@@ -30,11 +30,11 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@virastack/mask':
-        specifier: file:../mask
-        version: file:../mask(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)
+        specifier: 1.0.0
+        version: 1.0.0(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)
       '@virastack/password':
-        specifier: file:../password
-        version: file:../password(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: 1.0.0
+        version: 1.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       ai:
         specifier: ^6.0.134
         version: 6.0.134(zod@4.3.6)
@@ -3555,16 +3555,16 @@ packages:
   '@vercel/static-config@3.2.0':
     resolution: {integrity: sha512-UpOEIgWxWx0M+mDe1IMdHS6JuWM/L5nNIJ4ixX8v9JgBAejymo88OkgnmfLCNMem0Wd+b5vcQPWLdZybCndlsA==}
 
-  '@virastack/mask@file:../mask':
-    resolution: {directory: ../mask, type: directory}
+  '@virastack/mask@1.0.0':
+    resolution: {integrity: sha512-8a0ZdEpcayDyvRFFdH14lrIwwIGYFNFMv3ySjvPDqfpht+v1aLcA6eF0y4cavZsxysL7MOOqVNCwwLKXwJwGTw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/password@file:../password':
-    resolution: {directory: ../password, type: directory}
+  '@virastack/password@1.0.0':
+    resolution: {integrity: sha512-QVhGhSDLClW/CjBWGvyLdWxtfnbEX0/PeosOV7Y631hd8lpgsy8qQYlMwgIUmRJ40p0uqQVsTs4r09R/D6z1ZQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
@@ -11363,13 +11363,13 @@ snapshots:
       json-schema-to-ts: 1.6.4
       ts-morph: 12.0.0
 
-  '@virastack/mask@file:../mask(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)':
+  '@virastack/mask@1.0.0(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       react-hook-form: 7.71.2(react@19.2.3)
 
-  '@virastack/password@file:../password(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@virastack/password@1.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
