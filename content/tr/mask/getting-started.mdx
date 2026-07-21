@@ -1,0 +1,64 @@
+import { CodeBlockCommand } from '@/components/code-block-command/code-block-command'
+import { convertNpmCommand } from '@/components/code-block-command/utils'
+
+# Başlarken
+
+ViraStack Mask, maskeleme mantığını soyutlayarak girdileriniz için yayılabilir (spreadable) proplar döndüren bir hook ile girdi maskelemeyi basitleştirir.
+
+## Kurulum
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask")} />
+
+## Temel Kullanım
+
+1. Formunuzu `useForm` ile başlatın.
+2. Form alan adlarını maske hazır ayarlarına veya seçeneklerine eşleyen bir şema tanımlayın.
+3. Form örneği ve şema ile `useViraMask`'ı çağırın.
+4. Döndürülen alan proplarını girdilerinize yayın.
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+export default function PaymentForm() {
+  const form = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      amount: '',
+      phone: '',
+    }
+  });
+
+  // Şema anahtarları form alan adlarınızla eşleşmelidir
+  const { amount, phone } = useViraMask({
+    form,
+    schema: {
+      amount: 'currency', // 'currency' hazır ayarını kullan
+      phone: 'phone',     // 'phone' hazır ayarını kullan
+    },
+  });
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <div>
+        <label>Miktar</label>
+        <input {...amount} />
+      </div>
+
+      <div>
+        <label>Telefon</label>
+        <input {...phone} />
+      </div>
+
+      <button type="submit">Öde</button>
+    </form>
+  );
+}
+```
+
+## Nasıl Çalışır
+
+- **Durum Yönetimi:** Hook, *görünen değer* (maskelenmiş) için dahili bir durum tutarken, React Hook Form durumunu *ham değer* (maskelenmemiş) ile günceller.
+- **Olay İşleme:** Girdiyi işlemek, maskeyi uygulamak ve her iki durumu da güncellemek için `onChange` olayını yakalar.
+- **İmleç Konumlandırma:** Karakterler eklendiğinde veya kaldırıldığında imleç konumunu otomatik olarak ayarlayarak doğal bir yazma deneyimi sağlar.
+- **Doğrulama:** Bir doğrulayıcı sağlanmışsa (örn. Kredi Kartı veya TCKN için), doğrulama başarısız olursa RHF'nin `formState.errors` nesnesine bir hata kaydeder.

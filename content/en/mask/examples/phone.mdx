@@ -1,0 +1,54 @@
+# Phone
+
+The `phone` preset formats the input as a phone number. The default mask follows the **Turkey** format for better readability (e.g. `(555) 555 55 55`).
+
+<MaskedInputDemo
+  preset="phone"
+  label="Phone Number (TR)"
+  placeholder="(555) 555 55 55"
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { phone } = useViraMask({
+  form,
+  schema: { phone: 'phone' },
+});
+
+<input {...phone} placeholder="(555) 555 55 55" />
+```
+
+## Customize
+
+You can override the default mask to support other regions or formats. The following example uses a US-style mask:
+
+<MaskedInputDemo
+  preset="phone"
+  label="Phone Number (US)"
+  placeholder="(555) 555-5555"
+  options={{
+    mask: '(999) 999-9999',
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { phone } = useViraMask({
+  form,
+  schema: {
+    phone: {
+      mask: '(999) 999-9999',
+    },
+  },
+});
+
+<input {...phone} placeholder="(555) 555-5555" />
+```
+
+For more details, see the [Mask Options](/mask/mask-options) page.

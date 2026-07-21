@@ -1,0 +1,48 @@
+# TCKN
+
+`tckn` hazır ayarı Türkiye Cumhuriyeti Kimlik Numaralarını (TCKN) biçimlendirir. Resmi algoritmayı kullanarak 11 haneli sayıyı doğrular.
+
+<MaskedInputDemo preset="tckn" labelKey="turkishIdNumber" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm({ defaultValues: { tckn: '' } });
+const { tckn } = useViraMask({
+  form,
+  schema: { tckn: 'tckn' },
+});
+
+<input {...tckn} />
+```
+
+### Doğrulamayı Devre Dışı Bırak
+
+Varsayılan TCKN algoritması doğrulamasını devre dışı bırakmak isterseniz (örn. test amacıyla veya doğrulamayı sunucuda işlemek için), `validate: false` olarak ayarlayabilirsiniz.
+
+<MaskedInputDemo
+  preset="tckn"
+  labelKey="turkishIdNumberNoValidation"
+  options={{
+    validate: false,
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { tckn } = useViraMask({
+  form,
+  schema: {
+    tckn: {
+      preset: 'tckn',
+      validate: false, // TCKN doğrulamasını devre dışı bırakır
+    },
+  },
+});
+
+<input {...tckn} />
+```

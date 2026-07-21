@@ -1,0 +1,18 @@
+# Tax Number
+
+The `taxNumber` preset formats tax identification numbers. It validates the length and structure of the tax number.
+
+<MaskedInputDemo preset="taxNumber" label="Tax Identification Number" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm({ defaultValues: { taxNumber: '' } });
+const { taxNumber } = useViraMask({
+  form,
+  schema: { taxNumber: 'taxNumber' },
+});
+
+<input {...taxNumber} />
+```

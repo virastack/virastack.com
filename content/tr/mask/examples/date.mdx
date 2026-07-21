@@ -1,0 +1,51 @@
+# Tarih
+
+`date` hazır ayarı girişi bir tarih olarak biçimlendirir (GG/AA/YYYY). Girilen değerlerin geçerli bir tarih yapısı oluşturmasını sağlar.
+
+<MaskedInputDemo preset="date" label="Tarih (GG/AA/YYYY)" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { date } = useViraMask({
+  form,
+  schema: { date: 'date' },
+});
+
+<input {...date} />
+```
+
+## Özelleştirme
+
+Tarih biçimini özelleştirebilirsiniz. Aşağıdaki örnek **ABD formatını** (AA/GG/YYYY) kullanır.
+
+<MaskedInputDemo
+  preset="date"
+  label="Tarih (AA/GG/YYYY)"
+  placeholder="AA/GG/YYYY"
+  options={{
+    dateFormat: 'MDY',
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { date } = useViraMask({
+  form,
+  schema: {
+    date: {
+      preset: 'date',
+      dateFormat: 'MDY',
+    }
+  },
+});
+
+<input {...date} placeholder="AA/GG/YYYY" />
+```
+
+Daha fazla ayrıntı için [Maske Seçenekleri](/mask/mask-options) sayfasına bakın.

@@ -1,0 +1,127 @@
+# Araçlar
+
+Paket tarafından dışa aktarılan yardımcı işlevler ve sabitler.
+
+## `PRESETS`
+
+Dahili maske yapılandırmalarının bir kaydı.
+
+```text
+import { PRESETS } from '@virastack/mask';
+// PRESETS.card, PRESETS.phone vb. erişim
+```
+
+## `VALIDATORS`
+
+Dahili doğrulayıcı işlevlerinin bir kaydı.
+
+```text
+import { VALIDATORS } from '@virastack/mask';
+// VALIDATORS.luhn(value)
+// VALIDATORS.tckn(value)
+```
+
+## Doğrulama Araçları
+
+### `validateTCKN`
+
+Bağımsız TCKN doğrulama işlevi.
+
+```text
+function validateTCKN(value: string): boolean
+```
+
+### `validateLuhn`
+
+Bağımsız Luhn algoritması doğrulama işlevi.
+
+```text
+function validateLuhn(value: string): boolean
+```
+
+## Biçimlendirme Araçları
+
+Bu işlevler, ViraStack Mask'ın maskeleme ve biçimlendirme mantığını `useViraMask` hook'unun dışında kullanmanıza olanak tanır (örn. biçimlendirilmiş verileri bir tabloda görüntülemek için).
+
+### `applyMask`
+
+Ham bir değere maske deseni uygular.
+
+```text
+import { applyMask } from '@virastack/mask';
+
+const formatted = applyMask('5551234567', '(999) 999 99 99');
+// Çıktı: "(555) 123 45 67"
+```
+
+### `unmask`
+
+Bir değerden maske karakterlerini kaldırarak yalnızca maske türü tarafından tanımlanan ham karakterleri döndürür.
+
+```text
+import { unmask } from '@virastack/mask';
+
+const raw = unmask('(555) 123 45 67', '(999) 999 99 99');
+// Çıktı: "5551234567"
+```
+
+### `cleanValue`
+
+Bir dizeden sayısal olmayan tüm karakterleri kaldırır. İşlemeden önce girişleri temizlemek için yararlıdır.
+
+```text
+import { cleanValue } from '@virastack/mask';
+
+const clean = cleanValue('(555) 123-4567');
+// Çıktı: "5551234567"
+```
+
+### `formatCurrency`
+
+Bir sayı dizesini para birimi olarak biçimlendirir.
+
+```text
+import { formatCurrency } from '@virastack/mask';
+
+const price = formatCurrency('1234.50', {
+  symbol: '$',
+  precision: 2,
+  thousandSeparator: ',',
+  decimalSeparator: '.'
+});
+// Çıktı: "$ 1,234.50"
+```
+
+### `unformatCurrency`
+
+Biçimlendirilmiş bir para birimi dizesini tekrar ham bir sayı dizesine ayrıştırır.
+
+```text
+import { unformatCurrency } from '@virastack/mask';
+
+const raw = unformatCurrency('$ 1,234.50', {
+  decimalSeparator: '.'
+});
+// Çıktı: "1234.50"
+```
+
+### `getCardType`
+
+Bir numaradan kredi kartı türünü algılar.
+
+```text
+import { getCardType } from '@virastack/mask';
+
+const type = getCardType('4111');
+// Çıktı: "visa"
+```
+
+## React Araçları
+
+### `mergeRefs`
+
+Birden çok React ref'ini tek bir ref'te birleştirmek için araç.
+
+```text
+function mergeRefs<T>(...refs: Ref<T>[]): RefCallback<T>
+```

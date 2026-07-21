@@ -10,12 +10,12 @@ export default {
   index: {
     display: "hidden",
   },
-  "input-mask": {
-    title: "Input Mask",
+  "mask": {
+    title: "Mask",
     type: "page",
   },
-  "password-toggle": {
-    title: "Password Toggle",
+  "password": {
+    title: "Password",
     type: "page",
   },
 };

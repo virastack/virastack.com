@@ -39,9 +39,9 @@ export async function generateMetadata(props: {
 
   const PROJECT_NAMES: Record<string, string> = {
     "nextjs-boilerplate": "Next.js Boilerplate",
-    "ai-rules": "ViraStack AI",
-    "input-mask": "Input Mask",
-    "password-toggle": "Password Toggle",
+    "ai": "ViraStack AI",
+    "mask": "Input Mask",
+    "password": "Password Toggle",
     "modern-web-in-3-minutes": "Modern Web in 3 Minutes",
   };
 

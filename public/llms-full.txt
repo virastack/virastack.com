@@ -27,7 +27,7 @@ This file describes the `virastack-showcase` Next.js application: routing, i18n,
   - `app/[locale]/layout.tsx` — shell: header, sidebar, theme, toasts, `NextIntlClientProvider`, `QueryProvider`, Google Analytics.
   - `app/[locale]/[...mdxPath]/` — Nextra MDX pages (dynamic; see `page.tsx` for metadata and `dynamic = "force-dynamic"` rationale).
   - Other folders under `app/[locale]/` — React pages (about, roadmap, project landing pages, demos).
-- `content/en/`, `content/tr/` — MDX trees per product (e.g. `input-mask/`, `password-toggle/`). Sidebar order/titles use `_meta.js` files.
+- `content/en/`, `content/tr/` — MDX trees per product (e.g. `mask/`, `password/`). Sidebar order/titles use `_meta.js` files.
 - `components/` — Shared UI (includes shadcn-style components under `components/ui/`).
 - `data/projects.ts` — Project cards: name, `descriptionKey` (for next-intl), paths, optional `docsUrl`, GitHub `repo`, status.
 - `messages/en.json`, `messages/tr.json` — next-intl message catalogs.
@@ -43,7 +43,7 @@ This file describes the `virastack-showcase` Next.js application: routing, i18n,
 - TanStack React Query, TanStack Table (where used).
 - Forms: React Hook Form, Zod, `@hookform/resolvers`.
 - UI: Radix / shadcn-style primitives, lucide-react, Sonner, next-themes, Framer Motion / motion, Recharts (demos).
-- Scoped npm packages used in demos: `@virastack/input-mask`, `@virastack/password-toggle`.
+- Scoped npm packages used in demos: `@virastack/mask`, `@virastack/password`.
 
 ## Configuration notes
 
@@ -54,9 +54,9 @@ This file describes the `virastack-showcase` Next.js application: routing, i18n,
 ## Product list (from `data/projects.ts`)
 
 - Next.js Boilerplate — `/nextjs-boilerplate`, repo virastack/nextjs-boilerplate
-- AI Rules — `/ai-rules`, repo virastack/ai-rules
-- Input Mask — docs `/input-mask/getting-started`, repo virastack/input-mask
-- Password Toggle — docs `/password-toggle/getting-started`, repo virastack/password-toggle
+- AI Rules — `/ai`, repo virastack/ai
+- Input Mask — docs `/mask/getting-started`, repo virastack/mask
+- Password Toggle — docs `/password/getting-started`, repo virastack/password
 - Modern Web in 3 Minutes — `/modern-web-in-3-minutes`, repo virastack/modern-web-in-3-minutes
 - TanStack Boilerplate — `/tanstack-boilerplate`, status In Dev
 - Start (CLI) — `/cli`, status Research, repo virastack/cli

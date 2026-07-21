@@ -29,12 +29,12 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@virastack/input-mask':
-        specifier: 1.0.0
-        version: 1.0.0(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)
-      '@virastack/password-toggle':
-        specifier: 1.0.0
-        version: 1.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@virastack/mask':
+        specifier: file:../mask
+        version: file:../mask(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)
+      '@virastack/password':
+        specifier: file:../password
+        version: file:../password(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       ai:
         specifier: ^6.0.134
         version: 6.0.134(zod@4.3.6)
@@ -3555,20 +3555,20 @@ packages:
   '@vercel/static-config@3.2.0':
     resolution: {integrity: sha512-UpOEIgWxWx0M+mDe1IMdHS6JuWM/L5nNIJ4ixX8v9JgBAejymo88OkgnmfLCNMem0Wd+b5vcQPWLdZybCndlsA==}
 
-  '@virastack/input-mask@1.0.0':
-    resolution: {integrity: sha512-u9Qm/t7SPvmHhn2L9c4omyr8NK0Ze+BZ99PesL8E3TD5pL1WGVQQy9IBAGarspaGKNRa33xRBOyTTGfroqgmHw==}
+  '@virastack/mask@file:../mask':
+    resolution: {directory: ../mask, type: directory}
     engines: {node: '>=18'}
     peerDependencies:
-      react: '>=18'
-      react-dom: '>=18'
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/password-toggle@1.0.0':
-    resolution: {integrity: sha512-T/BmDX//x7pjHq+htqv92l2BlHHX/TuBJcX3cSIf3PkbyUR4lcRoSKiGb+7aDnLouz2PLfx1/2VpMJkW8c9lPg==}
+  '@virastack/password@file:../password':
+    resolution: {directory: ../password, type: directory}
     engines: {node: '>=18'}
     peerDependencies:
-      react: '>=18'
-      react-dom: '>=18'
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
 
   '@xmldom/xmldom@0.9.8':
     resolution: {integrity: sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==}
@@ -11363,13 +11363,13 @@ snapshots:
       json-schema-to-ts: 1.6.4
       ts-morph: 12.0.0
 
-  '@virastack/input-mask@1.0.0(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)':
+  '@virastack/mask@file:../mask(react-dom@19.2.3(react@19.2.3))(react-hook-form@7.71.2(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       react-hook-form: 7.71.2(react@19.2.3)
 
-  '@virastack/password-toggle@1.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@virastack/password@file:../password(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)

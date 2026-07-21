@@ -1,0 +1,57 @@
+# Şema ve Hazır Ayarlar
+
+Şema, ViraStack Mask için temel yapılandırmadır. Form alanı adlarınızı maske tanımlarına eşler.
+
+## Şema Tanımı
+
+Şema türü `MaskSchema<TFieldValues>` şeklindedir, burada anahtarlar form değerlerinizle eşleşir. Değerler bir **hazır ayar adı** (string) veya bir **MaskOptions** nesnesi olabilir.
+
+```tsx
+const { taxId, customCode } = useViraMask({
+  form,
+  schema: {
+    // Bir hazır ayar kullanma
+    taxId: 'tckn',
+    
+    // Özel seçenekler kullanma
+    customCode: {
+      mask: 'AA-999',
+      transform: 'uppercase',
+    },
+  },
+});
+```
+
+## Dahili Hazır Ayarlar
+
+ViraStack Mask, yaygın kullanım durumları için hazır ayarlar içerir.
+
+| Hazır Ayar | Maske / Desen | Açıklama |
+| :--- | :--- | :--- |
+| `card` | `9999 9999 9999 9999` | Kredi kartı numarası (Luhn doğrulaması). Amex'i otomatik algılar (4-6-5 formatı). |
+| `expiry` | `99/99` | Kart son kullanma tarihi |
+| `cvv` | `999` | Kart güvenlik kodu |
+| `tckn` | `99999999999` | Türkiye Cumhuriyeti Kimlik Numarası (Algoritma doğrulaması) |
+| `phone` | `(999) 999 99 99` | Türkiye telefon formatı |
+| `email` | `/[a-zA-Z0-9@._-]/` | E-posta izin verilen karakterler |
+| `url` | `/[a-zA-Z0-9@:%._\+~#=/?&-]/` | URL izin verilen karakterler |
+| `alpha` | `/[a-zA-Z]/` | Sadece alfabetik karakterler |
+| `numeric` | `/[0-9]/` | Sadece sayısal karakterler |
+| `currency` | Para birimi seçenekleri | Para birimi biçimlendirme |
+| `iban` | `TR99 ...` | IBAN formatı |
+| `date` | `99/99/9999` | Tarih formatı |
+| `taxNumber` | `9999999999` | Vergi kimlik numarası (VKN algoritma doğrulaması) |
+| `zipCode` | `99999` | Posta kodu |
+| `password` | - | Şifre giriş türü |
+| `text` | - | Düz metin |
+
+## Hazır Ayarları Geçersiz Kılma
+
+Bir hazır ayarı temel olarak kullanabilir ve hazır ayar yapılandırmasını yayarak (eğer `PRESETS`'e erişirseniz) veya ihtiyacınız olan seçenekleri manuel olarak tanımlayarak belirli seçenekleri geçersiz kılabilirsiniz.
+
+Şu anda şema, bir string anahtarı veya tam nesneyi kabul etmektedir. Bir hazır ayarı "genişletmek" için, hazır ayarlar yalnızca belirli `MaskOptions`'lar için kısayollar olduğundan, genellikle istenen özelliklere sahip tam nesneyi tanımlarsınız.
+
+## Ayrıca Bakınız
+
+- **[Maske Seçenekleri](/mask/mask-options):** Maskeleri özelleştirmek için mevcut tüm yapılandırma seçeneklerini keşfedin.
+- **[Örnekler](/mask/examples):** Çeşitli hazır ayarların ve özel yapılandırmaların canlı demolarını görüntüleyin.

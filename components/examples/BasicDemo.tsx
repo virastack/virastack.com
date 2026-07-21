@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraPassword } from "@virastack/password-toggle";
+import { useViraPassword } from "@virastack/password";
 
 export function BasicDemo() {
   const { inputProps, btnProps } = useViraPassword();

@@ -1,0 +1,22 @@
+import { BasicDemo } from '@/components/examples/BasicDemo';
+
+# Basic Usage
+
+This example demonstrates how to use `useViraPassword` with standard HTML `input` and `button` elements.
+
+<BasicDemo />
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+
+export function BasicDemo() {
+  const { inputProps, btnProps } = useViraPassword();
+
+  return (
+    <div>
+      <input {...inputProps} />
+      <button {...btnProps} />
+    </div>
+  );
+}
+```

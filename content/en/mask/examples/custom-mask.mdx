@@ -1,0 +1,33 @@
+# Custom Mask
+
+You can create custom masks and validators for specific needs.
+
+## Even Number Validator
+
+This example demonstrates a custom mask that only accepts numbers and validates if the number is even.
+
+<CustomMaskDemo />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { formState: { errors } } = form;
+const { evenNumber } = useViraMask({
+  form,
+  schema: {
+    evenNumber: {
+      inputMode: 'numeric',
+      allowedChars: /[0-9]/,
+      validate: true,
+      validator: (value) => parseInt(value, 10) % 2 === 0,
+    },
+  },
+});
+
+<input {...evenNumber} />
+{errors.evenNumber && <span>Must be an even number</span>}
+```
+
+For more details on customization, see the [Mask Options](/mask/mask-options) page.

@@ -1,0 +1,64 @@
+import { CodeBlockCommand } from '@/components/code-block-command/code-block-command'
+import { convertNpmCommand } from '@/components/code-block-command/utils'
+
+# Getting Started
+
+ViraStack Mask simplifies input masking by abstracting the logic into a hook that returns spreadable props for your inputs.
+
+## Installation
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask")} />
+
+## Basic Usage
+
+1. Initialize your form with `useForm`.
+2. Define a schema mapping field names to mask presets or options.
+3. Call `useViraMask` with the form instance and schema.
+4. Spread the returned field props onto your inputs.
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+export default function PaymentForm() {
+  const form = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      amount: '',
+      phone: '',
+    }
+  });
+
+  // The schema keys must match your form field names
+  const { amount, phone } = useViraMask({
+    form,
+    schema: {
+      amount: 'currency', // Use 'currency' preset
+      phone: 'phone',     // Use 'phone' preset
+    },
+  });
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <div>
+        <label>Amount</label>
+        <input {...amount} />
+      </div>
+
+      <div>
+        <label>Phone</label>
+        <input {...phone} />
+      </div>
+
+      <button type="submit">Pay</button>
+    </form>
+  );
+}
+```
+
+## How it Works
+
+- **State Management:** The hook maintains an internal state for the *display value* (masked) while updating the React Hook Form state with the *raw value* (unmasked).
+- **Event Handling:** It intercepts `onChange` to process the input, apply the mask, and update both states.
+- **Cursor Positioning:** It automatically adjusts the cursor position when characters are added or removed, ensuring a natural typing experience.
+- **Validation:** If a validator is provided (e.g., for Credit Card or TCKN), it registers an error in RHF's `formState.errors` if validation fails.

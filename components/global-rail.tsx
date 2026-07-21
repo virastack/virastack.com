@@ -41,8 +41,8 @@ export function GlobalRail() {
   const pathname = usePathname();
   const tNav = useTranslations("Common.Navigation");
 
-  const isMask = pathname.startsWith("/input-mask");
-  const isPassword = pathname.startsWith("/password-toggle");
+  const isMask = pathname.startsWith("/mask");
+  const isPassword = pathname.startsWith("/password");
 
   if (!isMask && !isPassword) return null;
 

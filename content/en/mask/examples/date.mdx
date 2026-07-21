@@ -1,0 +1,51 @@
+# Date
+
+The `date` preset formats the input as a date (DD/MM/YYYY). It ensures that the entered values form a valid date structure.
+
+<MaskedInputDemo preset="date" label="Date (DD/MM/YYYY)" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { date } = useViraMask({
+  form,
+  schema: { date: 'date' },
+});
+
+<input {...date} />
+```
+
+## Customize
+
+You can customize the date format. The following example uses the **US format** (MM/DD/YYYY).
+
+<MaskedInputDemo
+  preset="date"
+  label="Date (MM/DD/YYYY)"
+  placeholder="MM/DD/YYYY"
+  options={{
+    dateFormat: 'MDY',
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { date } = useViraMask({
+  form,
+  schema: {
+    date: {
+      preset: 'date',
+      dateFormat: 'MDY',
+    }
+  },
+});
+
+<input {...date} placeholder="MM/DD/YYYY" />
+```
+
+For more details, see the [Mask Options](/mask/mask-options) page.

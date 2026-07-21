@@ -88,23 +88,21 @@
     }
   },
   "Projects": {
-    "nextjsBoilerplate": "Tailwind CSS 4 ve TypeScript ile oluşturulmuş, üretime hazır Next.js 16+ başlangıç şablonu.",
     "aiRules": "Modern React uygulamaları için yapay zeka odaklı mimari kiti ve yüksek disiplinli protokoller.",
     "inputMask": "React Hook Form için optimize edilmiş, hafif ve bağımlılıksız input maskeleme kütüphanesi.",
     "passwordToggle": "React için tam erişilebilir ve son derece özelleştirilebilir şifre görünürlük hook'u.",
+    "cli": "Yüksek disiplinli ViraStack mimarilerini başlatmak ve ölçeklendirmek için otomatik iskelet oluşturma aracı.",
     "modernWeb": "Sadece 3 dakika içinde modern web geliştirme standartlarında ustalaşın.",
     "tanstackBoilerplate": "Tailwind CSS 4 ve TypeScript ile oluşturulmuş, üretime hazır TanStack Start başlangıç şablonu.",
-    "cli": "Yüksek disiplinli ViraStack mimarilerini başlatmak ve ölçeklendirmek için otomatik iskelet oluşturma aracı.",
     "standards": "Her projede mutlak kod bütünlüğünü sağlayan, yapılandırma gerektirmeyen ESLint ve Prettier paketi.",
     "errorGuard": "Sıfır sürtünmeli React ortamları için profesyonel düzeyde hata yönetimi ve akıllı kurtarma protokolleri.",
     "titles": {
-      "nextjsBoilerplate": "Next.js Boilerplate",
-      "aiRules": "AI Rules",
-      "inputMask": "Input Mask",
-      "passwordToggle": "Password Toggle",
+      "aiRules": "AI",
+      "inputMask": "Mask",
+      "passwordToggle": "Password",
+      "cli": "CLI",
       "modernWeb": "3 Dakikada Modern Web",
       "tanstackBoilerplate": "TanStack Boilerplate",
-      "cli": "Start (CLI)",
       "standards": "Standards",
       "errorGuard": "Error Guard"
     },

@@ -1,0 +1,157 @@
+# Validation
+
+ViraStack Mask is designed to work seamlessly with popular validation libraries like **Zod** and **Yup**, as well as standard **React Hook Form** validation.
+
+ViraStack Mask exports its internal validator functions so you can use them directly in your schemas:
+
+- `validateTCKN(value)`
+- `validateLuhn(value)`
+- `validateVKN(value)`
+- `validateIBAN(value)`
+- `validateEmail(value)`
+- `validateURL(value)`
+- `validateDate(value, format)`
+- `validateExpiry(value)`
+
+## Zod
+
+Use Zod's `refine` method to apply ViraStack Mask's validators.
+
+```tsx
+import { useViraMask, validateTCKN, validateLuhn } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({
+  // TCKN Validation
+  tckn: z.string()
+    .length(11, "TCKN must be 11 digits")
+    .refine(validateTCKN, "Invalid TCKN"),
+
+  // Credit Card Validation (Luhn)
+  creditCard: z.string()
+    .min(1, "Card number is required")
+    .refine(validateLuhn, "Invalid card number"),
+});
+
+export default function ZodForm() {
+  const form = useForm({
+    resolver: zodResolver(schema),
+    mode: 'onBlur'
+  });
+
+  const { tckn, creditCard } = useViraMask({
+    form,
+    schema: {
+      tckn: 'tckn',      // Mask: 99999999999
+      creditCard: 'card' // Mask: 9999 9999...
+    }
+  });
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <div>
+        <input {...tckn} placeholder="TCKN" />
+        {form.formState.errors.tckn && (
+          <span>{form.formState.errors.tckn.message}</span>
+        )}
+      </div>
+
+      <div>
+        <input {...creditCard} placeholder="Card Number" />
+        {form.formState.errors.creditCard && (
+          <span>{form.formState.errors.creditCard.message}</span>
+        )}
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Yup
+
+Use Yup's `test` method to apply ViraStack Mask's validators.
+
+```tsx
+import { useViraMask, validateTCKN } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  tckn: yup.string()
+    .length(11, "TCKN must be 11 digits")
+    .test('tckn', 'Invalid TCKN', validateTCKN)
+    .required(),
+});
+
+export default function YupForm() {
+  const form = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const { tckn } = useViraMask({
+    form,
+    schema: { tckn: 'tckn' }
+  });
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <input {...tckn} />
+      {form.formState.errors.tckn && (
+        <span>{form.formState.errors.tckn.message}</span>
+      )}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## React Hook Form (Standard)
+
+If you are not using a schema validation library, you can use React Hook Form's built-in `validate` rule.
+
+> **Note:** When using `useViraMask` without a resolver, ViraStack Mask automatically injects its default validators into the `register` function. However, you can override or extend this behavior manually if needed.
+
+```tsx
+import { useViraMask, validateTCKN } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+export default function StandardForm() {
+  const form = useForm();
+
+  const { tckn } = useViraMask({
+    form,
+    schema: {
+      tckn: {
+        preset: 'tckn',
+        // ViraStack Mask handles this automatically, but here is how you'd do it manually:
+        // validator: validateTCKN 
+      }
+    }
+  });
+
+  // Or applying extra validation manually via register (advanced)
+  /*
+  <input 
+    {...tckn}
+    {...form.register('tckn', {
+      validate: (value) => validateTCKN(value) || "Invalid TCKN"
+    })}
+  />
+  */
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <input {...tckn} />
+      {form.formState.errors.tckn && (
+        <span>Invalid TCKN</span>
+      )}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```

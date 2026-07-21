@@ -1,0 +1,37 @@
+import { CustomTextDemo } from '@/components/examples/CustomTextDemo';
+
+# Özel Metin
+
+İkonlar yerine, değiştirme butonu için metin etiketleri kullanabilirsiniz. Bu, açık "Göster/Gizle" eylemleri için kullanışlıdır.
+
+Bu örnekte, metin butonunu mutlak konumlandırma kullanarak girdi alanının içine yerleştiriyoruz ve bir bağlantı gibi stillendiriyoruz.
+
+<CustomTextDemo />
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+export function CustomTextDemo() {
+  const { inputProps, btnProps } = useViraPassword({
+    icons: {
+      show: <span>Göster</span>,
+      hide: <span>Gizle</span>,
+    },
+  });
+
+  return (
+    <div className="relative w-full max-w-sm">
+      <Input {...inputProps} className="pr-16" placeholder="Şifre" />
+      <Button
+        {...btnProps}
+        variant="link"
+        className="absolute right-0 top-0 h-full px-3 text-xs font-semibold text-muted-foreground hover:text-foreground"
+      >
+        {btnProps.children}
+      </Button>
+    </div>
+  );
+}
+```

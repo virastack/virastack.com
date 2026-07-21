@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraMask } from "@virastack/input-mask";
+import { useViraMask } from "@virastack/mask";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 

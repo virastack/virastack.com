@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraMask } from "@virastack/input-mask";
+import { useViraMask } from "@virastack/mask";
 import { useForm } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";

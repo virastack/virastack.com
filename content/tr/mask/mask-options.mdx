@@ -1,0 +1,101 @@
+# Maske Seçenekleri
+
+Hazır ayarların sunduğundan daha fazla kontrole ihtiyacınız olduğunda, `MaskOptions` nesnesini kullanın.
+
+## Yapılandırma Nesnesi
+
+```tsx
+interface MaskOptions {
+  mask?: string;
+  transform?: 'uppercase' | 'lowercase';
+  allowedChars?: RegExp;
+  forbiddenChars?: RegExp;
+  currency?: CurrencyOptions;
+  placeholderChar?: string;
+  inputMode?: 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+  type?: HTMLInputTypeAttribute;
+  validate?: boolean;
+  validator?: ((value: string) => boolean) | 'luhn' | 'tckn' | 'email' | 'iban' | 'expiry' | 'date' | 'url' | 'vkn';
+  autoComplete?: string;
+  errorMessage?: string;
+  dateFormat?: 'DMY' | 'MDY' | 'YMD';
+  alphaFormat?: boolean;
+  usernameFormat?: boolean;
+  displayPrefix?: string;
+  preset?: MaskPreset;
+  onCardTypeChange?: (type: 'visa' | 'mastercard' | 'amex' | 'troy' | 'unknown') => void;
+  resolveMask?: (value: string, allValues?: any, schema?: MaskSchema<any>) => string | undefined;
+}
+```
+
+## Özellikler
+
+### `mask`
+Desen dizesi.
+- `9`: Sayısal (0-9)
+- `a`: Alfabetik (a-z, A-Z)
+- `*`: Alfasayısal (0-9, a-z, A-Z)
+- Diğer tüm karakterler sabit karakter olarak kabul edilir (örn. `/`, `-`, `(`, `)`).
+
+### `resolveMask`
+Geçerli giriş değerine veya diğer form değerlerine göre maskeyi dinamik olarak belirlemek için bir işlev.
+- **value**: Girişin geçerli değeri.
+- **allValues**: Tüm form değerleri (`getValues()`'dan).
+- **schema**: ViraStack Mask şema tanımı.
+
+Bu, kart numarası türüne göre CVV maskesi uzunluğunu değiştirmek (örn. Amex için 4 haneye geçmek) gibi durumlar için yararlıdır.
+
+### `transform`
+Giriş büyük/küçük harf durumunu otomatik olarak dönüştürür.
+- `'uppercase'`: Büyük harfe dönüştürür.
+- `'lowercase'`: Küçük harfe dönüştürür.
+
+### `allowedChars`
+İzin verilen karakterleri tanımlayan bir RegExp. `mask` sağlanırsa, bu maske karakterlerinden çıkarılır (örn. `9`, `/[0-9]/` anlamına gelir), ancak geçersiz kılınabilir.
+
+### `forbiddenChars`
+Girişten çıkarılacak karakterleri tanımlayan bir RegExp.
+
+### `currency`
+Para birimi biçimlendirmesi için yapılandırma. Ayrıntılar için [Para Birimi](/mask/currency) bölümüne bakın.
+
+### `dateFormat`
+Tarih doğrulaması ve maskelemesi için tarih biçimini belirtir.
+- `'DMY'`: Gün-Ay-Yıl (örn. 31/12/2024)
+- `'MDY'`: Ay-Gün-Yıl (örn. 12/31/2024)
+- `'YMD'`: Yıl-Ay-Gün (örn. 2024/12/31)
+
+### `displayPrefix`
+Girişin başında görüntülenecek ve kullanıcı tarafından silinemeyen bir dize. Ülke kodları (örn. IBAN için `TR`) gibi şeyler için yararlıdır.
+
+### `alphaFormat`
+Boolean. Doğruysa, yalnızca alfabetik karakterlere (ç, ğ, ü vb. gibi Türkçe karakterler dahil) ve boşluklara izin verir.
+
+### `usernameFormat`
+Boolean. Doğruysa, girişi bir slug/kullanıcı adı olarak biçimlendirir (küçük harf, boşluklar tire ile değiştirilir, yalnızca alfasayısal karakterler).
+
+### `inputMode`
+Tarayıcıya hangi klavyenin görüntüleneceğini belirtir. Varsayılan `'text'`'tir. Hazır ayarlar genellikle bunu ayarlar (örn. `numeric`, `'numeric'` olarak ayarlar).
+
+### `type`
+Giriş için HTML `type` özniteliği (örn. `'text'`, `'tel'`, `'password'`).
+
+### `validate` & `validator`
+Doğrulamayı etkinleştirir.
+- `validate`: Etkinleştirmek için Boolean.
+- `validator`:
+  - `'luhn'`: Luhn algoritması (Kredi Kartları).
+  - `'tckn'`: Türkiye Cumhuriyeti Kimlik Numarası algoritması.
+  - `'email'`: E-posta doğrulaması.
+  - `'iban'`: IBAN doğrulaması.
+  - `'expiry'`: Kredi kartı son kullanma tarihi doğrulaması.
+  - `'date'`: Tarih biçimi doğrulaması.
+  - `'url'`: URL doğrulaması.
+  - `'vkn'`: Vergi Kimlik Numarası doğrulaması.
+  - `(value: string) => boolean`: Özel doğrulama işlevi.
+
+### `onCardTypeChange`
+Kredi kartı türü algılandığında veya değiştiğinde tetiklenen geri arama işlevi.
+- **type**: `'visa' | 'mastercard' | 'amex' | 'troy' | 'unknown'`
+
+Kart logosunu dinamik olarak görüntülemek için yararlıdır.

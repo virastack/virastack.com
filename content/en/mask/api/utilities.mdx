@@ -1,0 +1,127 @@
+# Utilities
+
+Helper functions and constants exported by the package.
+
+## `PRESETS`
+
+A record of built-in mask configurations.
+
+```text
+import { PRESETS } from '@virastack/mask';
+// Access PRESETS.card, PRESETS.phone, etc.
+```
+
+## `VALIDATORS`
+
+A record of built-in validator functions.
+
+```text
+import { VALIDATORS } from '@virastack/mask';
+// VALIDATORS.luhn(value)
+// VALIDATORS.tckn(value)
+```
+
+## Validation Helpers
+
+### `validateTCKN`
+
+Standalone TCKN validation function.
+
+```text
+function validateTCKN(value: string): boolean
+```
+
+### `validateLuhn`
+
+Standalone Luhn algorithm validation function.
+
+```text
+function validateLuhn(value: string): boolean
+```
+
+## Formatting Helpers
+
+These functions allow you to use ViraStack Mask's masking and formatting logic outside of the `useViraMask` hook (e.g., for displaying formatted data in a table).
+
+### `applyMask`
+
+Applies a mask pattern to a raw value.
+
+```text
+import { applyMask } from '@virastack/mask';
+
+const formatted = applyMask('5551234567', '(999) 999 99 99');
+// Output: "(555) 123 45 67"
+```
+
+### `unmask`
+
+Removes mask characters from a value, returning only the raw characters defined by the mask type.
+
+```text
+import { unmask } from '@virastack/mask';
+
+const raw = unmask('(555) 123 45 67', '(999) 999 99 99');
+// Output: "5551234567"
+```
+
+### `cleanValue`
+
+Removes all non-numeric characters from a string. Useful for cleaning inputs before processing.
+
+```text
+import { cleanValue } from '@virastack/mask';
+
+const clean = cleanValue('(555) 123-4567');
+// Output: "5551234567"
+```
+
+### `formatCurrency`
+
+Formats a number string as currency.
+
+```text
+import { formatCurrency } from '@virastack/mask';
+
+const price = formatCurrency('1234.50', {
+  symbol: '$',
+  precision: 2,
+  thousandSeparator: ',',
+  decimalSeparator: '.'
+});
+// Output: "$ 1,234.50"
+```
+
+### `unformatCurrency`
+
+Parses a formatted currency string back to a raw number string.
+
+```text
+import { unformatCurrency } from '@virastack/mask';
+
+const raw = unformatCurrency('$ 1,234.50', {
+  decimalSeparator: '.'
+});
+// Output: "1234.50"
+```
+
+### `getCardType`
+
+Detects the credit card type from a number.
+
+```text
+import { getCardType } from '@virastack/mask';
+
+const type = getCardType('4111');
+// Output: "visa"
+```
+
+## React Helpers
+
+### `mergeRefs`
+
+Utility to merge multiple React refs into one.
+
+```text
+function mergeRefs<T>(...refs: Ref<T>[]): RefCallback<T>
+```

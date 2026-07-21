@@ -1,0 +1,18 @@
+# Kullanıcı Adı
+
+`username` hazır ayarı, girdiyi gerçek zamanlı olarak URL dostu bir slug'a dönüştürür. Karakterleri normalleştirir (örn. Türkçe karakterleri ASCII'ye), boşlukları tirelere dönüştürür ve yalnızca küçük harfli alfasayısal karakterlere ve tirelere izin verir.
+
+<MaskedInputDemo preset="username" labelKey="username" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm({ defaultValues: { username: '' } });
+const { username } = useViraMask({
+  form,
+  schema: { username: 'username' },
+});
+
+<input {...username} placeholder="omer-gulcicek" />
+```

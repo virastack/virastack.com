@@ -1,0 +1,30 @@
+import { ShadcnDemo } from '@/components/examples/ShadcnDemo';
+
+# Shadcn UI Integration
+
+`useViraPassword` integrates seamlessly with Shadcn UI components. Just spread the props onto the `Input` and `Button` components.
+
+<ShadcnDemo />
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+
+export function ShadcnDemo() {
+  const { inputProps, btnProps } = useViraPassword();
+
+  return (
+    <div className="grid w-full max-w-sm items-center gap-1.5 p-4 border border-border rounded-lg">
+      <Label htmlFor={inputProps.id}>Password</Label>
+      <div className="flex w-full items-center space-x-2">
+        <Input {...inputProps} placeholder="Enter your password" />
+        <Button {...btnProps} variant="ghost" size="icon">
+          {btnProps.children}
+        </Button>
+      </div>
+    </div>
+  );
+}
+```

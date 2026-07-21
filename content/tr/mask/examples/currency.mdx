@@ -1,0 +1,65 @@
+# Para Birimi
+
+`currency` hazır ayarı girişi parasal bir değer olarak biçimlendirir. Varsayılan yapılandırma **Türkiye** formatını izler (ondalıklar için virgül, binlikler için nokta).
+
+<MaskedInputDemo
+  preset="currency"
+  label="Miktar"
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { amount } = useViraMask({
+  form,
+  schema: {
+    amount: 'currency'
+  },
+});
+
+<input {...amount} />
+```
+
+## Özelleştirme
+
+Para birimi sembolünü, konumunu ve ayırıcıları farklı yerellere uyacak şekilde özelleştirebilirsiniz. Aşağıdaki örnek, **ABD Doları** (ondalıklar için nokta, binlikler için virgül ve sonek sembolü) için nasıl yapılandırılacağını gösterir.
+
+<MaskedInputDemo
+  preset="currency"
+  label="ABD Doları"
+  placeholder="10,000.00 $"
+  options={{
+    currency: {
+      symbol: '$',
+      symbolPosition: 'suffix',
+      decimalSeparator: '.',
+      thousandSeparator: ',',
+    },
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { amount } = useViraMask({
+  form,
+  schema: {
+    amount: {
+      currency: {
+        symbol: '$',
+        symbolPosition: 'suffix',
+        decimalSeparator: '.',
+        thousandSeparator: ',',
+      }
+    },
+  },
+});
+
+<input {...amount} placeholder="10,000.00 $" />
+```
+
+Daha fazla ayrıntı için [Maske Seçenekleri](/mask/mask-options) sayfasına bakın.

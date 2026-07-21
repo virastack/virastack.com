@@ -1,0 +1,18 @@
+# Numeric
+
+The `numeric` preset restricts input to numeric characters only. It is suitable for fields like counts, quantities, or other integer values.
+
+<MaskedInputDemo preset="numeric" label="Quantity" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm({ defaultValues: { count: '' } });
+const { count } = useViraMask({
+  form,
+  schema: { count: 'numeric' },
+});
+
+<input {...count} />
+```

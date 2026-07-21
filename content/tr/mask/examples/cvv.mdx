@@ -1,0 +1,66 @@
+# CVV
+
+`cvv` hazır ayarı kredi kartı güvenlik kodları için tasarlanmıştır. Genellikle girişi 3 hane ile sınırlar.
+
+<MaskedInputDemo preset="cvv" labelKey="cardSecurityCode" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { cvv } = useViraMask({
+  form,
+  schema: { cvv: 'cvv' },
+});
+
+<input {...cvv} />
+```
+
+## Otomatik Uzunluk Değiştirme
+
+Başka bir alana American Express kart numarası girilirse, ViraStack Mask CVV maskesini otomatik olarak **4 haneye** geçirebilir.
+
+Bunun çalışması için:
+1. Şemanızda `card` hazır ayarına sahip bir alan olmalıdır.
+2. Kart alanı bir kart alanı olarak tanımlanmalıdır (ya `'card'` dize kısayolunu ya da `{ preset: 'card' }` nesne yapılandırmasını kullanarak).
+
+```tsx
+const { cardNumber, cvv } = useViraMask({
+  form,
+  schema: {
+    cardNumber: 'card', // Otomatik geçiş için mevcut olmalıdır
+    cvv: 'cvv',
+  },
+});
+```
+
+## Özelleştirme
+
+4 haneli bir CVV'ye ihtiyacınız varsa (örn. American Express için) ve CVV alanını **bağımsız olarak** (bir kart numarası alanı olmadan) kullanıyorsanız, maskeyi özelleştirebilirsiniz.
+
+<MaskedInputDemo
+  preset="cvv"
+  labelKey="amexCvv"
+  options={{
+    mask: '9999',
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { cvv } = useViraMask({
+  form,
+  schema: {
+    cvv: {
+      preset: 'cvv',
+      mask: '9999',
+    },
+  },
+});
+
+<input {...cvv} />
+```

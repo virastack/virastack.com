@@ -88,23 +88,21 @@
     }
   },
   "Projects": {
-    "nextjsBoilerplate": "Production-ready Next.js 16+ starter template built with Tailwind CSS 4 and TypeScript.",
     "aiRules": "AI-native architecture kit and high-discipline protocols for modern React applications.",
     "inputMask": "Lightweight, zero-dependency input masking library optimized for React Hook Form.",
     "passwordToggle": "Fully accessible and highly customizable password visibility hook for React.",
+    "cli": "Automated scaffolding tool to initialize and scale high-discipline ViraStack architectures.",
     "modernWeb": "Master modern web development standards in just 3 minutes.",
     "tanstackBoilerplate": "Production-ready TanStack Start starter template built with Tailwind CSS 4 and TypeScript.",
-    "cli": "Automated scaffolding tool to initialize and scale high-discipline ViraStack architectures.",
     "standards": "Zero-config ESLint and Prettier suite ensuring absolute code integrity across every project.",
     "errorGuard": "Pro-grade error handling and smart recovery protocols for zero-friction React environments.",
     "titles": {
-      "nextjsBoilerplate": "Next.js Boilerplate",
-      "aiRules": "AI Rules",
-      "inputMask": "Input Mask",
-      "passwordToggle": "Password Toggle",
+      "aiRules": "AI",
+      "inputMask": "Mask",
+      "passwordToggle": "Password",
+      "cli": "CLI",
       "modernWeb": "Modern Web in 3 Minutes",
       "tanstackBoilerplate": "TanStack Boilerplate",
-      "cli": "Start (CLI)",
       "standards": "Standards",
       "errorGuard": "Error Guard"
     },

@@ -1,0 +1,127 @@
+# Card Number
+
+The `card` preset formats credit card numbers. It supports all standard credit cards including **Visa, Mastercard, American Express, Troy**, and others.
+
+It automatically:
+- Validates the number using the **Luhn algorithm**.
+- Detects American Express cards (starting with 34 or 37) and switches to the 4-6-5 format (`9999 999999 99999`).
+- Detects the card type (Visa, Mastercard, Amex, Troy, etc.) which you can use to display card logos.
+
+<MaskedInputDemo preset="card" labelKey="creditCardNumber" />
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { cardNumber } = useViraMask({
+  form,
+  schema: { cardNumber: 'card' },
+});
+
+<input {...cardNumber} />
+```
+
+## Customize
+
+### Card Type Detection
+
+You can use the `onCardTypeChange` callback to detect the card type and display the corresponding logo. Supported types are: `'visa' | 'mastercard' | 'amex' | 'troy' | 'unknown'`.
+
+> **Note:** This feature uses a basic detection mechanism based on common BIN (Bank Identification Number) ranges. It may not cover all new card series or specific bank ranges (e.g. all Troy variations). For precise validation, rely on your Payment Gateway API responses.
+
+<CardTypeDemo />
+
+```tsx
+import { useState } from 'react';
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+export function CardTypeDemo() {
+  const [cardType, setCardType] = useState('unknown');
+  const form = useForm();
+  
+const { cardNumber } = useViraMask({
+  form,
+  schema: {
+    cardNumber: {
+      preset: 'card',
+      onCardTypeChange: (type) => setCardType(type),
+    },
+  },
+});
+
+return (
+  <div>
+    <label>Card Number</label>
+    <div className="relative">
+      <input {...cardNumber} />
+      <span className="absolute right-2 top-2 text-sm font-bold">
+        {cardType !== 'unknown' && cardType}
+      </span>
+    </div>
+  </div>
+);
+}
+```
+
+### Disable Validation
+
+If you want to disable the default Luhn algorithm validation (e.g., for testing purposes or to handle validation on the server), you can set `validate: false`.
+
+<MaskedInputDemo
+  preset="card"
+  label="Card Number (No Validation)"
+  options={{
+    validate: false,
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { cardNumber } = useViraMask({
+  form,
+  schema: {
+    cardNumber: {
+      preset: 'card',
+      validate: false, // Disables Luhn validation
+    },
+  },
+});
+
+<input {...cardNumber} />
+```
+
+### Custom Validator
+
+You can provide your own validator function. For example, to only accept **Visa** cards (starting with 4) while still using the Luhn algorithm:
+
+<CardValidatorDemo />
+
+```tsx
+import { useViraMask, validateLuhn } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { cardNumber } = useViraMask({
+  form,
+  schema: {
+    cardNumber: {
+      preset: 'card',
+      validator: (value) => {
+        // Custom rule: Must start with 4 (Visa)
+        if (!value.startsWith('4')) return false;
+        
+        // Optional: Also run the standard Luhn check
+        return validateLuhn(value);
+      },
+    },
+  },
+});
+
+<input {...cardNumber} />
+{form.formState.errors.cardNumber && <span>Invalid Visa Card</span>}
+```

@@ -1,0 +1,31 @@
+import { CodeBlockCommand } from '@/components/code-block-command/code-block-command'
+import { convertNpmCommand } from '@/components/code-block-command/utils'
+
+# Getting Started
+
+## Installation
+
+Install the package using your preferred package manager:
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+
+## Basic Usage
+
+Import the `useViraPassword` hook and use the returned props to connect your input and button.
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+
+function PasswordInput() {
+  const { inputProps, btnProps } = useViraPassword();
+
+  return (
+    <div>
+      <input {...inputProps} />
+      <button {...btnProps}>
+        {btnProps.children}
+      </button>
+    </div>
+  );
+}
+```

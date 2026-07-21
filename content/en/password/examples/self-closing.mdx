@@ -1,0 +1,40 @@
+import { SelfClosingDemo } from '@/components/examples/SelfClosingDemo';
+
+# Self-Closing & Positioning
+
+You don't need to explicitly pass `children` to your button component. The `btnProps` object already contains the correct icon or text as `children`. You can simply spread the props onto a self-closing component.
+
+This example also demonstrates how to position the toggle button inside the input field using absolute positioning.
+
+<SelfClosingDemo />
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+export function SelfClosingDemo() {
+  const { inputProps, btnProps } = useViraPassword();
+
+  return (
+    <div className="relative w-full max-w-sm">
+      <Input 
+        {...inputProps} 
+        className="pr-10" // Add padding to prevent text overlap
+        placeholder="Password" 
+      />
+      
+      {/* 
+        Notice that we don't pass children explicitly.
+        It's automatically handled by {...btnProps}.
+      */}
+      <Button 
+        {...btnProps}
+        variant="ghost" 
+        size="icon"
+        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+      />
+    </div>
+  );
+}
+```

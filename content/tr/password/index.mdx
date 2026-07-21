@@ -1,0 +1,50 @@
+import { Button } from '@/components/ui/button'
+import { CodeBlockCommand } from '@/components/code-block-command/code-block-command'
+import { convertNpmCommand } from '@/components/code-block-command/utils'
+
+import { GithubStarButton } from '@/components/github-star-button'
+import { ViraStackProjectHeading } from '@/components/virastack-project-heading'
+
+<ViraStackProjectHeading projectName="Password" accentClassName="text-rose-500" />
+
+React için tamamen erişilebilir ve özelleştirilebilir şifre görünürlüğü hook'u.
+
+<div className="flex gap-2 mt-4 mb-8">
+  <Button size="sm" asChild>
+    <a href="/password/getting-started" className="no-underline">
+      Başlarken
+    </a>
+  </Button>
+  <GithubStarButton href="https://github.com/virastack/password" variant="outline" size="sm" />
+</div>
+
+## Kurulum
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+
+## Hızlı Başlangıç
+
+```tsx
+import { useViraPassword } from '@virastack/password';
+
+function PasswordInput() {
+  const { inputProps, btnProps } = useViraPassword();
+
+  return (
+    <div>
+      <input {...inputProps} />
+      <button {...btnProps}>
+        {btnProps.children}
+      </button>
+    </div>
+  );
+}
+```
+
+## Özellikler
+
+- 🔒 **Güvenli**: Şifre görünürlüğünü güvenli bir şekilde yönetir.
+- ♿ **Erişilebilir**: Ekran okuyucular için tam ARIA desteği.
+- 🎨 **Özelleştirilebilir**: Değiştirme butonu için özel ikonlar veya metin kullanın.
+- 📦 **Hafif**: Sıfır bağımlılık (React hariç).
+- 🧩 **Kolay Entegrasyon**: Herhangi bir UI kütüphanesi (shadcn/ui, MUI vb.) ile sorunsuz çalışır.

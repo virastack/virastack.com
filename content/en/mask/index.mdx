@@ -1,0 +1,79 @@
+import { Button } from '@/components/ui/button'
+import { CodeBlockCommand } from '@/components/code-block-command/code-block-command'
+import { convertNpmCommand } from '@/components/code-block-command/utils'
+
+import { GithubStarButton } from '@/components/github-star-button'
+import { ViraStackProjectHeading } from '@/components/virastack-project-heading'
+
+<ViraStackProjectHeading projectName="Mask" accentClassName="text-indigo-500" />
+
+A lightweight, zero-dependency masking library for React Hook Form.
+
+<div className="flex gap-2 mt-4 mb-8">
+  <Button size="sm" asChild>
+    <a href="/mask/getting-started" className="no-underline">
+      Getting Started
+    </a>
+  </Button>
+  <GithubStarButton href="https://github.com/virastack/mask" variant="outline" size="sm" />
+</div>
+
+It provides a `useViraMask` hook that seamlessly integrates with React Hook Form to handle input masking, currency formatting, and validation.
+
+## Installation
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask")} />
+
+> **Note:** `react-hook-form` is a peer dependency.
+
+## Quick Start
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const App = () => {
+  const form = useForm({
+    defaultValues: {
+      cardNumber: '',
+      expiry: '',
+      cvv: '',
+    },
+  });
+
+  const { cardNumber, expiry, cvv } = useViraMask({
+    form,
+    schema: {
+      cardNumber: 'card',
+      expiry: 'expiry',
+      cvv: 'cvv',
+    },
+  });
+
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      <input {...cardNumber} placeholder="Card Number" />
+      <input {...expiry} placeholder="MM/YY" />
+      <input {...cvv} placeholder="CVV" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+```
+
+## Features
+
+- **Zero dependencies:** Lightweight and focused.
+- **React Hook Form integration:** Designed for RHF v7+.
+- **Declarative schema:** Define masks and validation rules in a simple object.
+- **Built-in presets:** Common patterns like Credit Card, IBAN, TCKN, Phone, Date, etc.
+- **Custom masks:** Flexible pattern definition (`9` for digits, `a` for letters, `*` for alphanumeric).
+- **Currency support:** Configurable precision, separators, and symbols.
+- **Validation:** Built-in Luhn, TCKN, and VKN algorithms, plus custom validators.
+- **TypeScript:** Fully typed.
+
+## Examples
+
+See the [Examples](/mask/examples) page for live demos of each preset — credit card, phone, currency, date, and more.

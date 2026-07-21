@@ -17,9 +17,9 @@ ViraStack is a modern frontend ecosystem that brings the React and Next.js lands
 ## Open Source Libraries
 
 - [Next.js Boilerplate](https://virastack.com/nextjs-boilerplate): Production-ready Next.js 16+ starter template built with Tailwind CSS 4 and TypeScript.
-- [AI Rules](https://virastack.com/ai-rules): AI-native architecture kit and high-discipline protocols for modern React applications.
-- [Input Mask](https://virastack.com/input-mask): Lightweight, zero-dependency input masking library optimized for React Hook Form.
-- [Password Toggle](https://virastack.com/password-toggle): Fully accessible and highly customizable password visibility hook for React.
+- [AI Rules](https://virastack.com/ai): AI-native architecture kit and high-discipline protocols for modern React applications.
+- [Input Mask](https://virastack.com/mask): Lightweight, zero-dependency input masking library optimized for React Hook Form.
+- [Password Toggle](https://virastack.com/password): Fully accessible and highly customizable password visibility hook for React.
 - [Modern Web in 3 Minutes](https://virastack.com/modern-web-in-3-minutes): Master modern web development standards in just 3 minutes.
 - [TanStack Boilerplate](https://virastack.com/tanstack-boilerplate) <sup>*In Dev*</sup>: roduction-ready TanStack Start starter template built with Tailwind CSS 4 and TypeScript.
 - [Start (CLI)](https://virastack.com/cli) <sup>*Research*</sup>: Automated scaffolding tool to initialize and scale high-discipline ViraStack architectures.

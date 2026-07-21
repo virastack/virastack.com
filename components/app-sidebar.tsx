@@ -105,253 +105,253 @@ const data: Record<string, any> = {
       },
     ],
   },
-  "input-mask": {
+  "mask": {
     nav: [
       {
         title: "Getting Started",
         translationKey: "InputMask.navigation.gettingStarted",
-        url: "/input-mask/getting-started",
+        url: "/mask/getting-started",
         icon: BookOpen,
       },
       {
         title: "Examples",
         translationKey: "InputMask.navigation.examples",
-        url: "/input-mask/examples",
+        url: "/mask/examples",
         icon: Component,
         isActive: false,
         items: [
           {
             title: "Overview",
             translationKey: "InputMask.navigation.overview",
-            url: "/input-mask/examples",
+            url: "/mask/examples",
           },
           {
             title: "Credit Card",
             translationKey: "InputMask.navigation.creditCard",
-            url: "/input-mask/examples/credit-card",
+            url: "/mask/examples/credit-card",
           },
           {
             title: "Card Number",
             translationKey: "InputMask.navigation.cardNumber",
-            url: "/input-mask/examples/card",
+            url: "/mask/examples/card",
           },
           {
             title: "Expiry",
             translationKey: "InputMask.navigation.expiry",
-            url: "/input-mask/examples/expiry",
+            url: "/mask/examples/expiry",
           },
           {
             title: "CVV",
             translationKey: "InputMask.navigation.cvv",
-            url: "/input-mask/examples/cvv",
+            url: "/mask/examples/cvv",
           },
           {
             title: "IBAN",
             translationKey: "InputMask.navigation.iban",
-            url: "/input-mask/examples/iban",
+            url: "/mask/examples/iban",
           },
           {
             title: "Currency",
             translationKey: "InputMask.navigation.currency",
-            url: "/input-mask/examples/currency",
+            url: "/mask/examples/currency",
           },
           {
             title: "TCKN",
             translationKey: "InputMask.navigation.tckn",
-            url: "/input-mask/examples/tckn",
+            url: "/mask/examples/tckn",
           },
           {
             title: "Tax Number",
             translationKey: "InputMask.navigation.taxNumber",
-            url: "/input-mask/examples/tax-number",
+            url: "/mask/examples/tax-number",
           },
           {
             title: "Phone",
             translationKey: "InputMask.navigation.phone",
-            url: "/input-mask/examples/phone",
+            url: "/mask/examples/phone",
           },
           {
             title: "Email",
             translationKey: "InputMask.navigation.email",
-            url: "/input-mask/examples/email",
+            url: "/mask/examples/email",
           },
           {
             title: "Zip Code",
             translationKey: "InputMask.navigation.zipCode",
-            url: "/input-mask/examples/zip-code",
+            url: "/mask/examples/zip-code",
           },
           {
             title: "Date",
             translationKey: "InputMask.navigation.date",
-            url: "/input-mask/examples/date",
+            url: "/mask/examples/date",
           },
           {
             title: "Password",
             translationKey: "InputMask.navigation.password",
-            url: "/input-mask/examples/password",
+            url: "/mask/examples/password",
           },
           {
             title: "URL",
             translationKey: "InputMask.navigation.url",
-            url: "/input-mask/examples/url",
+            url: "/mask/examples/url",
           },
           {
             title: "Username",
             translationKey: "InputMask.navigation.username",
-            url: "/input-mask/examples/username",
+            url: "/mask/examples/username",
           },
           {
             title: "Alpha",
             translationKey: "InputMask.navigation.alpha",
-            url: "/input-mask/examples/alpha",
+            url: "/mask/examples/alpha",
           },
           {
             title: "Numeric",
             translationKey: "InputMask.navigation.numeric",
-            url: "/input-mask/examples/numeric",
+            url: "/mask/examples/numeric",
           },
           {
             title: "Text",
             translationKey: "InputMask.navigation.text",
-            url: "/input-mask/examples/text",
+            url: "/mask/examples/text",
           },
           {
             title: "Custom Mask",
             translationKey: "InputMask.navigation.customMask",
-            url: "/input-mask/examples/custom-mask",
+            url: "/mask/examples/custom-mask",
           },
         ],
       },
       {
         title: "Schema & Presets",
         translationKey: "InputMask.navigation.schemaPresets",
-        url: "/input-mask/schema",
+        url: "/mask/schema",
         icon: Code2,
       },
       {
         title: "Mask Options",
         translationKey: "InputMask.navigation.maskOptions",
-        url: "/input-mask/mask-options",
+        url: "/mask/mask-options",
         icon: Settings2,
       },
       {
         title: "Custom Masks",
         translationKey: "InputMask.navigation.customMasks",
-        url: "/input-mask/custom-masks",
+        url: "/mask/custom-masks",
         icon: Terminal,
       },
       {
         title: "Currency",
         translationKey: "InputMask.navigation.currency",
-        url: "/input-mask/currency",
+        url: "/mask/currency",
         icon: Terminal,
       },
       {
         title: "Built-in Validation",
         translationKey: "InputMask.navigation.builtInValidation",
-        url: "/input-mask/validation",
+        url: "/mask/validation",
         icon: ShieldAlert,
       },
       {
         title: "Integrations",
         translationKey: "InputMask.navigation.integrations",
-        url: "/input-mask/integrations",
+        url: "/mask/integrations",
         icon: LayoutTemplate,
         items: [
           {
             title: "Libraries",
             translationKey: "InputMask.navigation.libraries",
-            url: "/input-mask/integrations/libraries",
+            url: "/mask/integrations/libraries",
           },
           {
             title: "Validation",
             translationKey: "InputMask.navigation.validation",
-            url: "/input-mask/integrations/validation",
+            url: "/mask/integrations/validation",
           },
         ],
       },
       {
         title: "API Reference",
         translationKey: "InputMask.navigation.apiReference",
-        url: "/input-mask/api",
+        url: "/mask/api",
         icon: BookOpen,
         items: [
           {
             title: "Engine",
             translationKey: "InputMask.navigation.engine",
-            url: "/input-mask/api/engine",
+            url: "/mask/api/engine",
           },
           {
             title: "Currency",
             translationKey: "InputMask.navigation.currency",
-            url: "/input-mask/api/currency",
+            url: "/mask/api/currency",
           },
           {
             title: "Utilities",
             translationKey: "InputMask.navigation.utilities",
-            url: "/input-mask/api/utilities",
+            url: "/mask/api/utilities",
           },
         ],
       },
       {
         title: "Types",
         translationKey: "InputMask.navigation.types",
-        url: "/input-mask/types",
+        url: "/mask/types",
         icon: Code2,
       },
     ],
   },
-  "password-toggle": {
+  "password": {
     nav: [
       {
         title: "Getting Started",
         translationKey: "PasswordToggle.navigation.gettingStarted",
-        url: "/password-toggle/getting-started",
+        url: "/password/getting-started",
         icon: BookOpen,
       },
       {
         title: "Examples",
         translationKey: "PasswordToggle.navigation.examples",
-        url: "/password-toggle/examples",
+        url: "/password/examples",
         icon: Component,
         isActive: true,
         items: [
           {
             title: "Overview",
             translationKey: "PasswordToggle.navigation.overview",
-            url: "/password-toggle/examples",
+            url: "/password/examples",
           },
           {
             title: "Basic",
             translationKey: "PasswordToggle.navigation.basic",
-            url: "/password-toggle/examples/basic",
+            url: "/password/examples/basic",
           },
           {
             title: "Custom Icons",
             translationKey: "PasswordToggle.navigation.customIcons",
-            url: "/password-toggle/examples/custom-icons",
+            url: "/password/examples/custom-icons",
           },
           {
             title: "Custom Text",
             translationKey: "PasswordToggle.navigation.customText",
-            url: "/password-toggle/examples/custom-text",
+            url: "/password/examples/custom-text",
           },
           {
             title: "Self Closing",
             translationKey: "PasswordToggle.navigation.selfClosing",
-            url: "/password-toggle/examples/self-closing",
+            url: "/password/examples/self-closing",
           },
           {
             title: "Shadcn UI",
             translationKey: "PasswordToggle.navigation.shadcn",
-            url: "/password-toggle/examples/shadcn",
+            url: "/password/examples/shadcn",
           },
         ],
       },
       {
         title: "API Reference",
         translationKey: "PasswordToggle.navigation.apiReference",
-        url: "/password-toggle/api",
+        url: "/password/api",
         icon: BookOpen,
       },
     ],
@@ -377,9 +377,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   );
 
   if (activeProject) {
-    if (activeProject.name === "Input Mask") context = "input-mask";
+    if (activeProject.name === "Input Mask") context = "mask";
     else if (activeProject.name === "Password Toggle")
-      context = "password-toggle";
+      context = "password";
     else context = "home";
   }
 
@@ -396,7 +396,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       collapsible="icon"
       className={cn(
         "top-12 h-[calc(100svh-3rem)]",
-        (context === "input-mask" || context === "password-toggle") &&
+        (context === "mask" || context === "password") &&
           "md:left-14",
       )}
       {...props}
@@ -483,7 +483,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </>
         )}
 
-        {(context === "input-mask" || context === "password-toggle") && (
+        {(context === "mask" || context === "password") && (
           <SidebarGroup>
             <SidebarMenu className="mt-2">
               {data[context].nav.map((item: any) => {
@@ -549,7 +549,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenu>
           </SidebarGroup>
         )}
-        {/* {context === "ai-rules" && (
+        {/* {context === "ai" && (
           <SidebarGroup>
             <SidebarMenu className="mt-2">
             </SidebarMenu>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraPassword } from "@virastack/password-toggle";
+import { useViraPassword } from "@virastack/password";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 

@@ -1,0 +1,65 @@
+# Currency
+
+The `currency` preset formats the input as a monetary value. The default configuration follows the **Turkey** format (comma for decimals, dot for thousands).
+
+<MaskedInputDemo
+  preset="currency"
+  label="Amount"
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { amount } = useViraMask({
+  form,
+  schema: {
+    amount: 'currency'
+  },
+});
+
+<input {...amount} />
+```
+
+## Customize
+
+You can customize the currency symbol, its position, and the separators to match different locales. The following example demonstrates how to configure it for **US Dollar** (dot for decimals, comma for thousands, and suffix symbol).
+
+<MaskedInputDemo
+  preset="currency"
+  label="US Dollar"
+  placeholder="10,000.00 $"
+  options={{
+    currency: {
+      symbol: '$',
+      symbolPosition: 'suffix',
+      decimalSeparator: '.',
+      thousandSeparator: ',',
+    },
+  }}
+/>
+
+```tsx
+import { useViraMask } from '@virastack/mask';
+import { useForm } from 'react-hook-form';
+
+const form = useForm();
+const { amount } = useViraMask({
+  form,
+  schema: {
+    amount: {
+      currency: {
+        symbol: '$',
+        symbolPosition: 'suffix',
+        decimalSeparator: '.',
+        thousandSeparator: ',',
+      }
+    },
+  },
+});
+
+<input {...amount} placeholder="10,000.00 $" />
+```
+
+For more details, see the [Mask Options](/mask/mask-options) page.
