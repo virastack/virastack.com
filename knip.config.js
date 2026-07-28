@@ -1,0 +1,29 @@
+/** @type {import('knip').KnipConfig} */
+const config = {
+  entry: [
+    "src/app/**/{page,layout,template,default,loading,not-found,error,global-error}.{ts,tsx}",
+    "src/app/**/{sitemap,robots,manifest}.{ts,tsx}",
+  ],
+  project: ["src/**/*.{ts,tsx,js,jsx}"],
+  ignore: [
+    "src/components/ui/**",
+    // Shared-layer barrels reserved for Rule-of-Three promotions
+    "src/hooks/index.ts",
+    "src/stores/index.ts",
+    "src/schemas/index.ts",
+    "src/constants/index.ts",
+    "src/features/**/data/index.ts",
+    "src/features/**/data/*.data.tsx",
+    "src/features/**/schemas/index.ts",
+    "src/i18n/routing.ts",
+  ],
+  ignoreDependencies: ["tailwindcss", "tw-animate-css"],
+  rules: {
+    dependencies: "error",
+    exports: "warn",
+    types: "warn",
+    files: "warn",
+  },
+};
+
+module.exports = config;
