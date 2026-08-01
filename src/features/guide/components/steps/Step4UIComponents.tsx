@@ -246,6 +246,7 @@ export function Step4UIComponents({ onNext, isCompleted, isStyled }: GuideStepPr
         <div className="space-y-3 rounded-xl border border-border bg-card p-4 ring-1 ring-border ring-offset-4 ring-offset-background">
           <p className="text-xs font-semibold tracking-wide text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 align-baseline">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-icon.webp" alt="" className="size-[1em] shrink-0" aria-hidden />
               {t.rich("after", {
                 mask: () => (
