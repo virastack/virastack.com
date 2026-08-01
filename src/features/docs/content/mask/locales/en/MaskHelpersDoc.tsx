@@ -50,7 +50,7 @@ export function MaskHelpersDoc() {
         <ul>
           <li>
             <code>formatCurrency(value, options)</code>: raw <code>&quot;1234.56&quot;</code> →
-            display
+            display (<code>1,234.56</code> US default; customize separators for TR)
           </li>
           <li>
             <code>unformatCurrency(value, options)</code>: display → raw

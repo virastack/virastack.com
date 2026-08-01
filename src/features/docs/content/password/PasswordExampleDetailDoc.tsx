@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 
 import { PasswordExampleDetailDoc as En } from "./locales/en/PasswordExampleDetailDoc";
 import { PasswordExampleDetailDoc as Tr } from "./locales/tr/PasswordExampleDetailDoc";
@@ -7,7 +7,7 @@ type PasswordExampleDetailDocProps = {
   id: string;
 };
 
-export function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocProps) {
-  const locale = useLocale();
+export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocProps) {
+  const locale = await getLocale();
   return locale === "tr" ? <Tr id={id} /> : <En id={id} />;
 }

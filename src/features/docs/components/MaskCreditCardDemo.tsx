@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 type CreditCardForm = {
   card: string;
@@ -13,10 +14,15 @@ type CreditCardForm = {
   cvv: string;
 };
 
+type MaskCreditCardDemoProps = {
+  /** Show rawValue / value meta under each field. */
+  showMeta?: boolean;
+};
+
 /**
  * Integrated card + expiry + cvv demo. Amex expands CVV to 4 digits.
  */
-export function MaskCreditCardDemo() {
+export function MaskCreditCardDemo({ showMeta = true }: MaskCreditCardDemoProps) {
   const t = useTranslations("DocsMask");
   const form = useForm<CreditCardForm>({
     defaultValues: { card: "", expiry: "", cvv: "" },
@@ -38,9 +44,9 @@ export function MaskCreditCardDemo() {
     },
   });
 
-  const { rawValue: cardRaw, ...cardProps } = card;
-  const { rawValue: _expiryRaw, ...expiryProps } = expiry;
-  const { rawValue: _cvvRaw, ...cvvProps } = cvv;
+  const { rawValue: cardRaw, value: cardValue, ...cardProps } = card;
+  const { rawValue: expiryRaw, value: expiryValue, ...expiryProps } = expiry;
+  const { rawValue: cvvRaw, value: cvvValue, ...cvvProps } = cvv;
 
   const cardType = getCardType(cardRaw);
   const errors = form.formState.errors;
@@ -59,6 +65,7 @@ export function MaskCreditCardDemo() {
         <Input
           id="mask-cc-card"
           {...cardProps}
+          value={cardValue}
           placeholder="0000 0000 0000 0000"
           aria-invalid={Boolean(errors.card)}
         />
@@ -66,6 +73,8 @@ export function MaskCreditCardDemo() {
           <p className="text-xs text-destructive">
             {String(errors.card.message ?? t("demoInvalidGeneric"))}
           </p>
+        ) : showMeta ? (
+          <MaskFieldMeta rawValue={cardRaw} value={cardValue} />
         ) : null}
       </div>
 
@@ -75,6 +84,7 @@ export function MaskCreditCardDemo() {
           <Input
             id="mask-cc-expiry"
             {...expiryProps}
+            value={expiryValue}
             placeholder="12/28"
             aria-invalid={Boolean(errors.expiry)}
           />
@@ -82,6 +92,8 @@ export function MaskCreditCardDemo() {
             <p className="text-xs text-destructive">
               {String(errors.expiry.message ?? t("demoInvalidGeneric"))}
             </p>
+          ) : showMeta ? (
+            <MaskFieldMeta rawValue={expiryRaw} value={expiryValue} />
           ) : null}
         </div>
         <div className="space-y-1.5">
@@ -89,8 +101,10 @@ export function MaskCreditCardDemo() {
           <Input
             id="mask-cc-cvv"
             {...cvvProps}
+            value={cvvValue}
             placeholder={cardType === "amex" ? "1234" : "123"}
           />
+          {showMeta ? <MaskFieldMeta rawValue={cvvRaw} value={cvvValue} /> : null}
         </div>
       </div>
     </div>

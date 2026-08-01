@@ -9,8 +9,8 @@ import { useViraPassword } from "@virastack/password"
 
 const { inputProps, btnProps } = useViraPassword({
   icons: {
-    show: <Star className="size-4" />,
-    hide: <Home className="size-4" />,
+    show: <Star />,
+    hide: <Home />,
   },
 })`;
 

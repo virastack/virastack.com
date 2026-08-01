@@ -30,8 +30,8 @@ importers:
         specifier: ^1.38.1
         version: 1.38.1
       '@virastack/mask':
-        specifier: latest
-        version: 1.0.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
+        specifier: 1.1.0
+        version: 1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
       '@virastack/password':
         specifier: latest
         version: 1.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1793,8 +1793,8 @@ packages:
   '@upstash/redis@1.38.1':
     resolution: {integrity: sha512-hVqkWmhqobH7hpdzSCSrOwK7gWNASOAdf85l6/yxdB+giCYNYfl8FkSKxnqW2sqCdLDP7HzRTvy/ILC1AjBMUA==}
 
-  '@virastack/mask@1.0.0':
-    resolution: {integrity: sha512-8a0ZdEpcayDyvRFFdH14lrIwwIGYFNFMv3ySjvPDqfpht+v1aLcA6eF0y4cavZsxysL7MOOqVNCwwLKXwJwGTw==}
+  '@virastack/mask@1.1.0':
+    resolution: {integrity: sha512-4pCmhr8MkIV8jRaUFno7HZ8WV3SnTBJ71JQMePtf9LfogtQaQ1JIBzTPoV4KWf3UR0CijBdgHYoCMyUST6OsRw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
@@ -6194,7 +6194,7 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  '@virastack/mask@1.0.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
+  '@virastack/mask@1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)

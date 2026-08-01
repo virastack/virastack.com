@@ -50,7 +50,7 @@ export function MaskHelpersDoc() {
         <ul>
           <li>
             <code>formatCurrency(value, options)</code>: ham <code>&quot;1234.56&quot;</code> →
-            görüntü
+            görüntü (<code>1,234.56</code> US varsayılan; TR için ayırıcıları customize edin)
           </li>
           <li>
             <code>unformatCurrency(value, options)</code>: görüntü → ham

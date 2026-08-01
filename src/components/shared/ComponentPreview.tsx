@@ -31,7 +31,7 @@ export function ComponentPreview({ preview, code, children, className }: Compone
 
   return (
     <div className={cn("relative my-6 overflow-hidden rounded-xl border border-border", className)}>
-      <div className="flex min-h-[160px] items-center justify-center bg-background p-8 sm:p-10">
+      <div className="flex min-h-[160px] items-center justify-center bg-background p-8 text-foreground sm:p-10">
         <div className="w-full max-w-sm">{preview}</div>
       </div>
 
@@ -57,7 +57,8 @@ export function ComponentPreview({ preview, code, children, className }: Compone
               "[&_.docs-code::-webkit-scrollbar]:hidden",
               "[&_pre]:[scrollbar-width:none] [&_pre]:overflow-x-auto [&_pre]:[-ms-overflow-style:none]",
               "[&_pre::-webkit-scrollbar]:hidden",
-              expanded ? "[&_pre]:pr-12 [&_pre]:pb-14" : "[&_pre]:pr-4",
+              // Room for the absolute View/Hide Code control at the bottom.
+              expanded ? "pb-10 [&_pre]:pr-12" : "[&_pre]:pr-4",
             )}
           >
             {children}

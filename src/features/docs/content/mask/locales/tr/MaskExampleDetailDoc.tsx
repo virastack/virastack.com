@@ -1,11 +1,12 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
+import { MaskCurrencyTrDemo } from "@/features/docs/components/MaskCurrencyTrDemo";
+import { MaskDateFormatDemo } from "@/features/docs/components/MaskDateFormatDemo";
+import { MaskPhoneTrDemo } from "@/features/docs/components/MaskPhoneTrDemo";
 import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
 import { getMaskExample } from "@/features/docs/config/mask-docs.config";
 import { Link } from "@/i18n/routing";
@@ -51,7 +52,9 @@ function Example() {
     schema: { ${preset}: "${preset}" },
   })
 
-  return <input {...${preset}} placeholder="${placeholder}" />
+  const { rawValue, ...inputProps } = ${preset}
+
+  return <input {...inputProps} placeholder="${placeholder}" />
 }`;
 }
 
@@ -78,8 +81,8 @@ function validatorErrorKey(validator?: string) {
   }
 }
 
-export function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
-  const t = useTranslations("DocsMask");
+export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
+  const t = await getTranslations("DocsMask");
   const example = getMaskExample(id, t);
   if (!example) return null;
 
@@ -151,13 +154,38 @@ export function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
         {example.customizations.length > 0 ? (
           <>
             <h2 id="ozellestirme">{t("exampleDetailHeadingCustomization")}</h2>
-            {example.customizations.map((item) => (
-              <div key={item.title} className="space-y-2">
-                <h3 id={item.title.toLowerCase().replace(/\s+/g, "-")}>{item.title}</h3>
-                <p>{item.description}</p>
-                <DocsCodeBlock code={item.code} lang="ts" />
-              </div>
-            ))}
+            {example.customizations.map((item) => {
+              const preview =
+                example.id === "currency" ? (
+                  <MaskCurrencyTrDemo />
+                ) : example.id === "phone" ? (
+                  <MaskPhoneTrDemo />
+                ) : item.codeKey === "exampleDateCustomization0Code" ? (
+                  <MaskDateFormatDemo dateFormat="MDY" placeholder="07/29/2026" />
+                ) : item.codeKey === "exampleDateCustomization1Code" ? (
+                  <MaskDateFormatDemo dateFormat="YMD" mask="9999/99/99" placeholder="2026/07/29" />
+                ) : null;
+
+              return (
+                <div key={item.codeKey} className="space-y-2">
+                  <h3 id={item.title.toLowerCase().replace(/\s+/g, "-")}>{item.title}</h3>
+                  <p>{item.description}</p>
+                  {preview ? (
+                    <ComponentPreview preview={preview} code={item.code}>
+                      <DocsCodeBlock
+                        code={item.code}
+                        lang={item.code.includes("import ") ? "tsx" : "ts"}
+                      />
+                    </ComponentPreview>
+                  ) : (
+                    <DocsCodeBlock
+                      code={item.code}
+                      lang={item.code.includes("import ") ? "tsx" : "ts"}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </>
         ) : null}
 

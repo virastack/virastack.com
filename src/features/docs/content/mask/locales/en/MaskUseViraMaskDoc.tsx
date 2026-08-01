@@ -14,7 +14,9 @@ function Example() {
     schema: { phone: "phone" },
   })
 
-  return <input {...phone} placeholder="(555) 555 55 55" />
+  const { rawValue, ...inputProps } = phone
+
+  return <input {...inputProps} placeholder="(555) 555-5555" />
 }`;
 
 export async function MaskUseViraMaskDoc() {
@@ -27,7 +29,7 @@ export async function MaskUseViraMaskDoc() {
       <DocsProse>
         <h2 id="temel">Basic usage</h2>
         <ComponentPreview
-          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555 55 55" />}
+          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555-5555" />}
           code={basicCode}
         >
           <DocsCodeBlock code={basicCode} lang="tsx" />
@@ -41,7 +43,7 @@ export async function MaskUseViraMaskDoc() {
           </li>
           <li>
             <strong>Options object</strong>:{" "}
-            <code>{`{ amount: { currency: { symbol: "₺" } } }`}</code>
+            <code>{`{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`}</code>
           </li>
           <li>
             <strong>Preset + override</strong>:{" "}
@@ -56,7 +58,9 @@ export async function MaskUseViraMaskDoc() {
         <h2 id="donus">Return value</h2>
         <p>
           <code>useViraMask()</code> returns a <code>MaskField</code> for each key in the schema.
-          Spread it directly onto an input: <code>{`<input {...phone} />`}</code>
+          Strip <code>rawValue</code> before spreading so it never lands on the DOM —{" "}
+          <code>value</code> stays in <code>inputProps</code>:{" "}
+          <code>{`const { rawValue, ...inputProps } = phone`}</code>
         </p>
         <ul>
           <li>

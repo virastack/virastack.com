@@ -4,9 +4,19 @@ import { useViraMask } from "@virastack/mask";
 import { useForm } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
+import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
-export function MaskCustomDemo() {
-  const form = useForm({ defaultValues: { code: "" } });
+type CustomForm = {
+  code: string;
+};
+
+type MaskCustomDemoProps = {
+  /** Show rawValue / value meta under the input. */
+  showMeta?: boolean;
+};
+
+export function MaskCustomDemo({ showMeta = true }: MaskCustomDemoProps) {
+  const form = useForm<CustomForm>({ defaultValues: { code: "" } });
   const { code } = useViraMask({
     form,
     schema: {
@@ -17,7 +27,12 @@ export function MaskCustomDemo() {
     },
   });
 
-  const { rawValue: _rawValue, ...inputProps } = code;
+  const { rawValue, ...inputProps } = code;
 
-  return <Input {...inputProps} placeholder="ABC-123" />;
+  return (
+    <div className="w-full space-y-1.5">
+      <Input {...inputProps} placeholder="ABC-123" />
+      {showMeta ? <MaskFieldMeta rawValue={rawValue} value={code.value} /> : null}
+    </div>
+  );
 }

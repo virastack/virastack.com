@@ -14,7 +14,9 @@ function Example() {
     schema: { phone: "phone" },
   })
 
-  return <input {...phone} placeholder="(555) 555 55 55" />
+  const { rawValue, ...inputProps } = phone
+
+  return <input {...inputProps} placeholder="(555) 555-5555" />
 }`;
 
 export async function MaskUseViraMaskDoc() {
@@ -27,7 +29,7 @@ export async function MaskUseViraMaskDoc() {
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
         <ComponentPreview
-          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555 55 55" />}
+          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555-5555" />}
           code={basicCode}
         >
           <DocsCodeBlock code={basicCode} lang="tsx" />
@@ -41,7 +43,7 @@ export async function MaskUseViraMaskDoc() {
           </li>
           <li>
             <strong>Options nesnesi</strong>:{" "}
-            <code>{`{ amount: { currency: { symbol: "₺" } } }`}</code>
+            <code>{`{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`}</code>
           </li>
           <li>
             <strong>Preset + override</strong>:{" "}
@@ -56,7 +58,9 @@ export async function MaskUseViraMaskDoc() {
         <h2 id="donus">Dönüş değeri</h2>
         <p>
           <code>useViraMask()</code>, schema’daki her anahtar için bir <code>MaskField</code> döner.
-          Doğrudan <code>{`<input {...phone} />`}</code> şeklinde spread edilir:
+          <code>rawValue</code>’yu DOM’a yaymamak için ayırın — <code>value</code>{" "}
+          <code>inputProps</code> içinde kalır:{" "}
+          <code>{`const { rawValue, ...inputProps } = phone`}</code>
         </p>
         <ul>
           <li>

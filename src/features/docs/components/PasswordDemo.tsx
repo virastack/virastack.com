@@ -32,8 +32,8 @@ export function PasswordDemo({ variant = "basic", className }: PasswordDemoProps
     icons:
       variant === "custom-icons"
         ? {
-            show: <Star className="size-4" />,
-            hide: <Home className="size-4" />,
+            show: <Star />,
+            hide: <Home />,
           }
         : variant === "custom-text"
           ? {

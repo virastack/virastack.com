@@ -4,7 +4,18 @@ import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.ty
 
 const BASE = "/mask/docs";
 
-type DocsMaskTranslate = (key: string) => string;
+type DocsMaskTranslate = ((key: string) => string) & {
+  /** Prefer for code snippets — ICU treats `{`/`}` as placeholders. */
+  raw?: (key: string) => unknown;
+};
+
+/** Code strings must use raw messages; otherwise next-intl ICU eats `{ ... }`. */
+function translateCode(t: DocsMaskTranslate, key: string): string {
+  if (typeof t.raw === "function") {
+    return String(t.raw(key));
+  }
+  return t(key);
+}
 
 export type MaskExampleMeta = {
   /** URL segment under /examples/ */
@@ -17,7 +28,13 @@ export type MaskExampleMeta = {
   group: "payment" | "identity" | "contact" | "text" | "misc";
   maskPattern?: string;
   notes: string[];
-  customizations: { title: string; description: string; code: string }[];
+  customizations: {
+    title: string;
+    description: string;
+    code: string;
+    /** Stable key for picking a live preview demo (if any). */
+    codeKey: string;
+  }[];
   /** Built-in validator key shown in docs (if any) */
   validator?: string;
 };
@@ -96,7 +113,7 @@ const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [
     id: "currency",
     preset: "currency",
     group: "payment",
-    placeholder: "1.234,56",
+    placeholder: "1,234.56",
     titleKey: "exampleCurrencyTitle",
     descriptionKey: "exampleCurrencyDescription",
     noteKeys: ["exampleCurrencyNote0", "exampleCurrencyNote1"],
@@ -148,8 +165,8 @@ const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [
     id: "phone",
     preset: "phone",
     group: "contact",
-    maskPattern: "(999) 999 99 99",
-    placeholder: "(555) 555 55 55",
+    maskPattern: "(999) 999-9999",
+    placeholder: "(555) 555-5555",
     titleKey: "examplePhoneTitle",
     descriptionKey: "examplePhoneDescription",
     noteKeys: ["examplePhoneNote0"],
@@ -260,6 +277,11 @@ const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [
         descriptionKey: "exampleDateCustomization0Description",
         codeKey: "exampleDateCustomization0Code",
       },
+      {
+        titleKey: "exampleDateCustomization1Title",
+        descriptionKey: "exampleDateCustomization1Description",
+        codeKey: "exampleDateCustomization1Code",
+      },
     ],
   },
 ];
@@ -277,7 +299,8 @@ function buildMaskExample(def: MaskExampleDef, t: DocsMaskTranslate): MaskExampl
     customizations: def.customizationKeys.map((keys) => ({
       title: t(keys.titleKey),
       description: t(keys.descriptionKey),
-      code: t(keys.codeKey),
+      code: translateCode(t, keys.codeKey),
+      codeKey: keys.codeKey,
     })),
     validator: def.validator,
   };

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
+import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 type MaskPresetDemoProps = {
   preset: MaskPreset;
@@ -13,6 +14,8 @@ type MaskPresetDemoProps = {
   /** Show RHF validation errors under the input (detail pages). */
   showError?: boolean;
   errorMessage?: string;
+  /** Show rawValue / value meta under the input. */
+  showMeta?: boolean;
 };
 
 /**
@@ -24,6 +27,7 @@ export function MaskPresetDemo({
   className,
   showError = false,
   errorMessage,
+  showMeta = true,
 }: MaskPresetDemoProps) {
   const t = useTranslations("DocsMask");
   const form = useForm<Record<string, string>>({
@@ -40,7 +44,7 @@ export function MaskPresetDemo({
   const field = fields[preset];
   if (!field) return null;
 
-  const { rawValue: _rawValue, ...inputProps } = field;
+  const { rawValue, ...inputProps } = field;
   const error = form.formState.errors[preset];
 
   return (
@@ -53,6 +57,8 @@ export function MaskPresetDemo({
       />
       {showError && error ? (
         <p className="text-xs text-destructive">{String(error.message ?? t("demoInvalidValue"))}</p>
+      ) : showMeta ? (
+        <MaskFieldMeta rawValue={rawValue} value={field.value} />
       ) : null}
     </div>
   );

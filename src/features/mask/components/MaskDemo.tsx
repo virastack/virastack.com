@@ -9,29 +9,33 @@ import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 import { Link } from "@/i18n/routing";
 
 type DemoForm = {
-  phone: string;
   card: string;
+  code: string;
 };
 
 export function MaskDemo() {
   const t = useTranslations("Mask");
   const form = useForm<DemoForm>({
-    defaultValues: { phone: "", card: "" },
+    defaultValues: { card: "", code: "" },
   });
 
-  const { phone, card } = useViraMask({
+  const { card, code } = useViraMask({
     form,
     schema: {
-      phone: "phone",
       card: "card",
+      code: {
+        mask: "aaa-999",
+        transform: "uppercase",
+      },
     },
   });
 
-  const { rawValue: phoneRaw, ...phoneProps } = phone;
-  const { rawValue: cardRaw, ...cardProps } = card;
+  const { rawValue: cardRaw, value: cardValue, ...cardProps } = card;
+  const { rawValue: codeRaw, value: codeValue, ...codeProps } = code;
   const cardType = getCardType(cardRaw);
 
   return (
@@ -39,14 +43,6 @@ export function MaskDemo() {
       <Reveal className="mx-auto w-full max-w-md">
         <div className="p-5 sm:p-6">
           <div className="flex flex-col gap-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="mask-demo-phone">{t("demoPhoneLabel")}</Label>
-              <Input id="mask-demo-phone" {...phoneProps} placeholder="(555) 555 55 55" />
-              <p className="font-mono text-xs text-muted-foreground">
-                {t("demoRawLabel")}: {phoneRaw || "—"}
-              </p>
-            </div>
-
             <div className="space-y-1.5">
               <div className="flex items-center justify-between gap-2">
                 <Label htmlFor="mask-demo-card">{t("demoCardLabel")}</Label>
@@ -56,10 +52,19 @@ export function MaskDemo() {
                   </span>
                 ) : null}
               </div>
-              <Input id="mask-demo-card" {...cardProps} placeholder="0000 0000 0000 0000" />
-              <p className="font-mono text-xs text-muted-foreground">
-                {t("demoRawLabel")}: {cardRaw || "—"}
-              </p>
+              <Input
+                id="mask-demo-card"
+                {...cardProps}
+                value={cardValue}
+                placeholder="0000 0000 0000 0000"
+              />
+              <MaskFieldMeta rawValue={cardRaw} value={cardValue} />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="mask-demo-code">{t("demoCodeLabel")}</Label>
+              <Input id="mask-demo-code" {...codeProps} value={codeValue} placeholder="ABC-123" />
+              <MaskFieldMeta rawValue={codeRaw} value={codeValue} />
             </div>
           </div>
         </div>

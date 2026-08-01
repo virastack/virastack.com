@@ -3,7 +3,9 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskCustomDemo } from "@/features/docs/content/mask/MaskCustomDemo";
 
-const customCode = `const { code } = useViraMask({
+const customCode = `const form = useForm({ defaultValues: { code: "" } })
+
+const { code } = useViraMask({
   form,
   schema: {
     code: {
@@ -13,7 +15,9 @@ const customCode = `const { code } = useViraMask({
   },
 })
 
-<input {...code} placeholder="ABC-123" />`;
+const { rawValue, ...inputProps } = code
+
+<input {...inputProps} placeholder="ABC-123" />`;
 
 const resolveMaskCode = `{
   mask: "9999 9999 9999 9999",

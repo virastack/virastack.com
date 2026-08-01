@@ -20,17 +20,16 @@ const productNameKeys = {
 } as const satisfies Record<ProductId, string>;
 
 const productDescKeys = {
-  start: "startDesc",
-  ai: "aiDesc",
-  mask: "maskDesc",
-  password: "passwordDesc",
-  guide: "guideDesc",
+  start: "ecosystemStartDesc",
+  ai: "ecosystemAiDesc",
+  mask: "ecosystemMaskDesc",
+  password: "ecosystemPasswordDesc",
+  guide: "ecosystemGuideDesc",
 } as const satisfies Record<ProductId, string>;
 
 export function Ecosystem() {
   const t = useTranslations("Home");
   const tNav = useTranslations("Navigation");
-  const tProducts = useTranslations("Products");
 
   const [start, ...rest] = products;
 
@@ -72,12 +71,7 @@ export function Ecosystem() {
                     />
                   </div>
                   <p className="max-w-2xl text-sm leading-relaxed text-pretty text-muted-foreground md:text-base">
-                    {tProducts.rich(productDescKeys.start, {
-                      bold: (chunks) => (
-                        <strong className="font-semibold text-foreground">{chunks}</strong>
-                      ),
-                      italic: (chunks) => <em className="italic">{chunks}</em>,
-                    })}
+                    {t(productDescKeys.start)}
                   </p>
                 </div>
                 <ChevronRight
@@ -106,7 +100,7 @@ export function Ecosystem() {
                   <ChevronRight className={featureCardChevronClassName} aria-hidden />
                 </div>
                 <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                  {tNav(productDescKeys[product.id])}
+                  {t(productDescKeys[product.id])}
                 </p>
               </Link>
             </RevealItem>
