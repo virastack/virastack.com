@@ -1,5 +1,5 @@
 /**
- * Formats a date using `Intl.DateTimeFormat`. Kept dependency-free on purpose —
+ * Formats a date using `Intl.DateTimeFormat`. Kept dependency-free on purpose:
  * add `date-fns` only if you need heavier date arithmetic.
  */
 export function formatDate(date: Date | string, locale = "en-US") {

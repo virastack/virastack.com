@@ -1,10 +1,14 @@
 import { setRequestLocale } from "next-intl/server";
 
-import { LandingPage } from "@/features/landing";
+import { HomePage } from "@/features/home";
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <LandingPage />;
+  return (
+    <main className="flex-1">
+      <HomePage />
+    </main>
+  );
 }

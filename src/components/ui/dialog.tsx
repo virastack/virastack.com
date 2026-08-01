@@ -1,7 +1,10 @@
+"use client";
+
 import type { ComponentProps } from "react";
 
 import { XIcon } from "lucide-react";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
@@ -23,6 +26,8 @@ export function DialogContent({
   showCloseButton = true,
   ...props
 }: ComponentProps<typeof BaseDialog.Popup> & { showCloseButton?: boolean }) {
+  const t = useTranslations("Common");
+
   return (
     <BaseDialog.Portal>
       <BaseDialog.Backdrop
@@ -55,7 +60,7 @@ export function DialogContent({
             )}
           >
             <XIcon className="size-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{t("close")}</span>
           </BaseDialog.Close>
         )}
       </BaseDialog.Popup>

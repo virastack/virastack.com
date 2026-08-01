@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -10,12 +10,21 @@ import { defaultMetadata } from "@/config/seo.config";
 
 import { Providers } from "@/providers";
 
+import { AppShell, Footer, Header } from "@/layout";
 import { routing } from "@/i18n/routing";
 
 import "@/styles/tailwind.css";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
   preload: true,
@@ -46,14 +55,18 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} h-full`}
+      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >
       <body className="flex min-h-full flex-col antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           <NuqsAdapter>
-            <Providers>{children}</Providers>
+            <Providers>
+              <AppShell header={<Header />} footer={<Footer />}>
+                {children}
+              </AppShell>
+            </Providers>
           </NuqsAdapter>
         </NextIntlClientProvider>
       </body>

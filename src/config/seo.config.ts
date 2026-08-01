@@ -9,9 +9,24 @@ export const defaultMetadata: Metadata = {
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["Next.js", "React", "TypeScript", "Tailwind CSS", "ViraStack", "Boilerplate"],
-  authors: [{ name: "ViraStack", url: siteConfig.url }],
-  creator: "ViraStack",
+  keywords: [
+    siteConfig.name,
+    "Next.js",
+    "TanStack Start",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Boilerplate",
+    "CLI",
+    "Feature-Sliced Design",
+    "Developer Experience",
+    "Developer Tools",
+  ],
+  authors: [
+    { name: siteConfig.author.name, url: siteConfig.author.website },
+    { name: siteConfig.name, url: siteConfig.url },
+  ],
+  creator: siteConfig.author.name,
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -28,7 +43,7 @@ export const defaultMetadata: Metadata = {
     images: [siteConfig.ogImage],
   },
   icons: {
-    icon: "/logo.webp",
+    icon: "/logo-icon.webp",
   },
   robots: {
     index: true,

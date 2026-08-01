@@ -1,0 +1,43 @@
+# ViraStack Password
+
+> Fully accessible, headless password visibility toggle for React; `useViraPassword()` returns spreadable `inputProps` and `btnProps` with ARIA defaults and optional custom icons or text.
+
+Install with `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). Not a password generator or strength meter; only show/hide visibility UX. Styling and markup are yours (Tailwind, Ant Design CSS, Chakra style props, etc.).
+
+## Docs
+
+- [Introduction](https://virastack.com/password/docs): Install, peers, and why Password.
+- [useViraPassword()](https://virastack.com/password/docs/use-vira-password): Options, return value, prop merging.
+- [Accessibility](https://virastack.com/password/docs/accessibility): `aria-label`, `aria-pressed`, `aria-controls`, `type="button"`.
+- [Customization](https://virastack.com/password/docs/customization): Custom icons, “Göster”/“Gizle” text, inputProps/btnProps, disabled/readOnly.
+- [Helpers](https://virastack.com/password/docs/helpers): `getInputType`, ARIA helpers, `EyeIcon` / `EyeOffIcon`, `mergeProps`.
+- [Types](https://virastack.com/password/docs/types): `UseViraPasswordOptions`, `UseViraPasswordResult`.
+- [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra patterns.
+- [Examples](https://virastack.com/password/docs/examples): Live demos index.
+
+## Notable examples
+
+- [Basit](https://virastack.com/password/docs/examples/basic): Default eye icons.
+- [Özel ikonlar](https://virastack.com/password/docs/examples/custom-icons): Custom `icons.show` / `icons.hide` (ReactNode).
+- [Özel metin](https://virastack.com/password/docs/examples/custom-text): Text labels via the same `icons` option.
+- [Disabled / readOnly](https://virastack.com/password/docs/examples/disabled): Locked toggle behavior.
+- [Prop merge](https://virastack.com/password/docs/examples/prop-merge): Merging `name`, `autoComplete`, `className`, handlers.
+- [Programatik](https://virastack.com/password/docs/examples/programmatic): `isVisible`, `toggle()`, `setVisible()`.
+
+## API surface (summary)
+
+- Hook: `useViraPassword(options?)` → `{ inputProps, btnProps, isVisible, toggle, setVisible }`
+- Options: `defaultVisible`, `icons`, `disabled`, `readOnly`, `id`, `inputProps`, `btnProps`
+- Also exported: `mergeProps`, `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes`, `EyeIcon`, `EyeOffIcon`
+
+## Product
+
+- [Password overview](https://virastack.com/password): Marketing page.
+- [npm `@virastack/password`](https://www.npmjs.com/package/@virastack/password): Package registry.
+- [GitHub](https://github.com/virastack/password): Source repository.
+
+## Related
+
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map.
+- [Start docs](https://virastack.com/start/docs): Scaffold CLI that can install Password as a tool.
+- [Mask docs](https://virastack.com/mask/docs): Companion headless form utility.
