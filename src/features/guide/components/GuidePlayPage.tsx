@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useHotkey } from "@tanstack/react-hotkeys";
-import { ChevronLeftIcon, ChevronRightIcon, XIcon } from "lucide-react";
+import { MoveLeftIcon, MoveRightIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -30,8 +30,6 @@ export function GuidePlayPage() {
   const [maxStep, setMaxStep] = useState(0);
   const [font, setFont] = useState<GuideFont>("sans");
   const isStyled = maxStep >= 2;
-  const canGoPrev = currentStep > 0;
-  const canGoNext = currentStep < LAST_STEP;
 
   const goNext = () => {
     setCurrentStep((step) => {
@@ -121,33 +119,16 @@ export function GuidePlayPage() {
         </Button>
       </div>
 
-      <nav
-        aria-label={t("stepNav")}
-        className="fixed top-3 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5"
+      <div
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3",
+          isStyled ? "text-muted-foreground" : "text-neutral-500",
+        )}
       >
-        <Button
-          type="button"
-          variant={isStyled ? "outline" : "ghost"}
-          size="icon"
-          onClick={goPrev}
-          disabled={!canGoPrev}
-          aria-label={t("previous")}
-          className={cn(!isStyled && "border border-neutral-300 bg-white text-black")}
-        >
-          <ChevronLeftIcon className="size-4" />
-        </Button>
-        <Button
-          type="button"
-          variant={isStyled ? "outline" : "ghost"}
-          size="icon"
-          onClick={goNext}
-          disabled={!canGoNext}
-          aria-label={t("next")}
-          className={cn(!isStyled && "border border-neutral-300 bg-white text-black")}
-        >
-          <ChevronRightIcon className="size-4" />
-        </Button>
-      </nav>
+        <MoveLeftIcon className="size-5" />
+        <MoveRightIcon className="size-5" />
+      </div>
 
       <div className="flex flex-col sm:pb-24">
         <AnimatePresence>

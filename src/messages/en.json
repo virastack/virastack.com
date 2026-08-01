@@ -304,9 +304,6 @@
   "Guide": {
     "close": "Close guide",
     "backToGuide": "Back to Guide",
-    "stepNav": "Step navigation",
-    "previous": "Previous step",
-    "next": "Next step",
     "serif": "Georgia · Classic",
     "sans": "Inter · Modern & soft",
     "mono": "JetBrains Mono · Technical",

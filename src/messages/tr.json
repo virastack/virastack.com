@@ -304,9 +304,6 @@
   "Guide": {
     "close": "Rehberi kapat",
     "backToGuide": "Guide’a dön",
-    "stepNav": "Adım gezintisi",
-    "previous": "Önceki adım",
-    "next": "Sonraki adım",
     "serif": "Georgia · Klasik",
     "sans": "Inter · Modern ve yumuşak",
     "mono": "JetBrains Mono · Teknik",
