@@ -126,8 +126,8 @@ export function GuidePlayPage() {
           isStyled ? "text-muted-foreground" : "text-neutral-500",
         )}
       >
-        <MoveLeftIcon className="size-5" />
-        <MoveRightIcon className="size-5" />
+        <MoveLeftIcon className="size-4" />
+        <MoveRightIcon className="size-4" />
       </div>
 
       <div className="flex flex-col sm:pb-24">
