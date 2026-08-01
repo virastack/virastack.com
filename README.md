@@ -1,202 +1,45 @@
 <div align="center">
 
-<a href="https://github.com/virastack/start" target="_blank" rel="noreferrer">
+<a href="https://virastack.com" target="_blank" rel="noreferrer">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/virastack/start/main/assets/logo-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/virastack/start/main/assets/logo-light.png">
-    <img src="https://raw.githubusercontent.com/virastack/start/main/assets/logo-light.png" alt="ViraStack Start" height="120" style="max-width: 100%;" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-light.png">
+    <img src="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-light.png" alt="ViraStack" height="72" style="max-width: 100%;" />
   </picture>
 </a>
 
-# virastack.com
+_The official website and documentation hub for the ViraStack ecosystem._
 
-_The Next.js boilerplate that feels effortless._
-
-[![ViraStack Next.js](https://img.shields.io/badge/ViraStack-Next.js-%2300bba7)](https://virastack.com)
-[![npm version](https://img.shields.io/npm/v/virastack)](https://www.npmjs.com/package/virastack)
-[![npm downloads](https://img.shields.io/npm/dt/virastack)](https://www.npmjs.com/package/virastack)
-[![Node](https://img.shields.io/badge/node-%3E%3D20.9-339933?logo=node.js&logoColor=white)](package.json)
+[![ViraStack](https://img.shields.io/badge/ViraStack-Website-18181b)](https://virastack.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/virastack/start/actions/workflows/ci.yml/badge.svg)](https://github.com/virastack/start/actions/workflows/ci.yml)
 [![@virastack](https://img.shields.io/badge/-%40virastack-black?logo=x&logoColor=white)](https://x.com/virastack)
 
 </div>
 
 ---
 
-**Docs:** [See the docs](https://www.virastack.com/nextjs-boilerplate/)
+### [Visit virastack.com →](https://virastack.com)
 
-**Contents:** [Why](#why-virastack) · [Features](#features) · [Getting started](#getting-started) · [Environment](#environment-variables) · [Scripts](#scripts) · [Project structure](#project-structure) · [Customization](#customization) · [ViraStack AI](#virastack-ai) · [Deployment](#deployment)
+## ViraStack
 
-Production-grade Next.js starter with feature-sliced architecture, strict TypeScript, and a pre-configured [**ViraStack AI**](https://github.com/virastack/ai) layer — so you and your coding agents ship consistent code from day one.
+A DX-first toolkit for frontend developers: modern-stack starters, agent rules, form hooks, and an interactive guide — documented and demoed in one place.
 
-## Why ViraStack
+## Products
 
-- **Opinionated, not opaque** — clear folder rules and placement conventions; nothing important is hidden behind magic
-- **Agent-ready by default** — `AGENTS.md`, Cursor rules, `llms.txt`, and design skills ship with every project
-- **Own your UI** — Base UI primitives in `components/ui` (shadcn-style), fully editable
-- **State triad** — TanStack Query (server), Zustand (client), nuqs (URL) — each with a dedicated job
-- **DX that sticks** — ESLint, Prettier, Knip, Husky, Commitlint, and GitHub Actions CI out of the box
+| Product                                               | Path        | Description                                    |
+| :---------------------------------------------------- | :---------- | :--------------------------------------------- |
+| [ViraStack Start](https://virastack.com/start/)       | `/start`    | Scaffolding CLI for Next.js and TanStack Start |
+| [ViraStack AI](https://virastack.com/ai/)             | `/ai`       | Agent rules and architecture kit               |
+| [ViraStack Mask](https://virastack.com/mask/)         | `/mask`     | Input masking for React forms                  |
+| [ViraStack Password](https://virastack.com/password/) | `/password` | Accessible password visibility hook            |
+| [ViraStack Guide](https://virastack.com/guide/)       | `/guide`    | Interactive modern-web walkthrough             |
 
-## Features
+## License
 
-**Included**
+Licensed under the [MIT License](LICENSE).
 
-- ⚡ **Next.js 16** — App Router, Turbopack, React Compiler
-- ⚛️ **React 19** + TypeScript strict (`noUncheckedIndexedAccess`)
-- 🎨 **Tailwind CSS 4** + Base UI primitives
-- 🔄 **TanStack Query** · **Zustand** · **nuqs**
-- 📋 **React Hook Form** + **Zod** — validated forms end to end
-- 🤖 **ViraStack AI** — agent context, scoped rules, design skills
-- ✅ **Quality built in** — ESLint, Prettier, Knip, Husky, Commitlint, CI (typecheck → lint → knip → build)
+## Maintainer
 
-**Optional / bring your own**
+A project by [**Ömer Gülçiçek**](https://omergulcicek.com)
 
-- Auth, database, i18n, analytics, and monitoring — wire them in when you need them; the architecture is ready
-
-## Getting started
-
-**Quick Start & Setup:** Please follow the instructions in the main [ViraStack Start README](https://github.com/virastack/start#quick-start).
-
-Once your project is scaffolded, start the development server:
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000). The home route renders `LandingPage` from `src/features/landing` — a full demo of the stack (theme toggle, TanStack Query, Zustand, Zod forms, nuqs). Delete that feature when you are ready to build.
-
-## Environment variables
-
-Validated in `src/env.ts`. Scaffolded projects already have `.env.local`.
-
-| Variable               | Scope  | Description                                                   |
-| :--------------------- | :----- | :------------------------------------------------------------ |
-| `NEXT_PUBLIC_APP_URL`  | Public | Canonical app URL (default `http://localhost:3000`)           |
-| `NEXT_PUBLIC_APP_NAME` | Public | Product name shown in UI/metadata (default `ViraStack Start`) |
-
-`NODE_ENV` is set by Next.js — do not define it manually. Add new vars in both `.env.example` and `src/env.ts`.
-
-## Scripts
-
-| Script                          | Description                                  |
-| :------------------------------ | :------------------------------------------- |
-| `dev`                           | Start the dev server (Turbopack)             |
-| `build`                         | Production build                             |
-| `start`                         | Serve the production build                   |
-| `analyze`                       | Build with bundle analyzer                   |
-| `lint` / `lint:fix` / `lint:ci` | ESLint (+ format check in CI)                |
-| `format` / `format:check`       | Prettier                                     |
-| `typecheck`                     | `tsc --noEmit`                               |
-| `knip`                          | Find unused files, exports, and dependencies |
-
-CI runs the same gates: typecheck → lint → knip → build (see `.github/workflows/ci.yml`).
-
-## Project structure
-
-```
-src/
-├── app/                  # Routes, layouts, metadata (App Router only)
-├── features/
-│   └── landing/          # Demo feature (canonical folder layout)
-│       ├── api/
-│       ├── components/   # Hero, Features, Showcase, demos, LandingPage
-│       ├── constants/
-│       ├── data/
-│       ├── helpers/
-│       ├── hooks/
-│       ├── icons/        # Brand SVGs used only by the landing demo
-│       ├── schemas/
-│       ├── stores/
-│       ├── types/
-│       └── index.ts
-├── components/
-│   ├── ui/               # Base UI primitives (Button, Dialog, Tabs, …)
-│   ├── layout/           # Header, Footer (reusable chrome)
-│   └── shared/           # Cross-feature components (ThemeToggle, …)
-├── hooks/                # Shared hooks (promote via Rule of Three)
-├── stores/
-├── schemas/
-├── providers/
-├── lib/                  # api.ts, query-client.ts, utils
-├── config/
-├── constants/
-├── helpers/
-├── types/
-├── styles/
-└── env.ts
-```
-
-The bundled `landing` feature follows the ViraStack AI feature tree and is meant to be deleted when you start building.
-
-**Quick start (strip the demo)**
-
-1. Delete `src/features/landing`
-2. Replace `src/app/page.tsx` with your own page
-3. Keep `components/layout` Header/Footer if you still want site chrome — pass `links` only when you need nav items
-
-**Rules of thumb**
-
-- Default scope is `features/[feature]/` — promote to global `src/` only when a second feature needs it
-- No cross-feature imports; share via `components/`, `lib/`, `hooks/`, etc.
-- Path aliases are mandatory; parent-relative imports (`../`) are forbidden
-
-See [`docs/architecture-guide.md`](docs/architecture-guide.md) for placement rules and import conventions.
-
-## Customization
-
-Search the repo for `FIXME:` to find the first things to own:
-
-| File                          | What to change                           |
-| :---------------------------- | :--------------------------------------- |
-| `src/config/site.config.ts`   | Site name, description, metadata         |
-| `next.config.ts`              | Remote image domains and Next.js options |
-| `src/lib/api.ts`              | Auth header / API client wiring          |
-| `src/env.ts` + `.env.example` | New environment variables                |
-| `public/`                     | Favicon and static assets                |
-
-You own every file — trim demos, rename features, keep only what you need.
-
-## ViraStack AI
-
-Developed with [**ViraStack AI**](https://github.com/virastack/ai) — an AI-native architecture kit that ships agent context into every project:
-
-| File              | Purpose                          |
-| :---------------- | :------------------------------- |
-| `AGENTS.md`       | Agent operating guide            |
-| `CLAUDE.md`       | Claude Code entry point          |
-| `.cursor/rules/`  | Scoped coding rules              |
-| `public/llms.txt` | Machine-readable project summary |
-| `.agents/skills/` | Design-taste skills              |
-
-Install or refresh rules: `npx @virastack/ai init`
-
-## Deployment
-
-Optimized for [Vercel](https://vercel.com/):
-
-1. Push the repo and import the project in Vercel (or your host of choice)
-2. Set `NEXT_PUBLIC_APP_URL` and `NEXT_PUBLIC_APP_NAME` from `.env.example`
-3. Run `pnpm analyze` locally before shipping if bundle size matters
-4. Deploy — `pnpm build` / `pnpm start` work the same on any Node host
-
-## Philosophy
-
-- Minimal surface, strong conventions
-- Agent-first documentation lives next to the code
-- Own your UI and architecture — no locked black boxes
-- Production-ready DX without forcing auth/db opinions until you need them
-
-## Contributing
-
-Ideas and bug reports welcome — open an [issue](https://github.com/virastack/start/issues).
-
-PRs that improve DX, architecture docs, or the landing showcase are especially appreciated.
-
----
-
-<div align="center">
-
-Bootstrapped with [**ViraStack Start**](https://github.com/virastack/start) · Built by <a href="https://omergulcicek.com">Ömer Gülçiçek</a> · <a href="LICENSE">MIT Licensed</a>
-
-</div>
+[![Follow Ömer Gülçiçek](https://img.shields.io/github/followers/omergulcicek?label=Follow&style=social)](https://github.com/omergulcicek)
