@@ -61,7 +61,7 @@ function typeIntoMask(field: MaskField, input: HTMLInputElement | null, nextValu
     target: input,
     currentTarget: input,
     nativeEvent: { isComposing: false },
-  } as ChangeEvent<HTMLInputElement>);
+  } as unknown as ChangeEvent<HTMLInputElement>);
 }
 
 function wait(ms: number, timers: number[]) {
