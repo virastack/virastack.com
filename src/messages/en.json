@@ -220,6 +220,7 @@
   },
   "Navigation": {
     "primaryNav": "Primary",
+    "home": "Home",
     "products": "Products",
     "about": "About",
     "brand": "Brand",
@@ -288,6 +289,17 @@
     "tryAgain": "Try again",
     "goHome": "Go home",
     "close": "Close"
+  },
+  "Search": {
+    "open": "Search docs",
+    "title": "Search",
+    "description": "Search product pages and documentation.",
+    "placeholder": "Search docs and products…",
+    "empty": "No results found.",
+    "filterLabel": "Filter",
+    "kindLanding": "Page",
+    "kindDocs": "Docs",
+    "hintNavigate": "Enter to open · Esc to close"
   },
   "Guide": {
     "close": "Close guide",

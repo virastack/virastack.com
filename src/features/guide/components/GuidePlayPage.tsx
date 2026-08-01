@@ -119,7 +119,7 @@ export function GuidePlayPage() {
         </Button>
       </div>
 
-      <div className="flex flex-col pb-24">
+      <div className="flex flex-col sm:pb-24">
         <AnimatePresence>
           {steps.slice(0, maxStep + 1).map((step, index) => (
             <motion.div
@@ -130,7 +130,7 @@ export function GuidePlayPage() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className={cn(
                 index === LAST_STEP
-                  ? "flex min-h-[30vh] flex-col justify-center py-10"
+                  ? "flex flex-col justify-center py-10 sm:min-h-[30vh]"
                   : "py-14 sm:py-20",
               )}
             >
@@ -138,8 +138,8 @@ export function GuidePlayPage() {
             </motion.div>
           ))}
         </AnimatePresence>
-        {/* Room so the final step can scroll to true vertical center */}
-        {maxStep >= LAST_STEP ? <div className="h-[30vh]" aria-hidden /> : null}
+        {/* Desktop: room so the final step can scroll to true vertical center */}
+        {maxStep >= LAST_STEP ? <div className="hidden h-[30vh] sm:block" aria-hidden /> : null}
       </div>
     </main>
   );

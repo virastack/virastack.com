@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { DocsMobileNav } from "@/features/docs/components/DocsMobileNav";
 import { DocsPager } from "@/features/docs/components/DocsPager";
 import { DocsSidebar } from "@/features/docs/components/DocsSidebar";
 import { DocsToc } from "@/features/docs/components/DocsToc";
@@ -52,6 +53,11 @@ export function DocsLayout({
 
       <article className="min-w-0 flex-1 px-1 pt-8 pb-16 sm:px-4 lg:px-8 lg:pb-[120px]">
         <div className="mx-auto max-w-3xl">
+          <DocsMobileNav
+            sections={sections}
+            productLabel={productLabel}
+            docsIndexHref={docsIndexHref}
+          />
           {children}
           <DocsPager prev={prev} next={next} />
         </div>

@@ -220,6 +220,7 @@
   },
   "Navigation": {
     "primaryNav": "Ana menü",
+    "home": "Ana sayfa",
     "products": "Ürünler",
     "about": "Hakkında",
     "brand": "Marka",
@@ -288,6 +289,17 @@
     "tryAgain": "Tekrar dene",
     "goHome": "Ana sayfaya dön",
     "close": "Kapat"
+  },
+  "Search": {
+    "open": "Sitede ara",
+    "title": "Ara",
+    "description": "Ürün sayfalarında ve dokümantasyonda ara.",
+    "placeholder": "Doküman ve ürünlerde ara…",
+    "empty": "Sonuç bulunamadı.",
+    "filterLabel": "Filtre",
+    "kindLanding": "Sayfa",
+    "kindDocs": "Docs",
+    "hintNavigate": "Enter ile aç · Esc ile kapat"
   },
   "Guide": {
     "close": "Rehberi kapat",

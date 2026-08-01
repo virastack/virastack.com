@@ -60,6 +60,7 @@ function typeIntoMask(field: MaskField, input: HTMLInputElement | null, nextValu
   field.onChange({
     target: input,
     currentTarget: input,
+    nativeEvent: { isComposing: false },
   } as ChangeEvent<HTMLInputElement>);
 }
 

@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server";
 import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
-import { DocsMobileNav } from "@/features/docs/components/DocsMobileNav";
 import { getStartDocsNav, getStartDocsPage } from "@/features/docs/config/start-docs.config";
 import {
   StartCliDoc,
@@ -69,7 +68,6 @@ export async function StartDocsPage({ slug }: StartDocsPageProps) {
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >
-      <DocsMobileNav sections={sections} docsIndexHref={DOCS_INDEX} />
       {render()}
     </DocsLayout>
   );

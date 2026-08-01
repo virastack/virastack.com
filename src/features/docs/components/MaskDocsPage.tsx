@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server";
 import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
-import { DocsMobileNav } from "@/features/docs/components/DocsMobileNav";
 import { getMaskDocsNav, getMaskDocsPage } from "@/features/docs/config/mask-docs.config";
 import {
   MaskCustomMaskDoc,
@@ -82,7 +81,6 @@ export async function MaskDocsPage({ slug }: MaskDocsPageProps) {
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >
-      <DocsMobileNav sections={sections} docsIndexHref={DOCS_INDEX} />
       {content}
     </DocsLayout>
   );

@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server";
 import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
-import { DocsMobileNav } from "@/features/docs/components/DocsMobileNav";
 import {
   getPasswordDocsNav,
   getPasswordDocsPage,
@@ -85,7 +84,6 @@ export async function PasswordDocsPage({ slug }: PasswordDocsPageProps) {
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >
-      <DocsMobileNav sections={sections} docsIndexHref={DOCS_INDEX} />
       {content}
     </DocsLayout>
   );
