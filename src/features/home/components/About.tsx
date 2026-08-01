@@ -6,7 +6,10 @@ import { guideProductTags, guideStackTags } from "@/features/guide/components/Gu
 export function About() {
   const t = useTranslations("Home");
   const stack = guideStackTags({ linked: true });
-  const products = guideProductTags({ ids: ["ai"], linked: true });
+  const products = guideProductTags({
+    ids: ["start", "ai", "mask", "password"],
+    linked: true,
+  });
 
   return (
     <section id="about" className="mx-auto max-w-3xl px-6 py-16 text-center">
@@ -17,10 +20,12 @@ export function About() {
             {t.rich("aboutBody", {
               bold: (chunks) => <strong className="font-semibold text-foreground">{chunks}</strong>,
               italic: (chunks) => <em className="italic">{chunks}</em>,
-              react: stack.react,
               nextjs: stack.nextjs,
               tanstack: stack.tanstack,
+              start: products.start,
               ai: products.ai,
+              mask: products.mask,
+              password: products.password,
             })}
           </p>
         </RevealItem>

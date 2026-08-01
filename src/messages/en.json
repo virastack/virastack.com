@@ -1,10 +1,10 @@
 {
   "Home": {
-    "heroDesc": "A <italic>DX-first</italic> toolkit for frontend developers. Modern infrastructure starters and React hooks help teams ship faster.",
+    "heroDesc": "A <italic>DX-first</italic> toolkit for frontend developers. Starters, agent rules, form hooks, and an interactive guide help teams ship faster.",
     "ctaStart": "Get Started",
     "ctaGithub": "GitHub",
     "aboutTitle": "What is ViraStack?",
-    "aboutBody": "ViraStack installs a <bold>Feature-Sliced</bold> architecture built on <nextjs>Next.js</nextjs> and <tanstack>TanStack Start</tanstack> into your project with a single CLI command. SEO, performance, form infrastructure, and optional i18n sit on that scaffold; server data via TanStack Query, client state via Zustand, and <ai>AI</ai> rules come automatically. All that’s left is to <italic>code your product</italic>.",
+    "aboutBody": "ViraStack is a modern frontend ecosystem: <start>Start</start> scaffolds a <bold>Feature-Sliced</bold> foundation on <nextjs>Next.js</nextjs> or <tanstack>TanStack Start</tanstack>; <ai>AI</ai> adds agent rules; <mask>Mask</mask> and <password>Password</password> complete form DX. All that’s left is to <italic>code your product</italic>.",
     "ecosystemTitle": "Products",
     "ecosystemDesc": "Each product stands on its own; all share the same modern stack and DX language.",
     "ecosystemStartDesc": "Production-ready Next.js and TanStack Start projects in one command. Feature-Sliced architecture, type safety, and AI rules included.",
@@ -92,7 +92,7 @@
     "featuresStateDesc": "TanStack Query for server cache, Zustand for client UI, nuqs for URL state. Each owns one job.",
     "featuresAiTitle": "AI-Ready",
     "featuresAiSubtitle": "Agent Rules Included",
-    "featuresAiDesc": "ViraStack AI ships AGENTS.md, Cursor rules, and skills. Agents write code that matches your architecture."
+    "featuresAiDesc": "Setup installs ViraStack AI with AGENTS.md and Cursor rules; design skills are added separately. Agents write code that matches your architecture."
   },
   "Mask": {
     "demoPhoneLabel": "Phone",
@@ -242,7 +242,7 @@
     "passwordName": "Password",
     "passwordDesc": "Accessible password visibility toggle for React.",
     "guideName": "Guide",
-    "guideDesc": "An interactive guide that shows the modern web in 3 minutes.",
+    "guideDesc": "An interactive guide through modern web standards, step by step.",
     "logoContextDownload": "Download logo (.svg)",
     "logoContextBrand": "Go to brand page"
   },
@@ -262,7 +262,7 @@
     "guideDesc": "An interactive path from <bold>raw HTML</bold> to an <italic>AI-native</italic> experience. You walk the modern web stack layer by layer, then land in the ViraStack ecosystem."
   },
   "Footer": {
-    "tagline": "A DX-first toolkit for frontend developers: modern-stack starters and React hooks.",
+    "tagline": "A DX-first toolkit for frontend developers: starters, agent rules, form hooks, and a guide.",
     "products": "Products",
     "explore": "Explore",
     "github": "GitHub",
@@ -319,10 +319,13 @@
     "learnTypeDesc": "Browser defaults feel unfinished. Pick a typeface in the guide and the tone of every step changes.",
     "learnUiTitle": "Components",
     "learnUiSubtitle": "Step 5",
-    "learnUiDesc": "Compose with shadcn/ui instead of reinventing controls, then see Mask format messy card data live.",
-    "learnAiTitle": "Theme & AI",
-    "learnAiSubtitle": "Step 6",
-    "learnAiDesc": "Add light/dark theming, then finish with a prompt-driven UI: type a request and watch a dynamic interface appear.",
+    "learnUiDesc": "Compose with shadcn/ui instead of reinventing controls; see Mask format card/phone data and Password toggle visibility live.",
+    "learnThemeTitle": "Theme",
+    "learnThemeSubtitle": "Step 6",
+    "learnThemeDesc": "Dark mode is expected, not a luxury. Add light/dark theming on demand.",
+    "learnAiTitle": "Artificial intelligence",
+    "learnAiSubtitle": "Step 7",
+    "learnAiDesc": "Finish with a prompt-driven UI: type a request and watch a dynamic interface appear.",
     "step0Title": "Content is everything",
     "step0Body": "Every interface starts with content. Design’s job is to make that text readable. The web’s foundation is semantic content; we build style on top of it.",
     "step0Cta": "Where do we start?",
@@ -384,7 +387,7 @@
     "introductionWhyHeading": "Why <start></start>?",
     "introductionWhyCli": "<bold>Interactive CLI</bold>: guided setup instead of a long flag checklist.",
     "introductionWhyProd": "<bold>Production-ready base</bold>: ESLint, Prettier, Husky, Knip, Commitlint, and CI come ready.",
-    "introductionWhyAgent": "<bold>Agent-ready</bold>: <ai>AI</ai> rules and design skills are applied during setup so assistants match the project architecture.",
+    "introductionWhyAgent": "<bold>Agent-ready</bold>: setup writes <ai>AI</ai> rules and separately installs design skills so assistants match the project architecture.",
     "introductionWhatsInP": "Every template ships a Feature-Sliced layout, theme support, Zod env validation, and the same shared packages for state, forms, and UI. The full list with icons is on the <templates>templates → shared stack</templates> page. Optional multi-language setup is covered under <i18n>i18n</i18n>.",
     "introductionOutOfScope": "Auth, database, and test runners are intentionally out of scope; the architecture is left ready for you to add them when needed.",
     "installationTitle": "Installation",
@@ -466,7 +469,7 @@
     "templatesStackPkgsForm": "<rhf>React Hook Form</rhf>, <zod>Zod</zod>",
     "templatesStackPkgsHooks": "<usehooks>usehooks-ts</usehooks>",
     "templatesStackPkgsUi": "<baseui>Base UI</baseui>, <motion>Framer Motion</motion>, <lucide>Lucide React</lucide>",
-    "templatesStackAi": "<ai>AI</ai> encodes these choices as agent rules; design skills ship too (<emil>emil-design-eng</emil>, <feel>make-interfaces-feel-better</feel>).",
+    "templatesStackAi": "<ai>AI</ai> encodes these choices as agent rules. Design skills are added separately by Start setup (<emil>emil-design-eng</emil>, <feel>make-interfaces-feel-better</feel>).",
     "templatesStackExtra": "Theme support and Zod-based env validation also ship with the template.",
     "templatesFooter": "Return to <installation>installation</installation> to set up, or see the <cli>CLI</cli> page for flags.",
     "templatesTreeCommentFeature": "Sample feature (deletable)",
