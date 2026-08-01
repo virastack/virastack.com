@@ -6,7 +6,6 @@ import {
   FileTextIcon,
   LayersIcon,
   PaletteIcon,
-  SunMoonIcon,
   TypeIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -51,13 +50,6 @@ export function GuideLearn() {
       description: t("learnUiDesc"),
       icon: <ComponentIcon className="size-5" aria-hidden />,
       tone: "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300",
-    },
-    {
-      title: t("learnThemeTitle"),
-      subtitle: t("learnThemeSubtitle"),
-      description: t("learnThemeDesc"),
-      icon: <SunMoonIcon className="size-5" aria-hidden />,
-      tone: "bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-300",
     },
     {
       title: t("learnAiTitle"),
