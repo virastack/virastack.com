@@ -4,7 +4,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-dark.png">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-light.png">
-    <img src="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-light.png" alt="ViraStack" height="72" style="max-width: 100%;" />
+    <img src="https://raw.githubusercontent.com/virastack/virastack.com/main/public/logo-wordmark-light.png" alt="ViraStack" height="120" style="max-width: 100%;" />
   </picture>
 </a>
 
