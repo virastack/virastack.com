@@ -54,7 +54,7 @@ export function Step7Final() {
   const sideY = height * 0.25;
 
   return (
-    <section className="flex flex-col justify-center gap-6">
+    <section className="flex flex-col justify-center gap-6 sm:mb-[30vh]">
       {ready ? (
         <>
           <Confetti

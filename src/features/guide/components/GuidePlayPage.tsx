@@ -101,7 +101,7 @@ export function GuidePlayPage() {
         font === "serif" && "font-serif",
         font === "sans" && "font-sans",
         font === "mono" && "font-mono",
-        !isStyled && "bg-white text-black",
+        !isStyled && "bg-white text-black dark:bg-black dark:text-white",
       )}
       style={!isStyled ? { fontFamily: '"Times New Roman", Times, serif' } : undefined}
     >
@@ -113,7 +113,10 @@ export function GuidePlayPage() {
           nativeButton={false}
           render={<Link href="/guide" />}
           aria-label={t("close")}
-          className={cn(!isStyled && "border border-neutral-300 bg-white text-black")}
+          className={cn(
+            !isStyled &&
+              "border border-neutral-300 bg-white text-black dark:border-neutral-700 dark:bg-black dark:text-white",
+          )}
         >
           <XIcon className="size-4" />
         </Button>
@@ -123,7 +126,7 @@ export function GuidePlayPage() {
         aria-hidden
         className={cn(
           "pointer-events-none absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3",
-          isStyled ? "text-muted-foreground" : "text-neutral-500",
+          isStyled ? "text-muted-foreground" : "text-neutral-500 dark:text-neutral-400",
         )}
       >
         <MoveLeftIcon className="size-4" />
@@ -149,8 +152,6 @@ export function GuidePlayPage() {
             </motion.div>
           ))}
         </AnimatePresence>
-        {/* Desktop: room so the final step can scroll to true vertical center */}
-        {maxStep >= LAST_STEP ? <div className="hidden h-[30vh] sm:block" aria-hidden /> : null}
       </div>
     </main>
   );
