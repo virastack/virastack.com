@@ -34,7 +34,7 @@ const MESSY = {
 
 const CLEAN = {
   cardNumber: "4532123456789012",
-  expiry: "1226",
+  expiry: "1230",
   cvv: "123",
 } as const;
 
