@@ -207,7 +207,7 @@
   }
 }
 
-/* rehype-pretty-code dual theme (github-light / github-dark) — next-themes `.dark` */
+/* rehype-pretty-code dual theme (github-light / github-dark); next-themes `.dark` */
 .docs-code code[data-theme*=" "],
 .docs-code code[data-theme*=" "] span {
   color: var(--shiki-light);

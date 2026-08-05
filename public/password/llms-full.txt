@@ -1,6 +1,6 @@
 # ViraStack Password (full)
 
-> `@virastack/password` (~1.0.2) — accessible, headless password visibility toggle for React. Returns `inputProps` + `btnProps`. No CSS required. Not a strength meter or password generator.
+> `@virastack/password` (~1.0.2), accessible, headless password visibility toggle for React. Returns `inputProps` + `btnProps`. No CSS required. Not a strength meter or password generator.
 
 ## Install
 
@@ -9,12 +9,12 @@ npm install @virastack/password
 # peers: react, react-dom (>= 18.2)
 ```
 
-Docs: https://virastack.com/password/docs — Index: https://virastack.com/password/llms.txt — Repo: https://github.com/virastack/password
+Docs: https://virastack.com/password/docs; Index: https://virastack.com/password/llms.txt; Repo: https://github.com/virastack/password
 
 ## Critical rules for agents
 
 1. Spread `inputProps` on the password field and `btnProps` on the toggle control.
-2. Keep the toggle as `<button type="button">` (provided via `btnProps`) — never submit the form.
+2. Keep the toggle as `<button type="button">` (provided via `btnProps`), never submit the form.
 3. Do not replace ARIA attributes unless intentionally overriding; defaults are accessibility-first.
 4. When `disabled` or `readOnly` is set, the toggle disables automatically.
 5. Style freely (Tailwind, Ant Design, Chakra, etc.); the hook is headless.
@@ -46,8 +46,8 @@ function Example() {
 | `disabled` | `boolean` | `false` | Disables input + button |
 | `readOnly` | `boolean` | `false` | Disables toggle |
 | `id` | `string` | auto `useId()` | Shared for `aria-controls` |
-| `inputProps` | `InputHTMLAttributes` | — | Merged onto generated input props |
-| `btnProps` | `ButtonHTMLAttributes` | — | Merged onto generated button props |
+| `inputProps` | `InputHTMLAttributes` | - | Merged onto generated input props |
+| `btnProps` | `ButtonHTMLAttributes` | - | Merged onto generated button props |
 
 ### UseViraPasswordResult
 

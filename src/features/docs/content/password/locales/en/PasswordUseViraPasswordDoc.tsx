@@ -95,14 +95,14 @@ export async function PasswordUseViraPasswordDoc() {
                 <td>
                   <code>inputProps</code>
                 </td>
-                <td>—</td>
+                <td>-</td>
                 <td>Merge with base input props</td>
               </tr>
               <tr>
                 <td>
                   <code>btnProps</code>
                 </td>
-                <td>—</td>
+                <td>-</td>
                 <td>Merge with base button props</td>
               </tr>
             </tbody>

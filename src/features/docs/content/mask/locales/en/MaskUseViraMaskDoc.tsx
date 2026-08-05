@@ -58,7 +58,7 @@ export async function MaskUseViraMaskDoc() {
         <h2 id="donus">Return value</h2>
         <p>
           <code>useViraMask()</code> returns a <code>MaskField</code> for each key in the schema.
-          Strip <code>rawValue</code> before spreading so it never lands on the DOM —{" "}
+          Strip <code>rawValue</code> before spreading so it never lands on the DOM -{" "}
           <code>value</code> stays in <code>inputProps</code>:{" "}
           <code>{`const { rawValue, ...inputProps } = phone`}</code>
         </p>

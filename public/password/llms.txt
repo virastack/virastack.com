@@ -2,7 +2,7 @@
 
 > Fully accessible, headless password visibility toggle for React. `useViraPassword()` returns spreadable `inputProps` and `btnProps` with ARIA defaults. npm: `@virastack/password` (~1.0.2).
 
-Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). Not a password generator or strength meter — only show/hide UX. Styling and markup are yours.
+Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). Not a password generator or strength meter, only show/hide UX. Styling and markup are yours.
 
 For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt).
 

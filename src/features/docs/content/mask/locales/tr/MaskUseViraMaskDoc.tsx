@@ -58,7 +58,7 @@ export async function MaskUseViraMaskDoc() {
         <h2 id="donus">Dönüş değeri</h2>
         <p>
           <code>useViraMask()</code>, schema’daki her anahtar için bir <code>MaskField</code> döner.
-          <code>rawValue</code>’yu DOM’a yaymamak için ayırın — <code>value</code>{" "}
+          <code>rawValue</code>’yu DOM’a yaymamak için ayırın, <code>value</code>{" "}
           <code>inputProps</code> içinde kalır:{" "}
           <code>{`const { rawValue, ...inputProps } = phone`}</code>
         </p>

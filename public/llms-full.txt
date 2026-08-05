@@ -6,7 +6,7 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 
 ## Positioning
 
-- Fills small, painful frontend gaps — not TanStack-scale data/query verticals
+- Fills small, painful frontend gaps, not TanStack-scale data/query verticals
 - Packages are headless: logic and props only; style with shadcn, Base UI, Ant Design, or plain HTML
 - Packages are independent: installing Mask does not require Password or AI
 - Primary documentation language: English (site is i18n; APIs and package docs center on EN)
@@ -62,7 +62,7 @@ Details: https://virastack.com/mask/llms-full.txt
 
 ## Password (quick)
 
-Peers: `react`, `react-dom` (≥18.2). Visibility toggle only — not a strength meter or generator.
+Peers: `react`, `react-dom` (≥18.2). Visibility toggle only, not a strength meter or generator.
 
 ```tsx
 import { useViraPassword } from "@virastack/password"
@@ -82,7 +82,7 @@ Details: https://virastack.com/password/llms-full.txt
 
 ## Guide (quick)
 
-Interactive path from plain content → modern stack → Tailwind → typography → components (incl. Mask/Password demos) → theme → AI prompt UI → ViraStack ecosystem CTA. Play: https://virastack.com/guide/play — full: https://virastack.com/guide/llms-full.txt
+Interactive path from plain content → modern stack → Tailwind → typography → components (incl. Mask/Password demos) → theme → AI prompt UI → ViraStack ecosystem CTA. Play: https://virastack.com/guide/play; full: https://virastack.com/guide/llms-full.txt
 
 ## Canonical links
 

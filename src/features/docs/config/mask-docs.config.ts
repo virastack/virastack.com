@@ -5,7 +5,7 @@ import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.ty
 const BASE = "/mask/docs";
 
 type DocsMaskTranslate = ((key: string) => string) & {
-  /** Prefer for code snippets — ICU treats `{`/`}` as placeholders. */
+  /** Prefer for code snippets, ICU treats `{`/`}` as placeholders. */
   raw?: (key: string) => unknown;
 };
 

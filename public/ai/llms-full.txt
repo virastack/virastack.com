@@ -1,6 +1,6 @@
 # ViraStack AI (full)
 
-> `@virastack/ai` (~1.3.1) — injects high-discipline agent rules and architecture docs into a React project. Framework-aware (Next.js vs TanStack Start). Not a chat UI library.
+> `@virastack/ai` (~1.3.1), injects high-discipline agent rules and architecture docs into a React project. Framework-aware (Next.js vs TanStack Start). Not a chat UI library.
 
 ## Install
 
@@ -8,7 +8,7 @@
 npx @virastack/ai init
 ```
 
-Product: https://virastack.com/ai — Index: https://virastack.com/ai/llms.txt — Repo: https://github.com/virastack/ai
+Product: https://virastack.com/ai; Index: https://virastack.com/ai/llms.txt; Repo: https://github.com/virastack/ai
 
 ## CLI flags
 

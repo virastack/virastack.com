@@ -1,6 +1,6 @@
 # ViraStack Mask (full)
 
-> `@virastack/mask` (~1.1.1) — type-safe input masking for React Hook Form. Headless: no CSS. Form stores raw values; inputs show formatted values.
+> `@virastack/mask` (~1.1.1), type-safe input masking for React Hook Form. Headless: no CSS. Form stores raw values; inputs show formatted values.
 
 ## Install
 
@@ -9,7 +9,7 @@ npm install @virastack/mask
 # peers: react, react-dom, react-hook-form
 ```
 
-Docs: https://virastack.com/mask/docs — Index: https://virastack.com/mask/llms.txt — Repo: https://github.com/virastack/mask
+Docs: https://virastack.com/mask/docs; Index: https://virastack.com/mask/llms.txt; Repo: https://github.com/virastack/mask
 
 ## Critical rules for agents
 
@@ -108,7 +108,7 @@ Built-in `validator` names: `luhn`, `tckn`, `email`, `iban`, `expiry`, `date`, `
 - `formatCurrency`, `unformatCurrency`
 - `getCardType`
 - `mergeRefs`
-- `PRESETS` — full preset map
+- `PRESETS`: full preset map
 
 ## Example URLs
 

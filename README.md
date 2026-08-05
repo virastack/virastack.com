@@ -22,7 +22,7 @@ _The official website and documentation hub for the ViraStack ecosystem._
 
 ## ViraStack
 
-A DX-first toolkit for frontend developers: modern-stack starters, agent rules, form hooks, and an interactive guide — documented and demoed in one place.
+A DX-first toolkit for frontend developers: modern-stack starters, agent rules, form hooks, and an interactive guide, documented and demoed in one place.
 
 ## Products
 

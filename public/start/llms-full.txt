@@ -1,6 +1,6 @@
 # ViraStack Start (full)
 
-> `virastack` CLI (~1.0.5) — scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, and optional ViraStack tools.
+> `virastack` CLI (~1.0.5), scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, and optional ViraStack tools.
 
 ## Install / run
 
@@ -9,7 +9,7 @@ npx virastack@latest
 npx virastack@latest init my-app --template nextjs --tools mask,password,ai --yes
 ```
 
-Docs: https://virastack.com/start/docs — Index: https://virastack.com/start/llms.txt — Repo: https://github.com/virastack/start
+Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.txt; Repo: https://github.com/virastack/start
 
 ## Commands
 
@@ -37,10 +37,10 @@ Docs: https://virastack.com/start/docs — Index: https://virastack.com/start/ll
 
 Four variants:
 
-1. `templates/nextjs` — Next.js 16 App Router, React 19, no i18n by default
-2. `templates/tanstack` — TanStack Start + Router, React 19, no i18n by default
-3. `templates-i18n/nextjs` — Next.js + `next-intl`
-4. `templates-i18n/tanstack` — TanStack Start + Paraglide
+1. `templates/nextjs`: Next.js 16 App Router, React 19, no i18n by default
+2. `templates/tanstack`: TanStack Start + Router, React 19, no i18n by default
+3. `templates-i18n/nextjs`: Next.js + `next-intl`
+4. `templates-i18n/tanstack`: TanStack Start + Paraglide
 
 ### Shared stack (typical)
 
@@ -62,7 +62,7 @@ Four variants:
 - Feature-Sliced: default work under `src/features/[feature]/`
 - No cross-feature imports; promote to `src/` only when a second feature needs it
 - Prefer aliases: `@/ui`, `@/hooks`, `@/schemas`, `@/layout`
-- Scaffold includes deletable `features/landing` demo — remove when building the real app
+- Scaffold includes deletable `features/landing` demo, remove when building the real app
 - Search codebase for `FIXME:` after scaffold (site config, remote images, etc.)
 
 ### Template-local llms.txt

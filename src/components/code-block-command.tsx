@@ -89,6 +89,11 @@ export type CodeBlockCommandProps = {
    * ```
    */
   onCopyError?: (error: Error) => void;
+
+  /**
+   * When true, long commands wrap to the next line instead of scrolling horizontally.
+   */
+  wrap?: boolean;
 };
 
 export function CodeBlockCommand({
@@ -99,6 +104,7 @@ export function CodeBlockCommand({
   bun,
   onCopySuccess,
   onCopyError,
+  wrap = false,
 }: CodeBlockCommandProps) {
   const [packageManager, setPackageManager] = usePackageManager();
 
@@ -115,7 +121,12 @@ export function CodeBlockCommand({
   const tabsFiltered = useMemo(() => Object.entries(tabs).filter(([, value]) => !!value), [tabs]);
 
   return (
-    <div className="relative w-fit max-w-full min-w-[360px] overflow-hidden rounded-xl bg-code">
+    <div
+      className={cn(
+        "relative max-w-full min-w-[360px] overflow-hidden rounded-xl bg-code",
+        wrap ? "w-full" : "w-fit",
+      )}
+    >
       <Tabs
         className="gap-0"
         value={packageManager}
@@ -155,12 +166,22 @@ export function CodeBlockCommand({
             <TabsContent key={key} value={key}>
               <pre
                 data-pm={key}
-                className="group/tabs-content-pre overscroll-x-contain p-4 leading-6 not-data-[pm=prompt]:overflow-x-auto"
+                className={cn(
+                  "group/tabs-content-pre p-4 leading-6",
+                  wrap
+                    ? "overflow-x-hidden break-all whitespace-pre-wrap"
+                    : "overscroll-x-contain not-data-[pm=prompt]:overflow-x-auto",
+                )}
               >
                 <code
                   data-slot="code-block"
                   data-language="bash"
-                  className="font-mono text-sm/none text-muted-foreground group-data-[pm=prompt]/tabs-content-pre:whitespace-normal"
+                  className={cn(
+                    "font-mono text-sm/none text-muted-foreground",
+                    wrap
+                      ? "break-all whitespace-pre-wrap"
+                      : "group-data-[pm=prompt]/tabs-content-pre:whitespace-normal",
+                  )}
                 >
                   <span className="select-none group-data-[pm=prompt]/tabs-content-pre:hidden">
                     ${" "}

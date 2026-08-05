@@ -11,7 +11,7 @@ type PhoneForm = {
 };
 
 /**
- * Live TR phone demo — spaces instead of hyphen grouping.
+ * Live TR phone demo, spaces instead of hyphen grouping.
  */
 export function MaskPhoneTrDemo() {
   const form = useForm<PhoneForm>({

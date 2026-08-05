@@ -15,10 +15,10 @@ For inline CLI + injected file list, prefer [llms-full.txt](https://virastack.co
 
 ## What it writes
 
-- `AGENTS.md` — universal agent operating guide
-- `CLAUDE.md` — Claude Code entry (`@AGENTS.md`)
-- `.cursor/rules/*.mdc` — scoped Cursor rules
-- `docs/` — architecture guide and project memory templates
+- `AGENTS.md`: universal agent operating guide
+- `CLAUDE.md`: Claude Code entry (`@AGENTS.md`)
+- `.cursor/rules/*.mdc`: scoped Cursor rules
+- `docs/`: architecture guide and project memory templates
 
 ## Related
 

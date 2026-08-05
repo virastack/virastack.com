@@ -1,7 +1,25 @@
 export { Button, buttonVariants, type ButtonProps } from "@/components/ui/button";
+export { Checkbox } from "@/components/ui/checkbox";
 export { FieldDescription, FieldError } from "@/components/ui/field";
 export { Input } from "@/components/ui/input";
 export { Label } from "@/components/ui/label";
+export {
+  Questionnaire,
+  QuestionnaireActions,
+  QuestionnaireChoice,
+  QuestionnaireChoices,
+  QuestionnaireDescription,
+  QuestionnaireError,
+  QuestionnaireInput,
+  QuestionnaireItem,
+  QuestionnaireNext,
+  QuestionnairePrevious,
+  QuestionnaireProgress,
+  QuestionnaireSkip,
+  QuestionnaireSubmit,
+  QuestionnaireTitle,
+} from "@/components/ui/questionnaire";
+export { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 export { Separator } from "@/components/ui/separator";
 export { Skeleton } from "@/components/ui/skeleton";
 export {

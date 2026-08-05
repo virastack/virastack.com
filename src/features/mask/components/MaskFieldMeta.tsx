@@ -16,10 +16,10 @@ export function MaskFieldMeta({ rawValue, value }: MaskFieldMetaProps) {
   return (
     <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
       <p>
-        {t("demoRawLabel")}: {rawValue || "—"}
+        {t("demoRawLabel")}: {rawValue || "-"}
       </p>
       <p>
-        {t("demoValueLabel")}: {value || "—"}
+        {t("demoValueLabel")}: {value || "-"}
       </p>
     </div>
   );

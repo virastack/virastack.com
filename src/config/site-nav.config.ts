@@ -8,7 +8,7 @@ export const siteNavLinks = [
 ] as const;
 
 /**
- * Primary header nav — brand stays in footer + logo context menu only.
+ * Primary header nav: brand stays in footer + logo context menu only.
  */
 export const headerNavLinks = [
   { href: "/about", labelKey: "about" },
