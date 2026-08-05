@@ -1,0 +1,129 @@
+# ViraStack Mask (full)
+
+> `@virastack/mask` (~1.1.1) — type-safe input masking for React Hook Form. Headless: no CSS. Form stores raw values; inputs show formatted values.
+
+## Install
+
+```bash
+npm install @virastack/mask
+# peers: react, react-dom, react-hook-form
+```
+
+Docs: https://virastack.com/mask/docs — Index: https://virastack.com/mask/llms.txt — Repo: https://github.com/virastack/mask
+
+## Critical rules for agents
+
+1. Always pass a React Hook Form `UseFormReturn` as `form`.
+2. Schema keys must match form field names.
+3. Destructure `rawValue` out before spreading onto `<input>`: `const { rawValue, ...inputProps } = field`.
+4. Submit / validate against raw values in the form (unmasked), not display strings.
+5. Works with any UI library via prop spread (shadcn Input, Ant Design, Chakra, native).
+
+## Quick start
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+function Example() {
+  const form = useForm<{ phone: string }>()
+  const { phone } = useViraMask({
+    form,
+    schema: { phone: "phone" },
+  })
+  const { rawValue, ...inputProps } = phone
+  return <input {...inputProps} placeholder="(555) 555-5555" />
+}
+```
+
+## useViraMask(props)
+
+```ts
+useViraMask<TFieldValues, TSchema>({
+  form: UseFormReturn<TFieldValues>
+  schema: TSchema // MaskSchema<TFieldValues>
+}): MaskFields<TSchema>
+```
+
+### Schema entry shapes
+
+- Preset string: `{ phone: "phone" }`
+- Options object: `{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`
+- Preset + override: `{ card: { preset: "card", onCardTypeChange: fn } }`
+
+### MaskField (per schema key)
+
+| Prop | Meaning |
+| --- | --- |
+| `value` | Formatted display value |
+| `rawValue` | Raw value in form state (do not put on DOM) |
+| `ref`, `name` | Input ref callback and name |
+| `onChange`, `onBlur`, `onFocus`, `onKeyDown` | Handlers (IME composition supported) |
+| `onCompositionStart`, `onCompositionEnd` | IME-safe updates |
+| `type`, `inputMode`, `autoComplete` | From preset/options |
+| `aria-invalid`, `aria-describedby`, `title` | When validation fails |
+
+## MaskPreset strings
+
+`card` | `expiry` | `cvv` | `tckn` | `phone` | `email` | `url` | `username` | `alpha` | `password` | `text` | `currency` | `iban` | `numeric` | `date` | `taxNumber` | `zipCode`
+
+Notes:
+
+- `card`: Luhn; Amex (`34`/`37`) switches to Amex mask; brands via `getCardType` / `onCardTypeChange`: visa, mastercard, amex, troy, unknown
+- `cvv`: 3 digits, or 4 when paired card field is Amex (`resolveMask`)
+- `iban`: TR display prefix; mod-97 validator
+- `tckn`: Turkish national ID algorithm
+- `taxNumber`: VKN validator
+- `currency`: default EN separators (`.` decimal, `,` thousand); customize via `currency` options
+- `date`: `dateFormat` `DMY` | `MDY` | `YMD`
+- `phone`: TR-style mask in preset
+
+## Custom mask pattern
+
+In `mask` strings: `9` = digit, `a` = letter, `*` = alphanumeric.
+
+## MaskOptions (selected)
+
+| Option | Role |
+| --- | --- |
+| `mask` | Pattern string |
+| `transform` | `uppercase` \| `lowercase` |
+| `allowedChars` / `forbiddenChars` | RegExp filters |
+| `currency` | `{ precision, decimalSeparator, thousandSeparator, symbol, symbolPosition }` |
+| `placeholderChar` | Mask placeholder |
+| `inputMode`, `type`, `autoComplete` | Input attrs |
+| `validate`, `validator` | `true` + built-in or custom `(value) => boolean` |
+| `errorMessage` | Validation message |
+| `dateFormat` | `DMY` \| `MDY` \| `YMD` |
+| `displayPrefix` | e.g. IBAN `TR` |
+| `preset` | Base preset name when overriding |
+| `resolveMask` | `(value, allValues?, schema?) => string \| undefined` dynamic mask |
+| `onCardTypeChange` | Card brand callback |
+
+Built-in `validator` names: `luhn`, `tckn`, `email`, `iban`, `expiry`, `date`, `url`, `vkn`.
+
+## Helpers (named exports)
+
+- `applyMask`, `cleanValue`, `unmask`, `stripMask`
+- `formatCurrency`, `unformatCurrency`
+- `getCardType`
+- `mergeRefs`
+- `PRESETS` — full preset map
+
+## Example URLs
+
+- https://virastack.com/mask/docs/examples/credit-card
+- https://virastack.com/mask/docs/examples/card
+- https://virastack.com/mask/docs/examples/phone
+- https://virastack.com/mask/docs/examples/iban
+- https://virastack.com/mask/docs/examples/tckn
+- https://virastack.com/mask/docs/examples/currency
+- https://virastack.com/mask/docs/examples/date
+- https://virastack.com/mask/docs/examples/taxNumber
+- Also: expiry, cvv, email, url, zipCode, alpha, username, text, password, numeric
+
+## Related
+
+- Password: https://virastack.com/password/llms-full.txt
+- Start (can install Mask): https://virastack.com/start/llms-full.txt
+- Ecosystem: https://virastack.com/llms.txt

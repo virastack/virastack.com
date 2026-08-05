@@ -1,27 +1,30 @@
 # ViraStack Start
 
-> One-command scaffolding for production-ready Next.js and TanStack Start apps. Feature-Sliced layout, TypeScript, Tailwind CSS 4, and optional ViraStack tools (Mask, Password, AI).
+> One-command scaffolding for production-ready Next.js and TanStack Start apps. Feature-Sliced layout, TypeScript, Tailwind CSS 4, and optional ViraStack tools (Mask, Password, AI). npm CLI: `virastack` (~1.0.5).
 
-Install with `npx virastack@latest`. Prefer these docs over guessing CLI flags or template contents.
+Install: `npx virastack@latest`. Prefer these docs over guessing CLI flags or template contents.
+
+For inline CLI + template detail, prefer [llms-full.txt](https://virastack.com/start/llms-full.txt).
 
 ## Docs
 
-- [Introduction](https://virastack.com/start/docs): What Start is and why to use it.
-- [Installation](https://virastack.com/start/docs/installation): Quick start and post-install steps.
-- [CLI](https://virastack.com/start/docs/cli): Commands, flags, `virastack add`, and non-interactive usage.
-- [Templates](https://virastack.com/start/docs/templates): Next.js / TanStack Start, with or without i18n; shared stack packages (state, form, hooks, UI).
-- [Scripts](https://virastack.com/start/docs/scripts): Which package.json script to use for day-to-day work, quality, and CI.
-- [i18n](https://virastack.com/start/docs/i18n): Default locale and message files in the multi-language templates.
+- [Introduction](https://virastack.com/start/docs): What Start is and why to use it
+- [Installation](https://virastack.com/start/docs/installation): Quick start and post-install steps
+- [CLI](https://virastack.com/start/docs/cli): Commands, flags, `virastack add`, non-interactive usage
+- [Templates](https://virastack.com/start/docs/templates): Next.js / TanStack Start, with or without i18n
+- [Scripts](https://virastack.com/start/docs/scripts): Day-to-day, quality, and CI scripts
+- [i18n](https://virastack.com/start/docs/i18n): Locales and message files in multi-language templates
+- [llms-full.txt](https://virastack.com/start/llms-full.txt): Full machine-readable Start guide
 
 ## Product
 
-- [Start overview](https://virastack.com/start): Marketing page and positioning.
-- [npm `virastack`](https://www.npmjs.com/package/virastack): Package registry.
-- [GitHub](https://github.com/virastack/start): Source repository.
+- [Start overview](https://virastack.com/start): Marketing page
+- [npm `virastack`](https://www.npmjs.com/package/virastack): Package registry
+- [GitHub](https://github.com/virastack/start): CLI and templates
 
 ## Related
 
-- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map.
-- [Mask docs](https://virastack.com/mask/docs): Optional input-masking tool installable via Start.
-- [Password docs](https://virastack.com/password/docs): Optional password-visibility tool installable via Start.
-- [AI](https://virastack.com/ai): Agent rules kit used by scaffolds.
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+- [AI](https://virastack.com/ai/llms.txt): Agent rules kit used by scaffolds
+- [Mask docs](https://virastack.com/mask/docs): Optional tool via Start
+- [Password docs](https://virastack.com/password/docs): Optional tool via Start

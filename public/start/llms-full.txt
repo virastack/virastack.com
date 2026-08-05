@@ -1,0 +1,81 @@
+# ViraStack Start (full)
+
+> `virastack` CLI (~1.0.5) — scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, and optional ViraStack tools.
+
+## Install / run
+
+```bash
+npx virastack@latest
+npx virastack@latest init my-app --template nextjs --tools mask,password,ai --yes
+```
+
+Docs: https://virastack.com/start/docs — Index: https://virastack.com/start/llms.txt — Repo: https://github.com/virastack/start
+
+## Commands
+
+| Command | Purpose |
+| --- | --- |
+| `init [name]` | Create a new project (interactive unless `--yes`) |
+| `add <tool>` | Add a ViraStack tool into an existing project (`mask`, `password`, `ai`) |
+
+## Flags
+
+| Flag | Meaning |
+| --- | --- |
+| `--name <name>` | Project name (`.` = current directory) |
+| `--template <name>` | `nextjs` or `tanstack` |
+| `--tools <list>` | Comma-separated: `mask`, `password`, `ai` |
+| `--i18n` / `--no-i18n` | Multi-language templates on/off |
+| `--yes`, `-y` | Non-interactive defaults |
+| `--skip-install` | Skip package install |
+| `--tr` | Turkish CLI prompts / success messages |
+| `--telemetry-disable` | Disable telemetry |
+| `-v`, `--version` | Version |
+| `-h`, `--help` | Help |
+
+## Templates
+
+Four variants:
+
+1. `templates/nextjs` — Next.js 16 App Router, React 19, no i18n by default
+2. `templates/tanstack` — TanStack Start + Router, React 19, no i18n by default
+3. `templates-i18n/nextjs` — Next.js + `next-intl`
+4. `templates-i18n/tanstack` — TanStack Start + Paraglide
+
+### Shared stack (typical)
+
+- TypeScript 5 strict + `noUncheckedIndexedAccess`, Node `>=20.9`
+- Tailwind CSS 4 design tokens
+- UI: Base UI (unstyled), Framer Motion, Sonner, Lucide, `next-themes`, CVA
+- Server state: TanStack Query 5
+- Client state: Zustand
+- URL state: `nuqs`
+- Forms: React Hook Form + Zod
+- API: native `fetch` wrapper → typed `ApiError` (`message`, `status`, `data`)
+- Env: Zod schema in `src/env.ts` (no `@t3-oss/env-nextjs` required)
+- Tooling: ESLint 9, Prettier 3, Husky, Knip, Commitlint, Changesets
+- Agent: ViraStack AI writes `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, `docs/*`
+- Intentionally omitted by default: Auth, DB/ORM, test runner, CSP
+
+### Architecture for agents
+
+- Feature-Sliced: default work under `src/features/[feature]/`
+- No cross-feature imports; promote to `src/` only when a second feature needs it
+- Prefer aliases: `@/ui`, `@/hooks`, `@/schemas`, `@/layout`
+- Scaffold includes deletable `features/landing` demo — remove when building the real app
+- Search codebase for `FIXME:` after scaffold (site config, remote images, etc.)
+
+### Template-local llms.txt
+
+Each generated app ships `public/llms.txt` describing that edition’s file tree (Next vs TanStack). Prefer that file inside a scaffolded repo.
+
+## Post-install quality scripts
+
+Common: `pnpm typecheck`, `pnpm lint` / `lint:ci`, `pnpm knip`, `pnpm build`.
+
+## Related products
+
+- AI: https://virastack.com/ai/llms-full.txt
+- Mask: https://virastack.com/mask/llms-full.txt
+- Password: https://virastack.com/password/llms-full.txt
+- Ecosystem: https://virastack.com/llms.txt

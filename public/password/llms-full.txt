@@ -1,0 +1,89 @@
+# ViraStack Password (full)
+
+> `@virastack/password` (~1.0.2) — accessible, headless password visibility toggle for React. Returns `inputProps` + `btnProps`. No CSS required. Not a strength meter or password generator.
+
+## Install
+
+```bash
+npm install @virastack/password
+# peers: react, react-dom (>= 18.2)
+```
+
+Docs: https://virastack.com/password/docs — Index: https://virastack.com/password/llms.txt — Repo: https://github.com/virastack/password
+
+## Critical rules for agents
+
+1. Spread `inputProps` on the password field and `btnProps` on the toggle control.
+2. Keep the toggle as `<button type="button">` (provided via `btnProps`) — never submit the form.
+3. Do not replace ARIA attributes unless intentionally overriding; defaults are accessibility-first.
+4. When `disabled` or `readOnly` is set, the toggle disables automatically.
+5. Style freely (Tailwind, Ant Design, Chakra, etc.); the hook is headless.
+
+## Quick start
+
+```tsx
+import { useViraPassword } from "@virastack/password"
+
+function Example() {
+  const { inputProps, btnProps } = useViraPassword()
+  return (
+    <div>
+      <input {...inputProps} placeholder="Enter password" />
+      <button {...btnProps} />
+    </div>
+  )
+}
+```
+
+## useViraPassword(options?)
+
+### UseViraPasswordOptions
+
+| Option | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `defaultVisible` | `boolean` | `false` | Initial visibility |
+| `icons` | `{ show: ReactNode; hide: ReactNode }` | built-in eye SVGs | Can be icons or text labels |
+| `disabled` | `boolean` | `false` | Disables input + button |
+| `readOnly` | `boolean` | `false` | Disables toggle |
+| `id` | `string` | auto `useId()` | Shared for `aria-controls` |
+| `inputProps` | `InputHTMLAttributes` | — | Merged onto generated input props |
+| `btnProps` | `ButtonHTMLAttributes` | — | Merged onto generated button props |
+
+### UseViraPasswordResult
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `inputProps` | `InputHTMLAttributes` | Includes `type` password/text, `id`, a11y |
+| `btnProps` | `ButtonHTMLAttributes` | `type="button"`, ARIA, children (icon) |
+| `isVisible` | `boolean` | Current visibility |
+| `toggle` | `() => void` | Flip visibility |
+| `setVisible` | `(visible: boolean) => void` | Imperative set |
+
+## Accessibility defaults
+
+- Button: `type="button"`, `aria-pressed`, `aria-controls` (input id), `aria-label` for show/hide
+- Input: linked id; type switches between `password` and `text`
+- Prop merge preserves and composes user `onClick` / `onChange` / `className`
+
+## Helpers / exports
+
+- `useViraPassword`
+- `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes`
+- `EyeIcon`, `EyeOffIcon`
+- `mergeProps` (also used internally)
+
+## Example URLs
+
+- https://virastack.com/password/docs/examples/basic
+- https://virastack.com/password/docs/examples/custom-icons
+- https://virastack.com/password/docs/examples/custom-text
+- https://virastack.com/password/docs/examples/disabled
+- https://virastack.com/password/docs/examples/prop-merge
+- https://virastack.com/password/docs/examples/programmatic
+- https://virastack.com/password/docs/examples/signup-password
+
+## Related
+
+- Mask: https://virastack.com/mask/llms-full.txt
+- Start: https://virastack.com/start/llms-full.txt
+- Ecosystem: https://virastack.com/llms.txt

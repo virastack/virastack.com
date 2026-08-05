@@ -1,36 +1,49 @@
 # ViraStack
 
-> Modern web tools and architecture in one stack: production-ready starters, accessible React utilities, and agent-ready project setup without configuration fatigue.
+> DX-first open-source toolkit for React frontend developers: production starters, agent architecture rules, headless form utilities, and an interactive modern-web guide. MIT licensed.
 
-ViraStack is an open-source ecosystem (MIT) for building modern React apps. Prefer product docs for API detail; use this file as a curated map.
+Prefer product `llms-full.txt` files for API detail. Use this file as the curated ecosystem map. Primary language for docs and packages is English.
+
+Package versions (approx.): `virastack@1.0.5`, `@virastack/mask@1.1.1`, `@virastack/password@1.0.2`, `@virastack/ai@1.3.1`.
 
 ## Products
 
-- [Start](https://virastack.com/start): CLI to scaffold production-ready Next.js or TanStack Start projects.
-- [Mask](https://virastack.com/mask): React Hook Form–friendly input masking (`@virastack/mask`).
-- [Password](https://virastack.com/password): Accessible password visibility toggle (`@virastack/password`).
-- [AI](https://virastack.com/ai): Agent rules, skills, and architecture kit (`@virastack/ai`).
-- [Guide](https://virastack.com/guide): Interactive “modern web in 3 minutes” experience.
+- [Start](https://virastack.com/start): CLI (`npx virastack@latest`) to scaffold Next.js or TanStack Start apps
+- [AI](https://virastack.com/ai): Agent rules and architecture kit (`npx @virastack/ai init`)
+- [Mask](https://virastack.com/mask): React Hook Form input masking (`@virastack/mask`)
+- [Password](https://virastack.com/password): Accessible password visibility toggle (`@virastack/password`)
+- [Guide](https://virastack.com/guide): Interactive “modern web” walkthrough
 
-## Documentation
+## LLM indexes
 
-- [Start docs](https://virastack.com/start/docs): Install CLI, flags, and templates.
-- [Start llms.txt](https://virastack.com/start/llms.txt): Machine-readable Start index.
-- [Mask docs](https://virastack.com/mask/docs): useViraMask, presets, validation, examples.
-- [Mask llms.txt](https://virastack.com/mask/llms.txt): Machine-readable Mask index.
-- [Password docs](https://virastack.com/password/docs): useViraPassword, accessibility, customization.
-- [Password llms.txt](https://virastack.com/password/llms.txt): Machine-readable Password index.
+- [Start llms.txt](https://virastack.com/start/llms.txt): Start docs map
+- [Start llms-full.txt](https://virastack.com/start/llms-full.txt): Start CLI, templates, flags (full)
+- [AI llms.txt](https://virastack.com/ai/llms.txt): AI product map
+- [AI llms-full.txt](https://virastack.com/ai/llms-full.txt): AI CLI, injected rules, usage (full)
+- [Mask llms.txt](https://virastack.com/mask/llms.txt): Mask docs map
+- [Mask llms-full.txt](https://virastack.com/mask/llms-full.txt): useViraMask API, presets, examples (full)
+- [Password llms.txt](https://virastack.com/password/llms.txt): Password docs map
+- [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword API and a11y (full)
+- [Guide llms.txt](https://virastack.com/guide/llms.txt): Guide step map
+- [Guide llms-full.txt](https://virastack.com/guide/llms-full.txt): Guide narrative and stack (full)
+- [Ecosystem llms-full.txt](https://virastack.com/llms-full.txt): Combined overview + quick APIs
+
+## Human docs
+
+- [Start docs](https://virastack.com/start/docs): Install, CLI, templates, scripts, i18n
+- [Mask docs](https://virastack.com/mask/docs): Hook, custom masks, validation, helpers, examples
+- [Password docs](https://virastack.com/password/docs): Hook, accessibility, customization, examples
 
 ## Packages
 
-- [`virastack`](https://www.npmjs.com/package/virastack): Project scaffold CLI.
-- [`@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Input masks for React + React Hook Form.
-- [`@virastack/password`](https://www.npmjs.com/package/@virastack/password): Password visibility hook for React.
-- [`@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Shared agent rules and docs for scaffolds.
+- [`virastack`](https://www.npmjs.com/package/virastack): Scaffold CLI (Start)
+- [`@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Shared agent rules for scaffolds
+- [`@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Input masks for React + React Hook Form
+- [`@virastack/password`](https://www.npmjs.com/package/@virastack/password): Password visibility hook for React
 
 ## Optional
 
-- [Community](https://virastack.com/community): Community and contribution entry points.
-- [Support](https://virastack.com/support): Support and contact.
-- [GitHub org](https://github.com/virastack): Source repositories.
-- [X / Twitter](https://x.com/virastack): Product updates.
+- [Community](https://virastack.com/community): Contribution entry points
+- [Support](https://virastack.com/support): Support and contact
+- [GitHub org](https://github.com/virastack): Source repositories
+- [X / Twitter](https://x.com/virastack): Product updates

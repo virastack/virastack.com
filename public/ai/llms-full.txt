@@ -1,0 +1,59 @@
+# ViraStack AI (full)
+
+> `@virastack/ai` (~1.3.1) — injects high-discipline agent rules and architecture docs into a React project. Framework-aware (Next.js vs TanStack Start). Not a chat UI library.
+
+## Install
+
+```bash
+npx @virastack/ai init
+```
+
+Product: https://virastack.com/ai — Index: https://virastack.com/ai/llms.txt — Repo: https://github.com/virastack/ai
+
+## CLI flags
+
+| Flag | Meaning |
+| --- | --- |
+| `--force`, `-f` | Overwrite existing rule files without prompting |
+| `--framework nextjs\|tanstack` | Force framework instead of detecting from `package.json` |
+| `--tr` | Turkish CLI prompts and success messages |
+
+## What gets written
+
+| Path | Role |
+| --- | --- |
+| `AGENTS.md` | Agent operating guide (all agents) |
+| `CLAUDE.md` | Claude Code entry point (`@AGENTS.md`) |
+| `.cursor/rules/*.mdc` | Scoped coding rules (Cursor auto-loads) |
+| `docs/architecture-guide.md` | Placement rules and import conventions |
+| `docs/MEMORIES.md` | Project memory template |
+
+## Rule coverage (typical)
+
+- Architecture: core principles, feature boundaries, React best practices
+- Data & state: TanStack Query (`queryOptions` factories), Zustand, API & error normalization (`ApiError`)
+- UI & performance: UI components, Tailwind, forms, Core Web Vitals
+- Quality: TypeScript strictness, testing expectations
+- Smart isolation: only injects rules for the detected framework to reduce cross-framework hallucinations
+
+## Critical rules encoded for agents (summary)
+
+- Feature-Sliced boundaries: no cross-feature imports; Zod-first validation at API edges
+- Prefer TanStack Query `queryOptions` factories over ad-hoc query keys
+- Safe return / normalized errors (`ApiError` with `message`, `status`, `data`)
+- Multi-agent ready: same standards via `AGENTS.md` + `CLAUDE.md` + Cursor rules
+
+## Relationship to Start
+
+`npx virastack@latest` scaffolds can install AI automatically (`--tools ai`). Inside an existing repo, run `npx @virastack/ai init` (use `--force` to refresh).
+
+Design skills commonly referenced alongside AI in Start templates:
+
+- https://github.com/emilkowalski/skills
+- https://github.com/jakubkrehel/make-interfaces-feel-better
+
+## Related
+
+- Start: https://virastack.com/start/llms-full.txt
+- Guide: https://virastack.com/guide/llms-full.txt
+- Ecosystem: https://virastack.com/llms.txt

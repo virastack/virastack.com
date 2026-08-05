@@ -1,0 +1,27 @@
+# ViraStack AI
+
+> AI-native architecture kit for modern React. One command injects disciplined agent rules for Cursor, Claude Code, and other agents. npm: `@virastack/ai` (~1.3.1).
+
+Install: `npx @virastack/ai init`. Detects Next.js vs TanStack Start from `package.json` and writes only the relevant rules.
+
+For inline CLI + injected file list, prefer [llms-full.txt](https://virastack.com/ai/llms-full.txt).
+
+## Docs & pages
+
+- [AI overview](https://virastack.com/ai): Product landing (how it works, injected rules, CLI)
+- [llms-full.txt](https://virastack.com/ai/llms-full.txt): Full machine-readable AI guide
+- [npm `@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Package registry
+- [GitHub](https://github.com/virastack/ai): Source and rule templates
+
+## What it writes
+
+- `AGENTS.md` — universal agent operating guide
+- `CLAUDE.md` — Claude Code entry (`@AGENTS.md`)
+- `.cursor/rules/*.mdc` — scoped Cursor rules
+- `docs/` — architecture guide and project memory templates
+
+## Related
+
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+- [Start](https://virastack.com/start/llms.txt): Scaffolds that pre-install AI
+- [Guide](https://virastack.com/guide/llms.txt): Interactive modern-web walkthrough

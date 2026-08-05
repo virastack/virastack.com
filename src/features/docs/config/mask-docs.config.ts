@@ -351,6 +351,12 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
           href: "/mask/llms.txt",
           external: true,
         },
+        {
+          slug: "llms-full.txt",
+          title: "llms-full.txt",
+          href: "/mask/llms-full.txt",
+          external: true,
+        },
       ],
     },
     {

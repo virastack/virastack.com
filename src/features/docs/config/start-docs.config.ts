@@ -17,6 +17,12 @@ export function getStartDocsNav(t: DocsStartTranslate): DocsNavSection[] {
           href: "/start/llms.txt",
           external: true,
         },
+        {
+          slug: "llms-full.txt",
+          title: "llms-full.txt",
+          href: "/start/llms-full.txt",
+          external: true,
+        },
       ],
     },
     {

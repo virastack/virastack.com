@@ -1,0 +1,91 @@
+# ViraStack (full)
+
+> DX-first open-source toolkit for React frontend developers. Headless utilities (no forced CSS/DOM), React-first packages, independent `@virastack/*` modules, and agent-ready scaffolds. MIT.
+
+This file is a self-contained overview for LLMs. For the deepest API detail, prefer each product’s `llms-full.txt`.
+
+## Positioning
+
+- Fills small, painful frontend gaps — not TanStack-scale data/query verticals
+- Packages are headless: logic and props only; style with shadcn, Base UI, Ant Design, or plain HTML
+- Packages are independent: installing Mask does not require Password or AI
+- Primary documentation language: English (site is i18n; APIs and package docs center on EN)
+
+## Products & install
+
+| Product | Install / entry | npm |
+| --- | --- | --- |
+| Start | `npx virastack@latest` | `virastack` (~1.0.5) |
+| AI | `npx @virastack/ai init` | `@virastack/ai` (~1.3.1) |
+| Mask | `npm i @virastack/mask` | `@virastack/mask` (~1.1.1) |
+| Password | `npm i @virastack/password` | `@virastack/password` (~1.0.2) |
+| Guide | https://virastack.com/guide/play | site experience (not an npm lib) |
+
+## Start (quick)
+
+```bash
+npx virastack@latest init my-app --template nextjs --tools mask,password,ai --yes
+```
+
+Flags: `init [name]`, `add <tool>`, `--template nextjs|tanstack`, `--tools mask,password,ai`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
+
+Templates ship Feature-Sliced layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, nuqs, RHF + Zod, Base UI. Details: https://virastack.com/start/llms-full.txt
+
+## AI (quick)
+
+```bash
+npx @virastack/ai init
+# optional: --force, --framework nextjs|tanstack, --tr
+```
+
+Detects Next.js vs TanStack Start from `package.json`, writes `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, and architecture docs. Details: https://virastack.com/ai/llms-full.txt
+
+## Mask (quick)
+
+Peers: `react`, `react-dom`, `react-hook-form`. Form state stores **raw** values; inputs show **formatted** display values. Always strip `rawValue` before spreading onto the DOM.
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+const form = useForm<{ phone: string }>()
+const { phone } = useViraMask({ form, schema: { phone: "phone" } })
+const { rawValue, ...inputProps } = phone
+return <input {...inputProps} />
+```
+
+Presets: `card`, `expiry`, `cvv`, `phone`, `iban`, `tckn`, `taxNumber`, `currency`, `date`, `email`, `url`, `username`, `alpha`, `password`, `text`, `numeric`, `zipCode`.
+
+Pattern chars: `9` digit, `a` letter, `*` alphanumeric. Helpers: `applyMask`, `unmask`, `formatCurrency`, `unformatCurrency`, `getCardType`, `mergeRefs`, `PRESETS`.
+
+Details: https://virastack.com/mask/llms-full.txt
+
+## Password (quick)
+
+Peers: `react`, `react-dom` (≥18.2). Visibility toggle only — not a strength meter or generator.
+
+```tsx
+import { useViraPassword } from "@virastack/password"
+
+const { inputProps, btnProps, isVisible, toggle, setVisible } = useViraPassword()
+return (
+  <>
+    <input {...inputProps} />
+    <button {...btnProps} />
+  </>
+)
+```
+
+Options: `defaultVisible`, `icons`, `disabled`, `readOnly`, `id`, `inputProps`, `btnProps`. ARIA: `aria-pressed`, `aria-controls`, `aria-label`, `type="button"`.
+
+Details: https://virastack.com/password/llms-full.txt
+
+## Guide (quick)
+
+Interactive path from plain content → modern stack → Tailwind → typography → components (incl. Mask/Password demos) → theme → AI prompt UI → ViraStack ecosystem CTA. Play: https://virastack.com/guide/play — full: https://virastack.com/guide/llms-full.txt
+
+## Canonical links
+
+- Site: https://virastack.com
+- Org: https://github.com/virastack
+- Ecosystem index: https://virastack.com/llms.txt

@@ -1,0 +1,30 @@
+# ViraStack Guide
+
+> Interactive walkthrough from plain semantic content to an AI-assisted interface, then into the ViraStack ecosystem. Site experience at virastack.com — not an npm package.
+
+Play the guide: https://virastack.com/guide/play — Landing: https://virastack.com/guide
+
+For step-by-step narrative and stack notes, prefer [llms-full.txt](https://virastack.com/guide/llms-full.txt).
+
+## Steps (play)
+
+- [Step 0 — Content](https://virastack.com/guide/play): Semantic content first
+- [Step 1 — Foundation](https://virastack.com/guide/play): React, TypeScript, Next.js, TanStack Start
+- [Step 2 — CSS](https://virastack.com/guide/play): Tailwind layout and spacing
+- [Step 3 — Typography](https://virastack.com/guide/play): Typeface sets product tone
+- [Step 4 — Components](https://virastack.com/guide/play): shadcn/ui + live Mask / Password demos
+- [Step 5 — Theme](https://virastack.com/guide/play): Light/dark expectation
+- [Step 6 — AI](https://virastack.com/guide/play): Prompt-driven UI moment
+- [Step 7 — Finish](https://virastack.com/guide/play): Congratulations + ecosystem CTA
+
+## Related products
+
+- [Start](https://virastack.com/start/llms.txt): Scaffold the stack shown in the guide
+- [AI](https://virastack.com/ai/llms.txt): Agent rules kit
+- [Mask](https://virastack.com/mask/llms.txt): Input masking demoed in components step
+- [Password](https://virastack.com/password/llms.txt): Visibility toggle demoed in components step
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+
+## Optional
+
+- [GitHub org](https://github.com/virastack): Source repositories

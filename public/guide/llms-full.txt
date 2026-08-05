@@ -1,0 +1,49 @@
+# ViraStack Guide (full)
+
+> Interactive “modern web” guide on virastack.com. Teaches the stack layer by layer, demos Mask/Password, ends with an AI moment and a ViraStack ecosystem CTA. Not published as an npm library.
+
+## URLs
+
+- Landing: https://virastack.com/guide
+- Play: https://virastack.com/guide/play
+- Index: https://virastack.com/guide/llms.txt
+- Ecosystem: https://virastack.com/llms.txt
+
+## Audience & intent
+
+Help frontend developers feel the path from raw HTML content → modern React architecture → utility CSS → typography → composed UI → theming → AI-assisted UI, then discover ViraStack Start / AI / Mask / Password.
+
+## Steps
+
+| # | Title | What the learner absorbs |
+| --- | --- | --- |
+| 0 | Content is everything | Semantic content first; style comes after |
+| 1 | The foundation | Modern baseline: React, TypeScript, Next.js, TanStack Start (not HTML/CSS alone) |
+| 2 | CSS | Tailwind for layout/spacing instead of hand-written stylesheets |
+| 3 | Typography | Typeface choice changes product tone |
+| 4 | Components | shadcn/ui composition; live demos of `@virastack/mask` and `@virastack/password` |
+| 5 | Theme | Light/dark as a standard expectation |
+| 6 | Artificial intelligence | Prompt-driven dynamic UI (demo prompt e.g. map of Istanbul) |
+| 7 | Finish | Congrats + ViraStack product CTA (Start, AI, Mask, Password, …) |
+
+## Stack called out in the narrative
+
+- React, TypeScript, Next.js, TanStack Start
+- Tailwind CSS
+- shadcn/ui
+- ViraStack Mask & Password (interactive demos in the components step)
+- Theming (system/user preference)
+- AI-assisted UI patterns (illustrative, not a separate Guide npm API)
+
+## Agent guidance
+
+- Guide is a **teaching / marketing experience**, not a programmable SDK.
+- When users ask “how do I build like the guide?”, point them to **Start** (`npx virastack@latest`) and **AI** (`npx @virastack/ai init`), plus Mask/Password docs for the form demos.
+- Prefer product `llms-full.txt` files for API truth; do not invent Guide package exports.
+
+## Related
+
+- Start: https://virastack.com/start/llms-full.txt
+- AI: https://virastack.com/ai/llms-full.txt
+- Mask: https://virastack.com/mask/llms-full.txt
+- Password: https://virastack.com/password/llms-full.txt

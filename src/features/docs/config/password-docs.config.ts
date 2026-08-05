@@ -225,6 +225,12 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
           href: "/password/llms.txt",
           external: true,
         },
+        {
+          slug: "llms-full.txt",
+          title: "llms-full.txt",
+          href: "/password/llms-full.txt",
+          external: true,
+        },
       ],
     },
     {

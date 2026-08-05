@@ -1,37 +1,42 @@
 # ViraStack Mask
 
-> Lightweight, type-safe input masking for React Hook Form: cards, phone, IBAN, currency, TCKN, and custom patterns via `useViraMask()`.
+> Lightweight, type-safe input masking for React Hook Form. Presets for cards, phone, IBAN, currency, TCKN, and custom patterns via `useViraMask()`. npm: `@virastack/mask` (~1.1.1).
 
-Install with `npm install @virastack/mask`. Peers: `react`, `react-dom`, `react-hook-form`. Form state keeps raw (unmasked) values; inputs show formatted display values.
+Install: `npm install @virastack/mask`. Peers: `react`, `react-dom`, `react-hook-form`. Form state keeps **raw** (unmasked) values; inputs show formatted display values. Strip `rawValue` before spreading props onto the DOM.
+
+For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llms-full.txt).
 
 ## Docs
 
-- [Introduction](https://virastack.com/mask/docs): Install, peers, and scope.
-- [useViraMask()](https://virastack.com/mask/docs/use-vira-mask): Hook API, schema, return fields, RHF sync.
-- [Custom mask](https://virastack.com/mask/docs/custom-mask): Pattern syntax (`9` / `a` / `*`), MaskOptions, `resolveMask`.
-- [Validation](https://virastack.com/mask/docs/validation): Built-in validators and custom error messages.
-- [Helpers](https://virastack.com/mask/docs/helpers): `applyMask`, currency helpers, `getCardType`, `mergeRefs`.
-- [Types](https://virastack.com/mask/docs/types): `MaskPreset`, `MaskOptions`, schema types.
-- [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn, Ant Design, Chakra; same prop-spread pattern.
-- [Examples](https://virastack.com/mask/docs/examples): Live presets (card, phone, IBAN, currency, and more).
+- [Introduction](https://virastack.com/mask/docs): Install, peers, and scope
+- [useViraMask()](https://virastack.com/mask/docs/use-vira-mask): Hook API, schema, return fields, RHF sync
+- [Custom mask](https://virastack.com/mask/docs/custom-mask): Pattern syntax (`9` / `a` / `*`), MaskOptions, `resolveMask`
+- [Validation](https://virastack.com/mask/docs/validation): Built-in validators and custom error messages
+- [Helpers](https://virastack.com/mask/docs/helpers): `applyMask`, currency helpers, `getCardType`, `mergeRefs`
+- [Types](https://virastack.com/mask/docs/types): `MaskPreset`, `MaskOptions`, schema types
+- [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn, Ant Design, Chakra; prop-spread pattern
+- [Examples](https://virastack.com/mask/docs/examples): Live presets index
+- [llms-full.txt](https://virastack.com/mask/llms-full.txt): Full machine-readable API
 
 ## Notable examples
 
-- [Credit card form](https://virastack.com/mask/docs/examples/credit-card): Card + expiry + CVV (Amex-aware).
-- [Card](https://virastack.com/mask/docs/examples/card): BIN detection (Visa, Mastercard, Amex, Troy).
-- [Phone](https://virastack.com/mask/docs/examples/phone): TR phone mask.
-- [IBAN](https://virastack.com/mask/docs/examples/iban): TR IBAN with mod-97 validation.
-- [TCKN](https://virastack.com/mask/docs/examples/tckn): Turkish national ID.
-- [Currency](https://virastack.com/mask/docs/examples/currency): Locale-aware money formatting.
+- [Credit card form](https://virastack.com/mask/docs/examples/credit-card): Card + expiry + CVV (Amex-aware)
+- [Card](https://virastack.com/mask/docs/examples/card): BIN detection (Visa, Mastercard, Amex, Troy)
+- [Phone](https://virastack.com/mask/docs/examples/phone): TR phone mask
+- [IBAN](https://virastack.com/mask/docs/examples/iban): TR IBAN with mod-97 validation
+- [TCKN](https://virastack.com/mask/docs/examples/tckn): Turkish national ID
+- [Currency](https://virastack.com/mask/docs/examples/currency): Locale-aware money formatting
+- [Date](https://virastack.com/mask/docs/examples/date): DMY / MDY / YMD
+- [Tax number](https://virastack.com/mask/docs/examples/taxNumber): VKN validator
 
 ## Product
 
-- [Mask overview](https://virastack.com/mask): Marketing page.
-- [npm `@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Package registry.
-- [GitHub](https://github.com/virastack/mask): Source repository.
+- [Mask overview](https://virastack.com/mask): Marketing page
+- [npm `@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Package registry
+- [GitHub](https://github.com/virastack/mask): Source repository
 
 ## Related
 
-- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map.
-- [Start docs](https://virastack.com/start/docs): Scaffold CLI that can install Mask as a tool.
-- [Password docs](https://virastack.com/password/docs): Companion headless form utility.
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+- [Password docs](https://virastack.com/password/docs): Companion headless form utility
+- [Start docs](https://virastack.com/start/docs): Scaffold CLI that can install Mask
