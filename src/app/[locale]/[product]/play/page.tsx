@@ -6,6 +6,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getProduct, isProductId } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
+import { buildOgImageMetadata } from "@/lib/og";
+
 import { GuidePlayPage } from "@/features/guide";
 import { routing } from "@/i18n/routing";
 
@@ -25,8 +27,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const t = await getTranslations({ locale, namespace: "Products" });
-  const title = `${siteConfig.name} ${t("guideName")}`;
+  const name = t("guideName");
+  const title = `${siteConfig.name} ${name}`;
   const description = t("guideDesc");
+  const og = buildOgImageMetadata({
+    title: name,
+    description,
+    product: "guide",
+    path: "/guide/play",
+  });
 
   return {
     title,
@@ -35,7 +44,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: `${siteConfig.url}/guide/play`,
+      ...og.openGraph,
     },
+    twitter: og.twitter,
   };
 }
 

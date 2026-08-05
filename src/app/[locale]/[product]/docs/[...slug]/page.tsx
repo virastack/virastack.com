@@ -6,6 +6,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getProduct, isProductId } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
+import { buildOgImageMetadata } from "@/lib/og";
+
 import {
   DOCS_PRODUCT_IDS,
   getDocsProduct,
@@ -66,15 +68,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!page) return {};
 
   const title = `${page.title} · ${siteConfig.name} ${docs.label}`;
+  const description = page.description;
+  const path = `${docs.indexHref}/${slug}`;
+  const og = buildOgImageMetadata({
+    title: page.title,
+    description,
+    product: productParam,
+    path,
+  });
 
   return {
     title,
-    description: page.description,
+    description,
     openGraph: {
       title,
-      description: page.description,
-      url: `${siteConfig.url}${docs.indexHref}/${slug}`,
+      description,
+      url: `${siteConfig.url}${path}`,
+      ...og.openGraph,
     },
+    twitter: og.twitter,
   };
 }
 

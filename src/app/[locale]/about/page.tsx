@@ -4,6 +4,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { siteConfig } from "@/config/site.config";
 
+import { buildOgImageMetadata } from "@/lib/og";
+
 import { AboutPage } from "@/features/about";
 import { routing } from "@/i18n/routing";
 
@@ -19,14 +21,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "AboutPage" });
 
+  const title = t("title");
+  const description = t("description");
+  const og = buildOgImageMetadata({ title, description, path: "/about" });
+
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     openGraph: {
-      title: t("title"),
-      description: t("description"),
+      title,
+      description,
       url: `${siteConfig.url}/about`,
+      ...og.openGraph,
     },
+    twitter: og.twitter,
   };
 }
 

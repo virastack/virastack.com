@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   description:
     "A DX-first toolkit for frontend developers: modern-stack starters and focused React hooks built on Next.js, TanStack, and React.",
   url: env.NEXT_PUBLIC_APP_URL,
-  ogImage: `${env.NEXT_PUBLIC_APP_URL}/og.png`,
+  ogImage: `${env.NEXT_PUBLIC_APP_URL}/og`,
   links: {
     github: "https://github.com/virastack",
     twitter: "https://x.com/virastack",
