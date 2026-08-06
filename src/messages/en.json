@@ -24,7 +24,7 @@
     "demoTitle": "Rules change the outcome",
     "demoDesc": "Same chat, different rule packs. The agent rejects the shortcut and ships the ViraStack pattern instead.",
     "demoPlaceholder": "Describe a feature…",
-    "demoModel": "Cursor Agent",
+    "demoModel": "Claude Code",
     "demoTabData": "Data",
     "demoTabArchitecture": "Architecture",
     "demoTabForms": "Forms",

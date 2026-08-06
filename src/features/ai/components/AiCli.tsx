@@ -17,7 +17,10 @@ export function AiCli() {
   const t = useTranslations("Ai");
 
   return (
-    <section id="install" className="mx-auto max-w-3xl scroll-mt-4 px-6 py-16 md:scroll-mt-28">
+    <section
+      id="install"
+      className="mx-auto max-w-3xl scroll-mt-4 px-6 py-16 md:scroll-mt-14 xl:scroll-mt-28"
+    >
       <RevealGroup className="mb-10 text-center">
         <RevealItem>
           <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("cliTitle")}</h2>

@@ -27,7 +27,7 @@ const SCENARIOS: ScenarioId[] = ["data", "architecture", "forms"];
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 const AUTO_ADVANCE_MS = 7000;
-const DEMO_STAGE_CLASS = "md:h-[min(64svh,48rem)] md:overflow-hidden";
+const DEMO_STAGE_CLASS = "md:min-h-[min(52svh,36rem)]";
 
 const SCENARIO_CODE: Record<
   ScenarioId,
@@ -97,7 +97,10 @@ export function AiDialogDemo() {
   }
 
   return (
-    <section id="demo" className="mx-auto max-w-3xl scroll-mt-4 px-6 py-16 md:scroll-mt-28">
+    <section
+      id="demo"
+      className="mx-auto max-w-5xl scroll-mt-4 px-6 py-16 md:scroll-mt-14 xl:scroll-mt-28"
+    >
       <Reveal className="mb-8 text-center">
         <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("demoTitle")}</h2>
         <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
@@ -118,7 +121,7 @@ export function AiDialogDemo() {
         </Tabs>
       </Reveal>
 
-      <div className={cn("relative mx-auto w-full max-w-xl", DEMO_STAGE_CLASS)}>
+      <div className={cn("relative mx-auto w-full max-w-4xl", DEMO_STAGE_CLASS)}>
         <AnimatePresence mode="wait" initial={false}>
           <ScenarioDemo key={scenario} scenario={scenario} onRequestNext={goNext} />
         </AnimatePresence>
@@ -184,9 +187,24 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
   const enterVisible = reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" };
   const enterExit = reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, filter: "blur(4px)" };
 
+  const itemVariants = {
+    hidden: enterHidden,
+    visible: {
+      ...enterVisible,
+      transition: {
+        duration: reduceMotion ? 0.12 : 0.35,
+        ease: EASE_OUT,
+      },
+    },
+    exit: {
+      ...enterExit,
+      transition: { duration: 0.15, ease: "easeOut" as const },
+    },
+  };
+
   return (
     <motion.div
-      className="relative flex flex-col md:absolute md:inset-0"
+      className="relative flex w-full flex-col"
       initial={enterHidden}
       animate={enterVisible}
       exit={enterExit}
@@ -195,56 +213,58 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
         ease: EASE_OUT,
       }}
     >
-      <div
-        className={cn(
-          "w-full shrink-0 rounded-lg border border-border bg-background",
-          "ring-1 ring-border ring-offset-4 ring-offset-background",
-          "shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]",
-        )}
-      >
+      <div className="mx-auto w-full max-w-xl shrink-0 md:p-4">
         <div
-          className="min-h-[5.5rem] px-3.5 pt-3 pb-2 text-[13px] leading-relaxed text-foreground/90 sm:text-sm"
-          aria-live="polite"
-        >
-          {typed ? (
-            <span className="whitespace-pre-wrap">{typed}</span>
-          ) : (
-            <span className="text-muted-foreground/70">{t("demoPlaceholder")}</span>
+          className={cn(
+            "w-full rounded-lg border border-border bg-background",
+            "ring-1 ring-border ring-offset-4 ring-offset-background",
+            "shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]",
           )}
-          {isTyping ? (
-            <span
-              className="ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-[2px] animate-pulse bg-foreground align-text-bottom"
-              aria-hidden
-            />
-          ) : null}
-        </div>
+        >
+          <div
+            className="min-h-[5.5rem] px-3.5 pt-3 pb-2 text-[13px] leading-relaxed text-foreground/90 sm:text-sm"
+            aria-live="polite"
+          >
+            {typed ? (
+              <span className="whitespace-pre-wrap">{typed}</span>
+            ) : (
+              <span className="text-muted-foreground/70">{t("demoPlaceholder")}</span>
+            )}
+            {isTyping ? (
+              <span
+                className="ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-[2px] animate-pulse bg-foreground align-text-bottom"
+                aria-hidden
+              />
+            ) : null}
+          </div>
 
-        <div className="flex items-center justify-end gap-2 px-2.5 pb-2.5">
-          <span
-            className={cn(
-              "inline-flex items-center gap-1 rounded-full border border-border/80",
-              "bg-muted/50 px-2 py-1 text-[11px] text-muted-foreground",
-            )}
-          >
-            {t("demoModel")}
-            <ChevronDownIcon className="size-3 opacity-70" aria-hidden />
-          </span>
-          <span
-            className={cn(
-              "inline-flex size-7 items-center justify-center rounded-full transition-[scale,background-color,color] duration-300 ease-out",
-              canSend || phase !== "typing"
-                ? "scale-100 bg-foreground text-background"
-                : "scale-95 bg-muted text-muted-foreground/50",
-              phase === "thinking" && "animate-pulse",
-            )}
-            aria-hidden
-          >
-            <ArrowUpIcon className="size-3.5" strokeWidth={2.5} />
-          </span>
+          <div className="flex items-center justify-end gap-2 px-2.5 pb-2.5">
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full border border-border/80",
+                "bg-muted/50 px-2 py-1 text-[11px] text-muted-foreground",
+              )}
+            >
+              {t("demoModel")}
+              <ChevronDownIcon className="size-3 opacity-70" aria-hidden />
+            </span>
+            <span
+              className={cn(
+                "inline-flex size-7 items-center justify-center rounded-full transition-[scale,background-color,color] duration-300 ease-out",
+                canSend || phase !== "typing"
+                  ? "scale-100 bg-foreground text-background"
+                  : "scale-95 bg-muted text-muted-foreground/50",
+                phase === "thinking" && "animate-pulse",
+              )}
+              aria-hidden
+            >
+              <ArrowUpIcon className="size-3.5" strokeWidth={2.5} />
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className="relative mt-6 md:min-h-0 md:flex-1 md:overflow-hidden">
+      <div className="relative mt-6">
         <AnimatePresence mode="wait">
           {phase === "thinking" ? (
             <motion.div
@@ -256,7 +276,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 duration: reduceMotion ? 0.1 : 0.3,
                 ease: EASE_OUT,
               }}
-              className="flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground md:absolute md:inset-x-0 md:top-0"
+              className="mx-auto flex max-w-xl items-center gap-2 rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground"
             >
               <span className="size-1.5 animate-pulse rounded-full bg-fuchsia-500" aria-hidden />
               {t(`${prefix}Thinking`)}
@@ -266,7 +286,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
           {phase === "ready" ? (
             <motion.div
               key="ready"
-              className="flex w-full flex-col gap-3 md:absolute md:inset-x-0 md:top-0"
+              className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 md:items-stretch"
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -286,22 +306,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 },
               }}
             >
-              <motion.div
-                variants={{
-                  hidden: enterHidden,
-                  visible: {
-                    ...enterVisible,
-                    transition: {
-                      duration: reduceMotion ? 0.12 : 0.35,
-                      ease: EASE_OUT,
-                    },
-                  },
-                  exit: {
-                    ...enterExit,
-                    transition: { duration: 0.15, ease: "easeOut" },
-                  },
-                }}
-              >
+              <motion.div className="min-w-0" variants={itemVariants}>
                 <OutcomeCard
                   tone="reject"
                   title={t(`${prefix}RejectTitle`)}
@@ -311,22 +316,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 </OutcomeCard>
               </motion.div>
 
-              <motion.div
-                variants={{
-                  hidden: enterHidden,
-                  visible: {
-                    ...enterVisible,
-                    transition: {
-                      duration: reduceMotion ? 0.12 : 0.35,
-                      ease: EASE_OUT,
-                    },
-                  },
-                  exit: {
-                    ...enterExit,
-                    transition: { duration: 0.15, ease: "easeOut" },
-                  },
-                }}
-              >
+              <motion.div className="min-w-0" variants={itemVariants}>
                 <OutcomeCard
                   tone="accept"
                   title={t(`${prefix}AcceptTitle`)}
@@ -340,23 +330,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 </OutcomeCard>
               </motion.div>
 
-              <motion.div
-                className="flex justify-end pt-1"
-                variants={{
-                  hidden: enterHidden,
-                  visible: {
-                    ...enterVisible,
-                    transition: {
-                      duration: reduceMotion ? 0.12 : 0.35,
-                      ease: EASE_OUT,
-                    },
-                  },
-                  exit: {
-                    ...enterExit,
-                    transition: { duration: 0.15, ease: "easeOut" },
-                  },
-                }}
-              >
+              <motion.div className="flex justify-end pt-1 md:col-span-2" variants={itemVariants}>
                 <AutoNextButton
                   label={t("demoNext")}
                   durationMs={AUTO_ADVANCE_MS}
@@ -435,7 +409,7 @@ function OutcomeCard({ tone, title, body, children }: OutcomeCardProps) {
   return (
     <div
       className={cn(
-        "flex items-start gap-3 rounded-xl border px-4 py-3",
+        "flex h-full items-start gap-3 rounded-xl border px-4 py-3",
         isReject
           ? "border-rose-500/20 bg-rose-50/80 dark:bg-rose-950/30"
           : "border-emerald-500/20 bg-emerald-50/80 dark:bg-emerald-950/30",

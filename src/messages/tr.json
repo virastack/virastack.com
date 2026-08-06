@@ -24,7 +24,7 @@
     "demoTitle": "Kurallar fark yaratır",
     "demoDesc": "Aynı sohbet, farklı kural paketleri. Ajan kestirmeyi reddeder, ViraStack kalıbını önerir.",
     "demoPlaceholder": "Bir özellik tarif et…",
-    "demoModel": "Cursor Agent",
+    "demoModel": "Claude Code",
     "demoTabData": "Data",
     "demoTabArchitecture": "Mimari",
     "demoTabForms": "Formlar",
