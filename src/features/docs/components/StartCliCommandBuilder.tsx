@@ -1,13 +1,16 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
 
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 import { cn } from "@/lib/utils";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+
+import { CodeBlockCommand, usePackageManager } from "@/components/code-block-command";
 import { Button } from "@/components/ui/button";
 import {
   Questionnaire,
@@ -20,7 +23,7 @@ import {
   QuestionnaireItem,
   QuestionnaireNext,
   QuestionnairePrevious,
-  QuestionnaireProgress,
+  QuestionnaireSubmit,
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire";
 import {
@@ -57,26 +60,25 @@ const QUESTIONNAIRE_ITEMS = [
   },
 ] as const;
 
-const ITEM_LAYOUT_CLASS = cn(
-  "grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-2",
-  "[&_[data-slot=questionnaire-title]]:col-start-1 [&_[data-slot=questionnaire-title]]:row-start-1",
-  "[&_[data-slot=questionnaire-description]]:col-start-1 [&_[data-slot=questionnaire-description]]:row-start-2",
-  "[&_[data-slot=questionnaire-progress]]:col-start-2 [&_[data-slot=questionnaire-progress]]:row-span-2 [&_[data-slot=questionnaire-progress]]:row-start-1 [&_[data-slot=questionnaire-progress]]:self-start [&_[data-slot=questionnaire-progress]]:justify-self-end",
-  "[&_[data-slot=questionnaire-choices]]:col-span-2",
-  "[&_[data-slot=questionnaire-error]]:col-span-2",
-  "[&_[data-slot=questionnaire-result]]:col-span-2",
-);
-
 /**
  * Step-by-step CLI questionnaire with a live install command.
  */
 export function StartCliCommandBuilder() {
   const t = useTranslations("DocsStart");
+  const [packageManager] = usePackageManager();
   const [name, setName] = useState("");
   const [template, setTemplate] = useState<StartCliTemplate | null>(null);
   const [i18n, setI18n] = useState<boolean | null>(null);
   const [tools, setTools] = useState<StartCliTool[]>([]);
   const [activeItem, setActiveItem] = useState("name");
+  const { copy } = useCopyToClipboard({
+    onCopySuccess: () => {
+      toast.success(t("cliBuilderCopied"));
+    },
+    onCopyError: () => {
+      toast.error(t("cliBuilderCopyFailed"));
+    },
+  });
 
   const stackTags = guideStackTags({ linked: false });
   const productTags = guideProductTags({
@@ -94,6 +96,13 @@ export function StartCliCommandBuilder() {
   });
   const packageCommands = convertNpmCommand(command);
 
+  const stepCount = QUESTIONNAIRE_ITEMS.length;
+  const stepIndex = Math.max(
+    0,
+    QUESTIONNAIRE_ITEMS.findIndex((item) => item.name === activeItem),
+  );
+  const currentStep = stepIndex + 1;
+
   function toggleTool(tool: StartCliTool, checked: boolean): void {
     setTools((current) => {
       if (checked) {
@@ -101,6 +110,18 @@ export function StartCliCommandBuilder() {
       }
       return current.filter((item) => item !== tool);
     });
+  }
+
+  function resolveCommandToCopy(): string {
+    if (packageManager === "prompt") {
+      return packageCommands.pnpm;
+    }
+    return packageCommands[packageManager] || packageCommands.pnpm;
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    void copy(resolveCommandToCopy());
   }
 
   function handleReset(): void {
@@ -111,27 +132,51 @@ export function StartCliCommandBuilder() {
     setActiveItem("name");
   }
 
-  function progressLabel(current: number, total: number): string {
-    return t("cliBuilderProgress", { current, total });
-  }
-
   return (
     <div className="not-prose my-6 space-y-6">
       <CodeBlockCommand wrap {...DEFAULT_PACKAGE_COMMANDS} />
 
       <div className="space-y-4">
-        <h3 className="mt-0 text-lg font-semibold tracking-tight text-foreground">
-          {t("cliBuilderTitle")}
-        </h3>
+        <div className="space-y-2">
+          <h3 className="mt-0 text-lg font-semibold tracking-tight text-foreground">
+            {t("cliBuilderTitle")}
+          </h3>
+          <div className="flex max-w-xs flex-col gap-1.5">
+            <p className="text-sm text-muted-foreground">
+              {t("cliBuilderProgress", { current: currentStep, total: stepCount })}
+            </p>
+            <div
+              role="progressbar"
+              aria-valuemin={1}
+              aria-valuemax={stepCount}
+              aria-valuenow={currentStep}
+              aria-label={t("cliBuilderProgress", {
+                current: currentStep,
+                total: stepCount,
+              })}
+              className="flex gap-1"
+            >
+              {QUESTIONNAIRE_ITEMS.map((item, index) => (
+                <div
+                  key={item.name}
+                  className={cn(
+                    "h-1 flex-1 rounded-full transition-colors duration-200 ease-out",
+                    index < currentStep ? "bg-foreground" : "bg-muted",
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
 
         <Questionnaire
           items={QUESTIONNAIRE_ITEMS}
           onItemChange={setActiveItem}
+          onSubmit={handleSubmit}
           onReset={handleReset}
         >
-          <QuestionnaireItem name="name" required className={ITEM_LAYOUT_CLASS}>
+          <QuestionnaireItem name="name" required>
             <QuestionnaireTitle>{t("cliBuilderName")}</QuestionnaireTitle>
-            <QuestionProgress label={progressLabel} />
             <QuestionnaireDescription>{t("cliBuilderNameDesc")}</QuestionnaireDescription>
             <QuestionnaireChoices>
               <QuestionnaireInput
@@ -146,9 +191,8 @@ export function StartCliCommandBuilder() {
             <QuestionnaireError>{t("cliBuilderErrorRequired")}</QuestionnaireError>
           </QuestionnaireItem>
 
-          <QuestionnaireItem name="template" required className={ITEM_LAYOUT_CLASS}>
+          <QuestionnaireItem name="template" required>
             <QuestionnaireTitle>{t("cliBuilderTemplate")}</QuestionnaireTitle>
-            <QuestionProgress label={progressLabel} />
             <QuestionnaireDescription>{t("cliBuilderTemplateDesc")}</QuestionnaireDescription>
             <QuestionnaireChoices>
               <QuestionnaireChoice
@@ -185,9 +229,8 @@ export function StartCliCommandBuilder() {
             <QuestionnaireError>{t("cliBuilderErrorRequired")}</QuestionnaireError>
           </QuestionnaireItem>
 
-          <QuestionnaireItem name="i18n" required className={ITEM_LAYOUT_CLASS}>
+          <QuestionnaireItem name="i18n" required>
             <QuestionnaireTitle>{t("cliBuilderI18n")}</QuestionnaireTitle>
-            <QuestionProgress label={progressLabel} />
             <QuestionnaireDescription>{t("cliBuilderI18nDesc")}</QuestionnaireDescription>
             <QuestionnaireChoices>
               <QuestionnaireChoice
@@ -208,9 +251,8 @@ export function StartCliCommandBuilder() {
             <QuestionnaireError>{t("cliBuilderErrorRequired")}</QuestionnaireError>
           </QuestionnaireItem>
 
-          <QuestionnaireItem name="tools" multiple className={ITEM_LAYOUT_CLASS}>
+          <QuestionnaireItem name="tools" multiple>
             <QuestionnaireTitle>{t("cliBuilderTools")}</QuestionnaireTitle>
-            <QuestionProgress label={progressLabel} />
             <QuestionnaireDescription>{t("cliBuilderToolsDesc")}</QuestionnaireDescription>
             <QuestionnaireChoices>
               <QuestionnaireChoice
@@ -253,9 +295,8 @@ export function StartCliCommandBuilder() {
             </QuestionnaireChoices>
           </QuestionnaireItem>
 
-          <QuestionnaireItem name="result" className={ITEM_LAYOUT_CLASS}>
+          <QuestionnaireItem name="result">
             <QuestionnaireTitle>{t("cliBuilderResult")}</QuestionnaireTitle>
-            <QuestionProgress label={progressLabel} />
             <QuestionnaireDescription>{t("cliBuilderResultDesc")}</QuestionnaireDescription>
             <QuestionnaireChoices>
               <QuestionnaireChoice value="ready" checked className="hidden" aria-hidden>
@@ -279,31 +320,10 @@ export function StartCliCommandBuilder() {
               </Button>
             ) : null}
             <QuestionnaireNext>{t("cliBuilderNext")}</QuestionnaireNext>
+            <QuestionnaireSubmit>{t("cliBuilderCopy")}</QuestionnaireSubmit>
           </QuestionnaireActions>
         </Questionnaire>
       </div>
     </div>
-  );
-}
-
-type QuestionProgressProps = {
-  label: (current: number, total: number) => string;
-};
-
-function QuestionProgress({ label }: QuestionProgressProps): ReactNode {
-  return (
-    <QuestionnaireProgress
-      render={(props, state) => {
-        const { className, ...rest } = props;
-        return (
-          <div
-            {...rest}
-            className={cn(typeof className === "string" ? className : undefined, "text-right")}
-          >
-            {label(state.current, state.total)}
-          </div>
-        );
-      }}
-    />
   );
 }
