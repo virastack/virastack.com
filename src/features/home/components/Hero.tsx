@@ -5,17 +5,32 @@ import { siteConfig } from "@/config/site.config";
 
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
+import { ParticleText } from "@/components/shared/ParticleText";
 import { Reveal } from "@/components/shared/Reveal";
+import { brandPalettes } from "@/features/brand/brand-colors";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
+
+const startColor = brandPalettes.find((palette) => palette.id === "start")?.hex ?? "#00baa6";
 
 export function Hero() {
   const t = useTranslations("Home");
 
   return (
     <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-36 pb-28 text-center">
-      <h1 className="mb-2 text-center text-4xl font-black tracking-tight text-balance text-primary lg:text-6xl">
-        {siteConfig.brandMark}
+      <h1 className="mb-2 w-full text-center">
+        <ParticleText
+          text={siteConfig.brandMark}
+          color={startColor}
+          highlightColor={startColor}
+          fontWeight={900}
+          fontSize="clamp(3rem, 12vw, 6rem)"
+          className="min-h-36 lg:min-h-48"
+          trigger="mount"
+          pointerRepel={24}
+          idleDrift={0.7}
+          glow
+        />
       </h1>
 
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
