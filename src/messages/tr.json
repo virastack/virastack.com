@@ -1,6 +1,7 @@
 {
   "Home": {
-    "heroDesc": "Frontend geliştiricileri için <italic>DX odaklı</italic> bir araç seti. Starter’lar, ajan kuralları, form hook’ları ve interaktif rehberle ekiplerin daha hızlı ilerlemesini sağlar.",
+    "heroTitle": "<hl>Frontend</hl> geliştiricileri için <hl>modern</hl> bir <hl>ekosistem</hl>",
+    "heroDesc": "Başlangıç şablonları, yapay zeka kuralları ve form hook’ları ile hızlı ve kaliteli ilerleyin.",
     "ctaStart": "Başlayın",
     "ctaGithub": "GitHub",
     "aboutTitle": "ViraStack nedir?",

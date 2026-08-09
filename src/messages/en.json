@@ -1,6 +1,7 @@
 {
   "Home": {
-    "heroDesc": "A <italic>DX-first</italic> toolkit for frontend developers. Starters, agent rules, form hooks, and an interactive guide help teams ship faster.",
+    "heroTitle": "A <hl>modern</hl> <hl>ecosystem</hl> for <hl>Frontend</hl> developers",
+    "heroDesc": "Starter templates, AI rules, and form hooks to move fast without sacrificing quality.",
     "ctaStart": "Get Started",
     "ctaGithub": "GitHub",
     "aboutTitle": "What is ViraStack?",
