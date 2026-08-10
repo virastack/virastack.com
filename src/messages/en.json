@@ -1,5 +1,6 @@
 {
   "Home": {
+    "title": "A modern ecosystem for Frontend developers",
     "heroTitle": "A <hl>modern</hl> <hl>ecosystem</hl> for <hl>Frontend</hl> developers",
     "heroDesc": "Starter templates, AI rules, and form hooks to move fast without sacrificing quality.",
     "ctaStart": "Get Started",
