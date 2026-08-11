@@ -99,7 +99,7 @@ export async function MaskValidationDoc() {
         </p>
         <p>
           For type definitions see <Link href="/mask/docs/types">types</Link>; for live examples see{" "}
-          <Link href="/mask/docs/examples">examples</Link>.
+          <Link href="/mask/examples">examples</Link>.
         </p>
       </DocsProse>
     </>

@@ -13,7 +13,9 @@ alwaysApply: false
 - **SSOT:** All translation keys MUST be defined in `src/messages/`.
 - **Type Safety:** Use the library's native type-generation features. Magic strings for keys are forbidden.
 - **Namespacing:** Use namespaces for features (e.g., `auth.login`, `profile.settings`) to maintain modularity.
-- **Brand:** Never translate the brand name `ViraStack`. Always render it from `siteConfig.name` (or hardcode `ViraStack`). Do not put the brand mark in message JSON as a standalone title key. In running copy, keep the spelling `ViraStack` unchanged in every locale. For uppercase logos/H1, use `siteConfig.brandMark` (`VIRASTACK`) — never CSS `uppercase` on the brand, because `lang=tr` turns `i` into `İ`.
+- **Brand:** One spelling only: `ViraStack` (from `siteConfig.name`). Never translate it, never `VIRASTACK`, never CSS `uppercase` on the brand (`lang=tr` turns `i` into `İ`). Do not put the brand as a standalone title key in message JSON. Product lockups in titles, heroes, docs, and OG use `ViraStack` + short name (e.g. `ViraStack Mask`); short name alone is allowed only in dense navigation.
+- **Brand weight:** Two roles only — heading/hero H1: `font-black` (900); everything else (header, footer, menus, body/inline): `font-semibold` (600). Product short name is always `font-medium italic` in its product color.
+- **Brand size:** Heading/hero H1 uses fluid display type (`text-4xl` / `lg:text-6xl`). Logo slots (header, footer, drawer title) use `text-lg` (18px). Inline lockups inherit the surrounding text size. Menus stay `text-sm` for density.
 
 ## Bans
 

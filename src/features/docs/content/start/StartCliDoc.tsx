@@ -4,7 +4,7 @@ import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { StartCliCommandBuilder } from "@/features/docs/components/StartCliCommandBuilder";
+import { Link } from "@/i18n/routing";
 
 export function StartCliDoc() {
   const t = useTranslations("DocsStart");
@@ -14,9 +14,13 @@ export function StartCliDoc() {
       <DocsPageHeader title={t("cliTitle")} description={t("cliHeaderDesc")} />
       <DocsProse>
         <h2 id="kullanim">{t("cliHeadingUsage")}</h2>
-        <p>{t("cliUsageP")}</p>
+        <p>
+          {t.rich("cliUsageP", {
+            builder: (chunks) => <Link href="/start/builder">{chunks}</Link>,
+          })}
+        </p>
 
-        <StartCliCommandBuilder />
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest")} />
 
         <h2 id="bayraklar">{t("cliHeadingFlags")}</h2>
         <div className="overflow-x-auto rounded-lg border border-border">

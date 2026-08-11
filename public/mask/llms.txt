@@ -15,19 +15,19 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 - [Helpers](https://virastack.com/mask/docs/helpers): `applyMask`, currency helpers, `getCardType`, `mergeRefs`
 - [Types](https://virastack.com/mask/docs/types): `MaskPreset`, `MaskOptions`, schema types
 - [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn, Ant Design, Chakra; prop-spread pattern
-- [Examples](https://virastack.com/mask/docs/examples): Live presets index
+- [Examples](https://virastack.com/mask/examples): Live presets index
 - [llms-full.txt](https://virastack.com/mask/llms-full.txt): Full machine-readable API
 
 ## Notable examples
 
-- [Credit card form](https://virastack.com/mask/docs/examples/credit-card): Card + expiry + CVV (Amex-aware)
-- [Card](https://virastack.com/mask/docs/examples/card): BIN detection (Visa, Mastercard, Amex, Troy)
-- [Phone](https://virastack.com/mask/docs/examples/phone): TR phone mask
-- [IBAN](https://virastack.com/mask/docs/examples/iban): TR IBAN with mod-97 validation
-- [TCKN](https://virastack.com/mask/docs/examples/tckn): Turkish national ID
-- [Currency](https://virastack.com/mask/docs/examples/currency): Locale-aware money formatting
-- [Date](https://virastack.com/mask/docs/examples/date): DMY / MDY / YMD
-- [Tax number](https://virastack.com/mask/docs/examples/taxNumber): VKN validator
+- [Credit card form](https://virastack.com/mask/examples/credit-card): Card + expiry + CVV (Amex-aware)
+- [Card](https://virastack.com/mask/examples/card): BIN detection (Visa, Mastercard, Amex, Troy)
+- [Phone](https://virastack.com/mask/examples/phone): TR phone mask
+- [IBAN](https://virastack.com/mask/examples/iban): TR IBAN with mod-97 validation
+- [TCKN](https://virastack.com/mask/examples/tckn): Turkish national ID
+- [Currency](https://virastack.com/mask/examples/currency): Locale-aware money formatting
+- [Date](https://virastack.com/mask/examples/date): DMY / MDY / YMD
+- [Tax number](https://virastack.com/mask/examples/taxNumber): VKN validator
 
 ## Product
 

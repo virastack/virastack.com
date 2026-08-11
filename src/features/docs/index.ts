@@ -22,8 +22,10 @@ export {
   getMaskExample,
   getMaskExampleGroups,
   getMaskExamples,
+  getMaskExamplesNav,
   isMaskDocsSlug,
   maskDocsSlugs,
+  maskExampleIds,
   maskExampleSlugs,
 } from "@/features/docs/config/mask-docs.config";
 export {
@@ -31,8 +33,10 @@ export {
   getPasswordDocsPage,
   getPasswordExamples,
   getPasswordExample,
+  getPasswordExamplesNav,
   isPasswordDocsSlug,
   passwordDocsSlugs,
+  passwordExampleIds,
   passwordExampleSlugs,
 } from "@/features/docs/config/password-docs.config";
 export type {

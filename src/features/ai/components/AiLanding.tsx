@@ -7,8 +7,8 @@ import { AiInjectedRules } from "@/features/ai/components/AiInjectedRules";
 export function AiLanding() {
   return (
     <>
-      <AiInjectedRules />
       <AiDialogDemo />
+      <AiInjectedRules />
       <AiHowItWorks />
       <AiCli />
       <AiEcosystemCta />

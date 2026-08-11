@@ -22,7 +22,7 @@ export function MaskIntroductionDoc() {
         <h2 id="baslarken">Getting started</h2>
         <p>
           Install the package. For live mask examples, see the{" "}
-          <Link href="/mask/docs/examples">examples</Link> page.
+          <Link href="/mask/examples">examples</Link> page.
         </p>
 
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask")} />
@@ -90,7 +90,7 @@ export function MaskIntroductionDoc() {
             <Link href="/mask/docs/types">Types</Link> reference
           </li>
           <li>
-            <Link href="/mask/docs/examples">Examples</Link> for every preset
+            <Link href="/mask/examples">Examples</Link> for every preset
           </li>
         </ul>
       </DocsProse>

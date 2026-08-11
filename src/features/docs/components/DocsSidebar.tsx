@@ -1,7 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
-
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -12,7 +10,6 @@ import { Link, usePathname } from "@/i18n/routing";
 
 type DocsSidebarProps = {
   sections: DocsNavSection[];
-  productLabel: ReactNode;
   /** @deprecated Kept for call-site compatibility; active state is exact pathname match. */
   docsIndexHref?: string;
 };
@@ -39,13 +36,12 @@ function DocsNavLink({ item, className }: { item: DocsNavItem; className: string
   );
 }
 
-export function DocsSidebar({ sections, productLabel }: DocsSidebarProps) {
+export function DocsSidebar({ sections }: DocsSidebarProps) {
   const t = useTranslations("Docs");
   const pathname = usePathname();
 
   return (
     <nav aria-label={t("docsNav")} className="flex flex-col gap-6">
-      <div className="px-2 text-sm tracking-tight">{productLabel}</div>
       {sections.map((section) => (
         <div key={section.title} className="flex flex-col gap-1">
           <p className="mb-1 px-2 text-xs font-medium text-muted-foreground">{section.title}</p>

@@ -17,7 +17,7 @@ export function AiEcosystemCta() {
         <h2 className="text-2xl font-semibold tracking-tight text-balance md:text-3xl">
           {t("ctaTitle")}
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+        <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
           {t.rich("ctaDesc", {
             start: (chunks) => (
               <GuideProductMark id="start" linked={false}>
@@ -28,7 +28,19 @@ export function AiEcosystemCta() {
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           <Button size="lg" nativeButton={false} render={<Link href="/start" />}>
-            <span>{t("ctaStart")}</span>
+            <span>
+              {t.rich("ctaStart", {
+                start: (chunks) => (
+                  <GuideProductMark
+                    id="start"
+                    linked={false}
+                    brandClassName="font-semibold text-primary-foreground"
+                  >
+                    {chunks}
+                  </GuideProductMark>
+                ),
+              })}
+            </span>
             <ChevronRightIcon
               data-icon="inline-end"
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"

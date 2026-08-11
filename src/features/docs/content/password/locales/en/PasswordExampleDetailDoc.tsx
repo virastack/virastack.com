@@ -21,7 +21,7 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
       <DocsPageHeader title={example.title} description={example.description} />
       <DocsProse>
         <p>
-          <Link href="/password/docs/examples">← All examples</Link>
+          <Link href="/password/examples">← All examples</Link>
           <span className="mx-2 text-border">·</span>
           <code>{example.variant}</code>
         </p>

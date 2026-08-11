@@ -64,8 +64,8 @@ export async function PasswordCustomizationDoc() {
         <p>
           Default icons can also be imported from the{" "}
           <Link href="/password/docs/helpers">helpers</Link> page. More examples:{" "}
-          <Link href="/password/docs/examples/custom-icons">custom icons</Link>,{" "}
-          <Link href="/password/docs/examples/custom-text">custom text</Link>.
+          <Link href="/password/examples/custom-icons">custom icons</Link>,{" "}
+          <Link href="/password/examples/custom-text">custom text</Link>.
         </p>
 
         <h2 id="props">inputProps & btnProps</h2>
@@ -76,7 +76,7 @@ export async function PasswordCustomizationDoc() {
         <p>
           Merge rules are on the{" "}
           <Link href="/password/docs/use-vira-password">useViraPassword()</Link> page. Example:{" "}
-          <Link href="/password/docs/examples/prop-merge">Prop merge</Link>.
+          <Link href="/password/examples/prop-merge">Prop merge</Link>.
         </p>
 
         <h2 id="state">disabled & readOnly</h2>

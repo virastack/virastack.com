@@ -83,7 +83,7 @@ export function AiInjectedRules() {
           <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("rulesTitle")}</h2>
         </RevealItem>
         <RevealItem>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-balance text-muted-foreground">
             {t.rich("rulesDesc", {
               bold: (chunks) => <strong className="font-semibold text-foreground">{chunks}</strong>,
             })}

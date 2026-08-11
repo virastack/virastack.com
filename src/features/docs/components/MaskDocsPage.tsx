@@ -8,8 +8,6 @@ import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { getMaskDocsNav, getMaskDocsPage } from "@/features/docs/config/mask-docs.config";
 import {
   MaskCustomMaskDoc,
-  MaskExampleDetailDoc,
-  MaskExamplesDoc,
   MaskHelpersDoc,
   MaskIntroductionDoc,
   MaskTypesDoc,
@@ -18,7 +16,6 @@ import {
   MaskValidationDoc,
 } from "@/features/docs/content/mask";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 const DOCS_INDEX = "/mask/docs";
 
@@ -30,7 +27,6 @@ const maskDocsContent: Record<string, () => ReactNode> = {
   helpers: () => <MaskHelpersDoc />,
   types: () => <MaskTypesDoc />,
   "ui-libraries": () => <MaskUiLibrariesDoc />,
-  examples: () => <MaskExamplesDoc />,
 };
 
 type MaskDocsPageProps = {
@@ -42,15 +38,8 @@ export async function MaskDocsPage({ slug }: MaskDocsPageProps) {
   const tDocs = await getTranslations("Docs");
   const page = getMaskDocsPage(slug, t);
   const sections = getMaskDocsNav(t);
-
-  let content: ReactNode = null;
-  if (slug.startsWith("examples/") && slug !== "examples") {
-    const id = slug.slice("examples/".length);
-    content = <MaskExampleDetailDoc id={id} />;
-  } else {
-    const render = maskDocsContent[slug];
-    content = render?.() ?? null;
-  }
+  const render = maskDocsContent[slug];
+  const content = render?.() ?? null;
 
   if (!page || !content) {
     return null;
@@ -73,11 +62,6 @@ export async function MaskDocsPage({ slug }: MaskDocsPageProps) {
       sections={sections}
       docsIndexHref={DOCS_INDEX}
       slug={slug}
-      productLabel={
-        <GuideProductMark id="mask" linked={false}>
-          Mask
-        </GuideProductMark>
-      }
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >

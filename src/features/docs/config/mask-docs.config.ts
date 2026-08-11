@@ -328,18 +328,6 @@ export function getMaskExampleGroups(t: DocsMaskTranslate) {
 export const maskExampleSlugs = MASK_EXAMPLE_DEFS.map((example) => `examples/${example.id}`);
 
 export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
-  const examples = getMaskExamples(t);
-  const exampleNavItems = [
-    { slug: "examples", title: t("navExamplesAll"), href: `${BASE}/examples` },
-    ...[...examples]
-      .sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" }))
-      .map((example) => ({
-        slug: `examples/${example.id}`,
-        title: example.title,
-        href: `${BASE}/examples/${example.id}`,
-      })),
-  ];
-
   return [
     {
       title: t("navGettingStarted"),
@@ -374,9 +362,25 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
         },
       ],
     },
+  ];
+}
+
+export function getMaskExamplesNav(t: DocsMaskTranslate): DocsNavSection[] {
+  const examples = getMaskExamples(t);
+
+  return [
     {
       title: t("navExamples"),
-      items: exampleNavItems,
+      items: [
+        { slug: "index", title: t("navExamplesAll"), href: "/mask/examples" },
+        ...[...examples]
+          .sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: "base" }))
+          .map((example) => ({
+            slug: example.id,
+            title: example.title,
+            href: `/mask/examples/${example.id}`,
+          })),
+      ],
     },
   ];
 }
@@ -503,9 +507,9 @@ export const maskDocsSlugs = [
   "helpers",
   "types",
   "ui-libraries",
-  "examples",
-  ...maskExampleSlugs,
 ] as const;
+
+export const maskExampleIds = MASK_EXAMPLE_DEFS.map((example) => example.id);
 
 const maskDocsSlugSet: Record<string, true> = Object.fromEntries(
   maskDocsSlugs.map((slug) => [slug, true as const]),

@@ -74,7 +74,7 @@ export function MaskDemo() {
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<Link href="/mask/docs/examples" />}
+            render={<Link href="/mask/examples" />}
           >
             <span>{t("demoMoreExamples")}</span>
             <ChevronRightIcon

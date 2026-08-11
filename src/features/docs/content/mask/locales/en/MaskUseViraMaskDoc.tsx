@@ -51,8 +51,8 @@ export async function MaskUseViraMaskDoc() {
           </li>
         </ul>
         <p>
-          See the <Link href="/mask/docs/examples">examples</Link> page for all presets. For masks
-          from scratch, see <Link href="/mask/docs/custom-mask">custom mask</Link>.
+          See the <Link href="/mask/examples">examples</Link> page for all presets. For masks from
+          scratch, see <Link href="/mask/docs/custom-mask">custom mask</Link>.
         </p>
 
         <h2 id="donus">Return value</h2>

@@ -23,7 +23,7 @@ export function AiHowItWorks() {
           <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("howTitle")}</h2>
         </RevealItem>
         <RevealItem>
-          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
             {t("howDesc")}
           </p>
         </RevealItem>

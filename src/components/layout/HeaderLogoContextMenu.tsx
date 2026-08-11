@@ -34,7 +34,7 @@ export function HeaderLogoContextMenu({ children }: HeaderLogoContextMenuProps) 
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="inline-flex">{children}</ContextMenuTrigger>
+      <ContextMenuTrigger className="inline-flex items-center">{children}</ContextMenuTrigger>
       <ContextMenuContent className="min-w-52">
         <ContextMenuGroup>
           <ContextMenuItem

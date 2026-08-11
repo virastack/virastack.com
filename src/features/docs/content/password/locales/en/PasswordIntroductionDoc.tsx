@@ -22,7 +22,7 @@ export function PasswordIntroductionDoc() {
         <h2 id="baslarken">Getting started</h2>
         <p>
           Install the package. For live demos, see the{" "}
-          <Link href="/password/docs/examples">examples</Link> page.
+          <Link href="/password/examples">examples</Link> page.
         </p>
 
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
@@ -85,7 +85,7 @@ export function PasswordIntroductionDoc() {
             <Link href="/password/docs/types">types</Link>
           </li>
           <li>
-            UI libraries and <Link href="/password/docs/examples">examples</Link>
+            UI libraries and <Link href="/password/examples">examples</Link>
           </li>
         </ul>
       </DocsProse>

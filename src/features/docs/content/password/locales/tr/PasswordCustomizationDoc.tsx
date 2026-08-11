@@ -63,8 +63,8 @@ export async function PasswordCustomizationDoc() {
         <p>
           Varsayılan ikonlar <Link href="/password/docs/helpers">helpers</Link> sayfasından da
           import edilebilir. Daha fazla örnek:{" "}
-          <Link href="/password/docs/examples/custom-icons">özel ikonlar</Link>,{" "}
-          <Link href="/password/docs/examples/custom-text">özel metin</Link>.
+          <Link href="/password/examples/custom-icons">özel ikonlar</Link>,{" "}
+          <Link href="/password/examples/custom-text">özel metin</Link>.
         </p>
 
         <h2 id="props">inputProps & btnProps</h2>
@@ -74,7 +74,7 @@ export async function PasswordCustomizationDoc() {
         </ComponentPreview>
         <p>
           Merge kuralları <Link href="/password/docs/use-vira-password">useViraPassword()</Link>{" "}
-          sayfasında. Örnek: <Link href="/password/docs/examples/prop-merge">Prop merge</Link>.
+          sayfasında. Örnek: <Link href="/password/examples/prop-merge">Prop merge</Link>.
         </p>
 
         <h2 id="state">disabled & readOnly</h2>

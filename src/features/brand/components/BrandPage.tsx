@@ -8,6 +8,13 @@ import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { brandPalettes } from "@/features/brand/brand-colors";
 import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
 
+type BrandMarkTone = "heading" | "body";
+
+const brandWeightClass: Record<BrandMarkTone, string> = {
+  heading: "font-black",
+  body: "font-semibold",
+};
+
 function BrandMarkPreview({
   productName,
   textClass,
@@ -15,13 +22,11 @@ function BrandMarkPreview({
 }: {
   productName: string | null;
   textClass: string;
-  tone: "heading" | "body";
+  tone: BrandMarkTone;
 }) {
   return (
     <span className="whitespace-nowrap">
-      <span className={cn("text-primary", tone === "heading" ? "font-black" : "font-medium")}>
-        {siteConfig.name}
-      </span>
+      <span className={cn("text-primary", brandWeightClass[tone])}>{siteConfig.name}</span>
       {productName ? (
         <>
           {" "}
@@ -31,6 +36,15 @@ function BrandMarkPreview({
     </span>
   );
 }
+
+const startPalette = brandPalettes.find((palette) => palette.id === "start");
+
+if (!startPalette?.productName) {
+  throw new Error("Start brand palette is required for typography examples");
+}
+
+const startName = startPalette.productName;
+const startTextClass = startPalette.textClass;
 
 export function BrandPage() {
   const t = useTranslations("BrandPage");
@@ -99,15 +113,7 @@ export function BrandPage() {
               <h2 className="text-xl font-semibold tracking-tight text-foreground">
                 {t("typeTitle")}
               </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                {t.rich("typeBody", {
-                  black: (chunks) => <span className="font-black text-foreground">{chunks}</span>,
-                  medium: (chunks) => <span className="font-medium text-foreground">{chunks}</span>,
-                  mediumItalic: (chunks) => (
-                    <span className="font-medium text-foreground italic">{chunks}</span>
-                  ),
-                })}
-              </p>
+              <p className="text-base leading-relaxed text-muted-foreground">{t("typeBody")}</p>
             </div>
 
             <div className="space-y-4 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
@@ -115,11 +121,30 @@ export function BrandPage() {
                 <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
                   {t("typeHeadingLabel")}
                 </p>
-                <p className="text-2xl tracking-tight sm:text-3xl">
-                  <BrandMarkPreview productName="Start" textClass="text-teal-500" tone="heading" />
+                <p className="text-4xl tracking-tight lg:text-6xl">
+                  <BrandMarkPreview
+                    productName={startName}
+                    textClass={startTextClass}
+                    tone="heading"
+                  />
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
-                  font-black text-primary · font-medium italic text-teal-500
+                  font-black · text-4xl / lg:text-6xl · font-medium italic · {startTextClass}
+                </p>
+              </div>
+              <div className="space-y-1 border-t border-border pt-4">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  {t("typeLogoLabel")}
+                </p>
+                <p className="text-lg leading-none">
+                  <BrandMarkPreview
+                    productName={startName}
+                    textClass={startTextClass}
+                    tone="body"
+                  />
+                </p>
+                <p className="font-mono text-xs text-muted-foreground">
+                  font-semibold · text-lg · font-medium italic · {startTextClass}
                 </p>
               </div>
               <div className="space-y-1 border-t border-border pt-4">
@@ -127,10 +152,14 @@ export function BrandPage() {
                   {t("typeBodyLabel")}
                 </p>
                 <p className="text-base">
-                  <BrandMarkPreview productName="AI" textClass="text-fuchsia-500" tone="body" />
+                  <BrandMarkPreview
+                    productName={startName}
+                    textClass={startTextClass}
+                    tone="body"
+                  />
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
-                  font-medium text-primary · font-medium italic text-fuchsia-500
+                  font-semibold · inherit (text-base) · font-medium italic · {startTextClass}
                 </p>
               </div>
             </div>

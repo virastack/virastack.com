@@ -95,7 +95,7 @@ export function Step7Final() {
       <p className="text-lg leading-relaxed text-muted-foreground">
         {t.rich("step7BodyVira", {
           brand: (chunks) => (
-            <span className="inline-flex items-center gap-1.5 align-baseline font-medium text-primary">
+            <span className="inline-flex items-center gap-1.5 align-baseline font-semibold text-primary">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-icon.webp" alt="" className="size-[1em] shrink-0" aria-hidden />
               {chunks}

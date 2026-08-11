@@ -120,7 +120,7 @@ export function AboutPage() {
                     <GuideProductMark
                       id="start"
                       linked={false}
-                      brandClassName="font-medium text-primary-foreground"
+                      brandClassName="font-semibold text-primary-foreground"
                     >
                       {chunks}
                     </GuideProductMark>
@@ -136,9 +136,9 @@ export function AboutPage() {
               size="lg"
               variant="outline"
               nativeButton={false}
-              render={<Link href="/contribute" />}
+              render={<Link href="/support" />}
             >
-              {t("ctaContribute")}
+              {t("ctaSupport")}
             </Button>
             <GithubRepoButton href={siteConfig.links.github} label="virastack" />
           </div>

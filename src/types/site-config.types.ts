@@ -1,8 +1,6 @@
 export type SiteConfig = {
-  /** Title-case brand for SEO, metadata, and running copy. */
+  /** Canonical brand spelling for logos, H1, SEO, and running copy. Never CSS `uppercase`. */
   name: string;
-  /** Locale-safe uppercase brand mark for logos/H1; never use CSS `uppercase` on `name`. */
-  brandMark: string;
   description: string;
   url: string;
   ogImage: string;

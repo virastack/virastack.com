@@ -34,7 +34,6 @@ import {
 import { guideProductTags, guideStackTags } from "@/features/guide/components/GuideRichText";
 
 const NAME_PLACEHOLDER = "my-app";
-const DEFAULT_PACKAGE_COMMANDS = convertNpmCommand("npx virastack@latest");
 
 const QUESTIONNAIRE_ITEMS = [
   { name: "name", required: true },
@@ -133,14 +132,11 @@ export function StartCliCommandBuilder() {
   }
 
   return (
-    <div className="not-prose my-6 space-y-6">
-      <CodeBlockCommand wrap {...DEFAULT_PACKAGE_COMMANDS} />
+    <div className="not-prose space-y-6">
+      <CodeBlockCommand wrap {...packageCommands} />
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <h3 className="mt-0 text-lg font-semibold tracking-tight text-foreground">
-            {t("cliBuilderTitle")}
-          </h3>
           <div className="flex max-w-xs flex-col gap-1.5">
             <p className="text-sm text-muted-foreground">
               {t("cliBuilderProgress", { current: currentStep, total: stepCount })}
@@ -303,9 +299,6 @@ export function StartCliCommandBuilder() {
                 <span>{t("cliBuilderResultReady")}</span>
               </QuestionnaireChoice>
             </QuestionnaireChoices>
-            <div data-slot="questionnaire-result">
-              <CodeBlockCommand wrap {...packageCommands} />
-            </div>
           </QuestionnaireItem>
 
           <QuestionnaireActions>

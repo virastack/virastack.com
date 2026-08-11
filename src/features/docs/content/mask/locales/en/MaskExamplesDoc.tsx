@@ -1,7 +1,5 @@
-"use client";
-
 import { BadgeCheckIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
@@ -11,8 +9,8 @@ import { getMaskExampleGroups, getMaskExamples } from "@/features/docs/config/ma
 import { MaskCustomDemo } from "@/features/docs/content/mask/MaskCustomDemo";
 import { Link } from "@/i18n/routing";
 
-export function MaskExamplesDoc() {
-  const t = useTranslations("DocsMask");
+export async function MaskExamplesDoc() {
+  const t = await getTranslations("DocsMask");
   const groups = getMaskExampleGroups(t);
   const examples = getMaskExamples(t);
 
@@ -49,7 +47,7 @@ export function MaskExamplesDoc() {
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex min-w-0 items-center gap-1.5">
                           <Link
-                            href={`/mask/docs/examples/${example.id}`}
+                            href={`/mask/examples/${example.id}`}
                             className="font-semibold text-foreground no-underline hover:underline"
                           >
                             {example.title}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 
 import { PanelLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -13,12 +13,11 @@ import { usePathname } from "@/i18n/routing";
 
 type DocsMobileNavProps = {
   sections: DocsNavSection[];
-  productLabel: ReactNode;
   /** @deprecated Kept for call-site compatibility; active state is exact pathname match. */
   docsIndexHref?: string;
 };
 
-export function DocsMobileNav({ sections, productLabel, docsIndexHref }: DocsMobileNavProps) {
+export function DocsMobileNav({ sections, docsIndexHref }: DocsMobileNavProps) {
   const t = useTranslations("Docs");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -43,11 +42,7 @@ export function DocsMobileNav({ sections, productLabel, docsIndexHref }: DocsMob
             <SheetTitle>{t("docsNav")}</SheetTitle>
           </SheetHeader>
           <div className="h-full overflow-y-auto overscroll-contain px-3 pt-12 pb-6">
-            <DocsSidebar
-              sections={sections}
-              productLabel={productLabel}
-              docsIndexHref={docsIndexHref}
-            />
+            <DocsSidebar sections={sections} docsIndexHref={docsIndexHref} />
           </div>
         </SheetContent>
       </Sheet>

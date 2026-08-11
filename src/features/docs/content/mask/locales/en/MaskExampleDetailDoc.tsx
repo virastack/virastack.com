@@ -96,7 +96,7 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
       <DocsPageHeader title={example.title} description={example.description} />
       <DocsProse>
         <p>
-          <Link href="/mask/docs/examples">{t("exampleDetailBackLink")}</Link>
+          <Link href="/mask/examples">{t("exampleDetailBackLink")}</Link>
           {example.preset ? (
             <>
               <span className="mx-2 text-border">·</span>

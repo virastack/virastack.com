@@ -26,44 +26,33 @@ export function AiCli() {
           <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("cliTitle")}</h2>
         </RevealItem>
         <RevealItem>
-          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
             {t("cliDesc")}
           </p>
         </RevealItem>
       </RevealGroup>
 
-      <Reveal className="mb-10 flex justify-center">
+      <Reveal className="mb-8 flex justify-center">
         <CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init")} />
       </Reveal>
 
-      <Reveal>
-        <div className="overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-border bg-muted/40">
-              <tr>
-                <th className="px-4 py-3 font-medium text-foreground">{t("cliFlagCol")}</th>
-                <th className="px-4 py-3 font-medium text-foreground">{t("cliDescCol")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {FLAGS.map((row) => (
-                <tr key={row.flag} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3 align-top font-mono text-xs text-fuchsia-600 dark:text-fuchsia-400">
-                    {row.flag}
-                  </td>
-                  <td className="px-4 py-3 align-top text-muted-foreground">
-                    {row.key === "cliFramework"
-                      ? t.rich(row.key, {
-                          italic: (chunks) => <em className="italic">{chunks}</em>,
-                        })
-                      : t(row.key)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Reveal>
+      <RevealGroup className="mx-auto max-w-xl space-y-2 text-sm leading-relaxed text-muted-foreground">
+        {FLAGS.map((row) => (
+          <RevealItem key={row.flag}>
+            <p>
+              <span className="font-mono text-xs text-fuchsia-600 dark:text-fuchsia-400">
+                {row.flag}
+              </span>
+              <span className="text-foreground/40"> — </span>
+              {row.key === "cliFramework"
+                ? t.rich(row.key, {
+                    italic: (chunks) => <em className="italic">{chunks}</em>,
+                  })
+                : t(row.key)}
+            </p>
+          </RevealItem>
+        ))}
+      </RevealGroup>
     </section>
   );
 }

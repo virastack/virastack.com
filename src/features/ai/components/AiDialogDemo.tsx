@@ -103,7 +103,7 @@ export function AiDialogDemo() {
     >
       <Reveal className="mb-8 text-center">
         <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("demoTitle")}</h2>
-        <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+        <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
           {t("demoDesc")}
         </p>
       </Reveal>

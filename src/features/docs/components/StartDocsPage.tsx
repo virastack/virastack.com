@@ -15,7 +15,6 @@ import {
   StartTemplatesDoc,
 } from "@/features/docs/content/start";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 const DOCS_INDEX = "/start/docs";
 
@@ -60,11 +59,6 @@ export async function StartDocsPage({ slug }: StartDocsPageProps) {
       sections={sections}
       docsIndexHref={DOCS_INDEX}
       slug={slug}
-      productLabel={
-        <GuideProductMark id="start" linked={false}>
-          Start
-        </GuideProductMark>
-      }
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >

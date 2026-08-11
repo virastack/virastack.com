@@ -74,13 +74,13 @@ function Example() {
 
 ## Example URLs
 
-- https://virastack.com/password/docs/examples/basic
-- https://virastack.com/password/docs/examples/custom-icons
-- https://virastack.com/password/docs/examples/custom-text
-- https://virastack.com/password/docs/examples/disabled
-- https://virastack.com/password/docs/examples/prop-merge
-- https://virastack.com/password/docs/examples/programmatic
-- https://virastack.com/password/docs/examples/signup-password
+- https://virastack.com/password/examples/basic
+- https://virastack.com/password/examples/custom-icons
+- https://virastack.com/password/examples/custom-text
+- https://virastack.com/password/examples/disabled
+- https://virastack.com/password/examples/prop-merge
+- https://virastack.com/password/examples/programmatic
+- https://virastack.com/password/examples/signup-password
 
 ## Related
 

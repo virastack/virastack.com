@@ -14,7 +14,6 @@ import type { DocsHeading, DocsNavSection } from "@/features/docs/types/docs.typ
 
 type DocsLayoutProps = {
   sections: DocsNavSection[];
-  productLabel: ReactNode;
   docsIndexHref: string;
   /** Current page slug; used for prev/next pager from sidebar nav order. */
   slug: string;
@@ -29,7 +28,6 @@ type DocsLayoutProps = {
  */
 export function DocsLayout({
   sections,
-  productLabel,
   docsIndexHref,
   slug,
   headings,
@@ -42,29 +40,21 @@ export function DocsLayout({
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 sm:px-6">
       <aside className="hidden w-56 shrink-0 lg:block xl:w-60">
-        <div className="sticky top-14 h-[calc(100dvh-3.5rem)] overflow-y-auto py-8 pr-4">
-          <DocsSidebar
-            sections={sections}
-            productLabel={productLabel}
-            docsIndexHref={docsIndexHref}
-          />
+        <div className="sticky top-25 h-[calc(100dvh-6.25rem)] overflow-y-auto py-8 pr-4">
+          <DocsSidebar sections={sections} docsIndexHref={docsIndexHref} />
         </div>
       </aside>
 
       <article className="min-w-0 flex-1 px-1 pt-8 pb-16 sm:px-4 lg:px-8 lg:pb-[120px]">
         <div className="mx-auto max-w-3xl">
-          <DocsMobileNav
-            sections={sections}
-            productLabel={productLabel}
-            docsIndexHref={docsIndexHref}
-          />
+          <DocsMobileNav sections={sections} docsIndexHref={docsIndexHref} />
           {children}
           <DocsPager prev={prev} next={next} />
         </div>
       </article>
 
       <aside className="hidden w-48 shrink-0 xl:block">
-        <div className="sticky top-14 h-[calc(100dvh-3.5rem)] overflow-y-auto py-8 pl-4">
+        <div className="sticky top-25 h-[calc(100dvh-6.25rem)] overflow-y-auto py-8 pl-4">
           <DocsToc headings={headings} />
           <div className={headings.length > 0 ? "mt-6 border-t border-border pt-4" : undefined}>
             <a

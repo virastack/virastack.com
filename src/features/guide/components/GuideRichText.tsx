@@ -41,13 +41,13 @@ export function GuideStackIcon({ icon, children }: { icon?: ReactNode; children:
   );
 }
 
-/** Brand mark: ViraStack (primary) + product name (color, italic); VIRASTACK_ARCHITECTURE §4.1 */
+/** Brand lockup: ViraStack (primary) + product name (color, italic). */
 export function GuideProductMark({
   id,
   children,
   linked = true,
   showBrand = true,
-  /** Heading’lerde black, gövde/cümle içinde medium. */
+  /** Heading/hero: black; body and logo slots: semibold. */
   tone = "body",
   brandClassName,
 }: {
@@ -60,7 +60,8 @@ export function GuideProductMark({
 }) {
   const product = getProduct(id);
   const brandWeight =
-    brandClassName ?? (tone === "heading" ? "font-black text-primary" : "font-medium text-primary");
+    brandClassName ??
+    (tone === "heading" ? "font-black text-primary" : "font-semibold text-primary");
 
   const mark = (
     <>

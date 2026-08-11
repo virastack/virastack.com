@@ -3,8 +3,6 @@ import { env } from "@/env";
 
 export const siteConfig: SiteConfig = {
   name: env.NEXT_PUBLIC_APP_NAME,
-  // Literal uppercase: CSS `uppercase` turns "i" into "İ" under `lang=tr`.
-  brandMark: "VIRASTACK",
   description:
     "A DX-first toolkit for frontend developers: modern-stack starters and focused React hooks built on Next.js, TanStack, and React.",
   url: env.NEXT_PUBLIC_APP_URL,

@@ -15,18 +15,18 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 - [Helpers](https://virastack.com/password/docs/helpers): `getInputType`, ARIA helpers, `EyeIcon` / `EyeOffIcon`, `mergeProps`
 - [Types](https://virastack.com/password/docs/types): `UseViraPasswordOptions`, `UseViraPasswordResult`
 - [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra patterns
-- [Examples](https://virastack.com/password/docs/examples): Live demos index
+- [Examples](https://virastack.com/password/examples): Live demos index
 - [llms-full.txt](https://virastack.com/password/llms-full.txt): Full machine-readable API
 
 ## Notable examples
 
-- [Basic](https://virastack.com/password/docs/examples/basic): Default eye icons
-- [Custom icons](https://virastack.com/password/docs/examples/custom-icons): Custom `icons.show` / `icons.hide`
-- [Custom text](https://virastack.com/password/docs/examples/custom-text): Text labels via `icons`
-- [Disabled / readOnly](https://virastack.com/password/docs/examples/disabled): Locked toggle behavior
-- [Prop merge](https://virastack.com/password/docs/examples/prop-merge): Merging `name`, `autoComplete`, `className`, handlers
-- [Programmatic](https://virastack.com/password/docs/examples/programmatic): `isVisible`, `toggle()`, `setVisible()`
-- [Signup password](https://virastack.com/password/docs/examples/signup-password): Typical signup layout
+- [Basic](https://virastack.com/password/examples/basic): Default eye icons
+- [Custom icons](https://virastack.com/password/examples/custom-icons): Custom `icons.show` / `icons.hide`
+- [Custom text](https://virastack.com/password/examples/custom-text): Text labels via `icons`
+- [Disabled / readOnly](https://virastack.com/password/examples/disabled): Locked toggle behavior
+- [Prop merge](https://virastack.com/password/examples/prop-merge): Merging `name`, `autoComplete`, `className`, handlers
+- [Programmatic](https://virastack.com/password/examples/programmatic): `isVisible`, `toggle()`, `setVisible()`
+- [Signup password](https://virastack.com/password/examples/signup-password): Typical signup layout
 
 ## Product
 

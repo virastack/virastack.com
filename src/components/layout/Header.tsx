@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 
 import { GithubIcon, XLogo } from "@/components/icons";
 import { HeaderLogoContextMenu } from "@/components/layout/HeaderLogoContextMenu";
+import { ProductSubHeader } from "@/components/layout/ProductSubHeader";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import {
@@ -77,24 +78,21 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-4 px-4 sm:px-6">
-        <HeaderLogoContextMenu>
-          <Link href="/" className="flex shrink-0 items-center gap-2 tracking-tight">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.webp" alt="" className="size-8" />
-            <span className="flex items-baseline gap-1.5 text-base sm:text-lg">
-              <span className="font-black text-primary">{siteConfig.brandMark}</span>
-              {activeProduct ? (
-                <span className={cn("font-medium italic", activeProduct.colorClass)}>
-                  {t(productNameKeys[activeProduct.id])}
-                </span>
-              ) : null}
-            </span>
-          </Link>
-        </HeaderLogoContextMenu>
+      <div className="mx-auto grid h-14 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 sm:px-6">
+        <div className="flex items-center justify-self-start">
+          <HeaderLogoContextMenu>
+            <Link href="/" className="inline-flex shrink-0 items-center gap-2 tracking-tight">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.webp" alt="" className="block size-6 shrink-0" />
+              <span className="text-lg leading-none font-semibold text-foreground">
+                {siteConfig.name}
+              </span>
+            </Link>
+          </HeaderLogoContextMenu>
+        </div>
 
-        <nav className="hidden flex-1 md:block" aria-label={t("primaryNav")}>
-          <NavigationMenu>
+        <nav className="hidden justify-self-center md:block" aria-label={t("primaryNav")}>
+          <NavigationMenu align="center">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>{t("products")}</NavigationMenuTrigger>
@@ -102,7 +100,7 @@ export function Header() {
                   <ul className="grid w-[min(100vw-2rem,36rem)] grid-cols-1 gap-1 p-2 sm:grid-cols-2">
                     {products.map((product) => {
                       const Icon = productIcons[product.id];
-                      const active = pathname === product.href;
+                      const active = activeProduct?.id === product.id;
 
                       return (
                         <li key={product.id}>
@@ -155,7 +153,7 @@ export function Header() {
           </NavigationMenu>
         </nav>
 
-        <div className="ml-auto flex items-center gap-0.5">
+        <div className="flex items-center gap-0.5 justify-self-end">
           <SiteSearch />
           <div className="hidden items-center gap-0.5 sm:flex">
             <Button
@@ -206,8 +204,8 @@ export function Header() {
 
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle className="font-black tracking-tight text-primary">
-                  {siteConfig.brandMark}
+                <DrawerTitle className="text-lg font-semibold tracking-tight text-primary">
+                  {siteConfig.name}
                 </DrawerTitle>
               </DrawerHeader>
 
@@ -229,7 +227,8 @@ export function Header() {
                     </DrawerClose>
                   </li>
                   {products.map((product) => {
-                    const active = pathname === product.href;
+                    const Icon = productIcons[product.id];
+                    const active = activeProduct?.id === product.id;
 
                     return (
                       <li key={product.id}>
@@ -238,16 +237,14 @@ export function Header() {
                             <Link
                               href={product.href}
                               className={cn(
-                                "block rounded-md px-2 py-2 text-sm transition-colors hover:bg-muted",
-                                active && "bg-muted",
+                                "flex items-center gap-2 rounded-md px-2 py-2 text-sm transition-colors hover:bg-muted",
+                                active && "bg-muted font-medium",
                               )}
                             />
                           }
                         >
-                          <span className="font-semibold">{siteConfig.name}</span>{" "}
-                          <span className={cn("font-medium italic", product.colorClass)}>
-                            {t(productNameKeys[product.id])}
-                          </span>
+                          <Icon className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+                          {t(productNameKeys[product.id])}
                         </DrawerClose>
                       </li>
                     );
@@ -310,6 +307,8 @@ export function Header() {
           </Drawer>
         </div>
       </div>
+
+      {activeProduct ? <ProductSubHeader product={activeProduct} /> : null}
     </header>
   );
 }

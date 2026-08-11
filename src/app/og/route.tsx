@@ -92,12 +92,12 @@ export async function GET(request: NextRequest) {
             style={{
               marginLeft: 16,
               fontSize: 28,
-              fontWeight: 700,
-              letterSpacing: "0.08em",
+              fontWeight: 600,
+              letterSpacing: "-0.02em",
               color: OG_COLORS.foreground,
             }}
           >
-            {siteConfig.brandMark}
+            {siteConfig.name}
           </div>
           {productName && pageTitle ? (
             <div

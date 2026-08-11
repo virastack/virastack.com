@@ -1,9 +1,9 @@
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 
 import { MaskExamplesDoc as En } from "./locales/en/MaskExamplesDoc";
 import { MaskExamplesDoc as Tr } from "./locales/tr/MaskExamplesDoc";
 
-export function MaskExamplesDoc() {
-  const locale = useLocale();
+export async function MaskExamplesDoc() {
+  const locale = await getLocale();
   return locale === "tr" ? <Tr /> : <En />;
 }

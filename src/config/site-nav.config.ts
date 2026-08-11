@@ -4,15 +4,15 @@
 export const siteNavLinks = [
   { href: "/about", labelKey: "about" },
   { href: "/brand", labelKey: "brand" },
-  { href: "/contribute", labelKey: "contribute" },
+  { href: "/support", labelKey: "support" },
 ] as const;
 
 /**
- * Primary header nav: brand stays in footer + logo context menu only.
+ * Primary header links beside the Products dropdown (also used in the mobile drawer).
  */
 export const headerNavLinks = [
   { href: "/about", labelKey: "about" },
-  { href: "/contribute", labelKey: "contribute" },
+  { href: "/support", labelKey: "support" },
 ] as const;
 
 export type SiteNavLabelKey = (typeof siteNavLinks)[number]["labelKey"];

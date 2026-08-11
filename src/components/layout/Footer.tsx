@@ -29,9 +29,9 @@ export async function Footer() {
         <div className="flex flex-col gap-3">
           <Link
             href="/"
-            className="w-fit text-lg leading-none font-black tracking-tight text-primary"
+            className="w-fit text-lg leading-none font-semibold tracking-tight text-primary"
           >
-            {siteConfig.brandMark}
+            {siteConfig.name}
           </Link>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{t("tagline")}</p>
           <div className="mt-2 flex items-center gap-2">
@@ -67,7 +67,7 @@ export async function Footer() {
                   href={product.href}
                   className="text-sm text-foreground/80 transition-colors hover:text-foreground"
                 >
-                  <span className="font-medium">{siteConfig.name}</span>{" "}
+                  <span className="font-semibold">{siteConfig.name}</span>{" "}
                   <span className={cn("font-medium italic", product.colorClass)}>
                     {t(productNameKeys[product.id])}
                   </span>

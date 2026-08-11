@@ -7,8 +7,8 @@ import {
   getMaskDocsNav,
   getPasswordDocsNav,
   getStartDocsNav,
-  maskExampleSlugs,
-  passwordExampleSlugs,
+  maskExampleIds,
+  passwordExampleIds,
 } from "@/features/docs";
 import { routing } from "@/i18n/routing";
 
@@ -42,8 +42,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     section.items.map((item) => item.href),
   );
 
-  const maskExampleHrefs = maskExampleSlugs.map((slug) => `/mask/docs/${slug}`);
-  const passwordExampleHrefs = passwordExampleSlugs.map((slug) => `/password/docs/${slug}`);
+  const maskExampleHrefs = [
+    "/mask/examples",
+    ...maskExampleIds.map((id) => `/mask/examples/${id}`),
+  ];
+  const passwordExampleHrefs = [
+    "/password/examples",
+    ...passwordExampleIds.map((id) => `/password/examples/${id}`),
+  ];
   const allDocsHrefs = [...new Set([...docsHrefs, ...maskExampleHrefs, ...passwordExampleHrefs])];
 
   const docsEntries = routing.locales.flatMap((locale) =>
@@ -68,8 +74,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const startBuilderEntries = routing.locales.map((locale) => ({
+    url:
+      locale === routing.defaultLocale
+        ? `${siteConfig.url}/start/builder`
+        : `${siteConfig.url}/${locale}/start/builder`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const siteEntries = routing.locales.flatMap((locale) =>
-    (["/about", "/brand", "/contribute", "/community", "/support"] as const).map((path) => ({
+    (["/about", "/brand", "/support"] as const).map((path) => ({
       url:
         locale === routing.defaultLocale
           ? `${siteConfig.url}${path}`
@@ -80,5 +96,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...homeEntries, ...productEntries, ...docsEntries, ...guidePlayEntries, ...siteEntries];
+  return [
+    ...homeEntries,
+    ...productEntries,
+    ...docsEntries,
+    ...guidePlayEntries,
+    ...startBuilderEntries,
+    ...siteEntries,
+  ];
 }

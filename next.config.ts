@@ -21,6 +21,60 @@ const nextConfig: NextConfig = {
       // { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/contribute",
+        destination: "/support",
+        permanent: true,
+      },
+      {
+        source: "/:locale/contribute",
+        destination: "/:locale/support",
+        permanent: true,
+      },
+      {
+        source: "/mask/docs/examples",
+        destination: "/mask/examples",
+        permanent: true,
+      },
+      {
+        source: "/:locale/mask/docs/examples",
+        destination: "/:locale/mask/examples",
+        permanent: true,
+      },
+      {
+        source: "/mask/docs/examples/:id",
+        destination: "/mask/examples/:id",
+        permanent: true,
+      },
+      {
+        source: "/:locale/mask/docs/examples/:id",
+        destination: "/:locale/mask/examples/:id",
+        permanent: true,
+      },
+      {
+        source: "/password/docs/examples",
+        destination: "/password/examples",
+        permanent: true,
+      },
+      {
+        source: "/:locale/password/docs/examples",
+        destination: "/:locale/password/examples",
+        permanent: true,
+      },
+      {
+        source: "/password/docs/examples/:id",
+        destination: "/password/examples/:id",
+        permanent: true,
+      },
+      {
+        source: "/:locale/password/docs/examples/:id",
+        destination: "/:locale/password/examples/:id",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

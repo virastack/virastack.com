@@ -21,7 +21,7 @@ export function PasswordIntroductionDoc() {
 
         <h2 id="baslarken">Başlarken</h2>
         <p>
-          Paketi ekleyin. Canlı demolar için <Link href="/password/docs/examples">örnekler</Link>{" "}
+          Paketi ekleyin. Canlı demolar için <Link href="/password/examples">örnekler</Link>{" "}
           sayfasına bakın.
         </p>
 
@@ -84,7 +84,7 @@ export function PasswordIntroductionDoc() {
             <Link href="/password/docs/types">types</Link>
           </li>
           <li>
-            UI kütüphaneleri ve <Link href="/password/docs/examples">örnekler</Link>
+            UI kütüphaneleri ve <Link href="/password/examples">örnekler</Link>
           </li>
         </ul>
       </DocsProse>

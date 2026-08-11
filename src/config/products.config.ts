@@ -1,7 +1,7 @@
 import type { Product, ProductId } from "@/types/product.types";
 
 /**
- * ViraStack ecosystem products: brand colors and paths from VIRASTACK_ARCHITECTURE.md §4.1.
+ * ViraStack ecosystem products: brand colors and paths.
  */
 export const products: readonly Product[] = [
   {

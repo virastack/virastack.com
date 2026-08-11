@@ -12,8 +12,8 @@ export function DocsProse({ children, className }: DocsProseProps) {
     <div
       className={cn(
         "space-y-6 text-base leading-relaxed text-muted-foreground",
-        "[&_h2]:scroll-mt-24 [&_h2]:pt-4 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground",
-        "[&_h3]:scroll-mt-24 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:text-foreground",
+        "[&_h2]:scroll-mt-32 [&_h2]:pt-4 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground",
+        "[&_h3]:scroll-mt-32 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:text-foreground",
         "[&_p]:text-pretty",
         "[&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5",
         "[&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-5",

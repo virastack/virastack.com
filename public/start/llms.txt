@@ -11,6 +11,7 @@ For inline CLI + template detail, prefer [llms-full.txt](https://virastack.com/s
 - [Introduction](https://virastack.com/start/docs): What Start is and why to use it
 - [Installation](https://virastack.com/start/docs/installation): Quick start and post-install steps
 - [CLI](https://virastack.com/start/docs/cli): Commands, flags, `virastack add`, non-interactive usage
+- [Builder](https://virastack.com/start/builder): Step-by-step install command wizard
 - [Templates](https://virastack.com/start/docs/templates): Next.js / TanStack Start, with or without i18n
 - [Scripts](https://virastack.com/start/docs/scripts): Day-to-day, quality, and CI scripts
 - [i18n](https://virastack.com/start/docs/i18n): Locales and message files in multi-language templates

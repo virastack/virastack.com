@@ -112,14 +112,14 @@ Built-in `validator` names: `luhn`, `tckn`, `email`, `iban`, `expiry`, `date`, `
 
 ## Example URLs
 
-- https://virastack.com/mask/docs/examples/credit-card
-- https://virastack.com/mask/docs/examples/card
-- https://virastack.com/mask/docs/examples/phone
-- https://virastack.com/mask/docs/examples/iban
-- https://virastack.com/mask/docs/examples/tckn
-- https://virastack.com/mask/docs/examples/currency
-- https://virastack.com/mask/docs/examples/date
-- https://virastack.com/mask/docs/examples/taxNumber
+- https://virastack.com/mask/examples/credit-card
+- https://virastack.com/mask/examples/card
+- https://virastack.com/mask/examples/phone
+- https://virastack.com/mask/examples/iban
+- https://virastack.com/mask/examples/tckn
+- https://virastack.com/mask/examples/currency
+- https://virastack.com/mask/examples/date
+- https://virastack.com/mask/examples/taxNumber
 - Also: expiry, cvv, email, url, zipCode, alpha, username, text, password, numeric
 
 ## Related

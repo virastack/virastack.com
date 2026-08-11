@@ -51,7 +51,7 @@ export async function MaskUseViraMaskDoc() {
           </li>
         </ul>
         <p>
-          Tüm hazır maskeler için <Link href="/mask/docs/examples">örnekler</Link> sayfasına bakın.
+          Tüm hazır maskeler için <Link href="/mask/examples">örnekler</Link> sayfasına bakın.
           Sıfırdan maske için <Link href="/mask/docs/custom-mask">custom mask</Link>.
         </p>
 

@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
+import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
@@ -30,31 +31,28 @@ const productDescKeys = {
   guide: "guideDesc",
 } as const;
 
+const AI_INSTALL_COMMAND = "npx @virastack/ai init";
+
 type ProductHeroProps = {
   product: Product;
 };
 
 export function ProductHero({ product }: ProductHeroProps) {
   const t = useTranslations("Products");
+  const tAi = useTranslations("Ai");
   const primary =
     product.id === "guide"
       ? { href: "/guide/play" as const, label: t("startExperience") }
       : product.id === "ai"
-        ? { href: "#demo" as const, label: t("seeTheDemo") }
+        ? { href: "#install" as const, label: t("install") }
         : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
-  const heroPadding =
-    product.id === "ai" ||
-    product.id === "mask" ||
-    product.id === "password" ||
-    product.id === "guide"
-      ? "pt-36 pb-16"
-      : "pt-36 pb-28";
+  const showInstallCommand = product.id === "start" || product.id === "ai";
 
   return (
     <section
       className={cn(
         "mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center",
-        heroPadding,
+        showInstallCommand ? "pt-36 pb-28" : "pt-36 pb-16",
       )}
     >
       <h1 className="mb-2 text-center text-4xl font-semibold tracking-tight text-balance lg:text-6xl">
@@ -76,7 +74,7 @@ export function ProductHero({ product }: ProductHeroProps) {
         delay={0.1}
         className={cn(
           "mt-2 flex items-center justify-center",
-          product.id === "start" ? "flex-col gap-4" : "flex-wrap gap-2",
+          showInstallCommand ? "flex-col gap-4" : "flex-wrap gap-2",
         )}
       >
         <div className="flex flex-wrap items-center justify-center gap-2">
@@ -97,10 +95,29 @@ export function ProductHero({ product }: ProductHeroProps) {
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
           </Button>
+          {product.id === "ai" ? (
+            <Button size="lg" variant="outline" nativeButton={false} render={<a href="#demo" />}>
+              <span>{t("seeTheDemo")}</span>
+            </Button>
+          ) : null}
           <GithubRepoButton href={product.github} label={`virastack/${product.id}`} />
         </div>
 
         {product.id === "start" ? <NpxInstallCommand /> : null}
+        {product.id === "ai" ? (
+          <>
+            <NpxInstallCommand command={AI_INSTALL_COMMAND} />
+            <p className="max-w-md text-sm leading-relaxed text-balance text-muted-foreground">
+              {tAi.rich("heroNewProject", {
+                start: (chunks) => (
+                  <GuideProductMark id="start" linked>
+                    {chunks}
+                  </GuideProductMark>
+                ),
+              })}
+            </p>
+          </>
+        ) : null}
       </Reveal>
     </section>
   );

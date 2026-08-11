@@ -12,8 +12,6 @@ import {
 import {
   PasswordAccessibilityDoc,
   PasswordCustomizationDoc,
-  PasswordExampleDetailDoc,
-  PasswordExamplesDoc,
   PasswordHelpersDoc,
   PasswordIntroductionDoc,
   PasswordTypesDoc,
@@ -21,7 +19,6 @@ import {
   PasswordUseViraPasswordDoc,
 } from "@/features/docs/content/password";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 const DOCS_INDEX = "/password/docs";
 
@@ -33,7 +30,6 @@ const passwordDocsContent: Record<string, () => ReactNode> = {
   helpers: () => <PasswordHelpersDoc />,
   types: () => <PasswordTypesDoc />,
   "ui-libraries": () => <PasswordUiLibrariesDoc />,
-  examples: () => <PasswordExamplesDoc />,
 };
 
 type PasswordDocsPageProps = {
@@ -45,15 +41,8 @@ export async function PasswordDocsPage({ slug }: PasswordDocsPageProps) {
   const tDocs = await getTranslations("Docs");
   const page = getPasswordDocsPage(slug, t);
   const sections = getPasswordDocsNav(t);
-
-  let content: ReactNode = null;
-  if (slug.startsWith("examples/") && slug !== "examples") {
-    const id = slug.slice("examples/".length);
-    content = <PasswordExampleDetailDoc id={id} />;
-  } else {
-    const render = passwordDocsContent[slug];
-    content = render?.() ?? null;
-  }
+  const render = passwordDocsContent[slug];
+  const content = render?.() ?? null;
 
   if (!page || !content) {
     return null;
@@ -76,11 +65,6 @@ export async function PasswordDocsPage({ slug }: PasswordDocsPageProps) {
       sections={sections}
       docsIndexHref={DOCS_INDEX}
       slug={slug}
-      productLabel={
-        <GuideProductMark id="password" linked={false}>
-          Password
-        </GuideProductMark>
-      }
       headings={page.headings}
       githubIssueHref={githubIssueHref}
     >

@@ -22,7 +22,7 @@ export async function PasswordExamplesDoc() {
             <div key={example.id} className="flex flex-col gap-3 rounded-xl bg-background p-4">
               <div className="flex items-baseline justify-between gap-2">
                 <Link
-                  href={`/password/docs/examples/${example.id}`}
+                  href={`/password/examples/${example.id}`}
                   className="font-semibold text-foreground no-underline hover:underline"
                 >
                   {example.title}

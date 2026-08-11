@@ -54,7 +54,7 @@ export function PasswordDemo() {
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<Link href="/password/docs/examples" />}
+            render={<Link href="/password/examples" />}
           >
             <span>{t("demoMoreExamples")}</span>
             <ChevronRightIcon

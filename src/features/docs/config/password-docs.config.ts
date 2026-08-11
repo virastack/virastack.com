@@ -200,20 +200,9 @@ export function getPasswordExample(
 }
 
 export const passwordExampleSlugs = PASSWORD_EXAMPLE_IDS.map((id) => `examples/${id}`);
+export const passwordExampleIds = [...PASSWORD_EXAMPLE_IDS];
 
 export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
-  const examples = getPasswordExamples(t);
-  const exampleNavItems = [
-    { slug: "examples", title: t("navExamplesAll"), href: `${BASE}/examples` },
-    ...[...examples]
-      .sort((a, b) => a.title.localeCompare(b.title))
-      .map((example) => ({
-        slug: `examples/${example.id}`,
-        title: example.title,
-        href: `${BASE}/examples/${example.id}`,
-      })),
-  ];
-
   return [
     {
       title: t("navGettingStarted"),
@@ -260,9 +249,25 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
         },
       ],
     },
+  ];
+}
+
+export function getPasswordExamplesNav(t: DocsPasswordTranslate): DocsNavSection[] {
+  const examples = getPasswordExamples(t);
+
+  return [
     {
       title: t("navExamples"),
-      items: exampleNavItems,
+      items: [
+        { slug: "index", title: t("navExamplesAll"), href: "/password/examples" },
+        ...[...examples]
+          .sort((a, b) => a.title.localeCompare(b.title))
+          .map((example) => ({
+            slug: example.id,
+            title: example.title,
+            href: `/password/examples/${example.id}`,
+          })),
+      ],
     },
   ];
 }
@@ -382,8 +387,6 @@ export const passwordDocsSlugs = [
   "helpers",
   "types",
   "ui-libraries",
-  "examples",
-  ...passwordExampleSlugs,
 ] as const;
 
 const passwordDocsSlugSet: Record<string, true> = Object.fromEntries(
