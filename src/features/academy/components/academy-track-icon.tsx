@@ -1,15 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 
-import {
-  BookOpen,
-  Bot,
-  Gauge,
-  Globe,
-  GraduationCap,
-  Layers,
-  Rocket,
-  ShieldCheck,
-} from "lucide-react";
+import { BookOpen, Bot, Gauge, GraduationCap, Layers, Rocket, ShieldCheck } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -27,6 +18,7 @@ import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Vitest } from "@/components/ui/svgs/vitest";
+import { Webdev } from "@/components/ui/svgs/webdev";
 import { Zod } from "@/components/ui/svgs/zod";
 import { Zustand } from "@/components/ui/svgs/zustand";
 
@@ -57,11 +49,7 @@ const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
   Zod: { kind: "svg", icon: Zod },
   Vitest: { kind: "svg", icon: Vitest },
   Playwright: { kind: "svg", icon: Playwright, className: "dark:brightness-200" },
-  "Web Temelleri": {
-    kind: "lucide",
-    icon: Globe,
-    className: "text-teal-600 dark:text-teal-400",
-  },
+  "Web Temelleri": { kind: "svg", icon: Webdev },
   "Web Performansı": {
     kind: "lucide",
     icon: Gauge,
