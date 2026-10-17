@@ -25,6 +25,9 @@ export const ACADEMY_LIBRARY_BADGES = [
   "docker",
   "vercel",
   "github",
+  "html",
+  "css",
+  "javascript",
 ] as const;
 
 export const ACADEMY_PRODUCT_BADGES = [
@@ -111,6 +114,9 @@ export const ACADEMY_BADGE_LABELS: Record<string, string> = {
   docker: "Docker",
   vercel: "Vercel",
   github: "GitHub",
+  html: "HTML",
+  css: "CSS",
+  javascript: "JavaScript",
   claude: "Claude",
   gpt: "GPT",
   chatGpt: "ChatGPT",

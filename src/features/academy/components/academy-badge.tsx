@@ -12,6 +12,7 @@ import { CodexDark } from "@/components/ui/svgs/codexDark";
 import { CodexLight } from "@/components/ui/svgs/codexLight";
 import { Copilot } from "@/components/ui/svgs/copilot";
 import { CopilotDark } from "@/components/ui/svgs/copilotDark";
+import { Css } from "@/components/ui/svgs/css";
 import { CursorDark } from "@/components/ui/svgs/cursorDark";
 import { CursorLight } from "@/components/ui/svgs/cursorLight";
 import { Docker } from "@/components/ui/svgs/docker";
@@ -22,6 +23,8 @@ import { Gemini } from "@/components/ui/svgs/gemini";
 import { GithubDark } from "@/components/ui/svgs/githubDark";
 import { GithubLight } from "@/components/ui/svgs/githubLight";
 import { Google } from "@/components/ui/svgs/google";
+import { Html5 } from "@/components/ui/svgs/html5";
+import { Javascript } from "@/components/ui/svgs/javascript";
 import { Linear } from "@/components/ui/svgs/linear";
 import { Meta } from "@/components/ui/svgs/meta";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
@@ -187,6 +190,12 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <ThemeIcon light={Vercel} dark={VercelDark} className={className} />;
     case "github":
       return <ThemeIcon light={GithubLight} dark={GithubDark} className={className} />;
+    case "html":
+      return <Html5 className={iconClassName} aria-hidden />;
+    case "css":
+      return <Css className={iconClassName} aria-hidden />;
+    case "javascript":
+      return <Javascript className={iconClassName} aria-hidden />;
     default:
       return null;
   }
