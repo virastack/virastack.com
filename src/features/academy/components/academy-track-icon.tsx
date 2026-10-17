@@ -4,6 +4,7 @@ import {
   BookOpen,
   Bot,
   Gauge,
+  Globe,
   GraduationCap,
   Layers,
   Rocket,
@@ -16,14 +17,14 @@ import { CssOld } from "@/components/ui/svgs/cssOld";
 import { Git } from "@/components/ui/svgs/git";
 import { Html5 } from "@/components/ui/svgs/html5";
 import { Javascript } from "@/components/ui/svgs/javascript";
-import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
-import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Playwright } from "@/components/ui/svgs/playwright";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
 import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Reactquery } from "@/components/ui/svgs/reactquery";
+import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
+import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Vitest } from "@/components/ui/svgs/vitest";
 import { Zod } from "@/components/ui/svgs/zod";
@@ -56,6 +57,11 @@ const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
   Zod: { kind: "svg", icon: Zod },
   Vitest: { kind: "svg", icon: Vitest },
   Playwright: { kind: "svg", icon: Playwright, className: "dark:brightness-200" },
+  "Web Temelleri": {
+    kind: "lucide",
+    icon: Globe,
+    className: "text-teal-600 dark:text-teal-400",
+  },
   "Web Performansı": {
     kind: "lucide",
     icon: Gauge,
@@ -119,9 +125,7 @@ export function AcademyTrackIcon({ tag, className }: AcademyTrackIconProps) {
 
   if (entry.kind === "lucide") {
     const Icon = entry.icon;
-    return (
-      <Icon className={cn(className, entry.className)} strokeWidth={1.5} aria-hidden />
-    );
+    return <Icon className={cn(className, entry.className)} strokeWidth={1.5} aria-hidden />;
   }
 
   const Icon = entry.icon;

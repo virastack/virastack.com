@@ -1,5 +1,5 @@
 export const TRACK_ICON_TAGS: Record<string, string | readonly string[]> = {
-  "web-fundamentals": ["HTML", "CSS", "Tailwind", "shadcn/ui", "JavaScript", "Git"],
+  "web-fundamentals": "Web Temelleri",
   typescript: "TypeScript",
   react: "React",
   nextjs: "Next.js",
