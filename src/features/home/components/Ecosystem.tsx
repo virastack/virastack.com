@@ -11,27 +11,43 @@ import { cn } from "@/lib/utils";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { Link } from "@/i18n/routing";
 
-const productNameKeys = {
+type EcosystemItemId = "academy" | ProductId;
+
+type EcosystemItem = {
+  id: EcosystemItemId;
+  href: "/academy" | `/${ProductId}`;
+  colorClass: string;
+};
+
+const ecosystemNameKeys = {
+  academy: "academyName",
   start: "startName",
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
   guide: "guideName",
-} as const satisfies Record<ProductId, string>;
+} as const satisfies Record<EcosystemItemId, string>;
 
-const productDescKeys = {
+const ecosystemDescKeys = {
+  academy: "ecosystemAcademyDesc",
   start: "ecosystemStartDesc",
   ai: "ecosystemAiDesc",
   mask: "ecosystemMaskDesc",
   password: "ecosystemPasswordDesc",
   guide: "ecosystemGuideDesc",
-} as const satisfies Record<ProductId, string>;
+} as const satisfies Record<EcosystemItemId, string>;
+
+const academyItem = {
+  id: "academy",
+  href: "/academy",
+  colorClass: "text-green-500",
+} as const satisfies EcosystemItem;
+
+const ecosystemItems: readonly EcosystemItem[] = [academyItem, ...products];
 
 export function Ecosystem() {
   const t = useTranslations("Home");
   const tNav = useTranslations("Navigation");
-
-  const [start, ...rest] = products;
 
   return (
     <section id="ecosystem" className="mx-auto max-w-5xl px-6 py-16">
@@ -46,67 +62,29 @@ export function Ecosystem() {
         </RevealItem>
       </RevealGroup>
 
-      <div className="flex flex-col gap-6">
-        {start ? (
-          <RevealGroup>
-            <RevealItem>
-              <Link
-                href={start.href}
-                className={cn(
-                  featureCardClassName,
-                  "h-full transition-colors hover:bg-accent/30 sm:flex-row sm:items-center sm:justify-between sm:gap-8",
-                )}
-              >
-                <div className="flex min-w-0 flex-col gap-3">
-                  <div className="flex items-center justify-between gap-2 md:gap-3">
-                    <h3 className="text-base font-semibold text-balance md:text-xl">
-                      <span className="text-foreground">{siteConfig.name}</span>{" "}
-                      <span className={cn("font-medium italic", start.colorClass)}>
-                        {tNav(productNameKeys.start)}
-                      </span>
-                    </h3>
-                    <ChevronRight
-                      className={cn(featureCardChevronClassName, "sm:hidden")}
-                      aria-hidden
-                    />
-                  </div>
-                  <p className="max-w-2xl text-sm leading-relaxed text-pretty text-muted-foreground md:text-base">
-                    {t(productDescKeys.start)}
-                  </p>
-                </div>
-                <ChevronRight
-                  className={cn(featureCardChevronClassName, "hidden sm:block")}
-                  aria-hidden
-                />
-              </Link>
-            </RevealItem>
-          </RevealGroup>
-        ) : null}
-
-        <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {rest.map((product) => (
-            <RevealItem key={product.id}>
-              <Link
-                href={product.href}
-                className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
-              >
-                <div className="flex items-center justify-between gap-2 md:gap-3">
-                  <h3 className="text-base font-semibold text-balance md:text-lg">
-                    <span className="text-foreground">{siteConfig.name}</span>{" "}
-                    <span className={cn("font-medium italic", product.colorClass)}>
-                      {tNav(productNameKeys[product.id])}
-                    </span>
-                  </h3>
-                  <ChevronRight className={featureCardChevronClassName} aria-hidden />
-                </div>
-                <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                  {t(productDescKeys[product.id])}
-                </p>
-              </Link>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </div>
+      <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {ecosystemItems.map((item) => (
+          <RevealItem key={item.id}>
+            <Link
+              href={item.href}
+              className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
+            >
+              <div className="flex items-center justify-between gap-2 md:gap-3">
+                <h3 className="text-base font-semibold text-balance md:text-lg">
+                  <span className="text-foreground">{siteConfig.name}</span>{" "}
+                  <span className={cn("font-medium italic", item.colorClass)}>
+                    {tNav(ecosystemNameKeys[item.id])}
+                  </span>
+                </h3>
+                <ChevronRight className={featureCardChevronClassName} aria-hidden />
+              </div>
+              <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                {t(ecosystemDescKeys[item.id])}
+              </p>
+            </Link>
+          </RevealItem>
+        ))}
+      </RevealGroup>
     </section>
   );
 }

@@ -13,6 +13,7 @@ import {
 import { useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
+import { isAcademyPath } from "@/config/academy-subnav.config";
 import { getProductByPathname, products } from "@/config/products.config";
 import { headerNavLinks } from "@/config/site-nav.config";
 import { siteConfig } from "@/config/site.config";
@@ -20,6 +21,7 @@ import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 
 import { GithubIcon, XLogo } from "@/components/icons";
+import { AcademySubHeader } from "@/components/layout/AcademySubHeader";
 import { HeaderLogoContextMenu } from "@/components/layout/HeaderLogoContextMenu";
 import { ProductSubHeader } from "@/components/layout/ProductSubHeader";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
@@ -78,8 +80,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto grid h-14 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 sm:px-6">
-        <div className="flex items-center justify-self-start">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr] md:justify-items-stretch">
+        <div className="flex items-center md:justify-self-start">
           <HeaderLogoContextMenu>
             <Link href="/" className="inline-flex shrink-0 items-center gap-2 tracking-tight">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -138,22 +140,27 @@ export function Header() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              {headerNavLinks.map((item) => (
-                <NavigationMenuItem key={item.href}>
-                  <NavigationMenuLink
-                    active={pathname === item.href}
-                    className={navigationMenuTriggerStyle()}
-                    render={<Link href={item.href} />}
-                  >
-                    {t(item.labelKey)}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
+              {headerNavLinks.map((item) => {
+                const active =
+                  item.href === "/academy" ? isAcademyPath(pathname) : pathname === item.href;
+
+                return (
+                  <NavigationMenuItem key={item.href}>
+                    <NavigationMenuLink
+                      active={active}
+                      className={navigationMenuTriggerStyle()}
+                      render={<Link href={item.href} />}
+                    >
+                      {t(item.labelKey)}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
             </NavigationMenuList>
           </NavigationMenu>
         </nav>
 
-        <div className="flex items-center gap-0.5 justify-self-end">
+        <div className="flex items-center gap-0.5 md:justify-self-end">
           <SiteSearch />
           <div className="hidden items-center gap-0.5 sm:flex">
             <Button
@@ -250,7 +257,8 @@ export function Header() {
                     );
                   })}
                   {headerNavLinks.map((item) => {
-                    const active = pathname === item.href;
+                    const active =
+                      item.href === "/academy" ? isAcademyPath(pathname) : pathname === item.href;
 
                     return (
                       <li key={item.href}>
@@ -308,7 +316,11 @@ export function Header() {
         </div>
       </div>
 
-      {activeProduct ? <ProductSubHeader product={activeProduct} /> : null}
+      {activeProduct ? (
+        <ProductSubHeader product={activeProduct} />
+      ) : isAcademyPath(pathname) ? (
+        <AcademySubHeader />
+      ) : null}
     </header>
   );
 }

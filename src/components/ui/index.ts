@@ -1,3 +1,9 @@
+export {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 export { Button, buttonVariants, type ButtonProps } from "@/components/ui/button";
 export { Checkbox } from "@/components/ui/checkbox";
 export { FieldDescription, FieldError } from "@/components/ui/field";
@@ -66,7 +72,20 @@ export {
   SheetTrigger,
 } from "@/components/ui/sheet";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-export { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+export {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/components/ui/avatar";
+export {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 export {
   Table,
   TableBody,

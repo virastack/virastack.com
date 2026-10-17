@@ -1,0 +1,139 @@
+export const ACADEMY_QUERY_BADGES = ["getBy", "queryBy", "findBy"] as const;
+
+export const ACADEMY_LIBRARY_BADGES = [
+  "react",
+  "nextjs",
+  "tanstack-start",
+  "tanstack-query",
+  "nuxt",
+  "vitest",
+  "playwright",
+  "vite",
+  "eslint",
+  "prettier",
+  "biome",
+  "turborepo",
+  "pnpm",
+  "npm",
+  "typescript",
+  "tailwind",
+  "zod",
+  "nodejs",
+  "react-router",
+  "shadcn",
+  "figma",
+  "docker",
+  "vercel",
+  "github",
+] as const;
+
+export const ACADEMY_PRODUCT_BADGES = [
+  "claude",
+  "gpt",
+  "chatGpt",
+  "gemini",
+  "geminiCli",
+  "cursor",
+  "claudeCode",
+  "copilot",
+  "codex",
+  "vscode",
+  "windsurf",
+  "zed",
+  "jira",
+  "linear",
+  "azuredevops",
+] as const;
+
+export const ACADEMY_COMPANY_BADGES = [
+  "anthropic",
+  "openai",
+  "google",
+  "qwen",
+  "meta",
+  "atlassian",
+] as const;
+
+export const ACADEMY_TABLE_LOGOS = [
+  "anthropic",
+  "openai",
+  "claude",
+  "gemini",
+  "google",
+  "qwen",
+  "meta",
+  "atlassian",
+] as const;
+
+export const ACADEMY_COMPANY_NAME_TO_KIND: Record<string, string> = {
+  Anthropic: "anthropic",
+  OpenAI: "openai",
+  Google: "google",
+  Alibaba: "qwen",
+  Meta: "meta",
+  Atlassian: "atlassian",
+};
+
+export const ACADEMY_BADGE_KINDS = [
+  ...ACADEMY_QUERY_BADGES,
+  ...ACADEMY_LIBRARY_BADGES,
+  ...ACADEMY_PRODUCT_BADGES,
+  ...ACADEMY_TABLE_LOGOS,
+] as const;
+
+export type AcademyBadgeKind = (typeof ACADEMY_BADGE_KINDS)[number];
+
+export const ACADEMY_BADGE_LABELS: Record<string, string> = {
+  getBy: "getBy*",
+  queryBy: "queryBy*",
+  findBy: "findBy*",
+  react: "React",
+  nextjs: "Next.js",
+  "tanstack-start": "TanStack Start",
+  nuxt: "Nuxt",
+  vitest: "Vitest",
+  playwright: "Playwright",
+  vite: "Vite",
+  eslint: "ESLint",
+  prettier: "Prettier",
+  biome: "Biome",
+  turborepo: "Turborepo",
+  pnpm: "pnpm",
+  npm: "npm",
+  typescript: "TypeScript",
+  tailwind: "Tailwind CSS",
+  zod: "Zod",
+  nodejs: "Node.js",
+  "tanstack-query": "TanStack Query",
+  "react-router": "React Router",
+  shadcn: "shadcn/ui",
+  figma: "Figma",
+  docker: "Docker",
+  vercel: "Vercel",
+  github: "GitHub",
+  claude: "Claude",
+  gpt: "GPT",
+  chatGpt: "ChatGPT",
+  gemini: "Gemini",
+  geminiCli: "Gemini CLI",
+  cursor: "Cursor",
+  claudeCode: "Claude Code",
+  copilot: "GitHub Copilot",
+  codex: "Codex",
+  vscode: "VS Code",
+  windsurf: "Windsurf",
+  zed: "Zed",
+  jira: "Jira",
+  linear: "Linear",
+  azuredevops: "Azure DevOps",
+  anthropic: "Anthropic",
+  openai: "OpenAI",
+  google: "Google",
+  qwen: "Qwen",
+  meta: "Meta",
+  atlassian: "Atlassian",
+};
+
+export function isAcademyBadgeKind(value: string): value is AcademyBadgeKind {
+  return (ACADEMY_BADGE_KINDS as readonly string[]).includes(value);
+}

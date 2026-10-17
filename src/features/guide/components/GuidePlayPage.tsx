@@ -66,10 +66,9 @@ export function GuidePlayPage() {
   useEffect(() => {
     const id = window.setTimeout(() => {
       const element = document.getElementById(`guide-step-${currentStep}`);
-      // Final step: center the congratulations block in the viewport.
       element?.scrollIntoView({
         behavior: "smooth",
-        block: currentStep === LAST_STEP ? "center" : "start",
+        block: "start",
       });
     }, 80);
     return () => window.clearTimeout(id);
@@ -129,8 +128,8 @@ export function GuidePlayPage() {
           isStyled ? "text-muted-foreground" : "text-neutral-500 dark:text-neutral-400",
         )}
       >
-        <MoveLeftIcon className="size-4" />
-        <MoveRightIcon className="size-4" />
+        <MoveLeftIcon className={cn("size-4", currentStep === 0 && "invisible")} />
+        <MoveRightIcon className={cn("size-4", currentStep === LAST_STEP && "invisible")} />
       </div>
 
       <div className="flex flex-col sm:pb-24">

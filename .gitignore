@@ -44,3 +44,6 @@ next-env.d.ts
 .knip
 .turbo
 .env*.local
+
+# academy curriculum cloned at build time
+.content/

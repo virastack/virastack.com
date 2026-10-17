@@ -8,7 +8,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "usehooks-ts";
 
 import type { ProductId } from "@/types/product.types";
-import { products } from "@/config/products.config";
+import { siteConfig } from "@/config/site.config";
 
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
@@ -22,12 +22,18 @@ const CONFETTI_COLORS = [
   "#fbbf24", // amber: Guide
 ];
 
+const ECOSYSTEM_PRODUCTS = [
+  "start",
+  "ai",
+  "mask",
+  "password",
+] as const satisfies readonly ProductId[];
+
 const PRODUCT_NAME_KEYS = {
   start: "startName",
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
-  guide: "guideName",
 } as const;
 
 const PRODUCT_DESC_KEYS = {
@@ -35,12 +41,12 @@ const PRODUCT_DESC_KEYS = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
-  guide: "guideDesc",
 } as const;
 
 export function Step7Final() {
   const t = useTranslations("Guide");
   const tNav = useTranslations("Navigation");
+  const tAcademy = useTranslations("Academy");
   const { width = 0, height = 0 } = useWindowSize({ initializeWithValue: false });
   const [recycle, setRecycle] = useState(true);
 
@@ -54,7 +60,7 @@ export function Step7Final() {
   const sideY = height * 0.25;
 
   return (
-    <section className="flex flex-col justify-center gap-6 sm:mb-[30vh]">
+    <section className="flex flex-col gap-6">
       {ready ? (
         <>
           <Confetti
@@ -88,41 +94,40 @@ export function Step7Final() {
         </>
       ) : null}
 
-      <h2 className="text-3xl font-bold tracking-tight">{t("step7Title")}</h2>
+      <div className="space-y-4">
+        <h2 className="text-3xl font-bold tracking-tight text-balance">{t("step7Title")}</h2>
+        <p className="text-lg leading-relaxed text-pretty text-muted-foreground">
+          {t("step7Body")}
+        </p>
+      </div>
 
-      <p className="text-lg leading-relaxed text-muted-foreground">{t("step7Body")}</p>
-
-      <p className="text-lg leading-relaxed text-muted-foreground">
-        {t.rich("step7BodyVira", {
-          brand: (chunks) => (
-            <span className="inline-flex items-center gap-1.5 align-baseline font-semibold text-primary">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-icon.webp" alt="" className="size-[1em] shrink-0" aria-hidden />
-              {chunks}
-            </span>
-          ),
-        })}
-      </p>
-
-      <ul className="list-disc space-y-2.5 pl-5 text-lg leading-relaxed text-muted-foreground">
-        {products.map((product) => {
-          const id = product.id as ProductId;
-          return (
-            <li key={id}>
-              <GuideProductMark id={id} linked={false} showBrand>
-                {tNav(PRODUCT_NAME_KEYS[id])}
-              </GuideProductMark>
-              <span aria-hidden> - </span>
-              <span>{tNav(PRODUCT_DESC_KEYS[id])}</span>
-            </li>
-          );
-        })}
-      </ul>
-
-      <Button size="lg" className="w-fit self-end" nativeButton={false} render={<Link href="/" />}>
-        <span>{t("step7Cta")}</span>
-        <ChevronRightIcon data-icon="inline-end" />
-      </Button>
+      <div className="space-y-4">
+        <dl className="space-y-3 leading-relaxed text-muted-foreground">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+            <dt className="shrink-0 text-lg sm:w-48">
+              <span className="mx-0.5 inline whitespace-nowrap">
+                <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
+                <span className="font-medium text-green-500 italic">{tAcademy("name")}</span>
+              </span>
+            </dt>
+            <dd className="text-base">{t("step7AcademyDesc")}</dd>
+          </div>
+          {ECOSYSTEM_PRODUCTS.map((id) => (
+            <div key={id} className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-6">
+              <dt className="shrink-0 text-lg sm:w-48">
+                <GuideProductMark id={id} linked={false} showBrand>
+                  {tNav(PRODUCT_NAME_KEYS[id])}
+                </GuideProductMark>
+              </dt>
+              <dd className="text-base">{tNav(PRODUCT_DESC_KEYS[id])}</dd>
+            </div>
+          ))}
+        </dl>
+        <Button size="lg" className="w-fit" nativeButton={false} render={<Link href="/" />}>
+          <span>{t("step7Cta")}</span>
+          <ChevronRightIcon data-icon="inline-end" />
+        </Button>
+      </div>
     </section>
   );
 }

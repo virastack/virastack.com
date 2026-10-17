@@ -14,6 +14,8 @@
     "node": ">=20.9.0"
   },
   "scripts": {
+    "content:pull": "node scripts/pull-academy-content.mjs",
+    "prebuild": "pnpm content:pull",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -55,6 +57,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "framer-motion": "^12.42.2",
+    "gray-matter": "^4.0.3",
     "jotai": "^2.20.2",
     "lucide-react": "^1.25.0",
     "maplibre-gl": "^6.0.0",
@@ -67,8 +70,10 @@
     "react-confetti": "^6.4.0",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.82.0",
+    "react-markdown": "^10.1.0",
     "rehype-pretty-code": "^0.14.5",
     "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "shadcn": "^4.16.0",
@@ -76,6 +81,7 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0",
     "usehooks-ts": "^3.1.1",
     "zod": "^4.4.3",
     "zustand": "^5.0.14"
@@ -87,6 +93,7 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@tailwindcss/postcss": "^4",
     "@types/geojson": "^7946.0.16",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

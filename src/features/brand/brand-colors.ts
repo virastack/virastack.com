@@ -69,4 +69,13 @@ export const brandPalettes: readonly BrandPalette[] = [
     textClass: "text-amber-400",
     bgClass: "bg-[#ffb900]",
   },
+  {
+    id: "academy",
+    productName: "Academy",
+    shade: "green-500",
+    hex: "#00c950",
+    darkHex: null,
+    textClass: "text-green-500",
+    bgClass: "bg-green-500",
+  },
 ] as const;

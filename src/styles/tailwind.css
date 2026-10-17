@@ -168,6 +168,27 @@
   --color-code: var(--code);
 
   --color-code-foreground: var(--code-foreground);
+
+  --animate-accordion-down: accordion-down 200ms ease-out;
+  --animate-accordion-up: accordion-up 200ms ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--accordion-panel-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--accordion-panel-height);
+    }
+    to {
+      height: 0;
+    }
+  }
 }
 
 @layer base {
@@ -265,4 +286,37 @@
 .docs-code [data-highlighted-line] {
   background-color: color-mix(in oklab, var(--foreground) 6%, transparent);
   border-left-color: color-mix(in oklab, var(--foreground) 35%, transparent);
+}
+
+/* Lesson column stays max-w-2xl. A wide table breaks out to max-w-3xl (48rem). */
+.academy-table-wide {
+  width: min(var(--container-3xl), calc(100vw - 3rem));
+  max-width: none;
+  margin-left: calc(50% - min(calc(var(--container-3xl) / 2), 50vw - 1.5rem));
+}
+
+/* Testing Playground breaks out of the lesson column to max-w-5xl (64rem). */
+.academy-playground {
+  width: min(var(--container-5xl), calc(100vw - 3rem));
+  max-width: var(--container-5xl);
+  margin-left: calc(50% - min(calc(var(--container-5xl) / 2), 50vw - 1.5rem));
+}
+
+/* Academy Shiki dual theme (github-light / one-dark-pro); next-themes `.dark` */
+.academy-code :where(pre) {
+  @apply my-0 overflow-x-auto rounded-xl border border-border bg-muted/20 p-3 text-xs leading-relaxed md:p-4 md:text-sm;
+}
+
+.academy-code :where(pre code) {
+  @apply border-0 bg-transparent p-0 font-mono font-normal;
+}
+
+.academy-code :where(pre code span[style*="--shiki-light"]) {
+  color: var(--shiki-light);
+  font-weight: var(--shiki-light-font-weight);
+}
+
+.dark .academy-code :where(pre code span[style*="--shiki-light"]) {
+  color: var(--shiki-dark);
+  font-weight: var(--shiki-dark-font-weight);
 }

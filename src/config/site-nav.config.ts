@@ -2,6 +2,7 @@
  * Site-level nav links for the footer (not product routes).
  */
 export const siteNavLinks = [
+  { href: "/academy", labelKey: "academy" },
   { href: "/about", labelKey: "about" },
   { href: "/brand", labelKey: "brand" },
   { href: "/support", labelKey: "support" },
@@ -11,6 +12,7 @@ export const siteNavLinks = [
  * Primary header links beside the Products dropdown (also used in the mobile drawer).
  */
 export const headerNavLinks = [
+  { href: "/academy", labelKey: "academy" },
   { href: "/about", labelKey: "about" },
   { href: "/support", labelKey: "support" },
 ] as const;

@@ -1,0 +1,15 @@
+---
+description: Refresh local Academy content when the user says tekrar or güncelle
+alwaysApply: true
+---
+
+# Academy content refresh
+
+When the user says `tekrar` or `güncelle` and means the local Academy content, run these steps in order. Do not skip or reorder them.
+
+1. Stop the dev server on port 3000 if it is running. Deleting `.content` while Next is running writes a broken `.next` cache and returns 500.
+2. Delete the local `.content` directory (`rm -rf .content`).
+3. Run `pnpm content:pull`.
+4. Start the dev server again so `loadAcademyCurriculum` reads the new files. The curriculum cache lives for the process lifetime and ignores a replaced `.content` tree.
+
+Report the short commit hash and subject from `.content/academy`.

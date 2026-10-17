@@ -28,8 +28,10 @@ export function TabsTrigger({ className, ...props }: ComponentProps<typeof BaseT
     <BaseTabs.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none",
-        "text-foreground data-[selected]:bg-background data-[selected]:shadow-sm",
+        "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium whitespace-nowrap outline-none",
+        "text-muted-foreground transition-[color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]",
+        "data-[active]:bg-background data-[active]:text-foreground data-[active]:shadow-sm",
+        "active:scale-[0.96] motion-reduce:active:scale-100",
         "focus-visible:ring-[3px] focus-visible:ring-ring/50",
         "disabled:pointer-events-none disabled:opacity-50",
         className,

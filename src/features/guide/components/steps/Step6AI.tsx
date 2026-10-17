@@ -137,8 +137,8 @@ export function Step6AI({ onNext, isCompleted, isStyled }: GuideStepProps) {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full border border-border/80",
-                  "bg-muted/50 px-2 py-1 text-[11px] text-muted-foreground",
+                  "inline-flex shrink-0 items-center gap-1 rounded-full border border-border/80",
+                  "bg-muted/50 px-2 py-1 text-[11px] whitespace-nowrap text-muted-foreground",
                 )}
               >
                 {t("promptModel")}
