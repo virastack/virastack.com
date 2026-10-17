@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
+import { hasPublishedLessons } from "@/features/academy/lib/load-curriculum";
 import type { AcademyTrack } from "@/features/academy/types/academy.types";
 import { Link } from "@/i18n/routing";
 
@@ -47,6 +48,7 @@ function AcademyTrackCardIcons({ tags }: { tags: readonly string[] }) {
 export async function AcademyTrackCard({ track, className }: AcademyTrackCardProps) {
   const t = await getTranslations("Academy");
   const isComingSoon = track.status === "coming_soon";
+  const isEmpty = !isComingSoon && !hasPublishedLessons(track);
   const iconTags = getTrackIconTags(track.slug);
 
   const content = (
@@ -65,7 +67,7 @@ export async function AcademyTrackCard({ track, className }: AcademyTrackCardPro
             <ChevronRight className={cn(featureCardChevronClassName, "mt-0.5")} aria-hidden />
           )}
         </div>
-        <p className="text-pretty text-xs leading-relaxed text-muted-foreground md:text-sm">
+        <p className="text-xs leading-relaxed text-pretty text-muted-foreground md:text-sm">
           {track.description}
         </p>
       </div>
@@ -75,6 +77,7 @@ export async function AcademyTrackCard({ track, className }: AcademyTrackCardPro
   const cardClass = cn(
     getInteractiveCardClassName(isComingSoon),
     isComingSoon && "opacity-60",
+    isEmpty && "border-dashed opacity-60",
     className,
   );
 

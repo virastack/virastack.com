@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 
-import { academyCurriculumSchema } from "@/features/academy/schemas/curriculum.schema";
 import { getCurriculumPath } from "@/features/academy/lib/content-path";
+import { academyCurriculumSchema } from "@/features/academy/schemas/curriculum.schema";
 import type {
   AcademyCurriculum,
   AcademyLessonEntry,
@@ -68,6 +68,13 @@ export function findAcademyTrackNeighbours(
     previous: index > 0 ? (tracks[index - 1] ?? null) : null,
     next: index < tracks.length - 1 ? (tracks[index + 1] ?? null) : null,
   };
+}
+
+/** True when at least one lesson in the track has published markdown content. */
+export function hasPublishedLessons(track: AcademyTrack): boolean {
+  return track.lessonGroups.some((group) =>
+    group.lessons.some((lesson) => lesson.status === "published"),
+  );
 }
 
 export function getNumberedLessonGroups(track: AcademyTrack): AcademyNumberedLessonGroup[] {
