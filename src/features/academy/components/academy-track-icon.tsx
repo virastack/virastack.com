@@ -4,11 +4,13 @@ import { BookOpen, Bot, Gauge, GraduationCap, Layers, Rocket, ShieldCheck } from
 
 import { cn } from "@/lib/utils";
 
-import { CssOld } from "@/components/ui/svgs/cssOld";
+import { Chromium } from "@/components/ui/svgs/chromium";
+import { Css } from "@/components/ui/svgs/css";
 import { Git } from "@/components/ui/svgs/git";
 import { Html5 } from "@/components/ui/svgs/html5";
 import { Javascript } from "@/components/ui/svgs/javascript";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { Npm } from "@/components/ui/svgs/npm";
 import { Playwright } from "@/components/ui/svgs/playwright";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
 import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
@@ -35,12 +37,14 @@ type AcademyTrackIconEntry =
 
 const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
   HTML: { kind: "svg", icon: Html5 },
-  CSS: { kind: "svg", icon: CssOld },
+  CSS: { kind: "svg", icon: Css },
   Tailwind: { kind: "svg", icon: Tailwindcss },
   "shadcn/ui": { kind: "svg", icon: ShadcnUi },
   JavaScript: { kind: "svg", icon: Javascript },
   TypeScript: { kind: "svg", icon: Typescript },
   Git: { kind: "svg", icon: Git },
+  Chromium: { kind: "svg", icon: Chromium },
+  npm: { kind: "svg", icon: Npm },
   React: { kind: "theme", light: ReactLight, dark: ReactDark },
   "Next.js": { kind: "svg", icon: NextjsIconDark, className: "dark:invert" },
   "TanStack Query": { kind: "svg", icon: Reactquery },

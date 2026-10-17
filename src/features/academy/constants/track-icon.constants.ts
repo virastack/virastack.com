@@ -16,6 +16,21 @@ export const TRACK_ICON_TAGS: Record<string, string | readonly string[]> = {
   glossary: "Sözlük",
 };
 
+/** Logo tag per lesson, keyed by `${trackSlug}/${lessonSlug}`. */
+export const LESSON_ICON_TAGS: Record<string, string> = {
+  "web-fundamentals/how-the-web-works": "Chromium",
+  "web-fundamentals/terminal-and-npm": "npm",
+  "web-fundamentals/html": "HTML",
+  "web-fundamentals/css": "CSS",
+  "web-fundamentals/tailwind": "Tailwind",
+  "web-fundamentals/javascript": "JavaScript",
+  "web-fundamentals/git": "Git",
+};
+
+export function getLessonIconTag(trackSlug: string, lessonSlug: string): string | null {
+  return LESSON_ICON_TAGS[`${trackSlug}/${lessonSlug}`] ?? null;
+}
+
 export function getTrackIconTags(trackSlug: string): string[] {
   const iconTag = TRACK_ICON_TAGS[trackSlug];
 

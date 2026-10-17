@@ -9,6 +9,8 @@ import {
 import { cn } from "@/lib/utils";
 
 import { AcademyLessonMetaBadges } from "@/features/academy/components/academy-lesson-meta-badges";
+import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
+import { getLessonIconTag } from "@/features/academy/constants/track-icon.constants";
 import { countLessonResources } from "@/features/academy/lib/count-lesson-resources";
 import { formatLessonNumber } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
@@ -27,12 +29,19 @@ export async function TrackLessonRow({ trackSlug, entry }: TrackLessonRowProps) 
   const isProject = lesson.kind === "project";
   const document = loadAcademyLesson(locale, trackSlug, lesson.slug);
   const counts = document ? countLessonResources(document.body) : [];
+  const iconTag = getLessonIconTag(trackSlug, lesson.slug);
 
   const body = (
     <>
       <span className="mt-0.5 w-5 shrink-0 font-mono text-xs text-muted-foreground tabular-nums md:mt-1 md:text-sm">
         {formatLessonNumber(number)}
       </span>
+      {iconTag ? (
+        <AcademyTrackIcon
+          tag={iconTag}
+          className={cn("mt-1 size-4 shrink-0 md:mt-1.5 md:size-5", isComingSoon && "opacity-50")}
+        />
+      ) : null}
       <span className="flex min-w-0 flex-1 flex-col gap-1">
         <span className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 md:gap-x-3">
           <span
