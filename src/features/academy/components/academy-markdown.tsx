@@ -273,6 +273,20 @@ async function renderPhrasing(
         }
         break;
       }
+      case "image":
+        out.push(
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={key}
+            src={node.url}
+            alt={node.alt ?? ""}
+            title={node.title ?? undefined}
+            loading="lazy"
+            decoding="async"
+            className="my-2 block h-auto w-full rounded-lg outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
+          />,
+        );
+        break;
       case "break":
         out.push(<br key={key} />);
         break;
