@@ -35,6 +35,8 @@ function resourceKindLabel(
       return t("resourceRepo");
     case "video":
       return t("resourceVideo");
+    case "podcast":
+      return t("resourcePodcast");
   }
 }
 
@@ -92,10 +94,7 @@ export async function AcademyResourceLinks({
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noreferrer" : undefined}
               >
-                <ExternalLink
-                  className="size-3.5 shrink-0 text-muted-foreground"
-                  aria-hidden
-                />
+                <ExternalLink className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
                 <span className="min-w-0 underline underline-offset-4">{item.label}</span>
               </a>
             </div>

@@ -11,6 +11,8 @@ const RESOURCE_BADGE_CLASS: Record<AcademyResourceKind, string> = {
   repo: "border-orange-500/30 bg-orange-300/15 text-orange-900 dark:border-orange-300/30 dark:bg-orange-300/15 dark:text-orange-50",
   video:
     "border-rose-500/30 bg-rose-300/15 text-rose-900 dark:border-rose-300/30 dark:bg-rose-200/15 dark:text-rose-50",
+  podcast:
+    "border-violet-500/30 bg-violet-300/15 text-violet-900 dark:border-violet-300/30 dark:bg-violet-300/15 dark:text-violet-50",
 };
 
 type AcademyResourceBadgeProps = {

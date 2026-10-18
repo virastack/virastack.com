@@ -17,6 +17,7 @@ const RESOURCE_COUNT_ORDER = [
   "research",
   "repo",
   "video",
+  "podcast",
 ] as const satisfies readonly AcademyResourceKind[];
 
 export type AcademyResourceCount = {

@@ -4,6 +4,7 @@ export const ACADEMY_RESOURCE_KINDS = [
   "research",
   "repo",
   "video",
+  "podcast",
 ] as const;
 
 export type AcademyResourceKind = (typeof ACADEMY_RESOURCE_KINDS)[number];
@@ -23,6 +24,7 @@ const ACADEMY_RESOURCE_KIND_ALIASES: Record<string, AcademyResourceKind> = {
   repo: "repo",
   repository: "repo",
   video: "video",
+  podcast: "podcast",
 };
 
 export function isAcademyResourceKind(value: string): value is AcademyResourceKind {
@@ -32,9 +34,7 @@ export function isAcademyResourceKind(value: string): value is AcademyResourceKi
 /**
  * Maps a resource-kind token or localized label to a canonical kind.
  */
-export function parseAcademyResourceKind(
-  value: string,
-): AcademyResourceKind | undefined {
+export function parseAcademyResourceKind(value: string): AcademyResourceKind | undefined {
   const normalized = value.trim().toLocaleLowerCase("tr");
   const unwrapped = /^\(([^)]+)\)$/.exec(normalized)?.[1]?.trim() ?? normalized;
   return ACADEMY_RESOURCE_KIND_ALIASES[unwrapped];

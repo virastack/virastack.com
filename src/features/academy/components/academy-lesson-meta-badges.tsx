@@ -22,6 +22,8 @@ function resourceCountLabel(
       return t("resourceCountRepo", { count });
     case "video":
       return t("resourceCountVideo", { count });
+    case "podcast":
+      return t("resourceCountPodcast", { count });
   }
 }
 
@@ -30,10 +32,7 @@ type AcademyLessonMetaBadgesProps = {
   isProject: boolean;
 };
 
-export async function AcademyLessonMetaBadges({
-  counts,
-  isProject,
-}: AcademyLessonMetaBadgesProps) {
+export async function AcademyLessonMetaBadges({ counts, isProject }: AcademyLessonMetaBadgesProps) {
   if (counts.length === 0 && !isProject) {
     return null;
   }
