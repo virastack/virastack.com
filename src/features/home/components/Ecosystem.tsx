@@ -1,4 +1,12 @@
-import { ChevronRight } from "lucide-react";
+import {
+  BookOpenIcon,
+  ChevronRight,
+  FormIcon,
+  GraduationCapIcon,
+  RocketIcon,
+  SparklesIcon,
+  SquareAsteriskIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
@@ -37,6 +45,16 @@ const ecosystemDescKeys = {
   guide: "ecosystemGuideDesc",
 } as const satisfies Record<EcosystemItemId, string>;
 
+/** Same icons as the omergulcicek.com project cards, keeping both sites consistent. */
+const ecosystemIcons = {
+  academy: GraduationCapIcon,
+  start: RocketIcon,
+  ai: SparklesIcon,
+  mask: FormIcon,
+  password: SquareAsteriskIcon,
+  guide: BookOpenIcon,
+} as const satisfies Record<EcosystemItemId, typeof RocketIcon>;
+
 const academyItem = {
   id: "academy",
   href: "/academy",
@@ -63,27 +81,38 @@ export function Ecosystem() {
       </RevealGroup>
 
       <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {ecosystemItems.map((item) => (
-          <RevealItem key={item.id}>
-            <Link
-              href={item.href}
-              className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
-            >
-              <div className="flex items-center justify-between gap-2 md:gap-3">
-                <h3 className="text-base font-semibold text-balance md:text-lg">
-                  <span className="text-foreground">{siteConfig.name}</span>{" "}
-                  <span className={cn("font-medium italic", item.colorClass)}>
-                    {tNav(ecosystemNameKeys[item.id])}
-                  </span>
-                </h3>
-                <ChevronRight className={featureCardChevronClassName} aria-hidden />
-              </div>
-              <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                {t(ecosystemDescKeys[item.id])}
-              </p>
-            </Link>
-          </RevealItem>
-        ))}
+        {ecosystemItems.map((item) => {
+          const Icon = ecosystemIcons[item.id];
+
+          return (
+            <RevealItem key={item.id}>
+              <Link
+                href={item.href}
+                className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
+              >
+                <div className="flex h-20 items-center justify-center md:h-28">
+                  <Icon
+                    className={cn("size-8 md:size-10", item.colorClass)}
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-2 md:gap-3">
+                  <h3 className="text-base font-semibold text-balance md:text-lg">
+                    <span className="text-foreground">{siteConfig.name}</span>{" "}
+                    <span className={cn("font-medium italic", item.colorClass)}>
+                      {tNav(ecosystemNameKeys[item.id])}
+                    </span>
+                  </h3>
+                  <ChevronRight className={featureCardChevronClassName} aria-hidden />
+                </div>
+                <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                  {t(ecosystemDescKeys[item.id])}
+                </p>
+              </Link>
+            </RevealItem>
+          );
+        })}
       </RevealGroup>
     </section>
   );
