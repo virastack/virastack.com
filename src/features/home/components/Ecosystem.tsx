@@ -90,25 +90,27 @@ export function Ecosystem() {
                 href={item.href}
                 className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
               >
-                <div className="flex h-20 items-center justify-center md:h-28">
+                <div className="flex items-start gap-4">
                   <Icon
-                    className={cn("size-8 md:size-10", item.colorClass)}
+                    className={cn("mt-0.5 size-8 shrink-0 md:size-10", item.colorClass)}
                     strokeWidth={1.75}
                     aria-hidden
                   />
+                  <div className="flex min-w-0 flex-1 flex-col gap-2">
+                    <div className="flex items-center justify-between gap-2 md:gap-3">
+                      <h3 className="text-base font-semibold text-balance md:text-lg">
+                        <span className="text-foreground">{siteConfig.name}</span>{" "}
+                        <span className={cn("font-medium italic", item.colorClass)}>
+                          {tNav(ecosystemNameKeys[item.id])}
+                        </span>
+                      </h3>
+                      <ChevronRight className={featureCardChevronClassName} aria-hidden />
+                    </div>
+                    <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                      {t(ecosystemDescKeys[item.id])}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between gap-2 md:gap-3">
-                  <h3 className="text-base font-semibold text-balance md:text-lg">
-                    <span className="text-foreground">{siteConfig.name}</span>{" "}
-                    <span className={cn("font-medium italic", item.colorClass)}>
-                      {tNav(ecosystemNameKeys[item.id])}
-                    </span>
-                  </h3>
-                  <ChevronRight className={featureCardChevronClassName} aria-hidden />
-                </div>
-                <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                  {t(ecosystemDescKeys[item.id])}
-                </p>
               </Link>
             </RevealItem>
           );
