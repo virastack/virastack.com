@@ -21,6 +21,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Academy content is cloned at build time (see scripts/pull-academy-content.mjs).
+    ".content/**",
   ]),
 ]);
 
