@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: "Home" });
 
   const title = `${siteConfig.name} - ${t("title")}`;
-  const description = t("heroDesc");
+  const description = t("metaDesc");
   const og = buildOgImageMetadata({ description, path: "/" });
 
   return {

@@ -1,4 +1,5 @@
 import { About } from "@/features/home/components/About";
+import { AcademyShowcase } from "@/features/home/components/AcademyShowcase";
 import { Community } from "@/features/home/components/Community";
 import { Ecosystem } from "@/features/home/components/Ecosystem";
 import { Hero } from "@/features/home/components/Hero";
@@ -10,6 +11,7 @@ export function HomePage() {
       <Hero />
       <About />
       <Ecosystem />
+      <AcademyShowcase />
       <Maintainer />
       <Community />
     </>

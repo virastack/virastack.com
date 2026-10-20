@@ -19,6 +19,8 @@ import { cn } from "@/lib/utils";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { Link } from "@/i18n/routing";
 
+import { homePillars } from "../constants/pillars";
+
 type EcosystemItemId = "academy" | ProductId;
 
 type EcosystemItem = {
@@ -80,42 +82,60 @@ export function Ecosystem() {
         </RevealItem>
       </RevealGroup>
 
-      <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {ecosystemItems.map((item) => {
-          const Icon = ecosystemIcons[item.id];
+      <div className="flex flex-col gap-12">
+        {homePillars.map((pillar) => {
+          const items = pillar.items
+            .map((entry) => ecosystemItems.find((item) => item.id === entry.id))
+            .filter((item): item is EcosystemItem => item !== undefined);
 
           return (
-            <RevealItem key={item.id}>
-              <Link
-                href={item.href}
-                className={cn(featureCardClassName, "h-full transition-colors hover:bg-accent/30")}
-              >
-                <div className="flex items-start gap-4">
-                  <Icon
-                    className={cn("mt-0.5 size-8 shrink-0 md:size-10", item.colorClass)}
-                    strokeWidth={1.75}
-                    aria-hidden
-                  />
-                  <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2 md:gap-3">
-                      <h3 className="text-base font-semibold text-balance md:text-lg">
-                        <span className="text-foreground">{siteConfig.name}</span>{" "}
-                        <span className={cn("font-medium italic", item.colorClass)}>
-                          {tNav(ecosystemNameKeys[item.id])}
-                        </span>
-                      </h3>
-                      <ChevronRight className={featureCardChevronClassName} aria-hidden />
-                    </div>
-                    <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                      {t(ecosystemDescKeys[item.id])}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </RevealItem>
+            <div key={pillar.id}>
+              <h3 className="mb-4 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+                {t(`${pillar.id}Title`)}
+              </h3>
+              <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {items.map((item) => {
+                  const Icon = ecosystemIcons[item.id];
+
+                  return (
+                    <RevealItem key={item.id}>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          featureCardClassName,
+                          "h-full transition-colors hover:bg-accent/30",
+                        )}
+                      >
+                        <div className="flex items-start gap-4">
+                          <Icon
+                            className={cn("mt-0.5 size-8 shrink-0 md:size-10", item.colorClass)}
+                            strokeWidth={1.75}
+                            aria-hidden
+                          />
+                          <div className="flex min-w-0 flex-1 flex-col gap-2">
+                            <div className="flex items-center justify-between gap-2 md:gap-3">
+                              <h3 className="text-base font-semibold text-balance md:text-lg">
+                                <span className="text-foreground">{siteConfig.name}</span>{" "}
+                                <span className={cn("font-medium italic", item.colorClass)}>
+                                  {tNav(ecosystemNameKeys[item.id])}
+                                </span>
+                              </h3>
+                              <ChevronRight className={featureCardChevronClassName} aria-hidden />
+                            </div>
+                            <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                              {t(ecosystemDescKeys[item.id])}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    </RevealItem>
+                  );
+                })}
+              </RevealGroup>
+            </div>
           );
         })}
-      </RevealGroup>
+      </div>
     </section>
   );
 }

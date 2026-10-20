@@ -1,53 +1,31 @@
-import type { ReactNode } from "react";
-
 import { useTranslations } from "next-intl";
 
-import { siteConfig } from "@/config/site.config";
-
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { guideProductTags } from "@/features/guide/components/GuideRichText";
-import { Link } from "@/i18n/routing";
+
+const bodyKeys = ["aboutBody1", "aboutBody2", "aboutBody3"] as const;
 
 export function About() {
   const t = useTranslations("Home");
-  const products = guideProductTags({
-    ids: ["start", "ai", "mask", "password"],
-    linked: true,
-  });
-
-  const rich = {
-    br: () => <br />,
-    nextjs: (chunks: ReactNode) => (
-      <span className="font-semibold text-foreground">{chunks}</span>
-    ),
-    tanstack: (chunks: ReactNode) => (
-      <span className="font-semibold text-foreground">{chunks}</span>
-    ),
-    start: products.start,
-    ai: products.ai,
-    mask: products.mask,
-    password: products.password,
-    academy: (chunks: ReactNode) => (
-      <Link
-        href="/academy"
-        className="mx-0.5 inline whitespace-nowrap underline-offset-2 transition-opacity hover:underline hover:opacity-90"
-      >
-        <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
-        <span className="font-medium italic text-green-500">{chunks}</span>
-      </Link>
-    ),
-  };
 
   return (
-    <section id="about" className="mx-auto max-w-3xl px-6 py-16 text-center">
+    <section id="about" className="mx-auto max-w-2xl px-6 py-16">
       <RevealGroup>
         <RevealItem>
-          <h2 className="text-3xl font-semibold tracking-tight text-balance">{t("aboutTitle")}</h2>
-          <div className="mx-auto mt-4 max-w-2xl space-y-4 text-base leading-relaxed text-balance text-muted-foreground">
-            <p>{t.rich("aboutBody", rich)}</p>
-            <p>{t.rich("aboutAcademy", rich)}</p>
-          </div>
+          <h2 className="text-center text-3xl font-semibold tracking-tight text-balance">
+            {t("aboutTitle")}
+          </h2>
+          <p className="mt-6 text-xl leading-relaxed font-medium text-pretty">{t("aboutLead")}</p>
         </RevealItem>
+
+        <div className="mt-6 flex flex-col gap-4">
+          {bodyKeys.map((key) => (
+            <RevealItem key={key}>
+              <p className="text-base leading-relaxed text-pretty text-muted-foreground">
+                {t(key)}
+              </p>
+            </RevealItem>
+          ))}
+        </div>
       </RevealGroup>
     </section>
   );

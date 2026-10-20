@@ -4,7 +4,7 @@ import { env } from "@/env";
 export const siteConfig: SiteConfig = {
   name: env.NEXT_PUBLIC_APP_NAME,
   description:
-    "A DX-first toolkit for frontend developers: modern-stack starters and focused React hooks built on Next.js, TanStack, and React.",
+    "An open-source frontend ecosystem: free guides, Next.js and TanStack Start templates, AI rules, and form components. Learn, start, build.",
   url: env.NEXT_PUBLIC_APP_URL,
   ogImage: `${env.NEXT_PUBLIC_APP_URL}/og`,
   links: {
