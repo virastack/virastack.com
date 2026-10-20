@@ -138,9 +138,7 @@ export function resolveAcademySourceVisual(
 
     const aliasTarget = PERSON_AVATAR_ALIASES[normalizeKey(name)];
     const author = ACADEMY_FEATURED_AUTHORS.find(
-      (entry) =>
-        entry.name === aliasTarget ||
-        normalizeKey(entry.name) === normalizeKey(name),
+      (entry) => entry.name === aliasTarget || normalizeKey(entry.name) === normalizeKey(name),
     );
     if (author) {
       return {

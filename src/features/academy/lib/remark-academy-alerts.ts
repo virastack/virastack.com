@@ -1,4 +1,4 @@
-import type { Root, Blockquote, Paragraph, PhrasingContent, Text } from "mdast";
+import type { Blockquote, Paragraph, PhrasingContent, Root, Text } from "mdast";
 import { visit } from "unist-util-visit";
 
 const ALERT_PATTERN = /^\[!(TIP|WARNING|CAUTION|NOTE|DO|DONT)\]\s*$/i;

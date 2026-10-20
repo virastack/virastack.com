@@ -10,10 +10,7 @@ import {
 } from "@/features/academy/constants/source-kind.constants";
 import { readEngineerTrustReason } from "@/features/academy/constants/source-trust.constants";
 import { buildAcademySourceCanonicalNames } from "@/features/academy/lib/canonicalize-academy-source";
-import {
-  getAcademyTracks,
-  loadAcademyCurriculum,
-} from "@/features/academy/lib/load-curriculum";
+import { getAcademyTracks, loadAcademyCurriculum } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import {
   isAcademyResourceList,
@@ -222,7 +219,10 @@ function readResourceRows(markdown: string): ResourceRow[] {
 }
 
 function normalizeCredit(raw: string): string {
-  return raw.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
+  return raw
+    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function collapseEtAl(credit: string): string {
@@ -261,9 +261,7 @@ function isShortCreditLabel(label: string): boolean {
     return false;
   }
   return !words.some((word) => {
-    const normalized = word
-      .toLocaleLowerCase("tr")
-      .replace(/[^a-zçğıöşü]/gi, "");
+    const normalized = word.toLocaleLowerCase("tr").replace(/[^a-zçğıöşü]/gi, "");
     return SENTENCE_STOPWORDS.has(normalized);
   });
 }
@@ -388,9 +386,7 @@ type CitationHit = {
  */
 export function collectAcademySources(locale: string): AcademySourcesCatalog {
   loadAcademyCurriculum(CONTENT_LOCALE);
-  const tracks = getAcademyTracks(CONTENT_LOCALE).filter(
-    (track) => track.status === "published",
-  );
+  const tracks = getAcademyTracks(CONTENT_LOCALE).filter((track) => track.status === "published");
 
   const hits: CitationHit[] = [];
   let lastVerified: string | null = null;

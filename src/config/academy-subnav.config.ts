@@ -25,7 +25,8 @@ export function isAcademySubNavItemActive(pathname: string, item: AcademySubNavI
 
     if (pathname.startsWith(`${item.href}/`)) {
       return !academySubNavItems.some(
-        (other) => other.id !== "home" && (pathname === other.href || pathname.startsWith(`${other.href}/`)),
+        (other) =>
+          other.id !== "home" && (pathname === other.href || pathname.startsWith(`${other.href}/`)),
       );
     }
 

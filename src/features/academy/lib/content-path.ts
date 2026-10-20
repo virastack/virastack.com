@@ -10,18 +10,10 @@ export function getCurriculumPath(locale: string): string {
   return join(ACADEMY_CONTENT_ROOT, "content", contentLocale, "curriculum.json");
 }
 
-export function getLessonFilePath(
-  locale: string,
-  trackSlug: string,
-  lessonSlug: string,
-): string {
+export function getLessonFilePath(locale: string, trackSlug: string, lessonSlug: string): string {
   return join(ACADEMY_CONTENT_ROOT, "content", locale, trackSlug, `${lessonSlug}.md`);
 }
 
-export function getLessonEditUrl(
-  locale: string,
-  trackSlug: string,
-  lessonSlug: string,
-): string {
+export function getLessonEditUrl(locale: string, trackSlug: string, lessonSlug: string): string {
   return `${ACADEMY_EDIT_BASE}/content/${locale}/${trackSlug}/${lessonSlug}.md`;
 }

@@ -5,10 +5,7 @@ const WIDE_TABLE_COMMENT = /^<!--\s*academy-table:\s*wide\s*-->$/;
 
 function isParent(node: unknown): node is Parent {
   return (
-    typeof node === "object" &&
-    node !== null &&
-    "children" in node &&
-    Array.isArray(node.children)
+    typeof node === "object" && node !== null && "children" in node && Array.isArray(node.children)
   );
 }
 

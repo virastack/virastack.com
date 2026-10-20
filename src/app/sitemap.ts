@@ -3,10 +3,7 @@ import type { MetadataRoute } from "next";
 import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
-import {
-  getAcademyTracks,
-  getPublishedLessonPaths,
-} from "@/features/academy";
+import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy";
 import {
   getMaskDocsNav,
   getPasswordDocsNav,

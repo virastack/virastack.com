@@ -1,9 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
+import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
 import { TrackLessonRow } from "@/features/academy/components/track-lesson-row";
 import { TrackPager } from "@/features/academy/components/track-pager";
-import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
 import {
   findAcademyTrackNeighbours,
@@ -23,7 +23,7 @@ export async function AcademyTrackPageView({ track }: AcademyTrackPageProps) {
   const iconTags = getTrackIconTags(track.slug);
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-2xl flex-col gap-10 px-6 pt-28 pb-24">
+    <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
         <AcademyBackLink />
         <header className="space-y-3 border-b border-border pb-8">
@@ -46,9 +46,7 @@ export async function AcademyTrackPageView({ track }: AcademyTrackPageProps) {
       {lessonGroups.map((group) => (
         <section key={group.id} className="flex flex-col gap-3">
           {lessonGroups.length > 1 ? (
-            <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              {group.title}
-            </h2>
+            <h2 className="text-lg font-semibold tracking-tight text-foreground">{group.title}</h2>
           ) : null}
           <ol
             className="flex flex-col gap-1"
@@ -67,9 +65,7 @@ export async function AcademyTrackPageView({ track }: AcademyTrackPageProps) {
         </section>
       ))}
 
-      {neighbours ? (
-        <TrackPager previous={neighbours.previous} next={neighbours.next} />
-      ) : null}
+      {neighbours ? <TrackPager previous={neighbours.previous} next={neighbours.next} /> : null}
     </div>
   );
 }

@@ -84,10 +84,7 @@ const Vitest = (props: SVGProps<SVGSVGElement>) => (
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur
-          result="effect1_foregroundBlur_2002_17204"
-          stdDeviation="4.596"
-        />
+        <feGaussianBlur result="effect1_foregroundBlur_2002_17204" stdDeviation="4.596" />
       </filter>
       <filter
         id="filter1_f_2002_17204"
@@ -100,10 +97,7 @@ const Vitest = (props: SVGProps<SVGSVGElement>) => (
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur
-          result="effect1_foregroundBlur_2002_17204"
-          stdDeviation="4.596"
-        />
+        <feGaussianBlur result="effect1_foregroundBlur_2002_17204" stdDeviation="4.596" />
       </filter>
       <filter
         id="filter2_f_2002_17204"
@@ -116,10 +110,7 @@ const Vitest = (props: SVGProps<SVGSVGElement>) => (
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur
-          result="effect1_foregroundBlur_2002_17204"
-          stdDeviation="4.596"
-        />
+        <feGaussianBlur result="effect1_foregroundBlur_2002_17204" stdDeviation="4.596" />
       </filter>
       <filter
         id="filter3_f_2002_17204"
@@ -132,10 +123,7 @@ const Vitest = (props: SVGProps<SVGSVGElement>) => (
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur
-          result="effect1_foregroundBlur_2002_17204"
-          stdDeviation="4.596"
-        />
+        <feGaussianBlur result="effect1_foregroundBlur_2002_17204" stdDeviation="4.596" />
       </filter>
       <filter
         id="filter4_f_2002_17204"
@@ -148,10 +136,7 @@ const Vitest = (props: SVGProps<SVGSVGElement>) => (
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur
-          result="effect1_foregroundBlur_2002_17204"
-          stdDeviation="4.596"
-        />
+        <feGaussianBlur result="effect1_foregroundBlur_2002_17204" stdDeviation="4.596" />
       </filter>
     </defs>
   </svg>

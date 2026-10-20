@@ -8,10 +8,7 @@ const Html5 = (props: SVGProps<SVGSVGElement>) => (
       fill="#ecedee"
       d="M226 208h-75l-5-58h80V94H84l15 171h127zm0 147l-64-17-4-45h-56l7 89 117 32z"
     />
-    <path
-      fill="#fff"
-      d="M226 265h69l-7 73-62 17v59l115-32 16-174H226zm0-171v56h136l5-56z"
-    />
+    <path fill="#fff" d="M226 265h69l-7 73-62 17v59l115-32 16-174H226zm0-171v56h136l5-56z" />
   </svg>
 );
 

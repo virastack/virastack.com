@@ -79,7 +79,7 @@ export function AcademySourceGuides({ guides }: AcademySourceGuidesProps) {
       {hiddenCount > 0 ? (
         <button
           type="button"
-          className="mt-2 text-sm font-medium text-muted-foreground underline-offset-4 outline-none transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:text-foreground hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.96] motion-reduce:active:scale-100"
+          className="mt-2 text-sm font-medium text-muted-foreground underline-offset-4 transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] outline-none hover:text-foreground hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.96] motion-reduce:active:scale-100"
           onClick={() => {
             setShowAll(true);
           }}

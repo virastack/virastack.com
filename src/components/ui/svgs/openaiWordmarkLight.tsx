@@ -23,19 +23,11 @@ const OpenaiWordmarkLight = (props: SVGProps<SVGSVGElement>) => (
         d="M900.385 404.008L981.297 206.661H1025.84L1104.78 404.008H1063.62L1046.7 360.874H957.334L940.136 404.008H900.385ZM970.584 327.043H1033.45L1002.16 247.54L970.584 327.043Z"
         fill="black"
       />
-      <path
-        d="M1117.53 404.008V206.661H1156.44V404.008H1117.53Z"
-        fill="black"
-      />
+      <path d="M1117.53 404.008V206.661H1156.44V404.008H1117.53Z" fill="black" />
     </g>
     <defs>
       <clipPath id="clip0_160_75">
-        <rect
-          width="1359.4"
-          height="610.41"
-          fill="white"
-          transform="scale(1.00044)"
-        />
+        <rect width="1359.4" height="610.41" fill="white" transform="scale(1.00044)" />
       </clipPath>
     </defs>
   </svg>

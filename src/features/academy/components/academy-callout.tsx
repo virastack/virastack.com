@@ -33,7 +33,8 @@ const calloutConfig = {
   DO: {
     labelKey: "calloutDo" as const,
     Icon: Check,
-    className: "border-emerald-600/30 bg-emerald-500/10 dark:border-emerald-400/30 dark:bg-emerald-400/10",
+    className:
+      "border-emerald-600/30 bg-emerald-500/10 dark:border-emerald-400/30 dark:bg-emerald-400/10",
     iconClassName: "text-emerald-600 dark:text-emerald-400",
   },
   DONT: {

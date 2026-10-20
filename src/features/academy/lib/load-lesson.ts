@@ -2,11 +2,8 @@ import { existsSync, readFileSync } from "node:fs";
 
 import matter from "gray-matter";
 
+import { getLessonEditUrl, getLessonFilePath } from "@/features/academy/lib/content-path";
 import { academyLessonFrontmatterSchema } from "@/features/academy/schemas/curriculum.schema";
-import {
-  getLessonEditUrl,
-  getLessonFilePath,
-} from "@/features/academy/lib/content-path";
 import type { AcademyLessonDocument } from "@/features/academy/types/academy.types";
 
 type ContentLocale = "tr" | "en";

@@ -106,7 +106,7 @@ export function AcademySourceRow({ source }: AcademySourceRowProps) {
         <TableCell className="w-10 px-1 text-right">
           <button
             type="button"
-            className="relative inline-flex size-8 items-center justify-center rounded-md text-muted-foreground outline-none transition-[scale,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] after:absolute after:top-1/2 after:left-1/2 after:size-10 after:-translate-x-1/2 after:-translate-y-1/2 hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.96] motion-reduce:active:scale-100"
+            className="relative inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-[scale,background-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] outline-none after:absolute after:top-1/2 after:left-1/2 after:size-10 after:-translate-x-1/2 after:-translate-y-1/2 hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.96] motion-reduce:active:scale-100"
             aria-expanded={open}
             aria-controls={panelId}
             aria-label={t("sourcesToggleGuides", { name: source.name })}

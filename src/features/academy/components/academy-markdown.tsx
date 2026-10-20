@@ -13,19 +13,14 @@ import type {
   TableCell,
   TableRow,
 } from "mdast";
+import { getTranslations } from "next-intl/server";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 
-import { getTranslations } from "next-intl/server";
-
-import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
-import {
-  AcademyBadge,
-  AcademyBadgeLogo,
-} from "@/features/academy/components/academy-badge";
+import { AcademyBadge, AcademyBadgeLogo } from "@/features/academy/components/academy-badge";
 import { AcademyCallout } from "@/features/academy/components/academy-callout";
 import { AcademyCodeBlock } from "@/features/academy/components/academy-code-block";
 import { AcademyDetails } from "@/features/academy/components/academy-details";
@@ -41,15 +36,6 @@ import {
 import { remarkAcademyAlerts } from "@/features/academy/lib/remark-academy-alerts";
 import { remarkAcademyBadges } from "@/features/academy/lib/remark-academy-badges";
 import {
-  isWideAcademyTable,
-  remarkAcademyTables,
-} from "@/features/academy/lib/remark-academy-tables";
-import {
-  readAcademyDetails,
-  remarkAcademyDetails,
-  type AcademyDetailsItem,
-} from "@/features/academy/lib/remark-academy-details";
-import {
   getAcademyCitationId,
   getAcademyHeadingText,
   isAcademyResourceHeading,
@@ -57,6 +43,16 @@ import {
   readAcademyCitationId,
   remarkAcademyCitations,
 } from "@/features/academy/lib/remark-academy-citations";
+import {
+  readAcademyDetails,
+  remarkAcademyDetails,
+  type AcademyDetailsItem,
+} from "@/features/academy/lib/remark-academy-details";
+import {
+  isWideAcademyTable,
+  remarkAcademyTables,
+} from "@/features/academy/lib/remark-academy-tables";
+import { Link } from "@/i18n/routing";
 
 type AcademyMarkdownProps = {
   content: string;
@@ -80,11 +76,7 @@ function isBadgeNode(node: PhrasingContent): boolean {
 }
 
 function readBadgeKind(node: PhrasingContent): string {
-  return (
-    getBadgeKind(node) ??
-    (node as { kind?: string }).kind ??
-    ""
-  );
+  return getBadgeKind(node) ?? (node as { kind?: string }).kind ?? "";
 }
 
 function readNodeId(data: { hProperties?: unknown } | undefined): string | undefined {
@@ -147,10 +139,7 @@ function collectBadgeKinds(nodes: readonly PhrasingContent[]): string[] | null {
   return kinds.length > 0 ? kinds : null;
 }
 
-function resolveCompanyLabelOverride(
-  kind: string,
-  trailing: string,
-): string | undefined {
+function resolveCompanyLabelOverride(kind: string, trailing: string): string | undefined {
   const mapped = ACADEMY_COMPANY_NAME_TO_KIND[trailing];
   if (mapped === undefined) {
     return undefined;
@@ -166,9 +155,7 @@ type SingleBadgeCell = {
   label?: string;
 };
 
-function readSingleBadgeCell(
-  nodes: readonly PhrasingContent[],
-): SingleBadgeCell | null {
+function readSingleBadgeCell(nodes: readonly PhrasingContent[]): SingleBadgeCell | null {
   const meaningful = nodes.filter((node) => !isWhitespaceText(node));
   if (meaningful.length === 0) return null;
 
@@ -294,9 +281,7 @@ async function renderPhrasing(
         out.push(renderCitation(node.identifier, key));
         break;
       case "html":
-        out.push(
-          <span key={key} dangerouslySetInnerHTML={{ __html: node.value }} />,
-        );
+        out.push(<span key={key} dangerouslySetInnerHTML={{ __html: node.value }} />);
         break;
       default: {
         if (isBadgeNode(node)) {
@@ -333,8 +318,7 @@ async function renderTableCellContent(
     const titleNodes =
       logoNode && isBadgeNode(logoNode) ? beforeMeaningful.slice(1) : beforeMeaningful;
     const detailText = flattenPhrasingText(split.after);
-    const logoKind =
-      logoNode && isBadgeNode(logoNode) ? readBadgeKind(logoNode) : null;
+    const logoKind = logoNode && isBadgeNode(logoNode) ? readBadgeKind(logoNode) : null;
 
     return (
       <span className="inline-flex items-center gap-2">
@@ -400,9 +384,7 @@ function parseResourceKind(text: string): AcademyResourceKind | undefined {
  * Builds the free-text note after the link and resource-kind emphasis,
  * preserving inline code as backtick-wrapped text.
  */
-function parseResourceNote(
-  children: readonly PhrasingContent[],
-): string | undefined {
+function parseResourceNote(children: readonly PhrasingContent[]): string | undefined {
   const noteParts: string[] = [];
 
   for (const child of children) {
@@ -430,7 +412,10 @@ function parseResourceNote(
     }
   }
 
-  const note = noteParts.join("").replace(/^[—–\-\s]+/, "").trim();
+  const note = noteParts
+    .join("")
+    .replace(/^[—–\-\s]+/, "")
+    .trim();
   return note.length > 0 ? note : undefined;
 }
 
@@ -515,11 +500,7 @@ async function renderListItem(item: ListItem, key: string): Promise<ReactNode> {
   );
 }
 
-async function renderResourceLinks(
-  title: string,
-  list: List,
-  key: string,
-): Promise<ReactNode> {
+async function renderResourceLinks(title: string, list: List, key: string): Promise<ReactNode> {
   return (
     <AcademyResourceLinks
       key={key}
@@ -538,11 +519,7 @@ async function renderList(list: List, key: string): Promise<ReactNode> {
   return (
     <Tag
       key={key}
-      className={
-        list.ordered
-          ? "list-decimal space-y-2 pl-5"
-          : "list-disc space-y-2 pl-5"
-      }
+      className={list.ordered ? "list-decimal space-y-2 pl-5" : "list-disc space-y-2 pl-5"}
     >
       {items}
     </Tag>
@@ -570,8 +547,7 @@ async function renderTableCell(
       className={cn(
         "px-3 py-2 align-middle",
         alignClass,
-        tag === "th" &&
-          "text-xs font-medium whitespace-normal text-foreground md:text-sm",
+        tag === "th" && "text-xs font-medium whitespace-normal text-foreground md:text-sm",
         tag === "td" &&
           cn(
             "text-xs leading-relaxed whitespace-pre-line md:text-sm",
@@ -603,10 +579,7 @@ async function renderTableRow(
     ),
   );
   return (
-    <tr
-      key={key}
-      className={cn(tag === "th" && "border-b border-border bg-muted/30")}
-    >
+    <tr key={key} className={cn(tag === "th" && "border-b border-border bg-muted/30")}>
       {cells}
     </tr>
   );
@@ -723,7 +696,7 @@ async function renderBlock(
     switch (node.type) {
       case "paragraph":
         out.push(
-          <p key={key} className="text-pretty leading-relaxed text-muted-foreground">
+          <p key={key} className="leading-relaxed text-pretty text-muted-foreground">
             {await renderPhrasing(node.children, key)}
           </p>,
         );
@@ -758,9 +731,7 @@ async function renderBlock(
       case "list":
         if (isAcademyResourceList(node)) {
           const t = await getTranslations("Academy");
-          out.push(
-            await renderResourceLinks(t("furtherResources"), node, key),
-          );
+          out.push(await renderResourceLinks(t("furtherResources"), node, key));
           break;
         }
         out.push(await renderList(node, key));
@@ -769,9 +740,7 @@ async function renderBlock(
         out.push(await renderTable(node, key));
         break;
       case "code":
-        out.push(
-          <AcademyCodeBlock key={key} language={node.lang ?? "text"} code={node.value} />,
-        );
+        out.push(<AcademyCodeBlock key={key} language={node.lang ?? "text"} code={node.value} />);
         break;
       case "blockquote": {
         const alertKind = getAlertKind(node);
@@ -783,10 +752,7 @@ async function renderBlock(
           );
         } else {
           out.push(
-            <blockquote
-              key={key}
-              className="border-l-2 border-border pl-4 text-muted-foreground"
-            >
+            <blockquote key={key} className="border-l-2 border-border pl-4 text-muted-foreground">
               {await renderBlock(node.children, key)}
             </blockquote>,
           );
@@ -797,9 +763,7 @@ async function renderBlock(
         out.push(<hr key={key} className="border-border" />);
         break;
       case "html":
-        out.push(
-          <div key={key} dangerouslySetInnerHTML={{ __html: node.value }} />,
-        );
+        out.push(<div key={key} dangerouslySetInnerHTML={{ __html: node.value }} />);
         break;
       case "footnoteDefinition":
         out.push(

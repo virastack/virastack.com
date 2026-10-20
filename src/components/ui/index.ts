@@ -80,12 +80,7 @@ export {
   AvatarGroupCount,
   AvatarImage,
 } from "@/components/ui/avatar";
-export {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 export {
   Table,
   TableBody,

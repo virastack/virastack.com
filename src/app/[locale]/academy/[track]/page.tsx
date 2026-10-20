@@ -7,11 +7,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { buildOgImageMetadata } from "@/lib/og";
 
-import {
-  AcademyTrackPageView,
-  findAcademyTrack,
-  getAcademyTracks,
-} from "@/features/academy";
+import { AcademyTrackPageView, findAcademyTrack, getAcademyTracks } from "@/features/academy";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

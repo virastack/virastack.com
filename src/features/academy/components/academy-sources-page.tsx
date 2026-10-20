@@ -57,7 +57,7 @@ export async function AcademySourcesPageView() {
   const institutionExamples = pickCriterionExamples(catalog.sources, "institution");
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-10 px-6 pt-28 pb-24">
+    <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
         <AcademyBackLink />
         <header className="flex flex-col gap-8 border-b border-border pb-8">

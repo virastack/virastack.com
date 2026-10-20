@@ -116,10 +116,7 @@ export function isAcademyResourceList(node: List): boolean {
   if (!props || typeof props !== "object" || Array.isArray(props)) {
     return false;
   }
-  return (
-    "data-academy-resources" in props &&
-    props["data-academy-resources"] === "true"
-  );
+  return "data-academy-resources" in props && props["data-academy-resources"] === "true";
 }
 
 function markResourceLists(tree: Root): void {

@@ -42,7 +42,12 @@ export function AcademyContributeFaq() {
       </Link>
     ),
     githubIssue: (chunks: ReactNode) => (
-      <a href={ACADEMY_GITHUB_ISSUES_NEW} target="_blank" rel="noreferrer" className={linkClassName}>
+      <a
+        href={ACADEMY_GITHUB_ISSUES_NEW}
+        target="_blank"
+        rel="noreferrer"
+        className={linkClassName}
+      >
         {chunks}
       </a>
     ),

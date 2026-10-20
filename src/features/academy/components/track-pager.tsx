@@ -25,9 +25,7 @@ async function TrackPagerCard({ track, direction, className }: TrackPagerCardPro
     <>
       <span className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
         {isPrevious ? t("trackPagerPrevious") : t("trackPagerNext")}
-        {isPublished ? (
-          <ChevronRight className={featureCardChevronClassName} aria-hidden />
-        ) : null}
+        {isPublished ? <ChevronRight className={featureCardChevronClassName} aria-hidden /> : null}
       </span>
       <span className="flex items-start gap-2">
         {iconTags.length > 0 ? (
@@ -80,9 +78,7 @@ export async function TrackPager({ previous, next }: TrackPagerProps) {
       className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-6"
     >
       {previous ? <TrackPagerCard track={previous} direction="previous" /> : null}
-      {next ? (
-        <TrackPagerCard track={next} direction="next" className="sm:col-start-2" />
-      ) : null}
+      {next ? <TrackPagerCard track={next} direction="next" className="sm:col-start-2" /> : null}
     </nav>
   );
 }

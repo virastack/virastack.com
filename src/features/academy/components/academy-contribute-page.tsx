@@ -4,7 +4,10 @@ import { getTranslations } from "next-intl/server";
 
 import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
 import { AcademyContributeFaq } from "@/features/academy/components/academy-contribute-faq";
-import { ACADEMY_GITHUB_ISSUES_NEW, ACADEMY_GITHUB_REPO } from "@/features/academy/lib/content-path";
+import {
+  ACADEMY_GITHUB_ISSUES_NEW,
+  ACADEMY_GITHUB_REPO,
+} from "@/features/academy/lib/content-path";
 
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
@@ -22,7 +25,12 @@ export async function AcademyContributePageView() {
       </a>
     ),
     githubIssue: (chunks: ReactNode) => (
-      <a href={ACADEMY_GITHUB_ISSUES_NEW} target="_blank" rel="noreferrer" className={linkClassName}>
+      <a
+        href={ACADEMY_GITHUB_ISSUES_NEW}
+        target="_blank"
+        rel="noreferrer"
+        className={linkClassName}
+      >
         {chunks}
       </a>
     ),
@@ -34,7 +42,7 @@ export async function AcademyContributePageView() {
   };
 
   return (
-    <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-10 px-6 pt-28 pb-24">
+    <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
         <AcademyBackLink />
         <header className="space-y-3 border-b border-border pb-8">

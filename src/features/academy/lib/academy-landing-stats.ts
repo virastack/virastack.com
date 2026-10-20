@@ -3,10 +3,7 @@ import remarkParse from "remark-parse";
 import { unified } from "unified";
 
 import { parseAcademyResourceKind } from "@/features/academy/constants/resource.constants";
-import {
-  getAcademyTracks,
-  loadAcademyCurriculum,
-} from "@/features/academy/lib/load-curriculum";
+import { getAcademyTracks, loadAcademyCurriculum } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import {
   isAcademyResourceList,
@@ -66,14 +63,7 @@ const ORG_STOPWORDS = new Set([
 
 const DOC_LIKE_KINDS = new Set(["doc", "repo"]);
 
-const PERSON_LIKE_KINDS = new Set([
-  "article",
-  "video",
-  "research",
-  "talk",
-  "podcast",
-  "paper",
-]);
+const PERSON_LIKE_KINDS = new Set(["article", "video", "research", "talk", "podcast", "paper"]);
 
 type ResourceRow = {
   title: string;
@@ -178,17 +168,15 @@ function normalizeCredit(raw: string): string {
 function splitCredits(credit: string): string[] {
   return credit
     .split(/\s+ve\s+|\s+and\s+/i)
-    .map((part) =>
-      part
-        .replace(/\s+(ve\s+ark\.?|et\s+al\.?)$/i, "")
-        .trim(),
-    )
+    .map((part) => part.replace(/\s+(ve\s+ark\.?|et\s+al\.?)$/i, "").trim())
     .filter(Boolean);
 }
 
 function isOrgCredit(name: string): boolean {
   const tokens = name.match(/[A-Za-zÇĞİÖŞÜçğıöşü'.-]+/g) ?? [];
-  return tokens.some((token) => ORG_STOPWORDS.has(token.toLocaleLowerCase("tr").replace(/\.$/, "")));
+  return tokens.some((token) =>
+    ORG_STOPWORDS.has(token.toLocaleLowerCase("tr").replace(/\.$/, "")),
+  );
 }
 
 function isPersonName(name: string): boolean {
@@ -262,9 +250,7 @@ function collectPublishedResourceRows(): {
   lastVerified: string | null;
 } {
   loadAcademyCurriculum(CONTENT_LOCALE);
-  const tracks = getAcademyTracks(CONTENT_LOCALE).filter(
-    (track) => track.status === "published",
-  );
+  const tracks = getAcademyTracks(CONTENT_LOCALE).filter((track) => track.status === "published");
 
   const rows: ResourceRow[] = [];
   let lastVerified: string | null = null;

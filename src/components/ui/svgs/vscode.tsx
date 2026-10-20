@@ -2,15 +2,7 @@ import type { SVGProps } from "react";
 
 const Vscode = (props: SVGProps<SVGSVGElement>) => (
   <svg {...props} fill="none" viewBox="0 0 100 100">
-    <mask
-      id="a"
-      width="100"
-      height="100"
-      x="0"
-      y="0"
-      mask-type="alpha"
-      maskUnits="userSpaceOnUse"
-    >
+    <mask id="a" width="100" height="100" x="0" y="0" mask-type="alpha" maskUnits="userSpaceOnUse">
       <path
         fill="#fff"
         fillRule="evenodd"
@@ -55,18 +47,11 @@ const Vscode = (props: SVGProps<SVGSVGElement>) => (
         filterUnits="userSpaceOnUse"
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        />
+        <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
         <feOffset />
         <feGaussianBlur stdDeviation="4.167" />
         <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-        <feBlend
-          in2="BackgroundImageFix"
-          mode="overlay"
-          result="effect1_dropShadow"
-        />
+        <feBlend in2="BackgroundImageFix" mode="overlay" result="effect1_dropShadow" />
         <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
       </filter>
       <filter
@@ -79,18 +64,11 @@ const Vscode = (props: SVGProps<SVGSVGElement>) => (
         filterUnits="userSpaceOnUse"
       >
         <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        />
+        <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
         <feOffset />
         <feGaussianBlur stdDeviation="4.167" />
         <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-        <feBlend
-          in2="BackgroundImageFix"
-          mode="overlay"
-          result="effect1_dropShadow"
-        />
+        <feBlend in2="BackgroundImageFix" mode="overlay" result="effect1_dropShadow" />
         <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
       </filter>
       <linearGradient

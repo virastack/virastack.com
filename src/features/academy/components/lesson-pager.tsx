@@ -15,12 +15,7 @@ type LessonPagerCardProps = {
   className?: string;
 };
 
-async function LessonPagerCard({
-  trackSlug,
-  entry,
-  direction,
-  className,
-}: LessonPagerCardProps) {
+async function LessonPagerCard({ trackSlug, entry, direction, className }: LessonPagerCardProps) {
   const t = await getTranslations("Academy");
   const { lesson, number } = entry;
   const isPublished = lesson.status === "published";
@@ -76,10 +71,7 @@ async function LessonPagerCard({
   }
 
   return (
-    <Link
-      href={`/academy/${trackSlug}/${lesson.slug}`}
-      className={cardClassName}
-    >
+    <Link href={`/academy/${trackSlug}/${lesson.slug}`} className={cardClassName}>
       {content}
     </Link>
   );
@@ -99,16 +91,9 @@ export async function LessonPager({ trackSlug, previous, next }: LessonPagerProp
   }
 
   return (
-    <nav
-      aria-label={t("pagerAria")}
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-6"
-    >
+    <nav aria-label={t("pagerAria")} className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-6">
       {previous ? (
-        <LessonPagerCard
-          trackSlug={trackSlug}
-          entry={previous}
-          direction="previous"
-        />
+        <LessonPagerCard trackSlug={trackSlug} entry={previous} direction="previous" />
       ) : null}
       {next ? (
         <LessonPagerCard

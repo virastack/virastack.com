@@ -15,9 +15,5 @@ if (existsSync(TARGET)) {
 }
 
 process.stdout.write(`Cloning ${REPO}#${REF} → .content/academy\n`);
-execFileSync(
-  "git",
-  ["clone", "--depth", "1", "--branch", REF, REPO, TARGET],
-  { stdio: "inherit" },
-);
+execFileSync("git", ["clone", "--depth", "1", "--branch", REF, REPO, TARGET], { stdio: "inherit" });
 process.stdout.write("Academy content ready.\n");

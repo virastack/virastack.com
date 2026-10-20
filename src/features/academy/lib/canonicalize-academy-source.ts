@@ -148,16 +148,18 @@ function aliasTarget(
   }
   const ownerTarget = targetKeyForSlug(ownerSlug, mention.localKey, slugToKey);
   const repoBelongsToOwner =
-    repoSlug === ownerSlug ||
-    repoSlug.startsWith(ownerSlug) ||
-    repoSlug.endsWith(ownerSlug);
+    repoSlug === ownerSlug || repoSlug.startsWith(ownerSlug) || repoSlug.endsWith(ownerSlug);
   if (ownerTarget && ownerSlug.length >= 3 && repoBelongsToOwner) {
     return ownerTarget;
   }
   return null;
 }
 
-function resolveKey(key: string, alias: ReadonlyMap<string, string>, seen: ReadonlySet<string>): string {
+function resolveKey(
+  key: string,
+  alias: ReadonlyMap<string, string>,
+  seen: ReadonlySet<string>,
+): string {
   const next = alias.get(key);
   if (!next || seen.has(key)) {
     return key;
