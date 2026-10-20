@@ -220,10 +220,13 @@
     "logoDownloadWebp": "WebP",
     "logoDownloadSvg": "SVG",
     "logoDownloadZip": "Full kit (ZIP)",
+    "dotsTitle": "Product dots",
+    "dotsBody": "Six dots, one per product, always in this order: Academy, Start, AI, Mask, Password, Guide. Hover or focus a dot to see its name; each one links to its product.",
+    "dotsLabel": "ViraStack products",
     "namingTitle": "Naming",
     "namingBody": "Don’t use the product name alone, for example <wrong>Mask</wrong>. Always write the full lockup: <mask>Mask</mask>. Short names alone are fine only in dense navigation.",
     "typeTitle": "Typography",
-    "typeBody": "Black for headings, semibold everywhere else. The product name stays medium italic in its color.",
+    "typeBody": "Black for headings, semibold everywhere else. ViraStack uses the primary color (#161616 light / #e5e5e5 dark). The product name stays medium italic in its color.",
     "typeHeadingLabel": "Heading",
     "typeLogoLabel": "Logo",
     "typeBodyLabel": "Body",
@@ -266,7 +269,6 @@
     "subNavSources": "Sources",
     "subNavContribute": "Contribute"
   },
-
   "StartBuilder": {
     "title": "Builder",
     "description": "Build your ViraStack Start install command step by step, then copy and run it.",
@@ -349,7 +351,6 @@
     "contributeFaqTopicA": "Yes. Share the topic and the level by <githubIssue>opening an issue on GitHub</githubIssue>, and we’ll review it.",
     "contributeFaqUpdateQ": "How often are guides updated?",
     "contributeFaqUpdateA": "Each guide shows a last-verified date at the bottom. When tools ship new versions, related guides are checked again.",
-
     "sourcesCriteriaTitle": "Choosing sources",
     "sourcesCriteriaOfficialTitle": "Official documentation",
     "sourcesCriteriaOfficialBody": "Documentation published by the team that builds a tool or a standard. They have the last word on how the tool works, and it is updated as versions change.",
@@ -393,7 +394,8 @@
     "aiName": "AI",
     "maskName": "Mask",
     "passwordName": "Password",
-    "guideName": "Guide"
+    "guideName": "Guide",
+    "productDots": "ViraStack products"
   },
   "Common": {
     "copy": "Copy",

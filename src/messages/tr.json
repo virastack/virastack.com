@@ -220,10 +220,13 @@
     "logoDownloadWebp": "WebP",
     "logoDownloadSvg": "SVG",
     "logoDownloadZip": "Tüm paket (ZIP)",
+    "dotsTitle": "Ürün noktaları",
+    "dotsBody": "Her ürün için bir nokta, her zaman bu sırayla: Academy, Start, AI, Mask, Password, Guide. Üzerine gelince veya odaklanınca ürün adı görünür; her nokta kendi ürününe gider.",
+    "dotsLabel": "ViraStack ürünleri",
     "namingTitle": "İsimlendirme",
     "namingBody": "Yalnızca ürün adı kullanılmaz, örneğin <wrong>Mask</wrong>. Her yerde tam lockup yazılır: <mask>Mask</mask>. Kısa ad yalnız yoğun navigasyonda kullanılabilir.",
     "typeTitle": "Tipografi",
-    "typeBody": "Başlıklarda black, diğer her yerde semibold. Ürün adı medium italic ve kendi renginde.",
+    "typeBody": "Başlıklarda black, diğer her yerde semibold. ViraStack yazısı primary renkte (açık temada #161616, koyu temada #e5e5e5). Ürün adı medium italic ve kendi renginde.",
     "typeHeadingLabel": "Başlık",
     "typeLogoLabel": "Logo",
     "typeBodyLabel": "Gövde",
@@ -266,7 +269,6 @@
     "subNavSources": "Kaynaklar",
     "subNavContribute": "Katkı"
   },
-
   "StartBuilder": {
     "title": "Sihirbaz",
     "description": "ViraStack Start kurulum komutunu adım adım oluşturun, kopyalayıp çalıştırın.",
@@ -349,7 +351,6 @@
     "contributeFaqTopicA": "Evet. Konuyu ve seviyeyi <githubIssue>GitHub’da issue açarak</githubIssue> paylaş, değerlendirelim.",
     "contributeFaqUpdateQ": "Rehberler ne sıklıkla güncelleniyor?",
     "contributeFaqUpdateA": "Her rehberin altında son doğrulama tarihi yazar. Araçlar yeni sürüm çıkardığında ilgili rehberler yeniden kontrol edilir.",
-
     "sourcesCriteriaTitle": "Kaynak seçerken",
     "sourcesCriteriaOfficialTitle": "Resmi doküman",
     "sourcesCriteriaOfficialBody": "Bir aracı ya da standardı geliştiren ekibin kendi yayınladığı doküman. Aracın nasıl çalıştığı konusunda son söz onlarındır ve sürüm değiştikçe güncellenir.",
@@ -393,7 +394,8 @@
     "aiName": "AI",
     "maskName": "Mask",
     "passwordName": "Password",
-    "guideName": "Guide"
+    "guideName": "Guide",
+    "productDots": "ViraStack ürünleri"
   },
   "Common": {
     "copy": "Kopyala",

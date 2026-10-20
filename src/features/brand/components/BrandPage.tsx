@@ -1,11 +1,12 @@
 import { useTranslations } from "next-intl";
 
+import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
+import { ProductDots } from "@/components/shared/ProductDots";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { brandPalettes } from "@/features/brand/brand-colors";
 import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
 
 type BrandMarkTone = "heading" | "body";
@@ -20,19 +21,14 @@ function BrandMarkPreview({
   textClass,
   tone,
 }: {
-  productName: string | null;
+  productName: string;
   textClass: string;
   tone: BrandMarkTone;
 }) {
   return (
     <span className="whitespace-nowrap">
-      <span className={cn("text-primary", brandWeightClass[tone])}>{siteConfig.name}</span>
-      {productName ? (
-        <>
-          {" "}
-          <span className={cn("font-medium italic", textClass)}>{productName}</span>
-        </>
-      ) : null}
+      <span className={cn("text-primary", brandWeightClass[tone])}>{siteConfig.name}</span>{" "}
+      <span className={cn("font-medium italic", textClass)}>{productName}</span>
     </span>
   );
 }
@@ -71,6 +67,21 @@ export function BrandPage() {
           <section className="space-y-6">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                {t("dotsTitle")}
+              </h2>
+              <p className="text-base leading-relaxed text-muted-foreground">{t("dotsBody")}</p>
+            </div>
+
+            <div className="flex justify-center rounded-2xl border border-border bg-card px-5 pt-12 pb-8 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
+              <ProductDots label={t("dotsLabel")} autoplay align="center" />
+            </div>
+          </section>
+        </RevealItem>
+
+        <RevealItem>
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
                 {t("namingTitle")}
               </h2>
               <p className="text-base leading-relaxed text-muted-foreground">
@@ -88,21 +99,19 @@ export function BrandPage() {
             </div>
 
             <ul className="space-y-3 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              {brandPalettes
-                .filter((palette) => palette.productName)
-                .map((palette) => (
-                  <li
-                    key={palette.id}
-                    className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border/60 pb-3 last:border-0 last:pb-0"
-                  >
-                    <BrandMarkPreview
-                      productName={palette.productName}
-                      textClass={palette.textClass}
-                      tone="body"
-                    />
-                    <span className="font-mono text-xs text-muted-foreground">{palette.shade}</span>
-                  </li>
-                ))}
+              {brandPalettes.map((palette) => (
+                <li
+                  key={palette.id}
+                  className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border/60 pb-3 last:border-0 last:pb-0"
+                >
+                  <BrandMarkPreview
+                    productName={palette.productName}
+                    textClass={palette.textClass}
+                    tone="body"
+                  />
+                  <span className="font-mono text-xs text-muted-foreground">{palette.shade}</span>
+                </li>
+              ))}
             </ul>
           </section>
         </RevealItem>
@@ -180,7 +189,7 @@ export function BrandPage() {
                 <div key={palette.id} className="space-y-2">
                   <div
                     className={cn("size-8 rounded-lg ring-1 ring-foreground/10", palette.bgClass)}
-                    title={palette.hex ?? palette.shade}
+                    title={palette.hex}
                   />
                   <div className="space-y-0.5">
                     <p className="text-sm font-medium text-foreground">
@@ -191,11 +200,7 @@ export function BrandPage() {
                       />
                     </p>
                     <p className="font-mono text-xs text-muted-foreground">
-                      {palette.darkHex
-                        ? `primary · ${palette.shade} / ${palette.darkHex}`
-                        : palette.hex
-                          ? `${palette.shade} · ${palette.hex}`
-                          : palette.shade}
+                      {palette.shade} · {palette.hex}
                     </p>
                   </div>
                 </div>

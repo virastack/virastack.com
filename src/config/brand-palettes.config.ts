@@ -1,81 +1,79 @@
+export type BrandPaletteId = "academy" | "start" | "ai" | "mask" | "password" | "guide";
+
 export type BrandPalette = {
-  id: string;
-  /** Product short name shown italic next to ViraStack, or null for core brand. */
-  productName: string | null;
-  /** Tailwind shade or light-mode hex shown in naming / colors. */
+  id: BrandPaletteId;
+  /** Product short name shown italic next to ViraStack. */
+  productName: string;
+  /** Route of the product on virastack.com. */
+  href: `/${BrandPaletteId}`;
+  /** Tailwind shade shown in naming / colors. */
   shade: string;
-  /** Hex for product colors; null for primary (uses shade + darkHex). */
-  hex: string | null;
-  /** Dark-theme hex for primary. */
-  darkHex: string | null;
+  /** Hex of the active brand shade (OG images, color docs). */
+  hex: string;
   /** Tailwind `text-*` class used to style the product name. */
   textClass: string;
   /** Active brand swatch `bg-*` / arbitrary class. */
   bgClass: string;
 };
 
+/**
+ * Ecosystem product colors in canonical order: learn (Academy), build (Start, AI,
+ * Mask, Password), then the big picture (Guide). The same order drives the
+ * brand page, the product dots, and the intro video.
+ */
 export const brandPalettes: readonly BrandPalette[] = [
   {
-    id: "virastack",
-    productName: null,
-    shade: "#161616",
-    hex: null,
-    darkHex: "#e5e5e5",
-    textClass: "text-primary",
-    bgClass: "bg-primary",
+    id: "academy",
+    productName: "Academy",
+    href: "/academy",
+    shade: "green-500",
+    hex: "#00c950",
+    textClass: "text-green-500",
+    bgClass: "bg-green-500",
   },
   {
     id: "start",
     productName: "Start",
+    href: "/start",
     shade: "teal-500",
     hex: "#00baa6",
-    darkHex: null,
     textClass: "text-teal-500",
     bgClass: "bg-[#00baa6]",
   },
   {
     id: "ai",
     productName: "AI",
+    href: "/ai",
     shade: "fuchsia-500",
     hex: "#e131fa",
-    darkHex: null,
     textClass: "text-fuchsia-500",
     bgClass: "bg-[#e131fa]",
   },
   {
     id: "mask",
     productName: "Mask",
+    href: "/mask",
     shade: "indigo-500",
     hex: "#605efe",
-    darkHex: null,
     textClass: "text-indigo-500",
     bgClass: "bg-[#605efe]",
   },
   {
     id: "password",
     productName: "Password",
+    href: "/password",
     shade: "rose-500",
     hex: "#ff2056",
-    darkHex: null,
     textClass: "text-rose-500",
     bgClass: "bg-[#ff2056]",
   },
   {
     id: "guide",
     productName: "Guide",
+    href: "/guide",
     shade: "amber-400",
     hex: "#ffb900",
-    darkHex: null,
     textClass: "text-amber-400",
     bgClass: "bg-[#ffb900]",
-  },
-  {
-    id: "academy",
-    productName: "Academy",
-    shade: "green-500",
-    hex: "#00c950",
-    darkHex: null,
-    textClass: "text-green-500",
-    bgClass: "bg-green-500",
   },
 ] as const;

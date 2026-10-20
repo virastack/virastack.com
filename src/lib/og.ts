@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 
 import type { ProductId } from "@/types/product.types";
+import { brandPalettes } from "@/config/brand-palettes.config";
 import { isProductId } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
-
-import { brandPalettes } from "@/features/brand/brand-colors";
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 

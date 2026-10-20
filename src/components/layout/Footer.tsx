@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 
 import { GithubIcon, XLogo } from "@/components/icons";
+import { ProductDots } from "@/components/shared/ProductDots";
 import { Link } from "@/i18n/routing";
 
 const productNameKeys = {
@@ -34,6 +35,7 @@ export async function Footer() {
             {siteConfig.name}
           </Link>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{t("tagline")}</p>
+          <ProductDots label={t("productDots")} />
           <div className="mt-2 flex items-center gap-2">
             <a
               href={siteConfig.links.github}
