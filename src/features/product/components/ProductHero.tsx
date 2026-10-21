@@ -96,9 +96,19 @@ export function ProductHero({ product }: ProductHeroProps) {
             />
           </Button>
           {product.id === "ai" ? (
-            <Button size="lg" variant="outline" nativeButton={false} render={<a href="#demo" />}>
-              <span>{t("seeTheDemo")}</span>
-            </Button>
+            <>
+              <Button
+                size="lg"
+                variant="outline"
+                nativeButton={false}
+                render={<Link href="/ai/docs" />}
+              >
+                <span>{t("readTheDocs")}</span>
+              </Button>
+              <Button size="lg" variant="outline" nativeButton={false} render={<a href="#demo" />}>
+                <span>{t("seeTheDemo")}</span>
+              </Button>
+            </>
           ) : null}
           <GithubRepoButton href={product.github} label={`virastack/${product.id}`} />
         </div>
