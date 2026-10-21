@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/questionnaire";
 import {
   buildStartCliCommand,
+  START_CLI_AGENTS,
+  type StartCliAgent,
   type StartCliTemplate,
   type StartCliTool,
 } from "@/features/docs/lib/build-start-cli-command";
@@ -41,6 +43,11 @@ const QUESTIONNAIRE_ITEMS = [
     name: "template",
     required: true,
     choices: [{ value: "nextjs" }, { value: "tanstack" }],
+  },
+  {
+    name: "agents",
+    required: false,
+    choices: [{ value: "none" }, { value: "claude" }, { value: "cursor" }],
   },
   {
     name: "i18n",
@@ -67,6 +74,7 @@ export function StartCliCommandBuilder() {
   const [packageManager] = usePackageManager();
   const [name, setName] = useState("");
   const [template, setTemplate] = useState<StartCliTemplate | null>(null);
+  const [agents, setAgents] = useState<StartCliAgent[]>([...START_CLI_AGENTS]);
   const [i18n, setI18n] = useState<boolean | null>(null);
   const [tools, setTools] = useState<StartCliTool[]>([]);
   const [activeItem, setActiveItem] = useState("name");
@@ -88,6 +96,7 @@ export function StartCliCommandBuilder() {
   const command = buildStartCliCommand({
     name,
     template,
+    agents,
     i18n,
     tools,
     turkishPrompts: false,
@@ -111,6 +120,15 @@ export function StartCliCommandBuilder() {
     });
   }
 
+  function toggleAgent(agent: StartCliAgent, checked: boolean): void {
+    setAgents((current) => {
+      if (checked) {
+        return current.includes(agent) ? current : [...current, agent];
+      }
+      return current.filter((item) => item !== agent);
+    });
+  }
+
   function resolveCommandToCopy(): string {
     if (packageManager === "prompt") {
       return packageCommands.pnpm;
@@ -126,6 +144,7 @@ export function StartCliCommandBuilder() {
   function handleReset(): void {
     setName("");
     setTemplate(null);
+    setAgents([...START_CLI_AGENTS]);
     setI18n(null);
     setTools([]);
     setActiveItem("name");
@@ -223,6 +242,42 @@ export function StartCliCommandBuilder() {
               </QuestionnaireChoice>
             </QuestionnaireChoices>
             <QuestionnaireError>{t("cliBuilderErrorRequired")}</QuestionnaireError>
+          </QuestionnaireItem>
+
+          <QuestionnaireItem name="agents" multiple>
+            <QuestionnaireTitle>{t("cliBuilderAgents")}</QuestionnaireTitle>
+            <QuestionnaireDescription>{t("cliBuilderAgentsDesc")}</QuestionnaireDescription>
+            <QuestionnaireChoices>
+              <QuestionnaireChoice
+                value="none"
+                checked={agents.length === 0}
+                onChange={() => setAgents([])}
+                className="hidden"
+                aria-hidden
+              >
+                <span>{t("cliBuilderAgentsNone")}</span>
+              </QuestionnaireChoice>
+              <QuestionnaireChoice
+                value="claude"
+                checked={agents.includes("claude")}
+                onChange={(event) => toggleAgent("claude", event.target.checked)}
+              >
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span className="font-medium">{t("cliBuilderAgentClaude")}</span>
+                  <span className="text-muted-foreground">{t("cliBuilderAgentClaudeHint")}</span>
+                </span>
+              </QuestionnaireChoice>
+              <QuestionnaireChoice
+                value="cursor"
+                checked={agents.includes("cursor")}
+                onChange={(event) => toggleAgent("cursor", event.target.checked)}
+              >
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span className="font-medium">{t("cliBuilderAgentCursor")}</span>
+                  <span className="text-muted-foreground">{t("cliBuilderAgentCursorHint")}</span>
+                </span>
+              </QuestionnaireChoice>
+            </QuestionnaireChoices>
           </QuestionnaireItem>
 
           <QuestionnaireItem name="i18n" required>

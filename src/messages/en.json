@@ -286,7 +286,7 @@
   "StartBuilder": {
     "title": "Builder",
     "description": "Build your ViraStack Start install command step by step, then copy and run it.",
-    "intro": "Answer each step in order: project name, template, i18n, then optional tools. When you finish, copy the generated command and run it in your terminal to scaffold the project."
+    "intro": "Answer each step in order: project name, template, AI coding tools, i18n, then optional tools. When you finish, copy the generated command and run it in your terminal to scaffold the project."
   },
   "Products": {
     "readTheDocs": "Read the docs",
@@ -576,6 +576,13 @@
     "cliBuilderTemplateNextHint": "App Router + Server Components",
     "cliBuilderTemplateTanstack": "<tanstack>TanStack Start</tanstack>",
     "cliBuilderTemplateTanstackHint": "Type-safe routing + SSR",
+    "cliBuilderAgents": "AI coding tools",
+    "cliBuilderAgentsDesc": "Which AI coding tools do you use? Leave both empty for plain rules.",
+    "cliBuilderAgentsNone": "None",
+    "cliBuilderAgentClaude": "Claude Code",
+    "cliBuilderAgentClaudeHint": ".claude/rules + skills",
+    "cliBuilderAgentCursor": "Cursor",
+    "cliBuilderAgentCursorHint": ".cursor/rules",
     "cliBuilderI18n": "Multi-language (i18n)",
     "cliBuilderI18nDesc": "Would you like multi-language support?",
     "cliBuilderI18nYes": "Yes, I want multi-language support",

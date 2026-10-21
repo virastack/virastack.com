@@ -286,7 +286,7 @@
   "StartBuilder": {
     "title": "Sihirbaz",
     "description": "ViraStack Start kurulum komutunu adım adım oluşturun, kopyalayıp çalıştırın.",
-    "intro": "Sırayla ilerleyin: proje adı, şablon, i18n, sonra isteğe bağlı araçlar. Bitince oluşan komutu kopyalayın ve terminalde çalıştırarak projeyi ayağa kaldırın."
+    "intro": "Sırayla ilerleyin: proje adı, şablon, AI araçları, i18n, sonra isteğe bağlı araçlar. Bitince oluşan komutu kopyalayın ve terminalde çalıştırarak projeyi ayağa kaldırın."
   },
   "Products": {
     "readTheDocs": "Dokümantasyon",
@@ -576,6 +576,13 @@
     "cliBuilderTemplateNextHint": "App Router + Server Components",
     "cliBuilderTemplateTanstack": "<tanstack>TanStack Start</tanstack>",
     "cliBuilderTemplateTanstackHint": "Type-safe routing + SSR",
+    "cliBuilderAgents": "AI kodlama araçları",
+    "cliBuilderAgentsDesc": "Hangi AI kodlama araçlarını kullanıyorsunuz? Düz kurallar için ikisini de boş bırakın.",
+    "cliBuilderAgentsNone": "Hiçbiri",
+    "cliBuilderAgentClaude": "Claude Code",
+    "cliBuilderAgentClaudeHint": ".claude/rules + skill’ler",
+    "cliBuilderAgentCursor": "Cursor",
+    "cliBuilderAgentCursorHint": ".cursor/rules",
     "cliBuilderI18n": "Çoklu dil (i18n)",
     "cliBuilderI18nDesc": "Çoklu dil desteği ister misiniz?",
     "cliBuilderI18nYes": "Evet, sitemde çoklu dil istiyorum",
