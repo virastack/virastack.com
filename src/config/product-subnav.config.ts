@@ -7,10 +7,10 @@ export type ProductSubNavItem = {
   href: string;
 };
 
-const docsProductIds = new Set<ProductId>(["start", "mask", "password"]);
+const docsProductIds = new Set<ProductId>(["start", "ai", "mask", "password"]);
 
 export function getProductSubNavItems(product: Product): ProductSubNavItem[] {
-  if (product.id === "guide" || product.id === "ai") {
+  if (product.id === "guide") {
     return [];
   }
 

@@ -9,25 +9,37 @@ import { siteConfig } from "@/config/site.config";
 import { buildOgImageMetadata } from "@/lib/og";
 
 import {
+  AiDocsPage,
   DOCS_PRODUCT_IDS,
   getDocsProduct,
   isDocsProductId,
-  joinDocsSlug,
   MaskDocsPage,
   PasswordDocsPage,
+  resolveDocsRoute,
   StartDocsPage,
   type DocsProductId,
 } from "@/features/docs";
+import { docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {
   params: Promise<{ locale: string; product: string; slug: string[] }>;
 };
 
-function DocsProductContent({ product, slug }: { product: DocsProductId; slug: string }) {
+function DocsProductContent({
+  product,
+  slug,
+  versionId,
+}: {
+  product: DocsProductId;
+  slug: string;
+  versionId?: string;
+}) {
   switch (product) {
     case "start":
       return <StartDocsPage slug={slug} />;
+    case "ai":
+      return <AiDocsPage slug={slug} versionId={versionId} />;
     case "mask":
       return <MaskDocsPage slug={slug} />;
     case "password":
@@ -41,35 +53,39 @@ export function generateStaticParams() {
       const docs = getDocsProduct(product);
       if (!docs) return [];
 
-      return docs.slugs
+      const latest = docs.slugs
         .filter((slug) => slug !== "introduction")
-        .map((slug) => ({
-          locale,
-          product,
-          slug: slug.split("/"),
-        }));
+        .map((slug) => slug.split("/"));
+
+      const archived = Object.entries(docs.archives).flatMap(([versionId, archive]) =>
+        archive.slugs.map((slug) =>
+          slug === "introduction" ? [versionId] : [versionId, ...slug.split("/")],
+        ),
+      );
+
+      return [...latest, ...archived].map((slug) => ({ locale, product, slug }));
     }),
   );
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, product: productParam, slug: slugSegments } = await params;
-  const slug = joinDocsSlug(slugSegments);
 
   if (!isProductId(productParam) || !isDocsProductId(productParam)) {
     return {};
   }
 
   const docs = getDocsProduct(productParam);
-  if (!docs || !docs.isSlug(slug)) return {};
+  const route = docs ? resolveDocsRoute(docs, slugSegments) : undefined;
+  if (!docs || !route) return {};
 
-  const t = await getTranslations({ locale, namespace: docs.messageNamespace });
-  const page = docs.getPage(slug, t);
+  const t = await getTranslations({ locale, namespace: route.content.messageNamespace });
+  const page = route.content.getPage(route.slug, t);
   if (!page) return {};
 
   const title = `${page.title} · ${siteConfig.name} ${docs.label}`;
   const description = page.description;
-  const path = `${docs.indexHref}/${slug}`;
+  const path = docsPagePath(route.content.indexHref, route.slug);
   const og = buildOgImageMetadata({
     title: page.title,
     description,
@@ -80,6 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    ...(route.version.latest ? {} : { robots: { index: false } }),
     openGraph: {
       title,
       description,
@@ -94,14 +111,13 @@ export default async function DocsSlugPage({ params }: PageProps) {
   const { locale, product: productParam, slug: slugSegments } = await params;
   setRequestLocale(locale);
 
-  const slug = joinDocsSlug(slugSegments);
-
   if (!isProductId(productParam) || !isDocsProductId(productParam)) {
     notFound();
   }
 
   const docs = getDocsProduct(productParam);
-  if (!docs || !docs.isSlug(slug) || slug === "introduction") {
+  const route = docs ? resolveDocsRoute(docs, slugSegments) : undefined;
+  if (!docs || !route) {
     notFound();
   }
 
@@ -109,7 +125,11 @@ export default async function DocsSlugPage({ params }: PageProps) {
 
   return (
     <main className="flex flex-1 flex-col">
-      <DocsProductContent product={productParam} slug={slug} />
+      <DocsProductContent
+        product={productParam}
+        slug={route.slug}
+        versionId={route.version.latest ? undefined : route.version.id}
+      />
     </main>
   );
 }

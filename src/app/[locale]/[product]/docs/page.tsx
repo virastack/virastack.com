@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildOgImageMetadata } from "@/lib/og";
 
 import {
+  AiDocsPage,
   DOCS_PRODUCT_IDS,
   getDocsProduct,
   isDocsProductId,
@@ -27,6 +28,8 @@ function DocsProductContent({ product, slug }: { product: DocsProductId; slug: s
   switch (product) {
     case "start":
       return <StartDocsPage slug={slug} />;
+    case "ai":
+      return <AiDocsPage slug={slug} />;
     case "mask":
       return <MaskDocsPage slug={slug} />;
     case "password":

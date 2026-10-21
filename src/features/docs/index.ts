@@ -1,5 +1,6 @@
 export { DocsLayout } from "@/features/docs/components/DocsLayout";
 export { StartDocsPage } from "@/features/docs/components/StartDocsPage";
+export { AiDocsPage } from "@/features/docs/components/AiDocsPage";
 export { MaskDocsPage } from "@/features/docs/components/MaskDocsPage";
 export { PasswordDocsPage } from "@/features/docs/components/PasswordDocsPage";
 export {
@@ -7,9 +8,10 @@ export {
   docsProducts,
   getDocsProduct,
   isDocsProductId,
-  joinDocsSlug,
+  resolveDocsRoute,
 } from "@/features/docs/config/docs-products";
 export type { DocsProductId } from "@/features/docs/config/docs-products";
+export { getAiDocsNav } from "@/features/docs/config/ai-docs.config";
 export {
   getStartDocsNav,
   getStartDocsPage,

@@ -1,6 +1,18 @@
 import type { ProductId } from "@/types/product.types";
 
 import {
+  aiDocsV1Slugs,
+  getAiDocsV1Nav,
+  getAiDocsV1Page,
+  isAiDocsV1Slug,
+} from "@/features/docs/config/ai-docs-v1.config";
+import {
+  aiDocsSlugs,
+  getAiDocsNav,
+  getAiDocsPage,
+  isAiDocsSlug,
+} from "@/features/docs/config/ai-docs.config";
+import {
   getMaskDocsNav,
   getMaskDocsPage,
   isMaskDocsSlug,
@@ -20,7 +32,7 @@ import {
 } from "@/features/docs/config/start-docs.config";
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
-export const DOCS_PRODUCT_IDS = ["start", "mask", "password"] as const;
+export const DOCS_PRODUCT_IDS = ["start", "ai", "mask", "password"] as const;
 
 export type DocsProductId = (typeof DOCS_PRODUCT_IDS)[number];
 
@@ -30,15 +42,34 @@ export function isDocsProductId(value: string): value is DocsProductId {
 
 type DocsTranslate = (key: string) => string;
 
-type DocsProductConfig = {
-  id: DocsProductId;
+type DocsMessageNamespace = "DocsStart" | "DocsAi" | "DocsAiV1" | "DocsMask" | "DocsPassword";
+
+type DocsVersion = {
+  id: string;
+  /** Selector label, e.g. "v2.0". */
   label: string;
+  latest: boolean;
+};
+
+/** Content of one docs version. */
+type DocsVersionContent = {
   indexHref: string;
-  messageNamespace: "DocsStart" | "DocsMask" | "DocsPassword";
+  messageNamespace: DocsMessageNamespace;
   slugs: readonly string[];
   getNav: (t: DocsTranslate) => DocsNavSection[];
   getPage: (slug: string, t: DocsTranslate) => DocsPageMeta | undefined;
   isSlug: (slug: string) => boolean;
+};
+
+/**
+ * Top-level fields describe the latest version (served at versionless paths).
+ * Archived versions live under `archives`, keyed by version id (served at `<indexHref>/<id>`).
+ */
+export type DocsProductConfig = DocsVersionContent & {
+  id: DocsProductId;
+  label: string;
+  versions: readonly DocsVersion[];
+  archives: Record<string, DocsVersionContent>;
 };
 
 export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
@@ -51,6 +82,32 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getNav: getStartDocsNav,
     getPage: getStartDocsPage,
     isSlug: isStartDocsSlug,
+    versions: [{ id: "v1", label: "v1.1", latest: true }],
+    archives: {},
+  },
+  ai: {
+    id: "ai",
+    label: "AI",
+    indexHref: "/ai/docs",
+    messageNamespace: "DocsAi",
+    slugs: aiDocsSlugs,
+    getNav: getAiDocsNav,
+    getPage: getAiDocsPage,
+    isSlug: isAiDocsSlug,
+    versions: [
+      { id: "v2", label: "v2.0", latest: true },
+      { id: "v1", label: "v1.3", latest: false },
+    ],
+    archives: {
+      v1: {
+        indexHref: "/ai/docs/v1",
+        messageNamespace: "DocsAiV1",
+        slugs: aiDocsV1Slugs,
+        getNav: getAiDocsV1Nav,
+        getPage: getAiDocsV1Page,
+        isSlug: isAiDocsV1Slug,
+      },
+    },
   },
   mask: {
     id: "mask",
@@ -61,6 +118,8 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getNav: getMaskDocsNav,
     getPage: getMaskDocsPage,
     isSlug: isMaskDocsSlug,
+    versions: [{ id: "v1", label: "v1", latest: true }],
+    archives: {},
   },
   password: {
     id: "password",
@@ -71,6 +130,8 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getNav: getPasswordDocsNav,
     getPage: getPasswordDocsPage,
     isSlug: isPasswordDocsSlug,
+    versions: [{ id: "v1", label: "v1", latest: true }],
+    archives: {},
   },
 };
 
@@ -81,6 +142,48 @@ export function getDocsProduct(
   return docsProducts[product];
 }
 
-export function joinDocsSlug(segments: string[]): string {
+function joinDocsSlug(segments: string[]): string {
   return segments.join("/");
+}
+
+export type ResolvedDocsRoute = {
+  version: DocsVersion;
+  content: DocsVersionContent;
+  slug: string;
+};
+
+/**
+ * Resolves `[...slug]` segments to a version and page slug.
+ * A leading archive version id (e.g. `v1`) selects that archive; otherwise the latest version is used.
+ * Non-canonical paths (e.g. `introduction`, which lives at the index) resolve to undefined.
+ */
+export function resolveDocsRoute(
+  docs: DocsProductConfig,
+  segments: string[],
+): ResolvedDocsRoute | undefined {
+  const [first, ...rest] = segments;
+  const archive = first ? docs.archives[first] : undefined;
+  const archiveVersion = docs.versions.find((item) => item.id === first && !item.latest);
+
+  if (archive && archiveVersion) {
+    const slug = rest.length === 0 ? "introduction" : joinDocsSlug(rest);
+    const canonical = slug === "introduction" ? rest.length === 0 : true;
+    return canonical && archive.isSlug(slug)
+      ? { version: archiveVersion, content: archive, slug }
+      : undefined;
+  }
+
+  const latest = docs.versions.find((item) => item.latest);
+  const slug = joinDocsSlug(segments);
+  return latest && slug !== "introduction" && docs.isSlug(slug)
+    ? { version: latest, content: docs, slug }
+    : undefined;
+}
+
+/** Content for a version id; falls back to the latest version. */
+export function getDocsVersionContent(
+  docs: DocsProductConfig,
+  versionId: string | undefined,
+): DocsVersionContent {
+  return (versionId ? docs.archives[versionId] : undefined) ?? docs;
 }

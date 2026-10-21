@@ -1,6 +1,6 @@
 # ViraStack AI (full)
 
-> `@virastack/ai` (~1.3.1), injects high-discipline agent rules and architecture docs into a React project. Framework-aware (Next.js vs TanStack Start). Not a chat UI library.
+> `@virastack/ai` v2 installs disciplined agent rules into a React project. Framework-aware (Next.js vs TanStack Start). Rules are written in Claude Code and Cursor native formats. Not a chat UI library.
 
 ## Install
 
@@ -8,52 +8,76 @@
 npx @virastack/ai init
 ```
 
-Product: https://virastack.com/ai; Index: https://virastack.com/ai/llms.txt; Repo: https://github.com/virastack/ai
+Product: https://virastack.com/ai; Docs: https://virastack.com/ai/docs; Index: https://virastack.com/ai/llms.txt; Repo: https://github.com/virastack/ai
 
-## CLI flags
+## Commands
+
+| Command | Meaning |
+| --- | --- |
+| `init` | Install the rules, or update an existing install |
+| `remove` | Remove every managed file, the `AGENTS.md` block and the `CLAUDE.md` import. Changed files are kept unless confirmed or `--force` |
+
+## Options
 
 | Flag | Meaning |
 | --- | --- |
-| `--force`, `-f` | Overwrite existing rule files without prompting |
+| `--agent <list>` | `claude`, `cursor` (comma separated) or `none`. Default `claude,cursor`. Saved in `.virastack/ai.json` |
 | `--framework nextjs\|tanstack` | Force framework instead of detecting from `package.json` |
-| `--tr` | Turkish CLI prompts and success messages |
+| `--force`, `-f` | Also overwrite (or, with `remove`, delete) managed files you changed |
+| `--dry-run` | Print the plan without writing anything |
+| `--yes`, `-y` | Answer every question with its default (never overwrite) |
+| `--tr` | Turkish CLI output |
 
 ## What gets written
 
-| Path | Role |
+| Path | When | Role |
+| --- | --- | --- |
+| `.claude/rules/virastack/*.md` | `--agent claude` | Claude Code rules, loaded by file path |
+| `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
+| `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
+| `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
+| `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
+| `.virastack/ai.json` | always | Manifest of installed files with hashes. Commit it |
+
+Content outside the managed `AGENTS.md` block is never touched.
+
+## Rules
+
+| Rule | Loaded for |
 | --- | --- |
-| `AGENTS.md` | Agent operating guide (all agents) |
-| `CLAUDE.md` | Claude Code entry point (`@AGENTS.md`) |
-| `.cursor/rules/*.mdc` | Scoped coding rules (Cursor auto-loads) |
-| `docs/architecture-guide.md` | Placement rules and import conventions |
-| `docs/MEMORIES.md` | Project memory template |
+| `core` | Always: workflow, naming, exports, errors |
+| `architecture` | Always: folder tree, feature boundaries, imports |
+| `react` | `src/**/*.tsx`, hooks |
+| `typescript` | `src/**/*.{ts,tsx}` |
+| `ui` | `src/components/**`, feature components |
+| `forms` | `*Form*.tsx`, `schemas/` |
+| `api` | `src/lib/api.ts`, feature `api/` |
+| `server-state` | feature `api/` and `hooks/`, `src/providers/`, `src/lib/query-client.ts` |
+| `client-state` | `stores/` |
+| `i18n` | `messages/`, `src/i18n/`, components (only with `next-intl` or Paraglide) |
+| `performance` | routes and components |
+| `testing` | `*.test.{ts,tsx}`, `src/test/` |
+| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts` (Next.js only) |
+| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
 
-## Rule coverage (typical)
+## Supported tools
 
-- Architecture: core principles, feature boundaries, React best practices
-- Data & state: TanStack Query (`queryOptions` factories), Zustand, API & error normalization (`ApiError`)
-- UI & performance: UI components, Tailwind, forms, Core Web Vitals
-- Quality: TypeScript strictness, testing expectations
-- Smart isolation: only injects rules for the detected framework to reduce cross-framework hallucinations
+- Native rules: Claude Code, Cursor
+- Read the `AGENTS.md` map: Codex, GitHub Copilot, Windsurf, Zed and other tools that read `AGENTS.md`
+- Gemini CLI: add `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }` to `.gemini/settings.json`
+- Aider: add `read: AGENTS.md` to `.aider.conf.yml`
 
-## Critical rules encoded for agents (summary)
+## Upgrading from v1
 
-- Feature-Sliced boundaries: no cross-feature imports; Zod-first validation at API edges
-- Prefer TanStack Query `queryOptions` factories over ad-hoc query keys
-- Safe return / normalized errors (`ApiError` with `message`, `status`, `data`)
-- Multi-agent ready: same standards via `AGENTS.md` + `CLAUDE.md` + Cursor rules
+Run `npx @virastack/ai@latest init`. Rule files and `docs/` written by v1.x are removed if never edited. Edited ones are kept and listed. Guide: https://virastack.com/ai/docs/upgrade
 
 ## Relationship to Start
 
-`npx virastack@latest` scaffolds can install AI automatically (`--tools ai`). Inside an existing repo, run `npx @virastack/ai init` (use `--force` to refresh).
-
-Design skills commonly referenced alongside AI in Start templates:
-
-- https://github.com/emilkowalski/skills
-- https://github.com/jakubkrehel/make-interfaces-feel-better
+`npx virastack@latest` scaffolds install ViraStack AI automatically and ask which AI tools you use. Inside an existing repo, run `npx @virastack/ai init`.
 
 ## Related
 
 - Start: https://virastack.com/start/llms-full.txt
 - Guide: https://virastack.com/guide/llms-full.txt
 - Ecosystem: https://virastack.com/llms.txt
+- Archived v1: https://virastack.com/ai/v1/llms-full.txt
