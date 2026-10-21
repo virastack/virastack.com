@@ -1,0 +1,47 @@
+# ViraStack AI v1 (archived, full)
+
+> `@virastack/ai` v1.3, injects agent rules and architecture docs into a React project. Framework-aware (Next.js vs TanStack Start). v1 is archived and no longer maintained. Current version: https://virastack.com/ai/llms-full.txt
+
+## Install
+
+```bash
+npx @virastack/ai@1 init
+```
+
+Without `@1`, npm installs v2. v1 docs: https://virastack.com/ai/docs/v1; Index: https://virastack.com/ai/v1/llms.txt; Repo: https://github.com/virastack/ai
+
+## CLI flags
+
+| Flag | Meaning |
+| --- | --- |
+| `--force`, `-f` | Overwrite existing rule files without prompting |
+| `--framework nextjs\|tanstack` | Force framework instead of detecting from `package.json` |
+| `--tr` | Turkish CLI prompts and success messages |
+
+## What gets written
+
+| Path | Role |
+| --- | --- |
+| `AGENTS.md` | Agent operating guide (all agents) |
+| `CLAUDE.md` | Claude Code entry point (`@AGENTS.md`) |
+| `.cursor/rules/*.mdc` | Scoped coding rules (Cursor auto-loads) |
+| `docs/architecture-guide.md` | Placement rules and import conventions |
+| `docs/MEMORIES.md` | Project memory template |
+
+## Rule coverage
+
+- Architecture: core principles, feature boundaries, React best practices
+- Data & state: TanStack Query (`queryOptions` factories), Zustand, API & error normalization (`ApiError`)
+- UI & performance: UI components, Tailwind, forms, Core Web Vitals
+- Quality: TypeScript strictness, testing expectations
+- Smart isolation: only injects rules for the detected framework
+
+## Upgrading to v2
+
+v2 writes rules in each agent's native format (`.claude/rules/virastack/`, `.cursor/rules/virastack/`), keeps a managed block in `AGENTS.md` and tracks files in `.virastack/ai.json`. Running `npx @virastack/ai@2 init` in a v1 project removes unchanged v1 files and keeps the ones you edited. Guide: https://virastack.com/ai/docs/upgrade
+
+## Related
+
+- AI v2: https://virastack.com/ai/llms-full.txt
+- Start: https://virastack.com/start/llms-full.txt
+- Ecosystem: https://virastack.com/llms.txt

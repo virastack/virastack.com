@@ -17,7 +17,17 @@ const config = {
     "src/features/**/schemas/index.ts",
     "src/i18n/routing.ts",
   ],
-  ignoreDependencies: ["tailwindcss", "tw-animate-css"],
+  ignoreDependencies: [
+    "tailwindcss",
+    "tw-animate-css",
+    // Imported from CSS (knip does not follow it)
+    "shadcn",
+    // Template stack kept for the Rule-of-Three promotions above
+    "@hookform/resolvers",
+    "@tanstack/react-query-devtools",
+    "react-markdown",
+    "zustand",
+  ],
   rules: {
     dependencies: "error",
     exports: "warn",

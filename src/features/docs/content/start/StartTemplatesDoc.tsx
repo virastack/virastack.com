@@ -44,7 +44,7 @@ export function StartTemplatesDoc() {
 │   └── landing/              # ${t("templatesTreeCommentFeature")}
 │       ├── api/
 │       ├── components/
-│       ├── data/
+│       ├── constants/
 │       ├── helpers/
 │       ├── hooks/
 │       ├── icons/
@@ -55,22 +55,24 @@ export function StartTemplatesDoc() {
 ├── components/
 │   ├── ui/
 │   └── shared/
-├── hooks/
-├── stores/
-├── schemas/
-├── providers/
-├── lib/
 ├── config/
 ├── constants/
 ├── helpers/
-├── types/
+├── hooks/
+├── lib/
+├── providers/
+├── schemas/
+├── stores/
 ├── styles/
+├── test/                     # ${t("templatesTreeCommentTest")}
+├── types/
 └── env.ts
 
-.agents/
-└── skills/                   # ${t("templatesTreeCommentSkills")}
-.cursor/
-└── rules/                    # ${t("templatesTreeCommentRules")}
+messages/                     # ${t("templatesTreeCommentMessages")}
+.agents/skills/               # ${t("templatesTreeCommentSkills")}
+.claude/                      # ${t("templatesTreeCommentClaude")}
+.cursor/rules/virastack/      # ${t("templatesTreeCommentRules")}
+.virastack/ai.json            # ${t("templatesTreeCommentManifest")}
 AGENTS.md
 CLAUDE.md`;
 
@@ -165,15 +167,46 @@ CLAUDE.md`;
                 {chunks}
               </GuideProductMark>
             ),
-            emil: (chunks) => <code>{chunks}</code>,
-            feel: (chunks) => <code>{chunks}</code>,
+            code: (chunks) => <code>{chunks}</code>,
+            docs: (chunks) => <Link href="/ai/docs/rules">{chunks}</Link>,
+            skills: (chunks) => <Link href="/start/docs/installation#skills">{chunks}</Link>,
           })}
         </p>
+
+        <h2 id="testler">{t("templatesHeadingTests")}</h2>
+        <p>
+          {t.rich("templatesTestsP", {
+            code: (chunks) => <code>{chunks}</code>,
+          })}
+        </p>
+        <ul>
+          <li>
+            {t.rich("templatesTestsSetup", {
+              code: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+          <li>
+            {t.rich("templatesTestsExamples", {
+              code: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+          <li>
+            {t.rich("templatesTestsScripts", {
+              code: (chunks) => <code>{chunks}</code>,
+              scripts: (chunks) => <Link href="/start/docs/scripts">{chunks}</Link>,
+            })}
+          </li>
+        </ul>
 
         <h2 id="klasor-yapisi">{t("templatesHeadingStructure")}</h2>
         <pre>
           <code>{tree}</code>
         </pre>
+        <p>
+          {t.rich("templatesStructureBoundaries", {
+            code: (chunks) => <code>{chunks}</code>,
+          })}
+        </p>
         <p>
           {t.rich("templatesFooter", {
             installation: (chunks) => <Link href="/start/docs/installation">{chunks}</Link>,

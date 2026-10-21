@@ -6,11 +6,15 @@ import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { Link } from "@/i18n/routing";
 
 const FLAGS = [
+  { flag: "--agent", key: "cliAgent" as const },
+  { flag: "--dry-run", key: "cliDryRun" as const },
   { flag: "--force, -f", key: "cliForce" as const },
   { flag: "--framework", key: "cliFramework" as const },
   { flag: "--tr", key: "cliTr" as const },
+  { flag: "remove", key: "cliRemove" as const },
 ] as const;
 
 export function AiCli() {
@@ -52,6 +56,20 @@ export function AiCli() {
             </p>
           </RevealItem>
         ))}
+        <RevealItem>
+          <p className="pt-4">
+            {t.rich("cliDocs", {
+              docs: (chunks) => (
+                <Link
+                  href="/ai/docs/cli"
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
+        </RevealItem>
       </RevealGroup>
     </section>
   );

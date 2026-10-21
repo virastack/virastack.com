@@ -12,6 +12,10 @@ const telemetryBodySchema = z.object({
       i18n: z.boolean().optional(),
       tools: z.array(z.string().max(32)).max(20).optional(),
       tool: z.string().max(32).optional(),
+      agents: z
+        .array(z.enum(["claude", "cursor", "none"]))
+        .max(3)
+        .optional(),
       packageManager: z.enum(["pnpm", "npm", "yarn", "bun"]).optional(),
       installOk: z.boolean().optional(),
       skipInstall: z.boolean().optional(),
@@ -63,6 +67,13 @@ export function buildTelemetryCounterKeys(body: TelemetryBody): string[] {
   for (const tool of tools) {
     const safe = segment(tool);
     if (safe) keys.push(`telemetry:${event}:tool:${safe}`);
+  }
+
+  if (properties.agents) {
+    const agents = new Set(properties.agents.length === 0 ? ["none"] : properties.agents);
+    for (const agent of agents) {
+      keys.push(`telemetry:${event}:agent:${agent}`);
+    }
   }
 
   if (properties.platform) {

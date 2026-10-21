@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import { PanelLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -15,9 +15,11 @@ type DocsMobileNavProps = {
   sections: DocsNavSection[];
   /** @deprecated Kept for call-site compatibility; active state is exact pathname match. */
   docsIndexHref?: string;
+  /** Version selector rendered above the nav inside the sheet. */
+  versionSelect?: ReactNode;
 };
 
-export function DocsMobileNav({ sections, docsIndexHref }: DocsMobileNavProps) {
+export function DocsMobileNav({ sections, docsIndexHref, versionSelect }: DocsMobileNavProps) {
   const t = useTranslations("Docs");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -42,6 +44,7 @@ export function DocsMobileNav({ sections, docsIndexHref }: DocsMobileNavProps) {
             <SheetTitle>{t("docsNav")}</SheetTitle>
           </SheetHeader>
           <div className="h-full overflow-y-auto overscroll-contain px-3 pt-12 pb-6">
+            {versionSelect}
             <DocsSidebar sections={sections} docsIndexHref={docsIndexHref} />
           </div>
         </SheetContent>

@@ -15,8 +15,8 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 
 | Product | Install / entry | npm |
 | --- | --- | --- |
-| Start | `npx virastack@latest` | `virastack` (~1.0.5) |
-| AI | `npx @virastack/ai init` | `@virastack/ai` (~1.3.1) |
+| Start | `npx virastack@latest` | `virastack` (~1.1.0) |
+| AI | `npx @virastack/ai init` | `@virastack/ai` (~2.0.0) |
 | Mask | `npm i @virastack/mask` | `@virastack/mask` (~1.1.1) |
 | Password | `npm i @virastack/password` | `@virastack/password` (~1.0.2) |
 | Guide | https://virastack.com/guide/play | site experience (not an npm lib) |
@@ -24,21 +24,22 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 ## Start (quick)
 
 ```bash
-npx virastack@latest init my-app --template nextjs --tools mask,password,ai --yes
+npx virastack@latest init my-app --template nextjs --agent claude,cursor --tools mask,password --yes
 ```
 
-Flags: `init [name]`, `add <tool>`, `--template nextjs|tanstack`, `--tools mask,password,ai`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
+Flags: `init [name]`, `add <tool>`, `--template nextjs|tanstack`, `--agent claude,cursor|none`, `--tools mask,password`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
 
-Templates ship Feature-Sliced layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, nuqs, RHF + Zod, Base UI. Details: https://virastack.com/start/llms-full.txt
+Templates ship Feature-Sliced layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, nuqs, RHF + Zod, Base UI, Vitest + MSW tests, ViraStack AI rules and three design skills. Details: https://virastack.com/start/llms-full.txt
 
 ## AI (quick)
 
 ```bash
 npx @virastack/ai init
-# optional: --force, --framework nextjs|tanstack, --tr
+# optional: --agent claude,cursor|none, --dry-run, --force, --framework nextjs|tanstack, --tr
+npx @virastack/ai remove
 ```
 
-Detects Next.js vs TanStack Start from `package.json`, writes `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, and architecture docs. Details: https://virastack.com/ai/llms-full.txt
+Detects Next.js vs TanStack Start from `package.json`. Writes rules to `.claude/rules/virastack/` and `.cursor/rules/virastack/`, a managed block in `AGENTS.md`, an `@AGENTS.md` line in `CLAUDE.md` and a `.virastack/ai.json` manifest. v1 guide (archived): https://virastack.com/ai/v1/llms-full.txt. Details: https://virastack.com/ai/llms-full.txt
 
 ## Mask (quick)
 

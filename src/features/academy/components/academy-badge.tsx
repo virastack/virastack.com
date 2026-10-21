@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode, SVGProps } from "react";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -62,6 +63,7 @@ import { WindsurfLight } from "@/components/ui/svgs/windsurfLight";
 import { ZedLogo } from "@/components/ui/svgs/zedLogo";
 import { ZedLogoDark } from "@/components/ui/svgs/zedLogoDark";
 import { Zod } from "@/components/ui/svgs/zod";
+import { Zustand } from "@/components/ui/svgs/zustand";
 import {
   ACADEMY_BADGE_LABELS,
   ACADEMY_COMPANY_BADGES,
@@ -174,6 +176,20 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <Tailwindcss className={iconClassName} aria-hidden />;
     case "zod":
       return <Zod className={iconClassName} aria-hidden />;
+    case "zustand":
+      return <Zustand className={iconClassName} aria-hidden />;
+    case "virastack":
+      return (
+        <Image
+          src="/logo-icon.webp"
+          alt=""
+          width={16}
+          height={16}
+          unoptimized
+          className={iconClassName}
+          aria-hidden
+        />
+      );
     case "nodejs":
       return <Nodejs className={iconClassName} aria-hidden />;
     case "tanstack-query":

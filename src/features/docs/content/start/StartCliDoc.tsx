@@ -78,6 +78,16 @@ export function StartCliDoc() {
               </tr>
               <tr>
                 <td>
+                  <code>--agent &lt;list&gt;</code>
+                </td>
+                <td>
+                  {t.rich("cliFlagAgent", {
+                    list: (chunks) => <code>{chunks}</code>,
+                  })}
+                </td>
+              </tr>
+              <tr>
+                <td>
                   <code>--i18n</code> / <code>--no-i18n</code>
                 </td>
                 <td>{t("cliFlagI18n")}</td>
@@ -92,7 +102,7 @@ export function StartCliDoc() {
                 <td>
                   <code>--skip-install</code>
                 </td>
-                <td>{t("cliFlagSkip")}</td>
+                <td>{t.rich("cliFlagSkip", { code: (chunks) => <code>{chunks}</code> })}</td>
               </tr>
               <tr>
                 <td>
@@ -135,7 +145,9 @@ export function StartCliDoc() {
         </p>
 
         <CodeBlockCommand
-          {...convertNpmCommand("npx virastack@latest --template nextjs --i18n --yes")}
+          {...convertNpmCommand(
+            "npx virastack@latest my-app --template nextjs --agent claude --i18n --yes",
+          )}
         />
 
         <h2 id="add">{t("cliHeadingAdd")}</h2>
@@ -147,7 +159,7 @@ export function StartCliDoc() {
 
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add mask")} />
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add password")} />
-        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai")} />
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent cursor")} />
 
         <p>{t("cliAddP2")}</p>
         <ul>
@@ -173,6 +185,7 @@ export function StartCliDoc() {
         <p>
           {t.rich("cliAddTip", {
             code: (chunks) => <code>{chunks}</code>,
+            ai: (chunks) => <Link href="/ai/docs/installation">{chunks}</Link>,
           })}
         </p>
 

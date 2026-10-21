@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy";
 import {
+  getAiDocsNav,
   getMaskDocsNav,
   getPasswordDocsNav,
   getStartDocsNav,
@@ -43,10 +44,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Hrefs are locale-independent; titles are ignored for the sitemap.
   const startDocsNav = getStartDocsNav((key) => key);
+  const aiDocsNav = getAiDocsNav((key) => key);
   const maskDocsNav = getMaskDocsNav((key) => key);
   const passwordDocsNav = getPasswordDocsNav((key) => key);
-  const docsHrefs = [...startDocsNav, ...maskDocsNav, ...passwordDocsNav].flatMap((section) =>
-    section.items.map((item) => item.href),
+  const docsHrefs = [...startDocsNav, ...aiDocsNav, ...maskDocsNav, ...passwordDocsNav].flatMap(
+    (section) => section.items.map((item) => item.href),
   );
 
   const maskExampleHrefs = [
