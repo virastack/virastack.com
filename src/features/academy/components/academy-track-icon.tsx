@@ -15,9 +15,9 @@ import { Playwright } from "@/components/ui/svgs/playwright";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
 import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { Reactquery } from "@/components/ui/svgs/reactquery";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
+import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Vitest } from "@/components/ui/svgs/vitest";
 import { Webdev } from "@/components/ui/svgs/webdev";
@@ -47,7 +47,7 @@ const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
   npm: { kind: "svg", icon: Npm },
   React: { kind: "theme", light: ReactLight, dark: ReactDark },
   "Next.js": { kind: "svg", icon: NextjsIconDark, className: "dark:invert" },
-  "TanStack Query": { kind: "svg", icon: Reactquery },
+  "TanStack Query": { kind: "svg", icon: Tanstack },
   Zustand: { kind: "svg", icon: Zustand },
   "React Hook Form": { kind: "svg", icon: ReactHookForm },
   Zod: { kind: "svg", icon: Zod },

@@ -110,6 +110,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Teknik mimar, Playwright elçisi, Microsoft MVP",
     en: "Technical architect, Playwright ambassador, Microsoft MVP",
   },
+  "tanner linsley": {
+    tr: "TanStack’in ve React Query’nin yaratıcısı",
+    en: "Creator of TanStack and React Query",
+  },
   tkdodo: {
     tr: "TanStack Query’nin ana maintainer’ı",
     en: "Lead maintainer of TanStack Query",

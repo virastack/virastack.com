@@ -43,11 +43,11 @@ import { QwenDark } from "@/components/ui/svgs/qwenDark";
 import { QwenLight } from "@/components/ui/svgs/qwenLight";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { Reactquery } from "@/components/ui/svgs/reactquery";
 import { Reactrouter } from "@/components/ui/svgs/reactrouter";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { ShadcnUiDark } from "@/components/ui/svgs/shadcnUiDark";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
+import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { TanstackDark } from "@/components/ui/svgs/tanstackDark";
 import { TanstackLight } from "@/components/ui/svgs/tanstackLight";
 import { TurborepoIconDark } from "@/components/ui/svgs/turborepoIconDark";
@@ -193,7 +193,7 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
     case "nodejs":
       return <Nodejs className={iconClassName} aria-hidden />;
     case "tanstack-query":
-      return <Reactquery className={iconClassName} aria-hidden />;
+      return <Tanstack className={iconClassName} aria-hidden />;
     case "react-router":
       return <Reactrouter className={iconClassName} aria-hidden />;
     case "shadcn":
