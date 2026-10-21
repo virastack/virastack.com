@@ -43,9 +43,7 @@ export function ProductHero({ product }: ProductHeroProps) {
   const primary =
     product.id === "guide"
       ? { href: "/guide/play" as const, label: t("startExperience") }
-      : product.id === "ai"
-        ? { href: "#install" as const, label: t("install") }
-        : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
+      : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
   const showInstallCommand = product.id === "start" || product.id === "ai";
 
   return (
@@ -95,21 +93,6 @@ export function ProductHero({ product }: ProductHeroProps) {
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
           </Button>
-          {product.id === "ai" ? (
-            <>
-              <Button
-                size="lg"
-                variant="outline"
-                nativeButton={false}
-                render={<Link href="/ai/docs" />}
-              >
-                <span>{t("readTheDocs")}</span>
-              </Button>
-              <Button size="lg" variant="outline" nativeButton={false} render={<a href="#demo" />}>
-                <span>{t("seeTheDemo")}</span>
-              </Button>
-            </>
-          ) : null}
           <GithubRepoButton href={product.github} label={`virastack/${product.id}`} />
         </div>
 

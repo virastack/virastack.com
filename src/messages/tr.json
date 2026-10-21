@@ -294,8 +294,6 @@
   },
   "Products": {
     "readTheDocs": "Dokümantasyon",
-    "install": "Kur",
-    "seeTheDemo": "Demoyu gör",
     "startExperience": "Deneyimi başlat",
     "startName": "Start",
     "startDesc": "Tek komutla <bold>üretime hazır</bold> Next.js ve TanStack Start projeleri. Feature-Sliced mimari, tip güvenliği ve AI kuralları dahil.",

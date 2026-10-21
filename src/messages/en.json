@@ -294,8 +294,6 @@
   },
   "Products": {
     "readTheDocs": "Read the docs",
-    "install": "Install",
-    "seeTheDemo": "See the demo",
     "startExperience": "Start the experience",
     "startName": "Start",
     "startDesc": "<bold>Production-ready</bold> Next.js and TanStack Start projects in <italic>one command</italic>. Feature-Sliced architecture, type safety, and AI rules included.",
