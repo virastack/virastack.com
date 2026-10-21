@@ -15,7 +15,7 @@ import { getDocsAdjacentPages } from "@/features/docs/lib/docs-adjacent";
 import type { DocsVersionLink } from "@/features/docs/lib/docs-versions";
 import type { DocsHeading, DocsNavSection } from "@/features/docs/types/docs.types";
 
-export type DocsLayoutVersions = {
+type DocsLayoutVersions = {
   /** Version id of the page being rendered. */
   current: string;
   /** One entry per version; the selector renders only when there is more than one. */
