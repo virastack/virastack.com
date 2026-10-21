@@ -106,6 +106,7 @@
     "ctaStart": "<start>Start</start> ile başlayın"
   },
   "Start": {
+    "demoVideoLabel": "ViraStack Start kurulumu: soruları yanıtla, proje ve AI kuralları hazır.",
     "featuresTitle": "Özellikler",
     "featuresCliTitle": "Tek CLI",
     "featuresCliSubtitle": "npx virastack",
@@ -150,7 +151,7 @@
     "featuresCustomSubtitle": "Pattern + resolveMask",
     "featuresCustomDesc": "Pattern ve resolveMask ile kendi formatlarınızı tanımlayın; motoru fork etmeye gerek yok.",
     "featuresLightTitle": "Ultra Hafif",
-    "featuresLightSubtitle": "<5KB gzip",
+    "featuresLightSubtitle": "~5KB gzip",
     "featuresLightDesc": "React ve React Hook Form peer’ları dışında sıfır runtime bağımlılık."
   },
   "Password": {
@@ -178,7 +179,7 @@
     "featuresSyncDesc": "Alan disabled veya readOnly iken toggle kilitlenir. Ekstra glue kodu yok.",
     "featuresUiTitle": "UI Bağımsız",
     "featuresUiSubtitle": "shadcn · Ant · Chakra",
-    "featuresUiDesc": "Kullandığınız UI kütüphanesiyle çalışır. Yaygın stack’ler için demo ve helper’lar var."
+    "featuresUiDesc": "Kullandığınız UI kütüphanesiyle çalışır. shadcn, Ant ve Chakra örnekleri dokümanda."
   },
   "SupportPage": {
     "title": "Destek",

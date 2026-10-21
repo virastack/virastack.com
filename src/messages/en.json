@@ -106,6 +106,7 @@
     "ctaStart": "Get started with <start>Start</start>"
   },
   "Start": {
+    "demoVideoLabel": "ViraStack Start setup: answer the prompts and get a project with AI rules ready.",
     "featuresTitle": "Features",
     "featuresCliTitle": "One CLI",
     "featuresCliSubtitle": "npx virastack",
@@ -150,7 +151,7 @@
     "featuresCustomSubtitle": "Pattern + resolveMask",
     "featuresCustomDesc": "Define your own formats with patterns and resolveMask; no fork of the engine required.",
     "featuresLightTitle": "Ultra-Light",
-    "featuresLightSubtitle": "<5KB gzip",
+    "featuresLightSubtitle": "~5KB gzip",
     "featuresLightDesc": "Zero runtime dependencies beyond React and React Hook Form as peers."
   },
   "Password": {
@@ -178,7 +179,7 @@
     "featuresSyncDesc": "Toggle locks with the field when disabled or read-only. Consistent UX without extra glue.",
     "featuresUiTitle": "UI-Agnostic",
     "featuresUiSubtitle": "shadcn · Ant · Chakra",
-    "featuresUiDesc": "Works with the UI library you already use. Demos and helpers for common stacks."
+    "featuresUiDesc": "Works with the UI library you already use. shadcn, Ant and Chakra examples are in the docs."
   },
   "SupportPage": {
     "title": "Support",
