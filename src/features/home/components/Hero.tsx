@@ -40,12 +40,7 @@ export function Hero() {
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            nativeButton={false}
-            render={<Link href="/start/docs" />}
-          >
+          <Button size="lg" variant="outline" nativeButton={false} render={<Link href="/start" />}>
             <span>{t("ctaStart")}</span>
           </Button>
           <Button
