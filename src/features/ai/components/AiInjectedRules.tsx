@@ -16,6 +16,7 @@ import { featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { Link } from "@/i18n/routing";
 
 type RuleItem = {
   title: string;
@@ -115,6 +116,23 @@ export function AiInjectedRules() {
             </p>
           </RevealItem>
         ))}
+      </RevealGroup>
+
+      <RevealGroup className="mt-10 text-center">
+        <RevealItem>
+          <p className="text-sm text-muted-foreground">
+            {t.rich("rulesAll", {
+              docs: (chunks) => (
+                <Link
+                  href="/ai/docs/rules"
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
+        </RevealItem>
       </RevealGroup>
     </section>
   );

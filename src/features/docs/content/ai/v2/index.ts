@@ -1,0 +1,9 @@
+export { AiChangelogDoc } from "@/features/docs/content/ai/v2/AiChangelogDoc";
+export { AiCliDoc } from "@/features/docs/content/ai/v2/AiCliDoc";
+export { AiCustomizationDoc } from "@/features/docs/content/ai/v2/AiCustomizationDoc";
+export { AiInstallationDoc } from "@/features/docs/content/ai/v2/AiInstallationDoc";
+export { AiInstalledFilesDoc } from "@/features/docs/content/ai/v2/AiInstalledFilesDoc";
+export { AiIntroductionDoc } from "@/features/docs/content/ai/v2/AiIntroductionDoc";
+export { AiRulesDoc } from "@/features/docs/content/ai/v2/AiRulesDoc";
+export { AiSupportedToolsDoc } from "@/features/docs/content/ai/v2/AiSupportedToolsDoc";
+export { AiUpgradeDoc } from "@/features/docs/content/ai/v2/AiUpgradeDoc";

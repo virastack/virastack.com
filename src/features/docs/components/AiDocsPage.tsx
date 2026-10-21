@@ -1,14 +1,44 @@
+import type { ReactNode } from "react";
+
 import { getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
-import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
+import { AiV1IntroductionDoc } from "@/features/docs/content/ai/v1";
+import {
+  AiChangelogDoc,
+  AiCliDoc,
+  AiCustomizationDoc,
+  AiInstallationDoc,
+  AiInstalledFilesDoc,
+  AiIntroductionDoc,
+  AiRulesDoc,
+  AiSupportedToolsDoc,
+  AiUpgradeDoc,
+} from "@/features/docs/content/ai/v2";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 const UPGRADE_HREF = "/ai/docs/upgrade";
+
+const aiDocsContent: Record<string, Record<string, () => ReactNode>> = {
+  latest: {
+    introduction: () => <AiIntroductionDoc />,
+    installation: () => <AiInstallationDoc />,
+    "supported-tools": () => <AiSupportedToolsDoc />,
+    cli: () => <AiCliDoc />,
+    "installed-files": () => <AiInstalledFilesDoc />,
+    rules: () => <AiRulesDoc />,
+    customization: () => <AiCustomizationDoc />,
+    upgrade: () => <AiUpgradeDoc />,
+    changelog: () => <AiChangelogDoc />,
+  },
+  v1: {
+    introduction: () => <AiV1IntroductionDoc />,
+  },
+};
 
 type AiDocsPageProps = {
   slug: string;
@@ -23,8 +53,9 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
   const t = await getTranslations(content.messageNamespace);
   const tDocs = await getTranslations("Docs");
   const page = content.getPage(slug, t);
+  const render = aiDocsContent[versionId ?? "latest"]?.[slug];
 
-  if (!page || !version) {
+  if (!page || !version || !render) {
     return null;
   }
 
@@ -52,10 +83,7 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
         upgradeHref: UPGRADE_HREF,
       }}
     >
-      <DocsPageHeader title={page.title} description={page.description} />
-      <DocsProse>
-        <p>{t("placeholder")}</p>
-      </DocsProse>
+      {render()}
     </DocsLayout>
   );
 }

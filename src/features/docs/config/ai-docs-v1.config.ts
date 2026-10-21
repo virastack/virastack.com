@@ -25,7 +25,12 @@ export function getAiDocsV1Page(slug: string, t: DocsAiV1Translate): DocsPageMet
       slug: "introduction",
       title: t("introductionTitle"),
       description: t("introductionDescription"),
-      headings: [],
+      headings: [
+        { id: "install", title: t("introductionHeadingInstall") },
+        { id: "options", title: t("introductionHeadingOptions") },
+        { id: "rules", title: t("introductionHeadingRules") },
+        { id: "files", title: t("introductionHeadingFiles") },
+      ],
     },
   };
 

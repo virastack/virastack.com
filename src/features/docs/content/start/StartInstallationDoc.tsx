@@ -55,6 +55,12 @@ export function StartInstallationDoc() {
             })}
           </li>
           <li>
+            {t.rich("installationQAgents", {
+              bold: (chunks) => <strong>{chunks}</strong>,
+              code: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+          <li>
             {t.rich("installationQI18n", {
               bold: (chunks) => <strong>{chunks}</strong>,
             })}
@@ -69,28 +75,44 @@ export function StartInstallationDoc() {
         </ol>
 
         <h2 id="sonrasi">{t("installationHeadingAfter")}</h2>
+        <p>{t("installationAfterOrder")}</p>
+        <ol>
+          <li>{t("installationOrderInstall")}</li>
+          <li>
+            {t.rich("installationOrderNext", {
+              code: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+          <li>
+            {t.rich("installationOrderAi", {
+              ai: (chunks) => (
+                <GuideProductMark id="ai" linked={false}>
+                  {chunks}
+                </GuideProductMark>
+              ),
+              code: (chunks) => <code>{chunks}</code>,
+              docs: (chunks) => <Link href="/ai/docs/installed-files">{chunks}</Link>,
+            })}
+          </li>
+          <li>{t("installationOrderSkills")}</li>
+          <li>
+            {t.rich("installationOrderCommit", {
+              code: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+        </ol>
+
+        <h3 id="skills">{t("installationHeadingSkills")}</h3>
         <p>
-          {t.rich("installationAfterP1", {
-            ai: (chunks) => (
-              <GuideProductMark id="ai" linked={false}>
-                {chunks}
-              </GuideProductMark>
-            ),
-            agents: (chunks) => <code>{chunks}</code>,
-            claude: (chunks) => <code>{chunks}</code>,
-            cursor: (chunks) => <code>{chunks}</code>,
-          })}
-        </p>
-        <p>
-          {t.rich("installationAfterP2", {
-            agentsDir: (chunks) => <code>{chunks}</code>,
+          {t.rich("installationSkillsP", {
+            code: (chunks) => <code>{chunks}</code>,
           })}
         </p>
         <ul>
           <li>
             {t.rich("installationSkillEmil", {
-              emil: (chunks) => <code>{chunks}</code>,
-              emilLink: (chunks) => (
+              code: (chunks) => <code>{chunks}</code>,
+              link: (chunks) => (
                 <a href="https://github.com/emilkowalski/skills" target="_blank" rel="noreferrer">
                   {chunks}
                 </a>
@@ -98,20 +120,40 @@ export function StartInstallationDoc() {
             })}
           </li>
           <li>
-            {t.rich("installationSkillFeel", {
-              feel: (chunks) => <code>{chunks}</code>,
-              feelLink: (chunks) => (
-                <a
-                  href="https://github.com/jakubkrehel/make-interfaces-feel-better"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+            {t.rich("installationSkillBetterUi", {
+              code: (chunks) => <code>{chunks}</code>,
+              link: (chunks) => (
+                <a href="https://github.com/jakubkrehel/skills" target="_blank" rel="noreferrer">
+                  {chunks}
+                </a>
+              ),
+            })}
+          </li>
+          <li>
+            {t.rich("installationSkillBetterA11y", {
+              code: (chunks) => <code>{chunks}</code>,
+              link: (chunks) => (
+                <a href="https://github.com/jakubkrehel/skills" target="_blank" rel="noreferrer">
                   {chunks}
                 </a>
               ),
             })}
           </li>
         </ul>
+        <p>
+          {t.rich("installationSkillsOffline", {
+            code: (chunks) => <code>{chunks}</code>,
+          })}
+        </p>
+
+        <h3 id="prettierignore">{t("installationHeadingPrettier")}</h3>
+        <p>
+          {t.rich("installationPrettierP", {
+            code: (chunks) => <code>{chunks}</code>,
+          })}
+        </p>
+
+        <h3 id="calistir">{t("installationHeadingRun")}</h3>
         <p>{t("installationAfterP3")}</p>
 
         <CodeBlockCommand {...convertNpmCommand("npm run dev")} />

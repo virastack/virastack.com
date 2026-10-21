@@ -62,6 +62,9 @@ export function getStartDocsPage(slug: string, t: DocsStartTranslate): DocsPageM
         { id: "hizli-baslangic", title: t("installationHeadingQuick") },
         { id: "cli-sorulari", title: t("installationHeadingQuestions") },
         { id: "sonrasi", title: t("installationHeadingAfter") },
+        { id: "skills", title: t("installationHeadingSkills"), level: 3 },
+        { id: "prettierignore", title: t("installationHeadingPrettier"), level: 3 },
+        { id: "calistir", title: t("installationHeadingRun"), level: 3 },
         { id: "fixme", title: t("installationHeadingFixme") },
       ],
     },
@@ -83,6 +86,7 @@ export function getStartDocsPage(slug: string, t: DocsStartTranslate): DocsPageM
       headings: [
         { id: "framework", title: t("templatesHeadingFramework") },
         { id: "stack", title: t("templatesHeadingStack") },
+        { id: "testler", title: t("templatesHeadingTests") },
         { id: "klasor-yapisi", title: t("templatesHeadingStructure") },
       ],
     },

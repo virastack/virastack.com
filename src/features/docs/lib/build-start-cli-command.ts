@@ -1,12 +1,16 @@
 export const START_CLI_TEMPLATES = ["nextjs", "tanstack"] as const;
 export const START_CLI_TOOLS = ["mask", "password"] as const;
+export const START_CLI_AGENTS = ["claude", "cursor"] as const;
 
 export type StartCliTemplate = (typeof START_CLI_TEMPLATES)[number];
 export type StartCliTool = (typeof START_CLI_TOOLS)[number];
+export type StartCliAgent = (typeof START_CLI_AGENTS)[number];
 
 export type StartCliCommandOptions = {
   name: string;
   template: StartCliTemplate | null;
+  /** Selected AI coding tools; both (the CLI default) adds no flag, none adds `--agent none`. */
+  agents: StartCliAgent[];
   i18n: boolean | null;
   tools: StartCliTool[];
   turkishPrompts: boolean;
@@ -28,6 +32,12 @@ export function buildStartCliCommand(options: StartCliCommandOptions): string {
 
   if (options.template) {
     parts.push(`--template ${options.template}`);
+    hasFlags = true;
+  }
+
+  if (options.agents.length < START_CLI_AGENTS.length) {
+    const orderedAgents = START_CLI_AGENTS.filter((agent) => options.agents.includes(agent));
+    parts.push(`--agent ${orderedAgents.length > 0 ? orderedAgents.join(",") : "none"}`);
     hasFlags = true;
   }
 

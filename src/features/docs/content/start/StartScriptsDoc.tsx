@@ -95,6 +95,18 @@ export function StartScriptsDoc() {
                 </td>
                 <td>{t("scriptsKnip")}</td>
               </tr>
+              <tr>
+                <td>
+                  <code>pnpm test</code>
+                </td>
+                <td>{t("scriptsTest")}</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>pnpm test:watch</code>
+                </td>
+                <td>{t("scriptsTestWatch")}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -155,7 +167,7 @@ export function StartScriptsDoc() {
         <h2 id="ci">{t("scriptsHeadingCi")}</h2>
         <p>{t("scriptsCiP")}</p>
         <pre>
-          <code>typecheck → lint:ci → knip → build</code>
+          <code>typecheck → lint:ci → knip → test → build</code>
         </pre>
         <p>
           {t.rich("scriptsCiTip", {

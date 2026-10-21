@@ -1,12 +1,12 @@
 # ViraStack Start (full)
 
-> `virastack` CLI (~1.0.5), scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, and optional ViraStack tools.
+> `virastack` CLI (1.1), scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
 
 ## Install / run
 
 ```bash
 npx virastack@latest
-npx virastack@latest init my-app --template nextjs --tools mask,password,ai --yes
+npx virastack@latest init my-app --template nextjs --agent claude,cursor --tools mask,password --yes
 ```
 
 Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.txt; Repo: https://github.com/virastack/start
@@ -17,6 +17,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | --- | --- |
 | `init [name]` | Create a new project (interactive unless `--yes`) |
 | `add <tool>` | Add a ViraStack tool into an existing project (`mask`, `password`, `ai`) |
+| `add ai --agent <list>` | Add AI rules for the given coding tools |
 
 ## Flags
 
@@ -24,14 +25,36 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | --- | --- |
 | `--name <name>` | Project name (`.` = current directory) |
 | `--template <name>` | `nextjs` or `tanstack` |
-| `--tools <list>` | Comma-separated: `mask`, `password`, `ai` |
+| `--agent <list>` | AI coding tools: `claude`, `cursor` (comma separated) or `none`. Default: both |
+| `--tools <list>` | Comma-separated: `mask`, `password` |
 | `--i18n` / `--no-i18n` | Multi-language templates on/off |
 | `--yes`, `-y` | Non-interactive defaults |
-| `--skip-install` | Skip package install |
+| `--skip-install` | Skip package install (AI rules and skills are still added) |
 | `--tr` | Turkish CLI prompts / success messages |
-| `--telemetry-disable` | Disable telemetry |
+| `--telemetry-disable` | Disable anonymous usage tracking |
 | `-v`, `--version` | Version |
 | `-h`, `--help` | Help |
+
+## Interactive questions
+
+Order: template, AI coding tools (Claude Code, Cursor; both selected by default), i18n, extra tools (Mask, Password).
+
+## Setup order
+
+1. `git init`
+2. Package install (skipped with `--skip-install`)
+3. Next.js only: Next.js agent rules block in `AGENTS.md`
+4. ViraStack AI: `npx @virastack/ai init --agent <list>` writes rules for the selected tools
+5. Design skills (see below)
+6. Initial commit
+
+## Design skills
+
+Installed in every project with the `skills` CLI (https://github.com/vercel-labs/skills), into `.agents/skills/` plus the selected agents:
+
+- `emil-design-eng` from https://github.com/emilkowalski/skills
+- `better-ui` from https://github.com/jakubkrehel/skills
+- `better-accessibility` from https://github.com/jakubkrehel/skills
 
 ## Templates
 
@@ -39,39 +62,53 @@ Four variants:
 
 1. `templates/nextjs`: Next.js 16 App Router, React 19, no i18n by default
 2. `templates/tanstack`: TanStack Start + Router, React 19, no i18n by default
-3. `templates-i18n/nextjs`: Next.js + `next-intl`
+3. `templates-i18n/nextjs`: Next.js + `next-intl`, messages in root `messages/`
 4. `templates-i18n/tanstack`: TanStack Start + Paraglide
 
 ### Shared stack (typical)
 
 - TypeScript 5 strict + `noUncheckedIndexedAccess`, Node `>=20.9`
 - Tailwind CSS 4 design tokens
-- UI: Base UI (unstyled), Framer Motion, Sonner, Lucide, `next-themes`, CVA
+- UI: Base UI (unstyled), Motion, Sonner, Lucide, `next-themes`, CVA
 - Server state: TanStack Query 5
 - Client state: Zustand
 - URL state: `nuqs`
 - Forms: React Hook Form + Zod
 - API: native `fetch` wrapper → typed `ApiError` (`message`, `status`, `data`)
 - Env: Zod schema in `src/env.ts` (no `@t3-oss/env-nextjs` required)
+- Tests: Vitest, Testing Library, jsdom, MSW
 - Tooling: ESLint 9, Prettier 3, Husky, Knip, Commitlint, Changesets
-- Agent: ViraStack AI writes `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, `docs/*`
-- Intentionally omitted by default: Auth, DB/ORM, test runner, CSP
+- Agent: ViraStack AI v2 writes `.claude/rules/virastack/`, `.cursor/rules/virastack/`, an `AGENTS.md` block and `.virastack/ai.json` (see https://virastack.com/ai/llms-full.txt)
+- Intentionally omitted by default: Auth, DB/ORM, CSP
+
+### Tests
+
+- `vitest.config.ts` and `src/test/`: jsdom setup, a `renderWithProviders` helper and an MSW server that fails on unhandled requests
+- Example tests in `features/landing`: a helper, an API function with MSW and a component
 
 ### Architecture for agents
 
 - Feature-Sliced: default work under `src/features/[feature]/`
 - No cross-feature imports; promote to `src/` only when a second feature needs it
+- Shared constants live in `src/constants/`
 - Prefer aliases: `@/ui`, `@/hooks`, `@/schemas`, `@/layout`
 - Scaffold includes deletable `features/landing` demo, remove when building the real app
 - Search codebase for `FIXME:` after scaffold (site config, remote images, etc.)
+
+### Formatting
+
+`.prettierignore` lists the AI rule files and skills, so `pnpm lint:ci` does not reformat files that ViraStack AI tracks by hash.
 
 ### Template-local llms.txt
 
 Each generated app ships `public/llms.txt` describing that edition’s file tree (Next vs TanStack). Prefer that file inside a scaffolded repo.
 
-## Post-install quality scripts
+## Scripts
 
-Common: `pnpm typecheck`, `pnpm lint` / `lint:ci`, `pnpm knip`, `pnpm build`.
+- Day-to-day: `pnpm dev`, `pnpm build`, `pnpm start`
+- Quality: `pnpm typecheck`, `pnpm lint` / `lint:ci`, `pnpm knip`, `pnpm format`
+- Tests: `pnpm test` (once), `pnpm test:watch`
+- CI order: `typecheck → lint:ci → knip → test → build`
 
 ## Related products
 
