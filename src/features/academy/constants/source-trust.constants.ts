@@ -26,6 +26,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Mock Service Worker’ın yaratıcısı, Epic Web eğitmeni",
     en: "Creator of Mock Service Worker, Epic Web instructor",
   },
+  "daishi kato": {
+    tr: "Zustand, Jotai ve Valtio’nun maintainer’ı",
+    en: "Maintainer of Zustand, Jotai and Valtio",
+  },
   "dan abramov": {
     tr: "Redux’ın eş yaratıcısı, eski React Core ve Bluesky mühendisi",
     en: "Co-creator of Redux, former React Core and Bluesky engineer",
