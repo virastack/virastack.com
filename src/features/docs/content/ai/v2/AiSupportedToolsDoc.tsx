@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
 
@@ -53,7 +54,9 @@ export function AiSupportedToolsDoc() {
             </thead>
             <tbody>
               <tr>
-                <td>Claude Code</td>
+                <td>
+                  <AcademyBadge kind="claudeCode" />
+                </td>
                 <td>
                   <Supported label={yes}>
                     <code>.claude/rules/virastack/</code>
@@ -64,7 +67,9 @@ export function AiSupportedToolsDoc() {
                 </td>
               </tr>
               <tr>
-                <td>Cursor</td>
+                <td>
+                  <AcademyBadge kind="cursor" />
+                </td>
                 <td>
                   <Supported label={yes}>
                     <code>.cursor/rules/virastack/</code>
@@ -75,7 +80,9 @@ export function AiSupportedToolsDoc() {
                 </td>
               </tr>
               <tr>
-                <td>Codex</td>
+                <td>
+                  <AcademyBadge kind="codex" />
+                </td>
                 <td>
                   <NotSupported label={no} />
                 </td>
@@ -84,7 +91,9 @@ export function AiSupportedToolsDoc() {
                 </td>
               </tr>
               <tr>
-                <td>GitHub Copilot</td>
+                <td>
+                  <AcademyBadge kind="copilot" />
+                </td>
                 <td>
                   <NotSupported label={no} />
                 </td>
@@ -93,7 +102,9 @@ export function AiSupportedToolsDoc() {
                 </td>
               </tr>
               <tr>
-                <td>Gemini CLI</td>
+                <td>
+                  <AcademyBadge kind="geminiCli" />
+                </td>
                 <td>
                   <NotSupported label={no} />
                 </td>
