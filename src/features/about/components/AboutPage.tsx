@@ -46,6 +46,11 @@ function richHandlers() {
         {chunks}
       </a>
     ),
+    tanstack: (chunks: ReactNode) => (
+      <a href="https://tanstack.com" target="_blank" rel="noreferrer" className={linkClassName}>
+        {chunks}
+      </a>
+    ),
     start: products.start,
     ai: products.ai,
     mask: products.mask,
@@ -80,6 +85,15 @@ export function AboutPage() {
             </p>
           </header>
         </RevealItem>
+
+        <StorySection title={t("whatTitle")}>
+          <p>{t.rich("whatBody1", rich)}</p>
+          <p>{t.rich("whatBody2", rich)}</p>
+        </StorySection>
+
+        <StorySection title={t("principlesTitle")}>
+          <p>{t.rich("principlesBody", rich)}</p>
+        </StorySection>
 
         <StorySection title={t("learnTitle")}>
           <p>{t.rich("learnBody", rich)}</p>
