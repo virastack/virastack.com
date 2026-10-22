@@ -38,6 +38,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Redux’ın eş yaratıcısı, eski React Core ve Bluesky mühendisi",
     en: "Co-creator of Redux, former React Core and Bluesky engineer",
   },
+  "danilo sato": {
+    tr: "Thoughtworks’te teknoloji lideri, DevOps in Practice kitabının yazarı",
+    en: "Technology leader at Thoughtworks, author of DevOps in Practice",
+  },
   "dominik dorfmeister": {
     tr: "TanStack Query’nin ana maintainer’ı",
     en: "Lead maintainer of TanStack Query",
@@ -101,6 +105,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
   "michael guay": {
     tr: "Kıdemli mühendis, NestJS Udemy eğitmeni",
     en: "Senior engineer, NestJS instructor on Udemy",
+  },
+  "pete hodgson": {
+    tr: "Bağımsız yazılım danışmanı, eski Thoughtworks mühendisi, feature flag üzerine yazıların yazarı",
+    en: "Independent software consultant, former Thoughtworks engineer, author of writing on feature flags",
   },
   "rachel potvin": {
     tr: "Block’ta platform mühendisliği başkanı, eski GitHub mühendislik VP’si, Google’ın monorepo makalesinin ortak yazarı",
