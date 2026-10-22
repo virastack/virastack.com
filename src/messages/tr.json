@@ -990,7 +990,7 @@
     "installationOrderSkills": "Üç tasarım skill’i kurar.",
     "installationOrderCommit": "İlk commit’i atar. <code>git status</code> temiz kalır.",
     "installationHeadingSkills": "Tasarım skill’leri",
-    "installationSkillsP": "Her proje, seçtiğiniz AI araçlarından bağımsız olarak <code>.agents/skills/</code> içine üç skill alır. Claude Code seçiliyse <code>.claude/skills/</code> içine de kopyalanır. Skill’ler symlink olarak değil dosya olarak kopyalanır.",
+    "installationSkillsP": "Her proje, Cursor ve diğer ajanların okuduğu <code>.agents/skills/</code> içine üç skill alır. Claude Code seçiliyse <code>.claude/skills/</code> içine de kopyalanır. Claude Code tek araçsa skill’ler yalnızca <code>.claude/skills/</code> içine gider. Skill’ler symlink olarak değil dosya olarak kopyalanır.",
     "installationSkillBetterUi": "<code>better-ui</code> (<link>jakubkrehel/skills</link>): Jakub Krehel’in arayüz detayları. <code>make-interfaces-feel-better</code> yerine gelir.",
     "installationSkillBetterA11y": "<code>better-accessibility</code> (<link>jakubkrehel/skills</link>): erişilebilir bileşenler, odak yönetimi ve semantik HTML.",
     "installationSkillsOffline": "Her skill ayrı kurulur. Biri başarısız olursa diğerleri durmaz. Skill’ler sadece çevrimdışıyken atlanır; CLI o zaman sonradan eklemek için komutu yazdırır. <code>--skip-install</code> onları atlamaz.",

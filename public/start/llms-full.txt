@@ -50,7 +50,7 @@ Order: template, AI coding tools (Claude Code, Cursor; both selected by default)
 
 ## Design skills
 
-Installed in every project with the `skills` CLI (https://github.com/vercel-labs/skills), into `.agents/skills/` plus the selected agents:
+Installed in every project with the `skills` CLI (https://github.com/vercel-labs/skills), into `.agents/skills/` plus the selected agents (only `.claude/skills/` when Claude Code is the only tool):
 
 - `emil-design-eng` from https://github.com/emilkowalski/skills
 - `better-ui` from https://github.com/jakubkrehel/skills
