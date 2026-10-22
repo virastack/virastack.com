@@ -66,6 +66,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "TanStack AI maintainer’ı, Netlify’da principal mühendis",
     en: "Maintainer of TanStack AI, principal engineer at Netlify",
   },
+  "jake archibald": {
+    tr: "Mozilla’da çalışıyor, önce uzun yıllar Google Chrome ekibindeydi",
+    en: "Works at Mozilla, previously spent many years on the Google Chrome team",
+  },
   "josh levenberg": {
     tr: "Google’ın monorepo makalesinin ortak yazarı, mühendislik VP’si",
     en: "Co-author of Google’s monorepo paper, VP of Engineering",
