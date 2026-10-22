@@ -42,6 +42,7 @@ import { PrettierIconLight } from "@/components/ui/svgs/prettierIconLight";
 import { QwenDark } from "@/components/ui/svgs/qwenDark";
 import { QwenLight } from "@/components/ui/svgs/qwenLight";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
+import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Reactrouter } from "@/components/ui/svgs/reactrouter";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
@@ -178,6 +179,8 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <Zod className={iconClassName} aria-hidden />;
     case "zustand":
       return <Zustand className={iconClassName} aria-hidden />;
+    case "react-hook-form":
+      return <ReactHookForm className={iconClassName} aria-hidden />;
     case "virastack":
       return (
         <Image

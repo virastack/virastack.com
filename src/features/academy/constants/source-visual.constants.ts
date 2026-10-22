@@ -42,6 +42,7 @@ const ORGANIZATION_BADGE_ALIASES: Record<string, AcademyBadgeKind> = {
   pnpm: "pnpm",
   prettier: "prettier",
   react: "react",
+  "react hook form": "react-hook-form",
   "react router": "react-router",
   "react-router": "react-router",
   "shadcn/ui": "shadcn",
@@ -52,6 +53,8 @@ const ORGANIZATION_BADGE_ALIASES: Record<string, AcademyBadgeKind> = {
   turborepo: "turborepo",
   vercel: "vercel",
   vitest: "vitest",
+  zod: "zod",
+  zustand: "zustand",
 };
 
 const PERSON_AVATAR_ALIASES: Record<string, string> = {

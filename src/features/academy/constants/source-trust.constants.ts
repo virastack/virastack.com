@@ -10,6 +10,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Anthropic’te Claude Code üzerinde çalışıyor, 14 yıl Google Chrome ekibinde çalıştı",
     en: "Works on Claude Code at Anthropic, spent 14 years on the Google Chrome team",
   },
+  "adrian roselli": {
+    tr: "Erişilebilirlik danışmanı, W3C ARIA ve Web Platform çalışma gruplarının üyesi",
+    en: "Accessibility consultant, member of the W3C ARIA and Web Platform working groups",
+  },
   "aleksandr guzenko": {
     tr: "Teknik lider, HolyJS ve Conf42 konuşmacısı",
     en: "Tech lead, speaker at HolyJS and Conf42",
@@ -61,6 +65,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
   "josh levenberg": {
     tr: "Google’ın monorepo makalesinin ortak yazarı, mühendislik VP’si",
     en: "Co-author of Google’s monorepo paper, VP of Engineering",
+  },
+  "josh w. comeau": {
+    tr: "Eski DigitalOcean ve Khan Academy mühendisi, CSS ve React eğitmeni",
+    en: "Former DigitalOcean and Khan Academy engineer, CSS and React educator",
   },
   "justin weiss": {
     tr: "Baş yazılım mühendisi, Practicing Rails kitabının yazarı",
@@ -117,6 +125,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
   "tanner linsley": {
     tr: "TanStack’in ve React Query’nin yaratıcısı",
     en: "Creator of TanStack and React Query",
+  },
+  "vitaly friedman": {
+    tr: "Smashing Magazine’in kurucu ortağı, UX ve form tasarımı eğitmeni",
+    en: "Co-founder of Smashing Magazine, UX and form design trainer",
   },
   tkdodo: {
     tr: "TanStack Query’nin ana maintainer’ı",
