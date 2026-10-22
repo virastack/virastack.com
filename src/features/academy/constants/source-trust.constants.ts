@@ -86,6 +86,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Testing Library’nin yaratıcısı, Epic Web’in kurucusu ve eğitmeni",
     en: "Creator of Testing Library, founder and instructor of Epic Web",
   },
+  "liran tal": {
+    tr: "Snyk’te geliştirici savunucusu, JavaScript tedarik zinciri güvenliği üzerine konuşmacı",
+    en: "Developer advocate at Snyk, speaker on JavaScript supply chain security",
+  },
   "luca mezzalira": {
     tr: "Building Micro-Frontends kitabının yazarı, AWS’de principal mimar",
     en: "Author of Building Micro-Frontends, principal architect at AWS",
