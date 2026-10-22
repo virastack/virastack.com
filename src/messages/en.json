@@ -990,7 +990,7 @@
     "installationOrderSkills": "Installs three design skills.",
     "installationOrderCommit": "Makes the first commit, so <code>git status</code> is clean.",
     "installationHeadingSkills": "Design skills",
-    "installationSkillsP": "Every project gets three skills in <code>.agents/skills/</code>, whatever AI tools you pick. With Claude Code they are also copied to <code>.claude/skills/</code>. Skills are copied as files, not symlinks.",
+    "installationSkillsP": "Every project gets three skills in <code>.agents/skills/</code>, which Cursor and other agents read. With Claude Code they are also copied to <code>.claude/skills/</code>. If Claude Code is your only tool, they go only to <code>.claude/skills/</code>. Skills are copied as files, not symlinks.",
     "installationSkillBetterUi": "<code>better-ui</code> (<link>jakubkrehel/skills</link>): Jakub Krehel’s interface details. Replaces <code>make-interfaces-feel-better</code>.",
     "installationSkillBetterA11y": "<code>better-accessibility</code> (<link>jakubkrehel/skills</link>): accessible components, focus handling and semantic markup.",
     "installationSkillsOffline": "Each skill installs on its own, so one failure does not stop the others. Skills are skipped only when you are offline; the CLI then prints the command to add them later. <code>--skip-install</code> does not skip them.",
