@@ -90,6 +90,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Refactoring kitabının yazarı, Thoughtworks baş bilim insanı",
     en: "Author of Refactoring, Chief Scientist at Thoughtworks",
   },
+  "lukas weichselbaum": {
+    tr: "Google’da staff bilgi güvenliği mühendisi, Google genelinde CSP geçişini yönetiyor",
+    en: "Staff information security engineer at Google, leads Google-wide CSP adoption",
+  },
   "marvin hagemeister": {
     tr: "Shopify’da kıdemli staff mühendis, Preact çekirdek ekibi ve Preact DevTools’un yaratıcısı",
     en: "Senior staff engineer at Shopify, on the Preact core team and creator of Preact DevTools",
@@ -109,6 +113,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
   "pete hodgson": {
     tr: "Bağımsız yazılım danışmanı, eski Thoughtworks mühendisi, feature flag üzerine yazıların yazarı",
     en: "Independent software consultant, former Thoughtworks engineer, author of writing on feature flags",
+  },
+  "philippe de ryck": {
+    tr: "Web güvenliği uzmanı, Pragmatic Web Security’nin kurucusu",
+    en: "Web security expert, founder of Pragmatic Web Security",
   },
   "rachel potvin": {
     tr: "Block’ta platform mühendisliği başkanı, eski GitHub mühendislik VP’si, Google’ın monorepo makalesinin ortak yazarı",
