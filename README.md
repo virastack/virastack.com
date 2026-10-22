@@ -26,13 +26,14 @@ A DX-first toolkit for frontend developers: modern-stack starters, agent rules, 
 
 ## Products
 
-| Product                                                                                                             | Path        | Description                                    |
-| :------------------------------------------------------------------------------------------------------------------ | :---------- | :--------------------------------------------- |
-| [![ViraStack Start](https://img.shields.io/badge/ViraStack-Start-%2300bba7)](https://virastack.com/start/)          | `/start`    | Scaffolding CLI for Next.js and TanStack Start |
-| [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23d946ef)](https://virastack.com/ai)                    | `/ai`       | Agent rules and architecture kit               |
-| [![ViraStack Mask](https://img.shields.io/badge/ViraStack-Mask-%23615fff)](https://virastack.com/mask/)             | `/mask`     | Input masking for React forms                  |
-| [![ViraStack Password](https://img.shields.io/badge/ViraStack-Password-%23ff2056)](https://virastack.com/password/) | `/password` | Accessible password visibility hook            |
-| [![ViraStack Guide](https://img.shields.io/badge/ViraStack-Guide-%23ffb900)](https://virastack.com/guide)           | `/guide`    | Interactive modern-web walkthrough             |
+| Product                                                                                                             | Path        | Description                                       |
+| :------------------------------------------------------------------------------------------------------------------ | :---------- | :------------------------------------------------ |
+| [![ViraStack Academy](https://img.shields.io/badge/ViraStack-Academy-%2300c950)](https://virastack.com/academy)     | `/academy`  | React frontend roadmap with curated sources       |
+| [![ViraStack Start](https://img.shields.io/badge/ViraStack-Start-%2300bba7)](https://virastack.com/start/)          | `/start`    | Scaffolding CLI for Next.js and TanStack Start    |
+| [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23d946ef)](https://virastack.com/ai)                    | `/ai`       | Agent rules for Claude Code, Cursor and AGENTS.md |
+| [![ViraStack Mask](https://img.shields.io/badge/ViraStack-Mask-%23615fff)](https://virastack.com/mask/)             | `/mask`     | Input masking for React Hook Form                 |
+| [![ViraStack Password](https://img.shields.io/badge/ViraStack-Password-%23ff2056)](https://virastack.com/password/) | `/password` | Accessible password visibility hook               |
+| [![ViraStack Guide](https://img.shields.io/badge/ViraStack-Guide-%23ffb900)](https://virastack.com/guide)           | `/guide`    | Interactive modern web walkthrough                |
 
 ## License
 
