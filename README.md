@@ -8,7 +8,7 @@
   </picture>
 </a>
 
-_The official website and documentation hub for the ViraStack ecosystem._
+_Official website and docs for the ViraStack ecosystem_
 
 [![ViraStack](https://img.shields.io/badge/ViraStack-Website-18181b)](https://virastack.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -20,7 +20,7 @@ _The official website and documentation hub for the ViraStack ecosystem._
 
 ### [Visit virastack.com →](https://virastack.com)
 
-## ViraStack
+## About
 
 A DX-first toolkit for frontend developers: modern-stack starters, agent rules, form hooks, and an interactive guide, documented and demoed in one place.
 
@@ -36,10 +36,4 @@ A DX-first toolkit for frontend developers: modern-stack starters, agent rules, 
 
 ## License
 
-Licensed under the [MIT License](LICENSE).
-
-## Maintainer
-
-A project by [**Ömer Gülçiçek**](https://omergulcicek.com)
-
-[![Follow Ömer Gülçiçek](https://img.shields.io/github/followers/omergulcicek?label=Follow&style=social)](https://github.com/omergulcicek)
+[MIT](LICENSE) © [Ömer Gülçiçek](https://omergulcicek.com)
