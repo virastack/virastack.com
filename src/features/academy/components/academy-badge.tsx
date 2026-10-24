@@ -182,6 +182,7 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
     case "react-hook-form":
       return <ReactHookForm className={iconClassName} aria-hidden />;
     case "virastack":
+      // logo-icon.webp has ~24% transparent padding per side; scale to match other icons.
       return (
         <Image
           src="/logo-icon.webp"
@@ -189,7 +190,7 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
           width={16}
           height={16}
           unoptimized
-          className={iconClassName}
+          className={cn(iconClassName, "scale-[1.9]")}
           aria-hidden
         />
       );

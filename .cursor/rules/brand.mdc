@@ -1,0 +1,31 @@
+---
+description: "USE WHEN: Writing or editing user-facing copy (message JSON, pages, docs) that mentions ViraStack products or technology names."
+globs: "src/messages/**/*.json,src/features/**/*.tsx,src/app/**/*.tsx"
+alwaysApply: false
+---
+
+# Brand & Copy
+
+## ViraStack products
+
+- **Lockup:** Products are always `ViraStack` + short name: `ViraStack Start`, `ViraStack AI`, `ViraStack Mask`, `ViraStack Password`, `ViraStack Guide`, `ViraStack Academy`. Never the short name alone in body copy (dense navigation is the only exception).
+- **Implementation:** Use rich-text tags backed by `guideProductTags` / `GuideProductMark` (`<start>Start</start>`). Never write the lockup as plain text in JSON.
+- **Academy:** Not a `ProductId`; use a local rich handler with brand span + italic name, colored from `brandPalettes` (id `academy`).
+- **Colors:** Read from `src/config/brand-palettes.config.ts`. Never hardcode a product color.
+- **Repeats:** Do not repeat the lockup needlessly; prefer one lockup per sentence or list.
+
+## Technology names
+
+- React, Next.js, TanStack Start, TypeScript, Tailwind CSS, shadcn/ui and similar are labeled with `AcademyBadge` (icon badge), not plain text.
+- Valid `kind` values and labels: `src/features/academy/constants/badge.constants.ts`.
+- In rich text, expose a handler per tech (`<react>React</react>` → `<AcademyBadge kind="react" />`).
+
+## Emphasis
+
+- **Bold:** key phrase or takeaway.
+- **Italic:** foreign or quoted word. Product short names are always `font-medium italic` in the product color.
+- **Icons:** only through badges, not inline decoration.
+
+## Sources
+
+- Link to `/academy/sources` when describing how sources are chosen; the criteria live there.

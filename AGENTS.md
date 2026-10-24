@@ -40,6 +40,7 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 
 - **Global Standards:** `.cursor/rules/core-principles.mdc`
 - **UI & UX:** `.cursor/rules/ui-components.mdc`, `.cursor/rules/forms.mdc`, `.cursor/rules/i18n.mdc`
+- **Brand & Copy:** `.cursor/rules/brand.mdc` (product lockups, tech badges, emphasis)
 - **Logic & State:** `.cursor/rules/state-management.mdc`, `.cursor/rules/tanstack-query.mdc`, `.cursor/rules/api.mdc`
 - **Frameworks:** `.cursor/rules/nextjs.mdc`
 - **Best Practices:** `.cursor/rules/react-best-practices.mdc`, `.cursor/rules/typescript.mdc`
