@@ -10,6 +10,7 @@ export const TRACK_ICON_TAGS: Record<string, string | readonly string[]> = {
   playwright: "Playwright",
   "performance-accessibility": "Web Performansı",
   architecture: "Mimari",
+  principles: "Prensipler",
   "auth-security": "Auth ve Güvenlik",
   production: "Production",
   ai: "Yapay Zekâ",

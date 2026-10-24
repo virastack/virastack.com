@@ -1,6 +1,15 @@
 import type { ComponentType, SVGProps } from "react";
 
-import { BookOpen, Bot, Gauge, GraduationCap, Layers, Rocket, ShieldCheck } from "lucide-react";
+import {
+  BookOpen,
+  Bot,
+  Gauge,
+  GraduationCap,
+  Layers,
+  Rocket,
+  Scale,
+  ShieldCheck,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -63,6 +72,11 @@ const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
     kind: "lucide",
     icon: Layers,
     className: "text-sky-600 dark:text-sky-400",
+  },
+  Prensipler: {
+    kind: "lucide",
+    icon: Scale,
+    className: "text-amber-600 dark:text-amber-400",
   },
   "Auth ve Güvenlik": {
     kind: "lucide",
