@@ -5,10 +5,10 @@ import { useTranslations } from "next-intl";
 import { BaseUiIcon } from "@/components/icons/base-ui";
 import { FramerIcon } from "@/components/icons/framer";
 import { NuqsIcon } from "@/components/icons/nuqs";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { Lucide } from "@/components/ui/svgs/lucide";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { Zod } from "@/components/ui/svgs/zod";
 import { Zustand } from "@/components/ui/svgs/zustand";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
@@ -27,7 +27,7 @@ export function StartTemplatesDoc() {
   const t = useTranslations("DocsStart");
 
   const stackTags = {
-    query: stackMark(<Tanstack aria-hidden />),
+    query: stackMark(<TanstackLogo />),
     zustand: stackMark(<Zustand aria-hidden />),
     nuqs: stackMark(<NuqsIcon className="size-full" />),
     rhf: stackMark(<ReactHookForm aria-hidden />),
@@ -97,7 +97,7 @@ CLAUDE.md`;
             {t.rich("templatesTanstack", {
               bold: (chunks) => <strong>{chunks}</strong>,
               tanstack: (chunks) => (
-                <GuideStackIcon icon={<Tanstack aria-hidden />}>{chunks}</GuideStackIcon>
+                <GuideStackIcon icon={<TanstackLogo />}>{chunks}</GuideStackIcon>
               ),
             })}
           </li>

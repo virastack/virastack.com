@@ -31,6 +31,9 @@ export const ACADEMY_LIBRARY_BADGES = [
   "html",
   "css",
   "javascript",
+  "mdn",
+  "testing-library",
+  "owasp",
 ] as const;
 
 export const ACADEMY_PRODUCT_BADGES = [
@@ -123,6 +126,9 @@ export const ACADEMY_BADGE_LABELS: Record<string, string> = {
   html: "HTML",
   css: "CSS",
   javascript: "JavaScript",
+  mdn: "MDN",
+  "testing-library": "Testing Library",
+  owasp: "OWASP",
   claude: "Claude",
   gpt: "GPT",
   chatGpt: "ChatGPT",

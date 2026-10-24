@@ -44,13 +44,18 @@ const ORGANIZATION_BADGE_ALIASES: Record<string, AcademyBadgeKind> = {
   react: "react",
   "react hook form": "react-hook-form",
   "react router": "react-router",
+  "react testing library": "testing-library",
   "react-router": "react-router",
   "shadcn/ui": "shadcn",
   shadcn: "shadcn",
+  tailwind: "tailwind",
+  "tailwind css": "tailwind",
   "tanstack query": "tanstack-query",
   "tanstack router": "tanstack-start",
   "tanstack start": "tanstack-start",
+  "tanstack virtual": "tanstack-query",
   turborepo: "turborepo",
+  "typescript handbook": "typescript",
   vercel: "vercel",
   vitest: "vitest",
   zod: "zod",
@@ -67,6 +72,14 @@ const PERSON_AVATAR_ALIASES: Record<string, string> = {
 };
 
 const PERSON_AVATAR_SOURCES: Record<string, { imageSrc: string; initials: string }> = {
+  "josh w. comeau": {
+    imageSrc: "/academy/authors/josh-w-comeau.png",
+    initials: "JC",
+  },
+  "adrian roselli": {
+    imageSrc: "/academy/authors/adrian-roselli.png",
+    initials: "AR",
+  },
   "alexander morgunov": {
     imageSrc: "/academy/authors/alexander-morgunov.png",
     initials: "AM",

@@ -27,6 +27,7 @@ import { Google } from "@/components/ui/svgs/google";
 import { Html5 } from "@/components/ui/svgs/html5";
 import { Javascript } from "@/components/ui/svgs/javascript";
 import { Linear } from "@/components/ui/svgs/linear";
+import { Mdn } from "@/components/ui/svgs/mdn";
 import { Meta } from "@/components/ui/svgs/meta";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
@@ -34,6 +35,7 @@ import { Npm } from "@/components/ui/svgs/npm";
 import { Nuxt } from "@/components/ui/svgs/nuxt";
 import { Openai } from "@/components/ui/svgs/openai";
 import { OpenaiDark } from "@/components/ui/svgs/openaiDark";
+import { Owasp } from "@/components/ui/svgs/owasp";
 import { Playwright } from "@/components/ui/svgs/playwright";
 import { Pnpm } from "@/components/ui/svgs/pnpm";
 import { PnpmDark } from "@/components/ui/svgs/pnpmDark";
@@ -48,9 +50,9 @@ import { Reactrouter } from "@/components/ui/svgs/reactrouter";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { ShadcnUiDark } from "@/components/ui/svgs/shadcnUiDark";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { TanstackDark } from "@/components/ui/svgs/tanstackDark";
 import { TanstackLight } from "@/components/ui/svgs/tanstackLight";
+import { TestingLibrary } from "@/components/ui/svgs/testingLibrary";
 import { TurborepoIconDark } from "@/components/ui/svgs/turborepoIconDark";
 import { TurborepoIconLight } from "@/components/ui/svgs/turborepoIconLight";
 import { Typescript } from "@/components/ui/svgs/typescript";
@@ -197,7 +199,7 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
     case "nodejs":
       return <Nodejs className={iconClassName} aria-hidden />;
     case "tanstack-query":
-      return <Tanstack className={iconClassName} aria-hidden />;
+      return <ThemeIcon light={TanstackLight} dark={TanstackDark} className={className} />;
     case "react-router":
       return <Reactrouter className={iconClassName} aria-hidden />;
     case "shadcn":
@@ -216,6 +218,12 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <Css className={iconClassName} aria-hidden />;
     case "javascript":
       return <Javascript className={iconClassName} aria-hidden />;
+    case "mdn":
+      return <Mdn className={iconClassName} aria-hidden />;
+    case "owasp":
+      return <Owasp viewBox="0 0 40 40" className={iconClassName} aria-hidden />;
+    case "testing-library":
+      return <TestingLibrary className={iconClassName} aria-hidden />;
     default:
       return null;
   }

@@ -3,9 +3,9 @@ import { useTranslations } from "next-intl";
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { GuideProductMark, GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
@@ -50,7 +50,7 @@ export function StartInstallationDoc() {
                 </GuideStackIcon>
               ),
               tanstack: (chunks) => (
-                <GuideStackIcon icon={<Tanstack aria-hidden />}>{chunks}</GuideStackIcon>
+                <GuideStackIcon icon={<TanstackLogo />}>{chunks}</GuideStackIcon>
               ),
             })}
           </li>

@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
@@ -56,9 +56,7 @@ export function StartI18nDoc() {
 
         <h2 id="tanstack">
           {t.rich("i18nHeadingTanstack", {
-            tanstack: (chunks) => (
-              <GuideStackIcon icon={<Tanstack aria-hidden />}>{chunks}</GuideStackIcon>
-            ),
+            tanstack: (chunks) => <GuideStackIcon icon={<TanstackLogo />}>{chunks}</GuideStackIcon>,
           })}
         </h2>
         <p>{t.rich("i18nTanstackP", rich)}</p>

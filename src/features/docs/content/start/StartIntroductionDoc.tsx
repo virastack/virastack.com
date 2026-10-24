@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { GuideProductMark, GuideStackIcon } from "@/features/guide/components/GuideRichText";
@@ -30,9 +30,7 @@ export function StartIntroductionDoc() {
                 {chunks}
               </GuideStackIcon>
             ),
-            tanstack: (chunks) => (
-              <GuideStackIcon icon={<Tanstack aria-hidden />}>{chunks}</GuideStackIcon>
-            ),
+            tanstack: (chunks) => <GuideStackIcon icon={<TanstackLogo />}>{chunks}</GuideStackIcon>,
             typescript: (chunks) => (
               <GuideStackIcon icon={<Typescript aria-hidden />}>{chunks}</GuideStackIcon>
             ),

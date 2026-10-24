@@ -6,11 +6,11 @@ import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
-import { Tanstack } from "@/components/ui/svgs/tanstack";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { Link } from "@/i18n/routing";
 
@@ -118,7 +118,7 @@ export function guideStackTags(options: { linked?: boolean } = {}): Record<Stack
     react: stackTag("react", <ReactLight aria-hidden />, linked),
     typescript: stackTag("typescript", <Typescript aria-hidden />, linked),
     nextjs: stackTag("nextjs", <NextjsIconDark className="dark:invert" aria-hidden />, linked),
-    tanstack: stackTag("tanstack", <Tanstack aria-hidden />, linked),
+    tanstack: stackTag("tanstack", <TanstackLogo />, linked),
     tailwind: stackTag("tailwind", <Tailwindcss aria-hidden />, linked),
     shadcn: stackTag("shadcn", <ShadcnUi className="text-foreground" aria-hidden />, linked),
   };
