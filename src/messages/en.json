@@ -963,6 +963,8 @@
     "i18nHeadingWhen": "When this applies",
     "i18nHeadingNext": "<nextjs>Next.js</nextjs> (next-intl)",
     "i18nHeadingTanstack": "<tanstack>TanStack Start</tanstack> (Paraglide)",
+    "i18nTocNext": "Next.js (next-intl)",
+    "i18nTocTanstack": "TanStack Start (Paraglide)",
     "i18nHeadingDefault": "Change the default language",
     "i18nWhenP": "This page only applies if you chose multi-language support at install time (the <bold>templates-i18n</bold> copy). Plain templates have no locale routing. Template overview: <templates>templates</templates>.",
     "i18nNextP": "Config lives in <file>src/i18n/routing.ts</file>. The scaffold ships with <code>en</code> and <code>tr</code>.",

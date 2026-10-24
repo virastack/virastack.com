@@ -963,6 +963,8 @@
     "i18nHeadingWhen": "Ne zaman geçerli",
     "i18nHeadingNext": "<nextjs>Next.js</nextjs> (next-intl)",
     "i18nHeadingTanstack": "<tanstack>TanStack Start</tanstack> (Paraglide)",
+    "i18nTocNext": "Next.js (next-intl)",
+    "i18nTocTanstack": "TanStack Start (Paraglide)",
     "i18nHeadingDefault": "Varsayılan dili değiştir",
     "i18nWhenP": "Bu sayfa yalnızca kurulumda çoklu dil desteğini seçtiyseniz geçerlidir (<bold>templates-i18n</bold> kopyası). Sade şablonlarda locale routing yoktur. Genel bakış: <templates>şablonlar</templates>.",
     "i18nNextP": "Yapılandırma <file>src/i18n/routing.ts</file> içindedir. Şablon <code>en</code> ve <code>tr</code> ile gelir.",

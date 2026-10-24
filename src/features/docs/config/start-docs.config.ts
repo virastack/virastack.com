@@ -107,8 +107,8 @@ export function getStartDocsPage(slug: string, t: DocsStartTranslate): DocsPageM
       description: t("i18nDescription"),
       headings: [
         { id: "ne-zaman", title: t("i18nHeadingWhen") },
-        { id: "nextjs", title: t("i18nHeadingNext") },
-        { id: "tanstack", title: t("i18nHeadingTanstack") },
+        { id: "nextjs", title: t("i18nTocNext") },
+        { id: "tanstack", title: t("i18nTocTanstack") },
         { id: "varsayilan", title: t("i18nHeadingDefault") },
       ],
     },
