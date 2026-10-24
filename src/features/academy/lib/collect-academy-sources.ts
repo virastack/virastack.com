@@ -52,7 +52,7 @@ type ResourceRow = {
 const CONTENT_LOCALE = "tr";
 
 const PERSON_NAME_PATTERN =
-  /^(?:[A-ZÇĞİÖŞÜ][\w'.-]*|[A-Z]\.)(?:\s+(?:[A-ZÇĞİÖŞÜ][\w'.-]*|[A-Z]\.)){1,4}$/;
+  /^(?:\p{Lu}[\p{L}\p{M}\d_'.-]*|\p{Lu}\.)(?:\s+(?:\p{Lu}[\p{L}\p{M}\d_'.-]*|\p{Lu}\.)){1,4}$/u;
 
 const ORG_STOPWORDS = new Set([
   "ai",
@@ -336,16 +336,16 @@ function pickCitationLink(
 }
 
 function resolveKind(name: string, kindTokens: readonly string[]): AcademySourceKind {
-  if (isPersonName(name)) {
-    return "engineer";
-  }
-
   const key = normalizeAcademySourceKey(name);
   if (ACADEMY_INSTITUTION_SOURCE_NAMES.has(key)) {
     return "institution";
   }
   if (ACADEMY_OFFICIAL_SOURCE_NAMES.has(key)) {
     return "official";
+  }
+
+  if (isPersonName(name)) {
+    return "engineer";
   }
 
   let docLike = 0;

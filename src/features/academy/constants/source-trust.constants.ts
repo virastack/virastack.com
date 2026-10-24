@@ -90,6 +90,10 @@ const ACADEMY_ENGINEER_TRUST_REASONS: Record<string, EngineerTrustReason> = {
     tr: "Snyk’te geliştirici savunucusu, JavaScript tedarik zinciri güvenliği üzerine konuşmacı",
     en: "Developer advocate at Snyk, speaker on JavaScript supply chain security",
   },
+  "manuel matuzović": {
+    tr: "Viyana’da frontend geliştirici ve erişilebilirlik danışmanı, Smashing ve Beyond Tellerrand konuşmacısı",
+    en: "Frontend developer and accessibility consultant in Vienna, speaker at Smashing and Beyond Tellerrand",
+  },
   "luca mezzalira": {
     tr: "Building Micro-Frontends kitabının yazarı, AWS’de principal mimar",
     en: "Author of Building Micro-Frontends, principal architect at AWS",

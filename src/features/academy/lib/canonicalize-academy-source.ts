@@ -7,7 +7,60 @@ export type AcademySourceMention = {
 
 const ISSUE_SUFFIX = /\s+#\d+$/;
 const VERSION_SUFFIX = /^(.*\D)\s+v?\d+(?:\.\d+)*$/;
-const HELP_SUFFIX = /^(.*)\s+help$/i;
+const HELP_SUFFIX = /^(.*)\s+(?:help|blog)$/i;
+/**
+ * Product names cited under several labels. Keys and values are display names;
+ * a trailing version is ignored when looking a mention up.
+ */
+const PRODUCT_NAME_ALIASES: Readonly<Record<string, string>> = {
+  "github blog": "GitHub",
+  "github changelog": "GitHub",
+  "github docs": "GitHub",
+  "google engineering practices": "Google",
+  "google search central": "Google",
+  "chrome devtools": "Chrome for Developers",
+  "ietf datatracker": "IETF",
+  "online kanban guide for scrum teams": "Scrum.org",
+  "openid connect core 1.0": "OpenID Foundation",
+  "pro git": "Git",
+  "react testing library": "Testing Library",
+  "react.dev": "React",
+  "react 18 upgrade guide": "React",
+  "react 19 upgrade guide": "React",
+  "react blog, brian vaughn": "React",
+  "tailwind css": "Tailwind",
+  "tailwind play": "Tailwind",
+  "tsconfig reference": "TypeScript",
+  "typescript blog": "TypeScript",
+  "typescript handbook": "TypeScript",
+  "typescript playground": "TypeScript",
+  "w3c apg": "W3C",
+  "w3c wai": "W3C",
+  "w3c wai-aria apg": "W3C",
+  "wai-aria 1.2": "W3C",
+};
+
+/** Labels that differ only by an edition, episode, or page name. */
+const PRODUCT_NAME_PATTERNS: readonly (readonly [RegExp, string])[] = [
+  [/^announcing typescript \d+(?:\.\d+)*$/i, "TypeScript"],
+  [/^typescript \d+(?:\.\d+)* release notes$/i, "TypeScript"],
+  [/^rfc \d+$/i, "IETF"],
+  [/^web\.dev learn\b/i, "web.dev"],
+  [/^webaim million\b/i, "WebAIM"],
+  [/^(?:http archive )?web almanac(?: \d{4})?$/i, "HTTP Archive"],
+  [/^http archive web almanac(?: \d{4})?$/i, "HTTP Archive"],
+];
+
+function resolveProductAlias(name: string): string | undefined {
+  const key = normalizeAcademySourceKey(name);
+  const versionBase = VERSION_SUFFIX.exec(name)?.[1]?.trim();
+  return (
+    PRODUCT_NAME_ALIASES[key] ??
+    (versionBase ? PRODUCT_NAME_ALIASES[normalizeAcademySourceKey(versionBase)] : undefined) ??
+    PRODUCT_NAME_PATTERNS.find(([pattern]) => pattern.test(name))?.[1]
+  );
+}
+
 const SLASH_CREDIT = /^([\w.-]+)\/([\w.-]+)$/;
 
 type SlashCredit = {
@@ -29,8 +82,8 @@ type PreparedMention = {
  *
  * A later guide joins an existing row when its credit is the same work under
  * another label: a trailing version (`Next.js 16`) whose bare name is already
- * cited, a help center (`Figma Help`), an episode or issue number (`Syntax #900`,
- * `MSW #2000`), or a GitHub `owner/repo` path whose owner or repository slug
+ * cited, a help center or blog (`Figma Help`, `React Blog`), an episode or issue number (`Syntax #900`,
+ * `MSW #2000`), a label listed in `PRODUCT_NAME_ALIASES` (`Tailwind Play`, `Google Search Central`), or a GitHub `owner/repo` path whose owner or repository slug
  * equals a cited person or product (`emilkowalski/skills`, `microsoft/playwright-mcp`).
  * An issue whose repository name contains the organization slug joins that
  * organization (`dom-testing-library #1218` on `testing-library`).
@@ -93,7 +146,8 @@ function prepareMention(mention: AcademySourceMention): PreparedMention {
   const trimmed = mention.name.trim();
   const issuePointer = ISSUE_SUFFIX.test(trimmed);
   const stripped = issuePointer ? trimmed.replace(ISSUE_SUFFIX, "").trim() : trimmed;
-  const localName = stripped || trimmed;
+  const unaliased = stripped || trimmed;
+  const localName = resolveProductAlias(unaliased) ?? unaliased;
   return {
     originalKey: normalizeAcademySourceKey(trimmed),
     localName,
