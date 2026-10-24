@@ -1,19 +1,11 @@
 import type { ComponentType, SVGProps } from "react";
 
-import {
-  BookOpen,
-  Bot,
-  Gauge,
-  GraduationCap,
-  Layers,
-  Rocket,
-  Scale,
-  ShieldCheck,
-} from "lucide-react";
+import { BookOpen, Gauge, GraduationCap, Layers, Rocket, Scale, ShieldCheck } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import { Chromium } from "@/components/ui/svgs/chromium";
+import { ClaudeAiIcon } from "@/components/ui/svgs/claudeAiIcon";
 import { Css } from "@/components/ui/svgs/css";
 import { Git } from "@/components/ui/svgs/git";
 import { Html5 } from "@/components/ui/svgs/html5";
@@ -42,7 +34,10 @@ type AcademyTrackIconEntry =
   | {
       kind: "lucide";
       icon: ComponentType<SVGProps<SVGSVGElement> & { strokeWidth?: number }>;
+      /** Icon color. */
       className?: string;
+      /** Tile behind the icon, so concept icons weigh like brand logos. */
+      tileClassName?: string;
     };
 
 const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
@@ -68,37 +63,39 @@ const TRACK_TAG_ICONS: Record<string, AcademyTrackIconEntry> = {
     kind: "lucide",
     icon: Gauge,
     className: "text-orange-500 dark:text-orange-400",
+    tileClassName: "bg-orange-500/10 dark:bg-orange-400/15",
   },
   Mimari: {
     kind: "lucide",
     icon: Layers,
     className: "text-sky-600 dark:text-sky-400",
+    tileClassName: "bg-sky-500/10 dark:bg-sky-400/15",
   },
   Prensipler: {
     kind: "lucide",
     icon: Scale,
     className: "text-amber-600 dark:text-amber-400",
+    tileClassName: "bg-amber-500/10 dark:bg-amber-400/15",
   },
   "Auth ve Güvenlik": {
     kind: "lucide",
     icon: ShieldCheck,
     className: "text-emerald-600 dark:text-emerald-400",
+    tileClassName: "bg-emerald-500/10 dark:bg-emerald-400/15",
   },
   Production: {
     kind: "lucide",
     icon: Rocket,
     className: "text-blue-600 dark:text-blue-400",
+    tileClassName: "bg-blue-500/10 dark:bg-blue-400/15",
   },
   Sözlük: {
     kind: "lucide",
     icon: BookOpen,
     className: "text-rose-600 dark:text-rose-400",
+    tileClassName: "bg-rose-500/10 dark:bg-rose-400/15",
   },
-  "Yapay Zekâ": {
-    kind: "lucide",
-    icon: Bot,
-    className: "text-violet-500 dark:text-violet-400",
-  },
+  "Yapay Zekâ": { kind: "svg", icon: ClaudeAiIcon },
 };
 
 type AcademyTrackIconProps = {
@@ -132,7 +129,18 @@ export function AcademyTrackIcon({ tag, className }: AcademyTrackIconProps) {
 
   if (entry.kind === "lucide") {
     const Icon = entry.icon;
-    return <Icon className={cn(className, entry.className)} strokeWidth={1.5} aria-hidden />;
+    return (
+      <span
+        className={cn(
+          "inline-flex shrink-0 items-center justify-center rounded-[22%]",
+          className,
+          entry.tileClassName,
+        )}
+        aria-hidden
+      >
+        <Icon className={cn("size-[68%]", entry.className)} strokeWidth={1.75} />
+      </span>
+    );
   }
 
   const Icon = entry.icon;

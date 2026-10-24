@@ -5,7 +5,7 @@ export const TRACK_ICON_TAGS: Record<string, string | readonly string[]> = {
   nextjs: "Next.js",
   "tanstack-query": "TanStack Query",
   zustand: "Zustand",
-  forms: ["React Hook Form", "Zod"],
+  forms: "React Hook Form",
   vitest: "Vitest",
   playwright: "Playwright",
   "performance-accessibility": "Web Performansı",
