@@ -29,6 +29,9 @@ export const defaultMetadata: Metadata = {
     { name: siteConfig.name, url: siteConfig.url },
   ],
   creator: siteConfig.author.name,
+  verification: {
+    google: "YGCecFZyIedKoeYx_17cGLHAm3oOFfsw2dDPbR6aT8Y",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
