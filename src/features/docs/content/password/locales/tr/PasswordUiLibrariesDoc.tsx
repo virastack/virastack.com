@@ -1,10 +1,9 @@
-import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
 import { ChakraUi } from "@/components/ui/svgs/chakraUi";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 
 const patternCode = `const { inputProps, btnProps } = useViraPassword({
   inputProps: { className: "pr-10" },
@@ -17,27 +16,6 @@ return (
     <button {...btnProps} />
   </div>
 )`;
-
-const shadcnCode = `import { useViraPassword } from "@virastack/password"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword({
-    inputProps: { className: "pr-10" },
-  })
-
-  const { children, ...restBtn } = btnProps
-
-  return (
-    <div className="relative">
-      <Input {...inputProps} placeholder="Parolanız" />
-      <Button variant="ghost" size="icon-sm" {...restBtn} className="absolute inset-y-0 right-1 my-auto">
-        {children}
-      </Button>
-    </div>
-  )
-}`;
 
 const antDesignCode = `import { useViraPassword } from "@virastack/password"
 import { Input, Button } from "antd"
@@ -111,9 +89,7 @@ export async function PasswordUiLibrariesDoc() {
         <p>
           Bu sitedeki canlı demolar da shadcn <code>Input</code> + <code>Button</code>&#32;kullanır:
         </p>
-        <ComponentPreview preview={<PasswordDemo variant="basic" />} code={shadcnCode}>
-          <DocsCodeBlock code={shadcnCode} lang="tsx" />
-        </ComponentPreview>
+        <PasswordExamplePreview id="shadcn" />
 
         <h2 id="ant-design" className="flex items-center gap-2.5">
           <AntDesignDarkTheme className="size-5 shrink-0" aria-hidden />

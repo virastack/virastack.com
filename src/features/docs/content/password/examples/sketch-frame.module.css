@@ -1,0 +1,125 @@
+/* Gives the plain example markup the site's look, so the code shown is exactly what runs. */
+.frame {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.frame form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.frame label {
+  font-weight: 500;
+}
+
+.frame input {
+  height: 2.25rem;
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  padding: 0 0.75rem;
+  color: var(--foreground);
+  outline: none;
+}
+
+.frame input:focus-visible {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 50%, transparent);
+}
+
+.frame input::placeholder {
+  color: var(--muted-foreground);
+}
+
+/* Input + its show/hide button */
+.frame div:has(> input + button[aria-controls]) {
+  position: relative;
+}
+
+.frame input:has(+ button[aria-controls]) {
+  padding-right: 3.5rem;
+}
+
+.frame button[aria-controls] {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  display: flex;
+  height: 1.75rem;
+  min-width: 1.75rem;
+  padding: 0 0.375rem;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--radius) - 4px);
+  color: var(--muted-foreground);
+}
+
+.frame button[aria-controls] svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.frame button[aria-controls]:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.frame button:not([aria-controls]) {
+  height: 2rem;
+  border-radius: var(--radius);
+  background: var(--primary);
+  padding: 0 0.75rem;
+  color: var(--primary-foreground);
+  font-weight: 500;
+}
+
+.frame button[type="button"]:not([aria-controls]) {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+}
+
+.frame button:disabled {
+  opacity: 0.5;
+}
+
+/* A row of action buttons */
+.frame div:has(> button:not([aria-controls])) {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.frame p,
+.frame ul {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.frame ul {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
+.frame [role="alert"] {
+  color: var(--destructive);
+}
+
+.frame meter {
+  height: 0.5rem;
+  width: 100%;
+}
+
+.frame pre {
+  overflow-x: auto;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--muted);
+  padding: 0.5rem;
+  font-size: 0.75rem;
+}

@@ -7,8 +7,11 @@ export function PasswordField() {
 
   return (
     <>
-      <input {...inputProps} />
-      <button {...btnProps} />
+      <label htmlFor={inputProps.id}>Password</label>
+      <div>
+        <input {...inputProps} placeholder="Your password" />
+        <button {...btnProps} />
+      </div>
       {capsLock && <p>Caps Lock is on</p>}
     </>
   );

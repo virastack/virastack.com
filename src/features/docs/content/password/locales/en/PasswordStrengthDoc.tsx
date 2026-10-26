@@ -1,6 +1,6 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { passwordExampleCode } from "@/features/docs/content/password/examples/example-code.generated";
+import { passwordExampleFile } from "@/features/docs/content/password/examples/example-code.generated";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
@@ -61,7 +61,7 @@ export function PasswordStrengthDoc() {
           Define the policy once in a shared file without <code>&quot;use client&quot;</code>. The
           form and the server import the same object.
         </p>
-        <DocsCodeBlock code={passwordExampleCode["password-policy"]} lang="ts" />
+        <DocsCodeBlock code={passwordExampleFile["password-policy"]} lang="ts" />
 
         <h2 id="sablonlar">Presets</h2>
         <div className="overflow-x-auto rounded-lg border border-border">

@@ -170,6 +170,10 @@
     "demoLevelFair": "fair",
     "demoLevelGood": "good",
     "demoLevelStrong": "strong",
+    "demoCheckLeak": "Check leaks",
+    "demoLeakPwned": "Seen {count} times in data breaches.",
+    "demoLeakSafe": "Not found in known breaches.",
+    "demoLeakUnknown": "Could not check right now; the form still works.",
     "demoMoreExamples": "More examples",
     "featuresTitle": "Features",
     "featuresA11yTitle": "Accessibility First",
@@ -1088,8 +1092,6 @@
     "exampleDisabledNote0": "disabled: true → input and button disabled.",
     "exampleDisabledNote1": "readOnly: true → input readOnly, button disabled.",
     "exampleDisabledNote2": "toggle() and setVisible() become no-ops.",
-    "exampleDisabledCodeComment": "or readOnly: true",
-    "exampleDisabledDefaultValue": "secret",
     "examplePropMergeTitle": "Prop merge",
     "examplePropMergeDescription": "Merge name, autoComplete, className, and handlers with inputProps and btnProps.",
     "examplePropMergeNote0": "User props merge with base props.",
@@ -1099,7 +1101,7 @@
     "exampleProgrammaticDescription": "Control visibility from code with isVisible, toggle, and setVisible.",
     "exampleProgrammaticNote0": "The hook return includes isVisible, toggle(), and setVisible(visible).",
     "exampleProgrammaticNote1": "Set initial state with defaultVisible.",
-    "exampleProgrammaticNote2": "After blur or submit, call setVisible(false) to hide again.",
+    "exampleProgrammaticNote2": "hideOnBlur hides the password again when focus leaves the field; submitting the form hides it by default.",
     "exampleProgrammaticNote3": "When disabled / readOnly, the programmatic API is also a no-op.",
     "navUpgrade": "Upgrade from 1.0",
     "navStrength": "Strength",
@@ -1189,8 +1191,7 @@
     "exampleMaskSignupDescription": "Phone (ViraStack Mask), password and confirm in one React Hook Form.",
     "exampleMaskSignupNote0": "Mask and Password share one useForm but never the same input.",
     "exampleMaskSignupNote1": "deps re-checks the confirm field when the password changes.",
-    "exampleMaskSignupNote2": "The form holds the raw phone value and the password.",
-    "exampleHeadingFullCode": "Full code"
+    "exampleMaskSignupNote2": "The form holds the raw phone value and the password."
   },
   "DocsPasswordV1": {
     "navGettingStarted": "Getting started",

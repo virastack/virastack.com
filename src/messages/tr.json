@@ -170,6 +170,10 @@
     "demoLevelFair": "orta",
     "demoLevelGood": "iyi",
     "demoLevelStrong": "güçlü",
+    "demoCheckLeak": "Sızıntıyı kontrol et",
+    "demoLeakPwned": "Veri sızıntılarında {count} kez görülmüş.",
+    "demoLeakSafe": "Bilinen sızıntılarda yok.",
+    "demoLeakUnknown": "Şu an kontrol edilemedi; form yine çalışır.",
     "demoMoreExamples": "Daha fazla örnek",
     "featuresTitle": "Özellikler",
     "featuresA11yTitle": "Önce Erişilebilirlik",
@@ -1088,8 +1092,6 @@
     "exampleDisabledNote0": "disabled: true → input ve buton disabled.",
     "exampleDisabledNote1": "readOnly: true → input readOnly, buton disabled.",
     "exampleDisabledNote2": "toggle() ve setVisible() no-op olur.",
-    "exampleDisabledCodeComment": "veya readOnly: true",
-    "exampleDisabledDefaultValue": "gizli",
     "examplePropMergeTitle": "Prop merge",
     "examplePropMergeDescription": "inputProps ve btnProps ile name, autoComplete, className ve handler’ları birleştirin.",
     "examplePropMergeNote0": "Kullanıcı props’ları base props ile merge edilir.",
@@ -1099,7 +1101,7 @@
     "exampleProgrammaticDescription": "isVisible, toggle ve setVisible ile görünürlüğü koddan yönetin.",
     "exampleProgrammaticNote0": "Hook dönüşünde isVisible, toggle() ve setVisible(visible) vardır.",
     "exampleProgrammaticNote1": "defaultVisible ile başlangıç durumunu ayarlayın.",
-    "exampleProgrammaticNote2": "Blur veya submit sonrası setVisible(false) ile tekrar gizleyebilirsiniz.",
+    "exampleProgrammaticNote2": "hideOnBlur, odak alandan çıkınca parolayı yeniden gizler; form gönderimi de varsayılan olarak gizler.",
     "exampleProgrammaticNote3": "disabled / readOnly iken programmatic API de no-op’dur.",
     "navUpgrade": "1.0'dan geçiş",
     "navStrength": "Güç",
@@ -1189,8 +1191,7 @@
     "exampleMaskSignupDescription": "Telefon (ViraStack Mask), parola ve tekrarı tek React Hook Form'da.",
     "exampleMaskSignupNote0": "Mask ve Password aynı useForm'u paylaşır, aynı input'u asla.",
     "exampleMaskSignupNote1": "deps, parola değişince tekrar alanını yeniden kontrol eder.",
-    "exampleMaskSignupNote2": "Form ham telefon değerini ve parolayı tutar.",
-    "exampleHeadingFullCode": "Tam kod"
+    "exampleMaskSignupNote2": "Form ham telefon değerini ve parolayı tutar."
   },
   "DocsPasswordV1": {
     "navGettingStarted": "Başlangıç",

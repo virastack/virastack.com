@@ -1,5 +1,5 @@
 import {
-  passwordExampleCode,
+  passwordExampleSketch,
   type PasswordExampleCodeId,
 } from "@/features/docs/content/password/examples/example-code.generated";
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
@@ -8,28 +8,19 @@ const BASE = "/password/docs";
 
 type DocsPasswordTranslate = (key: string) => string;
 
-export type PasswordExampleVariant =
-  "basic" | "custom-icons" | "custom-text" | "disabled" | "prop-merge" | "programmatic";
-
-/** Examples rendered by their own component; code comes from example-code.generated.ts. */
-export type PasswordExampleComponentId = Exclude<
-  PasswordExampleCodeId,
-  "password-input" | "password-policy"
->;
+export type PasswordExampleComponentId = PasswordExampleCodeId;
 
 export type PasswordExampleMeta = {
   /** URL segment under /examples/ */
-  id: string;
+  id: PasswordExampleComponentId;
   title: string;
   description: string;
   notes: string[];
+  /** The code shown next to the preview; the preview renders the same file. */
   code: string;
-} & (
-  | { variant: PasswordExampleVariant; component?: undefined }
-  | { component: PasswordExampleComponentId; variant?: undefined }
-);
+};
 
-const PASSWORD_EXAMPLE_COMPONENT_IDS = [
+const PASSWORD_EXAMPLE_IDS = [
   "show-hide",
   "strength-meter",
   "confirm",
@@ -38,255 +29,94 @@ const PASSWORD_EXAMPLE_COMPONENT_IDS = [
   "forbidden",
   "pwned",
   "mask-signup",
-] as const satisfies readonly PasswordExampleComponentId[];
-
-const PASSWORD_EXAMPLE_IDS = [
-  ...PASSWORD_EXAMPLE_COMPONENT_IDS,
   "basic",
   "custom-icons",
   "custom-text",
   "disabled",
   "prop-merge",
   "programmatic",
-] as const;
-
-function getComponentExamples(t: DocsPasswordTranslate): PasswordExampleMeta[] {
-  return [
-    {
-      id: "show-hide",
-      component: "show-hide",
-      title: t("exampleShowHideTitle"),
-      description: t("exampleShowHideDescription"),
-      notes: [t("exampleShowHideNote0"), t("exampleShowHideNote1"), t("exampleShowHideNote2")],
-      code: passwordExampleCode["show-hide"],
-    },
-    {
-      id: "strength-meter",
-      component: "strength-meter",
-      title: t("exampleStrengthTitle"),
-      description: t("exampleStrengthDescription"),
-      notes: [t("exampleStrengthNote0"), t("exampleStrengthNote1"), t("exampleStrengthNote2")],
-      code: passwordExampleCode["strength-meter"],
-    },
-    {
-      id: "confirm",
-      component: "confirm",
-      title: t("exampleConfirmTitle"),
-      description: t("exampleConfirmDescription"),
-      notes: [t("exampleConfirmNote0"), t("exampleConfirmNote1"), t("exampleConfirmNote2")],
-      code: passwordExampleCode.confirm,
-    },
-    {
-      id: "react-hook-form-zod",
-      component: "react-hook-form-zod",
-      title: t("exampleRhfZodTitle"),
-      description: t("exampleRhfZodDescription"),
-      notes: [t("exampleRhfZodNote0"), t("exampleRhfZodNote1"), t("exampleRhfZodNote2")],
-      code: passwordExampleCode["react-hook-form-zod"],
-    },
-    {
-      id: "server-action",
-      component: "server-action",
-      title: t("exampleServerTitle"),
-      description: t("exampleServerDescription"),
-      notes: [t("exampleServerNote0"), t("exampleServerNote1"), t("exampleServerNote2")],
-      code: passwordExampleCode["server-action"],
-    },
-    {
-      id: "forbidden",
-      component: "forbidden",
-      title: t("exampleForbiddenTitle"),
-      description: t("exampleForbiddenDescription"),
-      notes: [t("exampleForbiddenNote0"), t("exampleForbiddenNote1"), t("exampleForbiddenNote2")],
-      code: passwordExampleCode.forbidden,
-    },
-    {
-      id: "pwned",
-      component: "pwned",
-      title: t("examplePwnedTitle"),
-      description: t("examplePwnedDescription"),
-      notes: [t("examplePwnedNote0"), t("examplePwnedNote1"), t("examplePwnedNote2")],
-      code: passwordExampleCode.pwned,
-    },
-    {
-      id: "mask-signup",
-      component: "mask-signup",
-      title: t("exampleMaskSignupTitle"),
-      description: t("exampleMaskSignupDescription"),
-      notes: [
-        t("exampleMaskSignupNote0"),
-        t("exampleMaskSignupNote1"),
-        t("exampleMaskSignupNote2"),
-      ],
-      code: passwordExampleCode["mask-signup"],
-    },
-  ];
-}
+] as const satisfies readonly PasswordExampleComponentId[];
 
 export function getPasswordExamples(t: DocsPasswordTranslate): PasswordExampleMeta[] {
+  const example = (
+    id: PasswordExampleComponentId,
+    title: string,
+    description: string,
+    notes: string[],
+  ): PasswordExampleMeta => ({ id, title, description, notes, code: passwordExampleSketch[id][0] });
+
   return [
-    ...getComponentExamples(t),
-    {
-      id: "basic",
-      title: t("exampleBasicTitle"),
-      description: t("exampleBasicDescription"),
-      variant: "basic",
-      notes: [t("exampleBasicNote0"), t("exampleBasicNote1"), t("exampleBasicNote2")],
-      code: `import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword()
-
-  return (
-    <div className="relative">
-      <input {...inputProps} placeholder="${t("demoPlaceholderPassword")}" />
-      <button {...btnProps} />
-    </div>
-  )
-}`,
-    },
-    {
-      id: "custom-icons",
-      title: t("exampleCustomIconsTitle"),
-      description: t("exampleCustomIconsDescription"),
-      variant: "custom-icons",
-      notes: [
-        t("exampleCustomIconsNote0"),
-        t("exampleCustomIconsNote1"),
-        t("exampleCustomIconsNote2"),
-      ],
-      code: `import { Home, Star } from "lucide-react"
-import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword({
-    icons: {
-      show: <Star />,
-      hide: <Home />,
-    },
-  })
-
-  return (
-    <div className="relative">
-      <input {...inputProps} placeholder="${t("demoPlaceholderPassword")}" />
-      <button {...btnProps} />
-    </div>
-  )
-}`,
-    },
-    {
-      id: "custom-text",
-      title: t("exampleCustomTextTitle"),
-      description: t("exampleCustomTextDescription"),
-      variant: "custom-text",
-      notes: [
-        t("exampleCustomTextNote0"),
-        t("exampleCustomTextNote1"),
-        t("exampleCustomTextNote2"),
-      ],
-      code: `import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword({
-    icons: {
-      show: "${t("demoShow")}",
-      hide: "${t("demoHide")}",
-    },
-  })
-
-  return (
-    <div className="relative">
-      <input {...inputProps} placeholder="${t("demoPlaceholderPassword")}" />
-      <button {...btnProps} />
-    </div>
-  )
-}`,
-    },
-    {
-      id: "disabled",
-      title: t("exampleDisabledTitle"),
-      description: t("exampleDisabledDescription"),
-      variant: "disabled",
-      notes: [t("exampleDisabledNote0"), t("exampleDisabledNote1"), t("exampleDisabledNote2")],
-      code: `import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword({
-    disabled: true,
-    // ${t("exampleDisabledCodeComment")}
-  })
-
-  return (
-    <div className="relative">
-      <input {...inputProps} placeholder="${t("demoPlaceholderPassword")}" defaultValue="${t("exampleDisabledDefaultValue")}" />
-      <button {...btnProps} />
-    </div>
-  )
-}`,
-    },
-    {
-      id: "prop-merge",
-      title: t("examplePropMergeTitle"),
-      description: t("examplePropMergeDescription"),
-      variant: "prop-merge",
-      notes: [t("examplePropMergeNote0"), t("examplePropMergeNote1"), t("examplePropMergeNote2")],
-      code: `import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps } = useViraPassword({
-    id: "signup-password",
-    inputProps: {
-      name: "password",
-      autoComplete: "new-password",
-      className: "pr-10",
-    },
-    btnProps: {
-      className: "absolute inset-y-0 right-2 my-auto",
-      onClick: () => analytics.track("password_toggled"),
-    },
-  })
-
-  return (
-    <div className="relative">
-      <input {...inputProps} placeholder="${t("demoPlaceholderNewPassword")}" />
-      <button {...btnProps} />
-    </div>
-  )
-}`,
-    },
-    {
-      id: "programmatic",
-      title: t("exampleProgrammaticTitle"),
-      description: t("exampleProgrammaticDescription"),
-      variant: "programmatic",
-      notes: [
-        t("exampleProgrammaticNote0"),
-        t("exampleProgrammaticNote1"),
-        t("exampleProgrammaticNote2"),
-        t("exampleProgrammaticNote3"),
-      ],
-      code: `import { useViraPassword } from "@virastack/password"
-
-function Example() {
-  const { inputProps, btnProps, isVisible, setVisible } = useViraPassword({
-    defaultVisible: false,
-  })
-
-  return (
-    <div>
-      <div className="relative">
-        <input
-          {...inputProps}
-          placeholder="${t("demoPlaceholderPassword")}"
-          onBlur={() => setVisible(false)}
-        />
-        <button {...btnProps} />
-      </div>
-      <p>{isVisible ? "${t("demoStatusVisibleCapitalized")}" : "${t("demoStatusHiddenCapitalized")}"}</p>
-    </div>
-  )
-}`,
-    },
+    example("show-hide", t("exampleShowHideTitle"), t("exampleShowHideDescription"), [
+      t("exampleShowHideNote0"),
+      t("exampleShowHideNote1"),
+      t("exampleShowHideNote2"),
+    ]),
+    example("strength-meter", t("exampleStrengthTitle"), t("exampleStrengthDescription"), [
+      t("exampleStrengthNote0"),
+      t("exampleStrengthNote1"),
+      t("exampleStrengthNote2"),
+    ]),
+    example("confirm", t("exampleConfirmTitle"), t("exampleConfirmDescription"), [
+      t("exampleConfirmNote0"),
+      t("exampleConfirmNote1"),
+      t("exampleConfirmNote2"),
+    ]),
+    example("react-hook-form-zod", t("exampleRhfZodTitle"), t("exampleRhfZodDescription"), [
+      t("exampleRhfZodNote0"),
+      t("exampleRhfZodNote1"),
+      t("exampleRhfZodNote2"),
+    ]),
+    example("server-action", t("exampleServerTitle"), t("exampleServerDescription"), [
+      t("exampleServerNote0"),
+      t("exampleServerNote1"),
+      t("exampleServerNote2"),
+    ]),
+    example("forbidden", t("exampleForbiddenTitle"), t("exampleForbiddenDescription"), [
+      t("exampleForbiddenNote0"),
+      t("exampleForbiddenNote1"),
+      t("exampleForbiddenNote2"),
+    ]),
+    example("pwned", t("examplePwnedTitle"), t("examplePwnedDescription"), [
+      t("examplePwnedNote0"),
+      t("examplePwnedNote1"),
+      t("examplePwnedNote2"),
+    ]),
+    example("mask-signup", t("exampleMaskSignupTitle"), t("exampleMaskSignupDescription"), [
+      t("exampleMaskSignupNote0"),
+      t("exampleMaskSignupNote1"),
+      t("exampleMaskSignupNote2"),
+    ]),
+    example("basic", t("exampleBasicTitle"), t("exampleBasicDescription"), [
+      t("exampleBasicNote0"),
+      t("exampleBasicNote1"),
+      t("exampleBasicNote2"),
+    ]),
+    example("custom-icons", t("exampleCustomIconsTitle"), t("exampleCustomIconsDescription"), [
+      t("exampleCustomIconsNote0"),
+      t("exampleCustomIconsNote1"),
+      t("exampleCustomIconsNote2"),
+    ]),
+    example("custom-text", t("exampleCustomTextTitle"), t("exampleCustomTextDescription"), [
+      t("exampleCustomTextNote0"),
+      t("exampleCustomTextNote1"),
+      t("exampleCustomTextNote2"),
+    ]),
+    example("disabled", t("exampleDisabledTitle"), t("exampleDisabledDescription"), [
+      t("exampleDisabledNote0"),
+      t("exampleDisabledNote1"),
+      t("exampleDisabledNote2"),
+    ]),
+    example("prop-merge", t("examplePropMergeTitle"), t("examplePropMergeDescription"), [
+      t("examplePropMergeNote0"),
+      t("examplePropMergeNote1"),
+      t("examplePropMergeNote2"),
+    ]),
+    example("programmatic", t("exampleProgrammaticTitle"), t("exampleProgrammaticDescription"), [
+      t("exampleProgrammaticNote0"),
+      t("exampleProgrammaticNote1"),
+      t("exampleProgrammaticNote2"),
+      t("exampleProgrammaticNote3"),
+    ]),
   ];
 }
 
@@ -498,7 +328,6 @@ export function getPasswordDocsPage(
           headings: [
             { id: "onizleme", title: t("exampleHeadingPreview") },
             { id: "detaylar", title: t("exampleHeadingDetails") },
-            ...(example.component ? [{ id: "tam-kod", title: t("exampleHeadingFullCode") }] : []),
           ],
         } satisfies DocsPageMeta,
       ]),

@@ -1,14 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
-import { ComponentPreview } from "@/components/shared/ComponentPreview";
-import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
 import { getPasswordExample } from "@/features/docs/config/password-docs.config";
-import {
-  PasswordExampleFullSource,
-  PasswordExamplePreview,
-} from "@/features/docs/content/password/examples/ExamplePreview";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
 type PasswordExampleDetailDocProps = {
@@ -27,20 +21,11 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
         <p>
           <Link href="/password/examples">← All examples</Link>
           <span className="mx-2 text-border">·</span>
-          <code>{example.component ?? example.variant}</code>
+          <code>{example.id}</code>
         </p>
 
         <h2 id="onizleme">Preview</h2>
-        {example.component ? (
-          <PasswordExamplePreview id={example.component} />
-        ) : (
-          <ComponentPreview
-            preview={<PasswordDemo variant={example.variant} />}
-            code={example.code}
-          >
-            <DocsCodeBlock code={example.code} lang="tsx" />
-          </ComponentPreview>
-        )}
+        <PasswordExamplePreview id={example.id} />
 
         <h2 id="detaylar">Details</h2>
         <ul>
@@ -48,14 +33,6 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
             <li key={note}>{note}</li>
           ))}
         </ul>
-
-        {example.component ? (
-          <>
-            <h2 id="tam-kod">Full code</h2>
-            <p>The styled version of the preview above, ready to copy.</p>
-            <PasswordExampleFullSource id={example.component} />
-          </>
-        ) : null}
 
         <p>
           For the hook API see{" "}

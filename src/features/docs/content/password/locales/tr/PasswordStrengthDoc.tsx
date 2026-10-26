@@ -1,6 +1,6 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { passwordExampleCode } from "@/features/docs/content/password/examples/example-code.generated";
+import { passwordExampleFile } from "@/features/docs/content/password/examples/example-code.generated";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
@@ -61,7 +61,7 @@ export function PasswordStrengthDoc() {
           Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada bir kez
           tanımlayın. Form ve sunucu aynı nesneyi import eder.
         </p>
-        <DocsCodeBlock code={passwordExampleCode["password-policy"]} lang="ts" />
+        <DocsCodeBlock code={passwordExampleFile["password-policy"]} lang="ts" />
 
         <h2 id="sablonlar">Şablonlar</h2>
         <div className="overflow-x-auto rounded-lg border border-border">

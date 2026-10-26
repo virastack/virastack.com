@@ -1,22 +1,45 @@
 "use client";
 
+import { useState } from "react";
+
 import { useViraPassword } from "@virastack/password";
 
+import { passwordMessages } from "../password-messages";
 import { policy } from "../password-policy";
 
-type Props = { email: string; name: string };
+export function NewPasswordField() {
+  const [email, setEmail] = useState("hello@virastack.com");
+  const [name, setName] = useState("Vira Stack");
 
-export function NewPasswordField({ email, name }: Props) {
-  // "hello@virastack.com" → "hello"; "Vira Stack" → "vira", "stack"
-  const { inputProps, btnProps, issues } = useViraPassword({ policy, forbidden: [email, name] });
+  // Email: the local part and its pieces ("hello"). Name: each word ("vira", "stack").
+  const { inputProps, btnProps, issues, strengthProps } = useViraPassword({
+    policy,
+    forbidden: [email, name],
+  });
 
   return (
     <>
-      <input {...inputProps} />
-      <button {...btnProps} />
-      {issues.includes("password.containsPersonalInfo") && (
-        <p>Don&apos;t use your name or email.</p>
-      )}
+      <label htmlFor="forbidden-email">Email</label>
+      <input
+        id="forbidden-email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+      />
+
+      <label htmlFor="forbidden-name">Name</label>
+      <input id="forbidden-name" value={name} onChange={(event) => setName(event.target.value)} />
+
+      <label htmlFor={inputProps.id}>New password</label>
+      <div>
+        <input {...inputProps} />
+        <button {...btnProps} />
+      </div>
+
+      <p {...strengthProps}>
+        {issues.includes("password.containsPersonalInfo")
+          ? passwordMessages["password.containsPersonalInfo"]
+          : "Try vira-garden-path"}
+      </p>
     </>
   );
 }

@@ -1,23 +1,33 @@
 "use client";
 
 import { useViraPassword } from "@virastack/password";
-import { definePolicy } from "@virastack/password/strength";
 
-const policy = definePolicy(); // NIST: 15–64 characters
+import { passwordMessages } from "../password-messages";
+import { policy } from "../password-policy";
 
 export function NewPasswordField() {
   const { inputProps, btnProps, strength, strengthProps, issues } = useViraPassword({ policy });
+  const typed = (strength?.length ?? 0) > 0;
 
   return (
     <>
-      <input {...inputProps} />
-      <button {...btnProps} />
-      <meter min={0} max={4} value={strength?.score} />
-      <p {...strengthProps}>{strength?.level}</p>
-      {/* keys like "password.tooShort": map them to your own text */}
-      {issues.map((issue) => (
-        <p key={issue}>{issue}</p>
-      ))}
+      <label htmlFor={inputProps.id}>New password</label>
+      <div>
+        <input {...inputProps} />
+        <button {...btnProps} />
+      </div>
+
+      {/* The bar is yours: the hook only gives the score (0–4). */}
+      <meter min={0} max={4} value={strength?.score ?? 0} />
+      <p {...strengthProps}>{typed ? `Strength: ${strength?.level}` : "15 characters or more"}</p>
+
+      {typed && (
+        <ul>
+          {issues.map((issue) => (
+            <li key={issue}>{passwordMessages[issue]}</li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

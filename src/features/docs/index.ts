@@ -41,10 +41,7 @@ export {
   passwordExampleIds,
   passwordExampleSlugs,
 } from "@/features/docs/config/password-docs.config";
-export type {
-  PasswordExampleMeta,
-  PasswordExampleVariant,
-} from "@/features/docs/config/password-docs.config";
+export type { PasswordExampleMeta } from "@/features/docs/config/password-docs.config";
 export type {
   DocsHeading,
   DocsNavItem,
