@@ -160,6 +160,7 @@
     "featuresLightDesc": "React ve React Hook Form peer’ları dışında sıfır runtime bağımlılık."
   },
   "Password": {
+    "demoVideoLabel": "ViraStack Password tanıtımı: göster/gizle, güç göstergesi ve sızmış parola kontrolü.",
     "demoLabel": "Parola",
     "demoPlaceholder": "Parolanız",
     "demoStatus": "Durum",

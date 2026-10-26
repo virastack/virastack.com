@@ -77,6 +77,18 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Product loops are rewritten only when the video is re-rendered.
+      ...[
+        "/start/start-intro.mp4",
+        "/start/start-intro-poster.webp",
+        "/password/password-intro.mp4",
+        "/password/password-intro-poster.webp",
+      ].map((source) => ({
+        source,
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" },
+        ],
+      })),
       {
         source: "/:path*",
         headers: [

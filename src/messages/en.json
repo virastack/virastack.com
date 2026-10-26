@@ -160,6 +160,7 @@
     "featuresLightDesc": "Zero runtime dependencies beyond React and React Hook Form as peers."
   },
   "Password": {
+    "demoVideoLabel": "ViraStack Password intro: show/hide, strength meter and leaked password check.",
     "demoLabel": "Password",
     "demoPlaceholder": "Your password",
     "demoStatus": "Status",
