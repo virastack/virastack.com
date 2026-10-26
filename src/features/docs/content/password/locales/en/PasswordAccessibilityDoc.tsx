@@ -11,9 +11,10 @@ const ariaCode = `<input id="virapassword-input-:r0:" type="password" aria-descr
 
 const labelCode = `useViraPassword({ btnProps: { "aria-label": t("togglePassword") } })`;
 
-const liveCode = `const pw = useViraPassword({ policy })
+const liveCode = `const { inputProps, strength, strengthProps } = useViraPassword({ policy })
 
-<p {...pw.strengthProps}>{pw.strength?.level}</p>
+<input {...inputProps} />
+<p {...strengthProps}>{strength?.level}</p>
 // role="status" aria-live="polite" aria-atomic="true"
 // the input gets aria-describedby pointing at it`;
 
@@ -33,7 +34,7 @@ export function PasswordAccessibilityDoc() {
           </li>
           <li>
             <code>aria-pressed</code> tells screen readers whether the password is shown;{" "}
-            <code>aria-controls</code> links the button to the input.
+            <code>aria-controls</code>&#32;links the button to the input.
           </li>
           <li>The label is in English; translate it through btnProps:</li>
         </ul>
@@ -51,21 +52,22 @@ export function PasswordAccessibilityDoc() {
 
         <h2 id="canli">Live region</h2>
         <p>
-          Spread <code>strengthProps</code> on the element that shows strength. Announce a short
+          Spread <code>strengthProps</code>&#32;on the element that shows strength. Announce a short
           level, not every rule, so typing isn&apos;t noisy.
         </p>
         <DocsCodeBlock code={liveCode} lang="tsx" />
 
         <h2 id="caps">Caps Lock</h2>
         <p>
-          <code>capsLock</code> is true while Caps Lock is on and the input has focus. Show a text
-          hint; colour alone isn&apos;t enough.
+          <code>capsLock</code>&#32;is true while Caps Lock is on and the input has focus. Show a
+          text hint; colour alone isn&apos;t enough.
         </p>
 
         <h2 id="ids">Stable IDs</h2>
         <p>
           Without <code>id</code>, the input gets one from <code>useId()</code>, which matches
-          between server and client. Pass <code>id</code> when a label or test needs a fixed value.
+          between server and client. Pass <code>id</code>&#32;when a label or test needs a fixed
+          value.
         </p>
       </DocsProse>
     </>

@@ -99,13 +99,13 @@ export function PasswordUseViraPasswordDoc() {
 
         <h2 id="merge">Prop merging</h2>
         <p>
-          <code>inputProps</code> ve <code>btnProps</code> hook&apos;unkilerden sonra uygulanır;
+          <code>inputProps</code> ve <code>btnProps</code>&#32;hook&apos;unkilerden sonra uygulanır;
           çoğu anahtar değiştirilebilir. Şunlar birleştirilir:
         </p>
         <DocsCodeBlock code={mergeCode} lang="tsx" />
         <p>
           Dönen <code>inputProps</code> yalnızca öznitelik taşır; <code>register()</code> veya bir{" "}
-          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link> alanından önce ya da
+          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link>&#32;alanından önce ya da
           sonra spread edilebilir, onların ref ve handler&apos;larını ezmez.
         </p>
       </DocsProse>

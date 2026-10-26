@@ -11,9 +11,10 @@ const ariaCode = `<input id="virapassword-input-:r0:" type="password" aria-descr
 
 const labelCode = `useViraPassword({ btnProps: { "aria-label": t("togglePassword") } })`;
 
-const liveCode = `const pw = useViraPassword({ policy })
+const liveCode = `const { inputProps, strength, strengthProps } = useViraPassword({ policy })
 
-<p {...pw.strengthProps}>{pw.strength?.level}</p>
+<input {...inputProps} />
+<p {...strengthProps}>{strength?.level}</p>
 // role="status" aria-live="polite" aria-atomic="true"
 // input, ona işaret eden aria-describedby alır`;
 
@@ -33,7 +34,7 @@ export function PasswordAccessibilityDoc() {
           </li>
           <li>
             <code>aria-pressed</code> ekran okuyucuya parolanın görünüp görünmediğini söyler;{" "}
-            <code>aria-controls</code> butonu input&apos;a bağlar.
+            <code>aria-controls</code>&#32;butonu input&apos;a bağlar.
           </li>
           <li>Etiket İngilizcedir; btnProps ile çevirin:</li>
         </ul>
@@ -66,7 +67,7 @@ export function PasswordAccessibilityDoc() {
         <p>
           <code>id</code> verilmezse input id&apos;sini sunucu ve istemcide eşleşen{" "}
           <code>useId()</code>&apos;den alır. Etiket veya test sabit bir değer istiyorsa{" "}
-          <code>id</code> verin.
+          <code>id</code>&#32;verin.
         </p>
       </DocsProse>
     </>

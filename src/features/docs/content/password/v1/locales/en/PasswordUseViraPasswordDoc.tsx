@@ -32,7 +32,7 @@ export async function PasswordUseViraPasswordDoc() {
 
         <h2 id="options">Options</h2>
         <p>
-          <code>useViraPassword(options?)</code> accepts optional settings:
+          <code>useViraPassword(options?)</code>&#32;accepts optional settings:
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
@@ -59,7 +59,7 @@ export async function PasswordUseViraPasswordDoc() {
                 </td>
                 <td>Eye / EyeOff</td>
                 <td>
-                  <code>{`{ show, hide }`}</code> custom icons
+                  <code>{`{ show, hide }`}</code>&#32;custom icons
                 </td>
               </tr>
               <tr>
@@ -141,14 +141,15 @@ export async function PasswordUseViraPasswordDoc() {
         </p>
         <ul>
           <li>
-            <code>on*</code> event handlers are called in order (base first, then user)
+            <code>on*</code>&#32;event handlers are called in order (base first, then user)
           </li>
           <li>
-            <code>className</code> strings are joined with a space
+            <code>className</code>&#32;strings are joined with a space
           </li>
         </ul>
         <p>
-          <Link href="/password/docs/v1/helpers">mergeProps</Link> is exported for manual merging.
+          <Link href="/password/docs/v1/helpers">mergeProps</Link>&#32;is exported for manual
+          merging.
         </p>
       </DocsProse>
     </>

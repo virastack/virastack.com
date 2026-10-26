@@ -56,7 +56,7 @@ export function PasswordHelpersDoc() {
                   <code>getButtonAriaAttributes(isVisible, inputId, label?)</code>
                 </td>
                 <td>
-                  <code>aria-*</code> and <code>type=&quot;button&quot;</code> for the button
+                  <code>aria-*</code> and <code>type=&quot;button&quot;</code>&#32;for the button
                 </td>
               </tr>
               <tr>
@@ -81,8 +81,8 @@ export function PasswordHelpersDoc() {
         <h2 id="merge">mergeProps</h2>
         <p>
           The merger used by the hook is exported: chains <code>on*</code> handlers, joins{" "}
-          <code>className</code> strings, and for other keys the later value wins. Handy for manual
-          merges in controlled components.
+          <code>className</code>&#32;strings, and for other keys the later value wins. Handy for
+          manual merges in controlled components.
         </p>
       </DocsProse>
     </>

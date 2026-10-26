@@ -2,6 +2,7 @@
 
 import { ChevronRightIcon } from "lucide-react";
 import { useViraPassword } from "@virastack/password";
+import { definePolicy } from "@virastack/password/strength";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -12,13 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/routing";
 
+const policy = definePolicy();
+
 export function PasswordDemo() {
   const t = useTranslations("Password");
-  const { inputProps, btnProps, isVisible } = useViraPassword({
+  const { inputProps, btnProps, isVisible, strength, strengthProps } = useViraPassword({
     id: "password-landing-demo",
     defaultVisible: false,
+    policy,
     inputProps: {
-      autoComplete: "current-password",
       defaultValue: "virastack",
       className: "pr-10",
       placeholder: t("demoPlaceholder"),
@@ -28,6 +31,13 @@ export function PasswordDemo() {
         "absolute inset-y-0 right-1 my-auto size-7 text-muted-foreground hover:text-foreground",
     },
   });
+
+  const levels = {
+    weak: t("demoLevelWeak"),
+    fair: t("demoLevelFair"),
+    good: t("demoLevelGood"),
+    strong: t("demoLevelStrong"),
+  };
 
   const { className: btnClassName, children, ...restBtnProps } = btnProps;
 
@@ -45,6 +55,9 @@ export function PasswordDemo() {
             </div>
             <p className="text-xs text-muted-foreground">
               {t("demoStatus")}: {isVisible ? t("demoVisible") : t("demoHidden")}
+            </p>
+            <p {...strengthProps} className="text-xs text-muted-foreground">
+              {t("demoStrength")}: {strength ? levels[strength.level] : null}
             </p>
           </div>
         </div>

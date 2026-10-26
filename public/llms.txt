@@ -4,14 +4,14 @@
 
 Prefer product `llms-full.txt` files for API detail. Use this file as the curated ecosystem map. Primary language for docs and packages is English.
 
-Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virastack/password@1.0.2`, `@virastack/ai@2.0.0`.
+Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
 
 ## Products
 
 - [Start](https://virastack.com/start): CLI (`npx virastack@latest`) to scaffold Next.js or TanStack Start apps
 - [AI](https://virastack.com/ai): Agent rules and architecture kit (`npx @virastack/ai init`)
 - [Mask](https://virastack.com/mask): React Hook Form input masking (`@virastack/mask`)
-- [Password](https://virastack.com/password): Accessible password visibility toggle (`@virastack/password`)
+- [Password](https://virastack.com/password): Accessible password hook: show/hide, NIST-style strength, confirmation, server validation (`@virastack/password`)
 - [Guide](https://virastack.com/guide): Interactive “modern web” walkthrough
 
 ## LLM indexes
@@ -23,7 +23,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virast
 - [Mask llms.txt](https://virastack.com/mask/llms.txt): Mask docs map
 - [Mask llms-full.txt](https://virastack.com/mask/llms-full.txt): useViraMask API, presets, examples (full)
 - [Password llms.txt](https://virastack.com/password/llms.txt): Password docs map
-- [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword API and a11y (full)
+- [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword, strength, confirm, server and leaked-password APIs (full)
 - [Guide llms.txt](https://virastack.com/guide/llms.txt): Guide step map
 - [Guide llms-full.txt](https://virastack.com/guide/llms-full.txt): Guide narrative and stack (full)
 - [Ecosystem llms-full.txt](https://virastack.com/llms-full.txt): Combined overview + quick APIs
@@ -33,14 +33,14 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virast
 - [Start docs](https://virastack.com/start/docs): Install, CLI, templates, scripts, i18n
 - [AI docs](https://virastack.com/ai/docs): Install, CLI, installed files, rules, upgrade from v1
 - [Mask docs](https://virastack.com/mask/docs): Hook, custom masks, validation, helpers, examples
-- [Password docs](https://virastack.com/password/docs): Hook, accessibility, customization, examples
+- [Password docs](https://virastack.com/password/docs): Hook, strength, confirm, React Hook Form, server, leaked passwords, examples
 
 ## Packages
 
 - [`virastack`](https://www.npmjs.com/package/virastack): Scaffold CLI (Start)
 - [`@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Shared agent rules for scaffolds
 - [`@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Input masks for React + React Hook Form
-- [`@virastack/password`](https://www.npmjs.com/package/@virastack/password): Password visibility hook for React
+- [`@virastack/password`](https://www.npmjs.com/package/@virastack/password): Accessible password hook for React (show/hide, strength, server validation)
 
 ## Optional
 

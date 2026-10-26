@@ -4,15 +4,17 @@ import { PasswordExamplePreview } from "@/features/docs/content/password/example
 import { Link } from "@/i18n/routing";
 
 const ruleCode = `const password = useWatch({ control: form.control, name: "password" })
-const confirm = useViraPassword({ matchWith: password })
+const { inputProps, rule } = useViraPassword({ matchWith: password })
 
-<input {...mergeProps(confirm.inputProps, form.register("confirm", confirm.rule))} />
+<input {...inputProps} {...form.register("confirm", rule)} />
 // değerler farklıysa "password.mismatch" (boş tekrar alanı da geçmez)`;
 
 const sharedCode = `const [visible, setVisible] = useState(false)
 
-const pw = useViraPassword({ visible, onVisibleChange: setVisible })
-const confirm = useViraPassword({ matchWith: password, visible, onVisibleChange: setVisible })`;
+const shared = { visible, onVisibleChange: setVisible }
+
+const passwordField = useViraPassword(shared)
+const confirmField = useViraPassword({ ...shared, matchWith: password })`;
 
 export function PasswordConfirmDoc() {
   return (
@@ -25,8 +27,8 @@ export function PasswordConfirmDoc() {
         <h2 id="temel">Temel kullanım</h2>
         <p>
           Ayrı bir hook yoktur. Tekrar alanına <code>matchWith</code> verin: <code>matches</code>{" "}
-          <code>true</code>, <code>false</code> veya alan boşken <code>null</code> olur. İki değer
-          sunucudaki gibi NFKC sonrası karşılaştırılır.
+          <code>true</code>, <code>false</code> veya alan boşken <code>null</code>&#32;olur. İki
+          değer sunucudaki gibi NFKC sonrası karşılaştırılır.
         </p>
         <PasswordExamplePreview id="confirm" />
 

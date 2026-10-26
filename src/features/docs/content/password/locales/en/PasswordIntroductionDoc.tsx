@@ -25,8 +25,8 @@ export function PasswordIntroductionDoc() {
         <p>
           Password fields are easy to get wrong: missing ARIA, a toggle that submits the form, a
           password manager that sees a text field, rules that differ between the form and the
-          server. <code>useViraPassword()</code> handles this in one hook. Markup and styling stay
-          yours.
+          server. <code>useViraPassword()</code>&#32;handles this in one hook. Markup and styling
+          stay yours.
         </p>
         <PasswordExamplePreview id="show-hide" />
 
@@ -35,7 +35,7 @@ export function PasswordIntroductionDoc() {
         <p>
           Coming from 1.0? Nothing breaks; see the{" "}
           <Link href="/password/docs/upgrade">upgrade guide</Link>. Live demos are on the{" "}
-          <Link href="/password/examples">examples</Link> page.
+          <Link href="/password/examples">examples</Link>&#32;page.
         </p>
 
         <h2 id="giris-noktalari">Entry points</h2>
@@ -69,12 +69,13 @@ export function PasswordIntroductionDoc() {
         <h2 id="peer">Requirements</h2>
         <ul>
           <li>
-            <AcademyBadge kind="react" label="React 18.2+" /> and <code>react-dom</code> (React 19
-            supported)
+            <AcademyBadge kind="react" label="React 18.2+" /> and <code>react-dom</code>&#32;(React
+            19 supported)
           </li>
           <li>No runtime dependencies</li>
           <li>
-            <AcademyBadge kind="react-hook-form" /> is optional; any form library or none works.
+            <AcademyBadge kind="react-hook-form" />
+            &#32;is optional; any form library or none works.
           </li>
         </ul>
         <p>

@@ -99,15 +99,15 @@ export function PasswordUseViraPasswordDoc() {
 
         <h2 id="merge">Prop merging</h2>
         <p>
-          Your <code>inputProps</code> and <code>btnProps</code> are applied after the hook&apos;s,
-          so most keys can be overridden. These are combined instead:
+          Your <code>inputProps</code> and <code>btnProps</code>&#32;are applied after the
+          hook&apos;s, so most keys can be overridden. These are combined instead:
         </p>
         <DocsCodeBlock code={mergeCode} lang="tsx" />
         <p>
-          The returned <code>inputProps</code> holds attributes only, so it can be spread before or
-          after <code>register()</code> or a{" "}
-          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link> field without replacing
-          their ref or handlers.
+          The returned <code>inputProps</code>&#32;holds attributes only, so it can be spread before
+          or after <code>register()</code> or a{" "}
+          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link>&#32;field without
+          replacing their ref or handlers.
         </p>
       </DocsProse>
     </>

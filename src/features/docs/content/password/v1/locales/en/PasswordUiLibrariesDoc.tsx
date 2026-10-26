@@ -91,8 +91,8 @@ export async function PasswordUiLibrariesDoc() {
       />
       <DocsProse>
         <p>
-          <code>useViraPassword()</code> returns prop bags. Spread them onto input and button; the
-          icon lives in <code>btnProps.children</code>.
+          <code>useViraPassword()</code>&#32;returns prop bags. Spread them onto input and button;
+          the icon lives in <code>btnProps.children</code>.
         </p>
         <p>
           The package only manages visibility logic and accessible props; markup and styling are
@@ -119,7 +119,7 @@ export async function PasswordUiLibrariesDoc() {
           Ant Design
         </h2>
         <p>
-          <code>antd</code> accepts native props. Same pattern:
+          <code>antd</code>&#32;accepts native props. Same pattern:
         </p>
         <DocsCodeBlock code={antDesignCode} lang="tsx" />
 
@@ -128,7 +128,7 @@ export async function PasswordUiLibrariesDoc() {
           Chakra UI
         </h2>
         <p>
-          Works with Chakra <code>Input</code> / <code>IconButton</code> too:
+          Works with Chakra <code>Input</code> / <code>IconButton</code>&#32;too:
         </p>
         <DocsCodeBlock code={chakraCode} lang="tsx" />
       </DocsProse>

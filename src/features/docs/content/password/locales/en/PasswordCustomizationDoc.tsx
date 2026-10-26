@@ -45,8 +45,8 @@ export function PasswordCustomizationDoc() {
       <DocsProse>
         <h2 id="icons">Icons & text</h2>
         <p>
-          <code>icons</code> takes any <code>ReactNode</code>: <code>show</code> renders while the
-          password is hidden, <code>hide</code> while it is visible.
+          <code>icons</code> takes any <code>ReactNode</code>: <code>show</code>&#32;renders while
+          the password is hidden, <code>hide</code>&#32;while it is visible.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="custom-icons" />} code={iconsCode}>
           <DocsCodeBlock code={iconsCode} lang="tsx" />

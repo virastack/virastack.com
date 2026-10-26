@@ -4,9 +4,9 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 const coreCode = `import { getButtonAriaAttributes, getInputAriaAttributes, getInputType } from "@virastack/password"
 
 getInputType(true) // "text"
-getButtonAriaAttributes(false, "pw", "Show password")
-// { "aria-label": "Show password", "aria-pressed": false, "aria-controls": "pw", type: "button" }
-getInputAriaAttributes(true, "pw-hint") // { "aria-invalid": true, "aria-describedby": "pw-hint" }`;
+getButtonAriaAttributes(false, "password", "Show password")
+// { "aria-label": "Show password", "aria-pressed": false, "aria-controls": "password", type: "button" }
+getInputAriaAttributes(true, "password-hint") // { "aria-invalid": true, "aria-describedby": "password-hint" }`;
 
 const iconsCode = `import { EyeIcon, EyeOffIcon } from "@virastack/password"
 
@@ -14,7 +14,7 @@ const iconsCode = `import { EyeIcon, EyeOffIcon } from "@virastack/password"
 
 const mergeCode = `import { mergeProps } from "@virastack/password"
 
-<input {...mergeProps(pw.inputProps, form.register("password", pw.rule))} />
+<input {...mergeProps(inputProps, form.register("password", rule))} />
 // on* handlers: both run, the first argument first
 // className, aria-describedby: joined
 // ref: composed

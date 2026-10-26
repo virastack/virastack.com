@@ -5,7 +5,10 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
 import { getPasswordExample } from "@/features/docs/config/password-docs.config";
-import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+import {
+  PasswordExampleFullSource,
+  PasswordExamplePreview,
+} from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
 type PasswordExampleDetailDocProps = {
@@ -45,6 +48,14 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
             <li key={note}>{note}</li>
           ))}
         </ul>
+
+        {example.component ? (
+          <>
+            <h2 id="tam-kod">Tam kod</h2>
+            <p>Yukarıdaki önizlemenin stilli hali, kopyalamaya hazır.</p>
+            <PasswordExampleFullSource id={example.component} />
+          </>
+        ) : null}
 
         <p>
           Hook API için <Link href="/password/docs/use-vira-password">useViraPassword()</Link>, stil

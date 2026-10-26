@@ -51,7 +51,7 @@ export async function PasswordCustomizationDoc() {
         <h2 id="icons">Icons & text</h2>
         <p>
           The <code>icons</code> field accepts <code>ReactNode</code>: SVG, components, or plain
-          text. <code>show</code> renders when the password is hidden; <code>hide</code> when
+          text. <code>show</code> renders when the password is hidden; <code>hide</code>&#32;when
           visible.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="custom-icons" />} code={iconsCode}>
@@ -82,7 +82,7 @@ export async function PasswordCustomizationDoc() {
         <h2 id="state">disabled & readOnly</h2>
         <p>
           In both cases visibility cannot change: the button is disabled, and <code>toggle</code> /{" "}
-          <code>setVisible</code> are no-ops.
+          <code>setVisible</code>&#32;are no-ops.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="disabled" />} code={stateCode}>
           <DocsCodeBlock code={stateCode} lang="tsx" />

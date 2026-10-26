@@ -71,19 +71,19 @@ export function PasswordAccessibilityDoc() {
                 </td>
                 <td>input (opsiyonel)</td>
                 <td>
-                  <code>getInputAriaAttributes</code> ile manuel eklenebilir
+                  <code>getInputAriaAttributes</code>&#32;ile manuel eklenebilir
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <p>
-          Core yardımcılar <Link href="/password/docs/v1/helpers">helpers</Link> sayfasında.
+          Core yardımcılar <Link href="/password/docs/v1/helpers">helpers</Link>&#32;sayfasında.
         </p>
 
         <h2 id="button">type=button</h2>
         <p>
-          Toggle her zaman <code>type=&quot;button&quot;</code> alır. Böylece form içinde
+          Toggle her zaman <code>type=&quot;button&quot;</code>&#32;alır. Böylece form içinde
           yanlışlıkla submit tetiklenmez: kendi buton bileşeninizi kullanırken de bu değer korunur
           (override etmeyin).
         </p>
@@ -92,10 +92,10 @@ export function PasswordAccessibilityDoc() {
         <ul>
           <li>
             <code>id</code> verilmezse React <code>useId()</code> ile{" "}
-            <code>virapassword-input-…</code> üretilir.
+            <code>virapassword-input-…</code>&#32;üretilir.
           </li>
           <li>
-            Buton <code>aria-controls</code> aynı id’ye bağlanır: birden fazla parola alanı aynı
+            Buton <code>aria-controls</code>&#32;aynı id’ye bağlanır: birden fazla parola alanı aynı
             sayfada güvenle çalışır.
           </li>
         </ul>

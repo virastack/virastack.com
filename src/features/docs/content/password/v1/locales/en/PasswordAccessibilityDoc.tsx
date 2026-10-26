@@ -62,7 +62,7 @@ export function PasswordAccessibilityDoc() {
                 </td>
                 <td>button</td>
                 <td>
-                  <code>id</code> of the controlled input
+                  <code>id</code>&#32;of the controlled input
                 </td>
               </tr>
               <tr>
@@ -78,7 +78,7 @@ export function PasswordAccessibilityDoc() {
           </table>
         </div>
         <p>
-          Core helpers are on the <Link href="/password/docs/v1/helpers">helpers</Link> page.
+          Core helpers are on the <Link href="/password/docs/v1/helpers">helpers</Link>&#32;page.
         </p>
 
         <h2 id="button">type=button</h2>
@@ -95,7 +95,7 @@ export function PasswordAccessibilityDoc() {
             <code>virapassword-input-…</code>.
           </li>
           <li>
-            The button&apos;s <code>aria-controls</code> links to the same id: multiple password
+            The button&apos;s <code>aria-controls</code>&#32;links to the same id: multiple password
             fields on one page work safely.
           </li>
         </ul>

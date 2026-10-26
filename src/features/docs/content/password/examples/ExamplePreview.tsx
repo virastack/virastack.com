@@ -2,7 +2,7 @@ import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 
 import { ConfirmPasswordExample } from "./ConfirmPasswordExample";
-import { passwordExampleCode } from "./example-code.generated";
+import { passwordExampleCode, passwordExampleSketch } from "./example-code.generated";
 import { ForbiddenExample } from "./ForbiddenExample";
 import { MaskSignupExample } from "./MaskSignupExample";
 import { PwnedExample } from "./PwnedExample";
@@ -30,14 +30,27 @@ export function PasswordExampleLive({ id }: { id: PasswordExamplePreviewId }) {
   return <Preview />;
 }
 
-/** Live example with the exact source it was built from. */
+/**
+ * Live example with a short sketch of the code: plain markup, no styling, the package in focus.
+ * Extra files (Server Actions) follow in their own blocks.
+ */
 export function PasswordExamplePreview({ id }: { id: PasswordExamplePreviewId }) {
   const Preview = previews[id];
-  const code = passwordExampleCode[id];
+  const [main, ...extra] = passwordExampleSketch[id];
 
   return (
-    <ComponentPreview preview={<Preview />} code={code}>
-      <DocsCodeBlock code={code} lang="tsx" />
-    </ComponentPreview>
+    <>
+      <ComponentPreview preview={<Preview />} code={main}>
+        <DocsCodeBlock code={main} lang="tsx" />
+      </ComponentPreview>
+      {extra.map((code) => (
+        <DocsCodeBlock key={code} code={code} lang="ts" />
+      ))}
+    </>
   );
+}
+
+/** The styled source of the live example, for copying the whole thing. */
+export function PasswordExampleFullSource({ id }: { id: PasswordExamplePreviewId }) {
+  return <DocsCodeBlock code={passwordExampleCode[id]} lang="tsx" />;
 }

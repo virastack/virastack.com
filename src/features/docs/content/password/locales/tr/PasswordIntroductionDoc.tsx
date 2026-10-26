@@ -25,7 +25,8 @@ export function PasswordIntroductionDoc() {
         <p>
           Parola alanlarında hata yapmak kolaydır: eksik ARIA, formu gönderen bir toggle, metin
           alanı gören parola yöneticisi, formda ve sunucuda farklı kurallar.{" "}
-          <code>useViraPassword()</code> bunları tek hook ile çözer. İşaretleme ve stil sizde kalır.
+          <code>useViraPassword()</code>&#32;bunları tek hook ile çözer. İşaretleme ve stil sizde
+          kalır.
         </p>
         <PasswordExamplePreview id="show-hide" />
 
@@ -34,12 +35,12 @@ export function PasswordIntroductionDoc() {
         <p>
           1.0&apos;dan mı geliyorsunuz? Hiçbir şey kırılmaz;{" "}
           <Link href="/password/docs/upgrade">geçiş rehberine</Link> bakın. Canlı demolar{" "}
-          <Link href="/password/examples">örnekler</Link> sayfasında.
+          <Link href="/password/examples">örnekler</Link>&#32;sayfasında.
         </p>
 
         <h2 id="giris-noktalari">Giriş noktaları</h2>
         <p>
-          Yalnızca kök girişte <code>&quot;use client&quot;</code> vardır. Güç motoru yalnızca
+          Yalnızca kök girişte <code>&quot;use client&quot;</code>&#32;vardır. Güç motoru yalnızca
           politika verdiğinizde paketinize girer.
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
@@ -68,13 +69,13 @@ export function PasswordIntroductionDoc() {
         <h2 id="peer">Gereksinimler</h2>
         <ul>
           <li>
-            <AcademyBadge kind="react" label="React 18.2+" /> ve <code>react-dom</code> (React 19
-            desteklenir)
+            <AcademyBadge kind="react" label="React 18.2+" /> ve <code>react-dom</code>&#32;(React
+            19 desteklenir)
           </li>
           <li>Çalışma zamanı bağımlılığı yok</li>
           <li>
-            <AcademyBadge kind="react-hook-form" /> isteğe bağlıdır; başka bir form kütüphanesiyle
-            veya kütüphanesiz de çalışır.
+            <AcademyBadge kind="react-hook-form" />
+            &#32;isteğe bağlıdır; başka bir form kütüphanesiyle veya kütüphanesiz de çalışır.
           </li>
         </ul>
         <p>

@@ -31,9 +31,9 @@ export function PasswordServerDoc() {
       <DocsProse>
         <h2 id="giris">Server entry</h2>
         <p>
-          The browser can be skipped, so the server decides. <code>validatePassword</code> uses the
-          same engine as the form; the same input gives the same issues on both sides. Use it for
-          sign-up, password reset and password change.
+          The browser can be skipped, so the server decides. <code>validatePassword</code>&#32;uses
+          the same engine as the form; the same input gives the same issues on both sides. Use it
+          for sign-up, password reset and password change.
         </p>
         <DocsCodeBlock code={apiCode} lang="ts" />
         <p>

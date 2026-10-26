@@ -31,9 +31,9 @@ export function PasswordServerDoc() {
       <DocsProse>
         <h2 id="giris">Sunucu girişi</h2>
         <p>
-          Tarayıcı atlanabilir; karar sunucudadır. <code>validatePassword</code> formla aynı motoru
-          kullanır; aynı girdi iki tarafta aynı hataları verir. Kayıt, parola sıfırlama ve parola
-          değiştirmede kullanın.
+          Tarayıcı atlanabilir; karar sunucudadır. <code>validatePassword</code>&#32;formla aynı
+          motoru kullanır; aynı girdi iki tarafta aynı hataları verir. Kayıt, parola sıfırlama ve
+          parola değiştirmede kullanın.
         </p>
         <DocsCodeBlock code={apiCode} lang="ts" />
         <p>String olmayan her şey (eksik alan, File) boş parola sayılır.</p>
@@ -44,9 +44,9 @@ export function PasswordServerDoc() {
 
         <h2 id="hash">Neyi hash&apos;lemeli</h2>
         <p>
-          <code>result.password</code> değerini hash&apos;leyin: NFKC ile normalleştirilmiştir;
+          <code>result.password</code>&#32;değerini hash&apos;leyin: NFKC ile normalleştirilmiştir;
           başka klavyede yazılan aynı parola girişte de doğrulanır. Giriş formundaki parolayı da{" "}
-          <code>normalizePassword</code> ile aynı şekilde normalleştirin.
+          <code>normalizePassword</code>&#32;ile aynı şekilde normalleştirin.
         </p>
 
         <h2 id="nextjs">SSR ve Next.js</h2>
@@ -54,10 +54,10 @@ export function PasswordServerDoc() {
           <li>
             Yalnızca <code>@virastack/password</code> içinde <code>&quot;use client&quot;</code>{" "}
             vardır. Server Component, Server Action ve route handler&apos;lar <code>/server</code>{" "}
-            veya <code>/strength</code> import eder.
+            veya <code>/strength</code>&#32;import eder.
           </li>
           <li>
-            Politikayı <code>&quot;use client&quot;</code> içermeyen ortak bir dosyada tutun.
+            Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada tutun.
           </li>
           <li>
             Hook sunucuda ve istemcide aynı işaretlemeyi üretir (id&apos;ler <code>useId</code>

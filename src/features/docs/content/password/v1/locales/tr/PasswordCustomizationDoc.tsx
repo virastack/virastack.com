@@ -51,7 +51,7 @@ export async function PasswordCustomizationDoc() {
         <h2 id="icons">İkonlar & metin</h2>
         <p>
           <code>icons</code> alanı <code>ReactNode</code> kabul eder: SVG, bileşen veya düz metin.{" "}
-          <code>show</code> parola gizliyken, <code>hide</code> görünürken render edilir.
+          <code>show</code> parola gizliyken, <code>hide</code>&#32;görünürken render edilir.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="custom-icons" />} code={iconsCode}>
           <DocsCodeBlock code={iconsCode} lang="tsx" />
@@ -61,8 +61,8 @@ export async function PasswordCustomizationDoc() {
           <DocsCodeBlock code={textCode} lang="tsx" />
         </ComponentPreview>
         <p>
-          Varsayılan ikonlar <Link href="/password/docs/v1/helpers">helpers</Link> sayfasından da
-          import edilebilir. Daha fazla örnek:{" "}
+          Varsayılan ikonlar <Link href="/password/docs/v1/helpers">helpers</Link>&#32;sayfasından
+          da import edilebilir. Daha fazla örnek:{" "}
           <Link href="/password/examples/custom-icons">özel ikonlar</Link>,{" "}
           <Link href="/password/examples/custom-text">özel metin</Link>.
         </p>
@@ -80,7 +80,7 @@ export async function PasswordCustomizationDoc() {
         <h2 id="state">disabled & readOnly</h2>
         <p>
           Her iki durumda da görünürlük değiştirilemez: buton disabled olur, <code>toggle</code> /{" "}
-          <code>setVisible</code> no-op’dur.
+          <code>setVisible</code>&#32;no-op’dur.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="disabled" />} code={stateCode}>
           <DocsCodeBlock code={stateCode} lang="tsx" />

@@ -32,7 +32,7 @@ export async function PasswordUseViraPasswordDoc() {
 
         <h2 id="options">Options</h2>
         <p>
-          <code>useViraPassword(options?)</code> isteğe bağlı ayarlar alır:
+          <code>useViraPassword(options?)</code>&#32;isteğe bağlı ayarlar alır:
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
@@ -59,7 +59,7 @@ export async function PasswordUseViraPasswordDoc() {
                 </td>
                 <td>Eye / EyeOff</td>
                 <td>
-                  <code>{`{ show, hide }`}</code> özel ikonlar
+                  <code>{`{ show, hide }`}</code>&#32;özel ikonlar
                 </td>
               </tr>
               <tr>
@@ -88,7 +88,7 @@ export async function PasswordUseViraPasswordDoc() {
                   <code>useId()</code>
                 </td>
                 <td>
-                  Input id; buton <code>aria-controls</code> ile eşleşir
+                  Input id; buton <code>aria-controls</code>&#32;ile eşleşir
                 </td>
               </tr>
               <tr>
@@ -120,7 +120,7 @@ export async function PasswordUseViraPasswordDoc() {
           </li>
           <li>
             <code>btnProps</code>: <code>{`<button {...btnProps} />`}</code> (ikon{" "}
-            <code>children</code> olarak)
+            <code>children</code>&#32;olarak)
           </li>
           <li>
             <code>isVisible</code>: mevcut görünürlük
@@ -140,14 +140,14 @@ export async function PasswordUseViraPasswordDoc() {
         </p>
         <ul>
           <li>
-            <code>on*</code> event handler’lar sırayla çağrılır (önce base, sonra kullanıcı)
+            <code>on*</code>&#32;event handler’lar sırayla çağrılır (önce base, sonra kullanıcı)
           </li>
           <li>
-            <code>className</code> string’leri boşlukla birleşir
+            <code>className</code>&#32;string’leri boşlukla birleşir
           </li>
         </ul>
         <p>
-          Manuel birleştirme için <Link href="/password/docs/v1/helpers">mergeProps</Link> dışa
+          Manuel birleştirme için <Link href="/password/docs/v1/helpers">mergeProps</Link>&#32;dışa
           aktarılır.
         </p>
       </DocsProse>

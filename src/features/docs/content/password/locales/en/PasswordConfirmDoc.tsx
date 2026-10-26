@@ -4,15 +4,17 @@ import { PasswordExamplePreview } from "@/features/docs/content/password/example
 import { Link } from "@/i18n/routing";
 
 const ruleCode = `const password = useWatch({ control: form.control, name: "password" })
-const confirm = useViraPassword({ matchWith: password })
+const { inputProps, rule } = useViraPassword({ matchWith: password })
 
-<input {...mergeProps(confirm.inputProps, form.register("confirm", confirm.rule))} />
+<input {...inputProps} {...form.register("confirm", rule)} />
 // "password.mismatch" when the values differ (an empty confirm fails too)`;
 
 const sharedCode = `const [visible, setVisible] = useState(false)
 
-const pw = useViraPassword({ visible, onVisibleChange: setVisible })
-const confirm = useViraPassword({ matchWith: password, visible, onVisibleChange: setVisible })`;
+const shared = { visible, onVisibleChange: setVisible }
+
+const passwordField = useViraPassword(shared)
+const confirmField = useViraPassword({ ...shared, matchWith: password })`;
 
 export function PasswordConfirmDoc() {
   return (
@@ -25,8 +27,8 @@ export function PasswordConfirmDoc() {
         <h2 id="temel">Basic usage</h2>
         <p>
           There is no separate hook. Give the confirm field <code>matchWith</code>:{" "}
-          <code>matches</code> is <code>true</code>, <code>false</code>, or <code>null</code> while
-          the field is empty. Both values are compared after NFKC, like on the server.
+          <code>matches</code> is <code>true</code>, <code>false</code>, or <code>null</code>
+          &#32;while the field is empty. Both values are compared after NFKC, like on the server.
         </p>
         <PasswordExamplePreview id="confirm" />
 

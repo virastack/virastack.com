@@ -15,14 +15,14 @@ export function PasswordIntroductionDoc() {
       <DocsProse>
         <p>
           Show/hide password fields are easy to get wrong: missing ARIA, buttons that submit forms,
-          disabled sync issues, prop conflicts. <code>useViraPassword()</code> handles all of this
-          in one hook. Markup and styling are up to you.
+          disabled sync issues, prop conflicts. <code>useViraPassword()</code>&#32;handles all of
+          this in one hook. Markup and styling are up to you.
         </p>
 
         <h2 id="baslarken">Getting started</h2>
         <p>
           Install the package. For live demos, see the{" "}
-          <Link href="/password/examples">examples</Link> page.
+          <Link href="/password/examples">examples</Link>&#32;page.
         </p>
 
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password@1.0")} />
@@ -30,10 +30,10 @@ export function PasswordIntroductionDoc() {
         <h2 id="peer">Peer dependencies</h2>
         <ul>
           <li>
-            <code>react</code> ≥ 18.2
+            <code>react</code>&#32;≥ 18.2
           </li>
           <li>
-            <code>react-dom</code> ≥ 18.2
+            <code>react-dom</code>&#32;≥ 18.2
           </li>
         </ul>
         <p>
@@ -54,7 +54,7 @@ export function PasswordIntroductionDoc() {
         <ul>
           <li>
             <strong>Accessibility</strong>: <code>aria-label</code>, <code>aria-pressed</code>,{" "}
-            <code>aria-controls</code>, and <code>type=&quot;button&quot;</code> out of the box.
+            <code>aria-controls</code>, and <code>type=&quot;button&quot;</code>&#32;out of the box.
           </li>
           <li>
             <strong>Headless</strong>: prop bags only; same API with shadcn, Ant Design, or native
@@ -65,8 +65,8 @@ export function PasswordIntroductionDoc() {
           </li>
           <li>
             <strong>Safe merge</strong>: <code>on*</code> handlers are chained,{" "}
-            <code>className</code> is merged; <code>disabled</code> / <code>readOnly</code> lock the
-            toggle.
+            <code>className</code> is merged; <code>disabled</code> / <code>readOnly</code>&#32;lock
+            the toggle.
           </li>
         </ul>
 
@@ -74,7 +74,7 @@ export function PasswordIntroductionDoc() {
         <p>This documentation covers the full package surface:</p>
         <ul>
           <li>
-            <Link href="/password/docs/v1/use-vira-password">useViraPassword()</Link> API
+            <Link href="/password/docs/v1/use-vira-password">useViraPassword()</Link>&#32;API
           </li>
           <li>
             <Link href="/password/docs/v1/accessibility">Accessibility</Link> and{" "}

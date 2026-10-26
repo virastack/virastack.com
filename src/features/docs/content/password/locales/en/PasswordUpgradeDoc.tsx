@@ -93,8 +93,8 @@ export function PasswordUpgradeDoc() {
         <ul>
           <li>
             Files are <code>.mjs</code> / <code>.cjs</code> with <code>.d.mts</code> /{" "}
-            <code>.d.cts</code> types. Deep imports into <code>dist</code> were never public; use
-            the package entries.
+            <code>.d.cts</code> types. Deep imports into <code>dist</code>&#32;were never public;
+            use the package entries.
           </li>
           <li>
             <code>getInputAriaAttributes</code> returns a typed object instead of{" "}

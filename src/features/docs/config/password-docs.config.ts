@@ -498,6 +498,7 @@ export function getPasswordDocsPage(
           headings: [
             { id: "onizleme", title: t("exampleHeadingPreview") },
             { id: "detaylar", title: t("exampleHeadingDetails") },
+            ...(example.component ? [{ id: "tam-kod", title: t("exampleHeadingFullCode") }] : []),
           ],
         } satisfies DocsPageMeta,
       ]),

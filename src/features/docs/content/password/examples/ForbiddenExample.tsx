@@ -12,10 +12,10 @@ import { passwordMessages } from "./password-messages";
 import { policy } from "./password-policy";
 
 export function ForbiddenExample() {
-  const [email, setEmail] = useState("ada.lovelace@example.com");
-  const [name, setName] = useState("Ada Lovelace");
+  const [email, setEmail] = useState("vira.stack@example.com");
+  const [name, setName] = useState("Vira Stack");
 
-  // Email: the local part and its pieces ("ada", "lovelace"). Name: each word.
+  // Email: the local part and its pieces ("vira", "stack"). Name: each word.
   const pw = useViraPassword({ policy, forbidden: [email, name] });
 
   return (
@@ -36,7 +36,7 @@ export function ForbiddenExample() {
       <p {...pw.strengthProps} className="text-xs text-muted-foreground">
         {pw.issues.includes("password.containsPersonalInfo")
           ? passwordMessages["password.containsPersonalInfo"]
-          : "Try lovelace-garden-path"}
+          : "Try vira-garden-path"}
       </p>
     </div>
   );

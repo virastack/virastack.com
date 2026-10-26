@@ -37,7 +37,7 @@ export function ServerActionExample() {
           name="email"
           type="email"
           autoComplete="username"
-          defaultValue="ada@example.com"
+          defaultValue="vira@example.com"
         />
       </div>
       <PasswordInput label="New password" pw={pw} />

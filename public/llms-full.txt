@@ -18,7 +18,7 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 | Start | `npx virastack@latest` | `virastack` (~1.1.0) |
 | AI | `npx @virastack/ai init` | `@virastack/ai` (~2.0.0) |
 | Mask | `npm i @virastack/mask` | `@virastack/mask` (~1.1.1) |
-| Password | `npm i @virastack/password` | `@virastack/password` (~1.0.2) |
+| Password | `npm i @virastack/password` | `@virastack/password` (1.1.x) |
 | Guide | https://virastack.com/guide/play | site experience (not an npm lib) |
 
 ## Start (quick)
@@ -63,23 +63,25 @@ Details: https://virastack.com/mask/llms-full.txt
 
 ## Password (quick)
 
-Peers: `react`, `react-dom` (≥18.2). Visibility toggle only, not a strength meter or generator.
+Peers: `react`, `react-dom` (≥18.2). One hook for the field: show/hide, NIST-style strength (`/strength`), confirmation (`matchWith`), the same policy on the server (`/server`) and an optional Have I Been Pwned check (`/pwned`). Errors are keys. Not a UI component.
 
 ```tsx
 import { useViraPassword } from "@virastack/password"
+import { definePolicy } from "@virastack/password/strength"
 
-const { inputProps, btnProps, isVisible, toggle, setVisible } = useViraPassword()
+const policy = definePolicy() // NIST: 15–64 characters
+
+const { inputProps, btnProps, strength, issues } = useViraPassword({ policy })
 return (
   <>
     <input {...inputProps} />
     <button {...btnProps} />
+    <p>{strength?.level}</p>
   </>
 )
 ```
 
-Options: `defaultVisible`, `icons`, `disabled`, `readOnly`, `id`, `inputProps`, `btnProps`. ARIA: `aria-pressed`, `aria-controls`, `aria-label`, `type="button"`.
-
-Details: https://virastack.com/password/llms-full.txt
+Server: `validatePassword(formData.get("password"), policy, { forbidden: [email], confirm })`. Details: https://virastack.com/password/llms-full.txt
 
 ## Guide (quick)
 

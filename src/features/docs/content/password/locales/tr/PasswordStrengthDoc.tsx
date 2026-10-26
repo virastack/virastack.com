@@ -24,8 +24,8 @@ definePolicy({ minTokenLength: 4 }) // kısa adlarda daha az yanlış pozitif
 definePolicy({ blockCommon: false, blockRepetitive: false })`;
 
 const forbiddenCode = `evaluate(password, policy, { forbidden: [email, name, username] })
-// "ada.lovelace@example.com" → "ada.lovelace", "ada", "lovelace" (alan adı yok sayılır)
-// "Ada Lovelace" → "ada lovelace", "ada", "lovelace"`;
+// "vira.stack@example.com" → "vira.stack", "vira", "stack" (alan adı yok sayılır)
+// "Vira Stack" → "vira stack", "vira", "stack"`;
 
 const presetRows: [string, string, string][] = [
   [
@@ -58,7 +58,7 @@ export function PasswordStrengthDoc() {
       <DocsProse>
         <h2 id="policy">definePolicy()</h2>
         <p>
-          Politikayı <code>&quot;use client&quot;</code> içermeyen ortak bir dosyada bir kez
+          Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada bir kez
           tanımlayın. Form ve sunucu aynı nesneyi import eder.
         </p>
         <DocsCodeBlock code={passwordExampleCode["password-policy"]} lang="ts" />
@@ -117,14 +117,15 @@ export function PasswordStrengthDoc() {
         </div>
         <p>
           Skor, uzunluk ve karakter çeşitliliğinden çıkan bir sezgiseldir; kırılma süresi tahmini
-          değildir. Onun için <Link href="/password/docs/comparison">karşılaştırmaya</Link> bakın.
+          değildir. Onun için <Link href="/password/docs/comparison">karşılaştırmaya</Link>
+          &#32;bakın.
         </p>
 
         <h2 id="hook">Hook içinde</h2>
         <p>
           <code>policy</code> verin; <code>strength</code>, <code>issues</code> ve{" "}
-          <code>strengthProps</code> alanlarını okuyun. Hook motoru import etmez; motor politikayla
-          gelir, yani yalnızca toggle kullanan sayfa onu indirmez.
+          <code>strengthProps</code>&#32;alanlarını okuyun. Hook motoru import etmez; motor
+          politikayla gelir, yani yalnızca toggle kullanan sayfa onu indirmez.
         </p>
         <PasswordExamplePreview id="strength-meter" />
 
@@ -135,10 +136,10 @@ export function PasswordStrengthDoc() {
         </p>
         <DocsCodeBlock code={forbiddenCode} lang="ts" />
         <p>
-          <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır. Kısa adlar
-          yanlış pozitife yol açar: <code>&quot;Ali Can&quot;</code>, <code>can</code> yüzünden{" "}
-          <code>candlelight-garden</code> parolasını reddeder. Sizin için önemliyse 4&apos;e
-          çıkarın.
+          <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır. Kısa
+          parçalar yanlış pozitife yol açar: <code>vira.dev@example.com</code> için <code>dev</code>{" "}
+          parçası <code>devoted-garden-path</code>&#32;parolasını reddeder. Sizin için önemliyse
+          4&apos;e çıkarın.
         </p>
         <PasswordExamplePreview id="forbidden" />
 
@@ -152,7 +153,7 @@ export function PasswordStrengthDoc() {
           <li>Sıfır genişlikli karakterler uzunluğa sayılmaz.</li>
           <li>
             <code>maxLength</code>&apos;te hiçbir şey kesilmez; uzun parola{" "}
-            <code>password.tooLong</code> alır.
+            <code>password.tooLong</code>&#32;alır.
           </li>
         </ul>
 

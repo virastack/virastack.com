@@ -91,8 +91,8 @@ export async function PasswordUiLibrariesDoc() {
       />
       <DocsProse>
         <p>
-          <code>useViraPassword()</code> prop bag döndürür. Input ve butona doğrudan spread edin;
-          ikon <code>btnProps.children</code> içindedir.
+          <code>useViraPassword()</code>&#32;prop bag döndürür. Input ve butona doğrudan spread
+          edin; ikon <code>btnProps.children</code>&#32;içindedir.
         </p>
         <p>
           Paket yalnızca görünürlük mantığını ve erişilebilir props’ları yönetir; markup ve stil
@@ -109,7 +109,7 @@ export async function PasswordUiLibrariesDoc() {
           shadcn/ui
         </h2>
         <p>
-          Bu sitedeki canlı demolar da shadcn <code>Input</code> + <code>Button</code> kullanır:
+          Bu sitedeki canlı demolar da shadcn <code>Input</code> + <code>Button</code>&#32;kullanır:
         </p>
         <ComponentPreview preview={<PasswordDemo variant="basic" />} code={shadcnCode}>
           <DocsCodeBlock code={shadcnCode} lang="tsx" />
@@ -120,7 +120,7 @@ export async function PasswordUiLibrariesDoc() {
           Ant Design
         </h2>
         <p>
-          <code>antd</code> native props kabul eder. Aynı pattern:
+          <code>antd</code>&#32;native props kabul eder. Aynı pattern:
         </p>
         <DocsCodeBlock code={antDesignCode} lang="tsx" />
 
@@ -129,7 +129,7 @@ export async function PasswordUiLibrariesDoc() {
           Chakra UI
         </h2>
         <p>
-          Chakra <code>Input</code> / <code>IconButton</code> ile de çalışır:
+          Chakra <code>Input</code> / <code>IconButton</code>&#32;ile de çalışır:
         </p>
         <DocsCodeBlock code={chakraCode} lang="tsx" />
       </DocsProse>

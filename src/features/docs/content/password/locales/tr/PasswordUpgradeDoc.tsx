@@ -89,12 +89,12 @@ export function PasswordUpgradeDoc() {
         <ul>
           <li>
             Dosyalar <code>.mjs</code> / <code>.cjs</code>, tipler <code>.d.mts</code> /{" "}
-            <code>.d.cts</code>. <code>dist</code> içine derin import hiçbir zaman genel API
+            <code>.d.cts</code>. <code>dist</code>&#32;içine derin import hiçbir zaman genel API
             değildi; paket girişlerini kullanın.
           </li>
           <li>
-            <code>getInputAriaAttributes</code>, <code>Record&lt;string, any&gt;</code> yerine tipli
-            bir nesne döndürür.
+            <code>getInputAriaAttributes</code>, <code>Record&lt;string, any&gt;</code>&#32;yerine
+            tipli bir nesne döndürür.
           </li>
           <li>Peer bağımlılıklar aynı: React ve React DOM 18.2+.</li>
         </ul>

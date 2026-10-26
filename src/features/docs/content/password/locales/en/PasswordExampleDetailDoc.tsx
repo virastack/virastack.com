@@ -5,7 +5,10 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
 import { getPasswordExample } from "@/features/docs/config/password-docs.config";
-import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+import {
+  PasswordExampleFullSource,
+  PasswordExamplePreview,
+} from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
 type PasswordExampleDetailDocProps = {
@@ -45,6 +48,14 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
             <li key={note}>{note}</li>
           ))}
         </ul>
+
+        {example.component ? (
+          <>
+            <h2 id="tam-kod">Full code</h2>
+            <p>The styled version of the preview above, ready to copy.</p>
+            <PasswordExampleFullSource id={example.component} />
+          </>
+        ) : null}
 
         <p>
           For the hook API see{" "}

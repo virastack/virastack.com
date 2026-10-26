@@ -55,8 +55,8 @@ export function PasswordPwnedDoc() {
           </table>
         </div>
         <p>
-          Hiç hata fırlatmaz. <code>unknown</code> durumunda kullanıcının devam etmesine izin verin
-          (fail open).
+          Hiç hata fırlatmaz. <code>unknown</code>&#32;durumunda kullanıcının devam etmesine izin
+          verin (fail open).
         </p>
 
         <h2 id="gizlilik">Gizlilik ve sınırlar</h2>
@@ -71,7 +71,7 @@ export function PasswordPwnedDoc() {
           </li>
           <li>
             <code>crypto.subtle</code> yalnızca HTTPS ve localhost&apos;ta vardır; aksi halde sonuç{" "}
-            <code>unknown</code> olur.
+            <code>unknown</code>&#32;olur.
           </li>
           <li>Her tuş vuruşunda çağırmayın; gönderimde kontrol edin.</li>
         </ul>

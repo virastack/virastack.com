@@ -82,7 +82,7 @@ export function PasswordHelpersDoc() {
         <h2 id="merge">mergeProps</h2>
         <p>
           Hook’un kullandığı birleştirici dışa aktarılır: <code>on*</code> handler’ları zincirler,{" "}
-          <code>className</code> string’lerini birleştirir, diğer anahtarlarda sonraki değer
+          <code>className</code>&#32;string’lerini birleştirir, diğer anahtarlarda sonraki değer
           kazanır. Kontrollü bileşenlerinizde manuel merge için kullanışlıdır.
         </p>
       </DocsProse>
