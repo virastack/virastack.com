@@ -8,80 +8,73 @@ const iconsCode = `import { Home, Star } from "lucide-react"
 import { useViraPassword } from "@virastack/password"
 
 const { inputProps, btnProps } = useViraPassword({
-  icons: {
-    show: <Star />,
-    hide: <Home />,
-  },
+  icons: { show: <Star />, hide: <Home /> },
 })`;
 
-const textCode = `const { inputProps, btnProps } = useViraPassword({
-  icons: {
-    show: "Göster",
-    hide: "Gizle",
-  },
-})`;
+const textCode = `useViraPassword({ icons: { show: "Göster", hide: "Gizle" } })`;
 
-const propsCode = `const { inputProps, btnProps } = useViraPassword({
+const propsCode = `useViraPassword({
   id: "signup-password",
-  inputProps: {
-    name: "password",
-    autoComplete: "new-password",
-    className: "pr-10",
-  },
+  inputProps: { name: "password", className: "pr-10" },
   btnProps: {
     className: "absolute inset-y-0 right-2 my-auto",
     onClick: () => analytics.track("password_toggled"),
   },
 })`;
 
-const stateCode = `// Input + buton disabled; toggle / setVisible no-op
-useViraPassword({ disabled: true })
+const hideCode = `useViraPassword({
+  hideOnSubmit: true, // varsayılan: form gönderilince ve resetlenince gizle
+  hideOnBlur: true,   // odak alandan çıkınca veya sekme gizlenince gizle
+})`;
 
-// Input readOnly; buton disabled; toggle / setVisible no-op
-useViraPassword({ readOnly: true })`;
+const autoCompleteCode = `useViraPassword() // current-password (giriş)
+useViraPassword({ policy }) // new-password (kayıt)
+useViraPassword({ autoComplete: "one-time-code" })
+useViraPassword({ autoComplete: false }) // öznitelik eklenmez`;
 
-export async function PasswordCustomizationDoc() {
+const stateCode = `useViraPassword({ disabled: true }) // input ve buton disabled
+useViraPassword({ readOnly: true }) // salt okunur input, disabled buton`;
+
+export function PasswordCustomizationDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Customization"
-        description="İkonlar, metin, stil ve kilit durumları: headless API ile kendi tasarım sisteminize uyum."
+        title="Özelleştirme"
+        description="İkonlar, metin, props, otomatik gizleme, autoComplete ve kilit durumları."
       />
       <DocsProse>
         <h2 id="icons">İkonlar & metin</h2>
         <p>
-          <code>icons</code> alanı <code>ReactNode</code> kabul eder: SVG, bileşen veya düz metin.{" "}
-          <code>show</code> parola gizliyken, <code>hide</code> görünürken render edilir.
+          <code>icons</code> herhangi bir <code>ReactNode</code> alır: <code>show</code> parola
+          gizliyken, <code>hide</code> görünürken render edilir.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="custom-icons" />} code={iconsCode}>
           <DocsCodeBlock code={iconsCode} lang="tsx" />
         </ComponentPreview>
-        <p>Metin örneği:</p>
         <ComponentPreview preview={<PasswordDemo variant="custom-text" />} code={textCode}>
           <DocsCodeBlock code={textCode} lang="tsx" />
         </ComponentPreview>
-        <p>
-          Varsayılan ikonlar <Link href="/password/docs/helpers">helpers</Link> sayfasından da
-          import edilebilir. Daha fazla örnek:{" "}
-          <Link href="/password/examples/custom-icons">özel ikonlar</Link>,{" "}
-          <Link href="/password/examples/custom-text">özel metin</Link>.
-        </p>
 
         <h2 id="props">inputProps & btnProps</h2>
-        <p>name, autoComplete, className ve ekstra handler’lar options üzerinden merge edilir:</p>
         <ComponentPreview preview={<PasswordDemo variant="prop-merge" />} code={propsCode}>
           <DocsCodeBlock code={propsCode} lang="tsx" />
         </ComponentPreview>
         <p>
-          Merge kuralları <Link href="/password/docs/use-vira-password">useViraPassword()</Link>{" "}
-          sayfasında. Örnek: <Link href="/password/examples/prop-merge">Prop merge</Link>.
+          Birleştirme kuralları:{" "}
+          <Link href="/password/docs/use-vira-password">useViraPassword()</Link>.
         </p>
 
-        <h2 id="state">disabled & readOnly</h2>
+        <h2 id="gizleme">Otomatik gizleme</h2>
         <p>
-          Her iki durumda da görünürlük değiştirilemez: buton disabled olur, <code>toggle</code> /{" "}
-          <code>setVisible</code> no-op’dur.
+          Gönderimde gizlemek, parola yöneticisinin kaydederken parola alanı görmesini sağlar.
+          Otomatik gizleme alan disabled olsa bile çalışır.
         </p>
+        <DocsCodeBlock code={hideCode} lang="tsx" />
+
+        <h2 id="autocomplete">autoComplete</h2>
+        <DocsCodeBlock code={autoCompleteCode} lang="tsx" />
+
+        <h2 id="state">disabled & readOnly</h2>
         <ComponentPreview preview={<PasswordDemo variant="disabled" />} code={stateCode}>
           <DocsCodeBlock code={stateCode} lang="tsx" />
         </ComponentPreview>

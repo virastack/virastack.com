@@ -36,8 +36,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
       '@virastack/password':
-        specifier: latest
-        version: 1.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: file:../password
+        version: file:../password(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2001,8 +2001,8 @@ packages:
       react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/password@1.0.0':
-    resolution: {integrity: sha512-QVhGhSDLClW/CjBWGvyLdWxtfnbEX0/PeosOV7Y631hd8lpgsy8qQYlMwgIUmRJ40p0uqQVsTs4r09R/D6z1ZQ==}
+  '@virastack/password@file:../password':
+    resolution: {directory: ../password, type: directory}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
@@ -6754,7 +6754,7 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       react-hook-form: 7.83.0(react@19.2.4)
 
-  '@virastack/password@1.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@virastack/password@file:../password(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)

@@ -1,9 +1,16 @@
 export { PasswordIntroductionDoc } from "./PasswordIntroductionDoc";
+export { PasswordUpgradeDoc } from "./PasswordUpgradeDoc";
 export { PasswordUseViraPasswordDoc } from "./PasswordUseViraPasswordDoc";
+export { PasswordStrengthDoc } from "./PasswordStrengthDoc";
+export { PasswordConfirmDoc } from "./PasswordConfirmDoc";
+export { PasswordReactHookFormDoc } from "./PasswordReactHookFormDoc";
 export { PasswordAccessibilityDoc } from "./PasswordAccessibilityDoc";
 export { PasswordCustomizationDoc } from "./PasswordCustomizationDoc";
+export { PasswordServerDoc } from "./PasswordServerDoc";
+export { PasswordPwnedDoc } from "./PasswordPwnedDoc";
 export { PasswordHelpersDoc } from "./PasswordHelpersDoc";
 export { PasswordTypesDoc } from "./PasswordTypesDoc";
 export { PasswordUiLibrariesDoc } from "./PasswordUiLibrariesDoc";
+export { PasswordComparisonDoc } from "./PasswordComparisonDoc";
 export { PasswordExamplesDoc } from "./PasswordExamplesDoc";
 export { PasswordExampleDetailDoc } from "./PasswordExampleDetailDoc";

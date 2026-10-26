@@ -1,104 +1,73 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { Link } from "@/i18n/routing";
 
-const ariaMarkup = `<input
-  id="virapassword-input-…"
-  type="password"
-/>
+const ariaCode = `<input id="virapassword-input-:r0:" type="password" aria-describedby="…-strength" />
 <button
   type="button"
   aria-label="Toggle password visibility"
   aria-pressed="false"
-  aria-controls="virapassword-input-…"
->
-  <!-- EyeIcon -->
-</button>`;
+  aria-controls="virapassword-input-:r0:"
+/>`;
+
+const labelCode = `useViraPassword({ btnProps: { "aria-label": t("togglePassword") } })`;
+
+const liveCode = `const pw = useViraPassword({ policy })
+
+<p {...pw.strengthProps}>{pw.strength?.level}</p>
+// role="status" aria-live="polite" aria-atomic="true"
+// input, ona işaret eden aria-describedby alır`;
 
 export function PasswordAccessibilityDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Accessibility"
-        description="Ekran okuyucu ve klavye kullanıcıları için hazır ARIA; ekstra yapılandırma gerekmez."
+        title="Erişilebilirlik"
+        description="ARIA, tıklamadan sonra odak, güç için canlı bölge ve Caps Lock."
       />
       <DocsProse>
-        <p>
-          Hook, buton ve input için erişilebilir öznitelikleri üretir. Varsayılan çıktıya yakın
-          markup:
-        </p>
-        <DocsCodeBlock code={ariaMarkup} lang="html" />
-
         <h2 id="aria">ARIA öznitelikleri</h2>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Öznitelik</th>
-                <th>Nerede</th>
-                <th>Rol</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>aria-label</code>
-                </td>
-                <td>button</td>
-                <td>
-                  Varsayılan: <code>Toggle password visibility</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-pressed</code>
-                </td>
-                <td>button</td>
-                <td>Toggle durumu (görünür = true)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-controls</code>
-                </td>
-                <td>button</td>
-                <td>
-                  Kontrol edilen input’un <code>id</code>’si
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-invalid</code> / <code>aria-describedby</code>
-                </td>
-                <td>input (opsiyonel)</td>
-                <td>
-                  <code>getInputAriaAttributes</code> ile manuel eklenebilir
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Core yardımcılar <Link href="/password/docs/helpers">helpers</Link> sayfasında.
-        </p>
-
-        <h2 id="button">type=button</h2>
-        <p>
-          Toggle her zaman <code>type=&quot;button&quot;</code> alır. Böylece form içinde
-          yanlışlıkla submit tetiklenmez: kendi buton bileşeninizi kullanırken de bu değer korunur
-          (override etmeyin).
-        </p>
-
-        <h2 id="ids">Stabil ID’ler</h2>
+        <DocsCodeBlock code={ariaCode} lang="html" />
         <ul>
           <li>
-            <code>id</code> verilmezse React <code>useId()</code> ile{" "}
-            <code>virapassword-input-…</code> üretilir.
+            <code>type=&quot;button&quot;</code>: toggle formu asla göndermez.
           </li>
           <li>
-            Buton <code>aria-controls</code> aynı id’ye bağlanır: birden fazla parola alanı aynı
-            sayfada güvenle çalışır.
+            <code>aria-pressed</code> ekran okuyucuya parolanın görünüp görünmediğini söyler;{" "}
+            <code>aria-controls</code> butonu input&apos;a bağlar.
+          </li>
+          <li>Etiket İngilizcedir; btnProps ile çevirin:</li>
+        </ul>
+        <DocsCodeBlock code={labelCode} lang="tsx" />
+
+        <h2 id="odak">Odak</h2>
+        <ul>
+          <li>Fare veya dokunmayla basınca odak ve imleç input&apos;a döner.</li>
+          <li>Odaktaki butonda Enter veya Space odağı butonda tutar.</li>
+          <li>
+            Safari, &quot;Tüm denetimlere Sekme&quot; açık değilse Tab ile butonları atlar;
+            Option+Tab ulaşır. Bu bir tarayıcı ayarıdır, hata değil.
           </li>
         </ul>
+
+        <h2 id="canli">Canlı bölge</h2>
+        <p>
+          <code>strengthProps</code>&apos;u gücü gösteren elemana spread edin. Her kuralı değil kısa
+          bir seviyeyi duyurun; yazarken gürültü olmasın.
+        </p>
+        <DocsCodeBlock code={liveCode} lang="tsx" />
+
+        <h2 id="caps">Caps Lock</h2>
+        <p>
+          <code>capsLock</code>, input odaktayken Caps Lock açıksa true olur. Metinle uyarın; tek
+          başına renk yeterli değildir.
+        </p>
+
+        <h2 id="ids">Stabil ID&apos;ler</h2>
+        <p>
+          <code>id</code> verilmezse input id&apos;sini sunucu ve istemcide eşleşen{" "}
+          <code>useId()</code>&apos;den alır. Etiket veya test sabit bir değer istiyorsa{" "}
+          <code>id</code> verin.
+        </p>
       </DocsProse>
     </>
   );

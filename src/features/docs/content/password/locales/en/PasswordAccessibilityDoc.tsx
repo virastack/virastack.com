@@ -1,104 +1,72 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { Link } from "@/i18n/routing";
 
-const ariaMarkup = `<input
-  id="virapassword-input-…"
-  type="password"
-/>
+const ariaCode = `<input id="virapassword-input-:r0:" type="password" aria-describedby="…-strength" />
 <button
   type="button"
   aria-label="Toggle password visibility"
   aria-pressed="false"
-  aria-controls="virapassword-input-…"
->
-  <!-- EyeIcon -->
-</button>`;
+  aria-controls="virapassword-input-:r0:"
+/>`;
+
+const labelCode = `useViraPassword({ btnProps: { "aria-label": t("togglePassword") } })`;
+
+const liveCode = `const pw = useViraPassword({ policy })
+
+<p {...pw.strengthProps}>{pw.strength?.level}</p>
+// role="status" aria-live="polite" aria-atomic="true"
+// the input gets aria-describedby pointing at it`;
 
 export function PasswordAccessibilityDoc() {
   return (
     <>
       <DocsPageHeader
         title="Accessibility"
-        description="Ready-made ARIA for screen reader and keyboard users; no extra configuration needed."
+        description="ARIA, focus after a click, a live region for strength and Caps Lock."
       />
       <DocsProse>
-        <p>
-          The hook produces accessible attributes for the button and input. Markup close to the
-          default output:
-        </p>
-        <DocsCodeBlock code={ariaMarkup} lang="html" />
-
         <h2 id="aria">ARIA attributes</h2>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Attribute</th>
-                <th>Where</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>aria-label</code>
-                </td>
-                <td>button</td>
-                <td>
-                  Default: <code>Toggle password visibility</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-pressed</code>
-                </td>
-                <td>button</td>
-                <td>Toggle state (visible = true)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-controls</code>
-                </td>
-                <td>button</td>
-                <td>
-                  <code>id</code> of the controlled input
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>aria-invalid</code> / <code>aria-describedby</code>
-                </td>
-                <td>input (optional)</td>
-                <td>
-                  Can be added manually with <code>getInputAriaAttributes</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Core helpers are on the <Link href="/password/docs/helpers">helpers</Link> page.
-        </p>
+        <DocsCodeBlock code={ariaCode} lang="html" />
+        <ul>
+          <li>
+            <code>type=&quot;button&quot;</code>: the toggle never submits the form.
+          </li>
+          <li>
+            <code>aria-pressed</code> tells screen readers whether the password is shown;{" "}
+            <code>aria-controls</code> links the button to the input.
+          </li>
+          <li>The label is in English; translate it through btnProps:</li>
+        </ul>
+        <DocsCodeBlock code={labelCode} lang="tsx" />
 
-        <h2 id="button">type=button</h2>
+        <h2 id="odak">Focus</h2>
+        <ul>
+          <li>A mouse or touch press returns focus and the caret to the input.</li>
+          <li>Enter or Space on the focused button keeps focus on the button.</li>
+          <li>
+            Safari skips buttons on Tab unless &quot;Tab to all controls&quot; is on; Option+Tab
+            reaches them. That&apos;s a browser setting, not a bug.
+          </li>
+        </ul>
+
+        <h2 id="canli">Live region</h2>
         <p>
-          The toggle always gets <code>type=&quot;button&quot;</code>. This prevents accidental form
-          submission: the value is preserved even when you use your own button component (do not
-          override it).
+          Spread <code>strengthProps</code> on the element that shows strength. Announce a short
+          level, not every rule, so typing isn&apos;t noisy.
+        </p>
+        <DocsCodeBlock code={liveCode} lang="tsx" />
+
+        <h2 id="caps">Caps Lock</h2>
+        <p>
+          <code>capsLock</code> is true while Caps Lock is on and the input has focus. Show a text
+          hint; colour alone isn&apos;t enough.
         </p>
 
         <h2 id="ids">Stable IDs</h2>
-        <ul>
-          <li>
-            If no <code>id</code> is provided, React <code>useId()</code> generates{" "}
-            <code>virapassword-input-…</code>.
-          </li>
-          <li>
-            The button&apos;s <code>aria-controls</code> links to the same id: multiple password
-            fields on one page work safely.
-          </li>
-        </ul>
+        <p>
+          Without <code>id</code>, the input gets one from <code>useId()</code>, which matches
+          between server and client. Pass <code>id</code> when a label or test needs a fixed value.
+        </p>
       </DocsProse>
     </>
   );

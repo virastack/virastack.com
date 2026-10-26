@@ -8,82 +8,72 @@ const iconsCode = `import { Home, Star } from "lucide-react"
 import { useViraPassword } from "@virastack/password"
 
 const { inputProps, btnProps } = useViraPassword({
-  icons: {
-    show: <Star />,
-    hide: <Home />,
-  },
+  icons: { show: <Star />, hide: <Home /> },
 })`;
 
-const textCode = `const { inputProps, btnProps } = useViraPassword({
-  icons: {
-    show: "Show",
-    hide: "Hide",
-  },
-})`;
+const textCode = `useViraPassword({ icons: { show: "Show", hide: "Hide" } })`;
 
-const propsCode = `const { inputProps, btnProps } = useViraPassword({
+const propsCode = `useViraPassword({
   id: "signup-password",
-  inputProps: {
-    name: "password",
-    autoComplete: "new-password",
-    className: "pr-10",
-  },
+  inputProps: { name: "password", className: "pr-10" },
   btnProps: {
     className: "absolute inset-y-0 right-2 my-auto",
     onClick: () => analytics.track("password_toggled"),
   },
 })`;
 
-const stateCode = `// Input + button disabled; toggle / setVisible no-op
-useViraPassword({ disabled: true })
+const hideCode = `useViraPassword({
+  hideOnSubmit: true, // default: hide on form submit and reset
+  hideOnBlur: true,   // hide when focus leaves the field or the tab is hidden
+})`;
 
-// Input readOnly; button disabled; toggle / setVisible no-op
-useViraPassword({ readOnly: true })`;
+const autoCompleteCode = `useViraPassword() // current-password (login)
+useViraPassword({ policy }) // new-password (sign-up)
+useViraPassword({ autoComplete: "one-time-code" })
+useViraPassword({ autoComplete: false }) // no attribute`;
 
-export async function PasswordCustomizationDoc() {
+const stateCode = `useViraPassword({ disabled: true }) // input and button disabled
+useViraPassword({ readOnly: true }) // read-only input, disabled button`;
+
+export function PasswordCustomizationDoc() {
   return (
     <>
       <DocsPageHeader
         title="Customization"
-        description="Icons, text, styling, and locked states: fit your design system with the headless API."
+        description="Icons, text, props, automatic hiding, autoComplete and locked states."
       />
       <DocsProse>
         <h2 id="icons">Icons & text</h2>
         <p>
-          The <code>icons</code> field accepts <code>ReactNode</code>: SVG, components, or plain
-          text. <code>show</code> renders when the password is hidden; <code>hide</code> when
-          visible.
+          <code>icons</code> takes any <code>ReactNode</code>: <code>show</code> renders while the
+          password is hidden, <code>hide</code> while it is visible.
         </p>
         <ComponentPreview preview={<PasswordDemo variant="custom-icons" />} code={iconsCode}>
           <DocsCodeBlock code={iconsCode} lang="tsx" />
         </ComponentPreview>
-        <p>Text example:</p>
         <ComponentPreview preview={<PasswordDemo variant="custom-text" />} code={textCode}>
           <DocsCodeBlock code={textCode} lang="tsx" />
         </ComponentPreview>
-        <p>
-          Default icons can also be imported from the{" "}
-          <Link href="/password/docs/helpers">helpers</Link> page. More examples:{" "}
-          <Link href="/password/examples/custom-icons">custom icons</Link>,{" "}
-          <Link href="/password/examples/custom-text">custom text</Link>.
-        </p>
 
         <h2 id="props">inputProps & btnProps</h2>
-        <p>name, autoComplete, className, and extra handlers merge through options:</p>
         <ComponentPreview preview={<PasswordDemo variant="prop-merge" />} code={propsCode}>
           <DocsCodeBlock code={propsCode} lang="tsx" />
         </ComponentPreview>
         <p>
-          Merge rules are on the{" "}
-          <Link href="/password/docs/use-vira-password">useViraPassword()</Link> page. Example:{" "}
-          <Link href="/password/examples/prop-merge">Prop merge</Link>.
+          Merge rules: <Link href="/password/docs/use-vira-password">useViraPassword()</Link>.
         </p>
 
-        <h2 id="state">disabled & readOnly</h2>
+        <h2 id="gizleme">Automatic hiding</h2>
         <p>
-          In both cases visibility cannot change: the button is disabled, and <code>toggle</code> /{" "}
-          <code>setVisible</code> are no-ops.
+          Hiding on submit lets password managers see a password field when they save. Automatic
+          hiding works even while the field is disabled.
         </p>
+        <DocsCodeBlock code={hideCode} lang="tsx" />
+
+        <h2 id="autocomplete">autoComplete</h2>
+        <DocsCodeBlock code={autoCompleteCode} lang="tsx" />
+
+        <h2 id="state">disabled & readOnly</h2>
         <ComponentPreview preview={<PasswordDemo variant="disabled" />} code={stateCode}>
           <DocsCodeBlock code={stateCode} lang="tsx" />
         </ComponentPreview>

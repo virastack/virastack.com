@@ -52,7 +52,7 @@
     "@tanstack/react-query-devtools": "^5.101.4",
     "@upstash/redis": "^1.38.1",
     "@virastack/mask": "1.1.0",
-    "@virastack/password": "latest",
+    "@virastack/password": "file:../password",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

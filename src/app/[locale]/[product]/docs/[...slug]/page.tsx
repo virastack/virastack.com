@@ -43,7 +43,7 @@ function DocsProductContent({
     case "mask":
       return <MaskDocsPage slug={slug} />;
     case "password":
-      return <PasswordDocsPage slug={slug} />;
+      return <PasswordDocsPage slug={slug} versionId={versionId} />;
   }
 }
 

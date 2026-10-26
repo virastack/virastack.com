@@ -1,0 +1,43 @@
+# ViraStack Password
+
+> Archived: this describes @virastack/password 1.0.x. Current docs: https://virastack.com/password/llms.txt
+
+> Fully accessible, headless password visibility toggle for React. `useViraPassword()` returns spreadable `inputProps` and `btnProps` with ARIA defaults. npm: `@virastack/password` (~1.0.2).
+
+Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). Not a password generator or strength meter, only show/hide UX. Styling and markup are yours.
+
+For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/v1/llms-full.txt).
+
+## Docs
+
+- [Introduction](https://virastack.com/password/docs/v1): Install, peers, and scope
+- [useViraPassword()](https://virastack.com/password/docs/v1/use-vira-password): Options, return value, prop merging
+- [Accessibility](https://virastack.com/password/docs/v1/accessibility): `aria-label`, `aria-pressed`, `aria-controls`, `type="button"`
+- [Customization](https://virastack.com/password/docs/v1/customization): Custom icons, text labels, inputProps/btnProps, disabled/readOnly
+- [Helpers](https://virastack.com/password/docs/v1/helpers): `getInputType`, ARIA helpers, `EyeIcon` / `EyeOffIcon`, `mergeProps`
+- [Types](https://virastack.com/password/docs/v1/types): `UseViraPasswordOptions`, `UseViraPasswordResult`
+- [UI libraries](https://virastack.com/password/docs/v1/ui-libraries): shadcn, Ant Design, Chakra patterns
+- [Examples](https://virastack.com/password/examples): Live demos index
+- [llms-full.txt](https://virastack.com/password/v1/llms-full.txt): Full machine-readable API
+
+## Notable examples
+
+- [Basic](https://virastack.com/password/examples/basic): Default eye icons
+- [Custom icons](https://virastack.com/password/examples/custom-icons): Custom `icons.show` / `icons.hide`
+- [Custom text](https://virastack.com/password/examples/custom-text): Text labels via `icons`
+- [Disabled / readOnly](https://virastack.com/password/examples/disabled): Locked toggle behavior
+- [Prop merge](https://virastack.com/password/examples/prop-merge): Merging `name`, `autoComplete`, `className`, handlers
+- [Programmatic](https://virastack.com/password/examples/programmatic): `isVisible`, `toggle()`, `setVisible()`
+- [Signup password](https://virastack.com/password/examples/signup-password): Typical signup layout
+
+## Product
+
+- [Password overview](https://virastack.com/password): Marketing page
+- [npm `@virastack/password`](https://www.npmjs.com/package/@virastack/password): Package registry
+- [GitHub](https://github.com/virastack/password): Source repository
+
+## Related
+
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+- [Mask docs](https://virastack.com/mask/docs): Companion headless form utility
+- [Start docs](https://virastack.com/start/docs): Scaffold CLI that can install Password

@@ -1,46 +1,88 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
+
+const entries: [string, string, string][] = [
+  ["@virastack/password", "useViraPassword, mergeProps, composeRefs, ikonlar", "istemci"],
+  ["@virastack/password/strength", "definePolicy, evaluate, normalizePassword", "istemci + sunucu"],
+  ["@virastack/password/server", "validatePassword (+ strength dışa aktarımları)", "sunucu"],
+  ["@virastack/password/pwned", "checkPwned", "sunucu (önerilen)"],
+];
 
 export function PasswordIntroductionDoc() {
   return (
     <>
       <DocsPageHeader
         title="Giriş"
-        description="Erişilebilir ve özelleştirilebilir parola görünürlük toggle’ı; headless bir React hook."
+        description="React için başsız parola hook'u: göster/gizle, güç, parola tekrarı, sunucu doğrulaması ve sızmış parola kontrolü."
       />
       <DocsProse>
         <p>
-          Show/hide parola alanları kolayca yanlış uygulanır: eksik ARIA, form submit’e basan buton,
-          disabled senkronu, prop çakışması. <code>useViraPassword()</code> bunları tek hook’ta
-          çözer. Markup ve stil size aittir.
+          Parola alanlarında hata yapmak kolaydır: eksik ARIA, formu gönderen bir toggle, metin
+          alanı gören parola yöneticisi, formda ve sunucuda farklı kurallar.{" "}
+          <code>useViraPassword()</code> bunları tek hook ile çözer. İşaretleme ve stil sizde kalır.
         </p>
+        <PasswordExamplePreview id="show-hide" />
 
         <h2 id="baslarken">Başlarken</h2>
+        <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
         <p>
-          Paketi ekleyin. Canlı demolar için <Link href="/password/examples">örnekler</Link>{" "}
-          sayfasına bakın.
+          1.0&apos;dan mı geliyorsunuz? Hiçbir şey kırılmaz;{" "}
+          <Link href="/password/docs/upgrade">geçiş rehberine</Link> bakın. Canlı demolar{" "}
+          <Link href="/password/examples">örnekler</Link> sayfasında.
         </p>
 
-        <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+        <h2 id="giris-noktalari">Giriş noktaları</h2>
+        <p>
+          Yalnızca kök girişte <code>&quot;use client&quot;</code> vardır. Güç motoru yalnızca
+          politika verdiğinizde paketinize girer.
+        </p>
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <table>
+            <thead>
+              <tr>
+                <th>Import</th>
+                <th>Dışa aktarımlar</th>
+                <th>Çalıştığı yer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {entries.map(([entry, exports, runs]) => (
+                <tr key={entry}>
+                  <td>
+                    <code>{entry}</code>
+                  </td>
+                  <td>{exports}</td>
+                  <td>{runs}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-        <h2 id="peer">Peer bağımlılıklar</h2>
+        <h2 id="peer">Gereksinimler</h2>
         <ul>
           <li>
-            <code>react</code> ≥ 18.2
+            <AcademyBadge kind="react" label="React 18.2+" /> ve <code>react-dom</code> (React 19
+            desteklenir)
           </li>
+          <li>Çalışma zamanı bağımlılığı yok</li>
           <li>
-            <code>react-dom</code> ≥ 18.2
+            <AcademyBadge kind="react-hook-form" /> isteğe bağlıdır; başka bir form kütüphanesiyle
+            veya kütüphanesiz de çalışır.
           </li>
         </ul>
         <p>
+          Ayrıca{" "}
           <GuideProductMark id="start" linked={false}>
             Start
           </GuideProductMark>{" "}
-          CLI kurulumunda da seçilebilir (<code>npx virastack@latest --tools password</code>).
+          CLI kurulumunda seçilebilir (<code>npx virastack@latest --tools password</code>).
         </p>
 
         <h2 id="neden">
@@ -52,41 +94,46 @@ export function PasswordIntroductionDoc() {
         </h2>
         <ul>
           <li>
-            <strong>Erişilebilirlik</strong>: <code>aria-label</code>, <code>aria-pressed</code>,{" "}
-            <code>aria-controls</code> ve <code>type=&quot;button&quot;</code> hazır.
+            <strong>Başsız</strong>: döndürülen her değer geçerli bir input veya buton
+            prop&apos;udur.
           </li>
           <li>
-            <strong>Headless</strong>: yalnızca prop bag; shadcn, Ant Design veya native input ile
-            aynı API.
+            <strong>Radix düzeyinde detaylar</strong>: gönderimde gizleme, tıklamadan sonra odak,
+            kontrollü <code>visible</code>, Caps Lock, <code>autoComplete</code>.
           </li>
           <li>
-            <strong>Akıllı varsayılanlar</strong>: Eye / EyeOff SVG ikonları dahili.
+            <strong>NIST tarzı güç</strong>: önce uzunluk (15–64), yaygın parolalar, tekrarlar ve
+            kişisel bilgi. Varsayılan olarak bileşim kuralı yok.
           </li>
           <li>
-            <strong>Güvenli merge</strong>: <code>on*</code> handler’lar zincirlenir,{" "}
-            <code>className</code> birleşir; <code>disabled</code> / <code>readOnly</code> toggle’ı
-            kilitler.
+            <strong>Sunucuda aynı kurallar</strong>: form ve Server Action için tek politika
+            nesnesi.
+          </li>
+          <li>
+            <strong>Hata anahtarları</strong>: <code>password.tooShort</code>,{" "}
+            <code>password.mismatch</code>… Mesajlar ve i18n sizde kalır.
           </li>
         </ul>
 
         <h2 id="kapsam">Kapsam</h2>
-        <p>Dokümantasyon paket yüzeyinin tamamını kapsar:</p>
         <ul>
           <li>
-            <Link href="/password/docs/use-vira-password">useViraPassword()</Link> API’si
+            <Link href="/password/docs/use-vira-password">useViraPassword()</Link>,{" "}
+            <Link href="/password/docs/strength">güç</Link> ve{" "}
+            <Link href="/password/docs/confirm">parola tekrarı</Link>
           </li>
           <li>
-            <Link href="/password/docs/accessibility">Accessibility</Link> ve{" "}
-            <Link href="/password/docs/customization">customization</Link>
+            <Link href="/password/docs/react-hook-form">React Hook Form</Link>,{" "}
+            <Link href="/password/docs/server">sunucu doğrulaması</Link> ve{" "}
+            <Link href="/password/docs/pwned">sızmış parolalar</Link>
           </li>
           <li>
-            <Link href="/password/docs/helpers">Helpers</Link> ve{" "}
-            <Link href="/password/docs/types">types</Link>
-          </li>
-          <li>
-            UI kütüphaneleri ve <Link href="/password/examples">örnekler</Link>
+            <Link href="/password/docs/accessibility">Erişilebilirlik</Link>,{" "}
+            <Link href="/password/docs/customization">özelleştirme</Link> ve{" "}
+            <Link href="/password/docs/comparison">karşılaştırma</Link>
           </li>
         </ul>
+        <p>Kapsam dışı: güç barı veya parola üretici bileşeni, passkey, pano temizleme.</p>
       </DocsProse>
     </>
   );

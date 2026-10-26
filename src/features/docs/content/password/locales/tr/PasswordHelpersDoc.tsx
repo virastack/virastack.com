@@ -1,90 +1,49 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 
-const helpersCode = `import {
-  getInputType,
-  getButtonAriaAttributes,
-  getInputAriaAttributes,
-  mergeProps,
-  EyeIcon,
-  EyeOffIcon,
-} from "@virastack/password"
+const coreCode = `import { getButtonAriaAttributes, getInputAriaAttributes, getInputType } from "@virastack/password"
 
-getInputType(false) // "password"
-getInputType(true)  // "text"
+getInputType(true) // "text"
+getButtonAriaAttributes(false, "pw", "Show password")
+// { "aria-label": "Show password", "aria-pressed": false, "aria-controls": "pw", type: "button" }
+getInputAriaAttributes(true, "pw-hint") // { "aria-invalid": true, "aria-describedby": "pw-hint" }`;
 
-getButtonAriaAttributes(true, "pwd-1")
-// {
-//   "aria-label": "Toggle password visibility",
-//   "aria-pressed": true,
-//   "aria-controls": "pwd-1",
-//   type: "button",
-// }
+const iconsCode = `import { EyeIcon, EyeOffIcon } from "@virastack/password"
 
-getInputAriaAttributes(true, "pwd-error")
-// { "aria-invalid": true, "aria-describedby": "pwd-error" }`;
+<EyeIcon width={20} className="text-muted-foreground" />`;
+
+const mergeCode = `import { mergeProps } from "@virastack/password"
+
+<input {...mergeProps(pw.inputProps, form.register("password", pw.rule))} />
+// on* handlerlar: ikisi de çalışır, önce ilk argüman
+// className, aria-describedby: birleşir
+// ref: birleşir
+// diğerleri: sonraki değer kazanır`;
+
+const refsCode = `import { composeRefs } from "@virastack/password"
+
+<input ref={composeRefs(localRef, field.ref)} />
+// nesne ref, callback ref ve React 19 ref temizliğini destekler`;
 
 export function PasswordHelpersDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Helpers"
-        description="Hook dışında da kullanabileceğiniz core yardımcılar, ikonlar ve mergeProps."
+        title="Yardımcılar"
+        description="mergeProps, composeRefs, core yardımcılar ve varsayılan ikonlar."
       />
       <DocsProse>
         <h2 id="core">Core yardımcılar</h2>
-        <p>Framework-agnostic fonksiyonlar: React state olmadan da kullanılabilir:</p>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Fonksiyon</th>
-                <th>Açıklama</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>getInputType(isVisible)</code>
-                </td>
-                <td>
-                  <code>&quot;password&quot;</code> | <code>&quot;text&quot;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>getButtonAriaAttributes(isVisible, inputId, label?)</code>
-                </td>
-                <td>
-                  Buton için <code>aria-*</code> ve <code>type=&quot;button&quot;</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>getInputAriaAttributes(isInvalid?, describedBy?)</code>
-                </td>
-                <td>
-                  Opsiyonel <code>aria-invalid</code> / <code>aria-describedby</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <DocsCodeBlock code={helpersCode} lang="ts" />
+        <DocsCodeBlock code={coreCode} lang="tsx" />
 
         <h2 id="icons">İkonlar</h2>
-        <p>
-          Varsayılan <code>EyeIcon</code> / <code>EyeOffIcon</code> (16×16 SVG,{" "}
-          <code>currentColor</code>). Hook bunları render eder; kendi UI’nızda da import
-          edebilirsiniz.
-        </p>
+        <DocsCodeBlock code={iconsCode} lang="tsx" />
 
         <h2 id="merge">mergeProps</h2>
-        <p>
-          Hook’un kullandığı birleştirici dışa aktarılır: <code>on*</code> handler’ları zincirler,{" "}
-          <code>className</code> string’lerini birleştirir, diğer anahtarlarda sonraki değer
-          kazanır. Kontrollü bileşenlerinizde manuel merge için kullanışlıdır.
-        </p>
+        <DocsCodeBlock code={mergeCode} lang="tsx" />
+
+        <h2 id="refs">composeRefs</h2>
+        <DocsCodeBlock code={refsCode} lang="tsx" />
       </DocsProse>
     </>
   );

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
 import { getPasswordExamples } from "@/features/docs/config/password-docs.config";
+import { PasswordExampleLive } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
 export async function PasswordExamplesDoc() {
@@ -27,9 +28,13 @@ export async function PasswordExamplesDoc() {
                 >
                   {example.title}
                 </Link>
-                <code>{example.variant}</code>
+                <code>{example.component ?? example.variant}</code>
               </div>
-              <PasswordDemo variant={example.variant} />
+              {example.component ? (
+                <PasswordExampleLive id={example.component} />
+              ) : (
+                <PasswordDemo variant={example.variant} />
+              )}
             </div>
           ))}
         </div>

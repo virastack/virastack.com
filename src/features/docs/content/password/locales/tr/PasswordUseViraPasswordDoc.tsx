@@ -1,154 +1,112 @@
-import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
-const basicCode = `import { useViraPassword } from "@virastack/password"
+type Row = [name: string, fallback: string, description: string];
 
-function Example() {
-  const { inputProps, btnProps } = useViraPassword()
+const optionRows: Row[] = [
+  ["defaultVisible", "false", "Başlangıç görünürlüğü (kontrolsüz)"],
+  ["visible", "-", "Kontrollü görünürlük"],
+  ["onVisibleChange", "-", "(visible) => void; otomatik gizlemede de çağrılır"],
+  ["hideOnSubmit", "true", "Form gönderilince veya resetlenince gizle"],
+  ["hideOnBlur", "false", "Odak alandan çıkınca veya sekme gizlenince gizle"],
+  [
+    "autoComplete",
+    "current-password",
+    "policy veya matchWith ile new-password; false ile eklenmez",
+  ],
+  ["policy", "-", "definePolicy() politikası; strength ve issues'u açar"],
+  ["forbidden", "-", "Parolanın içermemesi gereken değerler (e-posta, ad)"],
+  ["matchWith", "-", "Tekrar alanının eşleşeceği parola; matches'i açar"],
+  ["value", "-", "Güncel değer, örn. useWatch()'tan"],
+  ["icons", "Eye / EyeOff", "ReactNode olarak { show, hide }"],
+  ["disabled", "false", "Input ve toggle kilitlenir"],
+  ["readOnly", "false", "Salt okunur input, disabled toggle"],
+  ["id", "useId()", "Input id'si; butonun aria-controls'u"],
+  ["inputProps", "-", 'Input props\'larıyla birleşir, örn. register("password")'],
+  ["btnProps", "-", "Buton props'larıyla birleşir"],
+];
 
+const returnRows: [string, string][] = [
+  ["inputProps", "<input {...inputProps} />; yalnızca öznitelik, ref veya handler yok"],
+  ["btnProps", "<button {...btnProps} />, ikon children olarak"],
+  ["isVisible", "Güncel görünürlük"],
+  ["toggle() / setVisible(v)", "Görünürlüğü değiştirir (disabled veya readOnly iken no-op)"],
+  ["capsLock", "Input odaktayken Caps Lock açık"],
+  ["strength", "Güncel değer için evaluate() sonucu; politika yoksa null"],
+  ["strengthProps", "Gücü gösteren eleman için canlı bölge props'ları"],
+  ["matches", "matchWith ile true / false; boşken null"],
+  ["issues", "Hata anahtarları: önce politika, sonra password.mismatch"],
+  ["rule", "React Hook Form için { validate }; ilk anahtarı döndürür"],
+];
+
+const mergeCode = `useViraPassword({
+  inputProps: { onBlur: () => track("blur"), className: "pr-10" },
+})
+// onBlur: önce hook'un handler'ı, sonra sizinki
+// className, aria-describedby: boşlukla birleşir
+// ref (sizinki): olduğu gibi geçer`;
+
+function PropTable({ rows, head }: { rows: string[][]; head: string[] }) {
   return (
-    <div className="relative">
-      <input {...inputProps} placeholder="Parolanız" />
-      <button {...btnProps} />
+    <div className="overflow-x-auto rounded-lg border border-border">
+      <table>
+        <thead>
+          <tr>
+            {head.map((cell) => (
+              <th key={cell}>{cell}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([name, ...rest]) => (
+            <tr key={name}>
+              <td>
+                <code>{name}</code>
+              </td>
+              {rest.map((cell, i) => (
+                <td key={i}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}`;
+  );
+}
 
-export async function PasswordUseViraPasswordDoc() {
+export function PasswordUseViraPasswordDoc() {
   return (
     <>
       <DocsPageHeader
         title="useViraPassword()"
-        description="Tek hook ile input type’ını ve görünürlük butonunu yönetin. Props doğrudan spread edilir."
+        description="Input ve toggle için tek hook; güç ve parola tekrarı aynı hook'un seçenekleridir."
       />
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
-        <ComponentPreview preview={<PasswordDemo variant="basic" />} code={basicCode}>
-          <DocsCodeBlock code={basicCode} lang="tsx" />
-        </ComponentPreview>
+        <PasswordExamplePreview id="show-hide" />
 
         <h2 id="options">Options</h2>
+        <PropTable head={["Seçenek", "Varsayılan", "Açıklama"]} rows={optionRows} />
         <p>
-          <code>useViraPassword(options?)</code> isteğe bağlı ayarlar alır:
-        </p>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Alan</th>
-                <th>Varsayılan</th>
-                <th>Açıklama</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>defaultVisible</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Başlangıç görünürlüğü</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>icons</code>
-                </td>
-                <td>Eye / EyeOff</td>
-                <td>
-                  <code>{`{ show, hide }`}</code> özel ikonlar
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>disabled</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Input ve buton kilitlenir</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>readOnly</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Input readOnly; buton disabled</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>id</code>
-                </td>
-                <td>
-                  <code>useId()</code>
-                </td>
-                <td>
-                  Input id; buton <code>aria-controls</code> ile eşleşir
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>inputProps</code>
-                </td>
-                <td>-</td>
-                <td>Base input props ile merge</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>btnProps</code>
-                </td>
-                <td>-</td>
-                <td>Base button props ile merge</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          İkonlar ve stil için <Link href="/password/docs/customization">customization</Link>, ARIA
-          için <Link href="/password/docs/accessibility">accessibility</Link>.
+          Güç: <Link href="/password/docs/strength">güç</Link>. Tekrar alanı:{" "}
+          <Link href="/password/docs/confirm">parola tekrarı</Link>.
         </p>
 
         <h2 id="donus">Dönüş değeri</h2>
-        <ul>
-          <li>
-            <code>inputProps</code>: <code>{`<input {...inputProps} />`}</code>
-          </li>
-          <li>
-            <code>btnProps</code>: <code>{`<button {...btnProps} />`}</code> (ikon{" "}
-            <code>children</code> olarak)
-          </li>
-          <li>
-            <code>isVisible</code>: mevcut görünürlük
-          </li>
-          <li>
-            <code>toggle()</code>: görünürlüğü değiştirir
-          </li>
-          <li>
-            <code>setVisible(visible)</code>: görünürlüğü ayarlar
-          </li>
-        </ul>
+        <PropTable head={["Alan", "Açıklama"]} rows={returnRows} />
 
         <h2 id="merge">Prop merging</h2>
         <p>
-          Kullanıcı props’ları base props’tan sonra uygulanır. Çoğu anahtar override edilebilir; şu
-          alanlar birleştirilir:
+          <code>inputProps</code> ve <code>btnProps</code> hook&apos;unkilerden sonra uygulanır;
+          çoğu anahtar değiştirilebilir. Şunlar birleştirilir:
         </p>
-        <ul>
-          <li>
-            <code>on*</code> event handler’lar sırayla çağrılır (önce base, sonra kullanıcı)
-          </li>
-          <li>
-            <code>className</code> string’leri boşlukla birleşir
-          </li>
-        </ul>
+        <DocsCodeBlock code={mergeCode} lang="tsx" />
         <p>
-          Manuel birleştirme için <Link href="/password/docs/helpers">mergeProps</Link> dışa
-          aktarılır.
+          Dönen <code>inputProps</code> yalnızca öznitelik taşır; <code>register()</code> veya bir{" "}
+          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link> alanından önce ya da
+          sonra spread edilebilir, onların ref ve handler&apos;larını ezmez.
         </p>
       </DocsProse>
     </>

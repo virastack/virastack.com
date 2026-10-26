@@ -5,6 +5,7 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
 import { getPasswordExample } from "@/features/docs/config/password-docs.config";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
 type PasswordExampleDetailDocProps = {
@@ -23,13 +24,20 @@ export async function PasswordExampleDetailDoc({ id }: PasswordExampleDetailDocP
         <p>
           <Link href="/password/examples">← All examples</Link>
           <span className="mx-2 text-border">·</span>
-          <code>{example.variant}</code>
+          <code>{example.component ?? example.variant}</code>
         </p>
 
         <h2 id="onizleme">Preview</h2>
-        <ComponentPreview preview={<PasswordDemo variant={example.variant} />} code={example.code}>
-          <DocsCodeBlock code={example.code} lang="tsx" />
-        </ComponentPreview>
+        {example.component ? (
+          <PasswordExamplePreview id={example.component} />
+        ) : (
+          <ComponentPreview
+            preview={<PasswordDemo variant={example.variant} />}
+            code={example.code}
+          >
+            <DocsCodeBlock code={example.code} lang="tsx" />
+          </ComponentPreview>
+        )}
 
         <h2 id="detaylar">Details</h2>
         <ul>

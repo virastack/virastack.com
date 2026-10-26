@@ -1,32 +1,38 @@
 # ViraStack Password
 
-> Fully accessible, headless password visibility toggle for React. `useViraPassword()` returns spreadable `inputProps` and `btnProps` with ARIA defaults. npm: `@virastack/password` (~1.0.2).
+> Headless password hook for React: show/hide, NIST-style strength, password confirmation, server validation and an optional leaked password check. npm: `@virastack/password` (1.1.x). Zero runtime dependencies, ~2 KB for the hook.
 
-Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). Not a password generator or strength meter, only show/hide UX. Styling and markup are yours.
+Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). One hook, `useViraPassword()`; strength and confirmation are options of the same hook. Errors are keys (`password.tooShort`), not messages. Not a strength bar or generator component.
 
-For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt).
+For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt). 1.0 docs are archived at [v1/llms.txt](https://virastack.com/password/v1/llms.txt).
 
 ## Docs
 
-- [Introduction](https://virastack.com/password/docs): Install, peers, and scope
-- [useViraPassword()](https://virastack.com/password/docs/use-vira-password): Options, return value, prop merging
-- [Accessibility](https://virastack.com/password/docs/accessibility): `aria-label`, `aria-pressed`, `aria-controls`, `type="button"`
-- [Customization](https://virastack.com/password/docs/customization): Custom icons, text labels, inputProps/btnProps, disabled/readOnly
-- [Helpers](https://virastack.com/password/docs/helpers): `getInputType`, ARIA helpers, `EyeIcon` / `EyeOffIcon`, `mergeProps`
-- [Types](https://virastack.com/password/docs/types): `UseViraPasswordOptions`, `UseViraPasswordResult`
-- [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra patterns
+- [Introduction](https://virastack.com/password/docs): Install, entry points, requirements
+- [Upgrade from 1.0](https://virastack.com/password/docs/upgrade): New defaults and how to turn them off
+- [useViraPassword()](https://virastack.com/password/docs/use-vira-password): Every option, return value, prop merging
+- [Strength](https://virastack.com/password/docs/strength): `definePolicy`, `evaluate`, presets, `forbidden`, Unicode
+- [Confirm password](https://virastack.com/password/docs/confirm): `matchWith`, `matches`, `rule`
+- [React Hook Form](https://virastack.com/password/docs/react-hook-form): `register`, `useWatch`, `deps`, Controller, Zod, ViraStack Mask
+- [Accessibility](https://virastack.com/password/docs/accessibility): ARIA, focus, live region, Caps Lock
+- [Customization](https://virastack.com/password/docs/customization): Icons, props, automatic hiding, autoComplete
+- [Server validation](https://virastack.com/password/docs/server): `validatePassword`, what to hash, Next.js
+- [Leaked passwords](https://virastack.com/password/docs/pwned): `checkPwned`, k-anonymity, fail open
+- [Helpers](https://virastack.com/password/docs/helpers): `mergeProps`, `composeRefs`, core helpers, icons
+- [Types](https://virastack.com/password/docs/types): All exported types
+- [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra
+- [Comparison](https://virastack.com/password/docs/comparison): vs Radix PasswordToggleField and zxcvbn-ts
 - [Examples](https://virastack.com/password/examples): Live demos index
-- [llms-full.txt](https://virastack.com/password/llms-full.txt): Full machine-readable API
 
 ## Notable examples
 
-- [Basic](https://virastack.com/password/examples/basic): Default eye icons
-- [Custom icons](https://virastack.com/password/examples/custom-icons): Custom `icons.show` / `icons.hide`
-- [Custom text](https://virastack.com/password/examples/custom-text): Text labels via `icons`
-- [Disabled / readOnly](https://virastack.com/password/examples/disabled): Locked toggle behavior
-- [Prop merge](https://virastack.com/password/examples/prop-merge): Merging `name`, `autoComplete`, `className`, handlers
-- [Programmatic](https://virastack.com/password/examples/programmatic): `isVisible`, `toggle()`, `setVisible()`
-- [Signup password](https://virastack.com/password/examples/signup-password): Typical signup layout
+- [Strength meter](https://virastack.com/password/examples/strength-meter): Your own bar on `score`, `level` and issue keys
+- [Confirm password](https://virastack.com/password/examples/confirm): `matchWith`
+- [React Hook Form + Zod](https://virastack.com/password/examples/react-hook-form-zod): Same policy in a Zod schema
+- [Server Action](https://virastack.com/password/examples/server-action): `validatePassword` with FormData
+- [Personal info](https://virastack.com/password/examples/forbidden): `forbidden: [email, name]`
+- [Leaked passwords](https://virastack.com/password/examples/pwned): `checkPwned` from a Server Action
+- [Sign-up with Mask](https://virastack.com/password/examples/mask-signup): Phone + password + confirm in one form
 
 ## Product
 
@@ -37,5 +43,5 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 ## Related
 
 - [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
-- [Mask docs](https://virastack.com/mask/docs): Companion headless form utility
+- [Mask docs](https://virastack.com/mask/docs): Input masks for React Hook Form
 - [Start docs](https://virastack.com/start/docs): Scaffold CLI that can install Password

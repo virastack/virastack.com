@@ -1,153 +1,113 @@
-import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { PasswordDemo } from "@/features/docs/components/PasswordDemo";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { Link } from "@/i18n/routing";
 
-const basicCode = `import { useViraPassword } from "@virastack/password"
+type Row = [name: string, fallback: string, description: string];
 
-function Example() {
-  const { inputProps, btnProps } = useViraPassword()
+const optionRows: Row[] = [
+  ["defaultVisible", "false", "Initial visibility (uncontrolled)"],
+  ["visible", "-", "Controlled visibility"],
+  ["onVisibleChange", "-", "(visible) => void; also called on automatic hiding"],
+  ["hideOnSubmit", "true", "Hide when the form is submitted or reset"],
+  ["hideOnBlur", "false", "Hide when focus leaves the field or the tab is hidden"],
+  [
+    "autoComplete",
+    "current-password",
+    "new-password with policy or matchWith; false leaves it out",
+  ],
+  ["policy", "-", "A policy from definePolicy(); enables strength and issues"],
+  ["forbidden", "-", "Values the password must not contain (email, name)"],
+  ["matchWith", "-", "The password a confirm field repeats; enables matches"],
+  ["value", "-", "Current value, e.g. from useWatch()"],
+  ["icons", "Eye / EyeOff", "{ show, hide } as ReactNode"],
+  ["disabled", "false", "Locks the input and the toggle"],
+  ["readOnly", "false", "Read-only input, disabled toggle"],
+  ["id", "useId()", "Input id; the button's aria-controls"],
+  ["inputProps", "-", 'Merged into the input props, e.g. register("password")'],
+  ["btnProps", "-", "Merged into the button props"],
+];
 
+const returnRows: [string, string][] = [
+  ["inputProps", "<input {...inputProps} />; attributes only, no ref or handlers"],
+  ["btnProps", "<button {...btnProps} />, icon as children"],
+  ["isVisible", "Current visibility"],
+  ["toggle() / setVisible(v)", "Change visibility (no-op while disabled or readOnly)"],
+  ["capsLock", "Caps Lock is on while the input has focus"],
+  ["strength", "evaluate() result for the current value, or null without a policy"],
+  ["strengthProps", "Live region props for the element that shows strength"],
+  ["matches", "true / false with matchWith; null while empty"],
+  ["issues", "Error keys: policy issues, then password.mismatch"],
+  ["rule", "{ validate } for React Hook Form; returns the first key"],
+];
+
+const mergeCode = `useViraPassword({
+  inputProps: { onBlur: () => track("blur"), className: "pr-10" },
+})
+// onBlur: the hook's handler runs first, then yours
+// className, aria-describedby: joined with a space
+// ref (your own): passed through`;
+
+function PropTable({ rows, head }: { rows: string[][]; head: string[] }) {
   return (
-    <div className="relative">
-      <input {...inputProps} placeholder="Your password" />
-      <button {...btnProps} />
+    <div className="overflow-x-auto rounded-lg border border-border">
+      <table>
+        <thead>
+          <tr>
+            {head.map((cell) => (
+              <th key={cell}>{cell}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([name, ...rest]) => (
+            <tr key={name}>
+              <td>
+                <code>{name}</code>
+              </td>
+              {rest.map((cell, i) => (
+                <td key={i}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}`;
+  );
+}
 
-export async function PasswordUseViraPasswordDoc() {
+export function PasswordUseViraPasswordDoc() {
   return (
     <>
       <DocsPageHeader
         title="useViraPassword()"
-        description="Manage input type and the visibility button with a single hook. Props spread directly."
+        description="One hook for the input and its toggle; strength and confirmation are options of the same hook."
       />
       <DocsProse>
         <h2 id="temel">Basic usage</h2>
-        <ComponentPreview preview={<PasswordDemo variant="basic" />} code={basicCode}>
-          <DocsCodeBlock code={basicCode} lang="tsx" />
-        </ComponentPreview>
+        <PasswordExamplePreview id="show-hide" />
 
         <h2 id="options">Options</h2>
+        <PropTable head={["Option", "Default", "Description"]} rows={optionRows} />
         <p>
-          <code>useViraPassword(options?)</code> accepts optional settings:
-        </p>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>defaultVisible</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Initial visibility</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>icons</code>
-                </td>
-                <td>Eye / EyeOff</td>
-                <td>
-                  <code>{`{ show, hide }`}</code> custom icons
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>disabled</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Locks input and button</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>readOnly</code>
-                </td>
-                <td>
-                  <code>false</code>
-                </td>
-                <td>Input readOnly; button disabled</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>id</code>
-                </td>
-                <td>
-                  <code>useId()</code>
-                </td>
-                <td>
-                  Input id; button matches via <code>aria-controls</code>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <code>inputProps</code>
-                </td>
-                <td>-</td>
-                <td>Merge with base input props</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>btnProps</code>
-                </td>
-                <td>-</td>
-                <td>Merge with base button props</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          For icons and styling, see <Link href="/password/docs/customization">customization</Link>;
-          for ARIA, see <Link href="/password/docs/accessibility">accessibility</Link>.
+          Strength: <Link href="/password/docs/strength">strength</Link>. Confirm field:{" "}
+          <Link href="/password/docs/confirm">confirm password</Link>.
         </p>
 
         <h2 id="donus">Return value</h2>
-        <ul>
-          <li>
-            <code>inputProps</code>: <code>{`<input {...inputProps} />`}</code>
-          </li>
-          <li>
-            <code>btnProps</code>: <code>{`<button {...btnProps} />`}</code> (icon as{" "}
-            <code>children</code>)
-          </li>
-          <li>
-            <code>isVisible</code>: current visibility
-          </li>
-          <li>
-            <code>toggle()</code>: toggles visibility
-          </li>
-          <li>
-            <code>setVisible(visible)</code>: sets visibility
-          </li>
-        </ul>
+        <PropTable head={["Field", "Description"]} rows={returnRows} />
 
         <h2 id="merge">Prop merging</h2>
         <p>
-          User props are applied after base props. Most keys can be overridden; these fields are
-          merged:
+          Your <code>inputProps</code> and <code>btnProps</code> are applied after the hook&apos;s,
+          so most keys can be overridden. These are combined instead:
         </p>
-        <ul>
-          <li>
-            <code>on*</code> event handlers are called in order (base first, then user)
-          </li>
-          <li>
-            <code>className</code> strings are joined with a space
-          </li>
-        </ul>
+        <DocsCodeBlock code={mergeCode} lang="tsx" />
         <p>
-          <Link href="/password/docs/helpers">mergeProps</Link> is exported for manual merging.
+          The returned <code>inputProps</code> holds attributes only, so it can be spread before or
+          after <code>register()</code> or a{" "}
+          <Link href="/password/docs/react-hook-form">ViraStack Mask</Link> field without replacing
+          their ref or handlers.
         </p>
       </DocsProse>
     </>

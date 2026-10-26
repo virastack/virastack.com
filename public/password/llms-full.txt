@@ -1,6 +1,6 @@
 # ViraStack Password (full)
 
-> `@virastack/password` (~1.0.2), accessible, headless password visibility toggle for React. Returns `inputProps` + `btnProps`. No CSS required. Not a strength meter or password generator.
+> `@virastack/password` (1.1.x): headless password hook for React. Show/hide, NIST-style strength, confirmation, server validation, optional Have I Been Pwned check. Zero runtime dependencies. Errors are keys, not messages.
 
 ## Install
 
@@ -11,79 +11,111 @@ npm install @virastack/password
 
 Docs: https://virastack.com/password/docs; Index: https://virastack.com/password/llms.txt; Repo: https://github.com/virastack/password
 
+## Entry points
+
+| Import | Exports | Runs on |
+| --- | --- | --- |
+| `@virastack/password` | `useViraPassword`, `mergeProps`, `composeRefs`, `EyeIcon`, `EyeOffIcon`, `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes` | client (`"use client"`) |
+| `@virastack/password/strength` | `definePolicy`, `evaluate`, `normalizePassword` | client + server |
+| `@virastack/password/server` | `validatePassword` + the strength exports | server |
+| `@virastack/password/pwned` | `checkPwned` | server (recommended) |
+
 ## Critical rules for agents
 
-1. Spread `inputProps` on the password field and `btnProps` on the toggle control.
-2. Keep the toggle as `<button type="button">` (provided via `btnProps`), never submit the form.
-3. Do not replace ARIA attributes unless intentionally overriding; defaults are accessibility-first.
-4. When `disabled` or `readOnly` is set, the toggle disables automatically.
-5. Style freely (Tailwind, Ant Design, Chakra, etc.); the hook is headless.
+1. One hook: `useViraPassword`. There is no `useViraPasswordStrength` or `useViraPasswordConfirm`.
+2. Spread `inputProps` on the input and `btnProps` on the toggle (`type="button"` is included).
+3. With React Hook Form, pass `value` from `useWatch` (reset/setValue fire no input events). `inputProps` holds attributes only (no ref, no handlers): spread it before or after `register("password", pw.rule)` or a Mask field.
+4. Define the policy once in a file without `"use client"`; import it in the form and on the server.
+5. Always validate again on the server with `validatePassword`. Hash `result.password` (NFKC).
+6. Map issue keys to messages yourself. Never block paste.
+7. Call `checkPwned` from the server; on `unknown`, let the user continue.
+8. Mask and Password can share one `useForm`, never the same input.
 
-## Quick start
+## Options
+
+| Option | Default | Notes |
+| --- | --- | --- |
+| `defaultVisible` | `false` | uncontrolled |
+| `visible`, `onVisibleChange` | - | controlled; `onVisibleChange` also fires on automatic hiding |
+| `hideOnSubmit` | `true` | hide on form submit and reset |
+| `hideOnBlur` | `false` | hide when focus leaves the field or the tab is hidden |
+| `autoComplete` | `current-password` | `new-password` with `policy` or `matchWith`; `false` omits it |
+| `policy` | - | from `definePolicy()`; enables `strength`, `issues` |
+| `forbidden` | - | values the password must not contain (email, name) |
+| `matchWith` | - | confirm field: the password to repeat |
+| `value` | - | current value (e.g. `useWatch`) |
+| `icons` | Eye / EyeOff | `{ show, hide }` |
+| `disabled`, `readOnly` | `false` | lock the toggle |
+| `id`, `inputProps`, `btnProps` | - | merged; `on*` chained, `className`/`aria-describedby` joined, refs composed; `inputProps.id` wins over `id` |
+
+Returns: `inputProps` (attributes only), `btnProps`, `isVisible`, `toggle()`, `setVisible(v)`, `capsLock`, `strength` (`StrengthResult | null`), `strengthProps` (`role="status"`, `aria-live="polite"`), `matches` (`true | false | null`), `issues` (`PasswordIssue[]`), `rule` (`{ validate }` returning the first key or `true`).
+
+Behavior: a pointer press on the toggle returns focus and the caret to the input; Enter/Space keeps focus on the button. `spellCheck`, `autoCorrect`, `autoCapitalize` are off.
+
+## Strength
+
+```ts
+// lib/password-policy.ts (no "use client")
+import { definePolicy } from "@virastack/password/strength"
+export const policy = definePolicy({ preset: "nist", blocklist: ["acme"] })
+
+evaluate(password, policy, { forbidden: [email, name] })
+// { score: 0-4, level: "weak"|"fair"|"good"|"strong", length, valid, checks, issues }
+```
+
+- `nist` (default): 15–64 characters, no composition rules (NIST SP 800-63B-4). `legacy`: 8–64, lowercase + uppercase + digit + symbol. Every value can be overridden: `minLength`, `maxLength`, `require`, `blockCommon`, `blockRepetitive`, `blocklist`, `minTokenLength` (default 3).
+- NFKC normalization; length in code points; zero-width characters don't count; no truncation.
+- `forbidden`: emails split into the local part and its pieces (domain ignored), names into words; case, accents and simple leetspeak ignored.
+- Keys: `password.tooShort`, `password.tooLong`, `password.noLowercase`, `password.noUppercase`, `password.noDigit`, `password.noSymbol`, `password.common`, `password.blocked`, `password.repetitive`, `password.containsPersonalInfo`, `password.mismatch`.
+- Score 0–1 fails the policy, 2–4 passes. It is a heuristic, not a crack-time estimate.
+
+## Hook with strength and confirm (React Hook Form)
 
 ```tsx
-import { useViraPassword } from "@virastack/password"
+const form = useForm({ defaultValues: { password: "", confirm: "" } })
+const [password, confirmValue] = useWatch({ control: form.control, name: ["password", "confirm"] })
+const pw = useViraPassword({ policy, value: password })
+const confirm = useViraPassword({ matchWith: password, value: confirmValue })
 
-function Example() {
-  const { inputProps, btnProps } = useViraPassword()
-  return (
-    <div>
-      <input {...inputProps} placeholder="Enter password" />
-      <button {...btnProps} />
-    </div>
-  )
+<input {...pw.inputProps} {...form.register("password", { ...pw.rule, deps: ["confirm"] })} />
+<button {...pw.btnProps} />
+<p {...pw.strengthProps}>{pw.strength?.level}</p>
+<input {...confirm.inputProps} {...form.register("confirm", confirm.rule)} />
+```
+
+`deps` only runs on user input; after `setValue("password", …)` call `trigger("confirm")`.
+
+## Server
+
+```ts
+"use server"
+import { validatePassword } from "@virastack/password/server"
+import { policy } from "@/lib/password-policy"
+
+export async function signup(formData: FormData) {
+  const result = validatePassword(formData.get("password"), policy, {
+    forbidden: [formData.get("email")],
+    confirm: formData.get("confirm"),
+  })
+  if (!result.valid) return { issues: result.issues }
+  // hash result.password
 }
 ```
 
-## useViraPassword(options?)
+Non-string input counts as empty.
 
-### UseViraPasswordOptions
+## Leaked passwords
 
-| Option | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `defaultVisible` | `boolean` | `false` | Initial visibility |
-| `icons` | `{ show: ReactNode; hide: ReactNode }` | built-in eye SVGs | Can be icons or text labels |
-| `disabled` | `boolean` | `false` | Disables input + button |
-| `readOnly` | `boolean` | `false` | Disables toggle |
-| `id` | `string` | auto `useId()` | Shared for `aria-controls` |
-| `inputProps` | `InputHTMLAttributes` | - | Merged onto generated input props |
-| `btnProps` | `ButtonHTMLAttributes` | - | Merged onto generated button props |
+```ts
+import { checkPwned } from "@virastack/password/pwned"
+const result = await checkPwned(password, { signal, timeout: 3000 })
+// { status: "pwned", count } | { status: "safe" } | { status: "unknown", reason }
+```
 
-### UseViraPasswordResult
+Only the first 5 characters of the SHA-1 hash are sent (`Add-Padding`). Never throws. `crypto.subtle` needs HTTPS or localhost.
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| `inputProps` | `InputHTMLAttributes` | Includes `type` password/text, `id`, a11y |
-| `btnProps` | `ButtonHTMLAttributes` | `type="button"`, ARIA, children (icon) |
-| `isVisible` | `boolean` | Current visibility |
-| `toggle` | `() => void` | Flip visibility |
-| `setVisible` | `(visible: boolean) => void` | Imperative set |
+## Links
 
-## Accessibility defaults
-
-- Button: `type="button"`, `aria-pressed`, `aria-controls` (input id), `aria-label` for show/hide
-- Input: linked id; type switches between `password` and `text`
-- Prop merge preserves and composes user `onClick` / `onChange` / `className`
-
-## Helpers / exports
-
-- `useViraPassword`
-- `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes`
-- `EyeIcon`, `EyeOffIcon`
-- `mergeProps` (also used internally)
-
-## Example URLs
-
-- https://virastack.com/password/examples/basic
-- https://virastack.com/password/examples/custom-icons
-- https://virastack.com/password/examples/custom-text
-- https://virastack.com/password/examples/disabled
-- https://virastack.com/password/examples/prop-merge
-- https://virastack.com/password/examples/programmatic
-- https://virastack.com/password/examples/signup-password
-
-## Related
-
-- Mask: https://virastack.com/mask/llms-full.txt
-- Start: https://virastack.com/start/llms-full.txt
-- Ecosystem: https://virastack.com/llms.txt
+- Examples: https://virastack.com/password/examples
+- Upgrade from 1.0: https://virastack.com/password/docs/upgrade
+- 1.0 (archived): https://virastack.com/password/v1/llms-full.txt
