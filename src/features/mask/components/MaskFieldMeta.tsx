@@ -3,23 +3,25 @@
 import { useTranslations } from "next-intl";
 
 type MaskFieldMetaProps = {
-  rawValue: string;
-  value: string;
+  /** What React Hook Form holds (`watch(name)`). */
+  formValue: string;
+  /** What the input shows. */
+  display: string;
 };
 
 /**
- * Shows MaskField `rawValue` and `value` under live demos (library property names).
+ * Shows the form value and the display text under live demos.
  */
-export function MaskFieldMeta({ rawValue, value }: MaskFieldMetaProps) {
+export function MaskFieldMeta({ formValue, display }: MaskFieldMetaProps) {
   const t = useTranslations("Mask");
 
   return (
     <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
       <p>
-        {t("demoRawLabel")}: {rawValue || "-"}
+        {t("demoRawLabel")}: {formValue || "-"}
       </p>
       <p>
-        {t("demoValueLabel")}: {value || "-"}
+        {t("demoValueLabel")}: {display || "-"}
       </p>
     </div>
   );

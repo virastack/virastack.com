@@ -1,7 +1,9 @@
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
+import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 import { Link } from "@/i18n/routing";
 
 const basicCode = `import { useForm } from "react-hook-form"
@@ -9,92 +11,157 @@ import { useViraMask } from "@virastack/mask"
 
 function Example() {
   const form = useForm<{ phone: string }>()
-  const { phone } = useViraMask({
-    form,
-    schema: { phone: "phone" },
-  })
+  const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
 
-  const { rawValue, ...inputProps } = phone
+  return <input {...phone} placeholder="(555) 123 45 67" />
+}
+// form.watch("phone") → "5551234567"`;
 
-  return <input {...inputProps} placeholder="(555) 555-5555" />
-}`;
+const schemaCode = `useViraMask(form, {
+  // a preset name
+  tckn: "tckn",
+  // a preset with overrides
+  birthDate: { preset: "date", date: { max: "today", minAge: 18 } },
+  // React Hook Form rules pass through
+  phone: { preset: "phone", country: "TR", rules: { required: "required" } },
+  // nested field: quote the key or set name
+  "address.zip": { mask: "99999" },
+  zip2: { name: "address.zip2", mask: "99999" },
+  // write the masked text into the form
+  iban: { preset: "iban", country: "TR", output: "masked" },
+  // when the mask is full
+  card: { preset: "card", onComplete: () => form.setFocus("expiry") },
+})`;
 
-export async function MaskUseViraMaskDoc() {
+const fromCode = `const form = useForm({ defaultValues: { currency: "TRY", price: "1234.56" } })
+
+const { price } = useViraMask(form, {
+  price: { preset: "currency", from: "currency" },
+})
+
+<select {...form.register("currency")}>…</select>
+<input {...price} />`;
+
+export function MaskUseViraMaskDoc() {
   return (
     <>
       <DocsPageHeader
         title="useViraMask()"
-        description="Mask multiple fields with one hook. Schema field names match form fields."
+        description="Mask several fields with one hook. The form keeps the raw value; the input shows the mask."
       />
       <DocsProse>
         <h2 id="temel">Basic usage</h2>
+        <p>
+          The first argument is what <code>useForm()</code> returns, the second is the schema. Types
+          come from the form; you don&apos;t write them again.
+        </p>
         <ComponentPreview
-          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555-5555" />}
+          preview={
+            <MaskFieldDemo
+              config={{ preset: "phone", country: "TR" }}
+              placeholder="(555) 123 45 67"
+            />
+          }
           code={basicCode}
         >
           <DocsCodeBlock code={basicCode} lang="tsx" />
         </ComponentPreview>
 
         <h2 id="schema">Schema</h2>
-        <p>Three forms are valid for each field:</p>
+        <p>
+          Keys are field paths of your form. An unknown field, an unknown preset or a wrong option
+          is a compile error.
+        </p>
+        <DocsCodeBlock code={schemaCode} lang="tsx" />
         <ul>
           <li>
-            <strong>Preset string</strong>: <code>{`{ phone: "phone" }`}</code>
+            <code>rules</code>: <code>required</code>, <code>minLength</code>, <code>deps</code>,{" "}
+            <code>setValueAs</code>, <code>disabled</code>, <code>onChange</code> and the other{" "}
+            <code>register</code> rules.
           </li>
           <li>
-            <strong>Options object</strong>:{" "}
-            <code>{`{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`}</code>
+            <code>country</code>: the Turkish layout for <code>phone</code>, <code>iban</code>,{" "}
+            <code>currency</code> and <code>number</code> (<code>&quot;TR&quot;</code> for now). The
+            defaults are global.
           </li>
           <li>
-            <strong>Preset + override</strong>:{" "}
-            <code>{`{ card: { preset: "card", onCardTypeChange: fn } }`}</code>
+            <code>output</code>: <code>&quot;raw&quot;</code> (default) or{" "}
+            <code>&quot;masked&quot;</code>.
+          </li>
+          <li>
+            <code>onComplete</code>: runs once when the mask is full. You decide where focus goes.
           </li>
         </ul>
+
+        <h2 id="from">Linked fields (from)</h2>
         <p>
-          See the <Link href="/mask/examples">examples</Link> page for all presets. For masks from
-          scratch, see <Link href="/mask/docs/custom-mask">custom mask</Link>.
+          A mask can depend on another field. The link is explicit and typed: <code>from</code> must
+          be a real field of the form.
+        </p>
+        <ul>
+          <li>
+            <code>cvv</code> → <code>card</code>: 4 digits for Amex, 3 otherwise.
+          </li>
+          <li>
+            <code>currency</code> → a select: symbol and separators follow the currency.
+          </li>
+          <li>
+            <code>date</code> → a start date: the end can&apos;t be before it (
+            <code>date.beforeFrom</code>).
+          </li>
+        </ul>
+        <ComponentPreview preview={<MaskCurrencyFromDemo />} code={fromCode}>
+          <DocsCodeBlock code={fromCode} lang="tsx" />
+        </ComponentPreview>
+        <p>
+          When the linked field changes the mask is re-applied: if the card turns from Amex to Visa,
+          the CVV is trimmed to 3 digits on screen and in the form.
         </p>
 
         <h2 id="donus">Return value</h2>
         <p>
-          <code>useViraMask()</code> returns a <code>MaskField</code> for each key in the schema.
-          Strip <code>rawValue</code> before spreading so it never lands on the DOM -{" "}
-          <code>value</code> stays in <code>inputProps</code>:{" "}
-          <code>{`const { rawValue, ...inputProps } = phone`}</code>
+          Each key returns an object you spread on an input. Every key in it is a valid input prop;
+          nothing unknown reaches the DOM.
         </p>
         <ul>
           <li>
-            <code>value</code>: formatted (display) value
+            <code>name</code>, <code>ref</code>, <code>defaultValue</code>
           </li>
           <li>
-            <code>rawValue</code>: raw value stored in the form
-          </li>
-          <li>
-            <code>ref</code>, <code>name</code>, <code>onChange</code>, <code>onBlur</code>,{" "}
-            <code>onFocus</code>, <code>onKeyDown</code>
+            <code>onChange</code>, <code>onBlur</code>, <code>onCompositionEnd</code>
           </li>
           <li>
             <code>type</code>, <code>inputMode</code>, <code>autoComplete</code>
           </li>
           <li>
-            <code>aria-invalid</code>, <code>aria-describedby</code>, <code>title</code>
+            <code>disabled</code> (when set in rules), <code>aria-invalid</code> (when there is an
+            error)
           </li>
         </ul>
+        <p>
+          The input is uncontrolled (<code>defaultValue</code>); don&apos;t pass <code>value</code>.
+          Read the raw value with <code>form.watch(&quot;phone&quot;)</code>.
+        </p>
 
-        <h2 id="rhf">React Hook Form</h2>
+        <h2 id="rhf">React Hook Form compatibility</h2>
         <ul>
           <li>
-            Each field is <code>register</code>ed; validation runs under{" "}
-            <code>validate.maskFormat</code>.
+            <code>reset()</code> and <code>setValue()</code> update the input. Pass raw values (ISO
+            for dates: <code>2026-07-29</code>).
           </li>
           <li>
-            <code>setValue</code> writes the <strong>raw</strong> value to the form (
-            <code>shouldValidate</code> / <code>shouldDirty</code> / <code>shouldTouch</code>).
+            <code>watch</code>, <code>getValues</code>, <code>formState</code>,{" "}
+            <code>Controller</code> and <code>useFieldArray</code> work alongside it.
           </li>
           <li>
-            Validation runs only when <code>validate: true</code> and the value is not empty;
-            details on the <Link href="/mask/docs/validation">validation</Link> page.
+            Mask validation is added as the <code>validate.mask</code> rule; your own{" "}
+            <code>validate</code> rules are kept.
           </li>
+          <li>
+            With a resolver (<AcademyBadge kind="zod" />, Valibot), wrap it with{" "}
+            <Link href="/mask/docs/validation#resolver">maskResolver</Link>.
+          </li>
+          <li>Formatting waits until IME composition (Chinese, Japanese, dead keys) ends.</li>
         </ul>
       </DocsProse>
     </>

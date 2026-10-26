@@ -37,9 +37,9 @@ export const ACADEMY_FEATURED_AUTHORS = [
     href: authorHref("https://tkdodo.eu"),
   },
   {
-    name: "Luca Mezzalira",
-    imageSrc: "/academy/authors/luca-mezzalira.png",
-    initials: "LM",
-    href: authorHref("https://lucamezzalira.com"),
+    name: "Matt Pocock",
+    imageSrc: "/academy/authors/matt-pocock.png",
+    initials: "MP",
+    href: authorHref("https://www.mattpocock.com"),
   },
 ] as const satisfies readonly AcademyFeaturedAuthor[];

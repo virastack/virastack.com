@@ -43,21 +43,22 @@ Detects Next.js vs TanStack Start from `package.json`. Writes rules to `.claude/
 
 ## Mask (quick)
 
-Peers: `react`, `react-dom`, `react-hook-form`. Form state stores **raw** values; inputs show **formatted** display values. Always strip `rawValue` before spreading onto the DOM.
+Peers: `react` ≥ 18.2, `react-hook-form` ≥ 7.55. The form stores **raw** values; inputs show **masked** text. Spread the returned object as is (no `rawValue` in v2).
 
 ```tsx
 import { useForm } from "react-hook-form"
 import { useViraMask } from "@virastack/mask"
 
-const form = useForm<{ phone: string }>()
-const { phone } = useViraMask({ form, schema: { phone: "phone" } })
-const { rawValue, ...inputProps } = phone
-return <input {...inputProps} />
+const form = useForm<{ phone: string; card: string; cvv: string }>()
+const { phone, card, cvv } = useViraMask(form, {
+  phone: { preset: "phone", country: "TR" },
+  card: "card",
+  cvv: { preset: "cvv", from: "card" },
+})
+return <input {...phone} />
 ```
 
-Presets: `card`, `expiry`, `cvv`, `phone`, `iban`, `tckn`, `taxNumber`, `currency`, `date`, `email`, `url`, `username`, `alpha`, `password`, `text`, `numeric`, `zipCode`.
-
-Pattern chars: `9` digit, `a` letter, `*` alphanumeric. Helpers: `applyMask`, `unmask`, `formatCurrency`, `unformatCurrency`, `getCardType`, `mergeRefs`, `PRESETS`.
+Presets: `phone`, `iban`, `currency`, `number` (all take `country: "TR"` for the Turkish layout), `card`, `cvv`, `expiry`, `tckn`, `vkn`, `date`. Errors are keys (`tckn.invalid`). With Zod/Valibot: `resolver: maskResolver(masks, zodResolver(schema))`. Server: `parseMasked(masks, formData, schema?)` from `@virastack/mask/server`.
 
 Details: https://virastack.com/mask/llms-full.txt
 

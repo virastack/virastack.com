@@ -1,9 +1,9 @@
 "use client";
 
 import { ChevronRightIcon } from "lucide-react";
-import { getCardType, useViraMask } from "@virastack/mask";
+import { createMask, getCardType, useViraMask } from "@virastack/mask";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,14 @@ type DemoForm = {
   code: string;
 };
 
+const masks = {
+  card: "card",
+  code: { mask: "aaa-999", transform: "uppercase" },
+} as const;
+
+const cardMask = createMask(masks.card);
+const codeMask = createMask(masks.code);
+
 type MaskDemoProps = {
   /** Rendered beside the hero copy: no section padding, animates on mount. */
   inHero?: boolean;
@@ -27,21 +35,10 @@ export function MaskDemo({ inHero = false }: MaskDemoProps) {
   const form = useForm<DemoForm>({
     defaultValues: { card: "", code: "" },
   });
-
-  const { card, code } = useViraMask({
-    form,
-    schema: {
-      card: "card",
-      code: {
-        mask: "aaa-999",
-        transform: "uppercase",
-      },
-    },
-  });
-
-  const { rawValue: cardRaw, value: cardValue, ...cardProps } = card;
-  const { rawValue: codeRaw, value: codeValue, ...codeProps } = code;
-  const cardType = getCardType(cardRaw);
+  const { card, code } = useViraMask(form, masks);
+  const watched = useWatch({ control: form.control, name: ["card", "code"] });
+  const values = { card: watched[0], code: watched[1] };
+  const cardType = getCardType(values.card);
 
   const demo = (
     <Reveal
@@ -60,19 +57,14 @@ export function MaskDemo({ inHero = false }: MaskDemoProps) {
                 </span>
               ) : null}
             </div>
-            <Input
-              id="mask-demo-card"
-              {...cardProps}
-              value={cardValue}
-              placeholder="0000 0000 0000 0000"
-            />
-            <MaskFieldMeta rawValue={cardRaw} value={cardValue} />
+            <Input id="mask-demo-card" {...card} placeholder="0000 0000 0000 0000" />
+            <MaskFieldMeta formValue={values.card} display={cardMask.format(values.card)} />
           </div>
 
           <div className="space-y-1.5">
             <Label htmlFor="mask-demo-code">{t("demoCodeLabel")}</Label>
-            <Input id="mask-demo-code" {...codeProps} value={codeValue} placeholder="ABC-123" />
-            <MaskFieldMeta rawValue={codeRaw} value={codeValue} />
+            <Input id="mask-demo-code" {...code} placeholder="ABC-123" />
+            <MaskFieldMeta formValue={values.code} display={codeMask.format(values.code)} />
           </div>
         </div>
       </div>

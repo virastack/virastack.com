@@ -1,78 +1,69 @@
+import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+
+const createMaskCode = `import { createMask } from "@virastack/mask"
+
+const phone = createMask({ preset: "phone", country: "TR" })
+phone.format("5551234567")        // "(555) 123 45 67"
+phone.parse("+90 555 123 45 67")  // "5551234567"
+phone.validate("555")             // "phone.incomplete"
+phone.isComplete("5551234567")    // true
+
+const price = createMask("currency")
+price.format("1234.5", { from: "USD" }) // "$1,234.5"`;
+
+const validatorsCode = `import {
+  getCardType,
+  isValidCard,
+  isValidIBAN,
+  isValidLuhn,
+  isValidTCKN,
+  isValidVKN,
+} from "@virastack/mask"
+
+getCardType("3782 822463 10005") // "amex"
+isValidCard("4111111111111111")  // true: uzunluk + Luhn
+isValidTCKN("10000000146")       // true
+isValidVKN("1234567890")         // true
+isValidIBAN("DE89 3704 0044 0532 0130 00") // true, her ülke
+isValidIBAN("TR330006100519786457841326")  // true
+isValidIBAN("TR33000610051978645784132")   // false: TR IBAN 26 karakter olmalı`;
+
+const moneyCode = `import { toMinorUnits } from "@virastack/mask"
+
+toMinorUnits("1234.56", "TRY") // 123456
+toMinorUnits("0.1", 2)         // 10 (float hatası yok)
+toMinorUnits("1500", "JPY")    // 1500`;
 
 export function MaskHelpersDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Helpers"
-        description="Hook olmadan da kullanabileceğiniz formatlama ve yardımcı fonksiyonlar."
+        title="Yardımcılar"
+        description="Hook dışında kullanabileceğiniz saf maske, doğrulayıcı ve para fonksiyonları."
       />
       <DocsProse>
-        <h2 id="mask">Maske yardımcıları</h2>
-        <div className="overflow-x-auto rounded-lg border border-border">
-          <table>
-            <thead>
-              <tr>
-                <th>Fonksiyon</th>
-                <th>Açıklama</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>applyMask(value, mask)</code>
-                </td>
-                <td>Ham değere pattern uygular</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>unmask(value, mask)</code>
-                </td>
-                <td>Maskeden veri karakterlerini çıkarır</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>stripMask(value, mask)</code>
-                </td>
-                <td>Maske ile kilit adımda yalnızca data slot’larını tutar</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>cleanValue(value, allowed?, forbidden?)</code>
-                </td>
-                <td>İzin / yasak regex ile filtreler</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 id="currency">Para birimi</h2>
-        <ul>
-          <li>
-            <code>formatCurrency(value, options)</code>: ham <code>&quot;1234.56&quot;</code> →
-            görüntü (<code>1,234.56</code> US varsayılan; TR için ayırıcıları customize edin)
-          </li>
-          <li>
-            <code>unformatCurrency(value, options)</code>: görüntü → ham
-          </li>
-        </ul>
-
-        <h2 id="card">Kart</h2>
         <p>
-          <code>getCardType(cardNumber)</code> →{" "}
-          <code>
-            &quot;visa&quot; | &quot;mastercard&quot; | &quot;amex&quot; | &quot;troy&quot; |
-            &quot;unknown&quot;
-          </code>
-          . BIN öneklerine göre çalışır (Visa <code>4</code>, Amex <code>34</code>/<code>37</code>,
-          Troy <code>9792</code>…).
+          Hepsi React&apos;siz ve saf fonksiyonlardır. Sunucuda <code>@virastack/mask/server</code>
+          &apos;dan içe aktarın.
         </p>
 
-        <h2 id="refs">Refs</h2>
+        <h2 id="create-mask">createMask</h2>
         <p>
-          <code>mergeRefs(...refs)</code>: RHF register ref’i ile yerel ref’i birleştirmek için.
-          Hook bunu dahili kullanır; kendi kontrollü input’unuzda da işe yarar.
+          Hook&apos;un kullandığı nesnenin aynısı. Listelerde, tablolarda ve raporlarda maskeli
+          gösterim için <code>format</code>; dışarıdan gelen metin için <code>parse</code>.
         </p>
+        <DocsCodeBlock code={createMaskCode} lang="ts" />
+
+        <h2 id="validators">Doğrulayıcılar</h2>
+        <DocsCodeBlock code={validatorsCode} lang="ts" />
+
+        <h2 id="money">Para</h2>
+        <p>
+          <code>toMinorUnits</code> ondalık metni tam sayı küçük birime çevirir. İkinci argüman
+          ondalık basamak sayısı ya da ISO para kodudur.
+        </p>
+        <DocsCodeBlock code={moneyCode} lang="ts" />
       </DocsProse>
     </>
   );

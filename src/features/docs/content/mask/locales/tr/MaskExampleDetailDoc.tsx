@@ -3,81 +3,69 @@ import { getTranslations } from "next-intl/server";
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { MaskCardNetworksTable } from "@/features/docs/components/MaskCardNetworksTable";
+import { MaskCheckCallout } from "@/features/docs/components/MaskCheckCallout";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
-import { MaskCurrencyTrDemo } from "@/features/docs/components/MaskCurrencyTrDemo";
-import { MaskDateFormatDemo } from "@/features/docs/components/MaskDateFormatDemo";
-import { MaskPhoneTrDemo } from "@/features/docs/components/MaskPhoneTrDemo";
-import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
-import { getMaskExample } from "@/features/docs/config/mask-docs.config";
+import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
+import { MaskDateRangeDemo } from "@/features/docs/components/MaskDateRangeDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+import {
+  getMaskExample,
+  getMaskExampleLabel,
+  getMaskExampleSpec,
+  type MaskCustomizationPreview,
+} from "@/features/docs/config/mask-docs.config";
+import {
+  buildCreditCardCode,
+  buildExampleCode,
+  buildPasswordCode,
+} from "@/features/docs/content/mask/mask-example-code";
+import { CUSTOM_EXAMPLE_CONFIG } from "@/features/docs/content/mask/mask-example-configs";
+import { MaskPasswordExample } from "@/features/docs/content/mask/MaskPasswordExample";
 import { Link } from "@/i18n/routing";
 
 type MaskExampleDetailDocProps = {
   id: string;
 };
 
-const creditCardCode = `import { useForm } from "react-hook-form"
-import { useViraMask } from "@virastack/mask"
-
-function CreditCardForm() {
-  const form = useForm({
-    defaultValues: { card: "", expiry: "", cvv: "" },
-  })
-
-  const { card, expiry, cvv } = useViraMask({
-    form,
-    schema: {
-      card: { preset: "card", errorMessage: "Geçersiz kart numarası" },
-      expiry: { preset: "expiry", errorMessage: "Geçersiz veya geçmiş tarih" },
-      cvv: "cvv",
-    },
-  })
-
-  return (
-    <>
-      <input {...card} placeholder="0000 0000 0000 0000" />
-      <input {...expiry} placeholder="12/28" />
-      <input {...cvv} placeholder="123" />
-    </>
-  )
-}`;
-
-function buildExampleCode(preset: string, placeholder: string) {
-  return `import { useForm } from "react-hook-form"
-import { useViraMask } from "@virastack/mask"
-
-function Example() {
-  const form = useForm<{ ${preset}: string }>()
-  const { ${preset} } = useViraMask({
-    form,
-    schema: { ${preset}: "${preset}" },
-  })
-
-  const { rawValue, ...inputProps } = ${preset}
-
-  return <input {...inputProps} placeholder="${placeholder}" />
-}`;
-}
-
-function validatorErrorKey(validator?: string) {
-  switch (validator) {
-    case "tckn":
-      return "demoInvalidTckn";
-    case "luhn":
-      return "demoInvalidCard";
-    case "expiry":
-      return "demoInvalidExpiry";
-    case "date":
-      return "demoInvalidDate";
-    case "iban":
-      return "demoInvalidIban";
-    case "email":
-      return "demoInvalidEmail";
-    case "url":
-      return "demoInvalidUrl";
-    case "vkn":
-      return "demoInvalidTaxNumber";
-    default:
-      return "demoInvalidValue";
+function CustomizationPreview({ preview }: { preview: MaskCustomizationPreview }) {
+  switch (preview) {
+    case "currencyFrom":
+      return <MaskCurrencyFromDemo />;
+    case "dateRange":
+      return <MaskDateRangeDemo />;
+    case "dateUs":
+      return <MaskFieldDemo config={{ date: { format: "MM/DD/YYYY" } }} placeholder="07/29/2026" />;
+    case "numberRange":
+      return <MaskFieldDemo config={{ number: { min: 1, max: 99 } }} placeholder="1–99" />;
+    case "phoneTR":
+      return (
+        <MaskFieldDemo
+          config={{ preset: "phone", country: "TR" as const }}
+          placeholder="0555 123 45 67"
+        />
+      );
+    case "ibanTR":
+      return (
+        <MaskFieldDemo
+          config={{ preset: "iban", country: "TR" as const }}
+          placeholder="TR00 0000 0000 0000 0000 0000 00"
+        />
+      );
+    case "currencyTR":
+      return (
+        <MaskFieldDemo
+          config={{ preset: "currency", country: "TR" as const }}
+          placeholder="₺1.234,56"
+        />
+      );
+    case "numberTR":
+      return (
+        <MaskFieldDemo
+          config={{ preset: "number", country: "TR" as const, number: { scale: 2 } }}
+          placeholder="1.234,56"
+        />
+      );
   }
 }
 
@@ -87,9 +75,12 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
   if (!example) return null;
 
   const isCreditCard = example.id === "credit-card";
-  const exampleCode = example.preset
-    ? buildExampleCode(example.preset, example.placeholder ?? "")
-    : creditCardCode;
+  const isPassword = example.id === "password";
+  const code = isCreditCard
+    ? buildCreditCardCode()
+    : isPassword
+      ? buildPasswordCode()
+      : buildExampleCode(example.preset ?? "plate", example.placeholder ?? "", example.country);
 
   return (
     <>
@@ -100,33 +91,37 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
           {example.preset ? (
             <>
               <span className="mx-2 text-border">·</span>
-              <code>{example.preset}</code>
+              <code>{getMaskExampleLabel(example)}</code>
             </>
           ) : null}
         </p>
 
-        <h2 id="onizleme">{t("exampleDetailHeadingPreview")}</h2>
-        {isCreditCard ? (
-          <ComponentPreview preview={<MaskCreditCardDemo />} code={creditCardCode}>
-            <DocsCodeBlock code={creditCardCode} lang="tsx" />
-          </ComponentPreview>
-        ) : example.preset ? (
-          <ComponentPreview
-            preview={
-              <MaskPresetDemo
-                preset={example.preset}
-                placeholder={example.placeholder}
-                showError={Boolean(example.validator)}
-                errorMessage={
-                  example.validator ? t(validatorErrorKey(example.validator)) : undefined
-                }
-              />
-            }
-            code={exampleCode}
-          >
-            <DocsCodeBlock code={exampleCode} lang="tsx" />
-          </ComponentPreview>
+        {example.check ? (
+          <MaskCheckCallout
+            label={t("exampleDetailCheckLabel")}
+            title={example.check.title}
+            description={example.check.description}
+          />
         ) : null}
+
+        <h2 id="onizleme">{t("exampleDetailHeadingPreview")}</h2>
+        <ComponentPreview
+          preview={
+            isCreditCard ? (
+              <MaskCreditCardDemo />
+            ) : isPassword ? (
+              <MaskPasswordExample />
+            ) : (
+              <MaskFieldDemo
+                config={getMaskExampleSpec(example) ?? CUSTOM_EXAMPLE_CONFIG}
+                placeholder={example.placeholder}
+              />
+            )
+          }
+          code={code}
+        >
+          <DocsCodeBlock code={code} lang="tsx" />
+        </ComponentPreview>
 
         <h2 id="detaylar">{t("exampleDetailHeadingDetails")}</h2>
         <ul>
@@ -137,13 +132,28 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
           ) : null}
           {example.preset ? (
             <li>
-              {t("exampleDetailPresetLabel")} <code>&quot;{example.preset}&quot;</code>
+              {t("exampleDetailPresetLabel")}{" "}
+              <code>
+                {example.country
+                  ? `{ preset: "${example.preset}", country: "${example.country}" }`
+                  : `"${example.preset}"`}
+              </code>
             </li>
           ) : null}
-          {example.validator ? (
+          {example.formValue ? (
             <li>
-              {t("exampleDetailValidatorLabel")} <code>&apos;{example.validator}&apos;</code>{" "}
-              {t("exampleDetailValidatorDescription")}
+              {t("exampleDetailFormValueLabel")} <code>&quot;{example.formValue}&quot;</code>
+            </li>
+          ) : null}
+          {example.errorKeys.length > 0 ? (
+            <li>
+              {t("exampleDetailErrorKeysLabel")}{" "}
+              {example.errorKeys.map((key, index) => (
+                <span key={key}>
+                  {index > 0 ? ", " : null}
+                  <code>{key}</code>
+                </span>
+              ))}
             </li>
           ) : null}
           {example.notes.map((note) => (
@@ -151,47 +161,39 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
           ))}
         </ul>
 
+        {example.id === "card" || example.id === "credit-card" ? (
+          <>
+            <h2 id="kart-aglari">{t("cardNetworksHeading")}</h2>
+            <p>{t("cardNetworksIntro")}</p>
+            <MaskCardNetworksTable />
+          </>
+        ) : null}
+
         {example.customizations.length > 0 ? (
           <>
             <h2 id="ozellestirme">{t("exampleDetailHeadingCustomization")}</h2>
-            {example.customizations.map((item) => {
-              const preview =
-                example.id === "currency" ? (
-                  <MaskCurrencyTrDemo />
-                ) : example.id === "phone" ? (
-                  <MaskPhoneTrDemo />
-                ) : item.codeKey === "exampleDateCustomization0Code" ? (
-                  <MaskDateFormatDemo dateFormat="MDY" placeholder="07/29/2026" />
-                ) : item.codeKey === "exampleDateCustomization1Code" ? (
-                  <MaskDateFormatDemo dateFormat="YMD" mask="9999/99/99" placeholder="2026/07/29" />
-                ) : null;
-
-              return (
-                <div key={item.codeKey} className="space-y-2">
-                  <h3 id={item.title.toLowerCase().replace(/\s+/g, "-")}>{item.title}</h3>
-                  <p>{item.description}</p>
-                  {preview ? (
-                    <ComponentPreview preview={preview} code={item.code}>
-                      <DocsCodeBlock
-                        code={item.code}
-                        lang={item.code.includes("import ") ? "tsx" : "ts"}
-                      />
-                    </ComponentPreview>
-                  ) : (
-                    <DocsCodeBlock
-                      code={item.code}
-                      lang={item.code.includes("import ") ? "tsx" : "ts"}
-                    />
-                  )}
-                </div>
-              );
-            })}
+            {example.customizations.map((item) => (
+              <div key={item.codeKey} className="space-y-2">
+                <h3 id={item.codeKey}>{item.title}</h3>
+                <p>{item.description}</p>
+                {item.preview ? (
+                  <ComponentPreview
+                    preview={<CustomizationPreview preview={item.preview} />}
+                    code={item.code}
+                  >
+                    <DocsCodeBlock code={item.code} lang="tsx" />
+                  </ComponentPreview>
+                ) : (
+                  <DocsCodeBlock code={item.code} lang="tsx" />
+                )}
+              </div>
+            ))}
           </>
         ) : null}
 
         <p>
-          Hook API için <Link href="/mask/docs/use-vira-mask">useViraMask()</Link>, özel maske için{" "}
-          <Link href="/mask/docs/custom-mask">custom mask</Link>.
+          Hook API için <Link href="/mask/docs/use-vira-mask">useViraMask()</Link>, kendi deseniniz
+          için <Link href="/mask/docs/custom-mask">özel maske</Link>.
         </p>
       </DocsProse>
     </>

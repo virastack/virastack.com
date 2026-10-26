@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraMask } from "@virastack/mask";
+import { useViraMask } from "@virastack/mask-v1";
 import { useForm } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ type MaskCustomDemoProps = {
   showMeta?: boolean;
 };
 
-export function MaskCustomDemo({ showMeta = true }: MaskCustomDemoProps) {
+export function MaskV1CustomDemo({ showMeta = true }: MaskCustomDemoProps) {
   const form = useForm<CustomForm>({ defaultValues: { code: "" } });
   const { code } = useViraMask({
     form,
@@ -32,7 +32,7 @@ export function MaskCustomDemo({ showMeta = true }: MaskCustomDemoProps) {
   return (
     <div className="w-full space-y-1.5">
       <Input {...inputProps} placeholder="ABC-123" />
-      {showMeta ? <MaskFieldMeta rawValue={rawValue} value={code.value} /> : null}
+      {showMeta ? <MaskFieldMeta formValue={rawValue} display={code.value} /> : null}
     </div>
   );
 }

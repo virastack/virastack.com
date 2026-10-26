@@ -1,6 +1,6 @@
 "use client";
 
-import { useViraMask, type MaskPreset } from "@virastack/mask";
+import { useViraMask, type MaskPreset } from "@virastack/mask-v1";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
@@ -21,7 +21,7 @@ type MaskPresetDemoProps = {
 /**
  * Minimal live input demo for a single Mask preset (used on examples index + detail pages).
  */
-export function MaskPresetDemo({
+export function MaskV1PresetDemo({
   preset,
   placeholder,
   className,
@@ -29,7 +29,7 @@ export function MaskPresetDemo({
   errorMessage,
   showMeta = true,
 }: MaskPresetDemoProps) {
-  const t = useTranslations("DocsMask");
+  const t = useTranslations("DocsMaskV1");
   const form = useForm<Record<string, string>>({
     defaultValues: { [preset]: "" },
     mode: showError ? "onChange" : "onSubmit",
@@ -58,7 +58,7 @@ export function MaskPresetDemo({
       {showError && error ? (
         <p className="text-xs text-destructive">{String(error.message ?? t("demoInvalidValue"))}</p>
       ) : showMeta ? (
-        <MaskFieldMeta rawValue={rawValue} value={field.value} />
+        <MaskFieldMeta formValue={rawValue} display={field.value} />
       ) : null}
     </div>
   );

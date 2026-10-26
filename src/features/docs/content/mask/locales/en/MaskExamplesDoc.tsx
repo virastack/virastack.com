@@ -1,12 +1,18 @@
-import { BadgeCheckIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
-import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
-import { getMaskExampleGroups, getMaskExamples } from "@/features/docs/config/mask-docs.config";
-import { MaskCustomDemo } from "@/features/docs/content/mask/MaskCustomDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+import {
+  getMaskExampleGroups,
+  getMaskExampleLabel,
+  getMaskExamples,
+  getMaskExampleSpec,
+} from "@/features/docs/config/mask-docs.config";
+import { CUSTOM_EXAMPLE_CONFIG } from "@/features/docs/content/mask/mask-example-configs";
+import { MaskPasswordExample } from "@/features/docs/content/mask/MaskPasswordExample";
 import { Link } from "@/i18n/routing";
 
 export async function MaskExamplesDoc() {
@@ -20,7 +26,7 @@ export async function MaskExamplesDoc() {
       <DocsProse>
         {groups.map((group) => {
           const items = examples.filter((example) => example.group === group.id);
-          if (items.length === 0 && group.id !== "misc") return null;
+          if (items.length === 0) return null;
 
           return (
             <section key={group.id} className="space-y-4">
@@ -28,12 +34,7 @@ export async function MaskExamplesDoc() {
               <div className="grid gap-4 sm:grid-cols-2">
                 {items.map((example) => {
                   const isCreditCard = example.id === "credit-card";
-                  const hasValidation = Boolean(example.validator) || isCreditCard;
-                  const validationTooltip = isCreditCard
-                    ? t("exampleValidatedTooltipCreditCard")
-                    : example.validator
-                      ? t("exampleValidatedTooltip", { validator: example.validator })
-                      : "";
+                  const validationTooltip = example.check?.title;
 
                   return (
                     <div
@@ -52,54 +53,40 @@ export async function MaskExamplesDoc() {
                           >
                             {example.title}
                           </Link>
-                          {hasValidation ? (
+                          {validationTooltip ? (
                             <Tooltip>
                               <TooltipTrigger
                                 className="inline-flex shrink-0 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
                                 aria-label={validationTooltip}
                               >
-                                <BadgeCheckIcon
-                                  className="size-4 fill-teal-600 stroke-teal-600 dark:fill-teal-400 dark:stroke-teal-400 [&_path:last-child]:fill-none [&_path:last-child]:stroke-white"
-                                  aria-hidden
-                                />
+                                <MaskCheckIcon />
                               </TooltipTrigger>
                               <TooltipContent>{validationTooltip}</TooltipContent>
                             </Tooltip>
                           ) : null}
                         </div>
-                        {example.preset ? (
-                          <code>{example.preset}</code>
-                        ) : (
-                          <code>{t("exampleDetailSchemaFallback")}</code>
-                        )}
+                        <code>
+                          {example.id === "password"
+                            ? "mask + password"
+                            : (getMaskExampleLabel(example) ??
+                              example.maskPattern ??
+                              "card + expiry + cvv")}
+                        </code>
                       </div>
                       {isCreditCard ? (
                         <MaskCreditCardDemo showMeta={false} />
-                      ) : example.preset ? (
-                        <MaskPresetDemo
-                          preset={example.preset}
+                      ) : example.id === "password" ? (
+                        <MaskPasswordExample />
+                      ) : (
+                        <MaskFieldDemo
+                          config={getMaskExampleSpec(example) ?? CUSTOM_EXAMPLE_CONFIG}
                           placeholder={example.placeholder}
                           showMeta={false}
                         />
-                      ) : null}
+                      )}
                     </div>
                   );
                 })}
-
-                {group.id === "misc" ? (
-                  <div className="flex flex-col gap-3 rounded-xl bg-background p-4">
-                    <div className="flex items-center justify-between gap-2">
-                      <Link
-                        href="/mask/docs/custom-mask"
-                        className="font-semibold text-foreground no-underline hover:underline"
-                      >
-                        {t("exampleCustomMaskTitle")}
-                      </Link>
-                      <code>aaa-999</code>
-                    </div>
-                    <MaskCustomDemo showMeta={false} />
-                  </div>
-                ) : null}
               </div>
             </section>
           );

@@ -11,7 +11,7 @@ import {
 
 import { useViraMask, type MaskField } from "@virastack/mask";
 import { useTranslations } from "next-intl";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 
@@ -51,11 +51,12 @@ const fieldClassName = cn(
 
 const plainClassName = "h-9 w-full border border-neutral-400 bg-white px-2 text-sm text-black";
 
-function typeIntoMask(field: MaskField, input: HTMLInputElement | null, nextValue: string) {
+/** Appends one character the way a keystroke would, then lets the mask format it. */
+function typeIntoMask(field: MaskField, input: HTMLInputElement | null, char: string) {
   if (!input) return;
 
   const valueSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
-  valueSetter?.call(input, nextValue);
+  valueSetter?.call(input, input.value + char);
 
   field.onChange({
     target: input,
@@ -90,11 +91,11 @@ async function typeMaskField(
   timers: number[],
   cancelled: () => boolean,
 ) {
-  for (let i = 1; i <= text.length; i += 1) {
+  for (const char of text) {
     if (cancelled()) return;
     const field = getField();
     if (!field) return;
-    typeIntoMask(field, getInput(), text.slice(0, i));
+    typeIntoMask(field, getInput(), char);
     await wait(CHAR_MS, timers);
   }
 }
@@ -119,16 +120,10 @@ export function Step4UIComponents({ onNext, isCompleted, isStyled }: GuideStepPr
     defaultValues: { cardNumber: "", expiry: "", cvv: "" },
   });
 
-  // Subscribe so masked display values re-render while we type programmatically.
-  useWatch({ control: form.control });
-
-  const { cardNumber, expiry, cvv } = useViraMask({
-    form,
-    schema: {
-      cardNumber: "card",
-      expiry: "expiry",
-      cvv: "cvv",
-    },
+  const { cardNumber, expiry, cvv } = useViraMask(form, {
+    cardNumber: "card",
+    expiry: "expiry",
+    cvv: { preset: "cvv", from: "cardNumber" },
   });
 
   useEffect(() => {

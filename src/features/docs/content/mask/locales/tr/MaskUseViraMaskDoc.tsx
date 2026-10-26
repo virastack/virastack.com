@@ -1,7 +1,9 @@
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
+import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 import { Link } from "@/i18n/routing";
 
 const basicCode = `import { useForm } from "react-hook-form"
@@ -9,92 +11,156 @@ import { useViraMask } from "@virastack/mask"
 
 function Example() {
   const form = useForm<{ phone: string }>()
-  const { phone } = useViraMask({
-    form,
-    schema: { phone: "phone" },
-  })
+  const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
 
-  const { rawValue, ...inputProps } = phone
+  return <input {...phone} placeholder="(555) 123 45 67" />
+}
+// form.watch("phone") → "5551234567"`;
 
-  return <input {...inputProps} placeholder="(555) 555-5555" />
-}`;
+const schemaCode = `useViraMask(form, {
+  // preset adı
+  tckn: "tckn",
+  // preset + değişiklik
+  birthDate: { preset: "date", date: { max: "today", minAge: 18 } },
+  // React Hook Form kuralları olduğu gibi geçer
+  phone: { preset: "phone", country: "TR", rules: { required: "required" } },
+  // iç içe alan: anahtarı tırnakla yazın ya da name verin
+  "address.zip": { mask: "99999" },
+  zip2: { name: "address.zip2", mask: "99999" },
+  // forma maskeli metin yaz
+  iban: { preset: "iban", country: "TR", output: "masked" },
+  // maske dolunca
+  card: { preset: "card", onComplete: () => form.setFocus("expiry") },
+})`;
 
-export async function MaskUseViraMaskDoc() {
+const fromCode = `const form = useForm({ defaultValues: { currency: "TRY", price: "1234.56" } })
+
+const { price } = useViraMask(form, {
+  price: { preset: "currency", from: "currency" },
+})
+
+<select {...form.register("currency")}>…</select>
+<input {...price} />`;
+
+export function MaskUseViraMaskDoc() {
   return (
     <>
       <DocsPageHeader
         title="useViraMask()"
-        description="Tek hook ile birden fazla alanı maskeleyin. Schema alan adları form alanlarıyla eşleşir."
+        description="Tek hook ile birden fazla alanı maskeleyin. Form ham değeri tutar, input maskeyi gösterir."
       />
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
+        <p>
+          İlk argüman <code>useForm()</code> dönüşüdür, ikincisi şema. Tip formdan gelir; ayrıca
+          yazmanız gerekmez.
+        </p>
         <ComponentPreview
-          preview={<MaskPresetDemo preset="phone" placeholder="(555) 555-5555" />}
+          preview={
+            <MaskFieldDemo
+              config={{ preset: "phone", country: "TR" }}
+              placeholder="(555) 123 45 67"
+            />
+          }
           code={basicCode}
         >
           <DocsCodeBlock code={basicCode} lang="tsx" />
         </ComponentPreview>
 
         <h2 id="schema">Schema</h2>
-        <p>Her alan için üç yazım geçerlidir:</p>
+        <p>
+          Anahtarlar formdaki alan yollarıdır. Olmayan bir alan, olmayan bir preset ya da yanlış
+          seçenek derleme hatası verir.
+        </p>
+        <DocsCodeBlock code={schemaCode} lang="tsx" />
         <ul>
           <li>
-            <strong>Preset string</strong>: <code>{`{ phone: "phone" }`}</code>
+            <code>rules</code>: <code>required</code>, <code>minLength</code>, <code>deps</code>,{" "}
+            <code>setValueAs</code>, <code>disabled</code>, <code>onChange</code> ve diğer{" "}
+            <code>register</code> kuralları.
           </li>
           <li>
-            <strong>Options nesnesi</strong>:{" "}
-            <code>{`{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`}</code>
+            <code>country</code>: <code>phone</code>, <code>iban</code>, <code>currency</code> ve{" "}
+            <code>number</code> için Türkiye biçimi (şimdilik <code>&quot;TR&quot;</code>).
+            Varsayılanlar globaldir.
           </li>
           <li>
-            <strong>Preset + override</strong>:{" "}
-            <code>{`{ card: { preset: "card", onCardTypeChange: fn } }`}</code>
+            <code>output</code>: <code>&quot;raw&quot;</code> (varsayılan) ya da{" "}
+            <code>&quot;masked&quot;</code>.
+          </li>
+          <li>
+            <code>onComplete</code>: maske dolduğunda bir kez çalışır. Odağı siz yönetirsiniz.
           </li>
         </ul>
+
+        <h2 id="from">Bağlı alanlar (from)</h2>
         <p>
-          Tüm hazır maskeler için <Link href="/mask/examples">örnekler</Link> sayfasına bakın.
-          Sıfırdan maske için <Link href="/mask/docs/custom-mask">custom mask</Link>.
+          Bir maske başka bir alanın değerine bağlı olabilir. Bağlantı açık yazılır ve tiplidir:{" "}
+          <code>from</code> formdaki gerçek bir alan olmalıdır.
+        </p>
+        <ul>
+          <li>
+            <code>cvv</code> → <code>card</code>: Amex ise 4, değilse 3 hane.
+          </li>
+          <li>
+            <code>currency</code> → bir select: seçilen kura göre sembol ve ayırıcılar.
+          </li>
+          <li>
+            <code>date</code> → başlangıç tarihi: bitiş ondan önce olamaz (
+            <code>date.beforeFrom</code>).
+          </li>
+        </ul>
+        <ComponentPreview preview={<MaskCurrencyFromDemo />} code={fromCode}>
+          <DocsCodeBlock code={fromCode} lang="tsx" />
+        </ComponentPreview>
+        <p>
+          Bağlı alan değişince maske yeniden uygulanır: kart Amex&apos;ten Visa&apos;ya dönerse CVV
+          hem ekranda hem formda 3 haneye kısalır.
         </p>
 
         <h2 id="donus">Dönüş değeri</h2>
         <p>
-          <code>useViraMask()</code>, schema’daki her anahtar için bir <code>MaskField</code> döner.
-          <code>rawValue</code>’yu DOM’a yaymamak için ayırın, <code>value</code>{" "}
-          <code>inputProps</code> içinde kalır:{" "}
-          <code>{`const { rawValue, ...inputProps } = phone`}</code>
+          Her anahtar için input&apos;a doğrudan yayılabilen bir nesne döner. İçindeki her alan
+          geçerli bir input prop&apos;udur; DOM&apos;a bilinmeyen bir şey sızmaz.
         </p>
         <ul>
           <li>
-            <code>value</code>: formatlı (display) değer
+            <code>name</code>, <code>ref</code>, <code>defaultValue</code>
           </li>
           <li>
-            <code>rawValue</code>: formda tutulan ham değer
-          </li>
-          <li>
-            <code>ref</code>, <code>name</code>, <code>onChange</code>, <code>onBlur</code>,{" "}
-            <code>onFocus</code>, <code>onKeyDown</code>
+            <code>onChange</code>, <code>onBlur</code>, <code>onCompositionEnd</code>
           </li>
           <li>
             <code>type</code>, <code>inputMode</code>, <code>autoComplete</code>
           </li>
           <li>
-            <code>aria-invalid</code>, <code>aria-describedby</code>, <code>title</code>
+            <code>disabled</code> (kurallarda varsa), <code>aria-invalid</code> (hata varsa)
           </li>
         </ul>
+        <p>
+          Input kontrolsüzdür (<code>defaultValue</code>); <code>value</code> vermeyin. Ham değeri{" "}
+          <code>form.watch(&quot;phone&quot;)</code> ile okuyun.
+        </p>
 
-        <h2 id="rhf">React Hook Form</h2>
+        <h2 id="rhf">React Hook Form uyumu</h2>
         <ul>
           <li>
-            Her alan <code>register</code> edilir; doğrulama <code>validate.maskFormat</code>{" "}
-            altında çalışır.
+            <code>reset()</code> ve <code>setValue()</code> ekrana yansır. Ham değer verin (tarihte
+            ISO: <code>2026-07-29</code>).
           </li>
           <li>
-            <code>setValue</code> ile forma <strong>ham</strong> değer yazılır (
-            <code>shouldValidate</code> / <code>shouldDirty</code> / <code>shouldTouch</code>).
+            <code>watch</code>, <code>getValues</code>, <code>formState</code>,{" "}
+            <code>Controller</code> ve <code>useFieldArray</code> ile birlikte çalışır.
           </li>
           <li>
-            Doğrulama yalnızca <code>validate: true</code> ve değer boş değilken koşulur; ayrıntılar{" "}
-            <Link href="/mask/docs/validation">validation</Link> sayfasında.
+            Mask doğrulaması <code>validate.mask</code> kuralı olarak eklenir; kendi{" "}
+            <code>validate</code> kurallarınız korunur.
           </li>
+          <li>
+            Resolver (<AcademyBadge kind="zod" />, Valibot) kullanıyorsanız{" "}
+            <Link href="/mask/docs/validation#resolver">maskResolver</Link> ile sarın.
+          </li>
+          <li>IME (Çince, Japonca, ölü tuşlar) bitene kadar biçimlendirme bekler.</li>
         </ul>
       </DocsProse>
     </>

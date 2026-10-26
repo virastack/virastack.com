@@ -1,7 +1,9 @@
 export { MaskIntroductionDoc } from "./MaskIntroductionDoc";
+export { MaskUpgradeDoc } from "./MaskUpgradeDoc";
 export { MaskUseViraMaskDoc } from "./MaskUseViraMaskDoc";
 export { MaskCustomMaskDoc } from "./MaskCustomMaskDoc";
 export { MaskValidationDoc } from "./MaskValidationDoc";
+export { MaskServerDoc } from "./MaskServerDoc";
 export { MaskHelpersDoc } from "./MaskHelpersDoc";
 export { MaskTypesDoc } from "./MaskTypesDoc";
 export { MaskUiLibrariesDoc } from "./MaskUiLibrariesDoc";

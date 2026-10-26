@@ -1,12 +1,10 @@
 "use client";
 
-import { getCardType, useViraMask } from "@virastack/mask";
+import { createMask, getCardType, useViraMask } from "@virastack/mask";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
+import { MaskDemoField } from "@/features/docs/components/MaskDemoField";
 
 type CreditCardForm = {
   card: string;
@@ -14,98 +12,76 @@ type CreditCardForm = {
   cvv: string;
 };
 
+const masks = {
+  card: "card",
+  expiry: "expiry",
+  cvv: { preset: "cvv", from: "card" },
+} as const;
+
+const cardMask = createMask("card");
+const expiryMask = createMask("expiry");
+const cvvMask = createMask("cvv");
+
 type MaskCreditCardDemoProps = {
-  /** Show rawValue / value meta under each field. */
+  /** Show form value / display meta under each field. */
   showMeta?: boolean;
 };
 
 /**
- * Integrated card + expiry + cvv demo. Amex expands CVV to 4 digits.
+ * Card + expiry + CVV. An Amex card switches the CVV to 4 digits.
  */
 export function MaskCreditCardDemo({ showMeta = true }: MaskCreditCardDemoProps) {
   const t = useTranslations("DocsMask");
   const form = useForm<CreditCardForm>({
     defaultValues: { card: "", expiry: "", cvv: "" },
-    mode: "onChange",
+    mode: "onTouched",
   });
-
-  const { card, expiry, cvv } = useViraMask({
-    form,
-    schema: {
-      card: {
-        preset: "card",
-        errorMessage: t("demoInvalidCard"),
-      },
-      expiry: {
-        preset: "expiry",
-        errorMessage: t("demoInvalidExpiry"),
-      },
-      cvv: "cvv",
-    },
-  });
-
-  const { rawValue: cardRaw, value: cardValue, ...cardProps } = card;
-  const { rawValue: expiryRaw, value: expiryValue, ...expiryProps } = expiry;
-  const { rawValue: cvvRaw, value: cvvValue, ...cvvProps } = cvv;
-
-  const cardType = getCardType(cardRaw);
+  const { card, expiry, cvv } = useViraMask(form, masks);
+  const watched = useWatch({ control: form.control, name: ["card", "expiry", "cvv"] });
+  const values = { card: watched[0], expiry: watched[1], cvv: watched[2] };
   const errors = form.formState.errors;
+  const cardType = getCardType(values.card);
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between gap-2">
-          <Label htmlFor="mask-cc-card">{t("demoCardNumberLabel")}</Label>
-          {cardType !== "unknown" ? (
-            <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              {cardType}
-            </span>
-          ) : null}
-        </div>
-        <Input
-          id="mask-cc-card"
-          {...cardProps}
-          value={cardValue}
-          placeholder="0000 0000 0000 0000"
-          aria-invalid={Boolean(errors.card)}
-        />
-        {errors.card ? (
-          <p className="text-xs text-destructive">
-            {String(errors.card.message ?? t("demoInvalidGeneric"))}
-          </p>
-        ) : showMeta ? (
-          <MaskFieldMeta rawValue={cardRaw} value={cardValue} />
+      <div className="relative">
+        {cardType !== "unknown" ? (
+          <span className="absolute top-0 right-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            {cardType}
+          </span>
         ) : null}
+        <MaskDemoField
+          id="mask-cc-card"
+          label={t("demoCardNumberLabel")}
+          {...card}
+          placeholder="0000 0000 0000 0000"
+          error={errors.card}
+          formValue={values.card}
+          display={cardMask.format(values.card)}
+          showMeta={showMeta}
+        />
       </div>
-
       <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <Label htmlFor="mask-cc-expiry">{t("demoExpiryLabel")}</Label>
-          <Input
-            id="mask-cc-expiry"
-            {...expiryProps}
-            value={expiryValue}
-            placeholder="12/28"
-            aria-invalid={Boolean(errors.expiry)}
-          />
-          {errors.expiry ? (
-            <p className="text-xs text-destructive">
-              {String(errors.expiry.message ?? t("demoInvalidGeneric"))}
-            </p>
-          ) : showMeta ? (
-            <MaskFieldMeta rawValue={expiryRaw} value={expiryValue} />
-          ) : null}
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="mask-cc-cvv">{t("demoCvvLabel")}</Label>
-          <Input
-            id="mask-cc-cvv"
-            {...cvvProps}
-            value={cvvValue}
-            placeholder={cardType === "amex" ? "1234" : "123"}
-          />
-          {showMeta ? <MaskFieldMeta rawValue={cvvRaw} value={cvvValue} /> : null}
-        </div>
+        <MaskDemoField
+          id="mask-cc-expiry"
+          label={t("demoExpiryLabel")}
+          {...expiry}
+          placeholder="12/28"
+          error={errors.expiry}
+          formValue={values.expiry}
+          display={expiryMask.format(values.expiry)}
+          showMeta={showMeta}
+        />
+        <MaskDemoField
+          id="mask-cc-cvv"
+          label={t("demoCvvLabel")}
+          {...cvv}
+          placeholder={cardType === "amex" ? "1234" : "123"}
+          error={errors.cvv}
+          formValue={values.cvv}
+          display={cvvMask.format(values.cvv, { from: values.card })}
+          showMeta={showMeta}
+        />
       </div>
     </div>
   );

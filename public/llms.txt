@@ -4,7 +4,7 @@
 
 Prefer product `llms-full.txt` files for API detail. Use this file as the curated ecosystem map. Primary language for docs and packages is English.
 
-Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
+Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.0.0`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
 
 ## Products
 
@@ -21,7 +21,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virast
 - [AI llms.txt](https://virastack.com/ai/llms.txt): AI product map
 - [AI llms-full.txt](https://virastack.com/ai/llms-full.txt): AI CLI, installed files, rules (full)
 - [Mask llms.txt](https://virastack.com/mask/llms.txt): Mask docs map
-- [Mask llms-full.txt](https://virastack.com/mask/llms-full.txt): useViraMask API, presets, examples (full)
+- [Mask llms-full.txt](https://virastack.com/mask/llms-full.txt): useViraMask API, presets, server, examples (full)
 - [Password llms.txt](https://virastack.com/password/llms.txt): Password docs map
 - [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword, strength, confirm, server and leaked-password APIs (full)
 - [Guide llms.txt](https://virastack.com/guide/llms.txt): Guide step map
@@ -32,7 +32,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@1.1.1`, `@virast
 
 - [Start docs](https://virastack.com/start/docs): Install, CLI, templates, scripts, i18n
 - [AI docs](https://virastack.com/ai/docs): Install, CLI, installed files, rules, upgrade from v1
-- [Mask docs](https://virastack.com/mask/docs): Hook, custom masks, validation, helpers, examples
+- [Mask docs](https://virastack.com/mask/docs): Hook, custom masks, validation, server, helpers, examples
 - [Password docs](https://virastack.com/password/docs): Hook, strength, confirm, React Hook Form, server, leaked passwords, examples
 
 ## Packages

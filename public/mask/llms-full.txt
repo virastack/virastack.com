@@ -1,23 +1,25 @@
 # ViraStack Mask (full)
 
-> `@virastack/mask` (~1.1.1), type-safe input masking for React Hook Form. Headless: no CSS. Form stores raw values; inputs show formatted values.
+> `@virastack/mask` (2.x): zero-config input masks for React Hook Form. Headless, no CSS, zero runtime dependencies. The form stores raw values; inputs show masked text. v1 docs: https://virastack.com/mask/v1/llms-full.txt
 
 ## Install
 
 ```bash
 npm install @virastack/mask
-# peers: react, react-dom, react-hook-form
+# peers: react >= 18.2, react-hook-form >= 7.55
 ```
 
-Docs: https://virastack.com/mask/docs; Index: https://virastack.com/mask/llms.txt; Repo: https://github.com/virastack/mask
+Docs: https://virastack.com/mask/docs · Index: https://virastack.com/mask/llms.txt · Repo: https://github.com/virastack/mask
 
 ## Critical rules for agents
 
-1. Always pass a React Hook Form `UseFormReturn` as `form`.
-2. Schema keys must match form field names.
-3. Destructure `rawValue` out before spreading onto `<input>`: `const { rawValue, ...inputProps } = field`.
-4. Submit / validate against raw values in the form (unmasked), not display strings.
-5. Works with any UI library via prop spread (shadcn Input, Ant Design, Chakra, native).
+1. Call `useViraMask(form, schema)`: the first argument is what `useForm()` returns. (v1's `useViraMask({ form, schema })` no longer exists.)
+2. Schema keys are form field paths. `phone`, `iban`, `currency` and `number` take `country: "TR"` for the Turkish layout; defaults are global. For nested fields quote the key (`"address.zip"`) or set `name`.
+3. Spread the returned object onto the input as is. There is no `rawValue`; read raw values with `form.watch(name)` / `getValues`.
+4. Don't pass `value`: the input is uncontrolled (`defaultValue`). `reset()` and `setValue()` update it; pass raw values (ISO for dates).
+5. With a resolver (Zod, Valibot), wrap it: `resolver: maskResolver(masks, zodResolver(schema))` or `maskResolver(masks, schema)`. Otherwise mask validation is skipped.
+6. In Server Components, Server Actions and shared schema files import from `@virastack/mask/server` (the root entry is `"use client"`).
+7. Errors are keys (`tckn.invalid`, `phone.incomplete`), not messages. Map them in your i18n layer.
 
 ## Quick start
 
@@ -25,105 +27,87 @@ Docs: https://virastack.com/mask/docs; Index: https://virastack.com/mask/llms.tx
 import { useForm } from "react-hook-form"
 import { useViraMask } from "@virastack/mask"
 
-function Example() {
-  const form = useForm<{ phone: string }>()
-  const { phone } = useViraMask({
-    form,
-    schema: { phone: "phone" },
+function Checkout() {
+  const form = useForm<{ phone: string; card: string; cvv: string }>()
+  const { phone, card, cvv } = useViraMask(form, {
+    phone: { preset: "phone", country: "TR" },
+    card: "card",
+    cvv: { preset: "cvv", from: "card" },
   })
-  const { rawValue, ...inputProps } = phone
-  return <input {...inputProps} placeholder="(555) 555-5555" />
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <input {...phone} />
+      <input {...card} />
+      <input {...cvv} />
+    </form>
+  )
+}
+// form.watch("phone") → "5551234567"
+```
+
+## Presets
+
+| Preset | Display | Form value | Error keys |
+| --- | --- | --- | --- |
+| `phone` | `+90 (555) 123 45 67`, others `+4915112345678` | `+905551234567` (E.164) | `phone.incomplete` |
+| `phone` + `country: "TR"` | `(555) 123 45 67` (type +90, 0090, 0 or 555) | `5551234567` | `phone.incomplete` |
+| `iban` | `GB82 WEST 1234 5698 7654 32` (any country) | `GB82WEST12345698765432` | `iban.incomplete`, `iban.invalid` |
+| `iban` + `country: "TR"` | `TR33 0006 1005 1978 6457 8413 26` | `TR330006100519786457841326` | `iban.incomplete`, `iban.invalid` |
+| `card` | `4111 1111 1111 1111`, Amex `3782 822463 10005` | digits | `card.incomplete`, `card.invalid` (Luhn) |
+| `cvv` | 3 digits, 4 when `from` card is Amex | digits | `cvv.incomplete` |
+| `expiry` | `12/28`, past months invalid | `1228` | `expiry.incomplete`, `expiry.invalid`, `expiry.min` |
+| `tckn` | `10000000146` | digits | `tckn.incomplete`, `tckn.invalid` |
+| `vkn` | `1234567890` | digits | `vkn.incomplete`, `vkn.invalid` |
+| `currency` | `1,234.56` (no symbol); with a code `$1,234.56` (Intl) | `1234.56` | `currency.min`, `currency.max` |
+| `currency` + `country: "TR"` | `₺1.234,56` | `1234.56` | `currency.min`, `currency.max` |
+| `number` | `1,234` | `1234` | `number.min`, `number.max` |
+| `number` + `country: "TR"` | `1.234` | `1234` | `number.min`, `number.max` |
+| `date` | `29/07/2026` | `2026-07-29` (ISO) | `date.incomplete`, `date.invalid`, `date.min`, `date.max`, `date.minAge`, `date.beforeFrom` |
+
+## Schema entry
+
+```ts
+useViraMask(form, {
+  tckn: "tckn",                                                   // preset name
+  birthDate: { preset: "date", date: { max: "today", minAge: 18 } }, // preset + overrides
+  phone: { preset: "phone", country: "TR", rules: { required: "required" } }, // national layout + register rules
+  price: { preset: "currency", from: "currency" },                   // linked field
+  endDate: { preset: "date", from: "startDate" },                    // can't be before start
+  "address.zip": { mask: "99999" },                                  // nested field
+  iban: { preset: "iban", country: "TR", output: "masked" },         // write masked text to the form
+  card: { preset: "card", onComplete: () => form.setFocus("expiry") },
+})
+```
+
+Returned props per key: `name`, `ref`, `defaultValue`, `onChange`, `onBlur`, `onCompositionEnd`, `type`, `inputMode`, `autoComplete`, `disabled?`, `aria-invalid?`.
+
+## Custom masks
+
+- Pattern: `9` digit, `a` letter, `*` letter or digit, `\` escape, `[...]` optional part, `{...}` fixed part kept in the value.
+- `tokens: { h: /[0-9a-f]/i }`, `transform: "uppercase" | "lowercase"`, `normalize: (value) => string`.
+- Dynamic: `mask: ["999-999", "9999-9999"]` or `mask: (value, ctx) => pattern` (`ctx.from` is the linked field).
+- `number: { min, max, scale, signed, locale }`, `currency: "USD" | { code, locale, min, max, scale }`, `date: { format, min, max, minAge }` (formats `DD/MM/YYYY`, `MM/DD/YYYY`, `YYYY-MM-DD`, `DD.MM.YYYY`, `MM/YY`, `MM/YYYY`).
+- `mask`, `number`, `currency` and `date` exclude each other (type error).
+- `validate: (value, ctx) => true | false | "my.key"` runs after built-in checks.
+- `definePreset("plate", { mask: "99 a[aa] 99[99]", transform: "uppercase" })` → error keys `plate.*`.
+
+## Server
+
+```ts
+"use server"
+import { parseMasked } from "@virastack/mask/server"
+
+export async function checkout(formData: FormData) {
+  const result = await parseMasked(checkoutMasks, formData, zodSchema) // schema optional (any Standard Schema)
+  if (!result.success) return { errors: result.errors } // { phone: "phone.incomplete" }
+  // result.data → raw values, nested names expanded
 }
 ```
 
-## useViraMask(props)
+## Helpers
 
-```ts
-useViraMask<TFieldValues, TSchema>({
-  form: UseFormReturn<TFieldValues>
-  schema: TSchema // MaskSchema<TFieldValues>
-}): MaskFields<TSchema>
-```
+`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length) · `toMinorUnits("1234.56", "TRY") → 123456` · `maskResolver(masks, resolverOrStandardSchema)`.
 
-### Schema entry shapes
+## Upgrade from v1
 
-- Preset string: `{ phone: "phone" }`
-- Options object: `{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`
-- Preset + override: `{ card: { preset: "card", onCardTypeChange: fn } }`
-
-### MaskField (per schema key)
-
-| Prop | Meaning |
-| --- | --- |
-| `value` | Formatted display value |
-| `rawValue` | Raw value in form state (do not put on DOM) |
-| `ref`, `name` | Input ref callback and name |
-| `onChange`, `onBlur`, `onFocus`, `onKeyDown` | Handlers (IME composition supported) |
-| `onCompositionStart`, `onCompositionEnd` | IME-safe updates |
-| `type`, `inputMode`, `autoComplete` | From preset/options |
-| `aria-invalid`, `aria-describedby`, `title` | When validation fails |
-
-## MaskPreset strings
-
-`card` | `expiry` | `cvv` | `tckn` | `phone` | `email` | `url` | `username` | `alpha` | `password` | `text` | `currency` | `iban` | `numeric` | `date` | `taxNumber` | `zipCode`
-
-Notes:
-
-- `card`: Luhn; Amex (`34`/`37`) switches to Amex mask; brands via `getCardType` / `onCardTypeChange`: visa, mastercard, amex, troy, unknown
-- `cvv`: 3 digits, or 4 when paired card field is Amex (`resolveMask`)
-- `iban`: TR display prefix; mod-97 validator
-- `tckn`: Turkish national ID algorithm
-- `taxNumber`: VKN validator
-- `currency`: default EN separators (`.` decimal, `,` thousand); customize via `currency` options
-- `date`: `dateFormat` `DMY` | `MDY` | `YMD`
-- `phone`: TR-style mask in preset
-
-## Custom mask pattern
-
-In `mask` strings: `9` = digit, `a` = letter, `*` = alphanumeric.
-
-## MaskOptions (selected)
-
-| Option | Role |
-| --- | --- |
-| `mask` | Pattern string |
-| `transform` | `uppercase` \| `lowercase` |
-| `allowedChars` / `forbiddenChars` | RegExp filters |
-| `currency` | `{ precision, decimalSeparator, thousandSeparator, symbol, symbolPosition }` |
-| `placeholderChar` | Mask placeholder |
-| `inputMode`, `type`, `autoComplete` | Input attrs |
-| `validate`, `validator` | `true` + built-in or custom `(value) => boolean` |
-| `errorMessage` | Validation message |
-| `dateFormat` | `DMY` \| `MDY` \| `YMD` |
-| `displayPrefix` | e.g. IBAN `TR` |
-| `preset` | Base preset name when overriding |
-| `resolveMask` | `(value, allValues?, schema?) => string \| undefined` dynamic mask |
-| `onCardTypeChange` | Card brand callback |
-
-Built-in `validator` names: `luhn`, `tckn`, `email`, `iban`, `expiry`, `date`, `url`, `vkn`.
-
-## Helpers (named exports)
-
-- `applyMask`, `cleanValue`, `unmask`, `stripMask`
-- `formatCurrency`, `unformatCurrency`
-- `getCardType`
-- `mergeRefs`
-- `PRESETS`: full preset map
-
-## Example URLs
-
-- https://virastack.com/mask/examples/credit-card
-- https://virastack.com/mask/examples/card
-- https://virastack.com/mask/examples/phone
-- https://virastack.com/mask/examples/iban
-- https://virastack.com/mask/examples/tckn
-- https://virastack.com/mask/examples/currency
-- https://virastack.com/mask/examples/date
-- https://virastack.com/mask/examples/taxNumber
-- Also: expiry, cvv, email, url, zipCode, alpha, username, text, password, numeric
-
-## Related
-
-- Password: https://virastack.com/password/llms-full.txt
-- Start (can install Mask): https://virastack.com/start/llms-full.txt
-- Ecosystem: https://virastack.com/llms.txt
+`useViraMask({ form, schema })` → `useViraMask(form, schema)`; `rawValue` removed; `phone` → `{ preset: "phone", country: "TR" }` for the Turkish layout or E.164 `"phone"`; `iban` → `{ preset: "iban", country: "TR" }` (value keeps `TR`) or global `"iban"`; `taxNumber` → `vkn`; `numeric` → `number`; `email`, `url`, `username`, `alpha`, `password`, `text`, `zipCode` removed; `resolveMask` → `mask` function; `errorMessage` → error keys; `mergeRefs`, `applyMask`, `formatCurrency` removed (use `createMask`). Full guide: https://virastack.com/mask/docs/upgrade

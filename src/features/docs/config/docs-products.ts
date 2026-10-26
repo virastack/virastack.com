@@ -13,6 +13,12 @@ import {
   isAiDocsSlug,
 } from "@/features/docs/config/ai-docs.config";
 import {
+  getMaskDocsV1Nav,
+  getMaskDocsV1Page,
+  isMaskDocsV1Slug,
+  maskDocsV1Slugs,
+} from "@/features/docs/config/mask-docs-v1.config";
+import {
   getMaskDocsNav,
   getMaskDocsPage,
   isMaskDocsSlug,
@@ -49,7 +55,13 @@ export function isDocsProductId(value: string): value is DocsProductId {
 type DocsTranslate = (key: string) => string;
 
 type DocsMessageNamespace =
-  "DocsStart" | "DocsAi" | "DocsAiV1" | "DocsMask" | "DocsPassword" | "DocsPasswordV1";
+  | "DocsStart"
+  | "DocsAi"
+  | "DocsAiV1"
+  | "DocsMask"
+  | "DocsMaskV1"
+  | "DocsPassword"
+  | "DocsPasswordV1";
 
 type DocsVersion = {
   id: string;
@@ -125,8 +137,20 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getNav: getMaskDocsNav,
     getPage: getMaskDocsPage,
     isSlug: isMaskDocsSlug,
-    versions: [{ id: "v1", label: "v1", latest: true }],
-    archives: {},
+    versions: [
+      { id: "v2", label: "v2.0", latest: true },
+      { id: "v1", label: "v1.1", latest: false },
+    ],
+    archives: {
+      v1: {
+        indexHref: "/mask/docs/v1",
+        messageNamespace: "DocsMaskV1",
+        slugs: maskDocsV1Slugs,
+        getNav: getMaskDocsV1Nav,
+        getPage: getMaskDocsV1Page,
+        isSlug: isMaskDocsV1Slug,
+      },
+    },
   },
   password: {
     id: "password",

@@ -1,50 +1,61 @@
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { MaskCustomDemo } from "@/features/docs/content/mask/MaskCustomDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 
-const customCode = `const form = useForm({ defaultValues: { code: "" } })
+const patternCode = `useViraMask(form, {
+  code: { mask: "aaa-999", transform: "uppercase" },     // ABC-123
+  zip: { mask: "99999[-9999]" },                          // 12345 ya da 12345-6789
+  hex: { mask: "\\\\#hhhhhh", tokens: { h: /[0-9a-f]/i } }, // #FF00AA
+  iban: { mask: "{TR}99 9999 9999 9999 9999 9999 99" },   // değer: TR33…
+})`;
 
-const { code } = useViraMask({
-  form,
-  schema: {
-    code: {
-      mask: "aaa-999",
-      transform: "uppercase",
-    },
+const dynamicCode = `useViraMask(form, {
+  // ilk uyan desen seçilir
+  code: { mask: ["999-999", "9999-9999"] },
+  // değere ya da bağlı alana göre desen
+  card: {
+    mask: (value) => (/^3[47]/.test(value) ? "9999 999999 99999" : "9999 9999 9999 9999"),
   },
+  // yazılanı desene yerleştirmeden önce düzelt
+  phone: { mask: "(999) 999 99 99", normalize: (value) => value.replace(/^0+/, "") },
+})`;
+
+const numberDateCode = `useViraMask(form, {
+  quantity: { number: { min: 1, max: 99 } },
+  weight: { number: { scale: 2, signed: true, locale: "en-US" } },
+  price: { currency: "USD" },
+  amount: { currency: { code: "TRY", min: 10, max: 5000 } },
+  birthDate: { date: { max: "today", minAge: 18 } },
+  expiry: { date: { format: "MM/YY", min: "today" } },
+})`;
+
+const presetCode = `// masks.ts — istemci ve sunucu paylaşır
+import { definePreset } from "@virastack/mask/server"
+
+export const plate = definePreset("plate", {
+  mask: "99 a[aa] 99[99]",
+  transform: "uppercase",
+  validate: (value) => !value.startsWith("00") || "plate.city",
 })
 
-const { rawValue, ...inputProps } = code
+// form
+useViraMask(form, { plate, backupPlate: { preset: plate } })`;
 
-<input {...inputProps} placeholder="ABC-123" />`;
-
-const resolveMaskCode = `{
-  mask: "9999 9999 9999 9999",
-  resolveMask: (value) => {
-    const digits = value.replace(/\\D/g, "")
-    if (digits.startsWith("34") || digits.startsWith("37")) {
-      return "9999 999999 99999" // Amex
-    }
-    return undefined
-  },
-}`;
-
-export async function MaskCustomMaskDoc() {
+export function MaskCustomMaskDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Custom mask"
-        description="Hazır maske yetmediğinde kendi maske dizginizi ve MaskOptions alanlarını kullanın."
+        title="Özel maske"
+        description="Desen sözdizimi, özel token, isteğe bağlı ve sabit bölümler, dinamik maske, sayı ve tarih seçenekleri."
       />
       <DocsProse>
-        <h2 id="sozdizimi">Sözdizimi</h2>
-        <p>Maske dizgisindeki özel token’lar:</p>
+        <h2 id="sozdizimi">Desen sözdizimi</h2>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
             <thead>
               <tr>
-                <th>Token</th>
+                <th>Yazım</th>
                 <th>Anlam</th>
               </tr>
             </thead>
@@ -53,70 +64,105 @@ export async function MaskCustomMaskDoc() {
                 <td>
                   <code>9</code>
                 </td>
-                <td>Rakam (0–9)</td>
+                <td>Rakam</td>
               </tr>
               <tr>
                 <td>
-                  <code>a</code> / <code>A</code>
+                  <code>a</code>
                 </td>
-                <td>
-                  Harf (a–z). Büyük/küçük için <code>transform</code> kullanın
-                </td>
+                <td>Harf (Türkçe harfler dahil)</td>
               </tr>
               <tr>
                 <td>
                   <code>*</code>
                 </td>
-                <td>Herhangi bir karakter</td>
+                <td>Harf ya da rakam</td>
               </tr>
               <tr>
-                <td>Diğer</td>
                 <td>
-                  Literal ayırıcı (<code> </code>, <code>/</code>, <code>(</code>, <code>)</code>…)
+                  <code>\</code>
+                </td>
+                <td>
+                  Sonraki karakter sabittir: <code>\9</code> ekranda 9 yazar
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>[ ]</code>
+                </td>
+                <td>İsteğe bağlı bölüm; boş kalsa da maske tamamlanmış sayılır</td>
+              </tr>
+              <tr>
+                <td>
+                  <code>{"{ }"}</code>
+                </td>
+                <td>
+                  Sabit bölüm; ekranda görünür ve form değerinde kalır (<code>{"{TR}"}</code>,{" "}
+                  <code>{"{+}"}</code>)
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <ComponentPreview preview={<MaskCustomDemo />} code={customCode}>
-          <DocsCodeBlock code={customCode} lang="tsx" />
+        <p>
+          Diğer karakterler yalnızca ekranda görünür. <code>tokens</code> ile kendi karakterlerinizi
+          tanımlarsınız; <code>transform</code> harfleri büyütür ya da küçültür.
+        </p>
+        <ComponentPreview
+          preview={
+            <MaskFieldDemo
+              config={{ mask: "aaa-999", transform: "uppercase" }}
+              placeholder="ABC-123"
+            />
+          }
+          code={patternCode}
+        >
+          <DocsCodeBlock code={patternCode} lang="tsx" />
         </ComponentPreview>
 
-        <h2 id="options">MaskOptions</h2>
-        <p>Sık kullanılan alanlar:</p>
+        <h2 id="dinamik">Dinamik maske</h2>
+        <p>
+          Dizi verirseniz değeri bütünüyle alan ilk desen seçilir. Fonksiyon değeri ve{" "}
+          <code>ctx.from</code> (bağlı alanın değeri) ile desen döner.
+        </p>
+        <DocsCodeBlock code={dynamicCode} lang="tsx" />
+
+        <h2 id="sayi-tarih">Sayı, para ve tarih</h2>
+        <p>
+          <code>mask</code>, <code>number</code>, <code>currency</code> ve <code>date</code>{" "}
+          birbirini dışlar; ikisini birden vermek derleme hatasıdır.
+        </p>
         <ul>
           <li>
-            <code>mask</code>: pattern dizgisi
+            <code>number</code>: <code>min</code>, <code>max</code>, <code>scale</code> (ondalık
+            basamak), <code>signed</code>, <code>locale</code> (varsayılan <code>en-US</code>;
+            Türkçe ayırıcılar için preset ile <code>country: &quot;TR&quot;</code>). Max yazarken,
+            min alan terk edilince uygulanır.
           </li>
           <li>
-            <code>transform</code>: <code>uppercase</code> | <code>lowercase</code>
+            <code>currency</code>: ISO kodu ya da <code>{"{ code, locale, min, max, scale }"}</code>
+            . Ayırıcılar ve sembol Intl&apos;den gelir. Kod yoksa sembolsüz <code>1,234.56</code>;
+            Türk lirası için <code>{'{ preset: "currency", country: "TR" }'}</code>.
           </li>
           <li>
-            <code>allowedChars</code> / <code>forbiddenChars</code>
-          </li>
-          <li>
-            <code>displayPrefix</code>: gösterilir, ham değere yazılmaz (IBAN’daki <code>TR</code>)
-          </li>
-          <li>
-            <code>currency</code>, <code>dateFormat</code>, <code>alphaFormat</code>,{" "}
-            <code>usernameFormat</code>
-          </li>
-          <li>
-            <code>type</code>, <code>inputMode</code>, <code>autoComplete</code>
-          </li>
-          <li>
-            <code>preset</code>: hazır maske üzerine override
+            <code>date</code>: <code>format</code>, <code>min</code>, <code>max</code> (
+            <code>&quot;today&quot;</code>, ISO ya da <code>Date</code>), <code>minAge</code>. Tam
+            tarihlerde form değeri ISO&apos;dur.
           </li>
         </ul>
+        <ComponentPreview
+          preview={<MaskFieldDemo config={{ number: { min: 1, max: 99 } }} placeholder="1–99" />}
+          code={numberDateCode}
+        >
+          <DocsCodeBlock code={numberDateCode} lang="tsx" />
+        </ComponentPreview>
 
-        <h2 id="resolve">resolveMask</h2>
+        <h2 id="preset">definePreset</h2>
         <p>
-          Dinamik maske için <code>resolveMask(value, allValues, schema)</code> yeni bir maske
-          dizgisi (veya <code>undefined</code>) döner. Kart (Amex) ve CVV hazır maskeleri bunu
-          kullanır: kardeş alanlara bakarak maskeyi günceller.
+          Ekibinizin maskesini tek yerde tanımlayın. Ad, hata anahtarlarının önekidir (
+          <code>plate.incomplete</code>). Hook, sunucu ve testler aynı nesneyi kullanır.
         </p>
-        <DocsCodeBlock code={resolveMaskCode} lang="ts" />
+        <DocsCodeBlock code={presetCode} lang="tsx" />
       </DocsProse>
     </>
   );

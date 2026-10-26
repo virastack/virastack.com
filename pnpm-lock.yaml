@@ -33,11 +33,14 @@ importers:
         specifier: ^1.38.1
         version: 1.38.1
       '@virastack/mask':
-        specifier: 1.1.0
-        version: 1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
+        specifier: 2.0.0
+        version: 2.0.0(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
+      '@virastack/mask-v1':
+        specifier: npm:@virastack/mask@1.1.0
+        version: '@virastack/mask@1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)'
       '@virastack/password':
-        specifier: file:../password
-        version: file:../password(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 1.1.0
+        version: 1.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2001,8 +2004,15 @@ packages:
       react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/password@file:../password':
-    resolution: {directory: ../password, type: directory}
+  '@virastack/mask@2.0.0':
+    resolution: {integrity: sha512-QQuvro77RxJRptcOMHdbpdYLWbqsIFmvsI/3nUFH+zBGNXVfGzj6IlnP2dwgThzzbNUwOvAGhFvznsnqOITPtQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: '>=18.2.0'
+      react-hook-form: '>=7.55.0'
+
+  '@virastack/password@1.1.0':
+    resolution: {integrity: sha512-M62GHYr/M+EFkl/bCqKvZRZvLtVKA100kZcrXqobgddjr6Dxm4xNvI4lUZ7RJegFvExaTFE0hI1MFqF1zDxMxQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
@@ -6754,7 +6764,12 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       react-hook-form: 7.83.0(react@19.2.4)
 
-  '@virastack/password@file:../password(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@virastack/mask@2.0.0(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      react: 19.2.4
+      react-hook-form: 7.83.0(react@19.2.4)
+
+  '@virastack/password@1.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)

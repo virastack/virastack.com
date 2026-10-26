@@ -53,6 +53,26 @@ const nextConfig: NextConfig = {
         destination: "/:locale/mask/examples/:id",
         permanent: true,
       },
+      // Mask v2 renamed or removed these example pages.
+      ...[
+        ["taxNumber", "vkn"],
+        ["numeric", "number"],
+      ].flatMap(([from, to]) => [
+        { source: `/mask/examples/${from}`, destination: `/mask/examples/${to}`, permanent: true },
+        {
+          source: `/:locale/mask/examples/${from}`,
+          destination: `/:locale/mask/examples/${to}`,
+          permanent: true,
+        },
+      ]),
+      ...["email", "url", "zipCode", "alpha", "username", "text"].flatMap((id) => [
+        { source: `/mask/examples/${id}`, destination: "/mask/examples", permanent: true },
+        {
+          source: `/:locale/mask/examples/${id}`,
+          destination: "/:locale/mask/examples",
+          permanent: true,
+        },
+      ]),
       {
         source: "/password/docs/examples",
         destination: "/password/examples",

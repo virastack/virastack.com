@@ -3,20 +3,27 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
 import { ChakraUi } from "@/components/ui/svgs/chakraUi";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { MaskPresetDemo } from "@/features/docs/components/MaskPresetDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 
-const patternCode = `const { card } = useViraMask({
-  form,
-  schema: {
-    card: "card",
-  },
-})
+const patternCode = `const { card } = useViraMask(form, { card: "card" })
 
-// card.value → "4111 1111 1111 1111" (ekranda görünen)
-// card.rawValue → "4111111111111111" (formdaki ham değer)
+// ekranda: "4111 1111 1111 1111"
+// form.watch("card"): "4111111111111111"
 
 return <input {...card} placeholder="0000 0000 0000 0000" />`;
+
+const refCode = `// Kendi ref'iniz de lazımsa ikisini birleştirin
+const inputRef = useRef<HTMLInputElement>(null)
+
+<Input
+  {...card}
+  ref={(el) => {
+    card.ref(el)
+    inputRef.current = el
+  }}
+/>`;
 
 const shadcnCode = `import { useForm } from "react-hook-form"
 import { useViraMask } from "@virastack/mask"
@@ -24,12 +31,7 @@ import { Input } from "@/components/ui/input"
 
 function Example() {
   const form = useForm<{ card: string }>()
-  const { card } = useViraMask({
-    form,
-    schema: {
-      card: "card",
-    },
-  })
+  const { card } = useViraMask(form, { card: "card" })
 
   return <Input {...card} placeholder="0000 0000 0000 0000" />
 }`;
@@ -40,12 +42,7 @@ import { Input } from "antd"
 
 function Example() {
   const form = useForm<{ card: string }>()
-  const { card } = useViraMask({
-    form,
-    schema: {
-      card: "card",
-    },
-  })
+  const { card } = useViraMask(form, { card: "card" })
 
   return <Input {...card} placeholder="0000 0000 0000 0000" />
 }`;
@@ -56,43 +53,40 @@ import { Input } from "@chakra-ui/react"
 
 function Example() {
   const form = useForm<{ card: string }>()
-  const { card } = useViraMask({
-    form,
-    schema: {
-      card: "card",
-    },
-  })
+  const { card } = useViraMask(form, { card: "card" })
 
   return <Input {...card} placeholder="0000 0000 0000 0000" />
 }`;
 
-export async function MaskUiLibrariesDoc() {
+export function MaskUiLibrariesDoc() {
   return (
     <>
       <DocsPageHeader
         title="UI kütüphaneleri"
-        description="Mask herhangi bir input bileşenine bağlanır. Aşağıdaki örnekler aynı hook API’sini kullanır."
+        description="Mask bir UI paketi değildir. shadcn/ui, Ant Design, Chakra ve düz input ile aynı kalıp."
       />
       <DocsProse>
         <p>
-          <code>useViraMask()</code> alan props’larını döndürür. Input’a doğrudan spread edin;{" "}
-          <code>card.value</code> formatlı görünümü, <code>card.rawValue</code> formdaki ham değeri
-          verir.
+          Dönen nesneyi input&apos;a yayın. Bileşen <code>ref</code>&apos;i gerçek{" "}
+          <code>&lt;input&gt;</code>&apos;a iletmelidir (
+          <AcademyBadge kind="react" label="React 19" />
+          &apos;da prop olarak, <AcademyBadge kind="react" label="React 18" />
+          &apos;de <code>forwardRef</code> ile). <code>value</code> vermeyin; input kontrolsüzdür.
         </p>
 
-        <h2 id="pattern">Ortak pattern</h2>
+        <h2 id="pattern">Ortak kalıp</h2>
         <DocsCodeBlock code={patternCode} lang="tsx" />
+        <DocsCodeBlock code={refCode} lang="tsx" />
 
         <h2 id="shadcn" className="flex items-center gap-2.5">
           <ShadcnUi className="size-5 shrink-0 text-foreground" aria-hidden />
           shadcn/ui
         </h2>
         <p>
-          Bu sitedeki canlı demolar da shadcn <code>Input</code> kullanır. Props doğrudan spread
-          edilir:
+          Bu sitedeki canlı demolar da <AcademyBadge kind="shadcn" /> <code>Input</code> kullanır:
         </p>
         <ComponentPreview
-          preview={<MaskPresetDemo preset="card" placeholder="0000 0000 0000 0000" />}
+          preview={<MaskFieldDemo config="card" placeholder="0000 0000 0000 0000" />}
           code={shadcnCode}
         >
           <DocsCodeBlock code={shadcnCode} lang="tsx" />
@@ -102,18 +96,12 @@ export async function MaskUiLibrariesDoc() {
           <AntDesignDarkTheme className="size-5 shrink-0" aria-hidden />
           Ant Design
         </h2>
-        <p>
-          <code>antd</code> <code>Input</code> native input props kabul eder. Aynı pattern:
-        </p>
         <DocsCodeBlock code={antDesignCode} lang="tsx" />
 
         <h2 id="chakra" className="flex items-center gap-2.5">
           <ChakraUi className="size-5 shrink-0" aria-hidden />
           Chakra UI
         </h2>
-        <p>
-          Chakra <code>Input</code> de aynı şekilde çalışır:
-        </p>
         <DocsCodeBlock code={chakraCode} lang="tsx" />
       </DocsProse>
     </>

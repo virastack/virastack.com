@@ -1,33 +1,33 @@
 # ViraStack Mask
 
-> Lightweight, type-safe input masking for React Hook Form. Presets for cards, phone, IBAN, currency, TCKN, and custom patterns via `useViraMask()`. npm: `@virastack/mask` (~1.1.1).
+> Zero-config input masks for React Hook Form, with Turkish validators, type safety and server support. npm: `@virastack/mask` (2.x). Zero runtime dependencies, ~8 KB.
 
-Install: `npm install @virastack/mask`. Peers: `react`, `react-dom`, `react-hook-form`. Form state keeps **raw** (unmasked) values; inputs show formatted display values. Strip `rawValue` before spreading props onto the DOM.
+Install: `npm install @virastack/mask`. Peers: `react` ≥ 18.2, `react-hook-form` ≥ 7.55. The form stores the **raw** value (`5551234567`); the input shows the mask (`(555) 123 45 67`). Spread the returned object onto the input as is.
 
-For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llms-full.txt).
+For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llms-full.txt). v1 docs are archived at [v1/llms.txt](https://virastack.com/mask/v1/llms.txt).
 
 ## Docs
 
-- [Introduction](https://virastack.com/mask/docs): Install, peers, and scope
-- [useViraMask()](https://virastack.com/mask/docs/use-vira-mask): Hook API, schema, return fields, RHF sync
-- [Custom mask](https://virastack.com/mask/docs/custom-mask): Pattern syntax (`9` / `a` / `*`), MaskOptions, `resolveMask`
-- [Validation](https://virastack.com/mask/docs/validation): Built-in validators and custom error messages
-- [Helpers](https://virastack.com/mask/docs/helpers): `applyMask`, currency helpers, `getCardType`, `mergeRefs`
-- [Types](https://virastack.com/mask/docs/types): `MaskPreset`, `MaskOptions`, schema types
-- [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn, Ant Design, Chakra; prop-spread pattern
-- [Examples](https://virastack.com/mask/examples): Live presets index
-- [llms-full.txt](https://virastack.com/mask/llms-full.txt): Full machine-readable API
+- [Introduction](https://virastack.com/mask/docs): Install, peers, comparison with imask and Maskito
+- [Upgrade from v1](https://virastack.com/mask/docs/upgrade): Signature, presets, options and helpers that changed
+- [useViraMask()](https://virastack.com/mask/docs/use-vira-mask): Schema, linked fields (`from`), return props, React Hook Form compatibility
+- [Custom mask](https://virastack.com/mask/docs/custom-mask): Pattern syntax, tokens, optional and fixed parts, dynamic masks, number/currency/date, `definePreset`
+- [Validation](https://virastack.com/mask/docs/validation): Error keys, custom validators, `maskResolver` for Zod/Valibot
+- [Server](https://virastack.com/mask/docs/server): `@virastack/mask/server`, `parseMasked`, Standard Schema
+- [Helpers](https://virastack.com/mask/docs/helpers): `createMask`, validators, `toMinorUnits`
+- [Types](https://virastack.com/mask/docs/types): `PresetName`, `MaskOptions`, schema and field types
+- [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn/ui, Ant Design, Chakra
+- [Examples](https://virastack.com/mask/examples): Live preset index
 
 ## Notable examples
 
-- [Credit card form](https://virastack.com/mask/examples/credit-card): Card + expiry + CVV (Amex-aware)
-- [Card](https://virastack.com/mask/examples/card): BIN detection (Visa, Mastercard, Amex, Troy)
-- [Phone](https://virastack.com/mask/examples/phone): TR phone mask
-- [IBAN](https://virastack.com/mask/examples/iban): TR IBAN with mod-97 validation
+- [Credit card form](https://virastack.com/mask/examples/credit-card): Card + expiry + CVV linked with `from`
+- [Phone](https://virastack.com/mask/examples/phone): E.164; `{ preset: "phone", country: "TR" }` for `(555) 123 45 67` (type +90, 0 or 555), raw 10 digits
+- [IBAN](https://virastack.com/mask/examples/iban): every country, mod-97 and country length; `{ preset: "iban", country: "TR" }` writes `TR` for you
 - [TCKN](https://virastack.com/mask/examples/tckn): Turkish national ID
-- [Currency](https://virastack.com/mask/examples/currency): Locale-aware money formatting
-- [Date](https://virastack.com/mask/examples/date): DMY / MDY / YMD
-- [Tax number](https://virastack.com/mask/examples/taxNumber): VKN validator
+- [Currency](https://virastack.com/mask/examples/currency): Intl formatting, `{ preset: "currency", country: "TR" }` for `₺1.234,56`, follows a currency select
+- [Date](https://virastack.com/mask/examples/date): ISO value, min/max, minAge, start/end
+- [Custom mask](https://virastack.com/mask/examples/custom): `definePreset` plate example
 
 ## Product
 

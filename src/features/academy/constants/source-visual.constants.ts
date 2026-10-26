@@ -67,7 +67,6 @@ const PERSON_AVATAR_ALIASES: Record<string, string> = {
   "dan abramov": "Dan Abramov",
   "dominik dorfmeister": "Dominik Dorfmeister",
   "kent c. dodds": "Kent C. Dodds",
-  "luca mezzalira": "Luca Mezzalira",
   tkdodo: "Dominik Dorfmeister",
 };
 
@@ -87,6 +86,10 @@ const PERSON_AVATAR_SOURCES: Record<string, { imageSrc: string; initials: string
   "jack herrington": {
     imageSrc: "/academy/authors/jack-herrington.png",
     initials: "JH",
+  },
+  "luca mezzalira": {
+    imageSrc: "/academy/authors/luca-mezzalira.png",
+    initials: "LM",
   },
   "martin fowler": {
     imageSrc: "/academy/authors/martin-fowler.png",
