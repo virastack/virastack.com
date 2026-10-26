@@ -24,7 +24,7 @@ definePolicy({ minTokenLength: 4 }) // fewer false positives for short names
 definePolicy({ blockCommon: false, blockRepetitive: false })`;
 
 const forbiddenCode = `evaluate(password, policy, { forbidden: [email, name, username] })
-// "vira.stack@example.com" → "vira.stack", "vira", "stack" (domain ignored)
+// "hello@virastack.com" → "hello" (domain ignored)
 // "Vira Stack" → "vira stack", "vira", "stack"`;
 
 const presetRows: [string, string, string][] = [
@@ -136,7 +136,7 @@ export function PasswordStrengthDoc() {
         <DocsCodeBlock code={forbiddenCode} lang="ts" />
         <p>
           Parts shorter than <code>minTokenLength</code>&#32;(default 3) are ignored. Short parts
-          cause false positives: with <code>vira.dev@example.com</code>, the part <code>dev</code>{" "}
+          cause false positives: with <code>dev@virastack.com</code>, the part <code>dev</code>{" "}
           rejects <code>devoted-garden-path</code>. Raise it to 4 if that matters to you.
         </p>
         <PasswordExamplePreview id="forbidden" />

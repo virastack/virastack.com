@@ -7,7 +7,7 @@ import { policy } from "../password-policy";
 type Props = { email: string; name: string };
 
 export function NewPasswordField({ email, name }: Props) {
-  // "vira.stack@example.com" and "Vira Stack" → "vira", "stack"
+  // "hello@virastack.com" → "hello"; "Vira Stack" → "vira", "stack"
   const { inputProps, btnProps, issues } = useViraPassword({ policy, forbidden: [email, name] });
 
   return (

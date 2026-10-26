@@ -12,10 +12,10 @@ import { passwordMessages } from "./password-messages";
 import { policy } from "./password-policy";
 
 export function ForbiddenExample() {
-  const [email, setEmail] = useState("vira.stack@example.com");
+  const [email, setEmail] = useState("hello@virastack.com");
   const [name, setName] = useState("Vira Stack");
 
-  // Email: the local part and its pieces ("vira", "stack"). Name: each word.
+  // Email: the local part and its pieces ("hello"). Name: each word ("vira", "stack").
   const pw = useViraPassword({ policy, forbidden: [email, name] });
 
   return (

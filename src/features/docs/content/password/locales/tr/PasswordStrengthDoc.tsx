@@ -24,7 +24,7 @@ definePolicy({ minTokenLength: 4 }) // kısa adlarda daha az yanlış pozitif
 definePolicy({ blockCommon: false, blockRepetitive: false })`;
 
 const forbiddenCode = `evaluate(password, policy, { forbidden: [email, name, username] })
-// "vira.stack@example.com" → "vira.stack", "vira", "stack" (alan adı yok sayılır)
+// "hello@virastack.com" → "hello" (alan adı yok sayılır)
 // "Vira Stack" → "vira stack", "vira", "stack"`;
 
 const presetRows: [string, string, string][] = [
@@ -137,7 +137,7 @@ export function PasswordStrengthDoc() {
         <DocsCodeBlock code={forbiddenCode} lang="ts" />
         <p>
           <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır. Kısa
-          parçalar yanlış pozitife yol açar: <code>vira.dev@example.com</code> için <code>dev</code>{" "}
+          parçalar yanlış pozitife yol açar: <code>dev@virastack.com</code> için <code>dev</code>{" "}
           parçası <code>devoted-garden-path</code>&#32;parolasını reddeder. Sizin için önemliyse
           4&apos;e çıkarın.
         </p>
