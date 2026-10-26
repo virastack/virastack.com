@@ -119,6 +119,13 @@ export function PasswordStrengthDoc() {
           The score is a heuristic from length and character variety, not a crack-time estimate. For
           that, see the <Link href="/password/docs/comparison">comparison</Link>.
         </p>
+        <p>
+          <strong>Why is a complex 14-character password weak?</strong> The score follows the
+          policy, not a universal rule. The default <code>nist</code> preset asks for 15 characters,
+          so anything shorter fails it and scores 0–1, however mixed it is. From 15 characters the
+          score rises with length and variety. Need shorter passwords? Use <code>minLength: 8</code>{" "}
+          (NIST allows it with a second factor) or the <code>legacy</code> preset.
+        </p>
 
         <h2 id="hook">In the hook</h2>
         <p>

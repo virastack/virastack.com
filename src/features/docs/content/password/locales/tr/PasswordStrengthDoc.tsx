@@ -120,6 +120,14 @@ export function PasswordStrengthDoc() {
           değildir. Onun için <Link href="/password/docs/comparison">karşılaştırmaya</Link>
           &#32;bakın.
         </p>
+        <p>
+          <strong>Karmaşık bir 14 karakterlik parola neden zayıf?</strong> Skor evrensel bir kurala
+          değil, politikaya göre hesaplanır. Varsayılan <code>nist</code> şablonu 15 karakter ister;
+          daha kısa parolalar ne kadar karışık olursa olsun politikayı geçemez ve 0–1 alır. 15
+          karakterden sonra skor uzunluk ve çeşitlilikle artar. Daha kısa parola mı gerekiyor?{" "}
+          <code>minLength: 8</code> (NIST ikinci faktörle buna izin verir) veya <code>legacy</code>{" "}
+          şablonunu kullanın.
+        </p>
 
         <h2 id="hook">Hook içinde</h2>
         <p>
