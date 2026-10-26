@@ -2,8 +2,8 @@ import type { Product } from "@/types/product.types";
 
 import { AiLanding } from "@/features/ai";
 import { GuideLanding } from "@/features/guide";
-import { MaskLanding } from "@/features/mask";
-import { PasswordLanding } from "@/features/password";
+import { MaskDemo, MaskLanding } from "@/features/mask";
+import { PasswordDemo, PasswordLanding } from "@/features/password";
 import { ProductHero } from "@/features/product/components/ProductHero";
 import { StartDemoVideo, StartFeatures } from "@/features/start";
 
@@ -11,10 +11,19 @@ type ProductPageProps = {
   product: Product;
 };
 
+/** Products with a live demo show it beside the hero copy instead of further down. */
+const heroDemos = {
+  mask: <MaskDemo inHero />,
+  password: <PasswordDemo inHero />,
+} as const;
+
 export function ProductPage({ product }: ProductPageProps) {
   return (
     <>
-      <ProductHero product={product} />
+      <ProductHero
+        product={product}
+        aside={product.id === "mask" || product.id === "password" ? heroDemos[product.id] : null}
+      />
       {product.id === "start" ? (
         <>
           <StartDemoVideo />

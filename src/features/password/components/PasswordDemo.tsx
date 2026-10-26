@@ -26,7 +26,12 @@ const bars = {
   strong: [4, "bg-green-600"],
 } as const;
 
-export function PasswordDemo() {
+type PasswordDemoProps = {
+  /** Rendered beside the hero copy: no section padding, animates on mount. */
+  inHero?: boolean;
+};
+
+export function PasswordDemo({ inHero = false }: PasswordDemoProps) {
   const t = useTranslations("Password");
   const locale = useLocale();
   const [leak, setLeak] = useState<PwnedResult | null>(null);
@@ -65,70 +70,80 @@ export function PasswordDemo() {
     startCheck(async () => setLeak(await checkPasswordLeak(password)));
   }
 
+  const demo = (
+    <Reveal
+      className="mx-auto w-full max-w-md"
+      mode={inHero ? "mount" : "view"}
+      delay={inHero ? 0.15 : 0}
+    >
+      {/* POST: a submit before hydration never puts the password in the URL. */}
+      <form method="post" onSubmit={onCheck} className="space-y-3 p-5 sm:p-6">
+        <div className="space-y-1.5">
+          <Label htmlFor="password-landing-demo">{t("demoLabel")}</Label>
+          <div className="relative w-full">
+            <Input {...inputProps} />
+            <Button variant="ghost" size="icon-sm" {...restBtnProps} className={cn(btnClassName)}>
+              {children}
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-1" aria-hidden>
+          {[1, 2, 3, 4].map((step) => (
+            <div
+              key={step}
+              className={cn(
+                "h-1 rounded-full transition-colors",
+                filled >= step ? barColor : "bg-muted",
+              )}
+            />
+          ))}
+        </div>
+
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <p {...strengthProps}>
+            {t("demoStrength")}: {strength ? levels[strength.level] : null}
+          </p>
+          <p>
+            {t("demoStatus")}: {isVisible ? t("demoVisible") : t("demoHidden")}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button type="submit" variant="outline" size="sm" disabled={checking}>
+            {t("demoCheckLeak")}
+          </Button>
+          <p className="text-xs text-muted-foreground" aria-live="polite">
+            {leak?.status === "pwned" &&
+              t("demoLeakPwned", { count: leak.count.toLocaleString(locale) })}
+            {leak?.status === "safe" && t("demoLeakSafe")}
+            {leak?.status === "unknown" && t("demoLeakUnknown")}
+          </p>
+        </div>
+      </form>
+
+      <div className="mt-6 flex justify-center">
+        <Button
+          variant="ghost"
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/password/examples" />}
+        >
+          <span>{t("demoMoreExamples")}</span>
+          <ChevronRightIcon
+            data-icon="inline-end"
+            className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
+          />
+        </Button>
+      </div>
+    </Reveal>
+  );
+
+  if (inHero) return demo;
+
   return (
     <section id="demo" className="mx-auto max-w-3xl scroll-mt-28 px-6 py-16">
-      <Reveal className="mx-auto w-full max-w-md">
-        {/* POST: a submit before hydration never puts the password in the URL. */}
-        <form method="post" onSubmit={onCheck} className="space-y-3 p-5 sm:p-6">
-          <div className="space-y-1.5">
-            <Label htmlFor="password-landing-demo">{t("demoLabel")}</Label>
-            <div className="relative w-full">
-              <Input {...inputProps} />
-              <Button variant="ghost" size="icon-sm" {...restBtnProps} className={cn(btnClassName)}>
-                {children}
-              </Button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-4 gap-1" aria-hidden>
-            {[1, 2, 3, 4].map((step) => (
-              <div
-                key={step}
-                className={cn(
-                  "h-1 rounded-full transition-colors",
-                  filled >= step ? barColor : "bg-muted",
-                )}
-              />
-            ))}
-          </div>
-
-          <div className="space-y-1 text-xs text-muted-foreground">
-            <p {...strengthProps}>
-              {t("demoStrength")}: {strength ? levels[strength.level] : null}
-            </p>
-            <p>
-              {t("demoStatus")}: {isVisible ? t("demoVisible") : t("demoHidden")}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Button type="submit" variant="outline" size="sm" disabled={checking}>
-              {t("demoCheckLeak")}
-            </Button>
-            <p className="text-xs text-muted-foreground" aria-live="polite">
-              {leak?.status === "pwned" &&
-                t("demoLeakPwned", { count: leak.count.toLocaleString(locale) })}
-              {leak?.status === "safe" && t("demoLeakSafe")}
-              {leak?.status === "unknown" && t("demoLeakUnknown")}
-            </p>
-          </div>
-        </form>
-
-        <div className="mt-6 flex justify-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            nativeButton={false}
-            render={<Link href="/password/examples" />}
-          >
-            <span>{t("demoMoreExamples")}</span>
-            <ChevronRightIcon
-              data-icon="inline-end"
-              className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
-            />
-          </Button>
-        </div>
-      </Reveal>
+      {demo}
     </section>
   );
 }

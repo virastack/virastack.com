@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -31,29 +33,37 @@ const productDescKeys = {
   guide: "guideDesc",
 } as const;
 
-const AI_INSTALL_COMMAND = "npx @virastack/ai init";
+/** Copy-to-clipboard line under the hero buttons; Guide has nothing to install. */
+const installCommands: Partial<Record<Product["id"], string>> = {
+  start: "npx virastack@latest",
+  ai: "npx @virastack/ai init",
+  mask: "npm install @virastack/mask",
+  password: "npm install @virastack/password",
+};
 
 type ProductHeroProps = {
   product: Product;
+  /** Live demo of the product, set beside the copy from `lg` up. */
+  aside?: ReactNode;
 };
 
-export function ProductHero({ product }: ProductHeroProps) {
+export function ProductHero({ product, aside }: ProductHeroProps) {
   const t = useTranslations("Products");
   const tAi = useTranslations("Ai");
   const primary =
     product.id === "guide"
       ? { href: "/guide/play" as const, label: t("startExperience") }
       : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
-  const showInstallCommand = product.id === "start" || product.id === "ai";
+  const installCommand = installCommands[product.id];
 
-  return (
-    <section
+  const copy = (
+    <div
       className={cn(
-        "mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center",
-        showInstallCommand ? "pt-36 pb-28" : "pt-36 pb-16",
+        "flex flex-col gap-6",
+        aside ? "items-center text-center lg:items-start lg:text-left" : "items-center",
       )}
     >
-      <h1 className="mb-2 text-center text-4xl font-semibold tracking-tight text-balance lg:text-6xl">
+      <h1 className="mb-2 text-4xl font-semibold tracking-tight text-balance lg:text-6xl">
         <span className="font-black text-primary">{siteConfig.name}</span>{" "}
         <span className={cn("font-medium italic", product.colorClass)}>
           {t(productNameKeys[product.id])}
@@ -71,11 +81,17 @@ export function ProductHero({ product }: ProductHeroProps) {
         mode="mount"
         delay={0.1}
         className={cn(
-          "mt-2 flex items-center justify-center",
-          showInstallCommand ? "flex-col gap-4" : "flex-wrap gap-2",
+          "mt-2 flex gap-4",
+          installCommand ? "flex-col" : "flex-wrap",
+          aside ? "items-center lg:items-start" : "items-center",
         )}
       >
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        <div
+          className={cn(
+            "flex flex-wrap items-center gap-2",
+            aside ? "justify-center lg:justify-start" : "justify-center",
+          )}
+        >
           <Button
             size="lg"
             nativeButton={false}
@@ -96,22 +112,42 @@ export function ProductHero({ product }: ProductHeroProps) {
           <GithubRepoButton href={product.github} label={`virastack/${product.id}`} />
         </div>
 
-        {product.id === "start" ? <NpxInstallCommand /> : null}
+        {installCommand ? <NpxInstallCommand command={installCommand} /> : null}
+
         {product.id === "ai" ? (
-          <>
-            <NpxInstallCommand command={AI_INSTALL_COMMAND} />
-            <p className="max-w-md text-sm leading-relaxed text-balance text-muted-foreground">
-              {tAi.rich("heroNewProject", {
-                start: (chunks) => (
-                  <GuideProductMark id="start" linked>
-                    {chunks}
-                  </GuideProductMark>
-                ),
-              })}
-            </p>
-          </>
+          <p className="max-w-md text-sm leading-relaxed text-balance text-muted-foreground">
+            {tAi.rich("heroNewProject", {
+              start: (chunks) => (
+                <GuideProductMark id="start" linked>
+                  {chunks}
+                </GuideProductMark>
+              ),
+            })}
+          </p>
         ) : null}
       </Reveal>
+    </div>
+  );
+
+  if (!aside) {
+    return (
+      <section
+        className={cn(
+          "mx-auto max-w-3xl px-6 text-center",
+          installCommand ? "pt-36 pb-28" : "pt-36 pb-16",
+        )}
+      >
+        {copy}
+      </section>
+    );
+  }
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 pt-32 pb-16">
+      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-14">
+        {copy}
+        <div className="w-full">{aside}</div>
+      </div>
     </section>
   );
 }

@@ -17,7 +17,9 @@ type ProductDemoVideoProps = {
  * Silent product loop that costs nothing until it is seen: neither the file nor
  * its poster is fetched on page load (`preload="none"` and the poster applied
  * from a prop instead of the attribute), buffering starts ~400px before the
- * section scrolls in, playback follows visibility — viewport and tab alike —
+ * section scrolls in, playback follows visibility — viewport and tab alike — and
+ * phones skip it entirely (the code in frame would be unreadable there), which
+ * also keeps the file off their connection:
  * and visitors who prefer reduced motion get the poster with controls instead
  * of autoplay.
  */
@@ -77,7 +79,7 @@ export function ProductDemoVideo({ src, poster, label }: ProductDemoVideoProps) 
   }, [poster]);
 
   return (
-    <section className="mx-auto max-w-4xl px-6 pb-16">
+    <section className="mx-auto hidden max-w-4xl px-6 pb-16 md:block">
       <Reveal>
         <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
           <video
