@@ -111,9 +111,34 @@
   color: var(--destructive);
 }
 
-.frame meter {
-  height: 0.5rem;
-  width: 100%;
+/* Strength bar: four segments, coloured by level */
+.frame div[data-level] {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.25rem;
+}
+
+.frame span[data-filled] {
+  height: 0.25rem;
+  border-radius: 9999px;
+  background: var(--muted);
+  transition: background-color 150ms ease-out;
+}
+
+.frame [data-level="weak"] span[data-filled="true"] {
+  background: var(--color-red-500, oklch(63.7% 0.237 25.331));
+}
+
+.frame [data-level="fair"] span[data-filled="true"] {
+  background: var(--color-amber-500, oklch(76.9% 0.188 70.08));
+}
+
+.frame [data-level="good"] span[data-filled="true"] {
+  background: var(--color-lime-500, oklch(76.8% 0.233 130.85));
+}
+
+.frame [data-level="strong"] span[data-filled="true"] {
+  background: var(--color-green-600, oklch(62.7% 0.194 149.214));
 }
 
 .frame pre {
