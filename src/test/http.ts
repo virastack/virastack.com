@@ -1,9 +1,3 @@
-/**
- * Canonical origin the server under test is built and started with. The sitemap
- * renders absolute URLs from it, so the tests and the server must agree on it.
- */
-export const CANONICAL_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://virastack.com";
-
 /** Base URL of the server under test; `server.setup.ts` sets it. */
 export const baseUrl = () => process.env.TEST_BASE_URL ?? "http://127.0.0.1:3210";
 

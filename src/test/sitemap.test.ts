@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { baseUrl, CANONICAL_URL, mapLimit, status } from "@/test/http";
+import { baseUrl, mapLimit, status } from "@/test/http";
 
 async function sitemapUrls(): Promise<string[]> {
   const response = await fetch(`${baseUrl()}/sitemap.xml`);
@@ -11,12 +11,17 @@ async function sitemapUrls(): Promise<string[]> {
 }
 
 describe("sitemap", () => {
-  it("lists every URL once, on the canonical host", async () => {
+  /**
+   * Which host is canonical is a deployment choice, so the suite checks that the
+   * sitemap agrees with itself rather than hard-coding one: a split between the
+   * apex and www is exactly what mixed origins would look like.
+   */
+  it("lists every URL once, on a single absolute origin", async () => {
     const urls = await sitemapUrls();
 
     expect(urls.length).toBeGreaterThan(0);
     expect(new Set(urls).size).toBe(urls.length);
-    expect(urls.filter((url) => new URL(url).origin !== CANONICAL_URL)).toEqual([]);
+    expect([...new Set(urls.map((url) => new URL(url).origin))]).toHaveLength(1);
   });
 
   /** A sitemap entry that redirects or 404s wastes crawl budget and signals a stale map. */

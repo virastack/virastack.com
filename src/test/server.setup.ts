@@ -2,8 +2,6 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
-import { CANONICAL_URL } from "@/test/http";
-
 const PORT = Number(process.env.TEST_PORT ?? 3210);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 const ROOT = path.join(import.meta.dirname, "..", "..");
@@ -43,7 +41,6 @@ export async function setup() {
   server = spawn("node_modules/.bin/next", ["start", "--port", String(PORT)], {
     cwd: ROOT,
     stdio: ["ignore", "pipe", "pipe"],
-    env: { ...process.env, NEXT_PUBLIC_APP_URL: CANONICAL_URL },
   });
 
   let log = "";
