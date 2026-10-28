@@ -439,7 +439,8 @@
     "somethingWentWrongDesc": "An unexpected error occurred while rendering this page. You can try again, or head back to the homepage.",
     "tryAgain": "Try again",
     "goHome": "Go home",
-    "close": "Close"
+    "close": "Close",
+    "skipToContent": "Skip to content"
   },
   "Search": {
     "open": "Search docs",

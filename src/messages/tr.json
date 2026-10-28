@@ -439,7 +439,8 @@
     "somethingWentWrongDesc": "Bu sayfa render edilirken beklenmeyen bir hata oluştu. Tekrar deneyebilir veya ana sayfaya dönebilirsiniz.",
     "tryAgain": "Tekrar dene",
     "goHome": "Ana sayfaya dön",
-    "close": "Kapat"
+    "close": "Kapat",
+    "skipToContent": "İçeriğe geç"
   },
   "Search": {
     "open": "Sitede ara",

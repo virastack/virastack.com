@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 
+import { SkipLink } from "@/components/layout/SkipLink";
 import { usePathname } from "@/i18n/routing";
 
 type AppShellProps = {
@@ -25,8 +26,12 @@ export function AppShell({ children, header, footer }: AppShellProps) {
 
   return (
     <>
+      <SkipLink />
       {immersive ? null : header}
-      <div className="flex flex-1 flex-col">{children}</div>
+      {/* tabIndex lets the skip link move focus here, not just scroll. */}
+      <div id="main-content" tabIndex={-1} className="flex flex-1 flex-col outline-none">
+        {children}
+      </div>
       {immersive || docs ? null : footer}
     </>
   );
