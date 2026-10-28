@@ -112,6 +112,18 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
+          {
+            // No `default-src`/`script-src`: those need a per-request nonce, which would
+            // make every page dynamic and give up the static prerender. These four need
+            // no nonce and close the holes that do not depend on inline scripts.
+            key: "Content-Security-Policy",
+            value: [
+              "base-uri 'none'",
+              "object-src 'none'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+            ].join("; "),
+          },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

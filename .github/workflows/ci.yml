@@ -39,3 +39,7 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      # Needs the production build: the suite drives a real `next start`.
+      - name: Test
+        run: pnpm run test

@@ -3,6 +3,9 @@ const config = {
   entry: [
     "src/app/**/{page,layout,template,default,loading,not-found,error,global-error}.{ts,tsx}",
     "src/app/**/{sitemap,robots,manifest}.{ts,tsx}",
+    "src/**/*.test.ts",
+    "src/test/server.setup.ts",
+    "vitest.config.ts",
   ],
   project: ["src/**/*.{ts,tsx,js,jsx}"],
   ignore: [
