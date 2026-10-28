@@ -9,7 +9,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { GuidePlayPage } from "@/features/guide";
+import { GuidePlayPage } from "@/features/guide/components/GuidePlayPage";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

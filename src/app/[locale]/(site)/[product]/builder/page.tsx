@@ -9,7 +9,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { StartBuilderPage } from "@/features/start";
+import { StartBuilderPage } from "@/features/start/components/StartBuilderPage";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

@@ -17,8 +17,8 @@ import {
   maskExampleIds,
   passwordExampleIds,
 } from "@/features/docs";
-import { MaskExamplesPage } from "@/features/mask";
-import { PasswordExamplesPage } from "@/features/password";
+import { MaskExamplesPage } from "@/features/mask/components/MaskExamplesPage";
+import { PasswordExamplesPage } from "@/features/password/components/PasswordExamplesPage";
 import { routing } from "@/i18n/routing";
 
 const EXAMPLES_PRODUCTS = ["mask", "password"] as const;
