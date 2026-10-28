@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 
 import { products } from "@/config/products.config";
-import { siteConfig } from "@/config/site.config";
+
+import { localeUrl } from "@/lib/canonical";
 
 import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy";
 import {
@@ -14,17 +15,11 @@ import {
 } from "@/features/docs";
 import { routing } from "@/i18n/routing";
 
-function localeUrl(locale: string, path: string): string {
-  return locale === routing.defaultLocale
-    ? `${siteConfig.url}${path}`
-    : `${siteConfig.url}/${locale}${path}`;
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
   const homeEntries = routing.locales.map((locale) => ({
-    url: locale === routing.defaultLocale ? siteConfig.url : `${siteConfig.url}/${locale}`,
+    url: localeUrl(locale),
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 1,
@@ -32,10 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const productEntries = routing.locales.flatMap((locale) =>
     products.map((product) => ({
-      url:
-        locale === routing.defaultLocale
-          ? `${siteConfig.url}${product.href}`
-          : `${siteConfig.url}/${locale}${product.href}`,
+      url: localeUrl(locale, product.href),
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.8,
@@ -61,33 +53,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
   const allDocsHrefs = [...new Set([...docsHrefs, ...maskExampleHrefs, ...passwordExampleHrefs])];
 
+  // The docs nav lists llms.txt next to real pages, but those are static files
+  // under public/ and exist only at the unprefixed path.
+  const isStaticFile = (href: string) => href.endsWith(".txt");
+  const pageHrefs = allDocsHrefs.filter((href) => !isStaticFile(href));
+  const fileHrefs = allDocsHrefs.filter(isStaticFile);
+
   const docsEntries = routing.locales.flatMap((locale) =>
-    allDocsHrefs.map((href) => ({
-      url:
-        locale === routing.defaultLocale
-          ? `${siteConfig.url}${href}`
-          : `${siteConfig.url}/${locale}${href}`,
+    pageHrefs.map((href) => ({
+      url: localeUrl(locale, href),
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.75,
     })),
   );
 
+  const docsFileEntries = fileHrefs.map((href) => ({
+    url: localeUrl(routing.defaultLocale, href),
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.5,
+  }));
+
   const guidePlayEntries = routing.locales.map((locale) => ({
-    url:
-      locale === routing.defaultLocale
-        ? `${siteConfig.url}/guide/play`
-        : `${siteConfig.url}/${locale}/guide/play`,
+    url: localeUrl(locale, "/guide/play"),
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const startBuilderEntries = routing.locales.map((locale) => ({
-    url:
-      locale === routing.defaultLocale
-        ? `${siteConfig.url}/start/builder`
-        : `${siteConfig.url}/${locale}/start/builder`,
+    url: localeUrl(locale, "/start/builder"),
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -147,6 +143,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...homeEntries,
     ...productEntries,
     ...docsEntries,
+    ...docsFileEntries,
     ...guidePlayEntries,
     ...startBuilderEntries,
     ...siteEntries,

@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/:locale/contribute",
+        source: "/:locale(en|tr)/contribute",
         destination: "/:locale/support",
         permanent: true,
       },
