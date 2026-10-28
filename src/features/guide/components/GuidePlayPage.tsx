@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useHotkey } from "@tanstack/react-hotkeys";
 import { MoveLeftIcon, MoveRightIcon, XIcon } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";

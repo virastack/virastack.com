@@ -10,7 +10,7 @@ import {
   FileCodeIcon,
   XIcon,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";

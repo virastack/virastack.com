@@ -1,18 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 
 import { ArrowUpIcon, ChevronDownIcon, ImageIcon, MicIcon, PaperclipIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Map, MapControls, type MapRef } from "@/components/ui/map";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideStepProps } from "@/features/guide/types/guide.types";
 
 const MAP_HEIGHT = "h-[420px]";
+
+/**
+ * maplibre-gl is the heaviest dependency on this route and the map only appears
+ * after the prompt finishes, so it loads on demand rather than with the page.
+ */
+const GuideMapPreview = dynamic(
+  () => import("@/features/guide/components/GuideMapPreview").then((mod) => mod.GuideMapPreview),
+  { ssr: false, loading: () => <Skeleton className="size-full" /> },
+);
 
 export function Step6AI({ onNext, isCompleted, isStyled }: GuideStepProps) {
   const t = useTranslations("Guide");
@@ -21,7 +30,6 @@ export function Step6AI({ onNext, isCompleted, isStyled }: GuideStepProps) {
   const [phase, setPhase] = useState<"idle" | "loading" | "ready">("idle");
   const [isSending, setIsSending] = useState(false);
   const mapSectionRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<MapRef | null>(null);
   const didScrollRef = useRef(false);
 
   const isTyping = typed.length < prompt.length;
@@ -69,16 +77,6 @@ export function Step6AI({ onNext, isCompleted, isStyled }: GuideStepProps) {
       window.clearTimeout(scrollTimer);
     };
   }, [prompt]);
-
-  useEffect(() => {
-    if (!showMap) return;
-
-    const timers = [50, 200, 500].map((ms) =>
-      window.setTimeout(() => mapRef.current?.resize(), ms),
-    );
-
-    return () => timers.forEach((id) => window.clearTimeout(id));
-  }, [showMap]);
 
   return (
     <section className="space-y-6">
@@ -172,9 +170,7 @@ export function Step6AI({ onNext, isCompleted, isStyled }: GuideStepProps) {
               MAP_HEIGHT,
             )}
           >
-            <Map ref={mapRef} center={[28.9784, 41.0082]} zoom={7}>
-              <MapControls position="top-right" showZoom showCompass showLocate showFullscreen />
-            </Map>
+            <GuideMapPreview />
           </div>
         ) : null}
 
