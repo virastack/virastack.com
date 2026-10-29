@@ -164,7 +164,6 @@
         color: var(--accent-ink);
       }
 
-
       /* ---------- ready: the finished site ---------- */
       #site {
         overflow: hidden;
@@ -467,7 +466,6 @@
         background: linear-gradient(90deg, #00c950, #14b8a6);
         transform-origin: left;
       }
-
 
       /* ---------- prompt showcase: logos beside the terminal ---------- */
       .shc {
@@ -955,14 +953,22 @@
         <div class="row">
           <div class="card tool" data-a="0">
             <span class="ic" style="background: #fcebe3" id="icClaude"></span>
-            <div><h3>Claude Code</h3><p>.claude/rules/virastack/ · .md</p></div>
+            <div>
+              <h3>Claude Code</h3>
+              <p>.claude/rules/virastack/ · .md</p>
+            </div>
           </div>
           <div class="card tool" data-a="1">
             <span class="ic" style="background: #f1f1f1" id="icCursor"></span>
-            <div><h3>Cursor</h3><p>.cursor/rules/virastack/ · .mdc</p></div>
+            <div>
+              <h3>Cursor</h3>
+              <p>.cursor/rules/virastack/ · .mdc</p>
+            </div>
           </div>
         </div>
-        <div class="files" data-a="2"><span class="file">AGENTS.md</span><span class="file">CLAUDE.md</span></div>
+        <div class="files" data-a="2">
+          <span class="file">AGENTS.md</span><span class="file">CLAUDE.md</span>
+        </div>
         <div class="card rules" data-a="3">
           <div class="cap">Rules</div>
           <div class="chips" id="rules"></div>
@@ -1018,11 +1024,45 @@
 
       /* Prompts, in the order init.js asks them. */
       const QUESTIONS = [
-        { t: 1300, d: 800, kind: "text", q: "What is your project named?", ans: "acme-app", ph: "virastack-app" },
-        { t: 2100, d: 2000, kind: "select", q: "Which template would you like to use?", ans: "Next.js App Router", show: "template" },
-        { t: 4100, d: 2000, kind: "multi", q: "Which AI coding tools do you use?", ans: "Claude Code, Cursor", show: "agents" },
-        { t: 6100, d: 800, kind: "confirm", q: "Would you like multi-language (i18n) support?", ans: "Yes" },
-        { t: 6900, d: 1500, kind: "tools", q: "Which ViraStack tools would you like to include?", ans: "none", show: "tools" },
+        {
+          t: 1300,
+          d: 800,
+          kind: "text",
+          q: "What is your project named?",
+          ans: "acme-app",
+          ph: "virastack-app",
+        },
+        {
+          t: 2100,
+          d: 2000,
+          kind: "select",
+          q: "Which template would you like to use?",
+          ans: "Next.js App Router",
+          show: "template",
+        },
+        {
+          t: 4100,
+          d: 2000,
+          kind: "multi",
+          q: "Which AI coding tools do you use?",
+          ans: "Claude Code, Cursor",
+          show: "agents",
+        },
+        {
+          t: 6100,
+          d: 800,
+          kind: "confirm",
+          q: "Would you like multi-language (i18n) support?",
+          ans: "Yes",
+        },
+        {
+          t: 6900,
+          d: 1500,
+          kind: "tools",
+          q: "Which ViraStack tools would you like to include?",
+          ans: "none",
+          show: "tools",
+        },
       ];
 
       function question(Q) {
@@ -1038,16 +1078,32 @@
         out.push(line("head", `<span class="cy">${SYM.active}</span>`, Q.q));
         if (Q.kind === "text") {
           const v = typed(Q.ans, Q.t + 200, 35);
-          out.push(line("rail", "", v ? `${v}${caret}` : `<span class="faint">${Q.ph}</span>${caret}`));
+          out.push(
+            line("rail", "", v ? `${v}${caret}` : `<span class="faint">${Q.ph}</span>${caret}`),
+          );
         } else if (Q.kind === "select") {
-          out.push(line("rail", "", `<span class="acc">●</span> Next.js App Router <span class="faint">(App Router + Server Components)</span>`));
+          out.push(
+            line(
+              "rail",
+              "",
+              `<span class="acc">●</span> Next.js App Router <span class="faint">(App Router + Server Components)</span>`,
+            ),
+          );
           out.push(line("rail", "", `<span class="faint">○ TanStack Start</span>`));
         } else if (Q.kind === "multi") {
           out.push(line("rail", "", `<span class="acc">◼</span> Claude Code`));
           out.push(line("rail", "", `<span class="acc">◼</span> Cursor`));
         } else if (Q.kind === "confirm") {
           const yes = r > 300;
-          out.push(line("rail", "", yes ? `<span class="acc">●</span> Yes <span class="faint">/ ○ No</span>` : `<span class="faint">○ Yes /</span> <span class="acc">●</span> No`));
+          out.push(
+            line(
+              "rail",
+              "",
+              yes
+                ? `<span class="acc">●</span> Yes <span class="faint">/ ○ No</span>`
+                : `<span class="faint">○ Yes /</span> <span class="acc">●</span> No`,
+            ),
+          );
         } else {
           out.push(line("rail", "", `<span class="faint">◻ @virastack/mask</span>`));
           out.push(line("rail", "", `<span class="faint">◻ @virastack/password</span>`));
@@ -1058,10 +1114,25 @@
 
       const STEPS = [
         { t: 8500, d: 300, run: "Creating project files...", done: "Project files created." },
-        { t: 8800, d: 700, run: "Installing dependencies with npm...", done: "Dependencies installed." },
-        { t: 9500, d: 450, run: "Configuring ViraStack AI rules...", done: "🤖 ViraStack AI agent rules successfully integrated." },
+        {
+          t: 8800,
+          d: 700,
+          run: "Installing dependencies with npm...",
+          done: "Dependencies installed.",
+        },
+        {
+          t: 9500,
+          d: 450,
+          run: "Configuring ViraStack AI rules...",
+          done: "🤖 ViraStack AI agent rules successfully integrated.",
+        },
         { t: 9950, d: 450, run: "Installing design skills...", done: "Design skills installed." },
-        { t: 10400, d: 300, run: "Creating the initial git commit...", done: "Initial git commit created." },
+        {
+          t: 10400,
+          d: 300,
+          run: "Creating the initial git commit...",
+          done: "Initial git commit created.",
+        },
       ];
       const OUTRO = 10800;
 
@@ -1071,7 +1142,12 @@
         const typing = ms < 900;
         L.push(prompt(cmd, typing));
         if (ms >= 1000) {
-          L.push(line("head first", "┌", `<span class="tag">ViraStack</span>`).replace('class="s"', 'class="s dim"'));
+          L.push(
+            line("head first", "┌", `<span class="tag">ViraStack</span>`).replace(
+              'class="s"',
+              'class="s dim"',
+            ),
+          );
           L.push(line("rail", "", ""));
         }
         if (ms >= T.prompts[0]) QUESTIONS.forEach((Q) => L.push(...question(Q)));
@@ -1111,8 +1187,20 @@
             L.push(line("plain", "", ""));
           }
           if (r >= 1100) {
-            L.push(line("plain", "", `   <span class="dim">▲</span> <b>Next.js 16.2.11</b> <span class="dim">(Turbopack)</span>`));
-            L.push(line("plain", "", `   <span class="dim">- Local:</span>         http://localhost:3000`));
+            L.push(
+              line(
+                "plain",
+                "",
+                `   <span class="dim">▲</span> <b>Next.js 16.2.11</b> <span class="dim">(Turbopack)</span>`,
+              ),
+            );
+            L.push(
+              line(
+                "plain",
+                "",
+                `   <span class="dim">- Local:</span>         http://localhost:3000`,
+              ),
+            );
             L.push(line("plain", "", ""));
           }
           if (r >= 1250) L.push(line("plain", "", ` <span class="acc">✓</span> Starting...`));
@@ -1134,14 +1222,55 @@
 
       /* ---------- stack scene ---------- */
       const LOGO = (key) => (key ? `<span class="lg">${window.TECH_LOGOS[key]}</span>` : "");
-      const chip = ([key, name], big = false) => `<span class="chip${big ? " big" : ""}">${LOGO(key)}${name}</span>`;
+      const chip = ([key, name], big = false) =>
+        `<span class="chip${big ? " big" : ""}">${LOGO(key)}${name}</span>`;
       const GROUPS = [
-        ["Framework", [["nextjs", "Next.js 16"], ["tanstack", "TanStack Start"]], true],
-        ["Core", [["react", "React 19"], ["typescript", "TypeScript"]]],
-        ["State", [["tanstack", "TanStack Query"], ["zustand", "Zustand"], ["nuqs", "nuqs"]]],
-        ["Form", [["reactHookForm", "React Hook Form"], ["zod", "Zod"]]],
-        ["UI", [["baseUi", "Base UI"], ["motion", "Motion"], ["lucide", "Lucide React"]]],
-        ["Test", [["vitest", "Vitest"], ["testingLibrary", "Testing Library"], [null, "MSW"]]],
+        [
+          "Framework",
+          [
+            ["nextjs", "Next.js 16"],
+            ["tanstack", "TanStack Start"],
+          ],
+          true,
+        ],
+        [
+          "Core",
+          [
+            ["react", "React 19"],
+            ["typescript", "TypeScript"],
+          ],
+        ],
+        [
+          "State",
+          [
+            ["tanstack", "TanStack Query"],
+            ["zustand", "Zustand"],
+            ["nuqs", "nuqs"],
+          ],
+        ],
+        [
+          "Form",
+          [
+            ["reactHookForm", "React Hook Form"],
+            ["zod", "Zod"],
+          ],
+        ],
+        [
+          "UI",
+          [
+            ["baseUi", "Base UI"],
+            ["motion", "Motion"],
+            ["lucide", "Lucide React"],
+          ],
+        ],
+        [
+          "Test",
+          [
+            ["vitest", "Vitest"],
+            ["testingLibrary", "Testing Library"],
+            [null, "MSW"],
+          ],
+        ],
       ];
       $("stackBody").innerHTML = GROUPS.map(
         ([k, items, big], i) =>
@@ -1165,7 +1294,9 @@
         ["    components/", ""],
         ["    lib/", ""],
       ];
-      $("tree").innerHTML = TREE.map(([t, c], i) => `<div data-i="${i}" class="${c}">${t}</div>`).join("");
+      $("tree").innerHTML = TREE.map(
+        ([t, c], i) => `<div data-i="${i}" class="${c}">${t}</div>`,
+      ).join("");
 
       function stackView() {
         const p = ms - T.stack[0];
@@ -1190,7 +1321,21 @@
       }
 
       /* ---------- ai scene ---------- */
-      const RULES = ["core", "architecture", "react", "typescript", "ui", "forms", "api", "server-state", "client-state", "performance", "testing", "nextjs", "i18n"];
+      const RULES = [
+        "core",
+        "architecture",
+        "react",
+        "typescript",
+        "ui",
+        "forms",
+        "api",
+        "server-state",
+        "client-state",
+        "performance",
+        "testing",
+        "nextjs",
+        "i18n",
+      ];
       const SKILLS = ["emil-design-eng", "better-ui", "better-accessibility"];
       $("rules").innerHTML = RULES.map((r) => `<span class="chip">${r}</span>`).join("");
       $("skills").innerHTML =
@@ -1219,7 +1364,6 @@
           c.style.opacity = ease((p - (i ? 1650 : 950)) / 300);
         });
       }
-
 
       /* ---------- ready: the finished site ---------- */
       const bars = (n, fn) => Array.from({ length: n }, (_, i) => fn(i)).join("");
@@ -1287,7 +1431,6 @@
         });
         const fill = q(".trk b")[0];
         fill.style.transform = `scaleX(${ease((p - 2800) / 1000) * Number(fill.dataset.p)})`;
-
       }
 
       /* ---------- opener ---------- */
@@ -1315,14 +1458,26 @@
 
       /* ---------- prompt showcase ---------- */
       const SHOW = {
-        template: [["nextjs", "Next.js", "App Router"], ["tanstack", "TanStack Start", "Routing + SSR"]],
-        agents: [["claude", "Claude Code", ".claude/rules"], ["cursor", "Cursor", ".cursor/rules"]],
-        tools: [["#605efe", "@virastack/mask", "Input masks"], ["#f6339a", "@virastack/password", "Password hook"], ["#fb2c36", "@virastack/address", "Address hook"]],
+        template: [
+          ["nextjs", "Next.js", "App Router"],
+          ["tanstack", "TanStack Start", "Routing + SSR"],
+        ],
+        agents: [
+          ["claude", "Claude Code", ".claude/rules"],
+          ["cursor", "Cursor", ".cursor/rules"],
+        ],
+        tools: [
+          ["#605efe", "@virastack/mask", "Input masks"],
+          ["#f6339a", "@virastack/password", "Password hook"],
+          ["#fb2c36", "@virastack/address", "Address hook"],
+        ],
       };
       Object.entries(SHOW).forEach(([key, cards]) => {
         $(`sc-${key}`).innerHTML = cards
           .map(([logo, name, sub]) => {
-            const mark = logo.startsWith("#") ? `<i class="dt" style="background:${logo};box-shadow:0 0 10px ${logo}66"></i>` : `<span class="lg">${window.TECH_LOGOS[logo]}</span>`;
+            const mark = logo.startsWith("#")
+              ? `<i class="dt" style="background:${logo};box-shadow:0 0 10px ${logo}66"></i>`
+              : `<span class="lg">${window.TECH_LOGOS[logo]}</span>`;
             return `<div class="sk">${mark}<div><h4>${name}</h4><p>${sub}</p></div></div>`;
           })
           .join("");
@@ -1366,7 +1521,8 @@
 
         const idx = SCENES.findIndex((s) => ms >= T[s][0] && ms < T[s][1]);
         const cur = idx < 0 ? (ms < 0 ? 0 : SCENES.length - 1) : idx;
-        $("tr").innerHTML = `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(SCENES.length).padStart(2, "0")}`;
+        $("tr").innerHTML =
+          `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(SCENES.length).padStart(2, "0")}`;
         $("br").textContent = LABELS[cur];
         dots.forEach((d, i) => d.classList.toggle("on", i === cur));
       };
