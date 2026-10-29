@@ -66,9 +66,15 @@ export function BrandLockup({
         {children}
       </Name>
       {slot ? (
+        /*
+         * The slot's own content is fixed-size (ProductDots: a 24px dot row, then
+         * 36px down to its bottom), so the offset subtracts it: the dot row's
+         * centre then sits 0.467f above the lockup's bottom at every size,
+         * instead of crowding the wordmark when `--f` shrinks on mobile.
+         */
         <div
           className="absolute inset-x-0 flex justify-center"
-          style={{ bottom: "calc(var(--f) * 0.12)" }}
+          style={{ bottom: "calc(var(--f) * 0.467 - 36px)" }}
         >
           {slot}
         </div>

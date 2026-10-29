@@ -21,6 +21,8 @@ type ProductDotsProps = {
   autoplay?: boolean;
   /** `start` aligns dots and caption to the left (footer); `center` for showcases. */
   align?: "start" | "center";
+  /** Prefix the caption with `ViraStack`; off where the wordmark sits right above the dots. */
+  showBrand?: boolean;
   className?: string;
 };
 
@@ -32,6 +34,7 @@ export function ProductDots({
   label,
   autoplay = false,
   align = "start",
+  showBrand = true,
   className,
 }: ProductDotsProps) {
   const ref = useRef<HTMLElement>(null);
@@ -109,7 +112,11 @@ export function ProductDots({
               exit={reduceMotion ? undefined : { opacity: 0, y: -4, filter: "blur(2px)" }}
               transition={{ duration: 0.18, ease: "easeOut" }}
             >
-              <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
+              {showBrand ? (
+                <>
+                  <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
+                </>
+              ) : null}
               <span className={cn("font-bold", active.textClass)}>{active.productName}</span>
             </m.span>
           ) : null}

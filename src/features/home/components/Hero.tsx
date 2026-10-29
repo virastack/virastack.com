@@ -21,7 +21,16 @@ export function Hero() {
 
       <HeroBrand />
 
-      <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
+      <p className="text-lg font-semibold text-balance text-primary sm:text-xl">
+        {t.rich("heroTitle", {
+          line: (chunks) => chunks,
+          learn: (chunks) => chunks,
+          start: (chunks) => chunks,
+          build: (chunks) => chunks,
+        })}
+      </p>
+
+      <p className="-mt-3 max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
         {t("heroDesc")}
       </p>
 
