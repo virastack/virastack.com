@@ -72,6 +72,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
       <BrandLockup
         nameScale={aside ? 0.8 : undefined}
         alignClassName={aside ? "items-center lg:items-start" : "items-center"}
+        nameClassName={aside ? "lg:pl-[0.08em]" : undefined}
       >
         <span className={product.colorClass}>{t(productNameKeys[product.id])}</span>
       </BrandLockup>
