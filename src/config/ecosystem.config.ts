@@ -226,13 +226,13 @@ export const ecosystem: readonly EcosystemEntry[] = [
         short: "Turkish address hook: province, district, neighbourhood and postal code.",
         medium:
           "A <italic>headless</italic> <bold>React</bold> hook for Turkish addresses. Province, district, and neighbourhood are picked in a chain; the postal code comes from the neighbourhood and the address is verified on the server.",
-        long: "A <bold>headless React hook</bold> for Turkish addresses. Province, district, and neighbourhood are picked in a chain, the postal code comes from the neighbourhood, and the address is re-checked on the server. It shares one React Hook Form with Mask and Password. PTT data for 81 provinces, 973 districts, and 72,466 neighbourhoods is included and checked monthly.",
+        long: "A <bold>headless React hook</bold> for Turkish addresses. Province, district, and neighbourhood are picked in a chain, the postal code comes from the neighbourhood, and the address is re-checked on the server.",
       },
       tr: {
         short: "Türkiye adres hook’u: il, ilçe, mahalle ve posta kodu.",
         medium:
           "Türkiye adresleri için <italic>headless</italic> <bold>React</bold> hook’u. İl, ilçe ve mahalle zincirleme seçilir; posta kodu mahalleden gelir ve adres sunucuda doğrulanır.",
-        long: "Türkiye adresleri için <bold>headless React hook’u</bold>. İl, ilçe ve mahalle zincirleme seçilir, posta kodu mahalleden gelir ve adres sunucuda yeniden doğrulanır; Mask ve Password ile aynı React Hook Form’da çalışır. 81 il, 973 ilçe ve 72.466 mahallelik PTT verisi pakete dahildir ve her ay kontrol edilir.",
+        long: "Türkiye adresleri için <bold>headless React hook’u</bold>. İl, ilçe ve mahalle zincirleme seçilir, posta kodu mahalleden gelir ve adres sunucuda yeniden doğrulanır.",
       },
     },
   },

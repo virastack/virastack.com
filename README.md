@@ -7,8 +7,8 @@
 _Official website and docs for the ViraStack ecosystem_
 
 [![ViraStack](https://img.shields.io/badge/ViraStack-Website-00baa6)](https://virastack.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![@virastack](https://img.shields.io/badge/-%40virastack-black?logo=x&logoColor=white)](https://x.com/virastack)
+[![License: MIT](https://img.shields.io/github/license/virastack/virastack.com)](LICENSE)
+[![@virastack](https://img.shields.io/badge/-%40virastack-555?logo=x&logoColor=white)](https://x.com/virastack)
 
 </div>
 
