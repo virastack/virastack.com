@@ -53,7 +53,7 @@ const valueCode = `{
   province: "İSTANBUL",
   district: "FATİH",
   neighbourhood: "AKSARAY MAH.",
-  postalCode: "34096",      // seçilen mahallenin ilk posta kodu
+  postalCode: "34096",      // mahallenin ilk posta kodu ya da yazılan kod
   postalCodes: ["34096"],   // hepsi; birkaç yüz mahallede birden fazla
 }`;
 
@@ -144,6 +144,19 @@ const returns: [string, ReactNode][] = [
       seviye alttakileri temizler.
     </>,
   ],
+  [
+    "setPostalCode(code)",
+    <>
+      Posta kodundan adresi doldurur; <code>{'"exact" | "partial" | "unknown"'}</code>&#32;ile
+      çözülür. Bkz. <Link href="/address/docs/postal-code">posta kodundan adres</Link>.
+    </>,
+  ],
+  [
+    "postalCodeStatus",
+    <>
+      Son posta kodunun ne bulduğu; etkin bir arama yoksa <code>null</code>.
+    </>,
+  ],
   ["reset()", "Her seviyeyi temizler."],
   [
     "loading.neighbourhoods",
@@ -163,6 +176,10 @@ const returns: [string, ReactNode][] = [
     </>,
   ],
   ["getPostalCodeProps()", "Türetilen posta kodu için gizli bir input."],
+  [
+    "getPostalCodeInputProps()",
+    "Kullanıcının posta kodu yazabildiği input; seçimden türetilen kodu da gösterir.",
+  ],
 ];
 
 export function AddressUseViraAddressDoc() {

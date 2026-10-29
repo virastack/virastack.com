@@ -33,7 +33,7 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
           <p className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums md:text-sm">
             {formatLessonNumber(number)} / {formatLessonNumber(total)}
             {lesson.kind === "project" ? (
-              <span className="ml-2 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 font-sans text-[0.7rem] font-medium text-green-700 dark:text-green-400">
+              <span className="ml-2 rounded-md border border-brand-academy/30 bg-brand-academy/10 px-1.5 py-0.5 font-sans text-[0.7rem] font-medium text-brand-academy">
                 {t("projectLabel")}
               </span>
             ) : null}

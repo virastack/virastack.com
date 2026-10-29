@@ -76,8 +76,8 @@ export function PasswordReactHookFormDoc() {
 
         <h2 id="zod">Zod resolver</h2>
         <p>
-          With a resolver, <code>register</code> rules don&apos;t run. Put the same policy into the{" "}
-          <AcademyBadge kind="zod" /> schema with <code>evaluate</code>:
+          With a resolver, <code>register</code>&#32;rules don&apos;t run. Put the same policy into
+          the <AcademyBadge kind="zod" /> schema with <code>evaluate</code>:
         </p>
         <PasswordExamplePreview id="react-hook-form-zod" />
 

@@ -2,19 +2,12 @@
 
 import { useState } from "react";
 
-import {
-  BookOpenIcon,
-  FormIcon,
-  MapPinIcon,
-  MenuIcon,
-  RocketIcon,
-  SparklesIcon,
-  SquareAsteriskIcon,
-} from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
 import { isAcademyPath } from "@/config/academy-subnav.config";
+import { productIcons } from "@/config/product-icons.config";
 import { getProductByPathname, products } from "@/config/products.config";
 import { headerNavLinks } from "@/config/site-nav.config";
 import { siteConfig } from "@/config/site.config";
@@ -49,15 +42,6 @@ import {
 import { Separator } from "@/ui/separator";
 import { Link, usePathname } from "@/i18n/routing";
 
-const productIcons: Record<ProductId, typeof RocketIcon> = {
-  start: RocketIcon,
-  ai: SparklesIcon,
-  mask: FormIcon,
-  password: SquareAsteriskIcon,
-  address: MapPinIcon,
-  guide: BookOpenIcon,
-};
-
 const productNameKeys = {
   start: "startName",
   ai: "aiName",
@@ -90,12 +74,12 @@ export function Header() {
             <Link href="/" className="inline-flex shrink-0 items-center gap-2 tracking-tight">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.webp" alt="" className="block size-6 shrink-0" />
-              <span className="text-lg leading-none font-semibold text-foreground">
+              <span className="text-lg leading-none font-semibold text-primary">
                 {siteConfig.name}
                 {activeProduct ? (
                   <>
                     {" "}
-                    <span className={cn("font-medium italic", activeProduct.colorClass)}>
+                    <span className={cn("font-bold", activeProduct.colorClass)}>
                       {t(productNameKeys[activeProduct.id])}
                     </span>
                   </>
@@ -134,10 +118,10 @@ export function Header() {
                             </span>
                             <span className="flex min-w-0 flex-col gap-0.5">
                               <span className="text-sm leading-none">
-                                <span className="font-semibold text-foreground">
+                                <span className="font-semibold text-primary">
                                   {siteConfig.name}
                                 </span>{" "}
-                                <span className={cn("font-medium italic", product.colorClass)}>
+                                <span className={cn("font-bold", product.colorClass)}>
                                   {t(productNameKeys[product.id])}
                                 </span>
                               </span>

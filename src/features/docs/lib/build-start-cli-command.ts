@@ -1,5 +1,5 @@
 export const START_CLI_TEMPLATES = ["nextjs", "tanstack"] as const;
-export const START_CLI_TOOLS = ["mask", "password"] as const;
+export const START_CLI_TOOLS = ["mask", "password", "address"] as const;
 export const START_CLI_AGENTS = ["claude", "cursor"] as const;
 
 export type StartCliTemplate = (typeof START_CLI_TEMPLATES)[number];

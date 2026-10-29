@@ -48,6 +48,11 @@ export function StartIntroductionDoc() {
                 {chunks}
               </GuideProductMark>
             ),
+            address: (chunks) => (
+              <GuideProductMark id="address" linked={false}>
+                {chunks}
+              </GuideProductMark>
+            ),
           })}
         </p>
 

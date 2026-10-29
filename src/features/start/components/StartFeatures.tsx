@@ -33,7 +33,7 @@ export function StartFeatures() {
       subtitle: t("featuresFsdSubtitle"),
       description: t("featuresFsdDesc"),
       icon: <FolderTreeIcon className="size-5" aria-hidden />,
-      tone: "bg-teal-50 text-teal-600 dark:bg-teal-950/40 dark:text-teal-300",
+      tone: "bg-brand-start/10 text-brand-start",
     },
     {
       title: t("featuresTypesTitle"),

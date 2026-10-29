@@ -11,6 +11,5 @@ export { PasswordPwnedDoc } from "./PasswordPwnedDoc";
 export { PasswordHelpersDoc } from "./PasswordHelpersDoc";
 export { PasswordTypesDoc } from "./PasswordTypesDoc";
 export { PasswordUiLibrariesDoc } from "./PasswordUiLibrariesDoc";
-export { PasswordComparisonDoc } from "./PasswordComparisonDoc";
 export { PasswordExamplesDoc } from "./PasswordExamplesDoc";
 export { PasswordExampleDetailDoc } from "./PasswordExampleDetailDoc";

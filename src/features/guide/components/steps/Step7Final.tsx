@@ -2,26 +2,20 @@
 
 import { useEffect, useState } from "react";
 
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, PartyPopperIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Confetti from "react-confetti";
 import { useWindowSize } from "usehooks-ts";
 
 import type { ProductId } from "@/types/product.types";
+import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
 
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
-const CONFETTI_COLORS = [
-  "#14b8a6", // teal: Start
-  "#d946ef", // fuchsia: AI
-  "#6366f1", // indigo: Mask
-  "#f43f5e", // rose: Password
-  "#f97316", // orange: Address
-  "#fbbf24", // amber: Guide
-];
+const CONFETTI_COLORS = brandPalettes.map((palette) => palette.hex);
 
 const ECOSYSTEM_PRODUCTS = [
   "start",
@@ -99,7 +93,10 @@ export function Step7Final() {
       ) : null}
 
       <div className="space-y-4">
-        <h2 className="text-3xl font-bold tracking-tight text-balance">{t("step7Title")}</h2>
+        <h2 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-balance">
+          {t("step7Title")}
+          <PartyPopperIcon className="size-8 shrink-0 text-brand-guide" aria-hidden />
+        </h2>
         <p className="text-lg leading-relaxed text-pretty text-muted-foreground">
           {t("step7Body")}
         </p>
@@ -111,7 +108,7 @@ export function Step7Final() {
             <dt className="shrink-0 text-lg sm:w-48">
               <span className="mx-0.5 inline whitespace-nowrap">
                 <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
-                <span className="font-medium text-green-500 italic">{tAcademy("name")}</span>
+                <span className="font-bold text-brand-academy">{tAcademy("name")}</span>
               </span>
             </dt>
             <dd className="text-base">{t("step7AcademyDesc")}</dd>

@@ -5,6 +5,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 
 const apiCode = `import {
   districts,
+  findPostalCode,
   neighbourhoods,
   province,
   provinces,
@@ -20,7 +21,11 @@ byDistrict.get("FATİH")
 // [{ name: "AKSARAY MAH.", postalCode: "34096", ... }, ...]
 
 source.date             // "2026-10-28": verinin toplandığı gün
-source.neighbourhoods   // 72466`;
+source.neighbourhoods   // 72466
+
+await findPostalCode("34710")
+// { postalCode: "34710", province: { code: 34, ... },
+//   district: "KADIKÖY", neighbourhoods: [{ name: "CAFERAĞA MAH.", ... }] }`;
 
 const loaderCode = `import { setLoader } from "@virastack/address/data"
 
@@ -86,6 +91,12 @@ export function AddressDataDoc() {
           Mahallelerin çoğunun tek posta kodu vardır. Birkaç yüzünün birden fazla, en çok sekiz
           posta kodu vardır ve hepsi korunur: <code>postalCodes</code>&#32;tam cevaptır,{" "}
           <code>postalCode</code>&#32;yaygın durum için ilkidir.
+        </p>
+        <p>
+          <code>findPostalCode(code)</code>&#32;bir posta kodunun ilini, ilçesini ve kapsadığı
+          mahalleleri verir; veri setinde yoksa <code>null</code>. Yalnızca kodun ilk iki
+          hanesindeki il yüklenir. Her kod tek bir ilçeye aittir ve ilin plaka koduyla başlar; veri
+          derlenirken bu kontrol edilir.
         </p>
 
         <h2 id="maliyet">Ne kadar indirir?</h2>

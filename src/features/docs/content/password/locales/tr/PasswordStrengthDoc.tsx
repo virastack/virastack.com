@@ -2,7 +2,6 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { passwordExampleFile } from "@/features/docs/content/password/examples/example-code.generated";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
-import { Link } from "@/i18n/routing";
 
 const evaluateCode = `import { evaluate } from "@virastack/password/strength"
 import { policy } from "@/lib/password-policy"
@@ -117,8 +116,7 @@ export function PasswordStrengthDoc() {
         </div>
         <p>
           Skor, uzunluk ve karakter çeşitliliğinden çıkan bir sezgiseldir; kırılma süresi tahmini
-          değildir. Onun için <Link href="/password/docs/comparison">karşılaştırmaya</Link>
-          &#32;bakın.
+          değildir.
         </p>
         <p>
           <strong>Karmaşık bir 14 karakterlik parola neden zayıf?</strong> Skor evrensel bir kurala

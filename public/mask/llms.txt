@@ -1,6 +1,6 @@
 # ViraStack Mask
 
-> Zero-config input masks for React Hook Form, with Turkish validators, type safety and server support. npm: `@virastack/mask` (2.x). Zero runtime dependencies, ~8 KB.
+> Zero-dependency input masks for React Hook Form, with Turkish validators, type safety and server support. npm: `@virastack/mask` (2.x). Zero runtime dependencies, ~8 KB.
 
 Install: `npm install @virastack/mask`. Peers: `react` ≥ 18.2, `react-hook-form` ≥ 7.55. The form stores the **raw** value (`5551234567`); the input shows the mask (`(555) 123 45 67`). Spread the returned object onto the input as is.
 
@@ -15,6 +15,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 - [Validation](https://virastack.com/mask/docs/validation): Error keys, custom validators, `maskResolver` for Zod/Valibot
 - [Server](https://virastack.com/mask/docs/server): `@virastack/mask/server`, `parseMasked`, Standard Schema
 - [Helpers](https://virastack.com/mask/docs/helpers): `createMask`, validators, `toMinorUnits`
+- [Bank detection](https://virastack.com/mask/docs/banks): `getTurkishBank(iban)`, `turkishBanks` (70 TCMB participants), live demo
 - [Types](https://virastack.com/mask/docs/types): `PresetName`, `MaskOptions`, schema and field types
 - [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn/ui, Ant Design, Chakra
 - [Examples](https://virastack.com/mask/examples): Live preset index
@@ -33,7 +34,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 
 - [Mask overview](https://virastack.com/mask): Marketing page
 - [npm `@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Package registry
-- [GitHub](https://github.com/virastack/mask): Source repository
+- [GitHub](https://github.com/virastack/form/tree/main/packages/mask): Source (form monorepo)
 
 ## Related
 

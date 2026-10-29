@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { Link } from "@/i18n/routing";
 
 const resolveCode = `import { resolveAddress } from "@virastack/address/server"
 
@@ -19,6 +20,7 @@ const issueCode = `type AddressIssue =
   | { level: "province"; reason: "missing" | "unknown" }
   | { level: "district"; reason: "missing" | "unknown" }
   | { level: "neighbourhood"; reason: "missing" | "unknown" }
+  | { level: "postalCode"; reason: "missing" | "unknown" | "mismatch" }
 
 await resolveAddress({ provinceCode: 34, district: "ÇANKAYA" })
 // ok: false
@@ -35,6 +37,7 @@ export async function saveAddress(formData: FormData) {
     province: String(formData.get("province") ?? ""),
     district: String(formData.get("district") ?? ""),
     neighbourhood: String(formData.get("neighbourhood") ?? ""),
+    postalCode: String(formData.get("postalCode") ?? ""),
   })
   if (!ok) return { errors: issues }
 
@@ -59,6 +62,21 @@ export function AddressForm() {
     </form>
   )
 }`;
+
+const postalCodeCode = `import { resolvePostalCode } from "@virastack/address/server"
+
+const { ok, value, neighbourhoods } = await resolvePostalCode("34096")
+// ok: false
+// issues: [{ level: "neighbourhood", reason: "missing" }]
+// value: { province: "İSTANBUL", district: "FATİH",
+//          neighbourhood: null, postalCode: "34096", ... }
+// neighbourhoods: ["AKSARAY MAH.", "HASEKİ SULTAN MAH."]
+
+await resolvePostalCode("34710")
+// ok: true, value.neighbourhood: "CAFERAĞA MAH."
+
+await resolvePostalCode("34999")
+// ok: false, issues: [{ level: "postalCode", reason: "unknown" }]`;
 
 const helpersCode = `import {
   districtsOf,
@@ -88,6 +106,14 @@ const helpers: [string, ReactNode][] = [
       Yalnızca posta kodu; eşleşme yoksa <code>null</code>
     </>,
   ],
+  [
+    "resolvePostalCode(code)",
+    <>
+      Posta kodundan adres: <code>{"{ ok, value, issues, neighbourhoods }"}</code>
+    </>,
+  ],
+  ["formatAddress(value, options)", "Adresi tek satıra döker"],
+  ["normalizePostalCode(input)", "Beş haneli posta kodu ya da null; boşlukları atar"],
   ["districtsOf(province)", "Bir ilin ilçe adları, Türkçe sıralı"],
   ["findProvince(input)", "Plaka kodu ya da adla il arar"],
   ["provinces", "81 il, ilçe adlarıyla"],
@@ -103,8 +129,10 @@ export function AddressServerDoc() {
       <DocsProse>
         <h2 id="resolve">resolveAddress()</h2>
         <p>
-          İstemci istediği posta kodunu gönderebilir. <code>resolveAddress</code>&#32;adresi veri
-          setinde arar ve posta kodunu kendisi türetir; gönderilen posta koduna hiç bakmaz.
+          Client istediği posta kodunu gönderebilir. <code>resolveAddress</code>&#32;adresi veri
+          setinde arar ve posta kodunu kendisi türetir. <code>postalCode</code>&#32;da gönderilirse
+          mahallenin kodlarından biri olup olmadığı kontrol edilir; birden çok kodu olan mahallede
+          gönderilen kod korunur.
         </p>
         <DocsCodeBlock code={resolveCode} lang="ts" />
         <p>
@@ -126,6 +154,26 @@ export function AddressServerDoc() {
           bilinmiyorsa il yine doludur, form adresin geri kalanını gösterebilir. Hata mesajları ve
           çevirileri sizdedir.
         </p>
+        <p>
+          Gönderilen <code>postalCode</code>&#32;mahalleye ait değilse sorun{" "}
+          <code>{'{ level: "postalCode", reason: "mismatch" }'}</code>&#32;olur; <code>value</code>
+          &#32;yine mahallenin gerçek kodunu taşır. Posta kodu gönderilmezse ya da boş gelirse
+          kontrol edilmez, türetilir.
+        </p>
+
+        <h2 id="posta-kodu">resolvePostalCode()</h2>
+        <p>
+          Bir posta kodunun hangi adrese ait olduğunu sunucuda bulur; örneğin bir route
+          handler&apos;dan <Link href="/address/docs/postal-code">posta kodu araması</Link>
+          &#32;sunmak için. Kodun kesin söyleyebildiği kadarını <code>value</code>&#32;içinde,
+          adayları <code>neighbourhoods</code>&#32;içinde döndürür:
+        </p>
+        <DocsCodeBlock code={postalCodeCode} lang="ts" />
+        <p>
+          <code>ok</code>&#32;yalnızca kodun altında tek mahalle varsa <code>true</code>&#32;olur;
+          adres o zaman tamdır. Boş kod <code>missing</code>, veri setinde olmayan ya da beş haneli
+          olmayan kod <code>unknown</code>&#32;verir.
+        </p>
 
         <h2 id="server-action">Server Action</h2>
         <DocsCodeBlock code={actionCode} lang="ts" />
@@ -133,8 +181,8 @@ export function AddressServerDoc() {
         <p>
           Native select&apos;te il seçeneğinin değeri plaka kodudur;{" "}
           <code>formData.get(&quot;province&quot;)</code>&#32;<code>&quot;34&quot;</code>&#32;gelir
-          ve <code>resolveAddress</code>&#32;bunu kod olarak tanır. Gizli posta kodu input&apos;u
-          yalnızca arayüz içindir; sunucu onu kullanmaz.
+          ve <code>resolveAddress</code>&#32;bunu kod olarak tanır. Gizli posta kodu input&apos;unun
+          değeri de gönderilir; sunucu ona güvenmez, mahalleye karşı kontrol eder.
         </p>
 
         <h2 id="yardimcilar">Diğer yardımcılar</h2>

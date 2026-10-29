@@ -18,7 +18,7 @@ export type OgImageParams = {
   /** Page / product headline shown large (e.g. "Start", "About"). */
   title?: string;
   description?: string;
-  /** Product accent + italic product name under ViraStack. */
+  /** Product accent + bold product name under ViraStack. */
   product?: ProductId;
   /** Footer path after virastack.com (e.g. "/start"). */
   path?: string;

@@ -6,6 +6,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 
 const apiCode = `import {
   districts,
+  findPostalCode,
   neighbourhoods,
   province,
   provinces,
@@ -21,7 +22,11 @@ byDistrict.get("FATİH")
 // [{ name: "AKSARAY MAH.", postalCode: "34096", ... }, ...]
 
 source.date             // "2026-10-28": when the data was collected
-source.neighbourhoods   // 72466`;
+source.neighbourhoods   // 72466
+
+await findPostalCode("34710")
+// { postalCode: "34710", province: { code: 34, ... },
+//   district: "KADIKÖY", neighbourhoods: [{ name: "CAFERAĞA MAH.", ... }] }`;
 
 const loaderCode = `import { setLoader } from "@virastack/address/data"
 
@@ -88,6 +93,12 @@ export function AddressDataDoc() {
           Most neighbourhoods have a single postal code. A few hundred have several, up to eight,
           and all of them are kept: <code>postalCodes</code>&#32;is the full answer and{" "}
           <code>postalCode</code>&#32;the first one, for the common case.
+        </p>
+        <p>
+          <code>findPostalCode(code)</code>&#32;gives a postal code&apos;s province, district and
+          the neighbourhoods it covers, or <code>null</code>&#32;when it is not in the dataset. Only
+          the province in the code&apos;s first two digits is loaded. Every code belongs to one
+          district and starts with its plate code; the data build checks both.
         </p>
 
         <h2 id="maliyet">How much does it download?</h2>

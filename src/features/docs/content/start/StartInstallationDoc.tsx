@@ -70,6 +70,7 @@ export function StartInstallationDoc() {
               bold: (chunks) => <strong>{chunks}</strong>,
               maskPkg: (chunks) => <code>{chunks}</code>,
               passwordPkg: (chunks) => <code>{chunks}</code>,
+              addressPkg: (chunks) => <code>{chunks}</code>,
             })}
           </li>
         </ol>

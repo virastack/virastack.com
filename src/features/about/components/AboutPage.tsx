@@ -18,12 +18,15 @@ import { Link } from "@/i18n/routing";
 
 const academyPalette = brandPalettes.find((palette) => palette.id === "academy");
 
+/** Order matches the copy: complement, headless and typed, Turkey-ready, evidence. */
+const principleIds = [1, 2, 3, 4] as const;
+
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
 
 function richHandlers() {
   const products = guideProductTags({
-    ids: ["start", "ai", "mask", "password", "guide"],
+    ids: ["start", "ai", "mask", "password", "address", "guide"],
     linked: true,
   });
 
@@ -66,7 +69,7 @@ function richHandlers() {
         className="mx-0.5 inline whitespace-nowrap underline-offset-2 transition-opacity hover:underline hover:opacity-90"
       >
         <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
-        <span className={cn("font-medium italic", academyPalette?.textClass)}>{chunks}</span>
+        <span className={cn("font-bold", academyPalette?.textClass)}>{chunks}</span>
       </Link>
     ),
     sources: (chunks: ReactNode) => (
@@ -75,11 +78,14 @@ function richHandlers() {
       </Link>
     ),
     password: products.password,
+    address: products.address,
     guide: products.guide,
     react: () => <AcademyBadge kind="react" />,
     virastack: () => <AcademyBadge kind="virastack" />,
     nextjs: () => <AcademyBadge kind="nextjs" />,
     tanstackstart: () => <AcademyBadge kind="tanstack-start" />,
+    tanstackbadge: () => <AcademyBadge kind="tanstack-start" label="TanStack" />,
+    rhf: () => <AcademyBadge kind="react-hook-form" />,
   };
 }
 
@@ -123,6 +129,23 @@ export function AboutPage() {
 
         <StorySection title={t("formTitle")}>
           <p>{t.rich("formBody", rich)}</p>
+        </StorySection>
+
+        <StorySection title={t("principlesTitle")}>
+          <p>{t("principlesIntro")}</p>
+          <ol className="space-y-4">
+            {principleIds.map((id, index) => (
+              <li key={id} className="flex gap-4">
+                <span className="mt-0.5 font-mono text-sm text-muted-foreground/70 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="font-semibold text-foreground">{t(`principle${id}Title`)}</h3>
+                  <p>{t.rich(`principle${id}Body`, rich)}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </StorySection>
 
         <StorySection title={t("nameTitle")}>

@@ -1,5 +1,6 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { Link } from "@/i18n/routing";
 
 const createMaskCode = `import { createMask } from "@virastack/mask"
 
@@ -57,6 +58,10 @@ export function MaskHelpersDoc() {
 
         <h2 id="validators">Doğrulayıcılar</h2>
         <DocsCodeBlock code={validatorsCode} lang="ts" />
+        <p>
+          Bir Türkiye IBAN&apos;ının hangi bankaya ait olduğunu bulmak için{" "}
+          <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullanın.
+        </p>
 
         <h2 id="money">Para</h2>
         <p>

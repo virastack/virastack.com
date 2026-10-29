@@ -44,9 +44,7 @@ export function AiCli() {
         {FLAGS.map((row) => (
           <RevealItem key={row.flag}>
             <p>
-              <span className="font-mono text-xs text-fuchsia-600 dark:text-fuchsia-400">
-                {row.flag}
-              </span>
+              <span className="font-mono text-xs text-brand-ai">{row.flag}</span>
               <span className="text-foreground/40"> — </span>
               {row.key === "cliFramework"
                 ? t.rich(row.key, {

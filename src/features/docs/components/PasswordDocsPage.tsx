@@ -8,7 +8,6 @@ import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import {
   PasswordAccessibilityDoc,
-  PasswordComparisonDoc,
   PasswordConfirmDoc,
   PasswordCustomizationDoc,
   PasswordHelpersDoc,
@@ -51,7 +50,6 @@ const passwordDocsContent: Record<string, Record<string, () => ReactNode>> = {
     helpers: () => <PasswordHelpersDoc />,
     types: () => <PasswordTypesDoc />,
     "ui-libraries": () => <PasswordUiLibrariesDoc />,
-    comparison: () => <PasswordComparisonDoc />,
   },
   v1: {
     introduction: () => <PasswordV1IntroductionDoc />,

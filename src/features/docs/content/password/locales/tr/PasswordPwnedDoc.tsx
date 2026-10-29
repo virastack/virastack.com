@@ -70,8 +70,8 @@ export function PasswordPwnedDoc() {
             görür.
           </li>
           <li>
-            <code>crypto.subtle</code> yalnızca HTTPS ve localhost&apos;ta vardır; aksi halde sonuç{" "}
-            <code>unknown</code>&#32;olur.
+            <code>crypto.subtle</code>&#32;yalnızca HTTPS ve localhost&apos;ta vardır; aksi halde
+            sonuç <code>unknown</code>&#32;olur.
           </li>
           <li>Her tuş vuruşunda çağırmayın; gönderimde kontrol edin.</li>
         </ul>

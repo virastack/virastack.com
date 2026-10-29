@@ -1,0 +1,33 @@
+# ViraStack Address
+
+> Headless Turkish address hook for React: chained province (il), district (ilçe) and neighbourhood (mahalle) selects, derived postal codes, server validation and the PTT dataset. npm: `@virastack/address` (1.0.x). Zero runtime dependencies.
+
+Install: `npm install @virastack/address`. Peer: `react` (≥ 18.2), optional for the `/server` and `/data` entries. One hook, `useViraAddress()`, returns prop getters for any select (`native`, `headless`, `shadcn`, `antd`) and a `value` with the postal code. The postal code also works the other way: `getPostalCodeInputProps()` or `setPostalCode()` fills province and district from a typed code, and the neighbourhood when the code has only one. `formatAddress()` puts an address on one line ("Alandüzü Mah. Adapazarı/Sakarya"). Data: 81 provinces, 973 districts, 72,466 neighbourhoods; a province's neighbourhoods load when it is picked. Not a component: no markup, no styles.
+
+Entry points: `@virastack/address` (hook), `@virastack/address/server` (`resolveAddress`, `resolvePostalCode`, no React, safe in Server Actions), `@virastack/address/data` (dataset, no React).
+
+React Hook Form: pass `form` (`useForm()` or `useFormContext()`) and every pick is written to `province`, `district`, `neighbourhood` and `postalCode` (rename with `names`). It follows `form.reset(data)`, the `values` option and `setValue()` on a level (React Hook Form 7.55+ `subscribe`), and the form stays pristine.
+
+## Docs
+
+- [Introduction](https://virastack.com/address/docs): Install, comparison, entry points, requirements
+- [useViraAddress()](https://virastack.com/address/docs/use-vira-address): `value`, options, return value, custom `source`
+- [React Hook Form](https://virastack.com/address/docs/react-hook-form): `form`, `names`, FormProvider, edit forms, Zod
+- [From a postal code](https://virastack.com/address/docs/postal-code): `getPostalCodeInputProps`, `setPostalCode`, `postalCodeStatus`
+- [UI libraries](https://virastack.com/address/docs/ui-libraries): Native select, shadcn, Ant Design, headless
+- [Server validation](https://virastack.com/address/docs/server): `resolveAddress`, `resolvePostalCode`, issues, derived postal code
+- [Dataset](https://virastack.com/address/docs/data): PTT source, counts, updates, usage without React
+- [Helpers](https://virastack.com/address/docs/helpers): `formatName`, `toSearchKey`, `compareNames`, `formatAddress`
+- [Types](https://virastack.com/address/docs/types): All exported types
+
+## Product
+
+- [Address overview](https://virastack.com/address): Product page
+- [npm `@virastack/address`](https://www.npmjs.com/package/@virastack/address): Package registry
+- [GitHub](https://github.com/virastack/form/tree/main/packages/address): Source (form monorepo)
+
+## Related
+
+- [ViraStack llms.txt](https://virastack.com/llms.txt): Ecosystem map
+- [Mask docs](https://virastack.com/mask/docs): Input masks for React Hook Form, with TCKN, VKN and IBAN presets
+- [Password docs](https://virastack.com/password/docs): Password hook for the same form

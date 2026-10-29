@@ -169,6 +169,24 @@
 
   --color-code-foreground: var(--code-foreground);
 
+  /* Product colors: values live in brand-palettes.config.ts (injected as CSS variables). */
+  --color-brand-academy: var(--brand-academy);
+  --color-brand-academy-solid: var(--brand-academy-solid);
+  --color-brand-start: var(--brand-start);
+  --color-brand-start-solid: var(--brand-start-solid);
+  --color-brand-ai: var(--brand-ai);
+  --color-brand-ai-solid: var(--brand-ai-solid);
+  --color-brand-mask: var(--brand-mask);
+  --color-brand-mask-solid: var(--brand-mask-solid);
+  --color-brand-password: var(--brand-password);
+  --color-brand-password-solid: var(--brand-password-solid);
+  --color-brand-address: var(--brand-address);
+  --color-brand-address-solid: var(--brand-address-solid);
+  --color-brand-guide: var(--brand-guide);
+  --color-brand-guide-solid: var(--brand-guide-solid);
+  --color-brand-virastack: var(--brand-virastack);
+  --color-brand-virastack-solid: var(--brand-virastack-solid);
+
   --animate-accordion-down: accordion-down 200ms ease-out;
   --animate-accordion-up: accordion-up 200ms ease-out;
 
@@ -326,4 +344,20 @@
   syntax: "<number>";
   inherits: false;
   initial-value: 0;
+}
+
+/* Hidden (and not clickable) until its delay has passed, then fades in; the delay is set inline. */
+@keyframes reveal-late {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@utility animate-reveal-late {
+  animation: reveal-late 700ms ease-out backwards;
 }

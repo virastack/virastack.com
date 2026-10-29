@@ -7,6 +7,7 @@ import { getProduct } from "@/config/products.config";
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import {
+  MaskBanksDoc,
   MaskCustomMaskDoc,
   MaskHelpersDoc,
   MaskIntroductionDoc,
@@ -40,6 +41,7 @@ const maskDocsContent: Record<string, Record<string, () => ReactNode>> = {
     validation: () => <MaskValidationDoc />,
     server: () => <MaskServerDoc />,
     helpers: () => <MaskHelpersDoc />,
+    banks: () => <MaskBanksDoc />,
     types: () => <MaskTypesDoc />,
     "ui-libraries": () => <MaskUiLibrariesDoc />,
   },

@@ -103,10 +103,10 @@ export function MaskUpgradeDoc() {
         <h2 id="prompt">Yapay zekâ ile tek adımda</h2>
         <p>
           Prompt&apos;u kopyalayıp projenizde <AcademyBadge kind="claudeCode" />,{" "}
-          <AcademyBadge kind="cursor" /> ya da <AcademyBadge kind="codex" /> gibi bir ajana verin.
-          Ajan tüm kullanımları bulur, v2&apos;ye çevirir, tip kontrolü ve testleri çalıştırır;
-          sonunda biçimi değişen verileri (tarih ISO, TR IBAN&apos;da <code>TR</code>) onayınız için
-          listeler.
+          <AcademyBadge kind="cursor" /> ya da <AcademyBadge kind="codex" />
+          &#32;gibi bir ajana verin. Ajan tüm kullanımları bulur, v2&apos;ye çevirir, tip kontrolü
+          ve testleri çalıştırır; sonunda biçimi değişen verileri (tarih ISO, TR IBAN&apos;da{" "}
+          <code>TR</code>) onayınız için listeler.
         </p>
         <DocsPromptBlock
           prompt={MASK_UPGRADE_PROMPT}

@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
+import { brandColorsCss } from "@/config/brand-palettes.config";
 import { defaultMetadata } from "@/config/seo.config";
 
 import { Providers } from "@/providers";
@@ -59,6 +60,9 @@ export default async function RootLayout({
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: brandColorsCss }} />
+      </head>
       <body className="flex min-h-full flex-col antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           <NuqsAdapter>

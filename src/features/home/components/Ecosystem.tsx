@@ -1,16 +1,9 @@
-import {
-  BookOpenIcon,
-  ChevronRight,
-  FormIcon,
-  GraduationCapIcon,
-  MapPinIcon,
-  RocketIcon,
-  SparklesIcon,
-  SquareAsteriskIcon,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
+import { getBrandPalette } from "@/config/brand-palettes.config";
+import { productIcons } from "@/config/product-icons.config";
 import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -51,20 +44,10 @@ const ecosystemDescKeys = {
 } as const satisfies Record<EcosystemItemId, string>;
 
 /** Same icons as the omergulcicek.com project cards, keeping both sites consistent. */
-const ecosystemIcons = {
-  academy: GraduationCapIcon,
-  start: RocketIcon,
-  ai: SparklesIcon,
-  mask: FormIcon,
-  password: SquareAsteriskIcon,
-  address: MapPinIcon,
-  guide: BookOpenIcon,
-} as const satisfies Record<EcosystemItemId, typeof RocketIcon>;
-
 const academyItem = {
   id: "academy",
   href: "/academy",
-  colorClass: "text-green-500",
+  colorClass: getBrandPalette("academy").textClass,
 } as const satisfies EcosystemItem;
 
 const ecosystemItems: readonly EcosystemItem[] = [academyItem, ...products];
@@ -99,7 +82,7 @@ export function Ecosystem() {
               </h3>
               <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 {items.map((item) => {
-                  const Icon = ecosystemIcons[item.id];
+                  const Icon = productIcons[item.id];
 
                   return (
                     <RevealItem key={item.id}>
@@ -119,15 +102,27 @@ export function Ecosystem() {
                           <div className="flex min-w-0 flex-1 flex-col gap-2">
                             <div className="flex items-center justify-between gap-2 md:gap-3">
                               <h3 className="text-base font-semibold text-balance md:text-lg">
-                                <span className="text-foreground">{siteConfig.name}</span>{" "}
-                                <span className={cn("font-medium italic", item.colorClass)}>
+                                <span className="text-primary">{siteConfig.name}</span>{" "}
+                                <span className={cn("font-bold", item.colorClass)}>
                                   {tNav(ecosystemNameKeys[item.id])}
                                 </span>
                               </h3>
                               <ChevronRight className={featureCardChevronClassName} aria-hidden />
                             </div>
                             <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                              {t(ecosystemDescKeys[item.id])}
+                              {t.rich(ecosystemDescKeys[item.id], {
+                                bold: (chunks) => (
+                                  <strong className="font-semibold text-foreground">
+                                    {chunks}
+                                  </strong>
+                                ),
+                                italic: (chunks) => <em className="italic">{chunks}</em>,
+                                code: (chunks) => (
+                                  <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground">
+                                    {chunks}
+                                  </code>
+                                ),
+                              })}
                             </p>
                           </div>
                         </div>

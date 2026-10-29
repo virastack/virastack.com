@@ -1,7 +1,9 @@
 import { siteConfig } from "@/config/site.config";
 
+import { parseGithubLink } from "@/lib/github";
+
 type BuildDocsGithubIssueUrlArgs = {
-  /** Product repo root, e.g. https://github.com/virastack/mask */
+  /** Product GitHub link: a repo root, or a package page in a monorepo. */
   githubRepo: string;
   pageTitle: string;
   /** Site path, e.g. /mask/docs/installation */
@@ -31,8 +33,10 @@ export function buildDocsGithubIssueUrl({
     "",
   ].join("\n");
 
-  const params = new URLSearchParams({ title, body });
-  return `${githubRepo.replace(/\/$/, "")}/issues/new?${params.toString()}`;
+  // A package in the form monorepo files its issues there, labelled pkg:<name>.
+  const { repo, pkg } = parseGithubLink(githubRepo);
+  const params = new URLSearchParams({ title, body, ...(pkg ? { labels: `pkg:${pkg}` } : {}) });
+  return `${repo}/issues/new?${params.toString()}`;
 }
 
 export function docsPagePath(docsIndexHref: string, slug: string): string {

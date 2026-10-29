@@ -24,12 +24,28 @@ const compareCode = `import { compareNames } from "@virastack/address"
 const sorted = ["İZMİR", "ADANA", "ÇORUM"].sort(compareNames)
 // ["ADANA", "ÇORUM", "İZMİR"]`;
 
+const formatAddressCode = `import { formatAddress } from "@virastack/address"
+
+const value = {
+  province: "SAKARYA",
+  district: "ADAPAZARI",
+  neighbourhood: "ALANDÜZÜ MAH.",
+  postalCode: "54100",
+}
+
+formatAddress(value)                        // "Alandüzü Mah. Adapazarı/Sakarya"
+formatAddress(value, { postalCode: true })  // "Alandüzü Mah. 54100 Adapazarı/Sakarya"
+formatAddress(value, { separator: ", " })   // "Alandüzü Mah. Adapazarı, Sakarya"
+
+formatAddress({ province: "SAKARYA", district: "ADAPAZARI" })
+// "Adapazarı/Sakarya": seçilmeyen seviye atlanır`;
+
 export function AddressHelpersDoc() {
   return (
     <>
       <DocsPageHeader
         title="Türkçe yardımcılar"
-        description="formatName, toSearchKey ve compareNames: adları göstermek, aramak ve sıralamak için; İ ve ı doğru işlenir."
+        description="formatName, toSearchKey, compareNames ve formatAddress: adları göstermek, aramak, sıralamak ve adresi tek satıra dökmek için; İ ve ı doğru işlenir."
       />
       <DocsProse>
         <h2 id="format-name">formatName</h2>
@@ -64,6 +80,23 @@ export function AddressHelpersDoc() {
         </p>
         <DocsCodeBlock code={compareCode} lang="ts" />
         <p>İl ve ilçe listeleri bununla sıralanır.</p>
+
+        <h2 id="format-address">formatAddress</h2>
+        <p>
+          Seçilen adresi tek satıra döker: sipariş özeti, fatura ya da kargo etiketi için.
+          Varsayılan biçim mahalle, ardından <code>ilçe/il</code>&apos;dir; adlar{" "}
+          <code>formatName</code>
+          &#32;ile yazılır.
+        </p>
+        <DocsCodeBlock code={formatAddressCode} lang="ts" />
+        <p>
+          İki seçenek vardır: <code>postalCode</code>&#32;posta kodunu zarftaki gibi ilçeden önce
+          ekler, <code>separator</code>&#32;ilçe ile il arasındakini değiştirir. Seçilmemiş
+          seviyeler atlanır, yarım doldurulmuş bir form da düzgün okunur. Hook&apos;un{" "}
+          <code>value</code>
+          &apos;sunu, <code>resolveAddress</code>&#32;sonucunu ya da kendi nesnenizi alır;{" "}
+          <code>/server</code>&#32;içinden de dışa aktarılır.
+        </p>
       </DocsProse>
     </>
   );

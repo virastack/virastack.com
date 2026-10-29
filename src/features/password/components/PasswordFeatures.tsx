@@ -19,14 +19,14 @@ export function PasswordFeatures() {
       subtitle: t("featuresA11ySubtitle"),
       description: t("featuresA11yDesc"),
       icon: <AccessibilityIcon className="size-5" aria-hidden />,
-      tone: "bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-300",
+      tone: "bg-brand-password/10 text-brand-password",
     },
     {
       title: t("featuresHeadlessTitle"),
       subtitle: t("featuresHeadlessSubtitle"),
       description: t("featuresHeadlessDesc"),
       icon: <PuzzleIcon className="size-5" aria-hidden />,
-      tone: "bg-pink-50 text-pink-600 dark:bg-pink-950/40 dark:text-pink-300",
+      tone: "bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300",
     },
     {
       title: t("featuresStrengthTitle"),

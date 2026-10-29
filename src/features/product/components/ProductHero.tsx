@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import type { Product } from "@/types/product.types";
 
+import { parseGithubLink } from "@/lib/github";
 import { cn } from "@/lib/utils";
 
 import { BrandLockup } from "@/components/shared/BrandLockup";
@@ -59,6 +60,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
       ? { href: "/guide/play" as const, label: t("startExperience") }
       : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
   const installCommand = installCommands[product.id];
+  const github = parseGithubLink(product.github);
 
   const copy = (
     <div
@@ -117,7 +119,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
           </Button>
           <GithubRepoButton
             href={product.github}
-            label={product.github.replace(/^https:\/\/github\.com\//, "")}
+            label={github.pkg ? `${github.slug}/packages/${github.pkg}` : github.slug}
           />
         </div>
 

@@ -141,9 +141,10 @@ export function AddressReactHookFormDoc() {
         </p>
         <p>
           Hook React Hook Form&apos;dan hiçbir şey import etmez, bağımlılığı da değildir.{" "}
-          <code>form</code>, <code>setValue(name, value, options)</code>&#32;ve doluyla başlamak
-          için <code>getValues(name)</code>&#32;taşıyan herhangi bir nesnedir;{" "}
-          <code>useForm()</code>&#32;sonucu olduğu gibi uyar.
+          <code>form</code>, <code>setValue(name, value, options)</code>, doluyla başlamak için{" "}
+          <code>getValues(name)</code>&#32;ve <code>reset()</code>&#32;ile güncellenmek için{" "}
+          <code>subscribe</code>&#32;taşıyan herhangi bir nesnedir; <code>useForm()</code>
+          &#32;sonucu olduğu gibi uyar.
         </p>
 
         <h2 id="names">names</h2>
@@ -179,9 +180,11 @@ export function AddressReactHookFormDoc() {
           <code>true</code>&#32;olur.
         </p>
         <p>
-          Hook formdaki adresi yalnızca ilk render&apos;da okur. Adresi sonradan{" "}
-          <code>form.reset()</code>&#32;ile değiştirirseniz hook&apos;u yeni bir <code>key</code>
-          &#32;ile yeniden başlatın.
+          Sonradan gelen veri de çalışır: <code>form.reset(data)</code>, <code>useForm()</code>
+          &#32;içindeki <code>values</code>&#32;seçeneği ve bir seviyeye <code>setValue()</code>
+          &#32;select&apos;leri günceller, form kirlenmez. Boş değerlerle <code>form.reset()</code>
+          &#32;adresi de temizler; yanında <code>address.reset()</code>
+          &#32;çağırmanız gerekmez. Yeni ilde ya da ilçede olmayan bir seviye formdan da düşer.
         </p>
 
         <h2 id="zod">Zod ile doğrulama</h2>

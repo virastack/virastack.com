@@ -52,8 +52,8 @@ export function MaskUseViraMaskDoc() {
       <DocsProse>
         <h2 id="temel">Basic usage</h2>
         <p>
-          The first argument is what <code>useForm()</code> returns, the second is the schema. Types
-          come from the form; you don&apos;t write them again.
+          The first argument is what <code>useForm()</code>&#32;returns, the second is the schema.
+          Types come from the form; you don&apos;t write them again.
         </p>
         <ComponentPreview
           preview={
@@ -106,7 +106,7 @@ export function MaskUseViraMaskDoc() {
             <code>currency</code> → a select: symbol and separators follow the currency.
           </li>
           <li>
-            <code>date</code> → a start date: the end can&apos;t be before it (
+            <code>date</code>&#32;→ a start date: the end can&apos;t be before it (
             <code>date.beforeFrom</code>).
           </li>
         </ul>

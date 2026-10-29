@@ -24,12 +24,28 @@ const compareCode = `import { compareNames } from "@virastack/address"
 const sorted = ["İZMİR", "ADANA", "ÇORUM"].sort(compareNames)
 // ["ADANA", "ÇORUM", "İZMİR"]`;
 
+const formatAddressCode = `import { formatAddress } from "@virastack/address"
+
+const value = {
+  province: "SAKARYA",
+  district: "ADAPAZARI",
+  neighbourhood: "ALANDÜZÜ MAH.",
+  postalCode: "54100",
+}
+
+formatAddress(value)                        // "Alandüzü Mah. Adapazarı/Sakarya"
+formatAddress(value, { postalCode: true })  // "Alandüzü Mah. 54100 Adapazarı/Sakarya"
+formatAddress(value, { separator: ", " })   // "Alandüzü Mah. Adapazarı, Sakarya"
+
+formatAddress({ province: "SAKARYA", district: "ADAPAZARI" })
+// "Adapazarı/Sakarya": a level not picked is left out`;
+
 export function AddressHelpersDoc() {
   return (
     <>
       <DocsPageHeader
         title="Turkish helpers"
-        description="formatName, toSearchKey and compareNames: display, search and sort Turkish names, with İ and ı handled correctly."
+        description="formatName, toSearchKey, compareNames and formatAddress: display, search and sort Turkish names and put an address on one line, with İ and ı handled correctly."
       />
       <DocsProse>
         <p>
@@ -74,6 +90,21 @@ export function AddressHelpersDoc() {
         </p>
         <DocsCodeBlock code={compareCode} lang="ts" />
         <p>The province and district lists are sorted with it.</p>
+
+        <h2 id="format-address">formatAddress</h2>
+        <p>
+          Puts the picked address on one line, for an order summary, an invoice or a cargo label.
+          The default is the neighbourhood followed by <code>district/province</code>, the way
+          Turkish addresses are written, with names in <code>formatName</code>&#32;case.
+        </p>
+        <DocsCodeBlock code={formatAddressCode} lang="ts" />
+        <p>
+          There are two options: <code>postalCode</code>&#32;adds the postal code before the
+          district, as on an envelope, and <code>separator</code>&#32;changes what goes between
+          district and province. Levels not picked yet are left out, so a half-filled form still
+          reads cleanly. It takes the hook&apos;s <code>value</code>, a <code>resolveAddress</code>
+          &#32;result or your own object, and is exported from <code>/server</code>&#32;too.
+        </p>
       </DocsProse>
     </>
   );

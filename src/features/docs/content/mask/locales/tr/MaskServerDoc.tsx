@@ -65,7 +65,7 @@ export function MaskServerDoc() {
 
         <h2 id="server-action">Server Action</h2>
         <p>
-          <code>parseMasked</code> FormData, URLSearchParams ya da düz nesne alır. Maskeli metni
+          <code>parseMasked</code>&#32;FormData, URLSearchParams ya da düz nesne alır. Maskeli metni
           (form JavaScript&apos;siz gönderildiyse) ya da ham değeri ayrıştırır, doğrular ve{" "}
           <code>address.zip</code> gibi adları iç içe nesneye çevirir.
         </p>

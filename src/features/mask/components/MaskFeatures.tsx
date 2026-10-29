@@ -13,7 +13,7 @@ export function MaskFeatures() {
       subtitle: t("featuresRhfSubtitle"),
       description: t("featuresRhfDesc"),
       icon: <FormInputIcon className="size-5" aria-hidden />,
-      tone: "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300",
+      tone: "bg-brand-mask/10 text-brand-mask",
     },
     {
       title: t("featuresPresetsTitle"),

@@ -42,7 +42,7 @@ export async function AcademyLessonMetaBadges({ counts, isProject }: AcademyLess
   return (
     <span className="flex max-w-full shrink-0 flex-wrap items-center justify-end gap-1.5 md:gap-2">
       {isProject ? (
-        <span className="inline-flex shrink-0 items-center rounded-full border border-green-500/30 bg-green-500/15 px-1.5 py-0.5 text-xs font-medium text-green-950 md:px-2 dark:border-green-400/30 dark:bg-green-400/15 dark:text-green-100">
+        <span className="inline-flex shrink-0 items-center rounded-full border border-brand-academy/30 bg-brand-academy/15 px-1.5 py-0.5 text-xs font-medium text-foreground md:px-2">
           {t("projectLabel")}
         </span>
       ) : null}

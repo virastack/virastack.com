@@ -4,6 +4,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 const hookCode = `import type {
   UseViraAddressOptions, UseViraAddressReturn, GetSelectPropsOptions,
   AddressSelectFlavour, AddressSelectProps,
+  GetPostalCodeInputPropsOptions, PostalCodeStatus,
 } from "@virastack/address"
 
 interface UseViraAddressOptions<P extends string = string> {
@@ -28,6 +29,10 @@ interface UseViraAddressReturn {
   setProvince: (code: string | number | null) => void
   setDistrict: (name: string | null) => void
   setNeighbourhood: (name: string | null) => void
+  setPostalCode: (
+    code: string | number | null,
+  ) => Promise<PostalCodeStatus | null>
+  postalCodeStatus: PostalCodeStatus | null
   reset: () => void
   loading: { neighbourhoods: boolean }
   error: Error | null
@@ -41,6 +46,18 @@ interface UseViraAddressReturn {
     options?: GetSelectPropsOptions,
   ) => Record<string, unknown>
   getPostalCodeProps: () => Record<string, unknown>
+  getPostalCodeInputProps: (
+    options?: GetPostalCodeInputPropsOptions,
+  ) => Record<string, unknown>
+}
+
+type PostalCodeStatus = "loading" | "exact" | "partial" | "unknown"
+
+interface GetPostalCodeInputPropsOptions {
+  disabled?: boolean
+  placeholder?: string
+  name?: string
+  id?: string
 }
 
 type AddressSelectFlavour = "native" | "headless" | "shadcn" | "antd"
@@ -67,6 +84,11 @@ interface AddressForm<P extends string = string> {
     options?: AddressFormWriteOptions,
   ): void
   getValues?(name: P): unknown
+  subscribe?(options: {
+    name?: readonly P[]
+    formState: { values: true }
+    callback: () => void
+  }): () => void
 }
 
 type AddressField =
@@ -88,6 +110,7 @@ interface AddressFormWriteOptions {
 const valueCode = `import type {
   AddressValue, AddressOption, NeighbourhoodOption, AddressProvince,
   AddressNeighbourhood, AddressSource, AddressLevel,
+  AddressLineInput, FormatAddressOptions,
 } from "@virastack/address"
 
 interface AddressValue {
@@ -112,12 +135,25 @@ interface AddressSource {
   ): Promise<ReadonlyMap<string, readonly AddressNeighbourhood[]>>
 }
 
-type AddressLevel = "province" | "district" | "neighbourhood"`;
+type AddressLevel = "province" | "district" | "neighbourhood"
+
+interface AddressLineInput {
+  province?: string | null
+  district?: string | null
+  neighbourhood?: string | null
+  postalCode?: string | null
+}
+
+interface FormatAddressOptions {
+  postalCode?: boolean // varsayılan: false
+  separator?: string // varsayılan: "/"
+}`;
 
 const serverCode = `import type {
   AddressInput,
   AddressIssue,
   AddressResult,
+  PostalCodeResult,
 } from "@virastack/address/server"
 
 interface AddressInput {
@@ -125,12 +161,23 @@ interface AddressInput {
   province?: string | null
   district?: string | null
   neighbourhood?: string | null
+  postalCode?: string | number | null
 }
+
+type AddressIssue =
+  | { level: "province"; reason: "missing" | "unknown" }
+  | { level: "district"; reason: "missing" | "unknown" }
+  | { level: "neighbourhood"; reason: "missing" | "unknown" }
+  | { level: "postalCode"; reason: "missing" | "unknown" | "mismatch" }
 
 interface AddressResult {
   ok: boolean
   value: AddressValue
   issues: readonly AddressIssue[]
+}
+
+interface PostalCodeResult extends AddressResult {
+  neighbourhoods: readonly string[]
 }`;
 
 const dataCode = `import type {
@@ -138,6 +185,7 @@ const dataCode = `import type {
   Neighbourhood,
   Source,
   Loader,
+  PostalCodeMatch,
 } from "@virastack/address/data"
 
 interface Province {
@@ -159,7 +207,14 @@ interface Source {
   districts: number
   neighbourhoods: number
 }
-type Loader = (provinceCode: number) => Promise<string>`;
+type Loader = (provinceCode: number) => Promise<string>
+
+interface PostalCodeMatch {
+  postalCode: string
+  province: Province
+  district: string
+  neighbourhoods: readonly Neighbourhood[]
+}`;
 
 export function AddressTypesDoc() {
   return (

@@ -35,7 +35,7 @@ export function AiInjectedRules() {
       subtitle: t("rulesArchSubtitle"),
       description: t("rulesArchDesc"),
       icon: <FolderTreeIcon className="size-5" aria-hidden />,
-      tone: "bg-fuchsia-50 text-fuchsia-600 dark:bg-fuchsia-950/40 dark:text-fuchsia-300",
+      tone: "bg-brand-ai/10 text-brand-ai",
     },
     {
       title: t("rulesDataTitle"),

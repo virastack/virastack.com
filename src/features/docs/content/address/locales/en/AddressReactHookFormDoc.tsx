@@ -144,8 +144,9 @@ export function AddressReactHookFormDoc() {
         <p>
           The hook imports nothing from React Hook Form and does not depend on it. <code>form</code>
           &#32;is any object with <code>setValue(name, value, options)</code>, plus{" "}
-          <code>getValues(name)</code>&#32;if it should start filled; the result of{" "}
-          <code>useForm()</code>&#32;fits as it is.
+          <code>getValues(name)</code>&#32;if it should start filled and <code>subscribe</code>
+          &#32;if it should follow <code>reset()</code>; the result of <code>useForm()</code>
+          &#32;fits as it is.
         </p>
 
         <h2 id="names">names</h2>
@@ -182,8 +183,12 @@ export function AddressReactHookFormDoc() {
           picks something.
         </p>
         <p>
-          The hook reads the form&apos;s address once, on the first render. If you replace it later
-          with <code>form.reset()</code>, remount the hook with a new <code>key</code>.
+          Data that arrives later works too: <code>form.reset(data)</code>, the <code>values</code>
+          &#32;option of <code>useForm()</code>&#32;and <code>setValue()</code>&#32;on a level all
+          move the selects, and the form stays pristine. <code>form.reset()</code>&#32;to empty
+          values clears the address as well, so you never call <code>address.reset()</code>
+          &#32;alongside it. A level the new province or district does not have is dropped in the
+          form too.
         </p>
 
         <h2 id="zod">Validation with Zod</h2>

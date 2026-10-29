@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 
 type OutlineWordmarkProps = {
-  /** Fill the letters with the brand teal and drop the bottom fade, instead of the outline. Animates. */
+  /** Fill the letters with the neutral foreground colour and drop the bottom fade, instead of the outline. Animates. */
   filled?: boolean;
   /** Font-size (and any layout) classes; the outline styling itself lives here. */
   className?: string;
@@ -22,8 +22,10 @@ export function OutlineWordmark({ filled = false, className }: OutlineWordmarkPr
     <span
       aria-hidden
       className={cn(
-        "pointer-events-none block [mask-image:linear-gradient(to_bottom,black_10%,rgb(0_0_0/var(--wordmark-fade))_80%)] px-[0.08em] leading-[0.95] font-bold tracking-tighter whitespace-nowrap transition-[color,translate,--wordmark-fade] duration-500 select-none [-webkit-text-stroke:2px_var(--color-teal-500)] [paint-order:stroke_fill] sm:[-webkit-text-stroke-width:3px]",
-        filled ? "text-teal-500 [--wordmark-fade:1]" : "text-background [--wordmark-fade:0]",
+        "pointer-events-none block [mask-image:linear-gradient(to_bottom,black_10%,rgb(0_0_0/var(--wordmark-fade))_80%)] px-[0.08em] leading-[0.95] font-bold tracking-tight whitespace-nowrap transition-[color,translate,-webkit-text-stroke-color,--wordmark-fade] duration-500 select-none [-webkit-text-stroke-width:2px] [paint-order:stroke_fill] sm:[-webkit-text-stroke-width:3px]",
+        filled
+          ? "text-foreground [--wordmark-fade:1] [-webkit-text-stroke-color:currentColor]"
+          : "text-background [--wordmark-fade:0] [-webkit-text-stroke-color:var(--foreground)]",
         className,
       )}
     >

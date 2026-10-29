@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-import { CheckIcon, MinusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
 
 const GEMINI_SETTINGS = `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }`;
@@ -13,20 +13,14 @@ const AIDER_SETTINGS = `read: AGENTS.md`;
 function Supported({ label, children }: { label: string; children?: ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1.5">
-      <CheckIcon className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden />
-      <span className="sr-only">{label}</span>
+      <StatusIcon status="yes" label={label} />
       {children}
     </span>
   );
 }
 
 function NotSupported({ label }: { label: string }) {
-  return (
-    <span className="inline-flex items-center">
-      <MinusIcon className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-      <span className="sr-only">{label}</span>
-    </span>
-  );
+  return <StatusIcon status="no" label={label} />;
 }
 
 export function AiSupportedToolsDoc() {

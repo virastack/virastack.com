@@ -129,9 +129,8 @@ export function PasswordIntroductionDoc() {
             <Link href="/password/docs/pwned">sızmış parolalar</Link>
           </li>
           <li>
-            <Link href="/password/docs/accessibility">Erişilebilirlik</Link>,{" "}
-            <Link href="/password/docs/customization">özelleştirme</Link> ve{" "}
-            <Link href="/password/docs/comparison">karşılaştırma</Link>
+            <Link href="/password/docs/accessibility">Erişilebilirlik</Link> ve{" "}
+            <Link href="/password/docs/customization">özelleştirme</Link>
           </li>
         </ul>
         <p>Kapsam dışı: güç barı veya parola üretici bileşeni, passkey, pano temizleme.</p>

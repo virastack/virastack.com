@@ -1,6 +1,5 @@
 "use client";
 
-import { MapPinIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -30,10 +29,9 @@ export function TurkeyOnlyNotice({ variant = "block", className }: TurkeyOnlyNot
           className,
         )}
       >
-        <MapPinIcon
-          className="size-3.5 shrink-0 text-orange-600 dark:text-orange-400"
-          aria-hidden
-        />
+        <span className="shrink-0 text-sm leading-none" aria-hidden>
+          🇹🇷
+        </span>
         <span>
           <span className="font-medium text-foreground">{t("regionNoticeTitle")}:</span>{" "}
           {t("regionNoticeShort")}
@@ -50,10 +48,9 @@ export function TurkeyOnlyNotice({ variant = "block", className }: TurkeyOnlyNot
         className,
       )}
     >
-      <MapPinIcon
-        className="mt-0.5 size-4 shrink-0 text-orange-600 dark:text-orange-400"
-        aria-hidden
-      />
+      <span className="shrink-0 text-base leading-6" aria-hidden>
+        🇹🇷
+      </span>
       <div className="space-y-1 text-sm leading-relaxed">
         <p className="font-semibold text-foreground">{t("regionNoticeTitle")}</p>
         <p className="text-muted-foreground">{t("regionNotice")}</p>

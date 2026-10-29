@@ -1,88 +1,73 @@
-export type BrandPaletteId = "academy" | "start" | "ai" | "mask" | "password" | "address" | "guide";
+import { ecosystem, type EcosystemId } from "@/config/ecosystem.config";
+
+export type BrandPaletteId = EcosystemId;
 
 export type BrandPalette = {
   id: BrandPaletteId;
-  /** Product short name shown italic next to ViraStack. */
+  /** Product short name shown bold next to ViraStack. */
   productName: string;
   /** Route of the product on virastack.com. */
   href: `/${BrandPaletteId}`;
-  /** Tailwind shade shown in naming / colors. */
+  /** Tailwind shade of the fixed swatch, shown in naming / colors. */
   shade: string;
-  /** Hex of the active brand shade (OG images, color docs). */
+  /** Tailwind shade used for text and icons on a light background. */
+  lightShade: string;
+  /** Tailwind shade used for text and icons on a dark background. */
+  darkShade: string;
+  /** Hex of the active brand shade (dots, glows, OG images, READMEs). */
   hex: string;
-  /** Tailwind `text-*` class used to style the product name. */
+  /** Readable hex for text and icons on a light background. */
+  lightHex: string;
+  /** Readable hex for text and icons on a dark background. */
+  darkHex: string;
+  /** Adaptive `text-*` class (light/dark aware) used to style the product name. */
   textClass: string;
-  /** Active brand swatch `bg-*` / arbitrary class. */
+  /** Fixed brand swatch `bg-*` class (same in both themes). */
   bgClass: string;
 };
 
 /**
- * Ecosystem product colors in canonical order: learn (Academy), build (Start, AI,
- * Mask, Password, Address), then the big picture (Guide). The same order drives the
- * brand page, the product dots, and the intro video.
+ * Product colors, derived from `ecosystem.config.ts` (the single source of truth). Hex
+ * values become CSS variables (`--brand-<id>`, `--brand-<id>-solid`) through
+ * `brandColorsCss`, which Tailwind exposes as `text-brand-<id>` / `bg-brand-<id>-solid`.
  */
-export const brandPalettes: readonly BrandPalette[] = [
-  {
-    id: "academy",
-    productName: "Academy",
-    href: "/academy",
-    shade: "green-500",
-    hex: "#00c950",
-    textClass: "text-green-500",
-    bgClass: "bg-green-500",
-  },
-  {
-    id: "start",
-    productName: "Start",
-    href: "/start",
-    shade: "teal-500",
-    hex: "#00baa6",
-    textClass: "text-teal-500",
-    bgClass: "bg-[#00baa6]",
-  },
-  {
-    id: "ai",
-    productName: "AI",
-    href: "/ai",
-    shade: "fuchsia-500",
-    hex: "#e131fa",
-    textClass: "text-fuchsia-500",
-    bgClass: "bg-[#e131fa]",
-  },
-  {
-    id: "mask",
-    productName: "Mask",
-    href: "/mask",
-    shade: "indigo-500",
-    hex: "#605efe",
-    textClass: "text-indigo-500",
-    bgClass: "bg-[#605efe]",
-  },
-  {
-    id: "password",
-    productName: "Password",
-    href: "/password",
-    shade: "rose-500",
-    hex: "#ff2056",
-    textClass: "text-rose-500",
-    bgClass: "bg-[#ff2056]",
-  },
-  {
-    id: "address",
-    productName: "Address",
-    href: "/address",
-    shade: "orange-500",
-    hex: "#ff6900",
-    textClass: "text-orange-500",
-    bgClass: "bg-[#ff6900]",
-  },
-  {
-    id: "guide",
-    productName: "Guide",
-    href: "/guide",
-    shade: "amber-400",
-    hex: "#ffb900",
-    textClass: "text-amber-400",
-    bgClass: "bg-[#ffb900]",
-  },
-] as const;
+export const brandPalettes: readonly BrandPalette[] = ecosystem.map((entry) => ({
+  id: entry.id,
+  productName: entry.name,
+  href: entry.href,
+  ...entry.color,
+  textClass: `text-brand-${entry.id}`,
+  bgClass: `bg-brand-${entry.id}-solid`,
+}));
+
+/**
+ * ViraStack's own turquoise (from Turkuaz CSS). It colors the logo mark only: the
+ * wordmark stays neutral and no product may use this hue.
+ */
+export const virastackColor = {
+  id: "virastack",
+  shade: "teal-500",
+  lightShade: "teal-600",
+  darkShade: "teal-500",
+  hex: "#00baa6",
+  lightHex: "#009689",
+  darkHex: "#00baa6",
+  textClass: "text-brand-virastack",
+  bgClass: "bg-brand-virastack-solid",
+} as const;
+
+export function getBrandPalette(id: BrandPaletteId): BrandPalette {
+  const palette = brandPalettes.find((item) => item.id === id);
+  if (!palette) {
+    throw new Error(`Unknown brand palette: ${id}`);
+  }
+  return palette;
+}
+
+/** CSS custom properties for every product color; injected once in the root layout. */
+const brandColors = [...brandPalettes, virastackColor];
+
+export const brandColorsCss = [
+  `:root{${brandColors.map((p) => `--brand-${p.id}:${p.lightHex};--brand-${p.id}-solid:${p.hex};`).join("")}}`,
+  `.dark{${brandColors.map((p) => `--brand-${p.id}:${p.darkHex};`).join("")}}`,
+].join("");

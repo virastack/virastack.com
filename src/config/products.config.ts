@@ -1,46 +1,16 @@
 import type { Product, ProductId } from "@/types/product.types";
+import { getBrandPalette } from "@/config/brand-palettes.config";
+import { ecosystem } from "@/config/ecosystem.config";
 
-/**
- * ViraStack ecosystem products: brand colors and paths.
- */
-export const products: readonly Product[] = [
-  {
-    id: "start",
-    href: "/start",
-    github: "https://github.com/virastack/start",
-    colorClass: "text-teal-500",
-  },
-  {
-    id: "ai",
-    href: "/ai",
-    github: "https://github.com/virastack/ai",
-    colorClass: "text-fuchsia-500",
-  },
-  {
-    id: "mask",
-    href: "/mask",
-    github: "https://github.com/virastack/mask",
-    colorClass: "text-indigo-500",
-  },
-  {
-    id: "password",
-    href: "/password",
-    github: "https://github.com/virastack/password",
-    colorClass: "text-rose-500",
-  },
-  {
-    id: "address",
-    href: "/address",
-    github: "https://github.com/virastack/form",
-    colorClass: "text-orange-500",
-  },
-  {
-    id: "guide",
-    href: "/guide",
-    github: "https://github.com/virastack/guide",
-    colorClass: "text-amber-400",
-  },
-] as const;
+/** Ecosystem products (Academy is a site section, not a product), from `ecosystem.config.ts`. */
+export const products: readonly Product[] = ecosystem
+  .filter((entry): entry is typeof entry & { id: ProductId } => entry.id !== "academy")
+  .map((entry) => ({
+    id: entry.id,
+    href: entry.href as Product["href"],
+    github: entry.github,
+    colorClass: getBrandPalette(entry.id).textClass,
+  }));
 
 const productIds = new Set<string>(products.map((product) => product.id));
 

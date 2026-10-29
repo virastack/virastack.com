@@ -2,7 +2,6 @@ import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { passwordExampleFile } from "@/features/docs/content/password/examples/example-code.generated";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
-import { Link } from "@/i18n/routing";
 
 const evaluateCode = `import { evaluate } from "@virastack/password/strength"
 import { policy } from "@/lib/password-policy"
@@ -116,8 +115,7 @@ export function PasswordStrengthDoc() {
           </table>
         </div>
         <p>
-          The score is a heuristic from length and character variety, not a crack-time estimate. For
-          that, see the <Link href="/password/docs/comparison">comparison</Link>.
+          The score is a heuristic from length and character variety, not a crack-time estimate.
         </p>
         <p>
           <strong>Why is a complex 14-character password weak?</strong> The score follows the

@@ -128,9 +128,8 @@ export function PasswordIntroductionDoc() {
             <Link href="/password/docs/pwned">leaked passwords</Link>
           </li>
           <li>
-            <Link href="/password/docs/accessibility">Accessibility</Link>,{" "}
-            <Link href="/password/docs/customization">customization</Link> and{" "}
-            <Link href="/password/docs/comparison">comparison</Link>
+            <Link href="/password/docs/accessibility">Accessibility</Link> and{" "}
+            <Link href="/password/docs/customization">customization</Link>
           </li>
         </ul>
         <p>

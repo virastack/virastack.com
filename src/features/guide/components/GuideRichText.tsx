@@ -41,7 +41,7 @@ export function GuideStackIcon({ icon, children }: { icon?: ReactNode; children:
   );
 }
 
-/** Brand lockup: ViraStack (primary) + product name (color, italic). */
+/** Brand lockup: ViraStack (primary) + product name (color, bold). */
 export function GuideProductMark({
   id,
   children,
@@ -70,7 +70,7 @@ export function GuideProductMark({
           <span className={brandWeight}>{siteConfig.name}</span>{" "}
         </>
       ) : null}
-      <span className={cn("font-medium italic", product.colorClass)}>{children}</span>
+      <span className={cn("font-bold", product.colorClass)}>{children}</span>
     </>
   );
 

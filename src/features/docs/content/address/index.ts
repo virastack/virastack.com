@@ -1,6 +1,7 @@
 export { AddressIntroductionDoc } from "./AddressIntroductionDoc";
 export { AddressUseViraAddressDoc } from "./AddressUseViraAddressDoc";
 export { AddressReactHookFormDoc } from "./AddressReactHookFormDoc";
+export { AddressPostalCodeDoc } from "./AddressPostalCodeDoc";
 export { AddressUiLibrariesDoc } from "./AddressUiLibrariesDoc";
 export { AddressServerDoc } from "./AddressServerDoc";
 export { AddressDataDoc } from "./AddressDataDoc";

@@ -2,7 +2,7 @@
   "name": "virastack-com",
   "version": "1.0.0",
   "private": true,
-  "description": "Premium Next.js 16 + React 19 + Tailwind CSS 4 boilerplate focused on clean architecture, UI/UX, and agent-ready developer experience.",
+  "description": "Official website and docs for the ViraStack ecosystem",
   "license": "MIT",
   "virastack": {
     "template": "nextjs",
@@ -54,7 +54,7 @@
     "@tanstack/react-query-devtools": "^5.101.4",
     "@upstash/redis": "^1.38.1",
     "@virastack/address": "file:../form/packages/address",
-    "@virastack/mask": "2.0.0",
+    "@virastack/mask": "file:../form/packages/mask",
     "@virastack/mask-v1": "npm:@virastack/mask@1.1.0",
     "@virastack/password": "1.1.0",
     "class-variance-authority": "^0.7.1",

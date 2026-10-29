@@ -15,8 +15,8 @@ export function MaskIntroductionDoc() {
       <DocsProse>
         <p>
           Kart numarası, telefon, IBAN, para birimi ve özel maskeler için tek bir{" "}
-          <code>useViraMask()</code> hook&apos;u sunar. Form state&apos;inde ham (unmasked) değer
-          tutulurken input&apos;ta formatlı görüntü gösterilir.
+          <code>useViraMask()</code>&#32;hook&apos;u sunar. Form state&apos;inde ham (unmasked)
+          değer tutulurken input&apos;ta formatlı görüntü gösterilir.
         </p>
 
         <h2 id="baslarken">Başlarken</h2>

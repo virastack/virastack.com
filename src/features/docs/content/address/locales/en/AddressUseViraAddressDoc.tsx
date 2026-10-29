@@ -53,7 +53,7 @@ const valueCode = `{
   province: "İSTANBUL",
   district: "FATİH",
   neighbourhood: "AKSARAY MAH.",
-  postalCode: "34096",      // first postal code of the neighbourhood
+  postalCode: "34096",      // the neighbourhood's first code, or the one typed
   postalCodes: ["34096"],   // all of them; a few hundred have several
 }`;
 
@@ -144,6 +144,20 @@ const returns: [string, ReactNode][] = [
       level clears the ones below.
     </>,
   ],
+  [
+    "setPostalCode(code)",
+    <>
+      Fills the address from a postal code; resolves with{" "}
+      <code>{'"exact" | "partial" | "unknown"'}</code>. See{" "}
+      <Link href="/address/docs/postal-code">from a postal code</Link>.
+    </>,
+  ],
+  [
+    "postalCodeStatus",
+    <>
+      What the last postal code matched; <code>null</code>&#32;when no lookup is active.
+    </>,
+  ],
   ["reset()", "Clears every level."],
   [
     "loading.neighbourhoods",
@@ -163,6 +177,10 @@ const returns: [string, ReactNode][] = [
     </>,
   ],
   ["getPostalCodeProps()", "A hidden input that carries the derived postal code."],
+  [
+    "getPostalCodeInputProps()",
+    "An input the user can type a postal code into; it also shows the code derived from a pick.",
+  ],
 ];
 
 export function AddressUseViraAddressDoc() {

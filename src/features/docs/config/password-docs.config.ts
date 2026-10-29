@@ -174,7 +174,6 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
         { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
         { slug: "types", title: t("navTypes"), href: `${BASE}/types` },
         { slug: "ui-libraries", title: t("navUiLibraries"), href: `${BASE}/ui-libraries` },
-        { slug: "comparison", title: t("navComparison"), href: `${BASE}/comparison` },
       ],
     },
   ];
@@ -308,10 +307,6 @@ export function getPasswordDocsPage(
       ["ant-design", "Ant Design"],
       ["chakra", "Chakra UI"],
     ]),
-    comparison: page("comparison", t("comparisonTitle"), t("comparisonDescription"), [
-      ["tablo", t("comparisonHeadingTable")],
-      ["notlar", t("comparisonHeadingNotes")],
-    ]),
     examples: {
       slug: "examples",
       title: t("examplesTitle"),
@@ -355,7 +350,6 @@ export const passwordDocsSlugs = [
   "helpers",
   "types",
   "ui-libraries",
-  "comparison",
 ] as const;
 
 const passwordDocsSlugSet: Record<string, true> = Object.fromEntries(

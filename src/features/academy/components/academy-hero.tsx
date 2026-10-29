@@ -71,7 +71,7 @@ export function AcademyHero({
   return (
     <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-36 pb-16 text-center">
       <BrandLockup nameScale={0.9}>
-        <span className="text-green-500">{t("name")}</span>
+        <span className="text-brand-academy">{t("name")}</span>
       </BrandLockup>
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
         {t("description")}

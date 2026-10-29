@@ -1,8 +1,7 @@
 /**
- * Site-level nav links for the footer (not product routes).
+ * Site-level nav links for the footer (not product routes; Academy is listed with the products).
  */
 export const siteNavLinks = [
-  { href: "/academy", labelKey: "academy" },
   { href: "/about", labelKey: "about" },
   { href: "/brand", labelKey: "brand" },
   { href: "/support", labelKey: "support" },

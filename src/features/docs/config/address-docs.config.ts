@@ -15,6 +15,7 @@ export function getAddressDocsNav(t: DocsAddressTranslate): DocsNavSection[] {
       items: [
         { slug: "use-vira-address", title: "useViraAddress()", href: `${BASE}/use-vira-address` },
         { slug: "react-hook-form", title: "React Hook Form", href: `${BASE}/react-hook-form` },
+        { slug: "postal-code", title: t("navPostalCode"), href: `${BASE}/postal-code` },
         { slug: "ui-libraries", title: t("navUiLibraries"), href: `${BASE}/ui-libraries` },
       ],
     },
@@ -54,9 +55,10 @@ export function getAddressDocsPage(
   const pages: Record<string, DocsPageMeta> = {
     introduction: page("introduction", t("introductionTitle"), t("introductionDescription"), [
       ["baslarken", t("introductionHeadingGettingStarted")],
+      ["neden", t("introductionHeadingWhy")],
+      ["karsilastirma", t("introductionHeadingComparison")],
       ["giris-noktalari", t("introductionHeadingEntries")],
       ["gereksinimler", t("introductionHeadingRequirements")],
-      ["neden", t("introductionHeadingWhy")],
       ["kapsam", t("introductionHeadingScope")],
     ]),
     "use-vira-address": page(
@@ -79,6 +81,14 @@ export function getAddressDocsPage(
       ["zod", t("reactHookFormHeadingZod")],
       ["diger", t("reactHookFormHeadingOther")],
     ]),
+    "postal-code": page("postal-code", t("postalCodeTitle"), t("postalCodeDescription"), [
+      ["input", t("postalCodeHeadingInput")],
+      ["kesinlik", t("postalCodeHeadingCertainty")],
+      ["davranis", t("postalCodeHeadingBehaviour")],
+      ["set-postal-code", "setPostalCode()"],
+      ["ui", t("navUiLibraries")],
+      ["sunucu", t("postalCodeHeadingServer")],
+    ]),
     "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription"), [
       ["getterlar", t("uiLibrariesHeadingGetters")],
       ["headless", "headless"],
@@ -90,6 +100,7 @@ export function getAddressDocsPage(
     server: page("server", t("serverTitle"), t("serverDescription"), [
       ["resolve", "resolveAddress()"],
       ["sorunlar", t("serverHeadingIssues")],
+      ["posta-kodu", "resolvePostalCode()"],
       ["server-action", "Server Action"],
       ["yardimcilar", t("serverHeadingHelpers")],
       ["nextjs", t("serverHeadingNext")],
@@ -104,6 +115,7 @@ export function getAddressDocsPage(
       ["format-name", "formatName"],
       ["search-key", "toSearchKey"],
       ["compare-names", "compareNames"],
+      ["format-address", "formatAddress"],
     ]),
     types: page("types", t("navTypes"), t("typesDescription"), [
       ["hook", t("typesHeadingHook")],
@@ -121,6 +133,7 @@ export const addressDocsSlugs = [
   "introduction",
   "use-vira-address",
   "react-hook-form",
+  "postal-code",
   "ui-libraries",
   "server",
   "data",

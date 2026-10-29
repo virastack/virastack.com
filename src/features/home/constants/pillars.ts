@@ -1,3 +1,4 @@
+import { getBrandPalette } from "@/config/brand-palettes.config";
 import { products } from "@/config/products.config";
 
 type PillarItem = {
@@ -21,7 +22,10 @@ function product(id: PillarItem["id"]): PillarItem {
 export const homePillars: readonly Pillar[] = [
   {
     id: "learn",
-    items: [{ id: "academy", href: "/academy", colorClass: "text-green-500" }, product("guide")],
+    items: [
+      { id: "academy", href: "/academy", colorClass: getBrandPalette("academy").textClass },
+      product("guide"),
+    ],
   },
   { id: "start", items: [product("start"), product("ai")] },
   { id: "build", items: [product("mask"), product("password"), product("address")] },

@@ -10,8 +10,9 @@ alwaysApply: false
 
 - **Lockup:** Products are always `ViraStack` + short name: `ViraStack Start`, `ViraStack AI`, `ViraStack Mask`, `ViraStack Password`, `ViraStack Guide`, `ViraStack Academy`. Never the short name alone in body copy (dense navigation is the only exception).
 - **Implementation:** Use rich-text tags backed by `guideProductTags` / `GuideProductMark` (`<start>Start</start>`). Never write the lockup as plain text in JSON.
-- **Academy:** Not a `ProductId`; use a local rich handler with brand span + italic name, colored from `brandPalettes` (id `academy`).
-- **Colors:** Read from `src/config/brand-palettes.config.ts`. Never hardcode a product color.
+- **Academy:** Not a `ProductId`; use a local rich handler with brand span + bold name, colored from `brandPalettes` (id `academy`).
+- **Colors:** Read from `src/config/brand-palettes.config.ts` (single source; exposed as `text-brand-<id>` / `bg-brand-<id>-solid`). Never hardcode a product color. `ViraStack`'s own turquoise (`virastackColor`) colors the logo mark only; no product may use that hue.
+- **Icons:** Read from `src/config/product-icons.config.ts` (Lucide). One icon per product.
 - **Repeats:** Do not repeat the lockup needlessly; prefer one lockup per sentence or list.
 
 ## Technology names
@@ -23,7 +24,10 @@ alwaysApply: false
 ## Emphasis
 
 - **Bold:** key phrase or takeaway.
-- **Italic:** foreign or quoted word. Product short names are always `font-medium italic` in the product color.
+- **Italic:** foreign or quoted word only. Product short names are never italic and always in the product color, in every context.
+- **Weights (two tiers):** Display (hero lockup): `ViraStack` `font-black` + product name `font-black`. UI (header, footer, search, running text): `ViraStack` `font-semibold` + product name `font-bold`.
+- **ViraStack color:** always `text-primary` (never `text-foreground`); the outlined wordmark is neutral decoration.
+- **Hero lockup:** big heroes show the outlined `ViraStack` wordmark (`BrandLockup`) above the black product name (Display tier).
 - **Icons:** only through badges, not inline decoration.
 
 ## Sources

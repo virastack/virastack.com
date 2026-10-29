@@ -56,7 +56,7 @@ async function LessonPagerCard({ trackSlug, entry, direction, className }: Lesso
           {formatLessonNumber(number)}. {lesson.title}
         </span>
         {isProject ? (
-          <span className="shrink-0 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400">
+          <span className="shrink-0 rounded-md border border-brand-academy/30 bg-brand-academy/10 px-1.5 py-0.5 text-xs font-medium text-brand-academy">
             {t("projectLabel")}
           </span>
         ) : null}

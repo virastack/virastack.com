@@ -123,7 +123,7 @@ export function MaskCustomMaskDoc() {
         <h2 id="dinamik">Dynamic masks</h2>
         <p>
           With an array, the first pattern that fits the whole value wins. A function gets the value
-          and <code>ctx.from</code> (the linked field&apos;s value) and returns a pattern.
+          and <code>ctx.from</code>&#32;(the linked field&apos;s value) and returns a pattern.
         </p>
         <DocsCodeBlock code={dynamicCode} lang="tsx" />
 

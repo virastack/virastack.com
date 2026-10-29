@@ -20,7 +20,7 @@ export const defaultMetadata: Metadata = {
     "Tailwind CSS",
     "Boilerplate",
     "CLI",
-    "Feature-Sliced Design",
+    "Feature-based architecture",
     "Developer Experience",
     "Developer Tools",
   ],

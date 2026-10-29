@@ -57,7 +57,7 @@ const QUESTIONNAIRE_ITEMS = [
   {
     name: "tools",
     required: false,
-    choices: [{ value: "none" }, { value: "mask" }, { value: "password" }],
+    choices: [{ value: "none" }, { value: "mask" }, { value: "password" }, { value: "address" }],
   },
   {
     name: "result",
@@ -89,7 +89,7 @@ export function StartCliCommandBuilder() {
 
   const stackTags = guideStackTags({ linked: false });
   const productTags = guideProductTags({
-    ids: ["mask", "password"] as const,
+    ids: ["mask", "password", "address"] as const,
     linked: false,
   });
 
@@ -341,6 +341,20 @@ export function StartCliCommandBuilder() {
                     })}
                   </span>
                   <span className="text-muted-foreground">{t("cliBuilderToolPasswordHint")}</span>
+                </span>
+              </QuestionnaireChoice>
+              <QuestionnaireChoice
+                value="address"
+                checked={tools.includes("address")}
+                onChange={(event) => toggleTool("address", event.target.checked)}
+              >
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span className="font-medium">
+                    {t.rich("cliBuilderToolAddress", {
+                      address: productTags.address,
+                    })}
+                  </span>
+                  <span className="text-muted-foreground">{t("cliBuilderToolAddressHint")}</span>
                 </span>
               </QuestionnaireChoice>
             </QuestionnaireChoices>

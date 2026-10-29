@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
+import { Link } from "@/i18n/routing";
 
 const resolveCode = `import { resolveAddress } from "@virastack/address/server"
 
@@ -19,6 +20,7 @@ const issueCode = `type AddressIssue =
   | { level: "province"; reason: "missing" | "unknown" }
   | { level: "district"; reason: "missing" | "unknown" }
   | { level: "neighbourhood"; reason: "missing" | "unknown" }
+  | { level: "postalCode"; reason: "missing" | "unknown" | "mismatch" }
 
 await resolveAddress({ provinceCode: 34, district: "ÇANKAYA" })
 // ok: false
@@ -35,6 +37,7 @@ export async function saveAddress(formData: FormData) {
     province: String(formData.get("province") ?? ""),
     district: String(formData.get("district") ?? ""),
     neighbourhood: String(formData.get("neighbourhood") ?? ""),
+    postalCode: String(formData.get("postalCode") ?? ""),
   })
   if (!ok) return { errors: issues }
 
@@ -59,6 +62,21 @@ export function AddressForm() {
     </form>
   )
 }`;
+
+const postalCodeCode = `import { resolvePostalCode } from "@virastack/address/server"
+
+const { ok, value, neighbourhoods } = await resolvePostalCode("34096")
+// ok: false
+// issues: [{ level: "neighbourhood", reason: "missing" }]
+// value: { province: "İSTANBUL", district: "FATİH",
+//          neighbourhood: null, postalCode: "34096", ... }
+// neighbourhoods: ["AKSARAY MAH.", "HASEKİ SULTAN MAH."]
+
+await resolvePostalCode("34710")
+// ok: true, value.neighbourhood: "CAFERAĞA MAH."
+
+await resolvePostalCode("34999")
+// ok: false, issues: [{ level: "postalCode", reason: "unknown" }]`;
 
 const helpersCode = `import {
   districtsOf,
@@ -88,6 +106,14 @@ const helpers: [string, ReactNode][] = [
       Just the postal code; <code>null</code>&#32;when nothing matches
     </>,
   ],
+  [
+    "resolvePostalCode(code)",
+    <>
+      The address behind a postal code: <code>{"{ ok, value, issues, neighbourhoods }"}</code>
+    </>,
+  ],
+  ["formatAddress(value, options)", "Puts the address on one line"],
+  ["normalizePostalCode(input)", "A five digit postal code or null; spaces dropped"],
   ["districtsOf(province)", "A province's district names, in Turkish alphabetical order"],
   ["findProvince(input)", "Finds a province by plate code or name"],
   ["provinces", "All 81 provinces with their district names"],
@@ -104,8 +130,9 @@ export function AddressServerDoc() {
         <h2 id="resolve">resolveAddress()</h2>
         <p>
           A client can send any postal code it likes. <code>resolveAddress</code>&#32;looks the
-          address up in the dataset and derives the postal code itself; it never reads the one that
-          was submitted.
+          address up in the dataset and derives the postal code itself. If a <code>postalCode</code>
+          &#32;is sent too, it must be one of the neighbourhood&apos;s codes; for a neighbourhood
+          with several, the one sent is kept.
         </p>
         <DocsCodeBlock code={resolveCode} lang="ts" />
         <p>
@@ -127,6 +154,26 @@ export function AddressServerDoc() {
           unknown, the province is still filled in, so the form can keep showing it. Error messages
           and their translations are up to you.
         </p>
+        <p>
+          A submitted <code>postalCode</code>&#32;that is not the neighbourhood&apos;s gives{" "}
+          <code>{'{ level: "postalCode", reason: "mismatch" }'}</code>, and <code>value</code>
+          &#32;still carries the neighbourhood&apos;s real code. A postal code that is not sent, or
+          sent empty, is not checked but derived.
+        </p>
+
+        <h2 id="posta-kodu">resolvePostalCode()</h2>
+        <p>
+          Finds the address a postal code belongs to, on the server: for example to offer a{" "}
+          <Link href="/address/docs/postal-code">postal code lookup</Link>&#32;from a route handler.
+          It returns as much of the address as the code can say in <code>value</code>, and the
+          candidates in <code>neighbourhoods</code>:
+        </p>
+        <DocsCodeBlock code={postalCodeCode} lang="ts" />
+        <p>
+          <code>ok</code>&#32;is <code>true</code>&#32;only when the code has one neighbourhood,
+          since only then is the address complete. An empty code gives <code>missing</code>; a code
+          that is not five digits or not in the dataset gives <code>unknown</code>.
+        </p>
 
         <h2 id="server-action">Server Action</h2>
         <DocsCodeBlock code={actionCode} lang="ts" />
@@ -134,8 +181,9 @@ export function AddressServerDoc() {
         <p>
           In a native select, a province option&apos;s value is its plate code, so{" "}
           <code>formData.get(&quot;province&quot;)</code>&#32;arrives as <code>&quot;34&quot;</code>
-          &#32;and <code>resolveAddress</code>&#32;reads it as a code. The hidden postal code input
-          is only for the UI; the server ignores it.
+          &#32;and <code>resolveAddress</code>&#32;reads it as a code. The hidden postal code
+          input&apos;s value is submitted too; the server does not trust it but checks it against
+          the neighbourhood.
         </p>
 
         <h2 id="yardimcilar">Other helpers</h2>

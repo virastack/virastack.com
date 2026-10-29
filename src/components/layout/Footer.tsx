@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import type { ProductId } from "@/types/product.types";
-import { products } from "@/config/products.config";
+import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteNavLinks } from "@/config/site-nav.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -10,15 +9,6 @@ import { cn } from "@/lib/utils";
 import { GithubIcon, XLogo } from "@/components/icons";
 import { ProductDots } from "@/components/shared/ProductDots";
 import { Link } from "@/i18n/routing";
-
-const productNameKeys = {
-  start: "startName",
-  ai: "aiName",
-  mask: "maskName",
-  password: "passwordName",
-  address: "addressName",
-  guide: "guideName",
-} as const satisfies Record<ProductId, string>;
 
 export async function Footer() {
   const t = await getTranslations("Footer");
@@ -64,16 +54,14 @@ export async function Footer() {
             {t("products")}
           </h2>
           <ul className="flex flex-col gap-2">
-            {products.map((product) => (
-              <li key={product.id}>
+            {brandPalettes.map((palette) => (
+              <li key={palette.id}>
                 <Link
-                  href={product.href}
+                  href={palette.href}
                   className="text-sm text-foreground/80 transition-colors hover:text-foreground"
                 >
                   <span className="font-semibold">{siteConfig.name}</span>{" "}
-                  <span className={cn("font-medium italic", product.colorClass)}>
-                    {t(productNameKeys[product.id])}
-                  </span>
+                  <span className={cn("font-bold", palette.textClass)}>{palette.productName}</span>
                 </Link>
               </li>
             ))}

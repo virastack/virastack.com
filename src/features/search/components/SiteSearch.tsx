@@ -2,18 +2,11 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
-import {
-  BookOpenIcon,
-  FileTextIcon,
-  FormIcon,
-  MapPinIcon,
-  RocketIcon,
-  SparklesIcon,
-  SquareAsteriskIcon,
-} from "lucide-react";
+import { FileTextIcon } from "lucide-react";
 import { useMessages, useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
+import { productIcons } from "@/config/product-icons.config";
 import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -34,15 +27,6 @@ import {
   groupSearchDocumentsByProduct,
 } from "@/features/search/helpers/build-search-documents";
 import { useRouter } from "@/i18n/routing";
-
-const productIcons: Record<ProductId, typeof RocketIcon> = {
-  start: RocketIcon,
-  ai: SparklesIcon,
-  mask: FormIcon,
-  password: SquareAsteriskIcon,
-  address: MapPinIcon,
-  guide: BookOpenIcon,
-};
 
 const productNameKeys = {
   start: "startName",
@@ -178,7 +162,7 @@ export function SiteSearch() {
                   )}
                 >
                   <Icon className={cn("size-3", product.colorClass)} aria-hidden />
-                  <span className={cn("font-medium italic", active && product.colorClass)}>
+                  <span className={cn("font-bold", active && product.colorClass)}>
                     {tNav(productNameKeys[product.id])}
                   </span>
                 </button>

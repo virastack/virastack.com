@@ -21,7 +21,6 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 - [Helpers](https://virastack.com/password/docs/helpers): `mergeProps`, `composeRefs`, core helpers, icons
 - [Types](https://virastack.com/password/docs/types): All exported types
 - [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra
-- [Comparison](https://virastack.com/password/docs/comparison): vs Radix PasswordToggleField and zxcvbn-ts
 - [Examples](https://virastack.com/password/examples): Live demos index
 
 ## Notable examples
@@ -38,7 +37,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 
 - [Password overview](https://virastack.com/password): Marketing page
 - [npm `@virastack/password`](https://www.npmjs.com/package/@virastack/password): Package registry
-- [GitHub](https://github.com/virastack/password): Source repository
+- [GitHub](https://github.com/virastack/form/tree/main/packages/password): Source (form monorepo)
 
 ## Related
 

@@ -1,9 +1,22 @@
 "use client";
 
-import { useViraAddress, type AddressOption, type GetSelectPropsOptions } from "@virastack/address";
+import { useState } from "react";
+
+import {
+  formatAddress,
+  useViraAddress,
+  type AddressOption,
+  type GetSelectPropsOptions,
+} from "@virastack/address";
 import { useTranslations } from "next-intl";
 
+import { cn } from "@/lib/utils";
+
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+
+import { CopyStateIcon } from "@/components/copy-button";
 import { Reveal } from "@/components/shared/Reveal";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -30,14 +43,19 @@ type Level = {
   placeholder?: string;
 };
 
+const POSTAL_CODE_ID = "address-demo-postal-code";
+const POSTAL_CODE_HINT_ID = "address-demo-postal-code-hint";
+
 /**
  * Province, district and neighbourhood chained by `useViraAddress` on shadcn/ui
- * selects, with the postal code derived from the pick. Each province's
- * neighbourhoods load on demand from the bundled dataset.
+ * selects. The postal code works both ways: derived from a pick, or typed to
+ * fill the selects. `formatAddress` puts the result on one line.
  */
 export function AddressDemo({ inHero = false, showValue = false }: AddressDemoProps) {
   const t = useTranslations("Address");
   const address = useViraAddress();
+  const [withPostalCode, setWithPostalCode] = useState(false);
+  const { state: copyState, copy } = useCopyToClipboard();
 
   const levels: Level[] = [
     {
@@ -64,6 +82,20 @@ export function AddressDemo({ inHero = false, showValue = false }: AddressDemoPr
         : t("demoNeighbourhoodPlaceholder"),
     },
   ];
+
+  const status = address.postalCodeStatus;
+  const postalCodeHint =
+    status === "loading"
+      ? t("demoPostalCodeLoading")
+      : status === "unknown"
+        ? t("demoPostalCodeUnknown")
+        : status === "exact"
+          ? t("demoPostalCodeExact")
+          : status === "partial" && address.value.neighbourhood === null
+            ? t("demoPostalCodePartial", { count: address.neighbourhoods.length })
+            : null;
+
+  const addressLine = formatAddress(address.value, { postalCode: withPostalCode });
 
   const fields = (
     <div className="flex w-full flex-col gap-3">
@@ -95,14 +127,60 @@ export function AddressDemo({ inHero = false, showValue = false }: AddressDemoPr
         );
       })}
       <div className="space-y-1.5">
-        <Label htmlFor="address-demo-postal-code">{t("demoPostalCode")}</Label>
+        <Label htmlFor={POSTAL_CODE_ID}>{t("demoPostalCode")}</Label>
         <Input
-          id="address-demo-postal-code"
-          readOnly
-          value={address.value.postalCode ?? ""}
-          placeholder={t("demoPostalCodeHint")}
+          {...address.getPostalCodeInputProps({
+            id: POSTAL_CODE_ID,
+            placeholder: t("demoPostalCodeHint"),
+          })}
+          aria-describedby={postalCodeHint ? POSTAL_CODE_HINT_ID : undefined}
           className="h-8 font-mono"
         />
+        {postalCodeHint ? (
+          <p
+            id={POSTAL_CODE_HINT_ID}
+            aria-live="polite"
+            className={cn(
+              "text-xs",
+              status === "unknown" ? "text-destructive" : "text-muted-foreground",
+            )}
+          >
+            {postalCodeHint}
+          </p>
+        ) : null}
+      </div>
+      <div className="space-y-1.5 border-t border-border pt-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-medium">{t("demoAddressLine")}</p>
+          <Label className="text-xs font-normal text-muted-foreground">
+            <Checkbox
+              checked={withPostalCode}
+              onCheckedChange={(checked) => setWithPostalCode(checked)}
+            />
+            {t("demoAddressLineWithPostalCode")}
+          </Label>
+        </div>
+        {addressLine ? (
+          <button
+            type="button"
+            onClick={() => copy(addressLine)}
+            aria-label={t("demoAddressLineCopy", { address: addressLine })}
+            className="group/line relative inline-flex max-w-full !cursor-copy items-center text-left text-sm text-foreground"
+          >
+            <span aria-live="polite">{addressLine}</span>
+            <span
+              className={cn(
+                "ml-2 inline-flex size-6 shrink-0 items-center justify-center text-muted-foreground opacity-0 transition-opacity group-hover/line:opacity-100 group-focus-visible/line:opacity-100 [&_svg]:size-3.5",
+                copyState !== "idle" && "opacity-100",
+              )}
+              aria-hidden
+            >
+              <CopyStateIcon state={copyState} />
+            </span>
+          </button>
+        ) : (
+          <p className="text-sm text-muted-foreground">{t("demoAddressLineEmpty")}</p>
+        )}
       </div>
     </div>
   );

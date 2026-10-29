@@ -36,7 +36,7 @@ export function AiHowItWorks() {
             className="relative grid grid-cols-[2.5rem_1fr] gap-4 pb-10 last:pb-0"
           >
             <div className="relative flex flex-col items-center">
-              <span className="z-10 flex size-10 items-center justify-center rounded-full border border-border bg-background font-mono text-sm font-medium text-fuchsia-600 dark:text-fuchsia-400">
+              <span className="z-10 flex size-10 items-center justify-center rounded-full border border-border bg-background font-mono text-sm font-medium text-brand-ai">
                 {index + 1}
               </span>
               {index < steps.length - 1 ? (

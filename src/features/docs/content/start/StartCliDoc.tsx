@@ -159,6 +159,7 @@ export function StartCliDoc() {
 
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add mask")} />
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add password")} />
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add address")} />
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent cursor")} />
 
         <p>{t("cliAddP2")}</p>
@@ -171,6 +172,12 @@ export function StartCliDoc() {
           </li>
           <li>
             {t.rich("cliAddPassword", {
+              tool: (chunks) => <code>{chunks}</code>,
+              pkg: (chunks) => <code>{chunks}</code>,
+            })}
+          </li>
+          <li>
+            {t.rich("cliAddAddress", {
               tool: (chunks) => <code>{chunks}</code>,
               pkg: (chunks) => <code>{chunks}</code>,
             })}

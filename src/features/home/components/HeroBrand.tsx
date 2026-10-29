@@ -3,27 +3,35 @@
 import { useEffect, useState } from "react";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useTranslations } from "next-intl";
 
-import { brandPalettes } from "@/config/brand-palettes.config";
+import { brandPalettes, getBrandPalette } from "@/config/brand-palettes.config";
 
 import { cn } from "@/lib/utils";
 
 import { BrandLockup } from "@/components/shared/BrandLockup";
 import { PageGlow } from "@/components/shared/PageGlow";
+import { ProductDots } from "@/components/shared/ProductDots";
 
-/** Solid teal wordmark before it turns into an outline. */
-const HOLD_MS = 700;
+/** Solid wordmark before it turns into an outline. */
+const HOLD_MS = 500;
 /** Matches the wordmark's colour transition. */
 const OUTLINE_MS = 500;
 /** Time each product name stays on screen; long enough to read. */
-const STEP_MS = 2000;
+const STEP_MS = 1200;
+
+const NAMES_START_MS = HOLD_MS + OUTLINE_MS;
+const INTRO_MS = NAMES_START_MS + brandPalettes.length * STEP_MS;
+/** Pause after the wordmark settles before the product dots appear. */
+const DOTS_DELAY_MS = 500;
 
 /**
- * Intro played once: teal wordmark -> outline -> each product name in brand
- * order -> teal wordmark again. The resting state (server render, reduced motion)
- * is the final one, a solid teal wordmark.
+ * Intro played once: solid wordmark -> outline -> each product name in brand
+ * order -> solid wordmark with the product dots. The resting state (server render,
+ * reduced motion) is the final one.
  */
 export function HeroBrand() {
+  const t = useTranslations("Footer");
   const reduceMotion = useReducedMotion();
   const [outlined, setOutlined] = useState(false);
   const [index, setIndex] = useState<number | null>(null);
@@ -33,11 +41,10 @@ export function HeroBrand() {
 
     const timers: number[] = [];
     const at = (ms: number, run: () => void) => timers.push(window.setTimeout(run, ms));
-    const namesStart = HOLD_MS + OUTLINE_MS;
 
     at(HOLD_MS, () => setOutlined(true));
-    brandPalettes.forEach((_, i) => at(namesStart + i * STEP_MS, () => setIndex(i)));
-    at(namesStart + brandPalettes.length * STEP_MS, () => {
+    brandPalettes.forEach((_, i) => at(NAMES_START_MS + i * STEP_MS, () => setIndex(i)));
+    at(INTRO_MS, () => {
       setIndex(null);
       setOutlined(false);
     });
@@ -50,8 +57,20 @@ export function HeroBrand() {
   return (
     <>
       {/* Absolute: anchors to the page's <main>, so it sits outside the hero's flex flow. */}
-      <PageGlow colorClass={active?.textClass ?? "text-teal-500"} />
-      <BrandLockup filled={!outlined} className="-mt-10 -mb-5">
+      <PageGlow colorClass={active?.textClass ?? getBrandPalette("start").textClass} />
+      <BrandLockup
+        filled={!outlined}
+        className="-mt-8 -mb-5"
+        slot={
+          /* Fades in once the names are done; no-JS and reduced motion show it at once. */
+          <div
+            className="animate-reveal-late motion-reduce:animate-none"
+            style={{ animationDelay: `${INTRO_MS + DOTS_DELAY_MS}ms` }}
+          >
+            <ProductDots label={t("productDots")} align="center" />
+          </div>
+        }
+      >
         <AnimatePresence mode="wait" initial={false}>
           {active ? (
             <motion.span

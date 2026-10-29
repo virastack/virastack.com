@@ -9,7 +9,7 @@ npm install @virastack/password
 # peers: react, react-dom (>= 18.2)
 ```
 
-Docs: https://virastack.com/password/docs; Index: https://virastack.com/password/llms.txt; Repo: https://github.com/virastack/password
+Docs: https://virastack.com/password/docs; Index: https://virastack.com/password/llms.txt; Repo: https://github.com/virastack/form/tree/main/packages/password
 
 ## Entry points
 

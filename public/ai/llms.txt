@@ -1,6 +1,6 @@
 # ViraStack AI
 
-> AI-native architecture kit for modern React. One command installs the same rules in Claude Code and Cursor native formats, plus an AGENTS.md map for every other agent. npm: `@virastack/ai` (v2).
+> Architecture rules for AI coding agents in modern React projects. One command installs the same rules in Claude Code and Cursor native formats, plus an AGENTS.md map for every other agent. npm: `@virastack/ai` (v2).
 
 Install: `npx @virastack/ai init`. Detects Next.js vs TanStack Start from `package.json` and writes only the relevant rules.
 

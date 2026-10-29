@@ -451,6 +451,7 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
         { slug: "validation", title: t("navValidation"), href: `${BASE}/validation` },
         { slug: "server", title: t("navServer"), href: `${BASE}/server` },
         { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
+        { slug: "banks", title: t("navBanks"), href: `${BASE}/banks` },
         { slug: "types", title: t("navTypes"), href: `${BASE}/types` },
         {
           slug: "ui-libraries",
@@ -490,9 +491,9 @@ export function getMaskDocsPage(slug: string, t: DocsMaskTranslate): DocsPageMet
       description: t("introductionDescription"),
       headings: [
         { id: "baslarken", title: t("introductionHeadingGettingStarted") },
-        { id: "peer", title: t("introductionHeadingPeer") },
         { id: "neden", title: t("introductionHeadingWhy") },
         { id: "karsilastirma", title: t("introductionHeadingComparison") },
+        { id: "peer", title: t("introductionHeadingPeer") },
         { id: "kapsam", title: t("introductionHeadingScope") },
       ],
     },
@@ -561,6 +562,17 @@ export function getMaskDocsPage(slug: string, t: DocsMaskTranslate): DocsPageMet
         { id: "create-mask", title: t("helpersHeadingCreateMask") },
         { id: "validators", title: t("helpersHeadingValidators") },
         { id: "money", title: t("helpersHeadingMoney") },
+      ],
+    },
+    banks: {
+      slug: "banks",
+      title: t("banksTitle"),
+      description: t("banksDescription"),
+      headings: [
+        { id: "deneyin", title: t("banksHeadingTry") },
+        { id: "nasil", title: t("banksHeadingHow") },
+        { id: "kullanim", title: t("banksHeadingUsage") },
+        { id: "kaynak", title: t("banksHeadingSource") },
       ],
     },
     types: {
@@ -632,6 +644,7 @@ export const maskDocsSlugs = [
   "validation",
   "server",
   "helpers",
+  "banks",
   "types",
   "ui-libraries",
 ] as const;

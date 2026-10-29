@@ -5,6 +5,7 @@ export { MaskCustomMaskDoc } from "./MaskCustomMaskDoc";
 export { MaskValidationDoc } from "./MaskValidationDoc";
 export { MaskServerDoc } from "./MaskServerDoc";
 export { MaskHelpersDoc } from "./MaskHelpersDoc";
+export { MaskBanksDoc } from "./MaskBanksDoc";
 export { MaskTypesDoc } from "./MaskTypesDoc";
 export { MaskUiLibrariesDoc } from "./MaskUiLibrariesDoc";
 export { MaskExamplesDoc } from "./MaskExamplesDoc";

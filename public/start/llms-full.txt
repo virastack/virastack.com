@@ -1,6 +1,6 @@
 # ViraStack Start (full)
 
-> `virastack` CLI (1.1), scaffold production-ready Next.js or TanStack Start apps with Feature-Sliced design, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
+> `virastack` CLI (1.1), scaffold production-ready Next.js or TanStack Start apps with a feature-based layout, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
 
 ## Install / run
 
@@ -16,7 +16,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | Command | Purpose |
 | --- | --- |
 | `init [name]` | Create a new project (interactive unless `--yes`) |
-| `add <tool>` | Add a ViraStack tool into an existing project (`mask`, `password`, `ai`) |
+| `add <tool>` | Add a ViraStack tool into an existing project (`mask`, `password`, `address`, `ai`) |
 | `add ai --agent <list>` | Add AI rules for the given coding tools |
 
 ## Flags
@@ -26,7 +26,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | `--name <name>` | Project name (`.` = current directory) |
 | `--template <name>` | `nextjs` or `tanstack` |
 | `--agent <list>` | AI coding tools: `claude`, `cursor` (comma separated) or `none`. Default: both |
-| `--tools <list>` | Comma-separated: `mask`, `password` |
+| `--tools <list>` | Comma-separated: `mask`, `password`, `address` |
 | `--i18n` / `--no-i18n` | Multi-language templates on/off |
 | `--yes`, `-y` | Non-interactive defaults |
 | `--skip-install` | Skip package install (AI rules and skills are still added) |
@@ -88,7 +88,7 @@ Four variants:
 
 ### Architecture for agents
 
-- Feature-Sliced: default work under `src/features/[feature]/`
+- Feature-based: default work under `src/features/[feature]/`
 - No cross-feature imports; promote to `src/` only when a second feature needs it
 - Shared constants live in `src/constants/`
 - Prefer aliases: `@/ui`, `@/hooks`, `@/schemas`, `@/layout`

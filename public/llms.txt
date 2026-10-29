@@ -1,17 +1,18 @@
 # ViraStack
 
-> DX-first open-source toolkit for React frontend developers: production starters, agent architecture rules, headless form utilities, and an interactive modern-web guide. MIT licensed.
+> DX-first open-source toolkit for React frontend developers: production starters, agent architecture rules, headless form hooks, and an interactive modern-web guide. MIT licensed.
 
 Prefer product `llms-full.txt` files for API detail. Use this file as the curated ecosystem map. Primary language for docs and packages is English.
 
-Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.0.0`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
+Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
 
 ## Products
 
 - [Start](https://virastack.com/start): CLI (`npx virastack@latest`) to scaffold Next.js or TanStack Start apps
-- [AI](https://virastack.com/ai): Agent rules and architecture kit (`npx @virastack/ai init`)
-- [Mask](https://virastack.com/mask): React Hook Form input masking (`@virastack/mask`)
+- [AI](https://virastack.com/ai): Architecture rules for Claude Code, Cursor and AGENTS.md (`npx @virastack/ai init`)
+- [Mask](https://virastack.com/mask): Zero-dependency input masks for React Hook Form (`@virastack/mask`)
 - [Password](https://virastack.com/password): Accessible password hook: show/hide, NIST-style strength, confirmation, server validation (`@virastack/password`)
+- [Address](https://virastack.com/address): Headless Turkish address hook: province, district, neighbourhood and postal code (`@virastack/address`)
 - [Guide](https://virastack.com/guide): Interactive “modern web” walkthrough
 
 ## LLM indexes
@@ -24,6 +25,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.0.0`, `@virast
 - [Mask llms-full.txt](https://virastack.com/mask/llms-full.txt): useViraMask API, presets, server, examples (full)
 - [Password llms.txt](https://virastack.com/password/llms.txt): Password docs map
 - [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword, strength, confirm, server and leaked-password APIs (full)
+- [Address llms.txt](https://virastack.com/address/llms.txt): Address docs map, entry points, React Hook Form notes
 - [Guide llms.txt](https://virastack.com/guide/llms.txt): Guide step map
 - [Guide llms-full.txt](https://virastack.com/guide/llms-full.txt): Guide narrative and stack (full)
 - [Ecosystem llms-full.txt](https://virastack.com/llms-full.txt): Combined overview + quick APIs
@@ -34,6 +36,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.0.0`, `@virast
 - [AI docs](https://virastack.com/ai/docs): Install, CLI, installed files, rules, upgrade from v1
 - [Mask docs](https://virastack.com/mask/docs): Hook, custom masks, validation, server, helpers, examples
 - [Password docs](https://virastack.com/password/docs): Hook, strength, confirm, React Hook Form, server, leaked passwords, examples
+- [Address docs](https://virastack.com/address/docs): Hook, React Hook Form, UI libraries, server, data, helpers
 
 ## Packages
 
@@ -41,6 +44,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.0.0`, `@virast
 - [`@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Shared agent rules for scaffolds
 - [`@virastack/mask`](https://www.npmjs.com/package/@virastack/mask): Input masks for React + React Hook Form
 - [`@virastack/password`](https://www.npmjs.com/package/@virastack/password): Accessible password hook for React (show/hide, strength, server validation)
+- [`@virastack/address`](https://www.npmjs.com/package/@virastack/address): Headless Turkish address hook for React (il, ilçe, mahalle, postal code)
 
 ## Optional
 

@@ -27,9 +27,9 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 npx virastack@latest init my-app --template nextjs --agent claude,cursor --tools mask,password --yes
 ```
 
-Flags: `init [name]`, `add <tool>`, `--template nextjs|tanstack`, `--agent claude,cursor|none`, `--tools mask,password`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
+Flags: `init [name]`, `add <tool>`, `--template nextjs|tanstack`, `--agent claude,cursor|none`, `--tools mask,password,address`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
 
-Templates ship Feature-Sliced layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, nuqs, RHF + Zod, Base UI, Vitest + MSW tests, ViraStack AI rules and three design skills. Details: https://virastack.com/start/llms-full.txt
+Templates ship a feature-based layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, nuqs, RHF + Zod, Base UI, Vitest + MSW tests, ViraStack AI rules and three design skills. Details: https://virastack.com/start/llms-full.txt
 
 ## AI (quick)
 

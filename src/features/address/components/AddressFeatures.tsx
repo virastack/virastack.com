@@ -19,7 +19,7 @@ export function AddressFeatures() {
       subtitle: t("featuresChainSubtitle"),
       description: t("featuresChainDesc"),
       icon: <ListTreeIcon className="size-5" aria-hidden />,
-      tone: "bg-orange-50 text-orange-600 dark:bg-orange-950/40 dark:text-orange-300",
+      tone: "bg-brand-address/10 text-brand-address",
     },
     {
       title: t("featuresPostalCodeTitle"),
@@ -40,7 +40,7 @@ export function AddressFeatures() {
       subtitle: t("featuresLightSubtitle"),
       description: t("featuresLightDesc"),
       icon: <ZapIcon className="size-5" aria-hidden />,
-      tone: "bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-300",
+      tone: "bg-pink-50 text-pink-600 dark:bg-pink-950/40 dark:text-pink-300",
     },
     {
       title: t("featuresHeadlessTitle"),

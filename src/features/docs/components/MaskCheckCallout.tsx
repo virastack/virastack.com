@@ -12,7 +12,7 @@ type MaskCheckCalloutProps = {
  */
 export function MaskCheckCallout({ label, title, description }: MaskCheckCalloutProps) {
   return (
-    <div className="not-prose my-6 flex gap-3 rounded-xl border border-teal-600/25 bg-teal-50/60 p-4 dark:border-teal-400/25 dark:bg-teal-950/30">
+    <div className="not-prose my-6 flex gap-3 rounded-xl border border-brand-mask/25 bg-brand-mask/5 p-4">
       <MaskCheckIcon className="mt-0.5 size-5" />
       <div className="space-y-1">
         <p className="text-sm font-semibold text-foreground">

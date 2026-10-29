@@ -109,10 +109,8 @@ export function ProductDots({
               exit={reduceMotion ? undefined : { opacity: 0, y: -4, filter: "blur(2px)" }}
               transition={{ duration: 0.18, ease: "easeOut" }}
             >
-              <span className="font-semibold text-foreground">{siteConfig.name}</span>{" "}
-              <span className={cn("font-medium italic", active.textClass)}>
-                {active.productName}
-              </span>
+              <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
+              <span className={cn("font-bold", active.textClass)}>{active.productName}</span>
             </motion.span>
           ) : null}
         </AnimatePresence>

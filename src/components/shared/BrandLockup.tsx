@@ -6,24 +6,21 @@ import { cn } from "@/lib/utils";
 
 import { OutlineWordmark } from "@/components/shared/OutlineWordmark";
 
-/**
- * While no name is shown the lockup has empty space below the wordmark (the
- * reserved `<h1>` line minus the overlap). Half of it, so the wordmark sits centred.
- * Mirrors the `<h1>` margin: f * (s * 0.954 - 0.657) / 2.
- */
-const FILLED_SHIFT = "translate-y-[calc(var(--f)*(var(--s)*0.477_-_0.3285))]";
-
 type BrandLockupProps = {
   /** Sets `--f`, the wordmark font-size. Defaults to the size every hero shares. */
   sizeClassName?: string;
   /** Product name size relative to the wordmark. */
   nameScale?: number;
-  /** Fill the wordmark with the brand teal (animated by the caller). */
+  /** Fill the wordmark (animated by the caller). When explicitly `false` it also lifts a little. */
   filled?: boolean;
   /** Extra classes for the lockup container (e.g. spacing to its neighbours). */
   className?: string;
   /** Cross-axis alignment of the lockup. */
   alignClassName?: string;
+  /** Heading level of the product name; use `div` where the page already has an `<h1>`. */
+  as?: "h1" | "div";
+  /** Shown in the product name's slot, centred under the wordmark (e.g. product dots). */
+  slot?: ReactNode;
   /** Product name; its colour comes from the caller. */
   children?: ReactNode;
 };
@@ -39,18 +36,23 @@ export function BrandLockup({
   filled,
   className,
   alignClassName = "items-center",
+  as: Name = "h1",
+  slot,
   children,
 }: BrandLockupProps) {
   return (
     <div
-      className={cn("flex w-full flex-col", alignClassName, sizeClassName, className)}
+      className={cn("relative flex w-full flex-col", alignClassName, sizeClassName, className)}
       style={{ "--s": nameScale } as CSSProperties}
     >
       <OutlineWordmark
         filled={filled}
-        className={cn("text-(length:--f)", filled && FILLED_SHIFT)}
+        className={cn(
+          "text-(length:--f)",
+          filled === false && "-translate-y-[calc(var(--f)*0.12)]",
+        )}
       />
-      <h1
+      <Name
         className="relative min-h-[1.05em] leading-[1.05] font-black tracking-tight"
         style={{
           fontSize: "calc(var(--f) * var(--s))",
@@ -59,7 +61,15 @@ export function BrandLockup({
       >
         <span className="sr-only">{siteConfig.name} </span>
         {children}
-      </h1>
+      </Name>
+      {slot ? (
+        <div
+          className="absolute inset-x-0 flex justify-center"
+          style={{ bottom: "calc(var(--f) * 0.12)" }}
+        >
+          {slot}
+        </div>
+      ) : null}
     </div>
   );
 }

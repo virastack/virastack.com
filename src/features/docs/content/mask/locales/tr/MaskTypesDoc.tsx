@@ -65,8 +65,8 @@ export function MaskTypesDoc() {
       <DocsProse>
         <p>
           Pakette <code>any</code> yoktur. Alan adları, <code>from</code>, <code>name</code> ve{" "}
-          <code>rules</code> form tipinden (ya da <AcademyBadge kind="zod" /> resolver&apos;ın girdi
-          tipinden) çıkarılır.
+          <code>rules</code> form tipinden (ya da <AcademyBadge kind="zod" />
+          &#32;resolver&apos;ın girdi tipinden) çıkarılır.
         </p>
 
         <h2 id="preset">PresetName</h2>

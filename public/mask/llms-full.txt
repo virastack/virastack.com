@@ -1,6 +1,6 @@
 # ViraStack Mask (full)
 
-> `@virastack/mask` (2.x): zero-config input masks for React Hook Form. Headless, no CSS, zero runtime dependencies. The form stores raw values; inputs show masked text. v1 docs: https://virastack.com/mask/v1/llms-full.txt
+> `@virastack/mask` (2.x): zero-dependency input masks for React Hook Form. Headless, no CSS, zero runtime dependencies. The form stores raw values; inputs show masked text. v1 docs: https://virastack.com/mask/v1/llms-full.txt
 
 ## Install
 
@@ -9,7 +9,7 @@ npm install @virastack/mask
 # peers: react >= 18.2, react-hook-form >= 7.55
 ```
 
-Docs: https://virastack.com/mask/docs · Index: https://virastack.com/mask/llms.txt · Repo: https://github.com/virastack/mask
+Docs: https://virastack.com/mask/docs · Index: https://virastack.com/mask/llms.txt · Repo: https://github.com/virastack/form/tree/main/packages/mask
 
 ## Critical rules for agents
 
@@ -106,7 +106,7 @@ export async function checkout(formData: FormData) {
 
 ## Helpers
 
-`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length) · `toMinorUnits("1234.56", "TRY") → 123456` · `maskResolver(masks, resolverOrStandardSchema)`.
+`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
 
 ## Upgrade from v1
 

@@ -19,12 +19,11 @@ function truncate(value: string, max: number): string {
 
 async function loadFonts() {
   const fontsDir = join(process.cwd(), "src/assets/fonts");
-  const [regular, medium, bold, black, mediumItalic] = await Promise.all([
+  const [regular, medium, bold, black] = await Promise.all([
     readFile(join(fontsDir, "Inter-Regular.ttf")),
     readFile(join(fontsDir, "Inter-Medium.ttf")),
     readFile(join(fontsDir, "Inter-Bold.ttf")),
     readFile(join(fontsDir, "Inter-Black.ttf")),
-    readFile(join(fontsDir, "Inter-MediumItalic.ttf")),
   ]);
 
   return [
@@ -32,7 +31,6 @@ async function loadFonts() {
     { name: "Inter", data: medium, weight: 500 as const, style: "normal" as const },
     { name: "Inter", data: bold, weight: 700 as const, style: "normal" as const },
     { name: "Inter", data: black, weight: 900 as const, style: "normal" as const },
-    { name: "Inter", data: mediumItalic, weight: 500 as const, style: "italic" as const },
   ];
 }
 
@@ -104,8 +102,7 @@ export async function GET(request: NextRequest) {
               style={{
                 marginLeft: 20,
                 fontSize: 24,
-                fontWeight: 500,
-                fontStyle: "italic",
+                fontWeight: 700,
                 color: accent,
               }}
             >
@@ -139,8 +136,7 @@ export async function GET(request: NextRequest) {
               <div
                 style={{
                   fontSize: 84,
-                  fontWeight: 500,
-                  fontStyle: "italic",
+                  fontWeight: 900,
                   lineHeight: 1.05,
                   letterSpacing: "-0.03em",
                   color: accent,
