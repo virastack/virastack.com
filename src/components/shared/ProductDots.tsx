@@ -19,22 +19,26 @@ type ProductDotsProps = {
   label: string;
   /** Highlight each product once, in order, when the dots scroll into view. */
   autoplay?: boolean;
-  /** `start` aligns dots and caption to the left (footer); `center` for showcases. */
+  /** `start` aligns dots and caption to the left; `center` for showcases. */
   align?: "start" | "center";
-  /** Prefix the caption with `ViraStack`; off where the wordmark sits right above the dots. */
-  showBrand?: boolean;
+  /**
+   * `dots` is a row of dots with a hover caption (hero, brand); `list` is a vertical list with
+   * the dot before each product name (footer). The brand is never repeated: it sits right above.
+   */
+  layout?: "dots" | "list";
   className?: string;
 };
 
 /**
  * One dot per ecosystem product, in brand order. Each dot links to its product;
- * hover / focus (or the optional intro sequence) reveals the product lockup below.
+ * in the `dots` layout, hover / focus (or the optional intro sequence) reveals the product name
+ * below. The `list` layout shows the names permanently.
  */
 export function ProductDots({
   label,
   autoplay = false,
   align = "start",
-  showBrand = true,
+  layout = "dots",
   className,
 }: ProductDotsProps) {
   const ref = useRef<HTMLElement>(null);
@@ -54,6 +58,27 @@ export function ProductDots({
 
     return () => timers.forEach((timer) => window.clearTimeout(timer));
   }, [autoplay, inView, reduceMotion]);
+
+  if (layout === "list") {
+    return (
+      <nav ref={ref} aria-label={label} className={className}>
+        <ul className="flex flex-col gap-2">
+          {brandPalettes.map((palette) => (
+            <li key={palette.id}>
+              <Link
+                href={palette.href}
+                aria-label={`${siteConfig.name} ${palette.productName}`}
+                className="inline-flex items-center gap-2 text-sm text-foreground/80 transition-colors hover:text-foreground"
+              >
+                <span aria-hidden className={cn("block size-2.5 rounded-full", palette.bgClass)} />
+                {palette.productName}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
 
   const activeIndex = hoverIndex ?? introIndex;
   const active = activeIndex === null ? null : brandPalettes[activeIndex];
@@ -112,11 +137,6 @@ export function ProductDots({
               exit={reduceMotion ? undefined : { opacity: 0, y: -4, filter: "blur(2px)" }}
               transition={{ duration: 0.18, ease: "easeOut" }}
             >
-              {showBrand ? (
-                <>
-                  <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
-                </>
-              ) : null}
               <span className={cn("font-bold", active.textClass)}>{active.productName}</span>
             </m.span>
           ) : null}

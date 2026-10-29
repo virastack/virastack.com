@@ -133,7 +133,7 @@ function ProductCopyList() {
             </p>
             <dl className="space-y-3">
               {rows.map(([label, text]) => (
-                <div key={label} className="grid gap-1 sm:grid-cols-[9rem_1fr] sm:gap-4">
+                <div key={label} className="grid gap-1 sm:grid-cols-[3.5rem_1fr] sm:gap-4">
                   <dt className="font-mono text-xs leading-6 text-muted-foreground">{label}</dt>
                   <dd className="text-sm leading-relaxed text-pretty text-muted-foreground">
                     {text}
@@ -186,11 +186,6 @@ export function BrandPage() {
               </h2>
               <p className="text-base leading-relaxed text-muted-foreground">
                 {t.rich("namingBody", {
-                  wrong: (chunks) => (
-                    <span className="font-medium text-muted-foreground line-through decoration-muted-foreground/80">
-                      {chunks}
-                    </span>
-                  ),
                   mask: () => (
                     <BrandMarkPreview
                       productName="Mask"
@@ -318,10 +313,26 @@ export function BrandPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
+              <div className="space-y-2 text-center">
+                <div
+                  className={cn(
+                    "mx-auto size-8 rounded-lg ring-1 ring-foreground/10",
+                    virastackColor.bgClass,
+                  )}
+                  title={virastackColor.hex}
+                />
+                <div className="space-y-0.5">
+                  <p className="text-sm font-semibold text-primary">{siteConfig.name}</p>
+                  <ColorValues color={virastackColor} />
+                </div>
+              </div>
               {brandPalettes.map((palette) => (
-                <div key={palette.id} className="space-y-2">
+                <div key={palette.id} className="space-y-2 text-center">
                   <div
-                    className={cn("size-8 rounded-lg ring-1 ring-foreground/10", palette.bgClass)}
+                    className={cn(
+                      "mx-auto size-8 rounded-lg ring-1 ring-foreground/10",
+                      palette.bgClass,
+                    )}
                     title={palette.hex}
                   />
                   <div className="space-y-0.5">
@@ -336,23 +347,6 @@ export function BrandPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="flex items-start gap-4 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              <div
-                className={cn(
-                  "size-8 shrink-0 rounded-lg ring-1 ring-foreground/10",
-                  virastackColor.bgClass,
-                )}
-                title={virastackColor.hex}
-              />
-              <div className="space-y-1">
-                <p className="text-sm font-semibold text-primary">{t("colorsBrandTitle")}</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {t("colorsBrandBody")}
-                </p>
-                <ColorValues color={virastackColor} />
-              </div>
             </div>
           </section>
         </RevealItem>
@@ -378,9 +372,9 @@ export function BrandPage() {
                 const slug = productIconSlugs[palette.id];
 
                 return (
-                  <div key={palette.id} className="space-y-3">
+                  <div key={palette.id} className="space-y-3 text-center">
                     <Icon
-                      className={cn("size-8", palette.textClass)}
+                      className={cn("mx-auto size-8", palette.textClass)}
                       strokeWidth={1.75}
                       aria-hidden
                     />

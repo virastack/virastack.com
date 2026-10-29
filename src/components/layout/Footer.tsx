@@ -1,10 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
-import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteNavLinks } from "@/config/site-nav.config";
 import { siteConfig } from "@/config/site.config";
-
-import { cn } from "@/lib/utils";
 
 import { GithubIcon, XLogo } from "@/components/icons";
 import { ProductDots } from "@/components/shared/ProductDots";
@@ -26,7 +23,6 @@ export async function Footer() {
             {siteConfig.name}
           </Link>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{t("tagline")}</p>
-          <ProductDots label={t("productDots")} />
           <div className="mt-2 flex items-center gap-2">
             <a
               href={siteConfig.links.github}
@@ -53,19 +49,7 @@ export async function Footer() {
           <h2 className="mb-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
             {t("products")}
           </h2>
-          <ul className="flex flex-col gap-2">
-            {brandPalettes.map((palette) => (
-              <li key={palette.id}>
-                <Link
-                  href={palette.href}
-                  className="text-sm text-foreground/80 transition-colors hover:text-foreground"
-                >
-                  <span className="font-semibold">{siteConfig.name}</span>{" "}
-                  <span className={cn("font-bold", palette.textClass)}>{palette.productName}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <ProductDots label={t("products")} layout="list" />
         </div>
 
         <div>

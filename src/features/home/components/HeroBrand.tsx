@@ -70,7 +70,7 @@ export function HeroBrand() {
             className="animate-reveal-late motion-reduce:animate-none"
             style={{ animationDelay: `${INTRO_MS + DOTS_DELAY_MS}ms` }}
           >
-            <ProductDots label={t("productDots")} align="center" showBrand={false} />
+            <ProductDots label={t("productDots")} align="center" />
           </div>
         }
       >
