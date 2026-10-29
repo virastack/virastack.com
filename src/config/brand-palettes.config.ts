@@ -27,6 +27,20 @@ export type BrandPalette = {
 };
 
 /**
+ * Written out in full: Tailwind only generates classes it finds as literal strings, so a
+ * template like `bg-brand-${id}-solid` would leave the swatches without a background.
+ */
+const BRAND_CLASSES = {
+  academy: { textClass: "text-brand-academy", bgClass: "bg-brand-academy-solid" },
+  start: { textClass: "text-brand-start", bgClass: "bg-brand-start-solid" },
+  ai: { textClass: "text-brand-ai", bgClass: "bg-brand-ai-solid" },
+  mask: { textClass: "text-brand-mask", bgClass: "bg-brand-mask-solid" },
+  password: { textClass: "text-brand-password", bgClass: "bg-brand-password-solid" },
+  address: { textClass: "text-brand-address", bgClass: "bg-brand-address-solid" },
+  guide: { textClass: "text-brand-guide", bgClass: "bg-brand-guide-solid" },
+} as const satisfies Record<EcosystemId, Pick<BrandPalette, "textClass" | "bgClass">>;
+
+/**
  * Product colors, derived from `ecosystem.config.ts` (the single source of truth). Hex
  * values become CSS variables (`--brand-<id>`, `--brand-<id>-solid`) through
  * `brandColorsCss`, which Tailwind exposes as `text-brand-<id>` / `bg-brand-<id>-solid`.
@@ -36,8 +50,7 @@ export const brandPalettes: readonly BrandPalette[] = ecosystem.map((entry) => (
   productName: entry.name,
   href: entry.href,
   ...entry.color,
-  textClass: `text-brand-${entry.id}`,
-  bgClass: `bg-brand-${entry.id}-solid`,
+  ...BRAND_CLASSES[entry.id],
 }));
 
 /**
