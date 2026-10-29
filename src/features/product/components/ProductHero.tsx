@@ -6,13 +6,14 @@ import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { Product } from "@/types/product.types";
-import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
+import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
+import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
@@ -22,6 +23,7 @@ const productNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const;
 
@@ -30,6 +32,7 @@ const productDescKeys = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
+  address: "addressDesc",
   guide: "guideDesc",
 } as const;
 
@@ -39,6 +42,7 @@ const installCommands: Partial<Record<Product["id"], string>> = {
   ai: "npx @virastack/ai init",
   mask: "npm install @virastack/mask",
   password: "npm install @virastack/password",
+  address: "npm install @virastack/address",
 };
 
 type ProductHeroProps = {
@@ -63,12 +67,12 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
         aside ? "items-center text-center lg:items-start lg:text-left" : "items-center",
       )}
     >
-      <h1 className="mb-2 text-4xl font-semibold tracking-tight text-balance lg:text-6xl">
-        <span className="font-black text-primary">{siteConfig.name}</span>{" "}
-        <span className={cn("font-medium italic", product.colorClass)}>
-          {t(productNameKeys[product.id])}
-        </span>
-      </h1>
+      <BrandLockup
+        nameScale={aside ? 0.8 : undefined}
+        alignClassName={aside ? "items-center lg:items-start" : "items-center"}
+      >
+        <span className={product.colorClass}>{t(productNameKeys[product.id])}</span>
+      </BrandLockup>
 
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
         {t.rich(productDescKeys[product.id], {
@@ -76,6 +80,8 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
           italic: (chunks) => <em className="italic">{chunks}</em>,
         })}
       </p>
+
+      {product.id === "address" ? <TurkeyOnlyNotice variant="inline" /> : null}
 
       <Reveal
         mode="mount"
@@ -109,7 +115,10 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
           </Button>
-          <GithubRepoButton href={product.github} label={`virastack/${product.id}`} />
+          <GithubRepoButton
+            href={product.github}
+            label={product.github.replace(/^https:\/\/github\.com\//, "")}
+          />
         </div>
 
         {installCommand ? <NpxInstallCommand command={installCommand} /> : null}
@@ -144,7 +153,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
 
   return (
     <section className="mx-auto max-w-6xl px-6 pt-32 pb-16">
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-14">
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_26rem] xl:gap-14">
         {copy}
         <div className="w-full">{aside}</div>
       </div>

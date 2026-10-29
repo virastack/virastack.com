@@ -60,7 +60,8 @@ export function PasswordServerDoc() {
             Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada tutun.
           </li>
           <li>
-            Hook sunucuda ve istemcide aynı işaretlemeyi üretir (id&apos;ler <code>useId</code>
+            Hook server&apos;da ve client&apos;ta aynı işaretlemeyi üretir (id&apos;ler{" "}
+            <code>useId</code>
             &apos;den gelir); hydration uyuşmazlığı olmaz.
           </li>
           <li>

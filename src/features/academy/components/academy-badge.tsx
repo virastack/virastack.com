@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
+import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
 import { AnthropicBlack } from "@/components/ui/svgs/anthropicBlack";
 import { AnthropicWhite } from "@/components/ui/svgs/anthropicWhite";
 import { Atlassian } from "@/components/ui/svgs/atlassian";
@@ -20,6 +21,8 @@ import { Docker } from "@/components/ui/svgs/docker";
 import { EslintIconDark } from "@/components/ui/svgs/eslintIconDark";
 import { EslintIconLight } from "@/components/ui/svgs/eslintIconLight";
 import { Figma } from "@/components/ui/svgs/figma";
+import { Formik } from "@/components/ui/svgs/formik";
+import { FormikDark } from "@/components/ui/svgs/formikDark";
 import { Gemini } from "@/components/ui/svgs/gemini";
 import { GithubDark } from "@/components/ui/svgs/githubDark";
 import { GithubLight } from "@/components/ui/svgs/githubLight";
@@ -27,6 +30,7 @@ import { Google } from "@/components/ui/svgs/google";
 import { Html5 } from "@/components/ui/svgs/html5";
 import { Javascript } from "@/components/ui/svgs/javascript";
 import { Linear } from "@/components/ui/svgs/linear";
+import { Materialui } from "@/components/ui/svgs/materialui";
 import { Mdn } from "@/components/ui/svgs/mdn";
 import { Meta } from "@/components/ui/svgs/meta";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
@@ -183,6 +187,14 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <Zustand className={iconClassName} aria-hidden />;
     case "react-hook-form":
       return <ReactHookForm className={iconClassName} aria-hidden />;
+    case "formik":
+      return <ThemeIcon light={Formik} dark={FormikDark} className={className} />;
+    case "tanstack-form":
+      return <ThemeIcon light={TanstackLight} dark={TanstackDark} className={className} />;
+    case "ant-design":
+      return <AntDesignDarkTheme className={iconClassName} aria-hidden />;
+    case "mui":
+      return <Materialui className={iconClassName} aria-hidden />;
     case "virastack":
       // logo-icon.webp has ~24% transparent padding per side; scale to match other icons.
       return (

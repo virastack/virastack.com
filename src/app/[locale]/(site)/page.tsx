@@ -51,7 +51,7 @@ export default async function Page({ params }: PageProps) {
   setRequestLocale(locale);
 
   return (
-    <main className="flex-1">
+    <main className="relative isolate flex-1">
       <HomePage />
     </main>
   );

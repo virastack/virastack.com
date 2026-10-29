@@ -6,6 +6,7 @@ import { localeUrl } from "@/lib/canonical";
 
 import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy";
 import {
+  getAddressDocsNav,
   getAiDocsNav,
   getMaskDocsNav,
   getPasswordDocsNav,
@@ -39,9 +40,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const aiDocsNav = getAiDocsNav((key) => key);
   const maskDocsNav = getMaskDocsNav((key) => key);
   const passwordDocsNav = getPasswordDocsNav((key) => key);
-  const docsHrefs = [...startDocsNav, ...aiDocsNav, ...maskDocsNav, ...passwordDocsNav].flatMap(
-    (section) => section.items.map((item) => item.href),
-  );
+  const addressDocsNav = getAddressDocsNav((key) => key);
+  const docsHrefs = [
+    ...startDocsNav,
+    ...aiDocsNav,
+    ...maskDocsNav,
+    ...passwordDocsNav,
+    ...addressDocsNav,
+  ].flatMap((section) => section.items.map((item) => item.href));
 
   const maskExampleHrefs = [
     "/mask/examples",

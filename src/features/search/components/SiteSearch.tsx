@@ -6,6 +6,7 @@ import {
   BookOpenIcon,
   FileTextIcon,
   FormIcon,
+  MapPinIcon,
   RocketIcon,
   SparklesIcon,
   SquareAsteriskIcon,
@@ -39,6 +40,7 @@ const productIcons: Record<ProductId, typeof RocketIcon> = {
   ai: SparklesIcon,
   mask: FormIcon,
   password: SquareAsteriskIcon,
+  address: MapPinIcon,
   guide: BookOpenIcon,
 };
 
@@ -47,6 +49,7 @@ const productNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const satisfies Record<ProductId, string>;
 

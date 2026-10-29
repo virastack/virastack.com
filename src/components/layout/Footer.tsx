@@ -16,6 +16,7 @@ const productNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const satisfies Record<ProductId, string>;
 

@@ -8,10 +8,10 @@ import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const entries: [string, string, string][] = [
-  ["@virastack/password", "useViraPassword, mergeProps, composeRefs, ikonlar", "istemci"],
-  ["@virastack/password/strength", "definePolicy, evaluate, normalizePassword", "istemci + sunucu"],
-  ["@virastack/password/server", "validatePassword (+ strength dışa aktarımları)", "sunucu"],
-  ["@virastack/password/pwned", "checkPwned", "sunucu (önerilen)"],
+  ["@virastack/password", "useViraPassword, mergeProps, composeRefs, ikonlar", "client"],
+  ["@virastack/password/strength", "definePolicy, evaluate, normalizePassword", "client + server"],
+  ["@virastack/password/server", "validatePassword (+ strength dışa aktarımları)", "server"],
+  ["@virastack/password/pwned", "checkPwned", "server (önerilen)"],
 ];
 
 export function PasswordIntroductionDoc() {
@@ -19,7 +19,7 @@ export function PasswordIntroductionDoc() {
     <>
       <DocsPageHeader
         title="Giriş"
-        description="React için başsız parola hook'u: göster/gizle, güç, parola tekrarı, sunucu doğrulaması ve sızmış parola kontrolü."
+        description="React için headless parola hook'u: göster/gizle, güç, parola tekrarı, sunucu doğrulaması ve sızmış parola kontrolü."
       />
       <DocsProse>
         <p>
@@ -28,10 +28,10 @@ export function PasswordIntroductionDoc() {
           <code>useViraPassword()</code>&#32;bunları tek hook ile çözer. İşaretleme ve stil sizde
           kalır.
         </p>
-        <PasswordExamplePreview id="show-hide" />
 
         <h2 id="baslarken">Başlarken</h2>
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+        <PasswordExamplePreview id="show-hide" />
         <p>
           1.0&apos;dan mı geliyorsunuz? Hiçbir şey kırılmaz;{" "}
           <Link href="/password/docs/upgrade">geçiş rehberine</Link> bakın. Canlı demolar{" "}
@@ -95,7 +95,7 @@ export function PasswordIntroductionDoc() {
         </h2>
         <ul>
           <li>
-            <strong>Başsız</strong>: döndürülen her değer geçerli bir input veya buton
+            <strong>Headless</strong>: döndürülen her değer geçerli bir input veya buton
             prop&apos;udur.
           </li>
           <li>

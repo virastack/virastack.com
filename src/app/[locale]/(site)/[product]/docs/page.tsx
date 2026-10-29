@@ -10,6 +10,7 @@ import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
 import {
+  AddressDocsPage,
   AiDocsPage,
   DOCS_PRODUCT_IDS,
   getDocsProduct,
@@ -35,6 +36,8 @@ function DocsProductContent({ product, slug }: { product: DocsProductId; slug: s
       return <MaskDocsPage slug={slug} />;
     case "password":
       return <PasswordDocsPage slug={slug} />;
+    case "address":
+      return <AddressDocsPage slug={slug} />;
   }
 }
 

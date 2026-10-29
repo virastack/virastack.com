@@ -28,10 +28,10 @@ export function PasswordIntroductionDoc() {
           server. <code>useViraPassword()</code>&#32;handles this in one hook. Markup and styling
           stay yours.
         </p>
-        <PasswordExamplePreview id="show-hide" />
 
         <h2 id="baslarken">Getting started</h2>
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+        <PasswordExamplePreview id="show-hide" />
         <p>
           Coming from 1.0? Nothing breaks; see the{" "}
           <Link href="/password/docs/upgrade">upgrade guide</Link>. Live demos are on the{" "}

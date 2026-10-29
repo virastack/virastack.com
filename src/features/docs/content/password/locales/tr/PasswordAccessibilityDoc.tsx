@@ -65,7 +65,7 @@ export function PasswordAccessibilityDoc() {
 
         <h2 id="ids">Stabil ID&apos;ler</h2>
         <p>
-          <code>id</code> verilmezse input id&apos;sini sunucu ve istemcide eşleşen{" "}
+          <code>id</code> verilmezse input id&apos;sini server ve client&apos;ta eşleşen{" "}
           <code>useId()</code>&apos;den alır. Etiket veya test sabit bir değer istiyorsa{" "}
           <code>id</code>&#32;verin.
         </p>

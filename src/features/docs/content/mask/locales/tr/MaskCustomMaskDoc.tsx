@@ -30,7 +30,7 @@ const numberDateCode = `useViraMask(form, {
   expiry: { date: { format: "MM/YY", min: "today" } },
 })`;
 
-const presetCode = `// masks.ts — istemci ve sunucu paylaşır
+const presetCode = `// masks.ts — client ve server paylaşır
 import { definePreset } from "@virastack/mask/server"
 
 export const plate = definePreset("plate", {

@@ -29,6 +29,12 @@ export const products: readonly Product[] = [
     colorClass: "text-rose-500",
   },
   {
+    id: "address",
+    href: "/address",
+    github: "https://github.com/virastack/form",
+    colorClass: "text-orange-500",
+  },
+  {
     id: "guide",
     href: "/guide",
     github: "https://github.com/virastack/guide",

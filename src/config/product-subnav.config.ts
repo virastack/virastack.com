@@ -7,7 +7,7 @@ export type ProductSubNavItem = {
   href: string;
 };
 
-const docsProductIds = new Set<ProductId>(["start", "ai", "mask", "password"]);
+const docsProductIds = new Set<ProductId>(["start", "ai", "mask", "password", "address"]);
 
 export function getProductSubNavItems(product: Product): ProductSubNavItem[] {
   if (product.id === "guide") {

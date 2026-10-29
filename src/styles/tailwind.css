@@ -320,3 +320,10 @@
   color: var(--shiki-dark);
   font-weight: var(--shiki-dark-font-weight);
 }
+
+/* Registered so OutlineWordmark can transition its bottom fade (gradient stops cannot animate). */
+@property --wordmark-fade {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}

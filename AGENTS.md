@@ -12,12 +12,6 @@ This version has breaking changes: APIs, conventions, and file structure may all
 
 Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-to-end type-safety. Approach: Plan-first.
 
-## CLI Commands
-
-- **Dev:** `pnpm install && pnpm dev`
-- **Validation:** `pnpm lint && pnpm typecheck`
-- **Build:** `pnpm build`
-
 ## Operational Guardrails
 
 - **Planning Protocol:** Approval required for: Boundaries, Routing/Rendering, State, Schemas, New Dependencies, Infrastructure.
@@ -28,19 +22,12 @@ Senior Frontend Architect specialized in Next.js 16. Decisions: SOLID, SRP, end-
 - **Language:** Chat: English. Code/Types/Naming: English.
 - **Self-Documentation:** JSDoc for complex logic as per `.mdc` standards.
 
-## Tool compatibility
-
-| Tool             | Entry point                | Rules                                     |
-| :--------------- | :------------------------- | :---------------------------------------- |
-| **Cursor**       | `AGENTS.md`                | `.cursor/rules/*.mdc` (auto-loaded)       |
-| **Claude Code**  | `CLAUDE.md` (`@AGENTS.md`) | Read `.cursor/rules/*.mdc` before editing |
-| **Other agents** | `AGENTS.md`                | Read `.cursor/rules/*.mdc` before editing |
-
 ## Resource Map
 
 - **Global Standards:** `.cursor/rules/core-principles.mdc`
 - **UI & UX:** `.cursor/rules/ui-components.mdc`, `.cursor/rules/forms.mdc`, `.cursor/rules/i18n.mdc`
 - **Brand & Copy:** `.cursor/rules/brand.mdc` (product lockups, tech badges, emphasis)
+- **Turkish Terminology:** `.cursor/rules/terminology.mdc` (terms Turkish copy keeps in English: headless, client)
 - **Logic & State:** `.cursor/rules/state-management.mdc`, `.cursor/rules/tanstack-query.mdc`, `.cursor/rules/api.mdc`
 - **Frameworks:** `.cursor/rules/nextjs.mdc`
 - **Best Practices:** `.cursor/rules/react-best-practices.mdc`, `.cursor/rules/typescript.mdc`

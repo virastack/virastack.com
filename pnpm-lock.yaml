@@ -32,6 +32,9 @@ importers:
       '@upstash/redis':
         specifier: ^1.38.1
         version: 1.38.1
+      '@virastack/address':
+        specifier: file:../form/packages/address
+        version: file:../form/packages/address(react@19.2.4)
       '@virastack/mask':
         specifier: 2.0.0
         version: 2.0.0(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
@@ -2288,6 +2291,15 @@ packages:
 
   '@upstash/redis@1.38.1':
     resolution: {integrity: sha512-hVqkWmhqobH7hpdzSCSrOwK7gWNASOAdf85l6/yxdB+giCYNYfl8FkSKxnqW2sqCdLDP7HzRTvy/ILC1AjBMUA==}
+
+  '@virastack/address@file:../form/packages/address':
+    resolution: {directory: ../form/packages/address, type: directory}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: '>=18.2.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   '@virastack/mask@1.1.0':
     resolution: {integrity: sha512-4pCmhr8MkIV8jRaUFno7HZ8WV3SnTBJ71JQMePtf9LfogtQaQ1JIBzTPoV4KWf3UR0CijBdgHYoCMyUST6OsRw==}
@@ -7408,6 +7420,10 @@ snapshots:
   '@upstash/redis@1.38.1':
     dependencies:
       uncrypto: 0.1.3
+
+  '@virastack/address@file:../form/packages/address(react@19.2.4)':
+    optionalDependencies:
+      react: 19.2.4
 
   '@virastack/mask@1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
     dependencies:

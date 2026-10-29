@@ -1,8 +1,8 @@
 import { products } from "@/config/products.config";
 
 type PillarItem = {
-  id: "academy" | "guide" | "start" | "ai" | "mask" | "password";
-  href: "/academy" | "/guide" | "/start" | "/ai" | "/mask" | "/password";
+  id: "academy" | "guide" | "start" | "ai" | "mask" | "password" | "address";
+  href: "/academy" | "/guide" | "/start" | "/ai" | "/mask" | "/password" | "/address";
   colorClass: string;
 };
 
@@ -24,5 +24,5 @@ export const homePillars: readonly Pillar[] = [
     items: [{ id: "academy", href: "/academy", colorClass: "text-green-500" }, product("guide")],
   },
   { id: "start", items: [product("start"), product("ai")] },
-  { id: "build", items: [product("mask"), product("password")] },
+  { id: "build", items: [product("mask"), product("password"), product("address")] },
 ];

@@ -1,6 +1,12 @@
 import type { ProductId } from "@/types/product.types";
 
 import {
+  addressDocsSlugs,
+  getAddressDocsNav,
+  getAddressDocsPage,
+  isAddressDocsSlug,
+} from "@/features/docs/config/address-docs.config";
+import {
   aiDocsV1Slugs,
   getAiDocsV1Nav,
   getAiDocsV1Page,
@@ -44,7 +50,7 @@ import {
 } from "@/features/docs/config/start-docs.config";
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
-export const DOCS_PRODUCT_IDS = ["start", "ai", "mask", "password"] as const;
+export const DOCS_PRODUCT_IDS = ["start", "ai", "mask", "password", "address"] as const;
 
 export type DocsProductId = (typeof DOCS_PRODUCT_IDS)[number];
 
@@ -61,7 +67,8 @@ type DocsMessageNamespace =
   | "DocsMask"
   | "DocsMaskV1"
   | "DocsPassword"
-  | "DocsPasswordV1";
+  | "DocsPasswordV1"
+  | "DocsAddress";
 
 type DocsVersion = {
   id: string;
@@ -175,6 +182,18 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
         isSlug: isPasswordDocsV1Slug,
       },
     },
+  },
+  address: {
+    id: "address",
+    label: "Address",
+    indexHref: "/address/docs",
+    messageNamespace: "DocsAddress",
+    slugs: addressDocsSlugs,
+    getNav: getAddressDocsNav,
+    getPage: getAddressDocsPage,
+    isSlug: isAddressDocsSlug,
+    versions: [{ id: "v0.1", label: "v0.1", latest: true }],
+    archives: {},
   },
 };
 

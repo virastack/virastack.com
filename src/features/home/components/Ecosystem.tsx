@@ -3,6 +3,7 @@ import {
   ChevronRight,
   FormIcon,
   GraduationCapIcon,
+  MapPinIcon,
   RocketIcon,
   SparklesIcon,
   SquareAsteriskIcon,
@@ -35,6 +36,7 @@ const ecosystemNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const satisfies Record<EcosystemItemId, string>;
 
@@ -44,6 +46,7 @@ const ecosystemDescKeys = {
   ai: "ecosystemAiDesc",
   mask: "ecosystemMaskDesc",
   password: "ecosystemPasswordDesc",
+  address: "ecosystemAddressDesc",
   guide: "ecosystemGuideDesc",
 } as const satisfies Record<EcosystemItemId, string>;
 
@@ -54,6 +57,7 @@ const ecosystemIcons = {
   ai: SparklesIcon,
   mask: FormIcon,
   password: SquareAsteriskIcon,
+  address: MapPinIcon,
   guide: BookOpenIcon,
 } as const satisfies Record<EcosystemItemId, typeof RocketIcon>;
 

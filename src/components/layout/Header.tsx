@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   BookOpenIcon,
   FormIcon,
+  MapPinIcon,
   MenuIcon,
   RocketIcon,
   SparklesIcon,
@@ -53,6 +54,7 @@ const productIcons: Record<ProductId, typeof RocketIcon> = {
   ai: SparklesIcon,
   mask: FormIcon,
   password: SquareAsteriskIcon,
+  address: MapPinIcon,
   guide: BookOpenIcon,
 };
 
@@ -61,6 +63,7 @@ const productNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const satisfies Record<ProductId, string>;
 
@@ -69,6 +72,7 @@ const productDescKeys = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
+  address: "addressDesc",
   guide: "guideDesc",
 } as const satisfies Record<ProductId, string>;
 
@@ -88,6 +92,14 @@ export function Header() {
               <img src="/logo.webp" alt="" className="block size-6 shrink-0" />
               <span className="text-lg leading-none font-semibold text-foreground">
                 {siteConfig.name}
+                {activeProduct ? (
+                  <>
+                    {" "}
+                    <span className={cn("font-medium italic", activeProduct.colorClass)}>
+                      {t(productNameKeys[activeProduct.id])}
+                    </span>
+                  </>
+                ) : null}
               </span>
             </Link>
           </HeaderLogoContextMenu>

@@ -20,6 +20,7 @@ const PRODUCT_MESSAGE_NS = {
   ai: "Ai",
   mask: "Mask",
   password: "Password",
+  address: "Address",
   guide: "Guide",
 } as const satisfies Record<ProductId, string>;
 
@@ -28,6 +29,7 @@ const PRODUCT_DESC_KEYS = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
+  address: "addressDesc",
   guide: "guideDesc",
 } as const satisfies Record<ProductId, string>;
 
@@ -36,6 +38,7 @@ const PRODUCT_NAME_KEYS = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const satisfies Record<ProductId, string>;
 

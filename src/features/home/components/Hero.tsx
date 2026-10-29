@@ -4,10 +4,11 @@ import { useTranslations } from "next-intl";
 import { siteConfig } from "@/config/site.config";
 
 import { GithubIcon } from "@/components/icons";
-import { ProductDots } from "@/components/shared/ProductDots";
 import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
+
+import { HeroBrand } from "./HeroBrand";
 
 export function Hero() {
   const t = useTranslations("Home");
@@ -18,14 +19,7 @@ export function Hero() {
         {t("heroBadge")}
       </p>
 
-      <h1 className="mb-2 text-center text-[7.5vw] leading-tight font-bold tracking-tight text-balance text-foreground sm:text-5xl sm:leading-tight md:text-6xl lg:text-[72px] lg:leading-[92px]">
-        {t.rich("heroTitle", {
-          line: (chunks) => <span className="block whitespace-nowrap">{chunks}</span>,
-          learn: (chunks) => <span className="text-green-600 dark:text-green-500">{chunks}</span>,
-          start: (chunks) => <span className="text-teal-600 dark:text-teal-500">{chunks}</span>,
-          build: (chunks) => <span className="text-indigo-500">{chunks}</span>,
-        })}
-      </h1>
+      <HeroBrand />
 
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
         {t("heroDesc")}
@@ -53,8 +47,6 @@ export function Hero() {
             <GithubIcon className="size-4" />
           </Button>
         </div>
-
-        <ProductDots label={t("productDots")} autoplay align="center" />
       </Reveal>
     </section>
   );

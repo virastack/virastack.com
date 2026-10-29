@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
+import { PageGlow } from "@/components/shared/PageGlow";
 import { ProductPage } from "@/features/product";
 import { routing } from "@/i18n/routing";
 
@@ -17,6 +18,7 @@ const productNameKeys = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
   guide: "guideName",
 } as const;
 
@@ -25,6 +27,7 @@ const productDescKeys = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
+  address: "addressDesc",
   guide: "guideDesc",
 } as const;
 
@@ -94,7 +97,8 @@ export default async function Page({ params }: PageProps) {
   const product = getProduct(productParam);
 
   return (
-    <main className="flex-1">
+    <main className="relative isolate flex-1">
+      <PageGlow colorClass={product.colorClass} />
       <ProductPage product={product} />
     </main>
   );

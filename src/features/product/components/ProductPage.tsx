@@ -1,5 +1,7 @@
 import type { Product } from "@/types/product.types";
 
+import { AddressDemo } from "@/components/shared/AddressDemo";
+import { AddressFeatures } from "@/features/address";
 import { AiLanding } from "@/features/ai";
 import { GuideLanding } from "@/features/guide";
 import { MaskDemo, MaskLanding } from "@/features/mask";
@@ -15,6 +17,7 @@ type ProductPageProps = {
 const heroDemos = {
   mask: <MaskDemo inHero />,
   password: <PasswordDemo inHero />,
+  address: <AddressDemo inHero />,
 } as const;
 
 export function ProductPage({ product }: ProductPageProps) {
@@ -22,7 +25,11 @@ export function ProductPage({ product }: ProductPageProps) {
     <>
       <ProductHero
         product={product}
-        aside={product.id === "mask" || product.id === "password" ? heroDemos[product.id] : null}
+        aside={
+          product.id === "mask" || product.id === "password" || product.id === "address"
+            ? heroDemos[product.id]
+            : null
+        }
       />
       {product.id === "start" ? (
         <>
@@ -32,6 +39,7 @@ export function ProductPage({ product }: ProductPageProps) {
       ) : null}
       {product.id === "mask" ? <MaskLanding /> : null}
       {product.id === "password" ? <PasswordLanding /> : null}
+      {product.id === "address" ? <AddressFeatures /> : null}
       {product.id === "guide" ? <GuideLanding /> : null}
       {product.id === "ai" ? <AiLanding /> : null}
     </>

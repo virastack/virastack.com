@@ -3,6 +3,7 @@ export { StartDocsPage } from "@/features/docs/components/StartDocsPage";
 export { AiDocsPage } from "@/features/docs/components/AiDocsPage";
 export { MaskDocsPage } from "@/features/docs/components/MaskDocsPage";
 export { PasswordDocsPage } from "@/features/docs/components/PasswordDocsPage";
+export { AddressDocsPage } from "@/features/docs/components/AddressDocsPage";
 export {
   DOCS_PRODUCT_IDS,
   docsProducts,
@@ -12,6 +13,12 @@ export {
 } from "@/features/docs/config/docs-products";
 export type { DocsProductId } from "@/features/docs/config/docs-products";
 export { getAiDocsNav } from "@/features/docs/config/ai-docs.config";
+export {
+  addressDocsSlugs,
+  getAddressDocsNav,
+  getAddressDocsPage,
+  isAddressDocsSlug,
+} from "@/features/docs/config/address-docs.config";
 export {
   getStartDocsNav,
   getStartDocsPage,

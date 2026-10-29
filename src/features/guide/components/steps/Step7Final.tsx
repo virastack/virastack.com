@@ -19,6 +19,7 @@ const CONFETTI_COLORS = [
   "#d946ef", // fuchsia: AI
   "#6366f1", // indigo: Mask
   "#f43f5e", // rose: Password
+  "#f97316", // orange: Address
   "#fbbf24", // amber: Guide
 ];
 
@@ -27,6 +28,7 @@ const ECOSYSTEM_PRODUCTS = [
   "ai",
   "mask",
   "password",
+  "address",
 ] as const satisfies readonly ProductId[];
 
 const PRODUCT_NAME_KEYS = {
@@ -34,6 +36,7 @@ const PRODUCT_NAME_KEYS = {
   ai: "aiName",
   mask: "maskName",
   password: "passwordName",
+  address: "addressName",
 } as const;
 
 const PRODUCT_DESC_KEYS = {
@@ -41,6 +44,7 @@ const PRODUCT_DESC_KEYS = {
   ai: "aiDesc",
   mask: "maskDesc",
   password: "passwordDesc",
+  address: "addressDesc",
 } as const;
 
 export function Step7Final() {

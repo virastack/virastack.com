@@ -1,0 +1,22 @@
+---
+description: "USE WHEN: Writing or editing Turkish copy (tr.json, Turkish docs content) that names a software concept."
+globs: "src/messages/tr.json,src/features/**/locales/tr/**/*.tsx"
+alwaysApply: false
+---
+
+# Terminology (Turkish copy)
+
+Developers read these terms in English every day. A Turkish coinage reads as a translation and slows them down, so Turkish copy keeps them in English.
+
+## Keep in English
+
+| Write    | Never      |
+| :------- | :--------- |
+| headless | başsız     |
+| client   | istemci    |
+
+- **Suffixes:** attach with an apostrophe: `client'ta`, `client'ın`, `server'da` (`&apos;` inside JSX text).
+- **Pairs:** when client and server appear together, write both in English: `client + server`, `server'da ve client'ta`.
+- **Sunucu:** on its own it stays Turkish: `sunucu doğrulaması`, `sunucuda türetilir`.
+
+Add a row here whenever a new term is agreed, and fix existing copy in the same change.

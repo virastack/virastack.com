@@ -1,4 +1,4 @@
-export type BrandPaletteId = "academy" | "start" | "ai" | "mask" | "password" | "guide";
+export type BrandPaletteId = "academy" | "start" | "ai" | "mask" | "password" | "address" | "guide";
 
 export type BrandPalette = {
   id: BrandPaletteId;
@@ -18,7 +18,7 @@ export type BrandPalette = {
 
 /**
  * Ecosystem product colors in canonical order: learn (Academy), build (Start, AI,
- * Mask, Password), then the big picture (Guide). The same order drives the
+ * Mask, Password, Address), then the big picture (Guide). The same order drives the
  * brand page, the product dots, and the intro video.
  */
 export const brandPalettes: readonly BrandPalette[] = [
@@ -66,6 +66,15 @@ export const brandPalettes: readonly BrandPalette[] = [
     hex: "#ff2056",
     textClass: "text-rose-500",
     bgClass: "bg-[#ff2056]",
+  },
+  {
+    id: "address",
+    productName: "Address",
+    href: "/address",
+    shade: "orange-500",
+    hex: "#ff6900",
+    textClass: "text-orange-500",
+    bgClass: "bg-[#ff6900]",
   },
   {
     id: "guide",

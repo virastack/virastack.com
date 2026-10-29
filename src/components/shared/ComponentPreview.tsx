@@ -19,20 +19,28 @@ type ComponentPreviewProps = {
   /** Server-rendered highlighted markup (e.g. `<DocsCodeBlock />`). */
   children: ReactNode;
   className?: string;
+  /** Width of the live preview; narrow by default. */
+  previewClassName?: string;
 };
 
 /**
  * shadcn-style docs preview: live UI on top, 3-line code peek with gradient,
  * expands on “View Code” with ease-out height animation (skills: enter 300ms / exit 150ms).
  */
-export function ComponentPreview({ preview, code, children, className }: ComponentPreviewProps) {
+export function ComponentPreview({
+  preview,
+  code,
+  children,
+  className,
+  previewClassName = "max-w-sm",
+}: ComponentPreviewProps) {
   const [expanded, setExpanded] = useState(false);
   const reduceMotion = useReducedMotion();
 
   return (
     <div className={cn("relative my-6 overflow-hidden rounded-xl border border-border", className)}>
       <div className="flex min-h-[160px] items-center justify-center bg-background p-8 text-foreground sm:p-10">
-        <div className="w-full max-w-sm">{preview}</div>
+        <div className={cn("w-full", previewClassName)}>{preview}</div>
       </div>
 
       <div className="relative border-t border-border bg-code">

@@ -5,8 +5,7 @@ import type { ReactNode } from "react";
 import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { siteConfig } from "@/config/site.config";
-
+import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
@@ -71,10 +70,9 @@ export function AcademyHero({
 
   return (
     <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-36 pb-16 text-center">
-      <h1 className="mb-2 text-center text-4xl font-semibold tracking-tight text-balance lg:text-6xl">
-        <span className="font-black text-primary">{siteConfig.name}</span>{" "}
-        <span className="font-medium text-green-500 italic">{t("name")}</span>
-      </h1>
+      <BrandLockup nameScale={0.9}>
+        <span className="text-green-500">{t("name")}</span>
+      </BrandLockup>
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
         {t("description")}
       </p>
