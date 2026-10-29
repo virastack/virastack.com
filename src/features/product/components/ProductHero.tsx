@@ -119,7 +119,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
           </Button>
           <GithubRepoButton
             href={product.github}
-            label={github.pkg ? `${github.slug}/packages/${github.pkg}` : github.slug}
+            label={github.pkg ? `${github.slug.split("/")[0]}/${github.pkg}` : github.slug}
           />
         </div>
 
