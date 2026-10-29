@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ViraStack Start — intro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --fg: #161616;
+        --muted: #737373;
+        --dim: #a3a3a3;
+        --border: #e5e5e5;
+        --accent: #00c950;
+        --accent-ink: #00a63e;
+        --cyan: #0e9bb8;
+        --magenta: #e131fa;
+        --sans: "Inter", -apple-system, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: #fff;
+      }
+
+      body {
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        font-family: var(--sans);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+      }
+
+      /* ---------- corners (fixed layer, same on every scene) ---------- */
+      .corner {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+
+      #tl {
+        top: 30px;
+        left: 40px;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+        gap: 7px;
+      }
+
+      #tl b:first-child {
+        color: var(--fg);
+        font-weight: 600;
+      }
+
+      #tl b:last-child {
+        color: var(--accent-ink);
+        font-weight: 700;
+      }
+
+      #tr {
+        top: 33px;
+        right: 40px;
+        font-family: var(--mono);
+      }
+
+      #tr b {
+        color: var(--accent-ink);
+        font-weight: 600;
+      }
+
+      #bl {
+        bottom: 30px;
+        left: 40px;
+        font-family: var(--mono);
+      }
+
+      #bc {
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 8px;
+      }
+
+      #bc i {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--border);
+      }
+
+      #bc i.on {
+        width: 24px;
+        background: var(--accent);
+      }
+
+      #br {
+        bottom: 30px;
+        right: 40px;
+        font-family: var(--mono);
+        color: var(--accent-ink);
+        font-weight: 500;
+      }
+
+      /* ---------- opener: hero lockup ---------- */
+      #open {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+      }
+
+      #lock {
+        --f: 170px;
+        --s: 1.0667;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-14px);
+      }
+
+      /* Same recipe as OutlineWordmark: page-coloured fill, doubled stroke, fade to the bottom. */
+      #wm {
+        display: block;
+        padding: 0 0.08em;
+        font-size: var(--f);
+        line-height: 0.95;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        white-space: nowrap;
+        color: #fff;
+        -webkit-text-stroke: 4px var(--fg);
+        paint-order: stroke fill;
+        mask-image: linear-gradient(to bottom, #000 10%, rgb(0 0 0 / 0) 80%);
+      }
+
+      #nm {
+        position: relative;
+        font-size: calc(var(--f) * var(--s));
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -0.025em;
+        margin-top: calc(var(--f) * (var(--s) * -0.096 - 0.657));
+        color: var(--accent-ink);
+      }
+
+
+      /* ---------- ready: the finished site ---------- */
+      #site {
+        overflow: hidden;
+      }
+
+      #pg {
+        position: relative;
+        height: 456px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      #pg .dots {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(#d4d4d4 1px, transparent 1.3px);
+        background-size: 22px 22px;
+        mask-image: radial-gradient(ellipse 62% 72% at 50% 34%, #000, transparent);
+      }
+
+      .gl {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(38px);
+        opacity: 0;
+      }
+
+      .g1 {
+        left: 170px;
+        top: -100px;
+        width: 580px;
+        height: 320px;
+        background: radial-gradient(closest-side, rgb(0 201 80 / 0.3), rgb(0 201 80 / 0));
+      }
+
+      .nav {
+        position: absolute;
+        inset: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        padding: 0 30px;
+      }
+
+      .brand,
+      .links {
+        display: flex;
+        align-items: center;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .links {
+        gap: 22px;
+      }
+
+      .mark {
+        width: 26px;
+        height: 26px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, #00c950, #14b8a6);
+        box-shadow:
+          0 4px 14px rgb(0 201 80 / 0.45),
+          inset 0 1px 0 rgb(255 255 255 / 0.55);
+      }
+
+      .pb {
+        display: block;
+        height: 10px;
+        border-radius: 6px;
+        background: var(--fg);
+      }
+
+      .pb.sm {
+        height: 8px;
+        background: #cfcfcf;
+      }
+
+      .navbtn {
+        display: grid;
+        place-items: center;
+        width: 86px;
+        height: 32px;
+        border-radius: 999px;
+        background: var(--fg);
+      }
+
+      .navbtn b {
+        width: 44px;
+        height: 7px;
+        border-radius: 5px;
+        background: #fff;
+      }
+
+      .hero {
+        position: absolute;
+        inset: 100px 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .h1 {
+        display: flex;
+        gap: 14px;
+        height: 40px;
+        margin-bottom: 14px;
+      }
+
+      .h1 i {
+        display: block;
+        height: 100%;
+        border-radius: 12px;
+      }
+
+      .h1 i {
+        background: #e2e2e2;
+      }
+
+      .sub {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin: 8px 0 26px;
+      }
+
+      .sub > div {
+        display: flex;
+        gap: 10px;
+      }
+
+      .sub b {
+        display: block;
+        height: 10px;
+        border-radius: 6px;
+        background: #ebebeb;
+      }
+
+      .cta {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 44px;
+        overflow: hidden;
+        border-radius: 999px;
+      }
+
+      .btn.p {
+        width: 158px;
+        background: linear-gradient(#2e2e2e, #121212);
+        box-shadow:
+          0 8px 20px -10px rgb(10 10 10 / 0.5),
+          inset 0 1px 0 rgb(255 255 255 / 0.16);
+      }
+
+      .btn.p b {
+        width: 62px;
+        height: 8px;
+        border-radius: 5px;
+        background: #fff;
+      }
+
+      .btn.s {
+        width: 128px;
+        border: 1px solid #e0e0e0;
+        background: #fff;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+      }
+
+      .btn.s i {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: #d4d4d4;
+      }
+
+      .btn.s b {
+        width: 48px;
+        height: 8px;
+        border-radius: 5px;
+        background: var(--fg);
+      }
+
+      .cards {
+        position: absolute;
+        inset: 346px 0 auto;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        mask-image: linear-gradient(#000 52%, transparent 98%);
+      }
+
+      .gc {
+        width: 272px;
+        height: 150px;
+        padding: 16px;
+        border: 1px solid rgb(0 0 0 / 0.07);
+        border-radius: 18px;
+        background: rgb(255 255 255 / 0.82);
+        box-shadow:
+          0 1px 2px rgb(0 0 0 / 0.04),
+          0 24px 48px -24px rgb(10 60 30 / 0.4),
+          inset 0 1px 0 #fff;
+      }
+
+      .gc .ch {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .gc .ic {
+        width: 22px;
+        height: 22px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #00c950, #14b8a6);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5);
+      }
+
+      .gc .ic.v {
+        background: linear-gradient(135deg, #8b5cf6, #c084fc);
+      }
+
+      .gc .ic.t {
+        background: linear-gradient(135deg, #14b8a6, #38bdf8);
+      }
+
+      .spark {
+        display: block;
+        width: 100%;
+        height: 46px;
+        margin-top: 4px;
+        overflow: visible;
+      }
+
+      .mini {
+        display: flex;
+        align-items: flex-end;
+        gap: 7px;
+        height: 46px;
+        margin-top: 8px;
+      }
+
+      .mini i {
+        flex: 1;
+        border-radius: 5px 5px 2px 2px;
+        background: linear-gradient(#00c950, #8be9ab);
+      }
+
+      .pill {
+        display: inline-block;
+        width: 46px;
+        height: 18px;
+        margin-left: auto;
+        border-radius: 999px;
+        background: #e2f9e9;
+        box-shadow: inset 0 0 0 1px #bff0cf;
+      }
+
+      .avs {
+        display: flex;
+        margin: 12px 0 14px;
+      }
+
+      .avs i {
+        width: 30px;
+        height: 30px;
+        margin-left: -8px;
+        border: 2px solid #fff;
+        border-radius: 999px;
+      }
+
+      .avs i:first-child {
+        margin-left: 0;
+      }
+
+      .trk {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #ececec;
+      }
+
+      .trk b {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #00c950, #14b8a6);
+        transform-origin: left;
+      }
+
+
+      /* ---------- prompt showcase: logos beside the terminal ---------- */
+      .shc {
+        position: absolute;
+        top: 74px;
+        right: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 236px;
+        opacity: 0;
+      }
+
+      .sk {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow:
+          0 1px 2px rgb(10 10 10 / 0.04),
+          0 18px 36px -20px rgb(10 10 10 / 0.3);
+      }
+
+      .sk .lg {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+      }
+
+      .sk .dt {
+        flex: none;
+        width: 14px;
+        height: 14px;
+        margin: 10px;
+        border-radius: 999px;
+      }
+
+      .sk h4 {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .sk p {
+        margin-top: 2px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* ---------- shared card ---------- */
+      .card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow:
+          0 1px 2px rgba(10, 10, 10, 0.04),
+          0 24px 60px -28px rgba(10, 10, 10, 0.25);
+      }
+
+      .scene {
+        position: absolute;
+        left: 180px;
+        top: 92px;
+        width: 920px;
+        height: 500px;
+        opacity: 0;
+      }
+
+      /* ---------- terminal (fixed size, content scrolls up) ---------- */
+      #win {
+        overflow: hidden;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--border);
+        background: #fafafa;
+      }
+
+      .bar i {
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        background: #e3e3e3;
+      }
+
+      .bar span {
+        flex: 1;
+        margin-right: 46px;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .term {
+        position: relative;
+        height: 454px;
+        padding: 0 26px;
+        overflow: hidden;
+        font-family: var(--mono);
+        font-size: 15px;
+        mask-image: linear-gradient(to bottom, transparent 0, #000 22px);
+      }
+
+      #lines {
+        padding-top: 14px;
+        will-change: transform;
+      }
+
+      .ln {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        height: 22px;
+        line-height: 22px;
+        white-space: pre;
+        color: var(--fg);
+      }
+
+      .ln .s {
+        position: relative;
+        color: var(--accent-ink);
+      }
+
+      /* clack's vertical rail, drawn so it never has gaps */
+      .ln .s::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #cfcfcf;
+      }
+
+      .ln.head .s::before {
+        top: 50%;
+        display: none;
+      }
+
+      .ln.head .s {
+        text-indent: 0;
+      }
+
+      .ln.plain .s::before {
+        display: none;
+      }
+
+      .ln.first .s::before {
+        top: 50%;
+      }
+
+      .ln.last .s::before {
+        bottom: 50%;
+      }
+
+      .ln .s b {
+        position: relative;
+        font-weight: 500;
+        background: #fff;
+        padding-right: 4px;
+      }
+
+      .ln .t {
+        padding-left: 2px;
+      }
+
+      .dim {
+        color: var(--muted);
+      }
+
+      .faint {
+        color: var(--dim);
+      }
+
+      .acc {
+        color: var(--accent-ink);
+      }
+
+      .cy {
+        color: var(--cyan);
+      }
+
+      .mg {
+        color: var(--magenta);
+      }
+
+      .tag {
+        background: var(--magenta);
+        color: #000;
+        padding: 0 8px;
+      }
+
+      .caret {
+        display: inline-block;
+        width: 9px;
+        height: 17px;
+        margin-left: 1px;
+        vertical-align: -3px;
+        background: var(--fg);
+      }
+
+      /* ---------- stack scene ---------- */
+      #stack {
+        display: grid;
+        grid-template-columns: 296px 1fr;
+        gap: 20px;
+        align-content: center;
+        align-items: stretch;
+      }
+
+      .pane {
+        padding: 36px 30px;
+      }
+
+      .pane .cap {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin-bottom: 18px;
+      }
+
+      #tree {
+        font-family: var(--mono);
+        font-size: 15px;
+        line-height: 26px;
+        color: var(--fg);
+      }
+
+      #tree div {
+        padding: 0 12px;
+        margin: 0 -12px;
+        border-radius: 6px;
+        white-space: pre;
+      }
+
+      #tree .hl {
+        background: #e8faee;
+        color: var(--accent-ink);
+        font-weight: 600;
+      }
+
+      #tree .hl2 {
+        background: #f3fcf6;
+        color: var(--accent-ink);
+      }
+
+      #stackBody {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+      }
+
+      .grp {
+        display: grid;
+        grid-template-columns: 84px 1fr;
+        align-items: start;
+        gap: 14px;
+      }
+
+      .grp .k {
+        padding-top: 8px;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--dim);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fff;
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--fg);
+      }
+
+      .chip .lg {
+        display: inline-grid;
+        flex: none;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+      }
+
+      .chip.big .lg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .sk .lg svg,
+      .lg svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--fg);
+      }
+
+      .chip.big {
+        height: 44px;
+        padding: 0 18px;
+        font-size: 16px;
+        font-weight: 500;
+        background: #fafafa;
+      }
+
+      .chip.good {
+        border-color: #bff0cf;
+        background: #f3fcf6;
+        color: var(--accent-ink);
+      }
+
+      /* ---------- ai scene ---------- */
+      #ai {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        justify-content: center;
+      }
+
+      .row {
+        display: flex;
+        gap: 18px;
+      }
+
+      .tool {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 24px;
+      }
+
+      .tool .ic {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+      }
+
+      .tool h3 {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .tool p {
+        margin-top: 4px;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .files {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .file {
+        padding: 6px 14px;
+        border-radius: 8px;
+        background: #171717;
+        color: #fff;
+        font-family: var(--mono);
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .rules {
+        padding: 24px 28px;
+      }
+
+      .rules .cap {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin: 0 0 12px;
+      }
+
+      .rules .chips + .cap {
+        margin-top: 20px;
+      }
+
+      .rules .chip {
+        height: 32px;
+        font-size: 13.5px;
+        background: #fafafa;
+      }
+
+      .rules .chip.good {
+        background: #f3fcf6;
+      }
+
+      .rules .chip.ai {
+        gap: 8px;
+        border-color: #f1b8fb;
+        background: #fdf2fe;
+        color: #a21caf;
+      }
+
+      .rules .chip .dt {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: #e131fa;
+        box-shadow: 0 0 8px rgb(225 49 250 / 0.7);
+      }
+
+      .tool .ic svg {
+        width: 28px;
+        height: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div class="corner" id="tl"><b>ViraStack</b><b>Start</b></div>
+      <div class="corner" id="tr"></div>
+      <div class="corner" id="bl">virastack.com/start</div>
+      <div class="corner" id="bc"></div>
+      <div class="corner" id="br"></div>
+
+      <div id="open">
+        <div id="lock">
+          <span id="wm">ViraStack</span>
+          <div id="nm">Start</div>
+        </div>
+      </div>
+
+      <!-- Terminal: one fixed window for Run, Prompts, Setup and Ready -->
+      <div class="scene card" id="win">
+        <div class="bar"><i></i><i></i><i></i><span id="path">~/projects</span></div>
+        <div class="term"><div id="lines"></div></div>
+        <div class="shc" id="sc-template"></div>
+        <div class="shc" id="sc-agents"></div>
+        <div class="shc" id="sc-tools"></div>
+      </div>
+
+      <!-- Ready: the finished site (placeholders only, no copy) -->
+      <div class="scene card" id="site">
+        <div class="bar"><i></i><i></i><i></i><span>localhost:3000</span></div>
+        <div id="pg"></div>
+      </div>
+
+      <!-- Stack -->
+      <div class="scene" id="stack">
+        <div class="card pane">
+          <div class="cap">Project</div>
+          <div id="tree"></div>
+        </div>
+        <div class="card pane">
+          <div class="cap">Ready out of the box</div>
+          <div id="stackBody"></div>
+        </div>
+      </div>
+
+      <!-- AI rules -->
+      <div class="scene" id="ai">
+        <div class="row">
+          <div class="card tool" data-a="0">
+            <span class="ic" style="background: #fcebe3" id="icClaude"></span>
+            <div><h3>Claude Code</h3><p>.claude/rules/virastack/ · .md</p></div>
+          </div>
+          <div class="card tool" data-a="1">
+            <span class="ic" style="background: #f1f1f1" id="icCursor"></span>
+            <div><h3>Cursor</h3><p>.cursor/rules/virastack/ · .mdc</p></div>
+          </div>
+        </div>
+        <div class="files" data-a="2"><span class="file">AGENTS.md</span><span class="file">CLAUDE.md</span></div>
+        <div class="card rules" data-a="3">
+          <div class="cap">Rules</div>
+          <div class="chips" id="rules"></div>
+          <div class="cap">Agent toolkit</div>
+          <div class="chips" id="skills"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="tech-logos.js"></script>
+    <script>
+      /* ---------- timeline (ms) ---------- */
+      const OPEN = 3100; // hero lockup before the terminal; every scene time below is relative to it
+      const T = {
+        run: [0, 1300],
+        prompts: [1300, 8400],
+        setup: [8400, 12100],
+        stack: [12100, 16600],
+        ai: [16600, 21400],
+        ready: [21400, 27350],
+      };
+      const TOTAL = T.ready[1];
+      const FADE = 260;
+      const LABELS = ["Run", "Prompts", "Setup", "Stack", "AI rules", "Ready"];
+      const SCENES = ["run", "prompts", "setup", "stack", "ai", "ready"];
+
+      window.__total = (TOTAL + OPEN) / 1000;
+      window.__poster = (T.stack[0] + 3800 + OPEN) / 1000;
+
+      const $ = (id) => document.getElementById(id);
+      const clamp = (n, a = 0, b = 1) => Math.min(b, Math.max(a, n));
+      const ease = (n) => 1 - Math.pow(1 - clamp(n), 3);
+
+      /* ---------- corners ---------- */
+      $("bc").innerHTML = SCENES.map(() => "<i></i>").join("");
+      const dots = [...$("bc").children];
+
+      /* ---------- terminal helpers ---------- */
+      const SYM = { done: "◇", active: "◆" };
+      const frames = ["◒", "◐", "◓", "◑"];
+      let ms = 0;
+
+      const typed = (txt, start, per) =>
+        txt.slice(0, clamp(Math.floor((ms - start) / per), 0, txt.length));
+      const caret = '<span class="caret"></span>';
+
+      /** One terminal line: kind head|rail|blank|plain. */
+      const line = (kind, sym, text, pos = "") =>
+        `<div class="ln ${kind} ${pos}"><span class="s">${sym ? `<b>${sym}</b>` : ""}</span><span class="t">${text}</span></div>`;
+
+      const prompt = (text, withCaret) =>
+        `<div class="ln plain"><span class="s acc">$</span><span class="t">${text}${withCaret ? caret : ""}</span></div>`;
+
+      /* Prompts, in the order init.js asks them. */
+      const QUESTIONS = [
+        { t: 1300, d: 800, kind: "text", q: "What is your project named?", ans: "acme-app", ph: "virastack-app" },
+        { t: 2100, d: 2000, kind: "select", q: "Which template would you like to use?", ans: "Next.js App Router", show: "template" },
+        { t: 4100, d: 2000, kind: "multi", q: "Which AI coding tools do you use?", ans: "Claude Code, Cursor", show: "agents" },
+        { t: 6100, d: 800, kind: "confirm", q: "Would you like multi-language (i18n) support?", ans: "Yes" },
+        { t: 6900, d: 1500, kind: "tools", q: "Which ViraStack tools would you like to include?", ans: "none", show: "tools" },
+      ];
+
+      function question(Q) {
+        const r = ms - Q.t;
+        if (r < 0) return [];
+        const out = [];
+        if (r >= Q.d) {
+          out.push(line("head", SYM.done, Q.q));
+          out.push(line("rail", "", `<span class="dim">${Q.ans}</span>`));
+          out.push(line("rail", "", ""));
+          return out;
+        }
+        out.push(line("head", `<span class="cy">${SYM.active}</span>`, Q.q));
+        if (Q.kind === "text") {
+          const v = typed(Q.ans, Q.t + 200, 35);
+          out.push(line("rail", "", v ? `${v}${caret}` : `<span class="faint">${Q.ph}</span>${caret}`));
+        } else if (Q.kind === "select") {
+          out.push(line("rail", "", `<span class="acc">●</span> Next.js App Router <span class="faint">(App Router + Server Components)</span>`));
+          out.push(line("rail", "", `<span class="faint">○ TanStack Start</span>`));
+        } else if (Q.kind === "multi") {
+          out.push(line("rail", "", `<span class="acc">◼</span> Claude Code`));
+          out.push(line("rail", "", `<span class="acc">◼</span> Cursor`));
+        } else if (Q.kind === "confirm") {
+          const yes = r > 300;
+          out.push(line("rail", "", yes ? `<span class="acc">●</span> Yes <span class="faint">/ ○ No</span>` : `<span class="faint">○ Yes /</span> <span class="acc">●</span> No`));
+        } else {
+          out.push(line("rail", "", `<span class="faint">◻ @virastack/mask</span>`));
+          out.push(line("rail", "", `<span class="faint">◻ @virastack/password</span>`));
+          out.push(line("rail", "", `<span class="faint">◻ @virastack/address</span>`));
+        }
+        return out;
+      }
+
+      const STEPS = [
+        { t: 8500, d: 300, run: "Creating project files...", done: "Project files created." },
+        { t: 8800, d: 700, run: "Installing dependencies with npm...", done: "Dependencies installed." },
+        { t: 9500, d: 450, run: "Configuring ViraStack AI rules...", done: "🤖 ViraStack AI agent rules successfully integrated." },
+        { t: 9950, d: 450, run: "Installing design skills...", done: "Design skills installed." },
+        { t: 10400, d: 300, run: "Creating the initial git commit...", done: "Initial git commit created." },
+      ];
+      const OUTRO = 10800;
+
+      function term1() {
+        const L = [];
+        const cmd = typed("npx virastack", 250, 35);
+        const typing = ms < 900;
+        L.push(prompt(cmd, typing));
+        if (ms >= 1000) {
+          L.push(line("head first", "┌", `<span class="tag">ViraStack</span>`).replace('class="s"', 'class="s dim"'));
+          L.push(line("rail", "", ""));
+        }
+        if (ms >= T.prompts[0]) QUESTIONS.forEach((Q) => L.push(...question(Q)));
+        STEPS.forEach((S) => {
+          const r = ms - S.t;
+          if (r < 0) return;
+          if (r < S.d) {
+            const f = frames[Math.floor(ms / 110) % 4];
+            L.push(line("head", `<span class="mg">${f}</span>`, S.run));
+          } else {
+            L.push(line("head", SYM.done, S.done));
+            L.push(line("rail", "", ""));
+          }
+        });
+        if (ms >= OUTRO) {
+          L.push(line("head last", "└", "You're all set!").replace('class="s"', 'class="s dim"'));
+          L.push(line("plain", "", "   cd acme-app"));
+          L.push(line("plain", "", "   npm run dev"));
+        }
+        return L;
+      }
+
+      function term2() {
+        const r = ms - T.ready[0];
+        const L = [];
+        {
+          const cd = typed("cd acme-app", 100, 25);
+          L.push(prompt(cd, r < 450));
+          if (r >= 450) {
+            const dev = typed("npm run dev", 500, 25);
+            L.push(prompt(dev, r < 950));
+          }
+          if (r >= 1000) {
+            L.push(line("plain", "", ""));
+            L.push(line("plain", "", "> acme-app@1.0.0 dev"));
+            L.push(line("plain", "", "> next dev"));
+            L.push(line("plain", "", ""));
+          }
+          if (r >= 1100) {
+            L.push(line("plain", "", `   <span class="dim">▲</span> <b>Next.js 16.2.11</b> <span class="dim">(Turbopack)</span>`));
+            L.push(line("plain", "", `   <span class="dim">- Local:</span>         http://localhost:3000`));
+            L.push(line("plain", "", ""));
+          }
+          if (r >= 1250) L.push(line("plain", "", ` <span class="acc">✓</span> Starting...`));
+          if (r >= 1400) L.push(line("plain", "", ` <span class="acc">✓</span> Ready in 412ms`));
+        }
+        return L;
+      }
+
+      const termView = () => {
+        const inReady = ms >= T.ready[0] - FADE;
+        const L = inReady ? term2() : term1();
+        $("lines").innerHTML = L.join("");
+        const visible = 454 - 14 - 20;
+        const over = Math.max(0, L.length * 22 - visible);
+        $("lines").style.transform = `translateY(${-over}px)`;
+        const cdDone = ms >= T.ready[0] + 450 && ms < T.ready[0] + 2010;
+        $("path").textContent = cdDone ? "~/projects/acme-app" : "~/projects";
+      };
+
+      /* ---------- stack scene ---------- */
+      const LOGO = (key) => (key ? `<span class="lg">${window.TECH_LOGOS[key]}</span>` : "");
+      const chip = ([key, name], big = false) => `<span class="chip${big ? " big" : ""}">${LOGO(key)}${name}</span>`;
+      const GROUPS = [
+        ["Framework", [["nextjs", "Next.js 16"], ["tanstack", "TanStack Start"]], true],
+        ["Core", [["react", "React 19"], ["typescript", "TypeScript"]]],
+        ["State", [["tanstack", "TanStack Query"], ["zustand", "Zustand"], ["nuqs", "nuqs"]]],
+        ["Form", [["reactHookForm", "React Hook Form"], ["zod", "Zod"]]],
+        ["UI", [["baseUi", "Base UI"], ["motion", "Motion"], ["lucide", "Lucide React"]]],
+        ["Test", [["vitest", "Vitest"], ["testingLibrary", "Testing Library"], [null, "MSW"]]],
+      ];
+      $("stackBody").innerHTML = GROUPS.map(
+        ([k, items, big], i) =>
+          `<div class="grp" data-g="${i}"><span class="k">${k}</span><div class="chips">${items.map((c) => chip(c, big)).join("")}</div></div>`,
+      ).join("");
+
+      /* Real shape of a scaffolded project: src, then one feature with its own folders. */
+      const TREE = [
+        ["acme-app/", ""],
+        ["  src/", ""],
+        ["    app/", ""],
+        ["    features/", "hl"],
+        ["      landing/", "hl2"],
+        ["        api/", "hl2"],
+        ["        components/", "hl2"],
+        ["        hooks/", "hl2"],
+        ["        schemas/", "hl2"],
+        ["        stores/", "hl2"],
+        ["        types/", "hl2"],
+        ["        index.ts", "hl2"],
+        ["    components/", ""],
+        ["    lib/", ""],
+      ];
+      $("tree").innerHTML = TREE.map(([t, c], i) => `<div data-i="${i}" class="${c}">${t}</div>`).join("");
+
+      function stackView() {
+        const p = ms - T.stack[0];
+        document.querySelectorAll("#tree div").forEach((el) => {
+          const k = ease((p - 100 - Number(el.dataset.i) * 105) / 300);
+          el.style.opacity = k;
+          el.style.transform = `translateX(${(1 - k) * -8}px)`;
+        });
+        const starts = [250, 550, 850, 1150, 1450, 1750];
+        document.querySelectorAll("#stackBody > [data-g]").forEach((el) => {
+          const g = Number(el.dataset.g);
+          const chips = el.querySelectorAll(".chip");
+          chips.forEach((c, i) => {
+            const k = ease((p - starts[g] - i * 90) / 300);
+            c.style.opacity = k;
+            c.style.transform = `translateY(${(1 - k) * 8}px)`;
+          });
+          const lk = ease((p - starts[g]) / 300);
+          const label = el.querySelector(".k");
+          if (label) label.style.opacity = lk;
+        });
+      }
+
+      /* ---------- ai scene ---------- */
+      const RULES = ["core", "architecture", "react", "typescript", "ui", "forms", "api", "server-state", "client-state", "performance", "testing", "nextjs", "i18n"];
+      const SKILLS = ["emil-design-eng", "better-ui", "better-accessibility"];
+      $("rules").innerHTML = RULES.map((r) => `<span class="chip">${r}</span>`).join("");
+      $("skills").innerHTML =
+        `<span class="chip ai"><i class="dt"></i>@virastack/ai</span>` +
+        SKILLS.map((r) => `<span class="chip good">${r}</span>`).join("");
+      $("icClaude").innerHTML = window.TECH_LOGOS.claude;
+      $("icCursor").innerHTML = window.TECH_LOGOS.cursor;
+
+      function aiView() {
+        const p = ms - T.ai[0];
+        const at = [120, 280, 600, 850];
+        document.querySelectorAll("#ai [data-a]").forEach((el) => {
+          const k = ease((p - at[Number(el.dataset.a)]) / 360);
+          el.style.opacity = k;
+          el.style.transform = `translateY(${(1 - k) * 10}px)`;
+        });
+        document.querySelectorAll("#rules .chip").forEach((c, i) => {
+          const k = ease((p - 1000 - i * 45) / 260);
+          c.style.opacity = k;
+        });
+        document.querySelectorAll("#skills .chip").forEach((c, i) => {
+          const k = ease((p - 1750 - i * 110) / 300);
+          c.style.opacity = k;
+        });
+        document.querySelectorAll("#ai .cap").forEach((c, i) => {
+          c.style.opacity = ease((p - (i ? 1650 : 950)) / 300);
+        });
+      }
+
+
+      /* ---------- ready: the finished site ---------- */
+      const bars = (n, fn) => Array.from({ length: n }, (_, i) => fn(i)).join("");
+      $("pg").innerHTML = `
+        <div class="dots"></div>
+        <i class="gl g1"></i>
+        <div class="nav">
+          <div class="brand"><i class="mark"></i><b class="pb" style="width:64px"></b></div>
+          <div class="links">${[46, 40, 54, 44].map((w) => `<b class="pb sm" style="width:${w}px"></b>`).join("")}</div>
+          <div class="navbtn"><b></b></div>
+        </div>
+        <div class="hero">
+          <div class="h1 a"><i style="width:280px"></i></div>
+          <div class="h1 b"><i style="width:400px"></i></div>
+          <div class="sub"><div><b style="width:344px"></b></div><div><b style="width:264px"></b></div></div>
+          <div class="cta"><div class="btn p"><b></b></div><div class="btn s"><i></i><b></b></div></div>
+        </div>
+        <div class="cards">
+          <div class="gc"><div class="ch"><i class="ic"></i><b class="pb sm" style="width:70px"></b></div>
+            <b class="pb" style="width:96px;height:16px;margin:12px 0 8px"></b>
+            <svg class="spark" viewBox="0 0 240 46"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c950" stop-opacity=".35"/><stop offset="1" stop-color="#00c950" stop-opacity="0"/></linearGradient></defs>
+              <path class="sa" d="M0 36C30 34 42 14 74 20S126 38 156 16 206 4 240 8V46H0Z" fill="url(#sg)"/>
+              <path class="sl" pathLength="1" d="M0 36C30 34 42 14 74 20S126 38 156 16 206 4 240 8" fill="none" stroke="#00c950" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>
+          <div class="gc"><div class="ch"><i class="ic v"></i><b class="pb sm" style="width:58px"></b><span class="pill"></span></div>
+            <b class="pb" style="width:84px;height:16px;margin:12px 0 0"></b>
+            <div class="mini">${[0.4, 0.62, 0.5, 0.78, 0.58, 0.9, 0.7, 1].map((h) => `<i data-h="${h}"></i>`).join("")}</div></div>
+          <div class="gc"><div class="ch"><i class="ic t"></i><b class="pb sm" style="width:76px"></b></div>
+            <div class="avs">${["#00c950,#14b8a6", "#8b5cf6,#c084fc", "#f59e0b,#fcd34d", "#14b8a6,#38bdf8"].map((g) => `<i style="background:linear-gradient(135deg,${g})"></i>`).join("")}</div>
+            <div class="trk"><b data-p="0.72"></b></div></div>
+        </div>`;
+
+      function siteView(p) {
+        const q = (sel) => [...$("pg").querySelectorAll(sel)];
+        const k = (t0, d) => ease((p - t0) / d);
+        const rise = (el, o, y = 14, blur = 0) => {
+          el.style.opacity = o;
+          el.style.transform = `translateY(${(1 - o) * y}px)`;
+          if (blur) el.style.filter = `blur(${(1 - o) * blur}px)`;
+        };
+
+        q(".gl").forEach((el, i) => {
+          const o = k(150 + i * 200, 1400);
+          el.style.opacity = o * (0.88 + 0.12 * Math.sin(p / 700 + i * 2));
+          el.style.transform = `translate(${Math.sin(p / 1500 + i) * 14}px, ${Math.cos(p / 1300 + i) * 8}px) scale(${0.7 + 0.3 * o})`;
+        });
+        q(".brand, .navbtn").forEach((el, i) => rise(el, k(350 + i * 350, 450), -10));
+        q(".links .pb").forEach((el, i) => rise(el, k(480 + i * 70, 400), -10));
+        rise(q(".h1.a")[0], k(800, 550), 16, 8);
+        const b = q(".h1.b")[0];
+        rise(b, k(1000, 550), 16, 8);
+        q(".sub > div").forEach((el, i) => rise(el, k(1300 + i * 120, 450), 10));
+        q(".btn").forEach((el, i) => rise(el, k(1550 + i * 130, 450), 12));
+
+        q(".gc").forEach((el, i) => {
+          const o = k(2150 + i * 160, 650);
+          el.style.opacity = o;
+          el.style.transform = `translateY(${(1 - o) * 56 + Math.sin(p / 800 + i * 1.7) * 3 * o}px)`;
+        });
+        q(".sl")[0].setAttribute("stroke-dashoffset", String(1 - k(2500, 1300)));
+        q(".sa")[0].style.opacity = k(3100, 700);
+        q(".mini i").forEach((el, i) => {
+          el.style.transformOrigin = "bottom";
+          el.style.transform = `scaleY(${ease((p - 2700 - i * 80) / 500) * Number(el.dataset.h)})`;
+          el.style.height = "100%";
+        });
+        const fill = q(".trk b")[0];
+        fill.style.transform = `scaleX(${ease((p - 2800) / 1000) * Number(fill.dataset.p)})`;
+
+      }
+
+      /* ---------- opener ---------- */
+      const mixHex = (a, b, k) => {
+        const c = (h, n) => parseInt(h.slice(1 + n * 2, 3 + n * 2), 16);
+        return `rgb(${[0, 1, 2].map((n) => Math.round(c(a, n) + (c(b, n) - c(a, n)) * k)).join(",")})`;
+      };
+
+      /* Mirrors HeroBrand: solid wordmark -> outline (lifts a little) -> product name. */
+      function openView(t) {
+        const appear = ease((t - 150) / 500);
+        const outline = ease((t - 1000) / 500);
+        const name = ease((t - 1550) / 380);
+        const wm = $("wm");
+        wm.style.opacity = appear;
+        wm.style.color = mixHex("#161616", "#ffffff", outline);
+        wm.style.maskImage = `linear-gradient(to bottom, #000 10%, rgb(0 0 0 / ${1 - outline}) 80%)`;
+        wm.style.transform = `translateY(${(1 - appear) * 14 - outline * 20.4}px)`;
+        const nm = $("nm");
+        nm.style.opacity = name;
+        nm.style.transform = `translateY(${(1 - name) * 8}px)`;
+        nm.style.filter = `blur(${(1 - name) * 4}px)`;
+        $("open").style.opacity = clamp(-ms / FADE);
+      }
+
+      /* ---------- prompt showcase ---------- */
+      const SHOW = {
+        template: [["nextjs", "Next.js", "App Router"], ["tanstack", "TanStack Start", "Routing + SSR"]],
+        agents: [["claude", "Claude Code", ".claude/rules"], ["cursor", "Cursor", ".cursor/rules"]],
+        tools: [["#605efe", "@virastack/mask", "Input masks"], ["#f6339a", "@virastack/password", "Password hook"], ["#fb2c36", "@virastack/address", "Address hook"]],
+      };
+      Object.entries(SHOW).forEach(([key, cards]) => {
+        $(`sc-${key}`).innerHTML = cards
+          .map(([logo, name, sub]) => {
+            const mark = logo.startsWith("#") ? `<i class="dt" style="background:${logo};box-shadow:0 0 10px ${logo}66"></i>` : `<span class="lg">${window.TECH_LOGOS[logo]}</span>`;
+            return `<div class="sk">${mark}<div><h4>${name}</h4><p>${sub}</p></div></div>`;
+          })
+          .join("");
+      });
+
+      function showView() {
+        QUESTIONS.forEach((Q) => {
+          if (!Q.show) return;
+          const box = $(`sc-${Q.show}`);
+          const r = ms - Q.t;
+          const out = 1 - ease((r - (Q.d - 150)) / 200);
+          box.style.opacity = r < 0 ? 0 : clamp(Math.min(ease((r - 100) / 250), out));
+          [...box.children].forEach((card, i) => {
+            const k = ease((r - 100 - i * 160) / 360);
+            card.style.transform = `translateX(${(1 - k) * 26}px) scale(${0.96 + 0.04 * k})`;
+            card.style.opacity = k;
+          });
+        });
+      }
+
+      /* ---------- seek ---------- */
+      const fade = (a, b) => clamp((ms - a) / FADE) * clamp((b - ms) / FADE);
+
+      window.__seek = (t) => {
+        ms = t - OPEN;
+        if (ms < 0) openView(t);
+        else $("open").style.opacity = 0;
+        const chrome = clamp((ms + FADE) / FADE);
+        document.querySelectorAll(".corner").forEach((c) => (c.style.opacity = chrome));
+        const termA = Math.max(fade(-FADE, T.setup[1]), fade(T.ready[0], T.ready[0] + 2010));
+        $("site").style.opacity = fade(T.ready[0] + 1750, TOTAL + FADE);
+        if (ms >= T.ready[0] + 1750) siteView(ms - (T.ready[0] + 1750));
+        $("win").style.opacity = termA;
+        $("stack").style.opacity = fade(T.stack[0], T.stack[1]);
+        $("ai").style.opacity = fade(T.ai[0], T.ai[1]);
+
+        termView();
+        showView();
+        if (ms >= T.stack[0] - FADE && ms <= T.stack[1] + FADE) stackView();
+        if (ms >= T.ai[0] - FADE && ms <= T.ai[1] + FADE) aiView();
+
+        const idx = SCENES.findIndex((s) => ms >= T[s][0] && ms < T[s][1]);
+        const cur = idx < 0 ? (ms < 0 ? 0 : SCENES.length - 1) : idx;
+        $("tr").innerHTML = `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(SCENES.length).padStart(2, "0")}`;
+        $("br").textContent = LABELS[cur];
+        dots.forEach((d, i) => d.classList.toggle("on", i === cur));
+      };
+
+      document.fonts.ready.then(() => {
+        const q = new URLSearchParams(location.search);
+        window.__seek(Number(q.get("t") ?? 0));
+      });
+    </script>
+  </body>
+</html>
