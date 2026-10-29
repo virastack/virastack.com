@@ -21,7 +21,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Academy" });
-  const title = `${t("sourcesTitle")} — ${siteConfig.name} Academy`;
+  const title = `${t("sourcesTitle")} · ${siteConfig.name} Academy`;
   const description = t("sourcesDescription");
   const path = "/academy/sources";
   const og = buildOgImageMetadata({
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {

@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {

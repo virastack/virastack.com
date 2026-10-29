@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { getProduct, isProductId } from "@/config/products.config";
-import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
+import { buildDocsSeoTitle } from "@/lib/seo-title";
 
 import {
   AddressDocsPage,
@@ -21,6 +21,7 @@ import {
   StartDocsPage,
   type DocsProductId,
 } from "@/features/docs";
+import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
 import { docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { routing } from "@/i18n/routing";
 
@@ -94,7 +95,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const page = route.content.getPage(route.slug, t);
   if (!page) return {};
 
-  const title = `${page.title} · ${siteConfig.name} ${docs.label}`;
+  const title = await buildDocsSeoTitle({
+    locale,
+    productLabel: docs.label,
+    pageTitle: page.title,
+    kind: route.slug === "introduction" ? "introduction" : "page",
+    versionLabel: route.version.latest ? undefined : route.version.label,
+  });
   const description = page.description;
   const path = docsPagePath(route.content.indexHref, route.slug);
   const og = buildOgImageMetadata({
@@ -105,7 +112,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     ...(route.version.latest ? {} : { robots: { index: false } }),
     alternates: buildAlternates(locale, path),
@@ -133,10 +140,24 @@ export default async function DocsSlugPage({ params }: PageProps) {
     notFound();
   }
 
-  getProduct(productParam);
+  const product = getProduct(productParam);
+  const t = await getTranslations({ locale, namespace: route.content.messageNamespace });
+  const page = route.content.getPage(route.slug, t);
 
   return (
     <main className="flex flex-1 flex-col">
+      {page ? (
+        <DocsJsonLd
+          locale={locale}
+          productLabel={docs.label}
+          productHref={product.href}
+          section="docs"
+          sectionPath={route.content.indexHref}
+          pageTitle={page.title}
+          description={page.description}
+          path={docsPagePath(route.content.indexHref, route.slug)}
+        />
+      ) : null}
       <DocsProductContent
         product={productParam}
         slug={route.slug}

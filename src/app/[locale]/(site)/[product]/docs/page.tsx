@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { getProduct, isProductId } from "@/config/products.config";
-import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
+import { buildDocsSeoTitle } from "@/lib/seo-title";
 
 import {
   AddressDocsPage,
@@ -20,6 +20,7 @@ import {
   StartDocsPage,
   type DocsProductId,
 } from "@/features/docs";
+import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {
@@ -68,7 +69,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const page = docs.getPage("introduction", t);
   if (!page) return {};
 
-  const title = `${page.title} · ${siteConfig.name} ${docs.label}`;
+  const title = await buildDocsSeoTitle({
+    locale,
+    productLabel: docs.label,
+    pageTitle: page.title,
+    kind: "introduction",
+  });
   const description = page.description;
   const og = buildOgImageMetadata({
     title: page.title,
@@ -78,7 +84,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, docs.indexHref),
     openGraph: {
@@ -104,10 +110,24 @@ export default async function DocsIndexPage({ params }: PageProps) {
     notFound();
   }
 
-  getProduct(productParam);
+  const product = getProduct(productParam);
+  const t = await getTranslations({ locale, namespace: docs.messageNamespace });
+  const page = docs.getPage("introduction", t);
 
   return (
     <main className="flex flex-1 flex-col">
+      {page ? (
+        <DocsJsonLd
+          locale={locale}
+          productLabel={docs.label}
+          productHref={product.href}
+          section="docs"
+          sectionPath={docs.indexHref}
+          pageTitle={page.title}
+          description={page.description}
+          path={docs.indexHref}
+        />
+      ) : null}
       <DocsProductContent product={productParam} slug="introduction" />
     </main>
   );

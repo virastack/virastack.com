@@ -5,8 +5,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
+import { buildHomeJsonLd } from "@/lib/json-ld";
 import { buildOgImageMetadata } from "@/lib/og";
 
+import { JsonLd } from "@/components/shared/JsonLd";
 import { HomePage } from "@/features/home";
 import { routing } from "@/i18n/routing";
 
@@ -49,9 +51,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Home" });
 
   return (
     <main className="relative isolate flex-1">
+      <JsonLd data={buildHomeJsonLd({ locale, description: t("metaDesc") })} />
       <HomePage />
     </main>
   );

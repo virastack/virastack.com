@@ -7,8 +7,11 @@ import { getProduct, isProductId, products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
+import { buildBreadcrumbJsonLd, buildSoftwareJsonLd } from "@/lib/json-ld";
 import { buildOgImageMetadata } from "@/lib/og";
+import { getProductSeoName } from "@/lib/seo-title";
 
+import { JsonLd } from "@/components/shared/JsonLd";
 import { PageGlow } from "@/components/shared/PageGlow";
 import { ProductPage } from "@/features/product";
 import { routing } from "@/i18n/routing";
@@ -59,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: "Products" });
   const name = t(productNameKeys[product.id]);
   const description = String(t.raw(productDescKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
-  const title = `${siteConfig.name} ${name}`;
+  const title = await getProductSeoName(locale, product.id);
 
   const og = buildOgImageMetadata({
     title: name,
@@ -69,7 +72,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, product.href),
     openGraph: {
@@ -95,9 +98,29 @@ export default async function Page({ params }: PageProps) {
   }
 
   const product = getProduct(productParam);
+  const t = await getTranslations({ locale, namespace: "Products" });
+  const name = `${siteConfig.name} ${t(productNameKeys[product.id])}`;
+  const description = String(t.raw(productDescKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
 
   return (
     <main className="relative isolate flex-1">
+      <JsonLd
+        data={buildBreadcrumbJsonLd({
+          locale,
+          items: [{ name: siteConfig.name, path: "/" }, { name }],
+        })}
+      />
+      {product.id !== "guide" ? (
+        <JsonLd
+          data={buildSoftwareJsonLd({
+            locale,
+            name,
+            description,
+            path: product.href,
+            repository: product.github,
+          })}
+        />
+      ) : null}
       <PageGlow colorClass={product.colorClass} />
       <ProductPage product={product} />
     </main>

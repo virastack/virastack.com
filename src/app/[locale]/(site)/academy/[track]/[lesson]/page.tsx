@@ -46,8 +46,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const document = loadAcademyLesson(locale, trackSlug, lessonSlug);
   const trackTitle = lookup.track.title;
   const title = document
-    ? `${document.frontmatter.title} — ${trackTitle}`
-    : `${lookup.entry.lesson.title} — ${trackTitle}`;
+    ? `${document.frontmatter.title} · ${trackTitle}`
+    : `${lookup.entry.lesson.title} · ${trackTitle}`;
   const description = (
     document?.frontmatter.description ?? lookup.entry.lesson.description
   ).replace(/\[\^\d+\]/g, "");

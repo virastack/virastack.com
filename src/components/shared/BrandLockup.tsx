@@ -19,6 +19,8 @@ type BrandLockupProps = {
   alignClassName?: string;
   /** Heading level of the product name; use `div` where the page already has an `<h1>`. */
   as?: "h1" | "div";
+  /** Screen-reader and crawler text of the heading; defaults to the brand name. */
+  srTitle?: string;
   /** Shown in the product name's slot, centred under the wordmark (e.g. product dots). */
   slot?: ReactNode;
   /** Product name; its colour comes from the caller. */
@@ -37,6 +39,7 @@ export function BrandLockup({
   className,
   alignClassName = "items-center",
   as: Name = "h1",
+  srTitle,
   slot,
   children,
 }: BrandLockupProps) {
@@ -59,7 +62,7 @@ export function BrandLockup({
           marginTop: "calc(var(--f) * (var(--s) * -0.096 - 0.657))",
         }}
       >
-        <span className="sr-only">{siteConfig.name} </span>
+        <span className="sr-only">{srTitle ?? siteConfig.name} </span>
         {children}
       </Name>
       {slot ? (

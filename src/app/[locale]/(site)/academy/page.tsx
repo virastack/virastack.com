@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { siteConfig } from "@/config/site.config";
-
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
@@ -21,7 +19,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Academy" });
-  const title = `${siteConfig.name} ${t("name")}`;
+  const tSeo = await getTranslations({ locale, namespace: "Seo" });
+  const title = tSeo("productAcademy");
   const description = t("description");
   const og = buildOgImageMetadata({
     title: t("name"),
@@ -30,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, "/academy"),
     openGraph: {

@@ -35,8 +35,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const t = await getTranslations({ locale, namespace: "Products" });
+  const tSeo = await getTranslations({ locale, namespace: "Seo" });
   const name = t("guideName");
-  const title = `${siteConfig.name} ${name}`;
+  const title = `${tSeo("guidePlay")} · ${siteConfig.name} ${name}`;
   const description = t("guideDesc");
   const og = buildOgImageMetadata({
     title: name,
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, "/guide/play"),
     openGraph: {

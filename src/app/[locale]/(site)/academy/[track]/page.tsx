@@ -40,12 +40,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const trackTitle = track.title;
   const description = track.description;
-  const title = `${trackTitle} — ${siteConfig.name} Academy`;
+  const title = `${trackTitle} · ${siteConfig.name} Academy`;
   const path = `/academy/${track.slug}`;
   const og = buildOgImageMetadata({ title: trackTitle, description, path });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {

@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { getProduct, isProductId } from "@/config/products.config";
-import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
+import { buildDocsSeoTitle } from "@/lib/seo-title";
 
 import { getMaskDocsPage, getPasswordDocsPage } from "@/features/docs";
+import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
 import { MaskExamplesPage } from "@/features/mask/components/MaskExamplesPage";
 import { PasswordExamplesPage } from "@/features/password/components/PasswordExamplesPage";
 import { routing } from "@/i18n/routing";
@@ -39,6 +40,12 @@ export function generateStaticParams() {
   );
 }
 
+const productLabels = { mask: "Mask", password: "Password" } as const;
+
+function getExamplesIndexPage(product: ExamplesProductId, t: (key: string) => string) {
+  return product === "mask" ? getMaskDocsPage("examples", t) : getPasswordDocsPage("examples", t);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, product: productParam } = await params;
 
@@ -48,54 +55,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const product = getProduct(productParam);
   const path = `${product.href}/examples`;
-
-  if (productParam === "mask") {
-    const t = await getTranslations({ locale, namespace: "DocsMask" });
-    const page = getMaskDocsPage("examples", t);
-    if (!page) return {};
-
-    const title = `${page.title} · ${siteConfig.name} Mask`;
-    const description = page.description;
-    const og = buildOgImageMetadata({
-      title: page.title,
-      description,
-      product: "mask",
-      path,
-    });
-
-    return {
-      title,
-      description,
-      alternates: buildAlternates(locale, path),
-      openGraph: {
-        title,
-        description,
-        url: localeUrl(locale, path),
-        ...og.openGraph,
-      },
-      twitter: {
-        title,
-        description,
-        ...og.twitter,
-      },
-    };
-  }
-
-  const t = await getTranslations({ locale, namespace: "DocsPassword" });
-  const page = getPasswordDocsPage("examples", t);
+  const t = await getTranslations({
+    locale,
+    namespace: productParam === "mask" ? "DocsMask" : "DocsPassword",
+  });
+  const page = getExamplesIndexPage(productParam, t);
   if (!page) return {};
 
-  const title = `${page.title} · ${siteConfig.name} Password`;
+  const title = await buildDocsSeoTitle({
+    locale,
+    productLabel: productLabels[productParam],
+    pageTitle: page.title,
+  });
   const description = page.description;
   const og = buildOgImageMetadata({
     title: page.title,
     description,
-    product: "password",
+    product: productParam,
     path,
   });
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {
@@ -120,8 +101,28 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
+  const product = getProduct(productParam);
+  const path = `${product.href}/examples`;
+  const t = await getTranslations({
+    locale,
+    namespace: productParam === "mask" ? "DocsMask" : "DocsPassword",
+  });
+  const page = getExamplesIndexPage(productParam, t);
+
   return (
     <main className="flex-1">
+      {page ? (
+        <DocsJsonLd
+          locale={locale}
+          productLabel={productLabels[productParam]}
+          productHref={product.href}
+          section="examples"
+          sectionPath={path}
+          pageTitle={page.title}
+          description={page.description}
+          path={path}
+        />
+      ) : null}
       {productParam === "mask" ? <MaskExamplesPage /> : <PasswordExamplesPage />}
     </main>
   );

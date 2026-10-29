@@ -6,6 +6,7 @@ import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { brandPalettes, getBrandPalette } from "@/config/brand-palettes.config";
+import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
@@ -32,6 +33,7 @@ const DOTS_DELAY_MS = 500;
  */
 export function HeroBrand() {
   const t = useTranslations("Footer");
+  const tHome = useTranslations("Home");
   const reduceMotion = useReducedMotion();
   const [outlined, setOutlined] = useState(false);
   const [index, setIndex] = useState<number | null>(null);
@@ -60,6 +62,7 @@ export function HeroBrand() {
       <PageGlow colorClass={active?.textClass ?? getBrandPalette("start").textClass} />
       <BrandLockup
         filled={!outlined}
+        srTitle={`${siteConfig.name} – ${tHome("heroSrTitle")}`}
         className="-mt-8 -mb-5"
         slot={
           /* Fades in once the names are done; no-JS and reduced motion show it at once. */
