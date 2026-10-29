@@ -33,17 +33,17 @@ importers:
         specifier: ^1.38.1
         version: 1.38.1
       '@virastack/address':
-        specifier: file:../form/packages/address
-        version: file:../form/packages/address(react@19.2.4)
+        specifier: 1.0.0
+        version: 1.0.0(react@19.2.4)
       '@virastack/mask':
-        specifier: file:../form/packages/mask
-        version: file:../form/packages/mask(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
+        specifier: 2.1.0
+        version: 2.1.0(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)
       '@virastack/mask-v1':
         specifier: npm:@virastack/mask@1.1.0
         version: '@virastack/mask@1.1.0(react-dom@19.2.4(react@19.2.4))(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)'
       '@virastack/password':
-        specifier: 1.1.0
-        version: 1.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 1.1.1
+        version: 1.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2292,8 +2292,8 @@ packages:
   '@upstash/redis@1.38.1':
     resolution: {integrity: sha512-hVqkWmhqobH7hpdzSCSrOwK7gWNASOAdf85l6/yxdB+giCYNYfl8FkSKxnqW2sqCdLDP7HzRTvy/ILC1AjBMUA==}
 
-  '@virastack/address@file:../form/packages/address':
-    resolution: {directory: ../form/packages/address, type: directory}
+  '@virastack/address@1.0.0':
+    resolution: {integrity: sha512-OIkjziHb2OKF4pZAqtPpB/QqX44S19KryW4CjTRGSx+a1pK74k73xGaOUlWYmmErvv8LfuFB5VmOP6Gknw7/yQ==}
     engines: {node: '>=20'}
     peerDependencies:
       react: '>=18.2.0'
@@ -2309,15 +2309,15 @@ packages:
       react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/mask@file:../form/packages/mask':
-    resolution: {directory: ../form/packages/mask, type: directory}
+  '@virastack/mask@2.1.0':
+    resolution: {integrity: sha512-SA8KPyvELUvLfYO3jPNuvQ0wV92NT9AaizpWe3YSujEvBekvxzheUVcV0C9aiagz/7quYfif3zpGQHtmc/qg1Q==}
     engines: {node: '>=20'}
     peerDependencies:
       react: '>=18.2.0'
       react-hook-form: '>=7.55.0'
 
-  '@virastack/password@1.1.0':
-    resolution: {integrity: sha512-M62GHYr/M+EFkl/bCqKvZRZvLtVKA100kZcrXqobgddjr6Dxm4xNvI4lUZ7RJegFvExaTFE0hI1MFqF1zDxMxQ==}
+  '@virastack/password@1.1.1':
+    resolution: {integrity: sha512-iqmqv7SlG4FGiP4e6hzSzb8hc3ZxPPPv+3bj36MUFvAH4hFjVORdStOkudeD9aesMLjXypRDbxwJk96rJyOrqQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
@@ -7421,7 +7421,7 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  '@virastack/address@file:../form/packages/address(react@19.2.4)':
+  '@virastack/address@1.0.0(react@19.2.4)':
     optionalDependencies:
       react: 19.2.4
 
@@ -7431,12 +7431,12 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       react-hook-form: 7.83.0(react@19.2.4)
 
-  '@virastack/mask@file:../form/packages/mask(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
+  '@virastack/mask@2.1.0(react-hook-form@7.83.0(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-hook-form: 7.83.0(react@19.2.4)
 
-  '@virastack/password@1.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@virastack/password@1.1.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
