@@ -1,5 +1,6 @@
 /**
- * Renders scripts/video/start-intro.html to public/start/start-intro.mp4.
+ * Renders scripts/video/start-intro.html to public/start/start-intro.<hash>.mp4 (+ poster).
+ * Notes and editing rules: scripts/video/README.md.
  *
  * The page is deterministic: `window.__seek(ms)` paints one frame and
  * `window.__total` is the length in seconds, so the video is a pure function of
@@ -7,9 +8,14 @@
  *
  * Needs Chromium (Playwright from node_modules, or the file in $PLAYWRIGHT_MODULE) and
  * ffmpeg on PATH:
- *   node scripts/video/render-start-intro.mjs [--fps 30] [--frames <dir>] [--out <dir>]
+ *   node scripts/video/render-start-intro.mjs [--no-opener] [--fps 30] [--frames <dir>] [--out <dir>]
+ *   node scripts/video/render-start-intro.mjs --still 4000,12000 [--no-opener] [--out <dir>]
+ *
+ * --no-opener  skip the hero lockup (what the product page uses)
+ * --still      only write PNGs of those video times (ms) to <out>, for a quick look
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import fs from "node:fs/promises";
 import { createServer } from "node:http";
@@ -27,6 +33,8 @@ const arg = (name, fallback) => {
 
 const out = path.resolve(arg("out", path.join(root, "public/start")));
 const fps = Number(arg("fps", 30));
+const opener = !process.argv.includes("--no-opener");
+const stills = arg("still", "").split(",").filter(Boolean).map(Number);
 const framesDir = arg("frames", path.join(os.tmpdir(), "start-intro-frames"));
 
 const TYPES = {
@@ -78,12 +86,24 @@ await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({
   viewport: { width: 1280, height: 720 },
-  deviceScaleFactor: 1.5,
+  deviceScaleFactor: stills.length ? 1 : 1.5,
 });
-await page.goto(`http://127.0.0.1:${port}/scripts/video/start-intro.html?render=1`, {
-  waitUntil: "load",
-});
+await page.goto(
+  `http://127.0.0.1:${port}/scripts/video/start-intro.html?render=1${opener ? "" : "&opener=0"}`,
+  { waitUntil: "load" },
+);
 await page.evaluate(() => document.fonts.ready);
+
+if (stills.length) {
+  for (const ms of stills) {
+    await page.evaluate((t) => window.__seek(t), ms);
+    await page.screenshot({ path: path.join(out, `still-${ms}.png`) });
+  }
+  await browser.close();
+  server.close();
+  process.stdout.write(`${stills.length} still(s) → ${out}\n`);
+  process.exit(0);
+}
 
 const total = await page.evaluate(() => window.__total);
 const posterAt = await page.evaluate(() => window.__poster);
@@ -139,5 +159,27 @@ execFileSync("cwebp", [
   path.join(out, "start-intro-poster.webp"),
 ]);
 
-const { size } = await fs.stat(path.join(out, "start-intro.mp4"));
-process.stdout.write(`${path.join(out, "start-intro.mp4")} · ${(size / 1024).toFixed(0)} KB\n`);
+/*
+ * The site caches these for a year, so the files are named after the video's hash:
+ * a re-render gets a new URL and the previous pair is deleted.
+ */
+const video = path.join(out, "start-intro.mp4");
+const hash = createHash("sha256")
+  .update(await fs.readFile(video))
+  .digest("hex")
+  .slice(0, 8);
+for (const name of await fs.readdir(out)) {
+  if (/^start-intro(-poster)?\.[0-9a-f]{8}\.(mp4|webp)$/.test(name))
+    await fs.rm(path.join(out, name));
+}
+await fs.rename(video, path.join(out, `start-intro.${hash}.mp4`));
+await fs.rename(
+  path.join(out, "start-intro-poster.webp"),
+  path.join(out, `start-intro-poster.${hash}.webp`),
+);
+
+const { size } = await fs.stat(path.join(out, `start-intro.${hash}.mp4`));
+process.stdout.write(
+  `${path.join(out, `start-intro.${hash}.mp4`)} · ${(size / 1024).toFixed(0)} KB\n` +
+    `Set the hash in src/features/start/components/StartDemoVideo.tsx: ${hash}\n`,
+);

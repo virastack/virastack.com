@@ -981,7 +981,9 @@
     <script src="tech-logos.js"></script>
     <script>
       /* ---------- timeline (ms) ---------- */
-      const OPEN = 3100; // hero lockup before the terminal; every scene time below is relative to it
+      /* Hero lockup before the terminal; every scene time below is relative to it. `?opener=0` drops it
+         (the product page already shows the lockup right above the video). */
+      const OPEN = new URLSearchParams(location.search).get("opener") === "0" ? 0 : 3100;
       const T = {
         run: [0, 1300],
         prompts: [1300, 8400],
@@ -992,8 +994,13 @@
       };
       const TOTAL = T.ready[1];
       const FADE = 260;
-      const LABELS = ["Run", "Prompts", "Setup", "Stack", "AI rules", "Ready"];
-      const SCENES = ["run", "prompts", "setup", "stack", "ai", "ready"];
+      /* What the viewer sees as steps: the terminal (Run, Prompts, Setup) is one step. */
+      const STEPS_UI = [
+        ["Interactive CLI", 0, T.setup[1]],
+        ["Tech Stack", ...T.stack],
+        ["AI Rules & Skills", ...T.ai],
+        ["Ready to build", ...T.ready],
+      ];
 
       window.__total = (TOTAL + OPEN) / 1000;
       window.__poster = (T.stack[0] + 3800 + OPEN) / 1000;
@@ -1003,7 +1010,7 @@
       const ease = (n) => 1 - Math.pow(1 - clamp(n), 3);
 
       /* ---------- corners ---------- */
-      $("bc").innerHTML = SCENES.map(() => "<i></i>").join("");
+      $("bc").innerHTML = STEPS_UI.map(() => "<i></i>").join("");
       const dots = [...$("bc").children];
 
       /* ---------- terminal helpers ---------- */
@@ -1519,11 +1526,11 @@
         if (ms >= T.stack[0] - FADE && ms <= T.stack[1] + FADE) stackView();
         if (ms >= T.ai[0] - FADE && ms <= T.ai[1] + FADE) aiView();
 
-        const idx = SCENES.findIndex((s) => ms >= T[s][0] && ms < T[s][1]);
-        const cur = idx < 0 ? (ms < 0 ? 0 : SCENES.length - 1) : idx;
+        const idx = STEPS_UI.findIndex(([, from, to]) => ms >= from && ms < to);
+        const cur = idx < 0 ? (ms < 0 ? 0 : STEPS_UI.length - 1) : idx;
         $("tr").innerHTML =
-          `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(SCENES.length).padStart(2, "0")}`;
-        $("br").textContent = LABELS[cur];
+          `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(STEPS_UI.length).padStart(2, "0")}`;
+        $("br").textContent = STEPS_UI[cur][0];
         dots.forEach((d, i) => d.classList.toggle("on", i === cur));
       };
 

@@ -20,8 +20,8 @@ type ProductDemoVideoProps = {
  * section scrolls in, playback follows visibility — viewport and tab alike — and
  * phones skip it entirely (the code in frame would be unreadable there), which
  * also keeps the file off their connection:
- * and visitors who prefer reduced motion get the poster with controls instead
- * of autoplay.
+ * and visitors who prefer reduced motion, turned on data saver or sit on a 2g
+ * connection get the poster with controls instead of autoplay and prefetching.
  */
 export function ProductDemoVideo({ src, poster, label }: ProductDemoVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,7 +30,15 @@ export function ProductDemoVideo({ src, poster, label }: ProductDemoVideoProps) 
     const video = videoRef.current;
     if (!video) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Not in every browser's types; where missing, nothing changes.
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
+    ).connection;
+    const reduced =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      connection?.saveData === true ||
+      connection?.effectiveType === "slow-2g" ||
+      connection?.effectiveType === "2g";
     let inView = false;
 
     // Poster first, then the file: both stay unfetched until the section is near.
