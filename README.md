@@ -22,15 +22,15 @@ ViraStack brings free frontend guides, ready-made project templates, AI rules, a
 
 ## Products
 
-| Product                                                                                                             | Path        | Description                                       |
-| :------------------------------------------------------------------------------------------------------------------ | :---------- | :------------------------------------------------ |
-| [![ViraStack Academy](https://img.shields.io/badge/ViraStack-Academy-%2300a6f4)](https://virastack.com/academy)     | `/academy`  | React frontend roadmap with curated sources       |
-| [![ViraStack Start](https://img.shields.io/badge/ViraStack-Start-%2300c950)](https://virastack.com/start/)          | `/start`    | Scaffolding CLI for Next.js and TanStack Start    |
-| [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23e131fa)](https://virastack.com/ai)                    | `/ai`       | Agent rules for Claude Code, Cursor and AGENTS.md |
-| [![ViraStack Mask](https://img.shields.io/badge/ViraStack-Mask-%23605efe)](https://virastack.com/mask/)             | `/mask`     | Zero-dependency input masks for React Hook Form   |
-| [![ViraStack Password](https://img.shields.io/badge/ViraStack-Password-%23f6339a)](https://virastack.com/password/) | `/password` | Accessible password hook for React                |
-| [![ViraStack Address](https://img.shields.io/badge/ViraStack-Address-%23fb2c36)](https://virastack.com/address/)    | `/address`  | Headless Turkish address hook for React           |
-| [![ViraStack Guide](https://img.shields.io/badge/ViraStack-Guide-%23ffb900)](https://virastack.com/guide)           | `/guide`    | Interactive modern web walkthrough                |
+| Product                                                                                                            | Path        | Description                                                             |
+| :----------------------------------------------------------------------------------------------------------------- | :---------- | :---------------------------------------------------------------------- |
+| [![ViraStack Academy](https://img.shields.io/badge/ViraStack-Academy-%2300a6f4)](https://virastack.com/academy)    | `/academy`  | A React frontend roadmap with free, curated guides                      |
+| [![ViraStack Start](https://img.shields.io/badge/ViraStack-Start-%2300c950)](https://virastack.com/start)          | `/start`    | Production-ready Next.js and TanStack Start apps in one command         |
+| [![ViraStack AI](https://img.shields.io/badge/ViraStack-AI-%23e131fa)](https://virastack.com/ai)                   | `/ai`       | Architecture rules for Claude Code, Cursor and AGENTS.md                |
+| [![ViraStack Mask](https://img.shields.io/badge/ViraStack-Mask-%23605efe)](https://virastack.com/mask)             | `/mask`     | Input masks for React Hook Form: phone, card, date, currency            |
+| [![ViraStack Password](https://img.shields.io/badge/ViraStack-Password-%23f6339a)](https://virastack.com/password) | `/password` | Accessible password hook: show/hide, strength, server checks            |
+| [![ViraStack Address](https://img.shields.io/badge/ViraStack-Address-%23fb2c36)](https://virastack.com/address)    | `/address`  | Turkish address hook: province, district, neighbourhood and postal code |
+| [![ViraStack Guide](https://img.shields.io/badge/ViraStack-Guide-%23ffb900)](https://virastack.com/guide)          | `/guide`    | An interactive guide through modern web standards, step by step         |
 
 ## License
 
