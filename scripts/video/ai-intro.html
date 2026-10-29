@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ViraStack AI — intro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --fg: #161616;
+        --muted: #737373;
+        --dim: #a3a3a3;
+        --border: #e5e5e5;
+        --accent: #e131fa;
+        --accent-ink: #c800de;
+        --ok: #00a63e;
+        --bad: #e11d48;
+        --sans: "Inter", -apple-system, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: #fff;
+      }
+
+      body {
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        font-family: var(--sans);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+      }
+
+      /* ---------- corners (fixed layer, same on every scene) ---------- */
+      .corner {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+
+      #tl {
+        top: 30px;
+        left: 40px;
+        font-size: 18px;
+        letter-spacing: -0.01em;
+        gap: 7px;
+      }
+
+      #tl b:first-child {
+        color: var(--fg);
+        font-weight: 600;
+      }
+
+      #tl b:last-child {
+        color: var(--accent-ink);
+        font-weight: 700;
+      }
+
+      #tr {
+        top: 33px;
+        right: 40px;
+        font-family: var(--mono);
+      }
+
+      #tr b {
+        color: var(--accent-ink);
+        font-weight: 600;
+      }
+
+      #bl {
+        bottom: 30px;
+        left: 40px;
+        font-family: var(--mono);
+      }
+
+      #bc {
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 8px;
+      }
+
+      #bc i {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--border);
+      }
+
+      #bc i.on {
+        width: 24px;
+        background: var(--accent);
+      }
+
+      #br {
+        bottom: 30px;
+        right: 40px;
+        font-family: var(--mono);
+        color: var(--accent-ink);
+        font-weight: 500;
+      }
+
+      /* ---------- opener: hero lockup ---------- */
+      #open {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+      }
+
+      #lock {
+        --f: 170px;
+        --s: 1.0667;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-14px);
+      }
+
+      /* Same recipe as OutlineWordmark: page-coloured fill, doubled stroke, fade to the bottom. */
+      #wm {
+        display: block;
+        padding: 0 0.08em;
+        font-size: var(--f);
+        line-height: 0.95;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        white-space: nowrap;
+        color: #fff;
+        -webkit-text-stroke: 4px var(--fg);
+        paint-order: stroke fill;
+        mask-image: linear-gradient(to bottom, #000 10%, rgb(0 0 0 / 0) 80%);
+      }
+
+      #nm {
+        position: relative;
+        font-size: calc(var(--f) * var(--s));
+        line-height: 1.05;
+        font-weight: 900;
+        letter-spacing: -0.025em;
+        margin-top: calc(var(--f) * (var(--s) * -0.096 - 0.657));
+        color: var(--accent-ink);
+      }
+
+      /* ---------- shared card ---------- */
+      .card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow:
+          0 1px 2px rgba(10, 10, 10, 0.04),
+          0 24px 60px -28px rgba(10, 10, 10, 0.25);
+      }
+
+      .scene {
+        position: absolute;
+        left: 180px;
+        top: 92px;
+        width: 920px;
+        height: 500px;
+        opacity: 0;
+      }
+
+      /* ---------- window bar (shared by the terminals) ---------- */
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--border);
+        background: #fafafa;
+      }
+
+      .bar i {
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        background: #e3e3e3;
+      }
+
+      .bar span {
+        flex: 1;
+        margin-right: 46px;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* ---------- chips and logos ---------- */
+      .lg {
+        display: inline-grid;
+        flex: none;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+      }
+
+      .lg svg {
+        width: 100%;
+        height: 100%;
+        fill: var(--fg);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 32px;
+        padding: 0 13px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fafafa;
+        font-family: var(--mono);
+        font-size: 13.5px;
+        color: var(--fg);
+      }
+
+      .chip.fw {
+        border-color: #f1b8fb;
+        background: #fdf2fe;
+        color: var(--accent-ink);
+        font-weight: 600;
+      }
+
+      .cap {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+
+      /* ---------- terminal lines ---------- */
+      .tl2 {
+        height: 20px;
+        line-height: 20px;
+        white-space: pre;
+      }
+
+      .tl2 .p {
+        color: var(--accent-ink);
+      }
+
+      .tl2 .d {
+        color: var(--muted);
+      }
+
+      .tl2 .plus {
+        color: var(--ok);
+      }
+
+      .caret {
+        display: inline-block;
+        width: 8px;
+        height: 15px;
+        margin-left: 1px;
+        vertical-align: -3px;
+        background: var(--fg);
+      }
+
+      /* ---------- step 1: tall terminal, shared pool and one card per framework ---------- */
+      #cli .term2 {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 440px;
+        overflow: hidden;
+      }
+
+      #cli .term2 .body {
+        position: relative;
+        height: 456px;
+        padding: 0 20px;
+        overflow: hidden;
+        font-family: var(--mono);
+        font-size: 11.5px;
+        mask-image: linear-gradient(to bottom, transparent 0, #000 14px);
+      }
+
+      #cli .term2 .lines {
+        padding-top: 12px;
+      }
+
+      #cli .side {
+        position: absolute;
+        inset: 0 0 0 460px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 14px;
+      }
+
+      #cli .pl {
+        padding: 20px 24px 22px;
+      }
+
+      #cli .pl .hd {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      #cli .pl .hd h3 {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      #cli .pl .hd .ag {
+        display: flex;
+        gap: 7px;
+        margin-left: auto;
+      }
+
+      #cli .pl .hd .ag .lg {
+        width: 18px;
+        height: 18px;
+      }
+
+      #cli .pl .hd em {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        font-style: normal;
+        color: var(--muted);
+      }
+
+      #cli .pl .cap {
+        margin: 14px 0 8px;
+        font-size: 11.5px;
+      }
+
+      #cli .pl .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      #cli .chip {
+        height: 26px;
+        padding: 0 10px;
+        font-size: 12.5px;
+      }
+
+      #cli .chip.file {
+        background: #f5f5f5;
+        color: var(--muted);
+      }
+
+      #cli .fwc {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 20px 24px;
+      }
+
+      #cli .fwc .lg {
+        width: 30px;
+        height: 30px;
+      }
+
+      #cli .fwc h3 {
+        line-height: 30px;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      #cli .fwc .chip {
+        margin-left: auto;
+      }
+
+      /* ---------- step 2: clean result ---------- */
+      .resv {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 20px;
+      }
+
+      .resv .tree {
+        padding: 26px 28px 22px;
+      }
+
+      .resv .tree .cap {
+        margin-bottom: 12px;
+      }
+
+      .rtree {
+        font-family: var(--mono);
+        font-size: 13.5px;
+        line-height: 22px;
+      }
+
+      .rtree div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        margin: 0 -10px;
+        border-radius: 0;
+        white-space: pre;
+      }
+
+      .rtree em:empty {
+        display: none;
+      }
+
+      .rtree em {
+        font-family: var(--sans);
+        font-size: 10.5px;
+        font-style: normal;
+        font-weight: 600;
+        color: var(--ok);
+        opacity: 0;
+      }
+
+      .resv .col {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* the small mint tick used by both lists */
+      .tk {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: #e6f8ec;
+        color: var(--ok);
+      }
+
+      .resv .checks {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 10px;
+        padding: 28px 30px;
+      }
+
+      .ck {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 10px;
+        margin: -9px -10px;
+        border-radius: 4px;
+      }
+
+      .ck h5 {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .ck p {
+        margin-top: 2px;
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--dim);
+      }
+
+      /* before / after card of the folded variant */
+      .resv .ba {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 28px 22px;
+        opacity: 0;
+      }
+
+      .ba .hd {
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .ba .hd .rulef {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--dim);
+      }
+
+      .ba .blk {
+        margin-bottom: 14px;
+      }
+
+      .ba .lab {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 7px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--fg);
+      }
+
+      .ba .lab .ic {
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+      }
+
+      .ba .blk.bad .lab .ic {
+        background: #fde8ec;
+        color: var(--bad);
+      }
+
+      .ba .blk.ok .lab .ic {
+        background: #e4f8ea;
+        color: var(--ok);
+      }
+
+      .ba .lab b {
+        color: var(--accent-ink);
+        font-weight: 700;
+      }
+
+      .ba code {
+        display: block;
+        padding: 13px 15px;
+        border-radius: 10px;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        line-height: 1.5;
+        white-space: pre;
+        overflow: hidden;
+      }
+
+      .ba .blk.bad code {
+        border: 1px solid #fecdd3;
+        background: #fff7f8;
+        color: #7f1d2d;
+      }
+
+      .ba .blk.ok code {
+        min-height: 42px;
+        border: 1px solid #bff0cf;
+        background: #f3fcf6;
+        color: #0b4a22;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div class="corner" id="tl"><b>ViraStack</b><b>AI</b></div>
+      <div class="corner" id="tr"></div>
+      <div class="corner" id="bl">virastack.com/ai</div>
+      <div class="corner" id="bc"></div>
+      <div class="corner" id="br"></div>
+
+      <div id="open">
+        <div id="lock">
+          <span id="wm">ViraStack</span>
+          <div id="nm">AI</div>
+        </div>
+      </div>
+
+      <!-- 1: one command, a tall terminal, one shared pool and a card per framework -->
+      <div class="scene" id="cli">
+        <div class="card term2">
+          <div class="bar"><i></i><i></i><i></i><span>~/projects</span></div>
+          <div class="body"><div class="lines" id="cliLines"></div></div>
+        </div>
+        <div class="side" id="side"></div>
+      </div>
+
+      <!-- 2: the clean result, each check with a before / after pair -->
+      <div class="scene resv" id="mix"></div>
+    </div>
+
+    <script src="tech-logos.js"></script>
+    <script>
+      /* Hero lockup before step 1; every time below is relative to it. `?opener=0` drops it. */
+      const OPEN = new URLSearchParams(location.search).get("opener") === "0" ? 0 : 3100;
+      const T = {
+        cli: [0, 6300],
+        mix: [6300, 24200],
+      };
+      const TOTAL = T.mix[1];
+      const FADE = 260;
+      const STEPS_UI = [
+        ["Interactive CLI", ...T.cli],
+        ["Before & After", ...T.mix],
+      ];
+
+      window.__total = (TOTAL + OPEN) / 1000;
+      window.__poster = (T.mix[0] + 11400 + OPEN) / 1000;
+
+      const $ = (id) => document.getElementById(id);
+      const clamp = (n, a = 0, b = 1) => Math.min(b, Math.max(a, n));
+      const ease = (n) => 1 - Math.pow(1 - clamp(n), 3);
+      const LOGO = (k) => `<span class="lg">${window.TECH_LOGOS[k]}</span>`;
+      let ms = 0;
+
+      $("bc").innerHTML = STEPS_UI.map(() => "<i></i>").join("");
+      const dots = [...$("bc").children];
+
+      const typed = (txt, start, per) =>
+        txt.slice(0, clamp(Math.floor((ms - start) / per), 0, txt.length));
+      const caret = '<span class="caret"></span>';
+      const TICK = (n = 12) =>
+        `<span class="tk"><svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>`;
+      const FILE = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>`;
+
+      /* ---------- step 1: one command, what lands in each framework ---------- */
+      const RULES = [
+        "core",
+        "architecture",
+        "react",
+        "typescript",
+        "ui",
+        "forms",
+        "api",
+        "server-state",
+        "client-state",
+        "i18n",
+        "performance",
+        "testing",
+      ];
+      const ENTER_AT = 1500; // the command is typed, then it waits a moment
+      const FILES_AT = 2100; // first file line
+      const PER = 80; // one file line every 80 ms
+      const printAt = (j) => FILES_AT + j * PER; // the moment file line j is printed
+      const FILE_TAGS = ["AGENTS.md", "CLAUDE.md", ".virastack/ai.json"];
+
+      const row = (html) => `<div class="tl2">${html}</div>`;
+
+      /* The same command ran in both projects. Every rule is printed as its two files (Claude Code,
+         then Cursor), the two framework rules come last, then the three shared files. A chip lands
+         right after the line that creates its file, so the terminal and the cards finish together. */
+      const CLI_FILES = [];
+      RULES.forEach((r) =>
+        CLI_FILES.push(`.claude/rules/virastack/${r}.md`, `.cursor/rules/virastack/${r}.mdc`),
+      );
+      CLI_FILES.push(
+        ".claude/rules/virastack/nextjs.md",
+        ".claude/rules/virastack/tanstack-start.md",
+      );
+      CLI_FILES.push(
+        ".cursor/rules/virastack/nextjs.mdc",
+        ".cursor/rules/virastack/tanstack-start.mdc",
+      );
+      CLI_FILES.push(...FILE_TAGS);
+      const chipAt = {
+        shared: (i) => printAt(2 * i + 1) + 70,
+        fw: printAt(RULES.length * 2 + 3) + 70,
+        file: (k) => printAt(RULES.length * 2 + 4 + k) + 70,
+      };
+
+      function termLines(t) {
+        const cmd = "npx @virastack/ai init";
+        const L = [];
+        L.push(
+          row(
+            `<span class="p">$</span> ${cmd.slice(0, clamp(Math.floor((t - 250) / 28), 0, cmd.length))}${t < ENTER_AT ? caret : ""}`,
+          ),
+        );
+        if (t >= ENTER_AT + 150) L.push(row("ViraStack AI v2.0.0"));
+        const n = clamp(Math.floor((t - FILES_AT) / PER) + 1, 0, CLI_FILES.length);
+        CLI_FILES.slice(0, n).forEach((f) =>
+          L.push(row(`  <span class="plus">+</span> ${f} <span class="d">· created</span>`)),
+        );
+        const done = printAt(CLI_FILES.length - 1) + PER;
+        if (t >= done + 150) {
+          L.push(row(""));
+          L.push(row("29 created · 0 updated · 0 removed · 0 skipped"));
+        }
+        if (t >= done + 400) L.push(row("ViraStack AI rules are ready."));
+        return L;
+      }
+
+      // a chip lands with a short mint background and settles; the framework rule settles from a stronger pink
+      const land = (t, el, at, calm, hot) => {
+        const k = ease((t - at) / 220);
+        const flash = 1 - ease((t - at - 100) / 700);
+        el.style.opacity = k;
+        el.style.transform = `translateY(${(1 - k) * 8}px)`;
+        el.style.background = k > 0 ? mixHex(calm, hot, flash) : calm;
+      };
+      const indexIn = (el) => [...el.parentElement.children].indexOf(el);
+
+      /* ---------- step 1: the whole terminal on the left, one shared pool, a card per framework ---------- */
+      $("side").innerHTML = `
+        <div class="card pl">
+          <div class="hd"><h3>Shared by both</h3><span class="ag">${LOGO("claude")}${LOGO("cursor")}</span><em>12 rules</em></div>
+          <div class="chips" data-p="0">${RULES.map((r) => `<span class="chip">${r}</span>`).join("")}</div>
+          <div class="cap">Project files</div>
+          <div class="chips" data-p="1">${FILE_TAGS.map((f) => `<span class="chip file">${f}</span>`).join("")}</div>
+        </div>
+        ${[
+          ["nextjs", "Next.js 16", "nextjs"],
+          ["tanstack", "TanStack Start", "tanstack-start"],
+        ]
+          .map(
+            ([logo, name, rule]) =>
+              `<div class="card fwc">${LOGO(logo)}<h3>${name}</h3><span class="chip fw">${rule}</span></div>`,
+          )
+          .join("")}`;
+
+      function cliView() {
+        const t = ms;
+        const L = termLines(t);
+        $("cliLines").innerHTML = L.join("");
+        $("cliLines").style.transform = `translateY(${-Math.max(0, L.length * 20 - 21 * 20)}px)`;
+
+        document.querySelectorAll("#side .card").forEach((card, i) => {
+          const k = ease((t - (FILES_AT - 350) - i * 80) / 400);
+          card.style.opacity = k;
+          card.style.transform = `translateY(${(1 - k) * 14}px)`;
+        });
+        document.querySelectorAll("#side .cap").forEach((el) => {
+          el.style.opacity = ease((t - printAt(RULES.length * 2 + 4)) / 300);
+        });
+        document
+          .querySelectorAll('#side .chips[data-p="0"] .chip')
+          .forEach((el) => land(t, el, chipAt.shared(indexIn(el)), "#fafafa", "#d9f5e3"));
+        document
+          .querySelectorAll('#side .chips[data-p="1"] .chip')
+          .forEach((el) => land(t, el, chipAt.file(indexIn(el)), "#f5f5f5", "#d9f5e3"));
+        document
+          .querySelectorAll("#side .fwc .chip")
+          .forEach((el) => land(t, el, chipAt.fw, "#fdf2fe", "#f3c3fb"));
+      }
+
+      /* ---------- clean result (folders and names from core.mdc / architecture.mdc) ---------- */
+      const CHECKS = [
+        ["Folder structure", "architecture"],
+        ["Naming", "core"],
+        ["Type safety", "typescript"],
+        ["Data layer", "server-state · api"],
+        ["State", "client-state"],
+        ["Clean code", "react · testing"],
+      ];
+      /* one feature, the way the rules lay it out; g = the check a row belongs to */
+      const TREE = [
+        ["src/features/users/", 0, true],
+        ["  api/", 0, false],
+        ["    get-users.api.ts", 1, true],
+        ["    get-users.api.test.ts", 5, true],
+        ["    query-keys.ts", 3, true],
+        ["    user.queries.ts", 3, true],
+        ["  components/", 0, false],
+        ["    UserCard.tsx", 1, true],
+        ["    UserCard.test.tsx", 5, true],
+        ["  hooks/", 0, false],
+        ["    use-users.ts", 1, true],
+        ["  schemas/", 0, false],
+        ["    user.schema.ts", 2, true],
+        ["  stores/", 0, false],
+        ["    user.store.ts", 4, true],
+        ["  types/", 0, false],
+        ["    user.types.ts", 2, true],
+        ["  index.ts", 0, false],
+      ];
+      /* what each check changes in the code; every pair comes from the rule it is listed under */
+      const PAIRS = [
+        [
+          "architecture.md",
+          'import { useUsers } from "@/features/users/hooks/…"',
+          'import { useUsers } from "@/features/users"',
+        ],
+        ["core.md", "getUsers.ts · userCard.tsx · IUser", "get-users.api.ts · UserCard.tsx · User"],
+        ["typescript.md", "const user = data as any", "type User = z.infer<typeof userSchema>"],
+        [
+          "server-state.md",
+          'useEffect(() => { fetch("/api/users") }, [])',
+          "const { data } = useUsers(page)",
+        ],
+        [
+          "client-state.md",
+          "const store = useUserStore()",
+          "const id = useUserStore((s) => s.selectedId)",
+        ],
+        [
+          "testing.md",
+          'vi.mock("@/features/users/api")',
+          'server.use(http.get("/api/users", handler))',
+        ],
+      ];
+      const XI =
+        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+      const CHI =
+        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+      $("mix").innerHTML = `
+        <div class="card tree"><div class="cap">Project</div><div class="rtree">${TREE.map(([t, g, cap], i) => `<div data-i="${i}" data-g="${g}"><span>${t}</span><em>${cap ? CHECKS[g][0] : ""}</em></div>`).join("")}</div></div>
+        <div class="col">
+          <div class="card checks">${CHECKS.map(([h, r]) => `<div class="ck">${TICK()}<div><h5>${h}</h5><p>${r}</p></div></div>`).join("")}</div>
+          <div class="card ba">
+            <div class="hd"><div class="cap">Before → After</div><span class="rulef"></span></div>
+            <div class="blk bad"><div class="lab"><span class="ic">${XI}</span>Before</div><code></code></div>
+            <div class="blk ok"><div class="lab"><span class="ic">${CHI}</span>After&nbsp;·&nbsp;<b>ViraStack AI</b></div><code></code></div>
+          </div>
+        </div>`;
+
+      const mixHex = (a, b, k) => {
+        const c = (h, n) => parseInt(h.slice(1 + n * 2, 3 + n * 2), 16);
+        return `rgb(${[0, 1, 2].map((n) => Math.round(c(a, n) + (c(b, n) - c(a, n)) * k)).join(",")})`;
+      };
+
+      /* One check at a time, slowly: its tick lights up on the right, its files on the left, the
+         wrong code shows and gets struck through, the ViraStack AI version is written, then both
+         calm down and the next check takes over. Ticks that were shown stay, without the emphasis. */
+      const PHASE = 2500;
+      const PHASE_AT = 1700;
+
+      function runResult() {
+        const root = $("mix");
+        const p = ms - T.mix[0];
+        const rel = p - PHASE_AT;
+        const active = rel >= 0 ? Math.floor(rel / PHASE) : -1;
+        const q = rel - active * PHASE;
+        const live = active >= 0 && active < CHECKS.length;
+        const focus = live ? ease(q / 450) * (1 - ease((q - (PHASE - 450)) / 450)) : 0;
+
+        root.querySelectorAll(".rtree div").forEach((el) => {
+          const g = Number(el.dataset.g);
+          const k = ease((p - 100 - Number(el.dataset.i) * 70) / 280);
+          const hit = g === active ? focus : 0;
+          el.style.opacity = k;
+          el.style.transform = `translateX(${(1 - k) * -8}px)`;
+          el.style.background = `rgb(0 201 80 / ${0.16 * hit})`;
+          const em = el.querySelector("em");
+          em.style.opacity = hit;
+        });
+
+        const pop = (el, k) => {
+          el.style.opacity = k;
+          el.style.transform = `translateY(${(1 - k) * 10}px)`;
+        };
+        root.querySelectorAll(".checks .ck").forEach((el, i) => {
+          const on = i === active ? focus : 0;
+          const k = ease((rel - i * PHASE) / 360);
+          pop(el, k);
+          // the active item only gets a mint background; its tick turns white on it
+          el.style.background = `rgb(0 201 80 / ${0.14 * on})`;
+          const tk = el.querySelector(".tk");
+          tk.style.background = mixHex("#e6f8ec", "#ffffff", on);
+          tk.style.transform = `scale(${0.5 + 0.5 * ease(k * 1.15)})`;
+        });
+
+        // before / after: the pair of the active check; the last pair stays once the checks are done
+        const ba = root.querySelector(".ba");
+        const idx = clamp(active, 0, CHECKS.length - 1);
+        const [rule, bad, ok] = PAIRS[idx];
+        if (root.dataset.pair !== String(idx)) {
+          root.dataset.pair = String(idx);
+          ba.querySelector(".rulef").innerHTML = `${FILE}${rule}`;
+          ba.querySelector(".blk.bad code").textContent = bad;
+          ba.querySelector(".blk.ok code").textContent = ok;
+        }
+        const last = active >= CHECKS.length - 1;
+        const out = last ? 1 : 1 - ease((q - (PHASE - 260)) / 260);
+        const qq = active >= 0 ? (active >= CHECKS.length ? 99999 : q) : -1;
+        ba.style.opacity = ease((rel + 300) / 400);
+        const stage = (el, t0) => {
+          const k = ease((qq - t0) / 300);
+          el.style.opacity = k * out;
+          el.style.transform = `translateY(${(1 - k) * 8}px)`;
+        };
+        stage(ba.querySelector(".blk.bad"), 300);
+        stage(ba.querySelector(".blk.ok"), 300);
+        ba.querySelector(".rulef").style.opacity = ease((qq - 150) / 300) * out;
+      }
+
+      /* ---------- opener (same recipe as the Start video) ---------- */
+      function openView(t) {
+        const appear = ease((t - 150) / 500);
+        const outline = ease((t - 1000) / 500);
+        const name = ease((t - 1550) / 380);
+        const wm = $("wm");
+        wm.style.opacity = appear;
+        wm.style.color = mixHex("#161616", "#ffffff", outline);
+        wm.style.maskImage = `linear-gradient(to bottom, #000 10%, rgb(0 0 0 / ${1 - outline}) 80%)`;
+        wm.style.transform = `translateY(${(1 - appear) * 14 - outline * 20.4}px)`;
+        const nm = $("nm");
+        nm.style.opacity = name;
+        nm.style.transform = `translateY(${(1 - name) * 8}px)`;
+        nm.style.filter = `blur(${(1 - name) * 4}px)`;
+        $("open").style.opacity = clamp(-ms / FADE);
+      }
+
+      /* ---------- seek ---------- */
+      const fade = (a, b) => clamp((ms - a) / FADE) * clamp((b - ms) / FADE);
+
+      window.__seek = (t) => {
+        ms = t - OPEN;
+        if (ms < 0) openView(t);
+        else $("open").style.opacity = 0;
+        const chrome = clamp((ms + FADE) / FADE);
+        document.querySelectorAll(".corner").forEach((c) => (c.style.opacity = chrome));
+
+        $("cli").style.opacity = fade(-FADE, T.cli[1]);
+        $("mix").style.opacity = fade(T.mix[0], TOTAL + FADE);
+
+        if (ms <= T.cli[1] + FADE) cliView();
+        if (ms >= T.mix[0] - FADE) runResult();
+
+        const idx = STEPS_UI.findIndex(([, from, to]) => ms >= from && ms < to);
+        const cur = idx < 0 ? (ms < 0 ? 0 : STEPS_UI.length - 1) : idx;
+        $("tr").innerHTML =
+          `<b>${String(cur + 1).padStart(2, "0")}</b> / ${String(STEPS_UI.length).padStart(2, "0")}`;
+        $("br").textContent = STEPS_UI[cur][0];
+        dots.forEach((d, i) => d.classList.toggle("on", i === cur));
+      };
+
+      document.fonts.ready.then(() => {
+        const q = new URLSearchParams(location.search);
+        window.__seek(Number(q.get("t") ?? 0));
+      });
+    </script>
+  </body>
+</html>

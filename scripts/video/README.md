@@ -3,12 +3,18 @@
 Silent product loops, rendered from a scripted HTML timeline. The mp4 is never edited: change the
 source, render again. The same source gives the page loop and the full version (archive, social).
 
-| Video          | Source                                 | Renderer                    | Lives in           |
-| :------------- | :------------------------------------- | :-------------------------- | :----------------- |
-| Start intro    | `start-intro.html` (+ `tech-logos.js`) | `render-start-intro.mjs`    | `public/start/`    |
-| Password intro | `password-intro.html`                  | `render-password-intro.mjs` | `public/password/` |
+| Video          | Source                                 | Renderer                    | Lives in                                   |
+| :------------- | :------------------------------------- | :-------------------------- | :----------------------------------------- |
+| Start intro    | `start-intro.html` (+ `tech-logos.js`) | `render-start-intro.mjs`    | `public/start/`                            |
+| Password intro | `password-intro.html`                  | `render-password-intro.mjs` | `public/password/`                         |
+| AI intro       | `ai-intro.html` (+ `tech-logos.js`)    | `render-ai-intro.mjs`       | `public/ai/` (not wired into the page yet) |
 
-The notes below are about the Start intro, the template the other videos should follow.
+The notes below are about the Start intro, the template the other videos follow. The AI intro uses the same chrome and flags (`--no-opener`, `--still`) with the product colour `#c800de`. It has two
+steps: Interactive CLI (a tall terminal on the left shows the whole run; on the right one shared pool holds the
+rules and files both projects get, and a Next.js and a TanStack Start card each add their own rule, every chip
+landing right after the line that creates its file) and Before & After (one feature tree; six checks take the focus
+one after another, each with a wrong line and the ViraStack AI version; every pair is taken from the rule it names).
+The wrong example never carries the product name; highlights are background colour only.
 
 ## Render
 

@@ -116,8 +116,13 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      // Start's loop is named after its content hash, so it never changes under a URL.
-      ...["/start/start-intro.:hash.mp4", "/start/start-intro-poster.:hash.webp"].map((source) => ({
+      // Start's and AI's loops are named after their content hash, so they never change under a URL.
+      ...[
+        "/start/start-intro.:hash.mp4",
+        "/start/start-intro-poster.:hash.webp",
+        "/ai/ai-intro.:hash.mp4",
+        "/ai/ai-intro-poster.:hash.webp",
+      ].map((source) => ({
         source,
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       })),
