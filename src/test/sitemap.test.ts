@@ -24,6 +24,13 @@ describe("sitemap", () => {
     expect([...new Set(urls.map((url) => new URL(url).origin))]).toHaveLength(1);
   });
 
+  /** A build-time `<lastmod>` on every URL is noise crawlers learn to ignore. */
+  it("does not stamp URLs with a fake lastmod", async () => {
+    const xml = await fetch(`${baseUrl()}/sitemap.xml`).then((r) => r.text());
+
+    expect(xml).not.toContain("<lastmod>");
+  });
+
   /** A sitemap entry that redirects or 404s wastes crawl budget and signals a stale map. */
   it("only lists URLs that answer 200", async () => {
     const urls = await sitemapUrls();
