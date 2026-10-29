@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { brandColorsCss } from "@/config/brand-palettes.config";
 import { defaultMetadata } from "@/config/seo.config";
@@ -65,13 +64,11 @@ export default async function RootLayout({
       </head>
       <body className="flex min-h-full flex-col antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
-          <NuqsAdapter>
-            <Providers>
-              <AppShell header={<Header />} footer={<Footer />}>
-                {children}
-              </AppShell>
-            </Providers>
-          </NuqsAdapter>
+          <Providers>
+            <AppShell header={<Header />} footer={<Footer />}>
+              {children}
+            </AppShell>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

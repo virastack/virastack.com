@@ -1,41 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import dynamic from "next/dynamic";
 
-import { FileTextIcon } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
-
-import type { ProductId } from "@/types/product.types";
-import { productIcons } from "@/config/product-icons.config";
-import { products } from "@/config/products.config";
-import { siteConfig } from "@/config/site.config";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  buildSearchDocuments,
-  filterSearchDocuments,
-  groupSearchDocumentsByProduct,
-} from "@/features/search/helpers/build-search-documents";
-import { useRouter } from "@/i18n/routing";
+const loadSiteSearchDialog = () =>
+  import("@/features/search/components/SiteSearchDialog").then((mod) => mod.SiteSearchDialog);
 
-const productNameKeys = {
-  start: "startName",
-  ai: "aiName",
-  mask: "maskName",
-  password: "passwordName",
-  address: "addressName",
-  guide: "guideName",
-} as const satisfies Record<ProductId, string>;
+const SiteSearchDialog = dynamic(loadSiteSearchDialog, { ssr: false });
 
 function isMacPlatform(): boolean {
   if (typeof navigator === "undefined") return false;
@@ -50,22 +25,21 @@ function useIsMac() {
   return useSyncExternalStore(subscribeNoop, isMacPlatform, () => true);
 }
 
+/**
+ * Header search trigger and ⌘K shortcut. The palette loads on first open (and is
+ * prefetched on hover/focus), then stays mounted so close animations still run.
+ */
 export function SiteSearch() {
   const t = useTranslations("Search");
-  const tNav = useTranslations("Navigation");
-  const tProducts = useTranslations("Products");
-  const messages = useMessages() as Record<string, unknown>;
-  const router = useRouter();
   const isMac = useIsMac();
-
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [productFilter, setProductFilter] = useState<Set<ProductId>>(() => new Set());
+  const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
+        setRequested(true);
         setOpen((current) => !current);
       }
     };
@@ -74,40 +48,8 @@ export function SiteSearch() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const documents = useMemo(
-    () =>
-      buildSearchDocuments(
-        messages,
-        (key) => String(tProducts.raw(key as "startDesc")),
-        (key) => String(tNav.raw(key as "startName")),
-      ),
-    [messages, tNav, tProducts],
-  );
-
-  const results = useMemo(
-    () => filterSearchDocuments(documents, query, productFilter),
-    [documents, productFilter, query],
-  );
-
-  const groups = useMemo(() => groupSearchDocumentsByProduct(results), [results]);
-
-  const toggleProduct = (productId: ProductId) => {
-    setProductFilter((current) => {
-      const next = new Set(current);
-      if (next.has(productId)) {
-        next.delete(productId);
-      } else {
-        next.add(productId);
-      }
-      return next;
-    });
-  };
-
-  const handleOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen);
-    if (!nextOpen) {
-      setQuery("");
-    }
+  const prefetch = () => {
+    void loadSiteSearchDialog();
   };
 
   const shortcutLabel = isMac ? "⌘K" : "Ctrl K";
@@ -116,7 +58,12 @@ export function SiteSearch() {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setRequested(true);
+          setOpen(true);
+        }}
+        onPointerEnter={prefetch}
+        onFocus={prefetch}
         aria-label={t("open")}
         aria-keyshortcuts={isMac ? "Meta+K" : "Control+K"}
         className={cn(
@@ -131,98 +78,9 @@ export function SiteSearch() {
         </kbd>
       </button>
 
-      <CommandDialog
-        open={open}
-        onOpenChange={handleOpenChange}
-        title={t("title")}
-        description={t("description")}
-      >
-        <Command shouldFilter={false}>
-          <CommandInput value={query} onValueChange={setQuery} placeholder={t("placeholder")} />
-
-          <div className="flex flex-wrap items-center gap-0.5 border-b border-border px-3 py-2">
-            <span className="mr-1 hidden text-xs text-muted-foreground sm:inline">
-              {t("filterLabel")}
-            </span>
-            {products.map((product) => {
-              const active = productFilter.has(product.id);
-              const Icon = productIcons[product.id];
-
-              return (
-                <button
-                  key={product.id}
-                  type="button"
-                  onClick={() => toggleProduct(product.id)}
-                  aria-pressed={active}
-                  className={cn(
-                    "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition-colors",
-                    active
-                      ? "border-foreground/20 bg-muted text-foreground"
-                      : "border-transparent bg-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground",
-                  )}
-                >
-                  <Icon className={cn("size-3", product.colorClass)} aria-hidden />
-                  <span className={cn("font-bold", active && product.colorClass)}>
-                    {tNav(productNameKeys[product.id])}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          <CommandList>
-            <CommandEmpty>{t("empty")}</CommandEmpty>
-
-            {groups.map((group) => {
-              const product = products.find((item) => item.id === group.productId);
-              if (!product) return null;
-
-              return (
-                <CommandGroup
-                  key={group.productId}
-                  heading={`${siteConfig.name} ${tNav(productNameKeys[group.productId])}`}
-                >
-                  {group.items.map((doc) => {
-                    const ProductIcon = productIcons[doc.productId];
-                    const ItemIcon = doc.kind === "landing" ? ProductIcon : FileTextIcon;
-
-                    return (
-                      <CommandItem
-                        key={doc.id}
-                        value={doc.id}
-                        onSelect={() => {
-                          setOpen(false);
-                          router.push(doc.href);
-                        }}
-                      >
-                        <ItemIcon className={cn("size-4", product.colorClass)} aria-hidden />
-                        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                          <span className="truncate font-medium">{doc.title}</span>
-                          {doc.description ? (
-                            <span className="truncate text-xs text-muted-foreground">
-                              {doc.description}
-                            </span>
-                          ) : null}
-                        </span>
-                        <span className="shrink-0 text-[10px] tracking-wide text-muted-foreground uppercase">
-                          {doc.kind === "landing" ? t("kindLanding") : t("kindDocs")}
-                        </span>
-                      </CommandItem>
-                    );
-                  })}
-                </CommandGroup>
-              );
-            })}
-          </CommandList>
-
-          <div className="flex items-center justify-between border-t border-border px-3 py-2 text-xs text-muted-foreground">
-            <span>{t("hintNavigate")}</span>
-            <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
-              {shortcutLabel}
-            </kbd>
-          </div>
-        </Command>
-      </CommandDialog>
+      {requested ? (
+        <SiteSearchDialog open={open} onOpenChange={setOpen} shortcutLabel={shortcutLabel} />
+      ) : null}
     </>
   );
 }

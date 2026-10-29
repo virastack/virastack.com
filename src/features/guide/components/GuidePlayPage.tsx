@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useHotkey } from "@tanstack/react-hotkeys";
 import { MoveLeftIcon, MoveRightIcon, XIcon } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -135,7 +135,7 @@ export function GuidePlayPage() {
       <div className="flex flex-col sm:pb-24">
         <AnimatePresence>
           {steps.slice(0, maxStep + 1).map((step, index) => (
-            <motion.div
+            <m.div
               key={index}
               id={`guide-step-${index}`}
               initial={{ opacity: 0, y: 16 }}
@@ -148,7 +148,7 @@ export function GuidePlayPage() {
               )}
             >
               {step}
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>

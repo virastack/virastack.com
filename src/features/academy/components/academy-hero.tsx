@@ -9,16 +9,9 @@ import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-  Button,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/ui";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
+import { Button } from "@/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 import { Link } from "@/i18n/routing";
 
 type AcademyHeroProps = {

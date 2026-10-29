@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/ui";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/ui/accordion";
 
 type AcademyDetailsItemView = {
   id: string;

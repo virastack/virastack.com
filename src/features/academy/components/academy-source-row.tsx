@@ -12,7 +12,8 @@ import { AcademyBadgeLogo } from "@/features/academy/components/academy-badge";
 import { AcademySourceGuides } from "@/features/academy/components/academy-source-guides";
 import { resolveAcademySourceVisual } from "@/features/academy/constants/source-visual.constants";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
-import { Avatar, AvatarFallback, AvatarImage, TableCell, TableRow } from "@/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
+import { TableCell, TableRow } from "@/ui/table";
 
 type AcademySourceRowProps = {
   source: AcademySourceEntry;

@@ -1,24 +1,29 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { TerminalIcon, TextAlignStartIcon } from "lucide-react";
 import { ScrollArea } from "@base-ui/react/scroll-area";
-import { useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
 
 import { cn } from "@/lib/utils";
+
+import { usePackageManagerStore, type PackageManager } from "@/stores";
 
 import { CopyButton } from "@/components/copy-button";
 import { IconSwap, IconSwapItem } from "@/components/icon-swap";
 import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "@/components/tabs";
 
-export type PackageManager = "prompt" | "pnpm" | "yarn" | "npm" | "bun";
-
-const packageManagerAtom = atomWithStorage<PackageManager>("packageManager", "pnpm");
+export type { PackageManager };
 
 export function usePackageManager() {
-  return useAtom(packageManagerAtom);
+  const packageManager = usePackageManagerStore((state) => state.packageManager);
+  const setPackageManager = usePackageManagerStore((state) => state.setPackageManager);
+
+  useEffect(() => {
+    void usePackageManagerStore.persist.rehydrate();
+  }, []);
+
+  return [packageManager, setPackageManager] as const;
 }
 
 /**

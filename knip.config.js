@@ -12,7 +12,6 @@ const config = {
     "src/components/ui/**",
     // Shared-layer barrels reserved for Rule-of-Three promotions
     "src/hooks/index.ts",
-    "src/stores/index.ts",
     "src/schemas/index.ts",
     "src/constants/index.ts",
     "src/features/**/data/index.ts",
@@ -27,9 +26,7 @@ const config = {
     "shadcn",
     // Template stack kept for the Rule-of-Three promotions above
     "@hookform/resolvers",
-    "@tanstack/react-query-devtools",
     "react-markdown",
-    "zustand",
   ],
   rules: {
     dependencies: "error",

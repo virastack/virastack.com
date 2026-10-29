@@ -23,6 +23,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Academy content is cloned at build time (see scripts/pull-academy-content.mjs).
     ".content/**",
+    // Third-party files copied from node_modules (see scripts/vendor-maplibre-worker.mjs).
+    "public/vendor/**",
   ]),
 ]);
 

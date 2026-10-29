@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 import { cn } from "@/lib/utils";
@@ -152,6 +152,8 @@ export function StartCliCommandBuilder() {
 
   return (
     <div className="not-prose space-y-6">
+      {/* The only toast on the site, so the toaster ships with this page alone. */}
+      <Toaster richColors position="bottom-right" closeButton />
       <CodeBlockCommand wrap {...packageCommands} />
 
       <div className="space-y-4">

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
 import { fadeInUp, staggerContainer, viewport } from "@/lib/motion";
 
@@ -36,19 +36,19 @@ export function Reveal({
 }: RevealProps) {
   if (mode === "mount") {
     return (
-      <motion.div
+      <m.div
         className={className}
         initial={fadeOpacity ? { opacity: 0, y } : { y }}
         animate={fadeOpacity ? { opacity: 1, y: 0 } : { y: 0 }}
         transition={{ duration: 0.45, delay, ease: "easeOut" }}
       >
         {children}
-      </motion.div>
+      </m.div>
     );
   }
 
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="visible"
@@ -56,13 +56,13 @@ export function Reveal({
       variants={fadeInUp}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
 export function RevealGroup({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial="hidden"
       whileInView="visible"
@@ -70,14 +70,14 @@ export function RevealGroup({ children, className }: { children: ReactNode; clas
       variants={staggerContainer}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
 export function RevealItem({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.div className={className} variants={fadeInUp}>
+    <m.div className={className} variants={fadeInUp}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }

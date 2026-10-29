@@ -33,10 +33,6 @@ function buildHeaders(init?: HeadersInit): Headers {
     headers.set("Content-Type", "application/json");
   }
 
-  // FIXME: attach auth token once an auth solution is chosen, e.g.:
-  // const token = await getAuthToken();
-  // if (token) headers.set("Authorization", `Bearer ${token}`);
-
   return headers;
 }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { brandPalettes, getBrandPalette } from "@/config/brand-palettes.config";
@@ -73,7 +73,7 @@ export function HeroBrand() {
       >
         <AnimatePresence mode="wait" initial={false}>
           {active ? (
-            <motion.span
+            <m.span
               key={active.id}
               aria-hidden
               className={cn("block whitespace-nowrap", active.textClass)}
@@ -83,7 +83,7 @@ export function HeroBrand() {
               transition={{ duration: 0.18, ease: "easeOut" }}
             >
               {active.productName}
-            </motion.span>
+            </m.span>
           ) : null}
         </AnimatePresence>
       </BrandLockup>

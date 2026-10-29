@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 
 import { CodeIcon } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -44,7 +44,7 @@ export function ComponentPreview({
       </div>
 
       <div className="relative border-t border-border bg-code">
-        <motion.div
+        <m.div
           initial={false}
           animate={{ height: expanded ? "auto" : COLLAPSED_HEIGHT }}
           transition={
@@ -71,11 +71,11 @@ export function ComponentPreview({
           >
             {children}
           </div>
-        </motion.div>
+        </m.div>
 
         <AnimatePresence initial={false}>
           {!expanded ? (
-            <motion.div
+            <m.div
               key="fade"
               initial={false}
               exit={
@@ -87,13 +87,13 @@ export function ComponentPreview({
               aria-hidden
             >
               <div className="absolute inset-0 bg-linear-to-t from-code from-30% via-code/70 to-transparent" />
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
 
         <AnimatePresence initial={false}>
           {expanded ? (
-            <motion.div
+            <m.div
               key="copy"
               initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -110,7 +110,7 @@ export function ComponentPreview({
               className="absolute top-3 right-3 z-10"
             >
               <CopyButton text={code} variant="outline" size="icon-sm" />
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
 

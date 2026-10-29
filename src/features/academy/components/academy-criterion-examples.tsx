@@ -5,15 +5,8 @@ import {
   getAcademySourceInitials,
   resolveAcademySourceVisual,
 } from "@/features/academy/constants/source-visual.constants";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/ui";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 
 export type AcademyCriterionExample = {
   name: string;

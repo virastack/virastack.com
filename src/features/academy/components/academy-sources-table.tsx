@@ -9,20 +9,9 @@ import { formatMonthYear } from "@/helpers";
 
 import { AcademySourceRow } from "@/features/academy/components/academy-source-row";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/ui";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 
 const SOURCE_FILTERS = ["all", "official", "engineer", "institution"] as const;
 

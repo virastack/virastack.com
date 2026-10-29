@@ -3,7 +3,7 @@
 import type { ComponentProps } from "react";
 
 import { CheckIcon, CircleXIcon, CopyIcon } from "lucide-react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -27,7 +27,7 @@ export type CopyStateIconProps = {
 export function CopyStateIcon({ state, idleIcon, doneIcon, errorIcon }: CopyStateIconProps) {
   return (
     <IconSwap>
-      <IconSwapItem key={state} as={motion.span}>
+      <IconSwapItem key={state} as={m.span}>
         {state === "idle" && (idleIcon ?? <CopyIcon data-slot="idle-icon" />)}
 
         {state === "done" && (doneIcon ?? <CheckIcon data-slot="done-icon" />)}

@@ -47,3 +47,6 @@ next-env.d.ts
 
 # academy curriculum cloned at build time
 .content/
+
+# MapLibre worker copied from node_modules on install
+/public/vendor/

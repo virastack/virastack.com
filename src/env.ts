@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { PUBLIC_ENV_DEFAULTS } from "./config/public-env";
+
 /**
  * Type-safe environment variable schema.
  *
@@ -7,14 +9,17 @@ import { z } from "zod";
  * Client-exposed variables MUST be prefixed with `NEXT_PUBLIC_` and
  * explicitly re-read via `process.env.NEXT_PUBLIC_*` at usage sites
  * (Next.js inlines these at build time; dynamic access does not work).
+ *
+ * Server/build-only: `next.config.ts` imports this file so a bad env fails the
+ * build. Browser code reads public values from `@/config/public-env` instead.
  */
 const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 
 const clientSchema = z.object({
-  NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
-  NEXT_PUBLIC_APP_NAME: z.string().min(1).default("ViraStack"),
+  NEXT_PUBLIC_APP_URL: z.string().url().default(PUBLIC_ENV_DEFAULTS.NEXT_PUBLIC_APP_URL),
+  NEXT_PUBLIC_APP_NAME: z.string().min(1).default(PUBLIC_ENV_DEFAULTS.NEXT_PUBLIC_APP_NAME),
 });
 
 const serverParsed = serverSchema.safeParse({

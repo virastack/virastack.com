@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useInView, useReducedMotion } from "motion/react";
 
 import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
@@ -81,7 +81,7 @@ export function ProductDots({
                 onFocus={() => setHoverIndex(index)}
                 onBlur={() => setHoverIndex(null)}
               >
-                <motion.span
+                <m.span
                   aria-hidden
                   className={cn("block size-2.5 rounded-full", palette.bgClass)}
                   animate={{
@@ -101,7 +101,7 @@ export function ProductDots({
       <div aria-hidden className="h-5 text-sm">
         <AnimatePresence mode="wait" initial={false}>
           {active ? (
-            <motion.span
+            <m.span
               key={active.id}
               className="block whitespace-nowrap"
               initial={reduceMotion ? false : { opacity: 0, y: 4, filter: "blur(2px)" }}
@@ -111,7 +111,7 @@ export function ProductDots({
             >
               <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
               <span className={cn("font-bold", active.textClass)}>{active.productName}</span>
-            </motion.span>
+            </m.span>
           ) : null}
         </AnimatePresence>
       </div>

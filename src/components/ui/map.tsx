@@ -28,10 +28,13 @@ import { cn } from "@/lib/utils";
 
 // MapLibre v6 resolves its worker as a sibling of import.meta.url. Next/Turbopack
 // hashes the main chunk, so that sibling 404s and vector tiles never load.
-// Point at the published worker (cross-origin → MapLibre wraps it in a blob import).
+// `scripts/vendor-maplibre-worker.mjs` copies the worker into public/ on install.
 if (typeof window !== "undefined" && !MapLibreGL.getWorkerUrl()) {
   MapLibreGL.setWorkerUrl(
-    `https://cdn.jsdelivr.net/npm/maplibre-gl@${MapLibreGL.getVersion()}/dist/maplibre-gl-worker.mjs`,
+    new URL(
+      `/vendor/maplibre-gl/${MapLibreGL.getVersion()}/maplibre-gl-worker.mjs`,
+      window.location.origin,
+    ).href,
   );
 }
 

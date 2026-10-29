@@ -4,7 +4,7 @@ import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
 import { getAcademyLandingStats } from "@/features/academy/lib/academy-landing-stats";
 import { getAcademyTracks } from "@/features/academy/lib/load-curriculum";
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
 import { Link } from "@/i18n/routing";
 
 export function AcademyShowcase() {

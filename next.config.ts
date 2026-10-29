@@ -4,22 +4,41 @@ import type { NextConfig } from "next";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import createNextIntlPlugin from "next-intl/plugin";
 
+// Validates env at build/dev start; throws on a bad value.
+import "./src/env";
+
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const withBundleAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
+const isDev = process.env.NODE_ENV !== "production";
+
+// Vercel's preview toolbar (and its Pusher socket); production never loads it.
+const VERCEL_LIVE = "https://vercel.live";
+// Guide map: style JSON, vector tiles, glyphs and sprites.
+const MAP_TILES = "https://*.cartocdn.com";
+
+/**
+ * No `default-src` and no nonce: a per-request nonce would make every page dynamic
+ * and give up the static prerender, so inline scripts stay allowed. What the policy
+ * does close is every *external* script, worker and network origin we do not use.
+ */
+const contentSecurityPolicy = [
+  "base-uri 'none'",
+  "object-src 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  `script-src 'self' 'unsafe-inline' ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
+  "worker-src 'self' blob:",
+  `connect-src 'self' ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
+].join("; ");
+
 const nextConfig: NextConfig = {
   reactCompiler: process.env.NODE_ENV === "production",
   turbopack: {
     root: path.join(import.meta.dirname),
-  },
-  images: {
-    remotePatterns: [
-      // FIXME: add your own remote image domains here, e.g.:
-      // { protocol: "https", hostname: "images.unsplash.com" },
-    ],
   },
   async redirects() {
     return [
@@ -112,18 +131,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
-          {
-            // No `default-src`/`script-src`: those need a per-request nonce, which would
-            // make every page dynamic and give up the static prerender. These four need
-            // no nonce and close the holes that do not depend on inline scripts.
-            key: "Content-Security-Policy",
-            value: [
-              "base-uri 'none'",
-              "object-src 'none'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-            ].join("; "),
-          },
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

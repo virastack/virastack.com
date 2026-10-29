@@ -10,7 +10,7 @@ import {
   FileCodeIcon,
   XIcon,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -203,7 +203,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
   };
 
   return (
-    <motion.div
+    <m.div
       className="relative flex w-full flex-col"
       initial={enterHidden}
       animate={enterVisible}
@@ -267,7 +267,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
       <div className="relative mt-6">
         <AnimatePresence mode="wait">
           {phase === "thinking" ? (
-            <motion.div
+            <m.div
               key="thinking"
               initial={enterHidden}
               animate={enterVisible}
@@ -280,11 +280,11 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
             >
               <span className="size-1.5 animate-pulse rounded-full bg-fuchsia-500" aria-hidden />
               {t(`${prefix}Thinking`)}
-            </motion.div>
+            </m.div>
           ) : null}
 
           {phase === "ready" ? (
-            <motion.div
+            <m.div
               key="ready"
               className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 md:items-stretch"
               initial="hidden"
@@ -306,7 +306,7 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 },
               }}
             >
-              <motion.div className="min-w-0" variants={itemVariants}>
+              <m.div className="min-w-0" variants={itemVariants}>
                 <OutcomeCard
                   tone="reject"
                   title={t(`${prefix}RejectTitle`)}
@@ -314,9 +314,9 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                 >
                   <CodeSnippet code={code.rejectCode} tone="reject" />
                 </OutcomeCard>
-              </motion.div>
+              </m.div>
 
-              <motion.div className="min-w-0" variants={itemVariants}>
+              <m.div className="min-w-0" variants={itemVariants}>
                 <OutcomeCard
                   tone="accept"
                   title={t(`${prefix}AcceptTitle`)}
@@ -328,20 +328,20 @@ function ScenarioDemo({ scenario, onRequestNext }: ScenarioDemoProps) {
                     {t(`${prefix}AcceptPath`)}
                   </p>
                 </OutcomeCard>
-              </motion.div>
+              </m.div>
 
-              <motion.div className="flex justify-end pt-1 md:col-span-2" variants={itemVariants}>
+              <m.div className="flex justify-end pt-1 md:col-span-2" variants={itemVariants}>
                 <AutoNextButton
                   label={t("demoNext")}
                   durationMs={AUTO_ADVANCE_MS}
                   onNext={onRequestNext}
                 />
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
