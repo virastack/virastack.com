@@ -9,6 +9,7 @@ import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
+import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
 import { Button } from "@/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
@@ -67,7 +68,7 @@ export function AcademyHero({
         <span className="text-brand-academy">{t("name")}</span>
       </BrandLockup>
       <p className="max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
-        {t("description")}
+        {t.rich("descriptionRich", guideBadgeTags())}
       </p>
       <Reveal
         mode="mount"

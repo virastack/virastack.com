@@ -101,11 +101,11 @@ export function Header() {
                       const active = activeProduct?.id === product.id;
 
                       return (
-                        <li key={product.id}>
+                        <li key={product.id} className="flex">
                           <NavigationMenuLink
                             active={active}
                             closeOnClick
-                            className="flex items-start gap-3 p-3"
+                            className="flex h-full w-full items-start gap-3 p-3"
                             render={<Link href={product.href} />}
                           >
                             <span

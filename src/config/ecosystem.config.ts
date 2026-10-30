@@ -17,10 +17,11 @@ export type EcosystemLocale = "en" | "tr";
  * Three lengths of the same product description:
  * - `short`: header menu and search (plain text, one line).
  * - `medium`: home page ecosystem cards (may use `<bold>`, `<italic>`, `<code>`).
- * - `long`: product page hero and meta description (may use `<bold>`, `<italic>`);
- *   its first sentence must stand alone, since search results cut it at ~155 characters.
+ * - `long`: product page hero (may use `<bold>`, `<italic>`).
+ * - `meta`: optional plain-text meta description (~155 characters, where search results cut it);
+ *   falls back to `long` when missing, so its first sentence must then stand alone.
  */
-export type EcosystemCopy = { short: string; medium: string; long: string };
+export type EcosystemCopy = { short: string; medium: string; long: string; meta?: string };
 
 export type EcosystemEntry = {
   id: EcosystemId;
@@ -75,14 +76,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "A React frontend roadmap with free, curated guides.",
         medium:
-          "A current roadmap for becoming a frontend developer with <bold>React</bold>. <bold>Free</bold> guides from the fundamentals through advanced topics such as AI, architecture, and testing.",
-        long: "An up-to-date roadmap showing which tools to learn, and in what order, to become a frontend developer with React. No unnecessary detail: curated sources from official docs, conference talks, and independent authors.",
+          "A current roadmap for becoming a frontend developer with <react>React</react>. <bold>Free</bold> guides from the fundamentals through advanced topics such as AI, architecture, and testing.",
+        long: "An up-to-date roadmap showing which tools to learn, and in what order, to become a frontend developer with <react>React</react>. No unnecessary detail: curated sources from official docs, conference talks, and independent authors.",
+        meta: "A current roadmap for becoming a frontend developer with React: free guides built from official docs, conference talks and independent authors.",
       },
       tr: {
         short: "React ile frontend yol haritası: ücretsiz, seçilmiş rehberler.",
         medium:
-          "<bold>React</bold> ile frontend geliştirici olmak için güncel yol haritası. Temellerden yapay zekâ, mimari ve test gibi ileri konulara <bold>ücretsiz</bold> rehberler.",
-        long: "React ile frontend geliştirici olmak için hangi sırayla, hangi araçları öğreneceğini gösteren güncel yol haritası. Gereksiz detay yok: resmi dokümanlar, konferans konuşmaları ve bağımsız yazarlardan seçilmiş kaynaklar.",
+          "<react>React</react> ile frontend geliştirici olmak için güncel yol haritası. Temellerden AI, mimari ve test gibi ileri konulara <bold>ücretsiz</bold> rehberler.",
+        long: "<react>React</react> ile frontend geliştirici olmak için hangi sırayla, hangi araçları öğreneceğini gösteren güncel yol haritası. Gereksiz detay yok: resmi dokümanlar, konferans konuşmaları ve bağımsız yazarlardan seçilmiş kaynaklar.",
+        meta: "React ile frontend geliştirici olmak için güncel yol haritası: resmi dokümanlar, konferans konuşmaları ve bağımsız yazarlardan seçilmiş ücretsiz rehberler.",
       },
     },
   },
@@ -105,14 +108,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "Production-ready Next.js and TanStack Start apps in one command.",
         medium:
-          "Production-ready <bold>Next.js</bold> and <bold>TanStack Start</bold> projects with <code>npx virastack</code>. Feature-based architecture, strict TypeScript, and AI rules included.",
-        long: "<bold>Production-ready</bold> Next.js and TanStack Start projects in <italic>one command</italic>. Feature-based architecture, strict TypeScript, Zod, TanStack Query, and AI rules come with setup; optional modules are picked from an interactive menu.",
+          "Production-ready <nextjs>Next.js</nextjs> and <tanstackstart>TanStack Start</tanstackstart> projects with <code>npx virastack</code>. Feature-based architecture, strict TypeScript, and AI rules included.",
+        long: "<bold>Production-ready</bold> <nextjs>Next.js</nextjs> and <tanstack>TanStack Start</tanstack> projects in one command. Feature-based architecture, strict TypeScript and AI rules come with setup; extra tools are picked from a menu.",
+        meta: "Production-ready Next.js and TanStack Start projects in one command, with feature-based architecture, strict TypeScript and AI rules.",
       },
       tr: {
         short: "Tek komutla üretime hazır Next.js ve TanStack Start projesi.",
         medium:
-          "<code>npx virastack</code> ile üretime hazır <bold>Next.js</bold> ve <bold>TanStack Start</bold> projeleri. Feature tabanlı mimari, strict TypeScript ve AI kuralları dahil gelir.",
-        long: "Tek komutla <bold>üretime hazır</bold> Next.js ve TanStack Start projesi. Feature tabanlı mimari, strict TypeScript, Zod, TanStack Query ve AI kuralları kurulumla gelir; opsiyonel modüller interaktif menüden seçilir.",
+          "<code>npx virastack</code> ile üretime hazır <nextjs>Next.js</nextjs> ve <tanstackstart>TanStack Start</tanstackstart> projeleri. Feature tabanlı mimari, strict TypeScript ve AI kuralları dahil gelir.",
+        long: "Tek komutla <bold>üretime hazır</bold> <nextjs>Next.js</nextjs> ve <tanstack>TanStack Start</tanstack> projesi. Feature tabanlı mimari, strict TypeScript ve AI kuralları kurulumla gelir; ek araçları menüden seçersin.",
+        meta: "Tek komutla üretime hazır Next.js ve TanStack Start projesi. Feature tabanlı mimari, strict TypeScript ve AI kuralları kurulumla gelir.",
       },
     },
   },
@@ -135,14 +140,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "Architecture rules for Claude Code, Cursor and AGENTS.md.",
         medium:
-          "One set of architecture rules for <bold>Claude Code</bold>, <bold>Cursor</bold>, and every agent that reads <code>AGENTS.md</code>, so agents write code that fits your project.",
-        long: "<bold>One set of architecture rules</bold> for Claude Code, Cursor, and every agent that reads AGENTS.md. One command writes framework-aware rules in each tool’s native format, so agents write <bold>consistent code</bold> that fits your architecture.",
+          "One set of architecture rules for <claudecode>Claude Code</claudecode>, <cursor>Cursor</cursor>, and every agent that reads <code>AGENTS.md</code>, so agents write code that fits your project.",
+        long: "<bold>One set of architecture rules</bold> for <claudecode>Claude Code</claudecode>, <cursor>Cursor</cursor>, and every agent that reads <code>AGENTS.md</code>. One command writes framework-aware rules in each tool’s native format, so agents write <bold>consistent code</bold> that fits your architecture.",
+        meta: "One command installs architecture rules for Claude Code, Cursor and AGENTS.md, so agents write code that fits your project.",
       },
       tr: {
         short: "Claude Code, Cursor ve AGENTS.md için mimari kurallar.",
         medium:
-          "<bold>Claude Code</bold>, <bold>Cursor</bold> ve <code>AGENTS.md</code> okuyan tüm agent’lar için tek bir mimari kural seti. Agent’lar projenin geri kalanına uyan kod yazar.",
-        long: "Claude Code, Cursor ve AGENTS.md okuyan tüm agent’lar için <bold>tek bir mimari kural seti</bold>. Tek komutla framework’e özel kuralları her aracın kendi formatında yazar; agent’lar mimarinize uyan <bold>tutarlı kod</bold> üretir.",
+          "<claudecode>Claude Code</claudecode>, <cursor>Cursor</cursor> ve <code>AGENTS.md</code> okuyan tüm agent’lar için tek bir mimari kural seti. Agent’lar projenin geri kalanına uyan kod yazar.",
+        long: "<claudecode>Claude Code</claudecode>, <cursor>Cursor</cursor> ve <code>AGENTS.md</code> okuyan tüm agent’lar için <bold>tek bir mimari kural seti</bold>. Komut, framework’e özel kuralları her aracın kendi formatında yazar; agent’lar mimarine uyan <bold>tutarlı kod</bold> üretir.",
+        meta: "Claude Code, Cursor ve AGENTS.md için tek komutla mimari kurallar kurar; agent’lar projenize uyan kod yazar.",
       },
     },
   },
@@ -165,14 +172,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "Input masks for React Hook Form: phone, card, date, currency.",
         medium:
-          "Zero-dependency input masks for <bold>React Hook Form</bold>. Phone, card, date, and currency presets built in; the same schema validates on the server.",
-        long: "<bold>Zero-dependency input masks</bold> for React Hook Form. The form keeps the raw value while the input shows the mask; phone, card, date, and currency presets are built in, Turkish presets (TCKN, VKN, IBAN) included, and the same schema parses and validates on the server.",
+          "Zero-dependency input masks for <rhf>React Hook Form</rhf>. Phone, card, date, and currency presets built in; the same schema validates on the server.",
+        long: "<bold>Zero-dependency input masks</bold> for <rhf>React Hook Form</rhf>. The form keeps the clean value while the input shows the mask; phone, card, date, and currency presets are built in, Turkish presets (TCKN, VKN, IBAN) included.",
+        meta: "Zero-dependency input masks for React Hook Form, with phone, card, IBAN and Turkish presets, and the same schema on the server.",
       },
       tr: {
         short: "React Hook Form için input maskeleri: telefon, IBAN, TCKN.",
         medium:
-          "<bold>React Hook Form</bold> için sıfır bağımlılıklı input maskeleri. Telefon, kart, IBAN, TCKN ve TRY hazır gelir; aynı şema sunucuda da doğrular.",
-        long: "React Hook Form için <bold>sıfır bağımlılıklı input maskeleri</bold>. Form ham değeri tutar, input maskeyi gösterir; telefon, kart, IBAN, TCKN, VKN ve TRY hazır gelir, aynı şema sunucuda da ayrıştırılıp doğrulanır.",
+          "<rhf>React Hook Form</rhf> için sıfır bağımlılıklı input maskeleri. Telefon, kart, IBAN, TCKN ve TRY hazır gelir; aynı şema sunucuda da doğrular.",
+        long: "<rhf>React Hook Form</rhf> için <bold>sıfır bağımlılıklı input maskeleri</bold>. Form temiz değeri tutar, input maskeyi gösterir; telefon, kart, IBAN, TCKN, VKN ve TRY hazır gelir.",
+        meta: "React Hook Form için sıfır bağımlılıklı input maskeleri: telefon, kart, IBAN, TCKN ve TRY hazır, aynı şema sunucuda da doğrular.",
       },
     },
   },
@@ -195,14 +204,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "Accessible password hook: show/hide, strength, server checks.",
         medium:
-          "An accessible password hook for <bold>React</bold>: show/hide, <italic>NIST</italic>-style strength, confirmation, and the same rules on the server.",
-        long: "An <bold>accessible password hook</bold> for React: show/hide, NIST-style strength, password confirmation and the same rules on the server, with an optional leaked password check. Headless, so it drops into your existing form components.",
+          "An accessible password hook for <react>React</react>: show/hide, NIST-style strength, confirmation, and the same rules on the server. Headless, so it fits any form.",
+        long: "An <bold>accessible password hook</bold> for <react>React</react>: show/hide, NIST-style strength, password confirmation and the same rules on the server. Headless, so it fits your existing form components.",
+        meta: "Accessible password hook for React: show/hide, NIST-style strength, confirmation and the same rules on the server.",
       },
       tr: {
         short: "Erişilebilir parola hook’u: göster/gizle, güç, sunucu kontrolü.",
         medium:
-          "<bold>React</bold> için erişilebilir parola hook’u: göster/gizle, <italic>NIST</italic> tarzı güç, parola tekrarı ve sunucuda aynı kurallar.",
-        long: "React için <bold>erişilebilir parola hook’u</bold>: göster/gizle, NIST tarzı güç, parola tekrarı ve sunucuda aynı kurallar. İsteğe bağlı sızmış parola kontrolü içerir; headless olduğu için mevcut form bileşenlerinize kolayca bağlanır.",
+          "<react>React</react> için erişilebilir parola hook’u: göster/gizle, NIST tarzı güç, parola tekrarı ve sunucuda aynı kurallar. Headless olduğu için her formla çalışır.",
+        long: "<react>React</react> için <bold>erişilebilir parola hook’u</bold>: göster/gizle, NIST tarzı güç, parola tekrarı ve sunucuda aynı kurallar. Headless olduğu için mevcut form bileşenlerine bağlanır.",
+        meta: "React için erişilebilir parola hook’u: göster/gizle, NIST tarzı güç, parola tekrarı ve sunucuda aynı kurallar.",
       },
     },
   },
@@ -225,14 +236,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "Turkish address hook: province, district, neighbourhood and postal code.",
         medium:
-          "A <italic>headless</italic> <bold>React</bold> hook for Turkish addresses. Province, district, and neighbourhood are picked in a chain; the postal code comes from the neighbourhood and the address is verified on the server.",
-        long: "A <bold>headless React hook</bold> for Turkish addresses. Province, district, and neighbourhood are picked in a chain, the postal code comes from the neighbourhood, and the address is re-checked on the server.",
+          "A <italic>headless</italic> <react>React</react> hook for Turkish addresses. Province, district, and neighbourhood are picked in a chain, and the address is verified on the server.",
+        long: "A <bold>headless</bold> <react>React</react> hook for Turkish addresses. Province, district, and neighbourhood are picked in a chain, the postal code comes from the neighbourhood, and the address is re-checked on the server.",
+        meta: "Headless React hook for Turkish addresses: chained province, district and neighbourhood selects, derived postal codes and server validation.",
       },
       tr: {
         short: "Türkiye adres hook’u: il, ilçe, mahalle ve posta kodu.",
         medium:
-          "Türkiye adresleri için <italic>headless</italic> <bold>React</bold> hook’u. İl, ilçe ve mahalle zincirleme seçilir; posta kodu mahalleden gelir ve adres sunucuda doğrulanır.",
-        long: "Türkiye adresleri için <bold>headless React hook’u</bold>. İl, ilçe ve mahalle zincirleme seçilir, posta kodu mahalleden gelir ve adres sunucuda yeniden doğrulanır.",
+          "Türkiye adresleri için <italic>headless</italic> <react>React</react> hook’u. İl, ilçe ve mahalle zincirleme seçilir; posta kodu mahalleden gelir ve adres sunucuda doğrulanır.",
+        long: "Türkiye adresleri için <bold>headless</bold> <react>React</react> hook’u. İl, ilçe ve mahalle zincirleme seçilir, posta kodu mahalleden gelir ve adres sunucuda yeniden doğrulanır.",
+        meta: "Türkiye adresleri için headless React hook’u: zincirleme il, ilçe, mahalle seçimi, posta kodu ve sunucuda doğrulama.",
       },
     },
   },
@@ -255,14 +268,16 @@ export const ecosystem: readonly EcosystemEntry[] = [
       en: {
         short: "An interactive guide through modern web standards, step by step.",
         medium:
-          "An interactive, step-by-step guide to how a modern web app is built, from raw HTML to an <italic>AI-native</italic> UI in <bold>3 minutes</bold>.",
-        long: "An interactive guide to how a modern web app is built, from <bold>raw HTML</bold> to an <italic>AI-native</italic> UI in <bold>3 minutes</bold>. It adds content, styling, components, theme, and AI one layer at a time, then hands you off to the ViraStack ecosystem.",
+          "An interactive, step-by-step guide to how a modern web app is built, from plain HTML to an <italic>AI-native</italic> UI in <bold>3 minutes</bold>.",
+        long: "An interactive guide to how a modern web app is built, from <bold>plain HTML</bold> to an <italic>AI-native</italic> UI in <bold>3 minutes</bold>. It adds content, styling, components, theme, and AI one layer at a time, then hands you off to the ViraStack ecosystem.",
+        meta: "An interactive guide to how a modern web app is built, from plain HTML to an AI-native UI in 3 minutes.",
       },
       tr: {
         short: "Modern web standartlarını adım adım gösteren interaktif rehber.",
         medium:
-          "Modern bir web uygulamasının nasıl kurulduğunu, ham HTML’den <italic>AI-native</italic> arayüze <bold>3 dakikada</bold> adım adım gösteren interaktif rehber.",
-        long: "Modern bir web uygulamasının nasıl kurulduğunu, <bold>ham HTML</bold>’den <italic>AI-native</italic> arayüze <bold>3 dakikada</bold> gösteren interaktif rehber. İçerik, stil, bileşen, tema ve yapay zekâ katmanlarını sırayla ekler; sonunda ViraStack ekosistemine yönlendirir.",
+          "Modern bir web uygulamasının nasıl kurulduğunu, sade HTML’den <italic>AI-native</italic> arayüze <bold>3 dakikada</bold> adım adım gösteren interaktif rehber.",
+        long: "Modern bir web uygulamasının nasıl kurulduğunu, <bold>sade HTML</bold>’den <italic>AI-native</italic> arayüze <bold>3 dakikada</bold> gösteren interaktif rehber. İçerik, stil, bileşen, tema ve AI katmanlarını sırayla ekler; sonunda ViraStack ekosistemine yönlendirir.",
+        meta: "Modern bir web uygulamasının nasıl kurulduğunu sade HTML’den AI-native arayüze 3 dakikada gösteren interaktif rehber.",
       },
     },
   },

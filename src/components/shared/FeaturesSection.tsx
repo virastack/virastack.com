@@ -8,7 +8,7 @@ import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 export type FeatureItem = {
   title: string;
   subtitle: string;
-  description: string;
+  description: ReactNode;
   icon: ReactNode;
   tone: string;
 };

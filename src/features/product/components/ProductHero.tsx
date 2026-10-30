@@ -15,7 +15,7 @@ import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
 import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
+import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
@@ -81,6 +81,12 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
         {t.rich(productDescKeys[product.id], {
           bold: (chunks) => <strong className="font-semibold text-foreground">{chunks}</strong>,
           italic: (chunks) => <em className="italic">{chunks}</em>,
+          code: (chunks) => (
+            <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground">
+              {chunks}
+            </code>
+          ),
+          ...guideBadgeTags(),
         })}
       </p>
 

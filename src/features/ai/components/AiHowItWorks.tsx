@@ -1,16 +1,26 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import { useTranslations } from "next-intl";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 export function AiHowItWorks() {
   const t = useTranslations("Ai");
 
+  const rich = {
+    ...guideBadgeTags(),
+    code: (chunks: ReactNode) => (
+      <code className="font-mono text-[0.9em] text-foreground">{chunks}</code>
+    ),
+  };
+
   const steps = [
-    { title: t("how1Title"), body: t("how1Body") },
-    { title: t("how2Title"), body: t("how2Body") },
-    { title: t("how3Title"), body: t("how3Body") },
+    { title: t("how1Title"), body: t.rich("how1Body", rich) },
+    { title: t("how2Title"), body: t.rich("how2Body", rich) },
+    { title: t("how3Title"), body: t.rich("how3Body", rich) },
   ] as const;
 
   return (
@@ -24,7 +34,13 @@ export function AiHowItWorks() {
         </RevealItem>
         <RevealItem>
           <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
-            {t("howDesc")}
+            {t.rich("howDesc", {
+              start: (chunks) => (
+                <GuideProductMark id="start" linked={false}>
+                  {chunks}
+                </GuideProductMark>
+              ),
+            })}
           </p>
         </RevealItem>
       </RevealGroup>
@@ -40,7 +56,7 @@ export function AiHowItWorks() {
                 {index + 1}
               </span>
               {index < steps.length - 1 ? (
-                <span className="absolute top-10 bottom-0 w-px bg-border" aria-hidden />
+                <span className="absolute top-10 -bottom-10 w-px bg-border" aria-hidden />
               ) : null}
             </div>
             <div className="min-w-0 pt-1.5">

@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import { useTranslations } from "next-intl";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
@@ -16,6 +18,10 @@ const FLAGS = [
   { flag: "--tr", key: "cliTr" as const },
   { flag: "remove", key: "cliRemove" as const },
 ] as const;
+
+const codeChunk = (chunks: ReactNode) => (
+  <code className="font-mono text-xs text-foreground">{chunks}</code>
+);
 
 export function AiCli() {
   const t = useTranslations("Ai");
@@ -46,11 +52,7 @@ export function AiCli() {
             <p>
               <span className="font-mono text-xs text-brand-ai">{row.flag}</span>
               <span className="text-foreground/40"> — </span>
-              {row.key === "cliFramework"
-                ? t.rich(row.key, {
-                    italic: (chunks) => <em className="italic">{chunks}</em>,
-                  })
-                : t(row.key)}
+              {t.rich(row.key, { code: codeChunk })}
             </p>
           </RevealItem>
         ))}

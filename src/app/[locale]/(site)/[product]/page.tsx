@@ -25,13 +25,13 @@ const productNameKeys = {
   guide: "guideName",
 } as const;
 
-const productDescKeys = {
-  start: "startDesc",
-  ai: "aiDesc",
-  mask: "maskDesc",
-  password: "passwordDesc",
-  address: "addressDesc",
-  guide: "guideDesc",
+const productMetaKeys = {
+  start: "startMeta",
+  ai: "aiMeta",
+  mask: "maskMeta",
+  password: "passwordMeta",
+  address: "addressMeta",
+  guide: "guideMeta",
 } as const;
 
 type PageProps = {
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = getProduct(productParam);
   const t = await getTranslations({ locale, namespace: "Products" });
   const name = t(productNameKeys[product.id]);
-  const description = String(t.raw(productDescKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
+  const description = String(t.raw(productMetaKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
   const title = await getProductSeoName(locale, product.id);
 
   const og = buildOgImageMetadata({
@@ -100,7 +100,7 @@ export default async function Page({ params }: PageProps) {
   const product = getProduct(productParam);
   const t = await getTranslations({ locale, namespace: "Products" });
   const name = `${siteConfig.name} ${t(productNameKeys[product.id])}`;
-  const description = String(t.raw(productDescKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
+  const description = String(t.raw(productMetaKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
 
   return (
     <main className="relative isolate flex-1">

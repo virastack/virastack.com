@@ -16,59 +16,61 @@ import { featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { guideCardTags } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 type RuleItem = {
   title: string;
   subtitle: string;
-  description: string;
+  description: ReactNode;
   icon: ReactNode;
   tone: string;
 };
 
 export function AiInjectedRules() {
   const t = useTranslations("Ai");
+  const cardTags = guideCardTags();
 
   const rules: RuleItem[] = [
     {
       title: t("rulesArchTitle"),
       subtitle: t("rulesArchSubtitle"),
-      description: t("rulesArchDesc"),
+      description: t.rich("rulesArchDesc", cardTags),
       icon: <FolderTreeIcon className="size-5" aria-hidden />,
       tone: "bg-brand-ai/10 text-brand-ai",
     },
     {
       title: t("rulesDataTitle"),
       subtitle: t("rulesDataSubtitle"),
-      description: t("rulesDataDesc"),
+      description: t.rich("rulesDataDesc", cardTags),
       icon: <SplitIcon className="size-5" aria-hidden />,
       tone: "bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300",
     },
     {
       title: t("rulesUiTitle"),
       subtitle: t("rulesUiSubtitle"),
-      description: t("rulesUiDesc"),
+      description: t.rich("rulesUiDesc", cardTags),
       icon: <LayersIcon className="size-5" aria-hidden />,
       tone: "bg-pink-50 text-pink-600 dark:bg-pink-950/40 dark:text-pink-300",
     },
     {
       title: t("rulesQualityTitle"),
       subtitle: t("rulesQualitySubtitle"),
-      description: t("rulesQualityDesc"),
+      description: t.rich("rulesQualityDesc", cardTags),
       icon: <ShieldCheckIcon className="size-5" aria-hidden />,
       tone: "bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-300",
     },
     {
       title: t("rulesPerfTitle"),
       subtitle: t("rulesPerfSubtitle"),
-      description: t("rulesPerfDesc"),
+      description: t.rich("rulesPerfDesc", cardTags),
       icon: <GaugeIcon className="size-5" aria-hidden />,
       tone: "bg-sky-50 text-sky-600 dark:bg-sky-950/40 dark:text-sky-300",
     },
     {
       title: t("rulesFwTitle"),
       subtitle: t("rulesFwSubtitle"),
-      description: t("rulesFwDesc"),
+      description: t.rich("rulesFwDesc", cardTags),
       icon: <BoxesIcon className="size-5" aria-hidden />,
       tone: "bg-zinc-50 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200",
     },
@@ -85,9 +87,7 @@ export function AiInjectedRules() {
         </RevealItem>
         <RevealItem>
           <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-balance text-muted-foreground">
-            {t.rich("rulesDesc", {
-              bold: (chunks) => <strong className="font-semibold text-foreground">{chunks}</strong>,
-            })}
+            {t.rich("rulesDesc", cardTags)}
           </p>
         </RevealItem>
       </RevealGroup>

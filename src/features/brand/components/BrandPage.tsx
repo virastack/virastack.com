@@ -17,6 +17,7 @@ import { BrandLockup } from "@/components/shared/BrandLockup";
 import { ProductDots } from "@/components/shared/ProductDots";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
+import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
@@ -64,13 +65,10 @@ type ColorValuesProps = {
 
 function ColorValues({ color }: ColorValuesProps) {
   const t = useTranslations("BrandPage");
-  const rows =
-    color.lightHex === color.darkHex
-      ? [[t("colorsBothThemes"), color.lightShade, color.lightHex]]
-      : [
-          [t("colorsLight"), color.lightShade, color.lightHex],
-          [t("colorsDark"), color.darkShade, color.darkHex],
-        ];
+  const rows = [
+    [t("colorsLight"), color.lightShade, color.lightHex],
+    [t("colorsDark"), color.darkShade, color.darkHex],
+  ];
 
   return (
     <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
@@ -84,6 +82,7 @@ function ColorValues({ color }: ColorValuesProps) {
 }
 
 const richTags = {
+  ...guideBadgeTags(),
   bold: (chunks: ReactNode) => <strong className="font-semibold text-foreground">{chunks}</strong>,
   italic: (chunks: ReactNode) => <em className="italic">{chunks}</em>,
   code: (chunks: ReactNode) => (
@@ -95,7 +94,7 @@ const richTags = {
 
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
-/** Short, medium and long descriptions of every product, read from `ecosystem.config.ts`. */
+/** Short, medium, long and meta descriptions of every product, read from `ecosystem.config.ts`. */
 function ProductCopyList() {
   const t = useTranslations("BrandPage");
   const tNav = useTranslations("Navigation");
@@ -113,8 +112,12 @@ function ProductCopyList() {
           [
             t("copyLong"),
             palette.id === "academy"
-              ? tAcademy("description")
+              ? tAcademy.rich("descriptionRich", richTags)
               : tProducts.rich(`${palette.id}Desc`, richTags),
+          ],
+          [
+            t("copyMeta"),
+            palette.id === "academy" ? tAcademy("metaDescription") : tProducts(`${palette.id}Meta`),
           ],
         ];
 
@@ -308,57 +311,6 @@ export function BrandPage() {
                   tailwind: (chunks) => (
                     <ExternalLink href="https://tailwindcss.com/docs/colors">{chunks}</ExternalLink>
                   ),
-                })}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
-              <div className="space-y-2 text-center">
-                <div
-                  className={cn(
-                    "mx-auto size-8 rounded-lg ring-1 ring-foreground/10",
-                    virastackColor.bgClass,
-                  )}
-                  title={virastackColor.hex}
-                />
-                <div className="space-y-0.5">
-                  <p className="text-sm font-semibold text-primary">{siteConfig.name}</p>
-                  <ColorValues color={virastackColor} />
-                </div>
-              </div>
-              {brandPalettes.map((palette) => (
-                <div key={palette.id} className="space-y-2 text-center">
-                  <div
-                    className={cn(
-                      "mx-auto size-8 rounded-lg ring-1 ring-foreground/10",
-                      palette.bgClass,
-                    )}
-                    title={palette.hex}
-                  />
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-medium text-foreground">
-                      <BrandMarkPreview
-                        productName={palette.productName}
-                        textClass={palette.textClass}
-                        tone="body"
-                      />
-                    </p>
-                    <ColorValues color={palette} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        </RevealItem>
-
-        <RevealItem>
-          <section className="space-y-10">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("iconsTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                {t.rich("iconsBody", {
                   lucide: (chunks) => (
                     <ExternalLink href="https://lucide.dev">{chunks}</ExternalLink>
                   ),
@@ -366,18 +318,42 @@ export function BrandPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-x-6 gap-y-10">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
+              <div className="space-y-3 text-center">
+                <div className="flex h-8 items-center justify-center gap-3">
+                  <div
+                    className={cn(
+                      "size-8 rounded-lg ring-1 ring-foreground/10",
+                      virastackColor.bgClass,
+                    )}
+                    title={virastackColor.hex}
+                  />
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-sm font-semibold text-primary">{siteConfig.name}</p>
+                  <ColorValues color={virastackColor} />
+                </div>
+              </div>
               {brandPalettes.map((palette) => {
                 const Icon = productIcons[palette.id];
                 const slug = productIconSlugs[palette.id];
 
                 return (
                   <div key={palette.id} className="space-y-3 text-center">
-                    <Icon
-                      className={cn("mx-auto size-8", palette.textClass)}
-                      strokeWidth={1.75}
-                      aria-hidden
-                    />
+                    <div className="flex items-center justify-center gap-3">
+                      <div
+                        className={cn(
+                          "size-8 rounded-lg ring-1 ring-foreground/10",
+                          palette.bgClass,
+                        )}
+                        title={palette.hex}
+                      />
+                      <Icon
+                        className={cn("size-8", palette.textClass)}
+                        strokeWidth={1.75}
+                        aria-hidden
+                      />
+                    </div>
                     <div className="space-y-0.5">
                       <p className="text-sm font-medium text-foreground">
                         <BrandMarkPreview
@@ -394,6 +370,7 @@ export function BrandPage() {
                       >
                         {slug}
                       </a>
+                      <ColorValues color={palette} />
                     </div>
                   </div>
                 );

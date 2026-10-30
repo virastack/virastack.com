@@ -11,6 +11,7 @@ import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature
 import { cn } from "@/lib/utils";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { Link } from "@/i18n/routing";
 
 import { homePillars } from "../constants/pillars";
@@ -117,6 +118,12 @@ export function Ecosystem() {
                                   </strong>
                                 ),
                                 italic: (chunks) => <em className="italic">{chunks}</em>,
+                                claudecode: () => <AcademyBadge kind="claudeCode" />,
+                                cursor: () => <AcademyBadge kind="cursor" />,
+                                react: () => <AcademyBadge kind="react" />,
+                                rhf: () => <AcademyBadge kind="react-hook-form" />,
+                                nextjs: () => <AcademyBadge kind="nextjs" />,
+                                tanstackstart: () => <AcademyBadge kind="tanstack-start" />,
                                 code: (chunks) => (
                                   <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground">
                                     {chunks}

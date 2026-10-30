@@ -35,7 +35,6 @@ export function AcademyContributeFaq() {
   const t = useTranslations("Academy");
 
   const rich = {
-    italic: (chunks: ReactNode) => <em className="italic">{chunks}</em>,
     sources: (chunks: ReactNode) => (
       <Link href="/academy/sources" className={linkClassName}>
         {chunks}

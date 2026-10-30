@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: "Academy" });
   const tSeo = await getTranslations({ locale, namespace: "Seo" });
   const title = tSeo("productAcademy");
-  const description = t("description");
+  const description = t("metaDescription");
   const og = buildOgImageMetadata({
     title: t("name"),
     description,

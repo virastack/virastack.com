@@ -36,7 +36,16 @@ export function AcademyShowcase() {
             {t("academyTitle")}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-base text-balance text-muted-foreground">
-            {t("academyDesc")}
+            {t.rich("academyDesc", {
+              sources: (chunks) => (
+                <Link
+                  href="/academy/sources"
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
           </p>
         </RevealItem>
 

@@ -1,14 +1,22 @@
+import type { ReactNode } from "react";
+
 import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
+
+import { cn } from "@/lib/utils";
 
 import { GithubIcon } from "@/components/icons";
 import { Reveal } from "@/components/shared/Reveal";
+import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
 import { HeroBrand } from "./HeroBrand";
+
+const academyPalette = brandPalettes.find((palette) => palette.id === "academy");
 
 export function Hero() {
   const t = useTranslations("Home");
@@ -31,7 +39,19 @@ export function Hero() {
       </p>
 
       <p className="-mt-3 max-w-2xl text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
-        {t("heroDesc")}
+        {t.rich("heroDesc", {
+          academy: (chunks: ReactNode) => (
+            <Link href="/academy" className="underline-offset-2 hover:underline">
+              <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
+              <span className={cn("font-bold", academyPalette?.textClass)}>{chunks}</span>
+            </Link>
+          ),
+          start: (chunks: ReactNode) => (
+            <GuideProductMark id="start" linked>
+              {chunks}
+            </GuideProductMark>
+          ),
+        })}
       </p>
 
       <Reveal mode="mount" delay={0.08} className="mt-2 flex flex-col items-center gap-5">

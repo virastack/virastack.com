@@ -193,6 +193,11 @@ export function Step4UIComponents({ onNext, isCompleted, isStyled }: GuideStepPr
         <p className="text-lg leading-relaxed text-muted-foreground">
           {t.rich("step4Body", {
             shadcn: guideStackTags({ linked: true }).shadcn,
+            mask: (chunks) => (
+              <GuideProductMark id="mask" linked>
+                {chunks}
+              </GuideProductMark>
+            ),
           })}
         </p>
       </div>

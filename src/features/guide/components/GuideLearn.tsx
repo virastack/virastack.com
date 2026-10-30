@@ -1,62 +1,70 @@
 "use client";
 
-import {
-  BotIcon,
-  ComponentIcon,
-  FileTextIcon,
-  LayersIcon,
-  PaletteIcon,
-  TypeIcon,
-} from "lucide-react";
+import { TypeIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { FeaturesSection, type FeatureItem } from "@/components/shared/FeaturesSection";
+import { ClaudeAiIcon } from "@/components/ui/svgs/claudeAiIcon";
+import { Html5 } from "@/components/ui/svgs/html5";
+import { ReactDark } from "@/components/ui/svgs/reactDark";
+import { ReactLight } from "@/components/ui/svgs/reactLight";
+import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
+import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
+import { guideCardTags } from "@/features/guide/components/GuideRichText";
+
+const logoTone = "bg-muted";
 
 export function GuideLearn() {
   const t = useTranslations("Guide");
+  const cardTags = guideCardTags();
 
   const features: FeatureItem[] = [
     {
       title: t("learnContentTitle"),
       subtitle: t("learnContentSubtitle"),
-      description: t("learnContentDesc"),
-      icon: <FileTextIcon className="size-5" aria-hidden />,
-      tone: "bg-zinc-50 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200",
+      description: t.rich("learnContentDesc", cardTags),
+      icon: <Html5 className="size-5" aria-hidden />,
+      tone: logoTone,
     },
     {
       title: t("learnStackTitle"),
       subtitle: t("learnStackSubtitle"),
-      description: t("learnStackDesc"),
-      icon: <LayersIcon className="size-5" aria-hidden />,
-      tone: "bg-sky-50 text-sky-600 dark:bg-sky-950/40 dark:text-sky-300",
+      description: t.rich("learnStackDesc", cardTags),
+      icon: (
+        <>
+          <ReactLight className="size-5 dark:hidden" aria-hidden />
+          <ReactDark className="hidden size-5 dark:block" aria-hidden />
+        </>
+      ),
+      tone: logoTone,
     },
     {
       title: t("learnStyleTitle"),
       subtitle: t("learnStyleSubtitle"),
-      description: t("learnStyleDesc"),
-      icon: <PaletteIcon className="size-5" aria-hidden />,
-      tone: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/40 dark:text-cyan-300",
+      description: t.rich("learnStyleDesc", cardTags),
+      icon: <Tailwindcss className="h-4 w-6" aria-hidden />,
+      tone: logoTone,
     },
     {
       title: t("learnTypeTitle"),
       subtitle: t("learnTypeSubtitle"),
-      description: t("learnTypeDesc"),
+      description: t.rich("learnTypeDesc", cardTags),
       icon: <TypeIcon className="size-5" aria-hidden />,
-      tone: "bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300",
+      tone: logoTone,
     },
     {
       title: t("learnUiTitle"),
       subtitle: t("learnUiSubtitle"),
-      description: t("learnUiDesc"),
-      icon: <ComponentIcon className="size-5" aria-hidden />,
-      tone: "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300",
+      description: t.rich("learnUiDesc", cardTags),
+      icon: <ShadcnUi className="size-5 text-foreground" aria-hidden />,
+      tone: logoTone,
     },
     {
       title: t("learnAiTitle"),
       subtitle: t("learnAiSubtitle"),
-      description: t("learnAiDesc"),
-      icon: <BotIcon className="size-5" aria-hidden />,
-      tone: "bg-fuchsia-50 text-fuchsia-600 dark:bg-fuchsia-950/40 dark:text-fuchsia-300",
+      description: t.rich("learnAiDesc", cardTags),
+      icon: <ClaudeAiIcon className="size-5" aria-hidden />,
+      tone: logoTone,
     },
   ];
 

@@ -4,7 +4,7 @@ import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Reveal } from "@/components/shared/Reveal";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
+import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
@@ -19,6 +19,7 @@ export function AiEcosystemCta() {
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-balance text-muted-foreground">
           {t.rich("ctaDesc", {
+            ...guideBadgeTags(),
             start: (chunks) => (
               <GuideProductMark id="start" linked={false}>
                 {chunks}

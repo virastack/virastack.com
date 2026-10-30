@@ -9,9 +9,9 @@ import { formatMonthYear } from "@/helpers";
 
 import { AcademySourceRow } from "@/features/academy/components/academy-source-row";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 
 const SOURCE_FILTERS = ["all", "official", "engineer", "institution"] as const;
 
@@ -26,18 +26,24 @@ function isFilterValue(value: unknown): value is FilterValue {
   return typeof value === "string" && (SOURCE_FILTERS as readonly string[]).includes(value);
 }
 
+/**
+ * Info hint in a column header. A popover rather than a tooltip: it opens on hover for a mouse and
+ * on tap for touch, and closes on pointer leave, outside tap, Escape or another tap on the icon.
+ */
 function ColumnHint({ label }: { label: string }) {
   return (
-    <Tooltip>
-      <TooltipTrigger
-        closeOnClick={false}
+    <Popover>
+      <PopoverTrigger
+        openOnHover
+        delay={100}
+        closeDelay={100}
         aria-label={label}
         className="relative inline-flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground outline-none after:absolute after:top-1/2 after:left-1/2 after:size-10 after:-translate-x-1/2 after:-translate-y-1/2 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         <Info aria-hidden className="size-3.5" />
-      </TooltipTrigger>
-      <TooltipContent className="max-w-64 text-pretty">{label}</TooltipContent>
-    </Tooltip>
+      </PopoverTrigger>
+      <PopoverContent className="max-w-64 text-pretty">{label}</PopoverContent>
+    </Popover>
   );
 }
 

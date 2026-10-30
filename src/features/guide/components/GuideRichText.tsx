@@ -12,6 +12,7 @@ import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { Typescript } from "@/components/ui/svgs/typescript";
+import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { Link } from "@/i18n/routing";
 
 const STACK_URLS = {
@@ -158,4 +159,64 @@ export function guideProductTags(
       return [id, ProductTag as RichChunk];
     }),
   );
+}
+
+/**
+ * Bordered icon badges (`AcademyBadge`) for the stack names, the same chip used for Claude Code
+ * and Cursor. Use these in cards and short copy; `guideStackTags` keeps the inline icon + text
+ * form for the guide steps.
+ */
+export function guideBadgeTags(): Record<StackKey, RichChunk> & {
+  claudecode: RichChunk;
+  cursor: RichChunk;
+  rhf: RichChunk;
+  tanstackstart: RichChunk;
+  zod: RichChunk;
+  antd: RichChunk;
+  tanstackquery: RichChunk;
+  zustand: RichChunk;
+  vitest: RichChunk;
+  testinglibrary: RichChunk;
+  codex: RichChunk;
+  copilot: RichChunk;
+} {
+  return {
+    react: () => <AcademyBadge kind="react" />,
+    typescript: () => <AcademyBadge kind="typescript" />,
+    nextjs: () => <AcademyBadge kind="nextjs" />,
+    tanstack: () => <AcademyBadge kind="tanstack-start" />,
+    tanstackstart: () => <AcademyBadge kind="tanstack-start" />,
+    tailwind: () => <AcademyBadge kind="tailwind" />,
+    shadcn: () => <AcademyBadge kind="shadcn" />,
+    zod: () => <AcademyBadge kind="zod" />,
+    antd: () => <AcademyBadge kind="ant-design" />,
+    tanstackquery: () => <AcademyBadge kind="tanstack-query" />,
+    zustand: () => <AcademyBadge kind="zustand" />,
+    vitest: () => <AcademyBadge kind="vitest" />,
+    testinglibrary: () => <AcademyBadge kind="testing-library" />,
+    codex: () => <AcademyBadge kind="codex" />,
+    copilot: () => <AcademyBadge kind="copilot" label="Copilot" />,
+    claudecode: () => <AcademyBadge kind="claudeCode" />,
+    cursor: () => <AcademyBadge kind="cursor" />,
+    rhf: () => <AcademyBadge kind="react-hook-form" />,
+  };
+}
+
+/**
+ * Rich-text handlers for feature card descriptions: icon badges plus `<bold>` and `<code>`.
+ * Shared by every product page so the same kind of text is styled the same way.
+ */
+export function guideCardTags(): ReturnType<typeof guideBadgeTags> & {
+  bold: RichChunk;
+  code: RichChunk;
+} {
+  return {
+    ...guideBadgeTags(),
+    bold: (chunks) => <strong className="font-semibold text-foreground">{chunks}</strong>,
+    code: (chunks) => (
+      <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground">
+        {chunks}
+      </code>
+    ),
+  };
 }

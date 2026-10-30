@@ -63,6 +63,7 @@ function richHandlers() {
     start: products.start,
     ai: products.ai,
     mask: products.mask,
+    br: () => <br />,
     academy: (chunks: ReactNode) => (
       <Link
         href="/academy"
