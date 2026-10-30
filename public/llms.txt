@@ -4,7 +4,7 @@
 
 Prefer product `llms-full.txt` files for API detail. Use this file as the curated ecosystem map. Primary language for docs and packages is English.
 
-Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virastack/password@1.1.0`, `@virastack/ai@2.0.0`.
+Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virastack/password@1.1.1`, `@virastack/ai@2.0.0`, `@virastack/address@1.0.0`.
 
 ## Products
 
@@ -13,6 +13,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virast
 - [Mask](https://virastack.com/mask): Zero-dependency input masks for React Hook Form (`@virastack/mask`)
 - [Password](https://virastack.com/password): Accessible password hook: show/hide, NIST-style strength, confirmation, server validation (`@virastack/password`)
 - [Address](https://virastack.com/address): Headless Turkish address hook: province, district, neighbourhood and postal code (`@virastack/address`)
+- [Academy](https://virastack.com/academy): Free frontend curriculum (web fundamentals, React, Next.js, TypeScript, forms, testing, security, AI)
 - [Guide](https://virastack.com/guide): Interactive “modern web” walkthrough
 
 ## LLM indexes
@@ -26,6 +27,8 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virast
 - [Password llms.txt](https://virastack.com/password/llms.txt): Password docs map
 - [Password llms-full.txt](https://virastack.com/password/llms-full.txt): useViraPassword, strength, confirm, server and leaked-password APIs (full)
 - [Address llms.txt](https://virastack.com/address/llms.txt): Address docs map, entry points, React Hook Form notes
+- [Address llms-full.txt](https://virastack.com/address/llms-full.txt): useViraAddress, prop getters, postal code, server and data APIs (full)
+- [Academy llms.txt](https://virastack.com/academy/llms.txt): Every published lesson, by track
 - [Guide llms.txt](https://virastack.com/guide/llms.txt): Guide step map
 - [Guide llms-full.txt](https://virastack.com/guide/llms-full.txt): Guide narrative and stack (full)
 - [Ecosystem llms-full.txt](https://virastack.com/llms-full.txt): Combined overview + quick APIs

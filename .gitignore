@@ -50,3 +50,4 @@ next-env.d.ts
 
 # MapLibre worker copied from node_modules on install
 /public/vendor/
+/public/academy/llms.txt

@@ -1,0 +1,169 @@
+# ViraStack Address (full)
+
+> `@virastack/address` (1.0.x): headless Turkish address hook for React. Chained province (il), district (ilçe) and neighbourhood (mahalle) selects, derived postal codes, server validation and the bundled PTT dataset. Zero runtime dependencies. Not a component: no markup, no styles.
+
+## Install
+
+```bash
+npm install @virastack/address
+# peer: react >= 18.2 (optional for the /server and /data entries)
+```
+
+Docs: https://virastack.com/address/docs; Index: https://virastack.com/address/llms.txt; Repo: https://github.com/virastack/form/tree/main/packages/address
+
+## Entry points
+
+| Import | Exports | Runs on |
+| --- | --- | --- |
+| `@virastack/address` | `useViraAddress`, `formatAddress` and the helpers | client (`"use client"`) |
+| `@virastack/address/server` | `resolveAddress`, `resolvePostalCode`, `districtsOf`, `findProvince`, `formatAddress`, `normalizePostalCode` | server, no React |
+| `@virastack/address/data` | `provinces`, `districts`, `neighbourhoods`, `findPostalCode`, `source`, `setLoader` | client + server, no React |
+
+## Critical rules for agents
+
+1. One hook: `useViraAddress`. Spread `getProvinceProps()`, `getDistrictProps()` and `getNeighbourhoodProps()` on the three selects.
+2. Picking a level clears the levels below it. Do not clear them by hand.
+3. The postal code is derived from the neighbourhood, never typed on its own. Use `getPostalCodeInputProps()` for a typed code that fills the selects.
+4. With React Hook Form, pass `form` (`useForm()` or `useFormContext()`). Fields are `province`, `district`, `neighbourhood`, `postalCode`; rename with `names`. Add `provinceCode` to `names` only when the backend wants the plate code.
+5. Always validate again on the server with `resolveAddress`. A client can post any postal code.
+6. Province, district and neighbourhood values are the dataset's raw names (upper case Turkish); `label` is title-cased for display.
+7. Rendering is yours: pass `as` to `getXProps()` for non-native selects.
+
+## Quick start
+
+```tsx
+import { useViraAddress } from "@virastack/address";
+
+function AddressFields() {
+  const { getProvinceProps, getDistrictProps, getNeighbourhoodProps, value } = useViraAddress();
+
+  return (
+    <>
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+      <p>Posta kodu: {value.postalCode ?? "—"}</p>
+    </>
+  );
+}
+```
+
+`value`:
+
+```ts
+{
+  provinceCode: "34",
+  province: "İSTANBUL",
+  district: "FATİH",
+  neighbourhood: "AKSARAY MAH.",
+  postalCode: "34096",
+  postalCodes: ["34096"], // all codes, for the few hundred neighbourhoods with several
+}
+```
+
+Every list is `{ value, label }`. The hook also returns the lists and setters (`provinces`, `setProvince`, ...), `reset()`, `error`, `loading.neighbourhoods`, `setPostalCode()`, `postalCodeStatus` and `getPostalCodeInputProps()`.
+
+## Prop getters
+
+Each getter returns a plain `<select>`'s props: options (empty first one as placeholder), `value`, `onChange`, `disabled`, `aria-busy`, `name`, `id`. The district waits for a province, the neighbourhood for a district and its data. Override any prop after the spread, or pass `{ placeholder }`.
+
+| `as` | Output |
+| --- | --- |
+| `native` (default) | props for `<select>` |
+| `headless` | `options`, `onChange(value)`, `loading`, `placeholder` for your own component |
+| `antd` | `options`, `loading`, search where "istanbul" finds "İstanbul" |
+| `shadcn` | `value`, `onValueChange`, `disabled` for `Select`; items are yours |
+
+A district can hold hundreds of neighbourhoods (Yusufeli has 674), so use a searchable select there.
+
+## Options
+
+| Option | Default | Notes |
+| --- | --- | --- |
+| `source` | bundled dataset | swap for a fixture or your own endpoint |
+| `defaultValue` | - | `{ provinceCode, district, neighbourhood }`; with `form`, read from the form when omitted |
+| `formatLabel` | `formatName` | `(name) => name` keeps the dataset's upper case |
+| `onChange` | - | called with the whole `value` on every change, not on first render |
+| `form` | - | anything with `setValue(name, value, options)`; `getValues` to start filled, `subscribe` to follow `reset()` |
+| `names` | `province`, `district`, `neighbourhood`, `postalCode` | field names in the form and on the inputs; `provinceCode` written only when named |
+| `shouldValidate` | `true` | revalidate form fields as the address changes |
+
+## React Hook Form
+
+```tsx
+const form = useForm<{ province: string; district: string; neighbourhood: string; postalCode: string }>();
+const { getProvinceProps, getDistrictProps, getNeighbourhoodProps } = useViraAddress({ form });
+```
+
+Clearing a level clears it in the form with `shouldDirty`, `shouldTouch` and `shouldValidate`. Edit forms work as is: the hook starts from the address in the form's values and filling the postal code does not dirty the form. `form.reset(data)`, the `values` option and `setValue()` on a level move the selects (React Hook Form 7.55+ for `subscribe`). React Hook Form is never imported.
+
+## From a postal code
+
+```tsx
+const { getPostalCodeInputProps, postalCodeStatus } = useViraAddress({ form });
+<input {...getPostalCodeInputProps()} />
+```
+
+The input strips non-digits and looks up at five digits. Without the input call `setPostalCode("34710")`; `setPostalCode(null)` drops the lookup.
+
+| `postalCodeStatus` | Meaning |
+| --- | --- |
+| `exact` | one neighbourhood under the code: all three levels filled |
+| `partial` | province and district filled; neighbourhoods narrowed to the code |
+| `unknown` | not in the dataset; nothing changes, input gets `aria-invalid` |
+| `loading` | the code's province is loading |
+
+## Address line
+
+```ts
+formatAddress(value);                       // "Alandüzü Mah. Adapazarı/Sakarya"
+formatAddress(value, { postalCode: true }); // "Alandüzü Mah. 54100 Adapazarı/Sakarya"
+formatAddress(value, { separator: ", " });  // "Alandüzü Mah. Adapazarı, Sakarya"
+```
+
+Unpicked levels are left out. Also exported from `/server`.
+
+## Server
+
+```ts
+import { resolveAddress, resolvePostalCode } from "@virastack/address/server";
+
+const { ok, value, issues } = await resolveAddress({
+  province: "istanbul", // name in any casing, or a plate code: 34, "34", "06"
+  district: "fatih",
+  neighbourhood: "aksaray mah.",
+});
+// !ok -> issues: [{ level: "district", reason: "unknown" }]
+// value.postalCode is derived here, not trusted
+```
+
+A submitted `postalCode` is checked too: a code outside the neighbourhood's gives `{ level: "postalCode", reason: "mismatch" }`; with several codes, the one sent is kept.
+
+`resolvePostalCode("34096")` returns `{ ok, value, issues, neighbourhoods }`: as much of the address as the code can say, plus candidate neighbourhoods. No `"use client"`, safe in Server Components and Server Actions.
+
+## Data
+
+```ts
+import { provinces, districts, neighbourhoods, findPostalCode, source } from "@virastack/address/data";
+
+provinces.length;                 // 81
+districts(34);                    // ["ADALAR", "ARNAVUTKÖY", ...]
+const byDistrict = await neighbourhoods(34);
+byDistrict.get("FATİH");          // [{ name, postalCode, postalCodes }, ...]
+await findPostalCode("34710");    // { postalCode, province, district, neighbourhoods }
+source.date;                      // when the data was collected
+```
+
+81 provinces, 973 districts, 72,466 neighbourhoods (PTT, https://www.ptt.gov.tr/posta-kodu). Names and districts are bundled (about 5 kB gzip); each province's neighbourhoods load when picked (median 4.6 kB, p90 9.2 kB, largest 28.5 kB). A typical visit downloads about 10 kB. Verify against PTT for delivery-critical work. A data refresh is a patch release.
+
+Custom loader: `setLoader(async (provinceCode) => fetch(`/api/address/${provinceCode}`).then((r) => r.text()))`.
+
+## Helpers and types
+
+`formatName`, `toSearchKey`, `compareNames`, `formatAddress`; all types are exported. Turkish-aware: sorting, case folding and title case respect `İ` and `ı`. Details: https://virastack.com/address/docs/helpers and https://virastack.com/address/docs/types
+
+## Related
+
+- Mask (TCKN, VKN, IBAN presets): https://virastack.com/mask/llms-full.txt
+- Password: https://virastack.com/password/llms-full.txt
+- Ecosystem index: https://virastack.com/llms.txt

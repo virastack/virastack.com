@@ -8,6 +8,8 @@ Entry points: `@virastack/address` (hook), `@virastack/address/server` (`resolve
 
 React Hook Form: pass `form` (`useForm()` or `useFormContext()`) and every pick is written to `province`, `district`, `neighbourhood` and `postalCode` (rename with `names`). It follows `form.reset(data)`, the `values` option and `setValue()` on a level (React Hook Form 7.55+ `subscribe`), and the form stays pristine.
 
+Full reference for agents: [Address llms-full.txt](https://virastack.com/address/llms-full.txt).
+
 ## Docs
 
 - [Introduction](https://virastack.com/address/docs): Install, comparison, entry points, requirements

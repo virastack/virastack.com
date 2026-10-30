@@ -17,8 +17,10 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 | --- | --- | --- |
 | Start | `npx virastack@latest` | `virastack` (~1.1.0) |
 | AI | `npx @virastack/ai init` | `@virastack/ai` (~2.0.0) |
-| Mask | `npm i @virastack/mask` | `@virastack/mask` (~1.1.1) |
+| Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.1.0) |
 | Password | `npm i @virastack/password` | `@virastack/password` (1.1.x) |
+| Address | `npm i @virastack/address` | `@virastack/address` (1.0.x) |
+| Academy | https://virastack.com/academy | free curriculum (not an npm lib) |
 | Guide | https://virastack.com/guide/play | site experience (not an npm lib) |
 
 ## Start (quick)
@@ -83,6 +85,29 @@ return (
 ```
 
 Server: `validatePassword(formData.get("password"), policy, { forbidden: [email], confirm })`. Details: https://virastack.com/password/llms-full.txt
+
+## Address (quick)
+
+Peer: `react` ≥ 18.2. Headless Turkish address hook: chained il → ilçe → mahalle selects, derived postal code (or fill the selects from a typed code), server validation (`@virastack/address/server`) and the bundled PTT dataset (`/data`, 81 provinces, 973 districts, 72,466 neighbourhoods). Pass `form` for React Hook Form.
+
+```tsx
+import { useViraAddress } from "@virastack/address"
+
+const { getProvinceProps, getDistrictProps, getNeighbourhoodProps, value } = useViraAddress({ form })
+return (
+  <>
+    <select {...getProvinceProps()} />
+    <select {...getDistrictProps()} />
+    <select {...getNeighbourhoodProps()} />
+  </>
+)
+```
+
+Server: `await resolveAddress({ province, district, neighbourhood, postalCode })`. Details: https://virastack.com/address/llms-full.txt
+
+## Academy (quick)
+
+Free, open-source frontend curriculum in Turkish and English. Lesson map: https://virastack.com/academy/llms.txt
 
 ## Guide (quick)
 

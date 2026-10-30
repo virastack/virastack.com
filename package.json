@@ -15,8 +15,9 @@
   },
   "scripts": {
     "content:pull": "node scripts/pull-academy-content.mjs",
+    "content:llms": "node scripts/build-academy-llms.mjs",
     "vendor:maplibre": "node scripts/vendor-maplibre-worker.mjs",
-    "prebuild": "pnpm content:pull && pnpm vendor:maplibre",
+    "prebuild": "pnpm content:pull && pnpm content:llms && pnpm vendor:maplibre",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
