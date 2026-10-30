@@ -7,6 +7,9 @@ import { siteConfig } from "@/config/site.config";
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 
+/** Pre-rendered landing cards are 2:1 (X large card and GitHub social preview). */
+export const LANDING_OG_SIZE = { width: 1280, height: 640 } as const;
+
 export const OG_COLORS = {
   background: "#f7f7f2",
   foreground: "#161616",
@@ -94,7 +97,7 @@ export function buildLandingOgImageMetadata(
   const url = `/og-images/${locale}/${id}.png`;
 
   return {
-    openGraph: { images: [{ url, width: OG_SIZE.width, height: OG_SIZE.height, alt }] },
+    openGraph: { images: [{ url, ...LANDING_OG_SIZE, alt }] },
     twitter: { images: [{ url, alt }] },
   };
 }
