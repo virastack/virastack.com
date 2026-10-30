@@ -54,7 +54,12 @@ export function Hero() {
         })}
       </p>
 
-      <Reveal mode="mount" delay={0.08} className="mt-2 flex flex-col items-center gap-5">
+      <Reveal
+        mode="mount"
+        fadeOpacity={false}
+        delay={0.08}
+        className="mt-2 flex flex-col items-center gap-5"
+      >
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button size="lg" nativeButton={false} render={<Link href="/academy" />}>
             <span>{t("ctaLearn")}</span>

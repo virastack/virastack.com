@@ -94,6 +94,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
 
       <Reveal
         mode="mount"
+        fadeOpacity={false}
         delay={0.1}
         className={cn(
           "mt-2 flex gap-4",

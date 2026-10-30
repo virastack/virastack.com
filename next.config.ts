@@ -37,6 +37,8 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   reactCompiler: process.env.NODE_ENV === "production",
+  // Static pages inline their CSS, so no stylesheet request blocks the first paint.
+  experimental: { inlineCss: true },
   turbopack: {
     root: path.join(import.meta.dirname),
   },

@@ -72,6 +72,7 @@ export function AcademyHero({
       </p>
       <Reveal
         mode="mount"
+        fadeOpacity={false}
         delay={0.1}
         className="mt-2 flex flex-wrap items-center justify-center gap-2"
       >

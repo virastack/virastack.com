@@ -15,6 +15,6 @@ export const siteConfig: SiteConfig = {
     name: "Ömer Gülçiçek",
     website: "https://omergulcicek.com/",
     github: "https://github.com/omergulcicek",
-    avatar: "https://github.com/omergulcicek.png",
+    avatar: "/omer-gulcicek.webp",
   },
 };

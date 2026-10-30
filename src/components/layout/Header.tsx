@@ -84,7 +84,13 @@ export function Header() {
           <HeaderLogoContextMenu>
             <Link href="/" className="inline-flex shrink-0 items-center gap-2 tracking-tight">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.webp" alt="" className="block size-6 shrink-0" />
+              <img
+                src="/logo-sm.webp"
+                alt=""
+                width={24}
+                height={24}
+                className="block size-6 shrink-0"
+              />
               <span className="text-lg leading-none font-semibold text-primary">
                 {siteConfig.name}
                 {activeProduct ? (

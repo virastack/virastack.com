@@ -64,7 +64,7 @@ export function SiteSearch() {
         }}
         onPointerEnter={prefetch}
         onFocus={prefetch}
-        aria-label={t("open")}
+        aria-label={`${t("open")} ${shortcutLabel}`}
         aria-keyshortcuts={isMac ? "Meta+K" : "Control+K"}
         className={cn(
           "inline-flex h-8 w-auto items-center gap-2 rounded-md border-transparent bg-transparent px-2 text-xs text-muted-foreground transition-colors sm:w-44 sm:border sm:border-input sm:px-2.5 sm:shadow-xs",

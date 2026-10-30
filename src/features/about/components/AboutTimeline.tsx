@@ -20,7 +20,7 @@ export function AboutTimeline() {
 
       <div className="flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.webp" alt="" width={96} height={96} className="h-20 w-auto sm:h-24" />
+        <img src="/logo-md.webp" alt="" width={96} height={96} className="h-20 w-auto sm:h-24" />
       </div>
 
       <span className="text-center text-sm font-medium tracking-tight text-muted-foreground">

@@ -12,7 +12,7 @@ export type AcademySourceVisual =
   | { type: "initials"; initials: string };
 
 const ORGANIZATION_LOGO_SOURCES: Record<string, string> = {
-  "virastack ai": "/logo.webp",
+  "virastack ai": "/logo-sm.webp",
 };
 
 const ORGANIZATION_BADGE_ALIASES: Record<string, AcademyBadgeKind> = {
@@ -72,35 +72,35 @@ const PERSON_AVATAR_ALIASES: Record<string, string> = {
 
 const PERSON_AVATAR_SOURCES: Record<string, { imageSrc: string; initials: string }> = {
   "josh w. comeau": {
-    imageSrc: "/academy/authors/josh-w-comeau.png",
+    imageSrc: "/academy/authors/josh-w-comeau.webp",
     initials: "JC",
   },
   "adrian roselli": {
-    imageSrc: "/academy/authors/adrian-roselli.png",
+    imageSrc: "/academy/authors/adrian-roselli.webp",
     initials: "AR",
   },
   "alexander morgunov": {
-    imageSrc: "/academy/authors/alexander-morgunov.png",
+    imageSrc: "/academy/authors/alexander-morgunov.webp",
     initials: "AM",
   },
   "jack herrington": {
-    imageSrc: "/academy/authors/jack-herrington.png",
+    imageSrc: "/academy/authors/jack-herrington.webp",
     initials: "JH",
   },
   "luca mezzalira": {
-    imageSrc: "/academy/authors/luca-mezzalira.png",
+    imageSrc: "/academy/authors/luca-mezzalira.webp",
     initials: "LM",
   },
   "martin fowler": {
-    imageSrc: "/academy/authors/martin-fowler.png",
+    imageSrc: "/academy/authors/martin-fowler.webp",
     initials: "MF",
   },
   "matt pocock": {
-    imageSrc: "/academy/authors/matt-pocock.png",
+    imageSrc: "/academy/authors/matt-pocock.webp",
     initials: "MP",
   },
   "simon willison": {
-    imageSrc: "/academy/authors/simon-willison.png",
+    imageSrc: "/academy/authors/simon-willison.webp",
     initials: "SW",
   },
 };

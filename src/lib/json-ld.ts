@@ -13,7 +13,7 @@ const authorNode = {
   "@id": authorId,
   name: siteConfig.author.name,
   url: siteConfig.author.website,
-  image: siteConfig.author.avatar,
+  image: `${siteConfig.url}${siteConfig.author.avatar}`,
   sameAs: [siteConfig.author.github],
 };
 
