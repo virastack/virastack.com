@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
-import { buildOgImageMetadata } from "@/lib/og";
+import { buildLandingOgImageMetadata } from "@/lib/og";
 
 import { AcademyLanding } from "@/features/academy";
 import { routing } from "@/i18n/routing";
@@ -22,11 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tSeo = await getTranslations({ locale, namespace: "Seo" });
   const title = tSeo("productAcademy");
   const description = t("metaDescription");
-  const og = buildOgImageMetadata({
-    title: t("name"),
-    description,
-    path: "/academy",
-  });
+  const og = buildLandingOgImageMetadata(locale, "academy", title);
 
   return {
     title: { absolute: title },

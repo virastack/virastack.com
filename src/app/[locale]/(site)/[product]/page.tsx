@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildBreadcrumbJsonLd, buildSoftwareJsonLd } from "@/lib/json-ld";
-import { buildOgImageMetadata } from "@/lib/og";
+import { buildLandingOgImageMetadata } from "@/lib/og";
 import { getProductSeoName } from "@/lib/seo-title";
 
 import { JsonLd } from "@/components/shared/JsonLd";
@@ -60,16 +60,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const product = getProduct(productParam);
   const t = await getTranslations({ locale, namespace: "Products" });
-  const name = t(productNameKeys[product.id]);
   const description = String(t.raw(productMetaKeys[product.id])).replace(/<\/?[a-zA-Z]+>/g, "");
   const title = await getProductSeoName(locale, product.id);
 
-  const og = buildOgImageMetadata({
-    title: name,
-    description,
-    product: product.id,
-    path: product.href,
-  });
+  const og = buildLandingOgImageMetadata(locale, product.id, title);
 
   return {
     title: { absolute: title },

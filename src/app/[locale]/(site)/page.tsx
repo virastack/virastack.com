@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildHomeJsonLd } from "@/lib/json-ld";
-import { buildOgImageMetadata } from "@/lib/og";
+import { buildLandingOgImageMetadata } from "@/lib/og";
 
 import { JsonLd } from "@/components/shared/JsonLd";
 import { HomePage } from "@/features/home";
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${siteConfig.name} - ${t("title")}`;
   const description = t("metaDesc");
-  const og = buildOgImageMetadata({ description, path: "/" });
+  const og = buildLandingOgImageMetadata(locale, "home", title);
 
   return {
     title: {

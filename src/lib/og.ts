@@ -80,3 +80,21 @@ export function buildOgImageMetadata(
     twitter: { images: [twitterImage] },
   };
 }
+
+/** Pages that ship a pre-rendered card in `public/og-images/<locale>/<id>.png` (source: virastack/social, `media/og`). */
+export type OgLandingId =
+  "home" | "academy" | "start" | "ai" | "mask" | "password" | "address" | "guide";
+
+/** Open Graph + Twitter image fields for a landing page, from the pre-rendered dark lockup card. */
+export function buildLandingOgImageMetadata(
+  locale: string,
+  id: OgLandingId,
+  alt = siteConfig.name,
+): Pick<Metadata, "openGraph" | "twitter"> {
+  const url = `/og-images/${locale}/${id}.png`;
+
+  return {
+    openGraph: { images: [{ url, width: OG_SIZE.width, height: OG_SIZE.height, alt }] },
+    twitter: { images: [{ url, alt }] },
+  };
+}
