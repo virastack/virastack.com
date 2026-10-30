@@ -4,7 +4,7 @@ import { products } from "@/config/products.config";
 
 import { localeUrl } from "@/lib/canonical";
 
-import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy";
+import { getAcademyTracks, getPublishedLessonPaths, loadAcademyLesson } from "@/features/academy";
 import {
   getAddressDocsNav,
   getAiDocsNav,
@@ -17,12 +17,19 @@ import {
 import { routing } from "@/i18n/routing";
 
 /**
- * No `lastModified`: there is no per-page content date to report, and stamping
- * every URL with the build time teaches crawlers to ignore the field.
+ * Last review of the site's own pages. A fixed date, not the build time: stamping
+ * every URL with `new Date()` teaches crawlers to ignore the field, so bump this
+ * when the pages change. Academy lessons carry their own `lastVerified` instead.
  */
+const SITE_LAST_MODIFIED = "2026-10-30";
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lessonDate = (locale: string, track: string, lesson: string) =>
+    loadAcademyLesson(locale, track, lesson)?.frontmatter.lastVerified ?? SITE_LAST_MODIFIED;
+
   const homeEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "monthly" as const,
     priority: 1,
   }));
@@ -30,6 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const productEntries = routing.locales.flatMap((locale) =>
     products.map((product) => ({
       url: localeUrl(locale, product.href),
+      lastModified: SITE_LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
@@ -68,6 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const docsEntries = routing.locales.flatMap((locale) =>
     pageHrefs.map((href) => ({
       url: localeUrl(locale, href),
+      lastModified: SITE_LAST_MODIFIED,
       changeFrequency: "weekly" as const,
       priority: 0.75,
     })),
@@ -75,18 +84,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const docsFileEntries = fileHrefs.map((href) => ({
     url: localeUrl(routing.defaultLocale, href),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
 
   const guidePlayEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/guide/play"),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const startBuilderEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/start/builder"),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -94,6 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteEntries = routing.locales.flatMap((locale) =>
     (["/about", "/brand", "/support"] as const).map((path) => ({
       url: localeUrl(locale, path),
+      lastModified: SITE_LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
@@ -101,18 +114,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const academyHomeEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/academy"),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   const academySourcesEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/academy/sources"),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "weekly" as const,
     priority: 0.75,
   }));
 
   const academyContributeEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/academy/contribute"),
+    lastModified: SITE_LAST_MODIFIED,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -122,6 +138,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .filter((track) => track.status === "published")
       .map((track) => ({
         url: localeUrl(locale, `/academy/${track.slug}`),
+        lastModified: SITE_LAST_MODIFIED,
         changeFrequency: "weekly" as const,
         priority: 0.75,
       })),
@@ -130,6 +147,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const academyLessonEntries = routing.locales.flatMap((locale) =>
     getPublishedLessonPaths(locale).map((path) => ({
       url: localeUrl(locale, `/academy/${path.track}/${path.lesson}`),
+      lastModified: lessonDate(locale, path.track, path.lesson),
       changeFrequency: "weekly" as const,
       priority: 0.7,
     })),

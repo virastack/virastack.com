@@ -24,11 +24,15 @@ describe("sitemap", () => {
     expect([...new Set(urls.map((url) => new URL(url).origin))]).toHaveLength(1);
   });
 
-  /** A build-time `<lastmod>` on every URL is noise crawlers learn to ignore. */
-  it("does not stamp URLs with a fake lastmod", async () => {
+  /** A `<lastmod>` is a fixed date or a lesson's own date, never the moving build time. */
+  it("gives every URL a valid, non-future lastmod", async () => {
     const xml = await fetch(`${baseUrl()}/sitemap.xml`).then((r) => r.text());
+    const dates = [...xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1] ?? "");
+    const urls = [...xml.matchAll(/<loc>/g)];
 
-    expect(xml).not.toContain("<lastmod>");
+    expect(dates).toHaveLength(urls.length);
+    expect(dates.filter((date) => !/^\d{4}-\d{2}-\d{2}/.test(date))).toEqual([]);
+    expect(dates.filter((date) => new Date(date).getTime() > Date.now())).toEqual([]);
   });
 
   /** A sitemap entry that redirects or 404s wastes crawl budget and signals a stale map. */
