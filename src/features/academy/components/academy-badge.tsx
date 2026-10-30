@@ -1,82 +1,158 @@
 import type { ComponentType, ReactNode, SVGProps } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
-import { AnthropicBlack } from "@/components/ui/svgs/anthropicBlack";
-import { AnthropicWhite } from "@/components/ui/svgs/anthropicWhite";
-import { Atlassian } from "@/components/ui/svgs/atlassian";
-import { Azure } from "@/components/ui/svgs/azure";
-import { Biomejs } from "@/components/ui/svgs/biomejs";
-import { ClaudeAiIcon } from "@/components/ui/svgs/claudeAiIcon";
-import { CodexDark } from "@/components/ui/svgs/codexDark";
-import { CodexLight } from "@/components/ui/svgs/codexLight";
-import { Copilot } from "@/components/ui/svgs/copilot";
-import { CopilotDark } from "@/components/ui/svgs/copilotDark";
-import { Css } from "@/components/ui/svgs/css";
-import { CursorDark } from "@/components/ui/svgs/cursorDark";
-import { CursorLight } from "@/components/ui/svgs/cursorLight";
-import { Docker } from "@/components/ui/svgs/docker";
-import { EslintIconDark } from "@/components/ui/svgs/eslintIconDark";
-import { EslintIconLight } from "@/components/ui/svgs/eslintIconLight";
-import { Figma } from "@/components/ui/svgs/figma";
-import { Formik } from "@/components/ui/svgs/formik";
-import { FormikDark } from "@/components/ui/svgs/formikDark";
-import { Gemini } from "@/components/ui/svgs/gemini";
-import { GithubDark } from "@/components/ui/svgs/githubDark";
-import { GithubLight } from "@/components/ui/svgs/githubLight";
-import { Google } from "@/components/ui/svgs/google";
-import { Html5 } from "@/components/ui/svgs/html5";
-import { Javascript } from "@/components/ui/svgs/javascript";
-import { Linear } from "@/components/ui/svgs/linear";
-import { Materialui } from "@/components/ui/svgs/materialui";
-import { Mdn } from "@/components/ui/svgs/mdn";
-import { Meta } from "@/components/ui/svgs/meta";
-import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
-import { Nodejs } from "@/components/ui/svgs/nodejs";
-import { Npm } from "@/components/ui/svgs/npm";
-import { Nuxt } from "@/components/ui/svgs/nuxt";
-import { Openai } from "@/components/ui/svgs/openai";
-import { OpenaiDark } from "@/components/ui/svgs/openaiDark";
-import { Owasp } from "@/components/ui/svgs/owasp";
-import { Playwright } from "@/components/ui/svgs/playwright";
-import { Pnpm } from "@/components/ui/svgs/pnpm";
-import { PnpmDark } from "@/components/ui/svgs/pnpmDark";
-import { PrettierIconDark } from "@/components/ui/svgs/prettierIconDark";
-import { PrettierIconLight } from "@/components/ui/svgs/prettierIconLight";
-import { QwenDark } from "@/components/ui/svgs/qwenDark";
-import { QwenLight } from "@/components/ui/svgs/qwenLight";
-import { ReactDark } from "@/components/ui/svgs/reactDark";
-import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
-import { ReactLight } from "@/components/ui/svgs/reactLight";
-import { Reactrouter } from "@/components/ui/svgs/reactrouter";
-import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
-import { ShadcnUiDark } from "@/components/ui/svgs/shadcnUiDark";
-import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
-import { TanstackDark } from "@/components/ui/svgs/tanstackDark";
-import { TanstackLight } from "@/components/ui/svgs/tanstackLight";
-import { TestingLibrary } from "@/components/ui/svgs/testingLibrary";
-import { TurborepoIconDark } from "@/components/ui/svgs/turborepoIconDark";
-import { TurborepoIconLight } from "@/components/ui/svgs/turborepoIconLight";
-import { Typescript } from "@/components/ui/svgs/typescript";
-import { Vercel } from "@/components/ui/svgs/vercel";
-import { VercelDark } from "@/components/ui/svgs/vercelDark";
-import { Vite } from "@/components/ui/svgs/vite";
-import { Vitest } from "@/components/ui/svgs/vitest";
-import { Vscode } from "@/components/ui/svgs/vscode";
-import { WindsurfDark } from "@/components/ui/svgs/windsurfDark";
-import { WindsurfLight } from "@/components/ui/svgs/windsurfLight";
-import { ZedLogo } from "@/components/ui/svgs/zedLogo";
-import { ZedLogoDark } from "@/components/ui/svgs/zedLogoDark";
-import { Zod } from "@/components/ui/svgs/zod";
-import { Zustand } from "@/components/ui/svgs/zustand";
 import {
   ACADEMY_BADGE_LABELS,
   ACADEMY_COMPANY_BADGES,
   ACADEMY_QUERY_BADGES,
   type AcademyBadgeKind,
 } from "@/features/academy/constants/badge.constants";
+
+/**
+ * Brand logos load on demand: a page ships only the SVGs of the badges it renders,
+ * not all ~70 (a static import of every logo cost ~107 KB gzip on client pages).
+ */
+const AntDesignDarkTheme = dynamic(() =>
+  import("@/components/ui/svgs/antDesignDarkTheme").then((m) => m.AntDesignDarkTheme),
+);
+const AnthropicBlack = dynamic(() =>
+  import("@/components/ui/svgs/anthropicBlack").then((m) => m.AnthropicBlack),
+);
+const AnthropicWhite = dynamic(() =>
+  import("@/components/ui/svgs/anthropicWhite").then((m) => m.AnthropicWhite),
+);
+const Atlassian = dynamic(() => import("@/components/ui/svgs/atlassian").then((m) => m.Atlassian));
+const Azure = dynamic(() => import("@/components/ui/svgs/azure").then((m) => m.Azure));
+const Biomejs = dynamic(() => import("@/components/ui/svgs/biomejs").then((m) => m.Biomejs));
+const ClaudeAiIcon = dynamic(() =>
+  import("@/components/ui/svgs/claudeAiIcon").then((m) => m.ClaudeAiIcon),
+);
+const CodexDark = dynamic(() => import("@/components/ui/svgs/codexDark").then((m) => m.CodexDark));
+const CodexLight = dynamic(() =>
+  import("@/components/ui/svgs/codexLight").then((m) => m.CodexLight),
+);
+const Copilot = dynamic(() => import("@/components/ui/svgs/copilot").then((m) => m.Copilot));
+const CopilotDark = dynamic(() =>
+  import("@/components/ui/svgs/copilotDark").then((m) => m.CopilotDark),
+);
+const Css = dynamic(() => import("@/components/ui/svgs/css").then((m) => m.Css));
+const CursorDark = dynamic(() =>
+  import("@/components/ui/svgs/cursorDark").then((m) => m.CursorDark),
+);
+const CursorLight = dynamic(() =>
+  import("@/components/ui/svgs/cursorLight").then((m) => m.CursorLight),
+);
+const Docker = dynamic(() => import("@/components/ui/svgs/docker").then((m) => m.Docker));
+const EslintIconDark = dynamic(() =>
+  import("@/components/ui/svgs/eslintIconDark").then((m) => m.EslintIconDark),
+);
+const EslintIconLight = dynamic(() =>
+  import("@/components/ui/svgs/eslintIconLight").then((m) => m.EslintIconLight),
+);
+const Figma = dynamic(() => import("@/components/ui/svgs/figma").then((m) => m.Figma));
+const Formik = dynamic(() => import("@/components/ui/svgs/formik").then((m) => m.Formik));
+const FormikDark = dynamic(() =>
+  import("@/components/ui/svgs/formikDark").then((m) => m.FormikDark),
+);
+const Gemini = dynamic(() => import("@/components/ui/svgs/gemini").then((m) => m.Gemini));
+const GithubDark = dynamic(() =>
+  import("@/components/ui/svgs/githubDark").then((m) => m.GithubDark),
+);
+const GithubLight = dynamic(() =>
+  import("@/components/ui/svgs/githubLight").then((m) => m.GithubLight),
+);
+const Google = dynamic(() => import("@/components/ui/svgs/google").then((m) => m.Google));
+const Html5 = dynamic(() => import("@/components/ui/svgs/html5").then((m) => m.Html5));
+const Javascript = dynamic(() =>
+  import("@/components/ui/svgs/javascript").then((m) => m.Javascript),
+);
+const Linear = dynamic(() => import("@/components/ui/svgs/linear").then((m) => m.Linear));
+const Materialui = dynamic(() =>
+  import("@/components/ui/svgs/materialui").then((m) => m.Materialui),
+);
+const Mdn = dynamic(() => import("@/components/ui/svgs/mdn").then((m) => m.Mdn));
+const Meta = dynamic(() => import("@/components/ui/svgs/meta").then((m) => m.Meta));
+const NextjsIconDark = dynamic(() =>
+  import("@/components/ui/svgs/nextjsIconDark").then((m) => m.NextjsIconDark),
+);
+const Nodejs = dynamic(() => import("@/components/ui/svgs/nodejs").then((m) => m.Nodejs));
+const Npm = dynamic(() => import("@/components/ui/svgs/npm").then((m) => m.Npm));
+const Nuxt = dynamic(() => import("@/components/ui/svgs/nuxt").then((m) => m.Nuxt));
+const Openai = dynamic(() => import("@/components/ui/svgs/openai").then((m) => m.Openai));
+const OpenaiDark = dynamic(() =>
+  import("@/components/ui/svgs/openaiDark").then((m) => m.OpenaiDark),
+);
+const Owasp = dynamic(() => import("@/components/ui/svgs/owasp").then((m) => m.Owasp));
+const Playwright = dynamic(() =>
+  import("@/components/ui/svgs/playwright").then((m) => m.Playwright),
+);
+const Pnpm = dynamic(() => import("@/components/ui/svgs/pnpm").then((m) => m.Pnpm));
+const PnpmDark = dynamic(() => import("@/components/ui/svgs/pnpmDark").then((m) => m.PnpmDark));
+const PrettierIconDark = dynamic(() =>
+  import("@/components/ui/svgs/prettierIconDark").then((m) => m.PrettierIconDark),
+);
+const PrettierIconLight = dynamic(() =>
+  import("@/components/ui/svgs/prettierIconLight").then((m) => m.PrettierIconLight),
+);
+const QwenDark = dynamic(() => import("@/components/ui/svgs/qwenDark").then((m) => m.QwenDark));
+const QwenLight = dynamic(() => import("@/components/ui/svgs/qwenLight").then((m) => m.QwenLight));
+const ReactDark = dynamic(() => import("@/components/ui/svgs/reactDark").then((m) => m.ReactDark));
+const ReactHookForm = dynamic(() =>
+  import("@/components/ui/svgs/reactHookForm").then((m) => m.ReactHookForm),
+);
+const ReactLight = dynamic(() =>
+  import("@/components/ui/svgs/reactLight").then((m) => m.ReactLight),
+);
+const Reactrouter = dynamic(() =>
+  import("@/components/ui/svgs/reactrouter").then((m) => m.Reactrouter),
+);
+const ShadcnUi = dynamic(() => import("@/components/ui/svgs/shadcnUi").then((m) => m.ShadcnUi));
+const ShadcnUiDark = dynamic(() =>
+  import("@/components/ui/svgs/shadcnUiDark").then((m) => m.ShadcnUiDark),
+);
+const Tailwindcss = dynamic(() =>
+  import("@/components/ui/svgs/tailwindcss").then((m) => m.Tailwindcss),
+);
+const TanstackDark = dynamic(() =>
+  import("@/components/ui/svgs/tanstackDark").then((m) => m.TanstackDark),
+);
+const TanstackLight = dynamic(() =>
+  import("@/components/ui/svgs/tanstackLight").then((m) => m.TanstackLight),
+);
+const TestingLibrary = dynamic(() =>
+  import("@/components/ui/svgs/testingLibrary").then((m) => m.TestingLibrary),
+);
+const TurborepoIconDark = dynamic(() =>
+  import("@/components/ui/svgs/turborepoIconDark").then((m) => m.TurborepoIconDark),
+);
+const TurborepoIconLight = dynamic(() =>
+  import("@/components/ui/svgs/turborepoIconLight").then((m) => m.TurborepoIconLight),
+);
+const Typescript = dynamic(() =>
+  import("@/components/ui/svgs/typescript").then((m) => m.Typescript),
+);
+const Vercel = dynamic(() => import("@/components/ui/svgs/vercel").then((m) => m.Vercel));
+const VercelDark = dynamic(() =>
+  import("@/components/ui/svgs/vercelDark").then((m) => m.VercelDark),
+);
+const Vite = dynamic(() => import("@/components/ui/svgs/vite").then((m) => m.Vite));
+const Vitest = dynamic(() => import("@/components/ui/svgs/vitest").then((m) => m.Vitest));
+const Vscode = dynamic(() => import("@/components/ui/svgs/vscode").then((m) => m.Vscode));
+const WindsurfDark = dynamic(() =>
+  import("@/components/ui/svgs/windsurfDark").then((m) => m.WindsurfDark),
+);
+const WindsurfLight = dynamic(() =>
+  import("@/components/ui/svgs/windsurfLight").then((m) => m.WindsurfLight),
+);
+const ZedLogo = dynamic(() => import("@/components/ui/svgs/zedLogo").then((m) => m.ZedLogo));
+const ZedLogoDark = dynamic(() =>
+  import("@/components/ui/svgs/zedLogoDark").then((m) => m.ZedLogoDark),
+);
+const Zod = dynamic(() => import("@/components/ui/svgs/zod").then((m) => m.Zod));
+const Zustand = dynamic(() => import("@/components/ui/svgs/zustand").then((m) => m.Zustand));
 
 type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
