@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import type { ProductId } from "@/types/product.types";
 import { isAcademyPath } from "@/config/academy-subnav.config";
+import { getBrandPalette } from "@/config/brand-palettes.config";
 import { productIcons } from "@/config/product-icons.config";
 import { getProductByPathname, products } from "@/config/products.config";
 import { headerNavLinks } from "@/config/site-nav.config";
@@ -60,8 +61,18 @@ const productDescKeys = {
   guide: "guideDesc",
 } as const satisfies Record<ProductId, string>;
 
+const academyPalette = getBrandPalette("academy");
+
 export function Header() {
   const t = useTranslations("Navigation");
+
+  /** Academy is a product, so its name carries the product color instead of plain text. */
+  const navLabel = (item: (typeof headerNavLinks)[number]) =>
+    item.href === "/academy" ? (
+      <span className={cn("font-semibold", academyPalette.textClass)}>{t(item.labelKey)}</span>
+    ) : (
+      t(item.labelKey)
+    );
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeProduct = getProductByPathname(pathname);
@@ -147,7 +158,7 @@ export function Header() {
                       className={navigationMenuTriggerStyle()}
                       render={<Link href={item.href} />}
                     >
-                      {t(item.labelKey)}
+                      {navLabel(item)}
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 );
@@ -269,7 +280,7 @@ export function Header() {
                             />
                           }
                         >
-                          {t(item.labelKey)}
+                          {navLabel(item)}
                         </DrawerClose>
                       </li>
                     );
