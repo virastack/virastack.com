@@ -5,7 +5,7 @@ export function MaskHelpersDoc() {
     <>
       <DocsPageHeader
         title="Helpers"
-        description="Hook olmadan da kullanabileceğiniz formatlama ve yardımcı fonksiyonlar."
+        description="Hook olmadan da kullanabileceğin formatlama ve yardımcı fonksiyonlar."
       />
       <DocsProse>
         <h2 id="mask">Maske yardımcıları</h2>
@@ -50,7 +50,7 @@ export function MaskHelpersDoc() {
         <ul>
           <li>
             <code>formatCurrency(value, options)</code>: ham <code>&quot;1234.56&quot;</code> →
-            görüntü (<code>1,234.56</code> US varsayılan; TR için ayırıcıları customize edin)
+            görüntü (<code>1,234.56</code> US varsayılan; TR için ayırıcıları customize et)
           </li>
           <li>
             <code>unformatCurrency(value, options)</code>: görüntü → ham
@@ -71,7 +71,7 @@ export function MaskHelpersDoc() {
         <h2 id="refs">Refs</h2>
         <p>
           <code>mergeRefs(...refs)</code>: RHF register ref’i ile yerel ref’i birleştirmek için.
-          Hook bunu dahili kullanır; kendi kontrollü input’unuzda da işe yarar.
+          Hook bunu dahili kullanır; kendi kontrollü input’unda da işe yarar.
         </p>
       </DocsProse>
     </>

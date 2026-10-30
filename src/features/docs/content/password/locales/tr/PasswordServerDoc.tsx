@@ -26,14 +26,14 @@ export function PasswordServerDoc() {
     <>
       <DocsPageHeader
         title="Sunucu doğrulaması"
-        description="Aynı politikayı @virastack/password/server ile Server Action ve API route'larda çalıştırın."
+        description="Aynı politikayı @virastack/password/server ile Server Action ve API route'larda çalıştır."
       />
       <DocsProse>
         <h2 id="giris">Sunucu girişi</h2>
         <p>
           Tarayıcı atlanabilir; karar sunucudadır. <code>validatePassword</code>&#32;formla aynı
           motoru kullanır; aynı girdi iki tarafta aynı hataları verir. Kayıt, parola sıfırlama ve
-          parola değiştirmede kullanın.
+          parola değiştirmede kullan.
         </p>
         <DocsCodeBlock code={apiCode} lang="ts" />
         <p>String olmayan her şey (eksik alan, File) boş parola sayılır.</p>
@@ -57,7 +57,7 @@ export function PasswordServerDoc() {
             veya <code>/strength</code>&#32;import eder.
           </li>
           <li>
-            Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada tutun.
+            Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada tut.
           </li>
           <li>
             Hook server&apos;da ve client&apos;ta aynı işaretlemeyi üretir (id&apos;ler{" "}

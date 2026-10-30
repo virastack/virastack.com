@@ -49,14 +49,14 @@ export function MaskServerDoc() {
     <>
       <DocsPageHeader
         title="Sunucu"
-        description="@virastack/mask/server ile aynı şemayı Server Component ve Server Action içinde kullanın."
+        description="@virastack/mask/server ile aynı şemayı Server Component ve Server Action içinde kullan."
       />
       <DocsProse>
         <h2 id="giris">Sunucu girişi</h2>
         <p>
           Kök paket (<code>@virastack/mask</code>) hook içerdiği için{" "}
           <code>&quot;use client&quot;</code> ile gelir. Server Component, Server Action ve
-          paylaşılan şema dosyalarında <code>@virastack/mask/server</code> kullanın:{" "}
+          paylaşılan şema dosyalarında <code>@virastack/mask/server</code> kullan:{" "}
           <code>createMask</code>, <code>definePreset</code>, doğrulayıcılar,{" "}
           <code>toMinorUnits</code> ve <code>parseMasked</code> buradadır.
         </p>
@@ -74,8 +74,8 @@ export function MaskServerDoc() {
         <h2 id="standard-schema">Standard Schema</h2>
         <p>
           Üçüncü argüman olarak <AcademyBadge kind="zod" />, Valibot, ArkType gibi herhangi bir
-          Standard Schema verin. Paket bunlara bağımlı değildir; yalnızca ortak arayüzü kullanır.
-          Şema verildiğinde sonuç bir Promise&apos;tir.
+          Standard Schema ver. Paket bunlara bağımlı değildir; yalnızca ortak arayüzü kullanır. Şema
+          verildiğinde sonuç bir Promise&apos;tir.
         </p>
         <DocsCodeBlock code={standardCode} lang="ts" />
       </DocsProse>

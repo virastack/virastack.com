@@ -41,7 +41,7 @@ export function MaskHelpersDoc() {
     <>
       <DocsPageHeader
         title="Yardımcılar"
-        description="Hook dışında kullanabileceğiniz saf maske, doğrulayıcı ve para fonksiyonları."
+        description="Hook dışında kullanabileceğin saf maske, doğrulayıcı ve para fonksiyonları."
       />
       <DocsProse>
         <p>
@@ -60,7 +60,7 @@ export function MaskHelpersDoc() {
         <DocsCodeBlock code={validatorsCode} lang="ts" />
         <p>
           Bir Türkiye IBAN&apos;ının hangi bankaya ait olduğunu bulmak için{" "}
-          <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullanın.
+          <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullan.
         </p>
 
         <h2 id="money">Para</h2>

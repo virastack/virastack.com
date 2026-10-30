@@ -23,7 +23,7 @@ interface UseViraPasswordOptions {
 }`;
 
 const resultCode = `interface UseViraPasswordResult {
-  inputProps: ViraPasswordInputProps // InputHTMLAttributes (+ verdiyseniz sizin ref'iniz)
+  inputProps: ViraPasswordInputProps // InputHTMLAttributes (+ verdiysen senin ref'in)
   btnProps: ButtonHTMLAttributes<HTMLButtonElement>
   isVisible: boolean
   capsLock: boolean

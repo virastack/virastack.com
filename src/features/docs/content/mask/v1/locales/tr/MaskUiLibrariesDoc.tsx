@@ -75,7 +75,7 @@ export async function MaskUiLibrariesDoc() {
       />
       <DocsProse>
         <p>
-          <code>useViraMask()</code> alan props’larını döndürür. Input’a doğrudan spread edin;{" "}
+          <code>useViraMask()</code> alan props’larını döndürür. Input’a doğrudan spread et;{" "}
           <code>card.value</code> formatlı görünümü, <code>card.rawValue</code> formdaki ham değeri
           verir.
         </p>

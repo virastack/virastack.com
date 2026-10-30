@@ -69,8 +69,8 @@ export async function PasswordUiLibrariesDoc() {
       />
       <DocsProse>
         <p>
-          <code>useViraPassword()</code>&#32;prop bag döndürür. Input ve butona doğrudan spread
-          edin; ikon <code>btnProps.children</code>&#32;içindedir.
+          <code>useViraPassword()</code>&#32;prop bag döndürür. Input ve butona doğrudan spread et;
+          ikon <code>btnProps.children</code>&#32;içindedir.
         </p>
         <p>
           Paket yalnızca görünürlük mantığını ve erişilebilir props’ları yönetir; markup ve stil

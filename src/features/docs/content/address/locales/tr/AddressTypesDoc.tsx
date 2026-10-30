@@ -226,7 +226,7 @@ export function AddressTypesDoc() {
 
         <h2 id="form">Form tipleri</h2>
         <p>
-          <code>P</code>, formun alan yollarıdır. <code>useForm&lt;T&gt;()</code>&#32;verdiğinizde
+          <code>P</code>, formun alan yollarıdır. <code>useForm&lt;T&gt;()</code>&#32;verdiğinde
           TypeScript onu formdan çıkarır ve <code>names</code>&#32;içindeki her adı kontrol eder.
         </p>
         <DocsCodeBlock code={formCode} lang="ts" />

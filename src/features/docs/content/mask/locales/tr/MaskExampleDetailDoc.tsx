@@ -192,7 +192,7 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
         ) : null}
 
         <p>
-          Hook API için <Link href="/mask/docs/use-vira-mask">useViraMask()</Link>, kendi deseniniz
+          Hook API için <Link href="/mask/docs/use-vira-mask">useViraMask()</Link>, kendi desenin
           için <Link href="/mask/docs/custom-mask">özel maske</Link>.
         </p>
       </DocsProse>

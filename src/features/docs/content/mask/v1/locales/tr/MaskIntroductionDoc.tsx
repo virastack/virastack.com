@@ -21,8 +21,8 @@ export function MaskIntroductionDoc() {
 
         <h2 id="baslarken">Başlarken</h2>
         <p>
-          Paketi ekleyin. Canlı maske örneklerini görmek için{" "}
-          <Link href="/mask/examples">örnekler</Link> sayfasına bakın.
+          Paketi ekle. Canlı maske örneklerini görmek için{" "}
+          <Link href="/mask/examples">örnekler</Link> sayfasına bak.
         </p>
 
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask@1")} />

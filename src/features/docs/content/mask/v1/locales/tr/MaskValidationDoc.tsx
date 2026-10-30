@@ -13,7 +13,7 @@ export async function MaskValidationDoc() {
     <>
       <DocsPageHeader
         title="Validation"
-        description="Hazır maskelerdeki yerleşik doğrulayıcılar veya kendi fonksiyonunuz. React Hook Form hatalarına bağlanır."
+        description="Hazır maskelerdeki yerleşik doğrulayıcılar veya kendi fonksiyonun. React Hook Form hatalarına bağlanır."
       />
       <DocsProse>
         <h2 id="built-in">Yerleşik validators</h2>
@@ -94,7 +94,7 @@ export async function MaskValidationDoc() {
         <h2 id="mesaj">Hata mesajı</h2>
         <p>
           Başarısız doğrulamada <code>errorMessage</code> döner; verilmezse RHF <code>false</code>{" "}
-          alır. Hataları <code>form.formState.errors</code> üzerinden okuyun.
+          alır. Hataları <code>form.formState.errors</code> üzerinden oku.
         </p>
         <p>
           Tip tanımları için <Link href="/mask/docs/v1/types">types</Link>, canlı örnekler için{" "}

@@ -13,7 +13,7 @@ export async function PasswordExamplesDoc() {
     <>
       <DocsPageHeader
         title="Örnekler"
-        description="Canlı önizlemeler. Detay ve kod için başlığa tıklayın."
+        description="Canlı önizlemeler. Detay ve kod için başlığa tıkla."
       />
       <DocsProse>
         <h2 id="tum">Tüm örnekler</h2>

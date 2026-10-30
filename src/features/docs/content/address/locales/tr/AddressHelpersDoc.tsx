@@ -94,7 +94,7 @@ export function AddressHelpersDoc() {
           ekler, <code>separator</code>&#32;ilçe ile il arasındakini değiştirir. Seçilmemiş
           seviyeler atlanır, yarım doldurulmuş bir form da düzgün okunur. Hook&apos;un{" "}
           <code>value</code>
-          &apos;sunu, <code>resolveAddress</code>&#32;sonucunu ya da kendi nesnenizi alır;{" "}
+          &apos;sunu, <code>resolveAddress</code>&#32;sonucunu ya da kendi nesneni alır;{" "}
           <code>/server</code>&#32;içinden de dışa aktarılır.
         </p>
       </DocsProse>

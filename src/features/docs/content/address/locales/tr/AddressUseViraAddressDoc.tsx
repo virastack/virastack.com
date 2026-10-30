@@ -16,7 +16,7 @@ return (
       value={value.provinceCode ?? ""}
       onChange={(e) => setProvince(e.target.value)}
     >
-      <option value="">İl seçiniz</option>
+      <option value="">İl seç</option>
       {provinces.map((p) => (
         <option key={p.value} value={p.value}>{p.label}</option>
       ))}
@@ -27,7 +27,7 @@ return (
       onChange={(e) => setDistrict(e.target.value)}
       disabled={!districts.length}
     >
-      <option value="">İlçe seçiniz</option>
+      <option value="">İlçe seç</option>
       {districts.map((d) => (
         <option key={d.value} value={d.value}>{d.label}</option>
       ))}
@@ -39,7 +39,7 @@ return (
       disabled={!neighbourhoods.length}
     >
       <option value="">
-        {loading.neighbourhoods ? "Yükleniyor…" : "Mahalle seçiniz"}
+        {loading.neighbourhoods ? "Yükleniyor…" : "Mahalle seç"}
       </option>
       {neighbourhoods.map((n) => (
         <option key={n.value} value={n.value}>{n.label}</option>
@@ -78,7 +78,7 @@ const options: [string, ReactNode, ReactNode][] = [
   [
     "source",
     "paketteki veri seti",
-    "Listelerin geldiği yer. Test fixture'ı ya da kendi API'niz için değiştirin.",
+    "Listelerin geldiği yer. Test fixture'ı ya da kendi API'n için değiştir.",
   ],
   [
     "defaultValue",
@@ -187,7 +187,7 @@ export function AddressUseViraAddressDoc() {
     <>
       <DocsPageHeader
         title="useViraAddress()"
-        description="Hook API'si: seçenekler, dönüş değeri, value nesnesi ve kendi veri kaynağınız."
+        description="Hook API'si: seçenekler, dönüş değeri, value nesnesi ve kendi veri kaynağın."
       />
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
@@ -211,7 +211,7 @@ export function AddressUseViraAddressDoc() {
           Seçilmemiş seviyeler <code>null</code>, <code>postalCodes</code>&#32;boş dizidir. Adlar
           veri setindeki gibi büyük harflidir; ekranda göstermek için listelerdeki{" "}
           <code>label</code>&#32;alanını ya da <Link href="/address/docs/helpers">formatName</Link>
-          &#32;kullanın.
+          &#32;kullan.
         </p>
 
         <h2 id="secenekler">Seçenekler</h2>
@@ -265,10 +265,10 @@ export function AddressUseViraAddressDoc() {
           </table>
         </div>
 
-        <h2 id="kaynak">Kendi veri kaynağınız</h2>
+        <h2 id="kaynak">Kendi veri kaynağın</h2>
         <p>
           Varsayılan kaynak paketteki veri setidir. Testlerde küçük bir fixture kullanmak ya da
-          listeleri kendi API&apos;nizden okumak için <code>source</code>&#32;verin:
+          listeleri kendi API&apos;nden okumak için <code>source</code>&#32;ver:
         </p>
         <DocsCodeBlock code={sourceCode} />
         <p>

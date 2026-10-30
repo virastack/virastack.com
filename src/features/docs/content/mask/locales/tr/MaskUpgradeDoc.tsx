@@ -35,7 +35,7 @@ const presetRows: Row[] = [
   ["numeric", "number"],
   [
     "email, url, username, alpha, password, text, zipCode",
-    "Kaldırıldı; şemanızda doğrulayın ya da definePreset",
+    "Kaldırıldı; şemanda doğrula ya da definePreset",
   ],
 ];
 
@@ -46,7 +46,7 @@ const optionRows: Row[] = [
     'validator: "tckn" / validate: true',
     'Presette yerleşik; ekleme için validate: (value) => true | "anahtar"',
   ],
-  ["errorMessage", "Hata anahtarı döner (tckn.invalid); mesajı siz eşlersiniz"],
+  ["errorMessage", "Hata anahtarı döner (tckn.invalid); mesajı sen eşlersin"],
   [
     "currency: { decimalSeparator, thousandSeparator, symbol }",
     "currency: { code, locale, scale }",
@@ -104,9 +104,9 @@ export function MaskUpgradeDoc() {
         <p>
           Prompt&apos;u kopyalayıp projenizde <AcademyBadge kind="claudeCode" />,{" "}
           <AcademyBadge kind="cursor" /> ya da <AcademyBadge kind="codex" />
-          &#32;gibi bir agent&apos;a verin. Agent tüm kullanımları bulur, v2&apos;ye çevirir, tip
+          &#32;gibi bir agent&apos;a ver. Agent tüm kullanımları bulur, v2&apos;ye çevirir, tip
           kontrolü ve testleri çalıştırır; sonunda biçimi değişen verileri (tarih ISO, TR
-          IBAN&apos;da <code>TR</code>) onayınız için listeler.
+          IBAN&apos;da <code>TR</code>) onayın için listeler.
         </p>
         <DocsPromptBlock
           prompt={MASK_UPGRADE_PROMPT}
@@ -124,7 +124,7 @@ export function MaskUpgradeDoc() {
         <h2 id="imza">Hook imzası</h2>
         <DocsCodeBlock code={signatureCode} lang="tsx" />
         <p>
-          Şema anahtarları formdaki alan adları olmalı (ya da <code>name</code> verin). Yazım hatası
+          Şema anahtarları formdaki alan adları olmalı (ya da <code>name</code> ver). Yazım hatası
           artık derleme hatasıdır.
         </p>
 

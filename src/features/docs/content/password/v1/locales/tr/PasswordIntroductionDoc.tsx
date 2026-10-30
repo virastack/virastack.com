@@ -21,8 +21,8 @@ export function PasswordIntroductionDoc() {
 
         <h2 id="baslarken">Başlarken</h2>
         <p>
-          Paketi ekleyin. Canlı demolar için <Link href="/password/examples">örnekler</Link>{" "}
-          sayfasına bakın.
+          Paketi ekle. Canlı demolar için <Link href="/password/examples">örnekler</Link> sayfasına
+          bak.
         </p>
 
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password@1.0")} />

@@ -84,8 +84,8 @@ export function PasswordAccessibilityDoc() {
         <h2 id="button">type=button</h2>
         <p>
           Toggle her zaman <code>type=&quot;button&quot;</code>&#32;alır. Böylece form içinde
-          yanlışlıkla submit tetiklenmez: kendi buton bileşeninizi kullanırken de bu değer korunur
-          (override etmeyin).
+          yanlışlıkla submit tetiklenmez: kendi buton bileşenini kullanırken de bu değer korunur
+          (override etme).
         </p>
 
         <h2 id="ids">Stabil ID’ler</h2>

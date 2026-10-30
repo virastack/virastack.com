@@ -77,13 +77,13 @@ export function AddressPostalCodeDoc() {
     <>
       <DocsPageHeader
         title="Posta kodundan adres"
-        description="Posta kodunu yazın, select'ler dolsun: tek mahalleli kodda üç seviye, ortak kodda il ve ilçe."
+        description="Posta kodunu yaz, select'ler dolsun: tek mahalleli kodda üç seviye, ortak kodda il ve ilçe."
       />
       <DocsProse>
         <p>
           Adres, select&apos;lerden seçilmek yerine posta kodundan da doldurulabilir. Posta kodu
-          input&apos;u ekleyin; kod yazılınca select&apos;ler kendiliğinden dolar. Mahalle seçilince
-          de aynı input türetilen kodu gösterir, iki yön birlikte çalışır.
+          input&apos;u ekle; kod yazılınca select&apos;ler kendiliğinden dolar. Mahalle seçilince de
+          aynı input türetilen kodu gösterir, iki yön birlikte çalışır.
         </p>
 
         <h2 id="input">Posta kodu input&apos;u</h2>
@@ -103,7 +103,7 @@ export function AddressPostalCodeDoc() {
         </p>
         <p>
           <code>names.postalCode</code>&#32;verdiyseniz input o adı taşır. Aynı formda gizli{" "}
-          <code>getPostalCodeProps()</code>&#32;input&apos;unu ayrıca kullanmayın; ikisi aynı alanı
+          <code>getPostalCodeProps()</code>&#32;input&apos;unu ayrıca kullanma; ikisi aynı alanı
           gönderir.
         </p>
 
@@ -164,12 +164,12 @@ export function AddressPostalCodeDoc() {
 
         <h2 id="set-postal-code">setPostalCode()</h2>
         <p>
-          Input kullanmadan, örneğin kayıtlı bir adresten ya da konumdan gelen kodla aramayı
-          kendiniz başlatın. Promise, bulunan durumla çözülür:
+          Input kullanmadan, örneğin kayıtlı bir adresten ya da konumdan gelen kodla aramayı kendin
+          başlat. Promise, bulunan durumla çözülür:
         </p>
         <DocsCodeBlock code={setterCode} lang="ts" />
         <p>
-          Kodu metin olarak verin: <code>01040</code>&#32;sayı olarak <code>1040</code>&#32;olur ve
+          Kodu metin olarak ver: <code>01040</code>&#32;sayı olarak <code>1040</code>&#32;olur ve
           baştaki sıfır geri getirilemez. Boşluklar atılır, <code>&quot;34 710&quot;</code>
           &#32;çalışır.
         </p>

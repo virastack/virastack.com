@@ -24,7 +24,7 @@ export async function MaskUseViraMaskDoc() {
     <>
       <DocsPageHeader
         title="useViraMask()"
-        description="Tek hook ile birden fazla alanı maskeleyin. Schema alan adları form alanlarıyla eşleşir."
+        description="Tek hook ile birden fazla alanı maskele. Schema alan adları form alanlarıyla eşleşir."
       />
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
@@ -51,7 +51,7 @@ export async function MaskUseViraMaskDoc() {
           </li>
         </ul>
         <p>
-          Tüm hazır maskeler için <Link href="/mask/examples">örnekler</Link> sayfasına bakın.
+          Tüm hazır maskeler için <Link href="/mask/examples">örnekler</Link> sayfasına bak.
           Sıfırdan maske için <Link href="/mask/docs/v1/custom-mask">custom mask</Link>.
         </p>
 

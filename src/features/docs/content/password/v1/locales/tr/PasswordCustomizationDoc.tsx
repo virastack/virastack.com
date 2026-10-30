@@ -45,7 +45,7 @@ export async function PasswordCustomizationDoc() {
     <>
       <DocsPageHeader
         title="Customization"
-        description="İkonlar, metin, stil ve kilit durumları: headless API ile kendi tasarım sisteminize uyum."
+        description="İkonlar, metin, stil ve kilit durumları: headless API ile kendi tasarım sistemine uyum."
       />
       <DocsProse>
         <h2 id="icons">İkonlar & metin</h2>

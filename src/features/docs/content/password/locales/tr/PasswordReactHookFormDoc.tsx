@@ -6,7 +6,7 @@ import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 const registerCode = `const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
 
-// inputProps yalnızca öznitelik taşır: register()'dan önce ya da sonra spread edin
+// inputProps yalnızca öznitelik taşır: register()'dan önce ya da sonra spread et
 <input {...inputProps} {...form.register("password", rule)} />
 <button {...btnProps} />`;
 
@@ -15,7 +15,7 @@ const { inputProps, strength } = useViraPassword({ policy, value: password })`;
 
 const depsCode = `form.register("password", { ...rule, deps: ["confirm"] })
 
-// deps yalnızca kullanıcı girişinde çalışır. setValue'dan sonra tekrar alanını siz kontrol edin:
+// deps yalnızca kullanıcı girişinde çalışır. setValue'dan sonra tekrar alanını sen kontrol et:
 form.setValue("password", next)
 form.trigger("confirm")`;
 
@@ -39,7 +39,7 @@ export function PasswordReactHookFormDoc() {
     <>
       <DocsPageHeader
         title="React Hook Form"
-        description="Hook'u register, Controller, Zod ve ViraStack Mask ile aynı formda kullanın."
+        description="Hook'u register, Controller, Zod ve ViraStack Mask ile aynı formda kullan."
       />
       <DocsProse>
         <p>
@@ -54,7 +54,7 @@ export function PasswordReactHookFormDoc() {
         <h2 id="value">useWatch()</h2>
         <p>
           <code>reset()</code> ve <code>setValue()</code>&#32;input olayı tetiklemeden değeri
-          değiştirir. Güç ve <code>matches</code> bunları takip etsin diye <code>value</code> verin.{" "}
+          değiştirir. Güç ve <code>matches</code> bunları takip etsin diye <code>value</code> ver.{" "}
           <code>useWatch</code>, <code>watch()</code>&apos;tan farklı olarak React Compiler ile de
           çalışır.
         </p>
@@ -68,7 +68,7 @@ export function PasswordReactHookFormDoc() {
         <DocsCodeBlock code={depsCode} lang="tsx" />
 
         <p>
-          Forma <code>method=&quot;post&quot;</code>&#32;verin. Hydration&apos;dan önce form yerel
+          Forma <code>method=&quot;post&quot;</code>&#32;ver. Hydration&apos;dan önce form yerel
           olarak gönderilir ve varsayılan GET parolayı URL&apos;ye yazar.
         </p>
 
@@ -79,7 +79,7 @@ export function PasswordReactHookFormDoc() {
         <p>
           Resolver varken <code>register</code> kuralları çalışmaz. Aynı politikayı{" "}
           <code>evaluate</code> ile <AcademyBadge kind="zod" />
-          &#32;şemasına koyun:
+          &#32;şemasına koy:
         </p>
         <PasswordExamplePreview id="react-hook-form-zod" />
 
@@ -89,7 +89,7 @@ export function PasswordReactHookFormDoc() {
             Mask
           </GuideProductMark>{" "}
           v2 de değeri React Hook Form&apos;da tutar; ikisi aynı <code>useForm</code>&apos;u
-          paylaşır. Farklı input&apos;larda kullanın, asla aynı input&apos;ta değil.
+          paylaşır. Farklı input&apos;larda kullan, asla aynı input&apos;ta değil.
         </p>
         <PasswordExamplePreview id="mask-signup" />
       </DocsProse>

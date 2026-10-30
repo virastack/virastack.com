@@ -29,7 +29,7 @@ export function PasswordHelpersDoc() {
     <>
       <DocsPageHeader
         title="Helpers"
-        description="Hook dışında da kullanabileceğiniz core yardımcılar, ikonlar ve mergeProps."
+        description="Hook dışında da kullanabileceğin core yardımcılar, ikonlar ve mergeProps."
       />
       <DocsProse>
         <h2 id="core">Core yardımcılar</h2>
@@ -76,14 +76,14 @@ export function PasswordHelpersDoc() {
         <p>
           Varsayılan <code>EyeIcon</code> / <code>EyeOffIcon</code> (16×16 SVG,{" "}
           <code>currentColor</code>). Hook bunları render eder; kendi UI’nızda da import
-          edebilirsiniz.
+          edebilirsin.
         </p>
 
         <h2 id="merge">mergeProps</h2>
         <p>
           Hook’un kullandığı birleştirici dışa aktarılır: <code>on*</code> handler’ları zincirler,{" "}
           <code>className</code>&#32;string’lerini birleştirir, diğer anahtarlarda sonraki değer
-          kazanır. Kontrollü bileşenlerinizde manuel merge için kullanışlıdır.
+          kazanır. Kontrollü bileşenlerinde manuel merge için kullanışlıdır.
         </p>
       </DocsProse>
     </>

@@ -26,7 +26,7 @@ export function PasswordConfirmDoc() {
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
         <p>
-          Ayrı bir hook yoktur. Tekrar alanına <code>matchWith</code> verin: <code>matches</code>{" "}
+          Ayrı bir hook yoktur. Tekrar alanına <code>matchWith</code> ver: <code>matches</code>{" "}
           <code>true</code>, <code>false</code> veya alan boşken <code>null</code>&#32;olur. İki
           değer sunucudaki gibi NFKC sonrası karşılaştırılır.
         </p>
@@ -36,14 +36,14 @@ export function PasswordConfirmDoc() {
         <p>
           <code>rule.validate</code> her zaman en son <code>matchWith</code>&apos;i okur; aynı nesne{" "}
           <code>register()</code>&apos;a verilebilir. Parola değişince tekrar alanını yeniden
-          kontrol etmek için <Link href="/password/docs/react-hook-form">deps</Link>&apos;e bakın.
+          kontrol etmek için <Link href="/password/docs/react-hook-form">deps</Link>&apos;e bak.
         </p>
         <DocsCodeBlock code={ruleCode} lang="tsx" />
 
         <h2 id="gorunurluk">Ortak görünürlük</h2>
         <p>
           Her alanın kendi toggle&apos;ı vardır. İkisini birlikte göstermek için tek state ile
-          kontrol edin:
+          kontrol et:
         </p>
         <DocsCodeBlock code={sharedCode} lang="tsx" />
       </DocsProse>

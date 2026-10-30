@@ -18,7 +18,7 @@ evaluate("correct horse battery staple", policy)
 
 const customCode = `definePolicy({ preset: "nist", minLength: 8 }) // ikinci faktörle (MFA)
 definePolicy({ preset: "legacy", require: { symbol: false } })
-definePolicy({ blocklist: ["acme", "acme pay"] }) // ürün adınız, herhangi bir yerde
+definePolicy({ blocklist: ["acme", "acme pay"] }) // ürün adın, herhangi bir yerde
 definePolicy({ minTokenLength: 4 }) // kısa adlarda daha az yanlış pozitif
 definePolicy({ blockCommon: false, blockRepetitive: false })`;
 
@@ -58,7 +58,7 @@ export function PasswordStrengthDoc() {
         <h2 id="policy">definePolicy()</h2>
         <p>
           Politikayı <code>&quot;use client&quot;</code>&#32;içermeyen ortak bir dosyada bir kez
-          tanımlayın. Form ve sunucu aynı nesneyi import eder.
+          tanımla. Form ve sunucu aynı nesneyi import eder.
         </p>
         <DocsCodeBlock code={passwordExampleFile["password-policy"]} lang="ts" />
 
@@ -124,21 +124,21 @@ export function PasswordStrengthDoc() {
           daha kısa parolalar ne kadar karışık olursa olsun politikayı geçemez ve 0–1 alır. 15
           karakterden sonra skor uzunluk ve çeşitlilikle artar. Daha kısa parola mı gerekiyor?{" "}
           <code>minLength: 8</code> (NIST ikinci faktörle buna izin verir) veya <code>legacy</code>{" "}
-          şablonunu kullanın.
+          şablonunu kullan.
         </p>
 
         <h2 id="hook">Hook içinde</h2>
         <p>
-          <code>policy</code> verin; <code>strength</code>, <code>issues</code> ve{" "}
-          <code>strengthProps</code>&#32;alanlarını okuyun. Hook motoru import etmez; motor
-          politikayla gelir, yani yalnızca toggle kullanan sayfa onu indirmez.
+          <code>policy</code> ver; <code>strength</code>, <code>issues</code> ve{" "}
+          <code>strengthProps</code>&#32;alanlarını oku. Hook motoru import etmez; motor politikayla
+          gelir, yani yalnızca toggle kullanan sayfa onu indirmez.
         </p>
         <PasswordExamplePreview id="strength-meter" />
 
         <h2 id="forbidden">forbidden</h2>
         <p>
-          Paket kullanıcınızı bilmez; değerleri siz verirsiniz. Eşleştirme büyük/küçük harfi, aksanı
-          ve basit leetspeak&apos;i yok sayar.
+          Paket kullanıcını bilmez; değerleri sen verirsin. Eşleştirme büyük/küçük harfi, aksanı ve
+          basit leetspeak&apos;i yok sayar.
         </p>
         <DocsCodeBlock code={forbiddenCode} lang="ts" />
         <p>
@@ -165,7 +165,7 @@ export function PasswordStrengthDoc() {
 
         <h2 id="yapistirma">Yapıştırma</h2>
         <p>
-          Parola alanlarına yapıştırmayı engellemeyin. Parola yöneticileri buna dayanır ve NIST izin
+          Parola alanlarına yapıştırmayı engelleme. Parola yöneticileri buna dayanır ve NIST izin
           verilmesini önerir. Hook yapıştırmayı asla engellemez.
         </p>
       </DocsProse>

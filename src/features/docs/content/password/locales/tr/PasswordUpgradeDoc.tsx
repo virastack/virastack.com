@@ -19,7 +19,7 @@ const defaultRows: Row[] = [
     "Ayarlanmaz",
     "current-password; policy veya matchWith ile new-password (autoComplete: false)",
   ],
-  ["spellCheck, autoCorrect, autoCapitalize", "Ayarlanmaz", "Kapalı (inputProps ile değiştirin)"],
+  ["spellCheck, autoCorrect, autoCapitalize", "Ayarlanmaz", "Kapalı (inputProps ile değiştir)"],
   ["Toggle fareyle tıklanınca", "Odak butonda kalır", "Odak ve imleç input'a döner"],
   ["mergeProps: aria-describedby", "Sonraki değer kazanır", "Değerler birleşir"],
   ["mergeProps: ref", "Sonraki değer kazanır", "Ref'ler birleşir"],
@@ -90,7 +90,7 @@ export function PasswordUpgradeDoc() {
           <li>
             Dosyalar <code>.mjs</code> / <code>.cjs</code>, tipler <code>.d.mts</code> /{" "}
             <code>.d.cts</code>. <code>dist</code>&#32;içine derin import hiçbir zaman genel API
-            değildi; paket girişlerini kullanın.
+            değildi; paket girişlerini kullan.
           </li>
           <li>
             <code>getInputAriaAttributes</code>, <code>Record&lt;string, any&gt;</code>&#32;yerine

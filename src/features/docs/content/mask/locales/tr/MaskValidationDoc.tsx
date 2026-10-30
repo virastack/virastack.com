@@ -8,14 +8,14 @@ import { Link } from "@/i18n/routing";
 const messagesCode = `const messages: Record<string, string> = {
   "tckn.invalid": "Geçersiz T.C. Kimlik No",
   "phone.incomplete": "Telefon numarası eksik",
-  "date.minAge": "18 yaşından büyük olmalısınız",
+  "date.minAge": "18 yaşından büyük olmalısın",
 }
 
 const error = form.formState.errors.tckn
 {error && <p>{messages[error.message ?? ""] ?? error.message}</p>}`;
 
 const customCode = `useViraMask(form, {
-  // true: geçerli · false: "<ad>.invalid" · metin: kendi anahtarınız
+  // true: geçerli · false: "<ad>.invalid" · metin: kendi anahtarın
   tckn: { preset: "tckn", validate: (value) => value !== "11111111110" || "tckn.blocked" },
   // React Hook Form kuralları da çalışır
   phone: { preset: "phone", country: "TR", rules: { required: "required", validate: { mobile: (v) => v.startsWith("5") || "phone.mobile" } } },
@@ -28,7 +28,7 @@ const masks = { tckn: "tckn", phone: { preset: "phone", country: "TR" } } as con
 const schema = z.object({ tckn: z.string().min(1, "required"), phone: z.string() })
 
 const form = useForm({ resolver: maskResolver(masks, zodResolver(schema)) })
-// ya da Standard Schema'yı doğrudan verin (@hookform/resolvers gerekmez)
+// ya da Standard Schema'yı doğrudan ver (@hookform/resolvers gerekmez)
 const form2 = useForm({ resolver: maskResolver(masks, schema) })
 
 const { tckn, phone } = useViraMask(form, masks)`;
@@ -38,14 +38,14 @@ export function MaskValidationDoc() {
     <>
       <DocsPageHeader
         title="Doğrulama"
-        description="Hatalar mesaj değil anahtar olarak döner. Kendi kuralınızı ekleyin, resolver ile birlikte kullanın."
+        description="Hatalar mesaj değil anahtar olarak döner. Kendi kuralını ekle, resolver ile birlikte kullan."
       />
       <DocsProse>
         <h2 id="anahtarlar">Hata anahtarları</h2>
         <p>
-          Boş değer doğrulanmaz; zorunluluk <code>rules.required</code> ya da şemanızın işidir. Hata{" "}
-          <code>errors.alan.message</code> içinde bir anahtar olarak gelir, böylece çeviriyi siz
-          yönetirsiniz.
+          Boş değer doğrulanmaz; zorunluluk <code>rules.required</code> ya da şemanın işidir. Hata{" "}
+          <code>errors.alan.message</code> içinde bir anahtar olarak gelir, böylece çeviriyi sen
+          yönetirsin.
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
@@ -91,7 +91,7 @@ export function MaskValidationDoc() {
         </div>
         <p>
           <code>&lt;ad&gt;</code> preset adıdır; özel desende <code>mask</code>,{" "}
-          <code>definePreset</code> ile verdiğiniz ad.
+          <code>definePreset</code> ile verdiğin ad.
         </p>
         <ComponentPreview
           preview={<MaskFieldDemo config="tckn" placeholder="10000000146" />}
@@ -116,7 +116,7 @@ export function MaskValidationDoc() {
         <DocsCodeBlock code={resolverCode} lang="tsx" />
         <p>
           Aynı şemayı sunucuda kullanmak için <Link href="/mask/docs/server">sunucu</Link> sayfasına
-          bakın.
+          bak.
         </p>
       </DocsProse>
     </>

@@ -62,7 +62,7 @@ export function AddressIntroductionDoc() {
           Adres formu göründüğünden zordur: il değişince ilçe ve mahalle temizlenmeli, posta kodu
           kullanıcıya yazdırılmamalı, 72 bin mahalle tek seferde indirilmemeli ve gönderilen adres
           sunucuda yeniden kontrol edilmelidir. <code>useViraAddress()</code>&#32;bunları tek hook
-          ile çözer. Select&apos;leriniz ve stiliniz sizde kalır.
+          ile çözer. Select&apos;lerin ve stilin sende kalır.
         </p>
 
         <h2 id="baslarken">Başlarken</h2>
@@ -82,7 +82,7 @@ export function AddressIntroductionDoc() {
         <p>
           Yukarıdaki demo aynı hook&apos;u <AcademyBadge kind="shadcn" />
           &#32;Select ile kullanır; diğer bileşenler için{" "}
-          <Link href="/address/docs/ui-libraries">UI kütüphaneleri</Link>&#32;sayfasına bakın.
+          <Link href="/address/docs/ui-libraries">UI kütüphaneleri</Link>&#32;sayfasına bak.
         </p>
 
         <h2 id="neden">
@@ -117,7 +117,7 @@ export function AddressIntroductionDoc() {
           <li>
             <strong>Headless</strong>: Hiçbir şey çizmez. Native select,{" "}
             <AcademyBadge kind="shadcn" />, <AcademyBadge kind="ant-design" />
-            &#32;veya kendi bileşeninizle çalışır.
+            &#32;veya kendi bileşeninle çalışır.
           </li>
           <li>
             <strong>Türkçe farkındalık</strong>: Sıralama, harf dönüşümü ve arama <code>İ</code> ile{" "}
@@ -133,7 +133,7 @@ export function AddressIntroductionDoc() {
         <h2 id="karsilastirma">Karşılaştırma</h2>
         <p>
           Karşılaştırılan iki paket veri paketidir: select&apos;leri, zincirlemeyi ve doğrulamayı
-          siz yazarsınız. Fark hook, posta kodu, isteğe bağlı yükleme ve sunucu tarafındadır.
+          sen yazarsın. Fark hook, posta kodu, isteğe bağlı yükleme ve sunucu tarafındadır.
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table className="[&_code]:whitespace-nowrap [&_td:not(:first-child)]:text-center [&_th:not(:first-child)]:text-center">

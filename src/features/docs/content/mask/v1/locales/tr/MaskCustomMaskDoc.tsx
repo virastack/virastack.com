@@ -35,7 +35,7 @@ export async function MaskCustomMaskDoc() {
     <>
       <DocsPageHeader
         title="Custom mask"
-        description="Hazır maske yetmediğinde kendi maske dizginizi ve MaskOptions alanlarını kullanın."
+        description="Hazır maske yetmediğinde kendi maske dizgini ve MaskOptions alanlarını kullan."
       />
       <DocsProse>
         <h2 id="sozdizimi">Sözdizimi</h2>
@@ -60,7 +60,7 @@ export async function MaskCustomMaskDoc() {
                   <code>a</code> / <code>A</code>
                 </td>
                 <td>
-                  Harf (a–z). Büyük/küçük için <code>transform</code> kullanın
+                  Harf (a–z). Büyük/küçük için <code>transform</code> kullan
                 </td>
               </tr>
               <tr>

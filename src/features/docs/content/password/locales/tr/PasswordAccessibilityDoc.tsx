@@ -52,7 +52,7 @@ export function PasswordAccessibilityDoc() {
 
         <h2 id="canli">Canlı bölge</h2>
         <p>
-          <code>strengthProps</code>&apos;u gücü gösteren elemana spread edin. Her kuralı değil kısa
+          <code>strengthProps</code>&apos;u gücü gösteren elemana spread et. Her kuralı değil kısa
           bir seviyeyi duyurun; yazarken gürültü olmasın.
         </p>
         <DocsCodeBlock code={liveCode} lang="tsx" />
@@ -67,7 +67,7 @@ export function PasswordAccessibilityDoc() {
         <p>
           <code>id</code>&#32;verilmezse input id&apos;sini server ve client&apos;ta eşleşen{" "}
           <code>useId()</code>&apos;den alır. Etiket veya test sabit bir değer istiyorsa{" "}
-          <code>id</code>&#32;verin.
+          <code>id</code>&#32;ver.
         </p>
       </DocsProse>
     </>

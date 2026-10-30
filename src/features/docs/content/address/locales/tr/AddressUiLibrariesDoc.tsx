@@ -37,7 +37,7 @@ const { provinces, getProvinceProps } = useViraAddress()
 
 <Select {...getProvinceProps({ as: "shadcn" })} items={provinces}>
   <SelectTrigger>
-    <SelectValue placeholder="İl seçiniz" />
+    <SelectValue placeholder="İl seç" />
   </SelectTrigger>
   <SelectContent>
     {provinces.map((p) => (
@@ -104,8 +104,8 @@ const getterProps: [string, ReactNode][] = [
   [
     "placeholder",
     <>
-      <code>&quot;İl seçiniz&quot;</code>, <code>&quot;İlçe seçiniz&quot;</code>,{" "}
-      <code>&quot;Mahalle seçiniz&quot;</code>
+      <code>&quot;İl seç&quot;</code>, <code>&quot;İlçe seç&quot;</code>,{" "}
+      <code>&quot;Mahalle seç&quot;</code>
     </>,
   ],
 ];
@@ -115,7 +115,7 @@ export function AddressUiLibrariesDoc() {
     <>
       <DocsPageHeader
         title="UI kütüphaneleri"
-        description="Prop getter'lar düz bir select'i tek satırda doldurur ve disabled durumunu zincirden hesaplar; shadcn/ui, Ant Design ve kendi bileşeniniz için ayrı biçimler sunar."
+        description="Prop getter'lar düz bir select'i tek satırda doldurur ve disabled durumunu zincirden hesaplar; shadcn/ui, Ant Design ve kendi bileşenin için ayrı biçimler sunar."
       />
       <DocsProse>
         <h2 id="getterlar">Prop getter&apos;lar</h2>
@@ -126,7 +126,7 @@ export function AddressUiLibrariesDoc() {
         </p>
         <DocsCodeBlock code={gettersCode} />
         <p>
-          Seçenekler sizin yerinize çizilir; boş ilk seçenek placeholder&apos;dır ve seviyeyi tekrar
+          Seçenekler senin yerine çizilir; boş ilk seçenek placeholder&apos;dır ve seviyeyi tekrar
           temizlemeye yarar. Getter&apos;lar ayrıca <code>value</code>, <code>onChange</code>,{" "}
           <code>disabled</code>, <code>aria-busy</code>, <code>name</code>&#32;ve <code>id</code>
           &#32;verir. Gizli posta kodu input&apos;u, değeri kütüphanesiz bir form gönderimine taşır.
@@ -134,17 +134,17 @@ export function AddressUiLibrariesDoc() {
         <p>
           <code>disabled</code>&#32;zincirden gelir: ilçe, il seçilene kadar; mahalle, ilçe seçilene
           ve mahalleler yüklenene kadar kapalıdır. Her değeri seçenekle ya da prop&apos;u sonradan
-          yazarak ezebilirsiniz:
+          yazarak ezebilirsin:
         </p>
         <DocsCodeBlock code={overrideCode} />
         <p>
-          Başka bir bileşen kullanıyorsanız biçimi <code>as</code>&#32;ile seçin:{" "}
-          <code>headless</code>, <code>shadcn</code>&#32;veya <code>antd</code>.
+          Başka bir bileşen kullanıyorsan biçimi <code>as</code>&#32;ile seç: <code>headless</code>,{" "}
+          <code>shadcn</code>&#32;veya <code>antd</code>.
         </p>
 
         <h2 id="headless">headless</h2>
         <p>
-          Kendi select bileşeniniz için: <code>options</code>&#32;listesi artı{" "}
+          Kendi select bileşenin için: <code>options</code>&#32;listesi artı{" "}
           <code>onChange(value)</code>.
         </p>
         <DocsCodeBlock code={headlessCode} />
@@ -192,12 +192,12 @@ export function AddressUiLibrariesDoc() {
 
         <h2 id="listeler">Listeler ve setter&apos;lar</h2>
         <p>
-          Bileşeninizin prop&apos;ları hiçbir biçime uymuyorsa listeleri ve setter&apos;ları
-          doğrudan kullanın. <AcademyBadge kind="mui" /> <code>Autocomplete</code>:
+          Bileşeninin prop&apos;ları hiçbir biçime uymuyorsa listeleri ve setter&apos;ları doğrudan
+          kullan. <AcademyBadge kind="mui" /> <code>Autocomplete</code>:
         </p>
         <DocsCodeBlock code={customCode} />
         <p>
-          Kendi aramanızı yazıyorsanız <Link href="/address/docs/helpers">toSearchKey</Link>
+          Kendi aramanı yazıyorsan <Link href="/address/docs/helpers">toSearchKey</Link>
           &#32;harf ve Türkçe karakter farkını yok sayar:
         </p>
         <DocsCodeBlock code={searchCode} lang="ts" />
@@ -205,7 +205,7 @@ export function AddressUiLibrariesDoc() {
         <h2 id="uzun-listeler">Uzun listeler</h2>
         <p>
           Bir ilçe birkaç yüz mahalle ve köy tutabilir; en kalabalığı <strong>Artvin</strong>
-          &apos;in Yusufeli ilçesidir (674). Bu seviyede aranabilir bir select kullanın; listeniz
+          &apos;in Yusufeli ilçesidir (674). Bu seviyede aranabilir bir select kullan; listen
           binlerce satır çizecekse sanallaştırın.
         </p>
       </DocsProse>

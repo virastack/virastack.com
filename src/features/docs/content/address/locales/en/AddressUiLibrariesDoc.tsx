@@ -104,9 +104,8 @@ const getterProps: [string, ReactNode][] = [
   [
     "placeholder",
     <>
-      <code>&quot;İl seçiniz&quot;</code>, <code>&quot;İlçe seçiniz&quot;</code>,{" "}
-      <code>&quot;Mahalle seçiniz&quot;</code>&#32;(Turkish for &quot;select a province&quot; and so
-      on)
+      <code>&quot;İl seç&quot;</code>, <code>&quot;İlçe seç&quot;</code>,{" "}
+      <code>&quot;Mahalle seç&quot;</code>&#32;(Turkish for &quot;select a province&quot; and so on)
     </>,
   ],
 ];

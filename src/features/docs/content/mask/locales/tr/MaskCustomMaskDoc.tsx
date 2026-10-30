@@ -105,8 +105,8 @@ export function MaskCustomMaskDoc() {
           </table>
         </div>
         <p>
-          Diğer karakterler yalnızca ekranda görünür. <code>tokens</code> ile kendi karakterlerinizi
-          tanımlarsınız; <code>transform</code> harfleri büyütür ya da küçültür.
+          Diğer karakterler yalnızca ekranda görünür. <code>tokens</code> ile kendi karakterlerini
+          tanımlarsın; <code>transform</code> harfleri büyütür ya da küçültür.
         </p>
         <ComponentPreview
           preview={
@@ -159,7 +159,7 @@ export function MaskCustomMaskDoc() {
 
         <h2 id="preset">definePreset</h2>
         <p>
-          Ekibinizin maskesini tek yerde tanımlayın. Ad, hata anahtarlarının önekidir (
+          Ekibinin maskesini tek yerde tanımla. Ad, hata anahtarlarının önekidir (
           <code>plate.incomplete</code>). Hook, sunucu ve testler aynı nesneyi kullanır.
         </p>
         <DocsCodeBlock code={presetCode} lang="tsx" />

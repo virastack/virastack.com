@@ -25,7 +25,7 @@ export function PasswordIntroductionDoc() {
         <p>
           Parola alanlarında hata yapmak kolaydır: eksik ARIA, formu gönderen bir toggle, metin
           alanı gören parola yöneticisi, formda ve sunucuda farklı kurallar.{" "}
-          <code>useViraPassword()</code>&#32;bunları tek hook ile çözer. İşaretleme ve stil sizde
+          <code>useViraPassword()</code>&#32;bunları tek hook ile çözer. İşaretleme ve stil sende
           kalır.
         </p>
 
@@ -33,15 +33,15 @@ export function PasswordIntroductionDoc() {
         <CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
         <PasswordExamplePreview id="show-hide" />
         <p>
-          1.0&apos;dan mı geliyorsunuz? Hiçbir şey kırılmaz;{" "}
-          <Link href="/password/docs/upgrade">geçiş rehberine</Link> bakın. Canlı demolar{" "}
+          1.0&apos;dan mı geliyorsun? Hiçbir şey kırılmaz;{" "}
+          <Link href="/password/docs/upgrade">geçiş rehberine</Link> bak. Canlı demolar{" "}
           <Link href="/password/examples">örnekler</Link>&#32;sayfasında.
         </p>
 
         <h2 id="giris-noktalari">Giriş noktaları</h2>
         <p>
           Yalnızca kök girişte <code>&quot;use client&quot;</code>&#32;vardır. Güç motoru yalnızca
-          politika verdiğinizde paketinize girer.
+          politika verdiğinde paketine girer.
         </p>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
@@ -112,7 +112,7 @@ export function PasswordIntroductionDoc() {
           </li>
           <li>
             <strong>Hata anahtarları</strong>: <code>password.tooShort</code>,{" "}
-            <code>password.mismatch</code>… Mesajlar ve i18n sizde kalır.
+            <code>password.mismatch</code>… Mesajlar ve i18n sende kalır.
           </li>
         </ul>
 

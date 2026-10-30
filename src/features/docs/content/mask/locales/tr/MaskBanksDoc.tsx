@@ -30,12 +30,12 @@ export function MaskBanksDoc() {
     <>
       <DocsPageHeader
         title="Banka tespiti"
-        description="Türkiye IBAN'ından bankayı bulun. API yok; banka, numaranın içindeki banka kodundan okunur."
+        description="Türkiye IBAN'ından bankayı bul. API yok; banka, numaranın içindeki banka kodundan okunur."
       />
       <DocsProse>
-        <h2 id="deneyin">Deneyin</h2>
+        <h2 id="deneyin">Dene</h2>
         <p>
-          Bir IBAN yazın; banka kodunun son hanesi girildiği anda banka görünür ve tabloda
+          Bir IBAN yaz; banka kodunun son hanesi girildiği anda banka görünür ve tabloda
           işaretlenir.
         </p>
         <MaskBankDemo />
@@ -60,7 +60,7 @@ export function MaskBanksDoc() {
         <p>
           <code>getTurkishBank</code>&#32;IBAN&apos;ın kendisini doğrulamaz; kontrol hanesi yanlış
           bir IBAN&apos;ın da bankasını söyler. Doğrulama için <code>iban</code>&#32;preset&apos;i
-          ya da <code>isValidIBAN</code>&#32;kullanın. İkisi de <code>@virastack/mask/server</code>
+          ya da <code>isValidIBAN</code>&#32;kullan. İkisi de <code>@virastack/mask/server</code>
           &#32;içinde de vardır.
         </p>
         <p>

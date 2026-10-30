@@ -14,7 +14,7 @@ const patternCode = `const { card } = useViraMask(form, { card: "card" })
 
 return <input {...card} placeholder="0000 0000 0000 0000" />`;
 
-const refCode = `// Kendi ref'iniz de lazımsa ikisini birleştirin
+const refCode = `// Kendi ref'in de lazımsa ikisini birleştir
 const inputRef = useRef<HTMLInputElement>(null)
 
 <Input
@@ -71,7 +71,7 @@ export function MaskUiLibrariesDoc() {
           <code>&lt;input&gt;</code>&apos;a iletmelidir (
           <AcademyBadge kind="react" label="React 19" />
           &apos;da prop olarak, <AcademyBadge kind="react" label="React 18" />
-          &apos;de <code>forwardRef</code> ile). <code>value</code> vermeyin; input kontrolsüzdür.
+          &apos;de <code>forwardRef</code> ile). <code>value</code> verme; input kontrolsüzdür.
         </p>
 
         <h2 id="pattern">Ortak kalıp</h2>

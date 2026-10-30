@@ -124,7 +124,7 @@ export function AddressServerDoc() {
     <>
       <DocsPageHeader
         title="Sunucu doğrulaması"
-        description="Gönderilen adresi @virastack/address/server ile veri setine karşı yeniden kontrol edin; posta kodunu sunucuda türetin."
+        description="Gönderilen adresi @virastack/address/server ile veri setine karşı yeniden kontrol et; posta kodunu sunucuda türetin."
       />
       <DocsProse>
         <h2 id="resolve">resolveAddress()</h2>

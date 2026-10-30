@@ -82,9 +82,9 @@ const zodCode = `import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 const schema = z.object({
-  province: z.string().min(1, "İl seçin"),
-  district: z.string().min(1, "İlçe seçin"),
-  neighbourhood: z.string().min(1, "Mahalle seçin"),
+  province: z.string().min(1, "İl seç"),
+  district: z.string().min(1, "İlçe seç"),
+  neighbourhood: z.string().min(1, "Mahalle seç"),
   postalCode: z.string().regex(/^\\d{5}$/),
 })
 
@@ -130,14 +130,14 @@ export function AddressReactHookFormDoc() {
         <h2 id="temel">Temel kullanım</h2>
         <p>
           <AcademyBadge kind="react-hook-form" />
-          &#32;formunu <code>form</code>&#32;seçeneğiyle verin; alanlar kendiliğinden dolar:
+          &#32;formunu <code>form</code>&#32;seçeneğiyle ver; alanlar kendiliğinden dolar:
         </p>
         <DocsCodeBlock code={basicCode} />
         <p>
           Bir üst seviye değişince alttakiler formda da <code>&quot;&quot;</code>&#32;olur. Değerler{" "}
           <code>shouldDirty</code>, <code>shouldTouch</code>&#32;ve <code>shouldValidate</code>
           &#32;ile yazılır; böylece zorunlu bir ilçe alanı, il değiştikten sonra geçerli kalamaz.
-          Yeniden doğrulamayı kapatmak için <code>shouldValidate: false</code>&#32;verin.
+          Yeniden doğrulamayı kapatmak için <code>shouldValidate: false</code>&#32;ver.
         </p>
         <p>
           Hook React Hook Form&apos;dan hiçbir şey import etmez, bağımlılığı da değildir.{" "}
@@ -150,8 +150,8 @@ export function AddressReactHookFormDoc() {
         <h2 id="names">names</h2>
         <p>
           Alanlar varsayılan olarak <code>province</code>, <code>district</code>,{" "}
-          <code>neighbourhood</code>&#32;ve <code>postalCode</code>&apos;dur. Formunuz farklıysa{" "}
-          <code>names</code>&#32;verin; TypeScript her adı formun tipine karşı kontrol eder:
+          <code>neighbourhood</code>&#32;ve <code>postalCode</code>&apos;dur. Formun farklıysa{" "}
+          <code>names</code>&#32;ver; TypeScript her adı formun tipine karşı kontrol eder:
         </p>
         <DocsCodeBlock code={namesCode} />
         <p>
@@ -162,8 +162,8 @@ export function AddressReactHookFormDoc() {
 
         <h2 id="form-provider">FormProvider</h2>
         <p>
-          Adres alanlarını ayrı bir bileşene taşıdığınızda formu prop olarak geçirmek yerine
-          bağlamdan alın:
+          Adres alanlarını ayrı bir bileşene taşıdığında formu prop olarak geçirmek yerine bağlamdan
+          alın:
         </p>
         <DocsCodeBlock code={providerCode} />
 
@@ -194,7 +194,7 @@ export function AddressReactHookFormDoc() {
           &#32;şeması olduğu gibi çalışır. İl değişince ilçe ve mahalle boşaltılıp yeniden
           doğrulandığı için hata mesajları doğru seviyede kalır. Yine de client doğrulaması tek
           başına yetmez: gönderilen adresi{" "}
-          <Link href="/address/docs/server">sunucuda resolveAddress</Link>&#32;ile kontrol edin.
+          <Link href="/address/docs/server">sunucuda resolveAddress</Link>&#32;ile kontrol et.
         </p>
 
         <h2 id="diger">Diğer form kütüphaneleri</h2>
@@ -204,13 +204,13 @@ export function AddressReactHookFormDoc() {
         </p>
         <DocsCodeBlock code={formikCode} />
         <p>
-          Ya da yazma işini kendiniz yapın: <code>onChange</code>&#32;her değişiklikte tüm{" "}
+          Ya da yazma işini kendin yap: <code>onChange</code>&#32;her değişiklikte tüm{" "}
           <code>value</code>&#32;ile çağrılır. <AcademyBadge kind="tanstack-form" />:
         </p>
         <DocsCodeBlock code={onChangeCode} />
         <p>
           Kütüphane kullanmayan bir form için <Link href="/address/docs/server">Server Action</Link>
-          &#32;örneğine bakın.
+          &#32;örneğine bak.
         </p>
       </DocsProse>
     </>

@@ -102,7 +102,7 @@ export function AddressDataDoc() {
         <h2 id="maliyet">Ne kadar indirir?</h2>
         <p>
           Sayfa açılınca il ve ilçe adları gelir; bir il seçilince yalnızca o ilin mahalleleri
-          indirilir. Bunun için ayar gerekmez: her il ayrı bir dosyadır ve projenizin bundler&apos;ı
+          indirilir. Bunun için ayar gerekmez: her il ayrı bir dosyadır ve projenin bundler&apos;ı
           onu kendiliğinden ayırır. Sunucuda da yalnızca istenen iller belleğe alınır.
         </p>
         <p>
@@ -135,10 +135,10 @@ export function AddressDataDoc() {
           büyütemez.
         </p>
 
-        <h2 id="loader">Kendi loader&apos;ınız</h2>
+        <h2 id="loader">Kendi loader&apos;ın</h2>
         <p>
-          Mahalleleri diskten, bir CDN&apos;den ya da kendi endpoint&apos;inizden okumak için loader
-          değiştirin:
+          Mahalleleri diskten, bir CDN&apos;den ya da kendi endpoint&apos;inden okumak için loader
+          değiştir:
         </p>
         <DocsCodeBlock code={loaderCode} lang="ts" />
         <p>
@@ -159,7 +159,7 @@ export function AddressDataDoc() {
             PTT
           </a>
           &apos;den derlendi. Adlar ve posta kodları kamuya açık referans verisidir; bu paket
-          yalnızca biçimlerini değiştirir. Teslimatın kritik olduğu işlerde PTT ile doğrulayın.
+          yalnızca biçimlerini değiştirir. Teslimatın kritik olduğu işlerde PTT ile doğrula.
         </p>
         <p>
           Kaynak her sokağı listeler; bu, bir adres formunun ihtiyacından çok fazladır. Derleme

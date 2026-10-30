@@ -24,7 +24,7 @@ const schemaCode = `useViraMask(form, {
   birthDate: { preset: "date", date: { max: "today", minAge: 18 } },
   // React Hook Form kuralları olduğu gibi geçer
   phone: { preset: "phone", country: "TR", rules: { required: "required" } },
-  // iç içe alan: anahtarı tırnakla yazın ya da name verin
+  // iç içe alan: anahtarı tırnakla yaz ya da name ver
   "address.zip": { mask: "99999" },
   zip2: { name: "address.zip2", mask: "99999" },
   // forma maskeli metin yaz
@@ -47,7 +47,7 @@ export function MaskUseViraMaskDoc() {
     <>
       <DocsPageHeader
         title="useViraMask()"
-        description="Tek hook ile birden fazla alanı maskeleyin. Form ham değeri tutar, input maskeyi gösterir."
+        description="Tek hook ile birden fazla alanı maskele. Form ham değeri tutar, input maskeyi gösterir."
       />
       <DocsProse>
         <h2 id="temel">Temel kullanım</h2>
@@ -89,7 +89,7 @@ export function MaskUseViraMaskDoc() {
             <code>&quot;masked&quot;</code>.
           </li>
           <li>
-            <code>onComplete</code>: maske dolduğunda bir kez çalışır. Odağı siz yönetirsiniz.
+            <code>onComplete</code>: maske dolduğunda bir kez çalışır. Odağı sen yönetirsin.
           </li>
         </ul>
 
@@ -138,14 +138,14 @@ export function MaskUseViraMaskDoc() {
           </li>
         </ul>
         <p>
-          Input kontrolsüzdür (<code>defaultValue</code>); <code>value</code> vermeyin. Ham değeri{" "}
-          <code>form.watch(&quot;phone&quot;)</code> ile okuyun.
+          Input kontrolsüzdür (<code>defaultValue</code>); <code>value</code> verme. Ham değeri{" "}
+          <code>form.watch(&quot;phone&quot;)</code> ile oku.
         </p>
 
         <h2 id="rhf">React Hook Form uyumu</h2>
         <ul>
           <li>
-            <code>reset()</code> ve <code>setValue()</code> ekrana yansır. Ham değer verin (tarihte
+            <code>reset()</code> ve <code>setValue()</code> ekrana yansır. Ham değer ver (tarihte
             ISO: <code>2026-07-29</code>).
           </li>
           <li>
@@ -154,10 +154,10 @@ export function MaskUseViraMaskDoc() {
           </li>
           <li>
             Mask doğrulaması <code>validate.mask</code> kuralı olarak eklenir; kendi{" "}
-            <code>validate</code> kurallarınız korunur.
+            <code>validate</code> kuralların korunur.
           </li>
           <li>
-            Resolver (<AcademyBadge kind="zod" />, Valibot) kullanıyorsanız{" "}
+            Resolver (<AcademyBadge kind="zod" />, Valibot) kullanıyorsan{" "}
             <Link href="/mask/docs/validation#resolver">maskResolver</Link> ile sarın.
           </li>
           <li>IME (Çince, Japonca, ölü tuşlar) bitene kadar biçimlendirme bekler.</li>

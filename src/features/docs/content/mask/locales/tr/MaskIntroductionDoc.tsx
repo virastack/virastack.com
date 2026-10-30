@@ -52,8 +52,8 @@ export function MaskIntroductionDoc() {
           <DocsCodeBlock code={quickStartCode} lang="tsx" />
         </ComponentPreview>
         <p>
-          Tüm hazır maskeleri <Link href="/mask/examples">örnekler</Link> sayfasında deneyin. v1
-          kullanıyorsanız <Link href="/mask/docs/upgrade">geçiş rehberine</Link> bakın.
+          Tüm hazır maskeleri <Link href="/mask/examples">örnekler</Link> sayfasında dene. v1
+          kullanıyorsan <Link href="/mask/docs/upgrade">geçiş rehberine</Link> bak.
         </p>
 
         <h2 id="neden">
