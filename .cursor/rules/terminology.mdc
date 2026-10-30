@@ -10,13 +10,20 @@ Developers read these terms in English every day. A Turkish coinage reads as a t
 
 ## Keep in English
 
-| Write    | Never      |
-| :------- | :--------- |
-| headless | başsız     |
-| client   | istemci    |
+| Write    | Never          |
+| :------- | :------------- |
+| headless | başsız         |
+| client   | istemci        |
+| agent    | ajan           |
+| starter  | başlangıç kiti |
 
 - **Suffixes:** attach with an apostrophe: `client'ta`, `client'ın`, `server'da` (`&apos;` inside JSX text).
 - **Pairs:** when client and server appear together, write both in English: `client + server`, `server'da ve client'ta`.
+- **Agent:** `agent'ın`, `agent'lar`, `Claude Code gibi bir agent'a`. Never `ajan`.
 - **Sunucu:** on its own it stays Turkish: `sunucu doğrulaması`, `sunucuda türetilir`.
+
+## Address form (hitap)
+
+Use one form per page, and **sen** everywhere on the site except Academy: product pages (Start, AI, Mask, Password, Address, Guide), the home, about, support and brand pages, docs and shared UI. Examples: `kurulur`, `ekle`, `kullan`, `seç`, `tarif et`, `projen`, `ayarlarsın`. Never mix `siz` forms (`ekleyin`, `kullanın`, `projeniz`, `-sınız`) into these pages. Slogans such as `öğren, başlat, geliştir` follow the same form. Academy has its own voice and is not covered by this rule. CLI flag descriptions have no subject: `planı gösterir`, `kaldırır`.
 
 Add a row here whenever a new term is agreed, and fix existing copy in the same change.
