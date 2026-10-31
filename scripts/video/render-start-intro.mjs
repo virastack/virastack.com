@@ -67,9 +67,16 @@ function serve() {
   const server = createServer((req, res) => {
     const file = path.join(root, decodeURIComponent(req.url.split("?")[0]));
     if (!file.startsWith(root)) return res.writeHead(403).end();
-    res.writeHead(200, { "content-type": TYPES[path.extname(file)] ?? "application/octet-stream" });
     createReadStream(file)
-      .on("error", () => res.writeHead(404).end())
+      .on("open", () =>
+        res.writeHead(200, {
+          "content-type": TYPES[path.extname(file)] ?? "application/octet-stream",
+        }),
+      )
+      .on("error", () => {
+        console.warn(`not found: ${req.url}`);
+        res.writeHead(404).end();
+      })
       .pipe(res);
   });
   return new Promise((resolve) => server.listen(0, "127.0.0.1", () => resolve(server)));
