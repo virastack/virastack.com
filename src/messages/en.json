@@ -204,13 +204,16 @@
   },
   "ReleasesPage": {
     "title": "Release notes",
+    "productTitle": "{product} release notes",
     "description": "Notable changes across ViraStack products, why they were made and the sources behind them.",
     "filterLabel": "Filter by product",
     "filterAll": "All",
     "draft": "Draft",
+    "backToList": "All release notes",
     "whatChanged": "What changed",
     "why": "Why",
     "sources": "Sources",
+    "commits": "Commits",
     "migration": "Migration",
     "empty": "No release notes for this product yet."
   },

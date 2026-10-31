@@ -1,9 +1,6 @@
-"use client";
+import type { ReactNode } from "react";
 
-import { Suspense, type ReactNode } from "react";
-import { useSearchParams } from "next/navigation";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { brandPalettes } from "@/config/brand-palettes.config";
 import type { EcosystemId } from "@/config/ecosystem.config";
@@ -15,7 +12,6 @@ import { Link } from "@/i18n/routing";
 
 export type ReleaseFeedEntry = {
   id: string;
-  productIds: readonly EcosystemId[];
   content: ReactNode;
 };
 
@@ -26,17 +22,15 @@ function badgeStateClassName(active: boolean) {
   return active ? "border-foreground/40 bg-muted" : "border-border hover:bg-muted/60";
 }
 
-function FeedView({
+/** Each filter is a page of its own (`/releases/start`), so a filtered list has its own link. */
+export async function ReleasesFeed({
   entries,
   activeProduct,
 }: {
   entries: readonly ReleaseFeedEntry[];
   activeProduct: EcosystemId | null;
 }) {
-  const t = useTranslations("ReleasesPage");
-  const visible = activeProduct
-    ? entries.filter((entry) => entry.productIds.includes(activeProduct))
-    : entries;
+  const t = await getTranslations("ReleasesPage");
 
   return (
     <div className="flex flex-col gap-10">
@@ -46,7 +40,7 @@ function FeedView({
             <Link
               href="/releases"
               scroll={false}
-              aria-current={activeProduct === null ? "true" : undefined}
+              aria-current={activeProduct === null ? "page" : undefined}
               className={cn(
                 badgeClassName,
                 badgeStateClassName(activeProduct === null),
@@ -62,16 +56,14 @@ function FeedView({
             return (
               <li key={palette.id}>
                 <Link
-                  href={
-                    active ? "/releases" : { pathname: "/releases", query: { product: palette.id } }
-                  }
+                  href={`/releases/${palette.id}`}
                   scroll={false}
-                  aria-current={active ? "true" : undefined}
+                  aria-current={active ? "page" : undefined}
                   aria-label={`${siteConfig.name} ${palette.productName}`}
                   className={cn(badgeClassName, badgeStateClassName(active))}
                 >
                   <span aria-hidden className={cn("size-2 rounded-full", palette.bgClass)} />
-                  <span className={cn("font-bold", palette.textClass)}>{palette.productName}</span>
+                  <span className="font-medium text-foreground">{palette.productName}</span>
                 </Link>
               </li>
             );
@@ -79,36 +71,17 @@ function FeedView({
         </ul>
       </nav>
 
-      {visible.length > 0 ? (
-        <div className="flex flex-col gap-12 divide-y divide-border [&>*:not(:last-child)]:pb-12">
-          {visible.map((entry) => (
-            <div key={entry.id}>{entry.content}</div>
+      {entries.length > 0 ? (
+        <ul className="flex flex-col gap-6">
+          {entries.map((entry) => (
+            <li key={entry.id}>{entry.content}</li>
           ))}
-        </div>
+        </ul>
       ) : (
         <p className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           {t("empty")}
         </p>
       )}
     </div>
-  );
-}
-
-function FilteredFeed({ entries }: { entries: readonly ReleaseFeedEntry[] }) {
-  const product = useSearchParams().get("product");
-  const activeProduct = brandPalettes.find((palette) => palette.id === product)?.id ?? null;
-
-  return <FeedView entries={entries} activeProduct={activeProduct} />;
-}
-
-/**
- * The filter lives in `?product=`, so a filtered list has its own link. The fallback renders
- * the full list, which keeps every note in the prerendered HTML.
- */
-export function ReleasesFeed({ entries }: { entries: readonly ReleaseFeedEntry[] }) {
-  return (
-    <Suspense fallback={<FeedView entries={entries} activeProduct={null} />}>
-      <FilteredFeed entries={entries} />
-    </Suspense>
   );
 }

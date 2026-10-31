@@ -204,13 +204,16 @@
   },
   "ReleasesPage": {
     "title": "Sürüm notları",
+    "productTitle": "{product} sürüm notları",
     "description": "ViraStack ürünlerindeki önemli değişiklikler, nedenleri ve dayandıkları kaynaklar.",
     "filterLabel": "Ürüne göre filtrele",
     "filterAll": "Tümü",
     "draft": "Taslak",
+    "backToList": "Tüm sürüm notları",
     "whatChanged": "Ne değişti",
     "why": "Neden",
     "sources": "Kaynaklar",
+    "commits": "Commit'ler",
     "migration": "Geçiş",
     "empty": "Bu ürün için henüz sürüm notu yok."
   },

@@ -14,6 +14,7 @@ import {
   maskExampleIds,
   passwordExampleIds,
 } from "@/features/docs";
+import { getReleaseHref, getReleases } from "@/features/releases";
 import { routing } from "@/i18n/routing";
 
 /**
@@ -112,6 +113,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
+  const releaseEntries = routing.locales.flatMap((locale) =>
+    getReleases().map((release) => ({
+      url: localeUrl(locale, getReleaseHref(release)),
+      lastModified: release.date,
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
+  );
+
+  const releaseProductIds = [
+    ...new Set(getReleases().flatMap((release) => release.products.map((item) => item.id))),
+  ];
+  const releaseProductEntries = routing.locales.flatMap((locale) =>
+    releaseProductIds.map((id) => ({
+      url: localeUrl(locale, `/releases/${id}`),
+      lastModified: SITE_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  );
+
   const academyHomeEntries = routing.locales.map((locale) => ({
     url: localeUrl(locale, "/academy"),
     lastModified: SITE_LAST_MODIFIED,
@@ -161,6 +183,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...guidePlayEntries,
     ...startBuilderEntries,
     ...siteEntries,
+    ...releaseProductEntries,
+    ...releaseEntries,
     ...academyHomeEntries,
     ...academySourcesEntries,
     ...academyContributeEntries,
