@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChevronRightIcon, PartyPopperIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Confetti from "react-confetti";
+import { createPortal } from "react-dom";
 import { useWindowSize } from "usehooks-ts";
 
 import type { ProductId } from "@/types/product.types";
@@ -59,38 +60,45 @@ export function Step7Final() {
 
   return (
     <section className="flex flex-col gap-6">
-      {ready ? (
-        <>
-          <Confetti
-            width={width}
-            height={height}
-            recycle={recycle}
-            numberOfPieces={350}
-            gravity={0.12}
-            friction={0.98}
-            tweenDuration={3000}
-            colors={CONFETTI_COLORS}
-            confettiSource={{ x: 0, y: sideY, w: 12, h: sideHeight }}
-            initialVelocityX={{ min: 10, max: 22 }}
-            initialVelocityY={{ min: -14, max: 6 }}
-            style={{ position: "fixed", inset: 0, zIndex: 40, pointerEvents: "none" }}
-          />
-          <Confetti
-            width={width}
-            height={height}
-            recycle={recycle}
-            numberOfPieces={350}
-            gravity={0.12}
-            friction={0.98}
-            tweenDuration={3000}
-            colors={CONFETTI_COLORS}
-            confettiSource={{ x: width - 12, y: sideY, w: 12, h: sideHeight }}
-            initialVelocityX={{ min: -22, max: -10 }}
-            initialVelocityY={{ min: -14, max: 6 }}
-            style={{ position: "fixed", inset: 0, zIndex: 40, pointerEvents: "none" }}
-          />
-        </>
-      ) : null}
+      {/*
+       * The step animates with a transform, which would make these fixed canvases relative
+       * to it and stretch the page until the animation ends, so they live under the body.
+       */}
+      {ready
+        ? createPortal(
+            <>
+              <Confetti
+                width={width}
+                height={height}
+                recycle={recycle}
+                numberOfPieces={350}
+                gravity={0.12}
+                friction={0.98}
+                tweenDuration={3000}
+                colors={CONFETTI_COLORS}
+                confettiSource={{ x: 0, y: sideY, w: 12, h: sideHeight }}
+                initialVelocityX={{ min: 10, max: 22 }}
+                initialVelocityY={{ min: -14, max: 6 }}
+                style={{ position: "fixed", inset: 0, zIndex: 40, pointerEvents: "none" }}
+              />
+              <Confetti
+                width={width}
+                height={height}
+                recycle={recycle}
+                numberOfPieces={350}
+                gravity={0.12}
+                friction={0.98}
+                tweenDuration={3000}
+                colors={CONFETTI_COLORS}
+                confettiSource={{ x: width - 12, y: sideY, w: 12, h: sideHeight }}
+                initialVelocityX={{ min: -22, max: -10 }}
+                initialVelocityY={{ min: -14, max: 6 }}
+                style={{ position: "fixed", inset: 0, zIndex: 40, pointerEvents: "none" }}
+              />
+            </>,
+            document.body,
+          )
+        : null}
 
       <div className="space-y-4">
         <h2 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-balance">

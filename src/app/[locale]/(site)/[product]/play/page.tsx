@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tSeo = await getTranslations({ locale, namespace: "Seo" });
   const name = t("guideName");
   const title = `${tSeo("guidePlay")} · ${siteConfig.name} ${name}`;
-  const description = t("guideDesc");
+  const description = t("guideMeta");
   const og = buildOgImageMetadata({
     title: name,
     description,
