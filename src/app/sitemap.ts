@@ -21,7 +21,7 @@ import { routing } from "@/i18n/routing";
  * every URL with `new Date()` teaches crawlers to ignore the field, so bump this
  * when the pages change. Academy lessons carry their own `lastVerified` instead.
  */
-const SITE_LAST_MODIFIED = "2026-10-30";
+const SITE_LAST_MODIFIED = "2026-10-31";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lessonDate = (locale: string, track: string, lesson: string) =>
@@ -104,7 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const siteEntries = routing.locales.flatMap((locale) =>
-    (["/about", "/brand", "/support"] as const).map((path) => ({
+    (["/about", "/brand", "/releases", "/support"] as const).map((path) => ({
       url: localeUrl(locale, path),
       lastModified: SITE_LAST_MODIFIED,
       changeFrequency: "monthly" as const,

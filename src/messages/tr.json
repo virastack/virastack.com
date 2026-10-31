@@ -202,6 +202,18 @@
     "regionNoticeShort": "Diğer ülkelerin adresleri yoktur.",
     "regionNotice": "Türkiye adreslerini kapsar: 81 il, 973 ilçe ve 72.466 mahalle. Diğer ülkelerin adresleri yoktur."
   },
+  "ReleasesPage": {
+    "title": "Sürüm notları",
+    "description": "ViraStack ürünlerindeki önemli değişiklikler, nedenleri ve dayandıkları kaynaklar.",
+    "filterLabel": "Ürüne göre filtrele",
+    "filterAll": "Tümü",
+    "draft": "Taslak",
+    "whatChanged": "Ne değişti",
+    "why": "Neden",
+    "sources": "Kaynaklar",
+    "migration": "Geçiş",
+    "empty": "Bu ürün için henüz sürüm notu yok."
+  },
   "SupportPage": {
     "title": "Destek",
     "description": "ViraStack’e nasıl destek olabileceğin: yıldız, soru, geri bildirim ve kod.",
@@ -299,6 +311,8 @@
     "about": "Hakkında",
     "brand": "Marka",
     "support": "Destek",
+    "releases": "Sürümler",
+    "new": "Yeni",
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",
     "github": "GitHub",

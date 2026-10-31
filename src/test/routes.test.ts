@@ -50,6 +50,7 @@ const PAGES = [
   "/academy/react",
   "/about",
   "/brand",
+  "/releases",
   "/support",
   "/robots.txt",
   "/sitemap.xml",

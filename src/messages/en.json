@@ -202,6 +202,18 @@
     "regionNoticeShort": "addresses from other countries are not included.",
     "regionNotice": "This package covers addresses in Türkiye: its 81 provinces, 973 districts and 72,466 neighbourhoods. Addresses from other countries are not included."
   },
+  "ReleasesPage": {
+    "title": "Release notes",
+    "description": "Notable changes across ViraStack products, why they were made and the sources behind them.",
+    "filterLabel": "Filter by product",
+    "filterAll": "All",
+    "draft": "Draft",
+    "whatChanged": "What changed",
+    "why": "Why",
+    "sources": "Sources",
+    "migration": "Migration",
+    "empty": "No release notes for this product yet."
+  },
   "SupportPage": {
     "title": "Support",
     "description": "How to support ViraStack: stars, questions, feedback, and code.",
@@ -299,6 +311,8 @@
     "about": "About",
     "brand": "Brand",
     "support": "Support",
+    "releases": "Releases",
+    "new": "New",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "github": "GitHub",

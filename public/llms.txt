@@ -51,6 +51,7 @@ Package versions (approx.): `virastack@1.1.0`, `@virastack/mask@2.1.0`, `@virast
 
 ## Optional
 
+- [Release notes](https://virastack.com/releases): Notable product changes, why they were made and their sources
 - [Support](https://virastack.com/support): Support and contact
 - [GitHub org](https://github.com/virastack): Source repositories
 - [X / Twitter](https://x.com/virastack): Product updates
