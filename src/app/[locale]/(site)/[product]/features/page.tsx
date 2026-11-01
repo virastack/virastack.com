@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { isFeatureCatalogLive } from "@/config/product-subnav.config";
 import { siteConfig } from "@/config/site.config";
 
 import { buildAlternates } from "@/lib/canonical";
@@ -31,7 +30,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: { absolute: `${t("title")} · ${siteConfig.name} Start` },
     description: t("description"),
     alternates: buildAlternates(locale, "/start/features"),
-    robots: isFeatureCatalogLive ? undefined : { index: false },
   };
 }
 
@@ -39,7 +37,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, product } = await params;
   setRequestLocale(locale);
 
-  if (product !== "start" || !isFeatureCatalogLive) {
+  if (product !== "start") {
     notFound();
   }
 

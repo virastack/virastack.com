@@ -41,7 +41,7 @@ export function StartTemplatesDoc() {
   const tree = `src/
 ├── app/ | routes/            # Next.js App Router | TanStack file-based routing
 ├── features/
-│   └── landing/              # ${t("templatesTreeCommentFeature")}
+│   └── home/                 # ${t("templatesTreeCommentFeature")}
 │       ├── api/
 │       ├── components/
 │       ├── constants/

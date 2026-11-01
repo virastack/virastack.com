@@ -875,7 +875,7 @@
     "installationQTools": "<bold>Araçlar</bold>: <maskPkg>@virastack/mask</maskPkg>, <passwordPkg>@virastack/password</passwordPkg>, <addressPkg>@virastack/address</addressPkg> gibi opsiyonel paketler.",
     "installationSkillEmil": "<code>emil-design-eng</code> (<link>emilkowalski/skills</link>): Emil Kowalski’nin animasyon, etkileşim ve detay odaklı tasarım mühendisliği.",
     "installationAfterP3": "Proje dizinine girip geliştirme sunucusunu başlat:",
-    "installationAfterP4": "Ana sayfa örnek <landing>landing</landing> feature’ını gösterir. Kendi ürününe geçerken silebilirsin.",
+    "installationAfterP4": "Ana sayfa <landing>src/features/home</landing> içindeki kısa başlangıç sayfasıdır. Kendi ürününe geçerken silebilirsin.",
     "installationHeadingFixme": "İlk yapılacaklar (FIXME)",
     "installationFixmeIntro": "Şablonlar ilk yapılacakları <fixme>FIXME:</fixme> yorumlarıyla işaretler. Repoda bu işareti ara, sonra sırayla güncelle:",
     "installationFixmeStep1": "<bold>Adım 1: Site meta verisi</bold> (<file>src/config/site.config.ts</file>): varsayılan açıklama ve sosyal linkleri ürün adın, metnin ve URL’lerinle değiştir. Ad ve kök URL <env>.env</env> üzerinden gelir:",
@@ -1059,7 +1059,7 @@
     "templatesHeadingTests": "Testler",
     "templatesTestsP": "Her şablon <code>Vitest</code>, Testing Library ve MSW kurulu ve hazır gelir.",
     "templatesTestsSetup": "<code>vitest.config.ts</code> ve <code>src/test/</code>: jsdom kurulumu, <code>renderWithProviders</code> yardımcısı ve yakalanmayan isteklerde hata veren bir MSW sunucusu.",
-    "templatesTestsExamples": "landing feature’ında örnek testler: bir yardımcı fonksiyon (<code>get-initials.test.ts</code>), MSW ile bir API fonksiyonu (<code>get-users.api.test.ts</code>) ve bir bileşen (<code>CartDemo.test.tsx</code>).",
+    "templatesTestsExamples": "<code>npx virastack add users</code> örnek testlerle gelir: bir yardımcı fonksiyon (<code>get-initials.test.ts</code>), MSW ile bir API fonksiyonu (<code>get-users.api.test.ts</code>) ve bir bileşen (<code>UsersDirectory.test.tsx</code>).",
     "templatesTestsScripts": "<code>pnpm test</code> bir kez çalışır, <code>pnpm test:watch</code> izlemeye devam eder. CI testleri build’den önce çalıştırır. <scripts>Komutlar</scripts> sayfasına bak.",
     "templatesStructureBoundaries": "ESLint, feature’lar arası import’ları ve üst dizine giden <code>../</code> import’larını engeller. Bu ağaçtaki sınırlar sadece önerilmez, uygulanır.",
     "templatesTreeCommentTest": "Vitest kurulumu, render yardımcısı, MSW sunucusu",
@@ -1673,11 +1673,11 @@
       "apiTitle": "Kendi API'ne geçiş",
       "apiDesc": "<code>.env.local</code> dosyasında, <nextjs>Next.js</nextjs> kullanıyorsan <code>NEXT_PUBLIC_API_URL</code>, <tanstack>TanStack Start</tanstack> kullanıyorsan <code>VITE_API_URL</code> değerine kendi API adresini yaz. Yanıtın farklıysa şu yerleri uyarla: <code>api</code>, <code>schemas</code>, <code>constants</code>, <code>UsersTable</code>, <code>AddUserForm</code> ve testler.",
       "pageTitle": "Çalışan bir sayfa",
-      "pageDesc": "<start>Start</start> v2 ile kurduğun projede <code>/users</code> sayfası hazır gelir. Var olan bir Start projesine eklemek için <code>npx virastack add users</code> yazman yeterli; dosyalar, paketler ve route yerine oturur.",
+      "pageDesc": "<start>Start</start> v2 projende <code>npx virastack add users</code> yazman yeterli; dosyalar, paketler ve route yerine oturur. Kaldırmak için <code>npx virastack remove users</code> yazarsın.",
       "doneTitle": "Yazman gerekmeyenler",
       "doneDesc": "Arama, URL'de sayfalama, yükleme, hata ve boş durumları, doğrulanan form, favoriler ve testler yazılmış olarak gelir. Bunları sıfırdan kurmakla uğraşmazsın.",
       "ownTitle": "Kod artık senin",
-      "ownDesc": "Modül projene kopyalanır, bir pakete bağlı kalmazsın. Sütun ekler, tasarımı değiştirirsin; istemezsen <code>src/features/users</code> klasörüyle birlikte silersin."
+      "ownDesc": "Modül projene kopyalanır, bir pakete bağlı kalmazsın. Sütun ekler, tasarımı değiştirirsin; istemezsen <code>npx virastack remove users</code> ile kaldırırsın."
     }
   }
 }

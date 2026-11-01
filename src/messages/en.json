@@ -875,7 +875,7 @@
     "installationQTools": "<bold>Tools</bold>: optional packages like <maskPkg>@virastack/mask</maskPkg>, <passwordPkg>@virastack/password</passwordPkg> and <addressPkg>@virastack/address</addressPkg>.",
     "installationSkillEmil": "<code>emil-design-eng</code> (<link>emilkowalski/skills</link>): Emil Kowalski’s design engineering for animation, interaction and polish.",
     "installationAfterP3": "Enter the project directory and start the dev server:",
-    "installationAfterP4": "The homepage renders the sample <landing>landing</landing> feature. Delete it when you build your product.",
+    "installationAfterP4": "The homepage is a short start page in <landing>src/features/home</landing>. Delete it when you build your product.",
     "installationHeadingFixme": "First steps (FIXME)",
     "installationFixmeIntro": "Templates mark the first steps with <fixme>FIXME:</fixme> comments. Search the repo for that marker, then update these in order:",
     "installationFixmeStep1": "<bold>Step 1: Site metadata</bold> (<file>src/config/site.config.ts</file>): replace the default description and social links with your product name, copy, and URLs. Name and base URL come from <env>.env</env>:",
@@ -1059,7 +1059,7 @@
     "templatesHeadingTests": "Tests",
     "templatesTestsP": "Every template ships with <code>Vitest</code>, Testing Library and MSW ready to use.",
     "templatesTestsSetup": "<code>vitest.config.ts</code> and <code>src/test/</code>: jsdom setup, a <code>renderWithProviders</code> helper and an MSW server that fails on unhandled requests.",
-    "templatesTestsExamples": "Example tests in the landing feature: a helper (<code>get-initials.test.ts</code>), an API function with MSW (<code>get-users.api.test.ts</code>) and a component (<code>CartDemo.test.tsx</code>).",
+    "templatesTestsExamples": "<code>npx virastack add users</code> brings example tests: a helper (<code>get-initials.test.ts</code>), an API function with MSW (<code>get-users.api.test.ts</code>) and a component (<code>UsersDirectory.test.tsx</code>).",
     "templatesTestsScripts": "<code>pnpm test</code> runs once and <code>pnpm test:watch</code> keeps watching. CI runs the tests before the build. See <scripts>scripts</scripts>.",
     "templatesStructureBoundaries": "ESLint blocks imports between features and parent-relative <code>../</code> imports, so the boundaries in this tree are enforced, not just suggested.",
     "templatesTreeCommentTest": "Vitest setup, render helper, MSW server",
@@ -1673,11 +1673,11 @@
       "apiTitle": "Moving to your API",
       "apiDesc": "In <code>.env.local</code>, set <code>NEXT_PUBLIC_API_URL</code> on <nextjs>Next.js</nextjs> or <code>VITE_API_URL</code> on <tanstack>TanStack Start</tanstack> to your API's address. If your responses differ, adapt these: <code>api</code>, <code>schemas</code>, <code>constants</code>, <code>UsersTable</code>, <code>AddUserForm</code> and the tests.",
       "pageTitle": "A working page",
-      "pageDesc": "A project created with <start>Start</start> v2 comes with the <code>/users</code> page ready. To add it to an existing Start project, run <code>npx virastack add users</code>; files, packages and the route fall into place.",
+      "pageDesc": "Run <code>npx virastack add users</code> in a <start>Start</start> v2 project; files, packages and the route fall into place. To take it out, run <code>npx virastack remove users</code>.",
       "doneTitle": "What you don't have to write",
       "doneDesc": "Search, pagination in the URL, loading, error and empty states, a validated form, favorites and tests come already written. You don't build any of it from scratch.",
       "ownTitle": "The code is yours",
-      "ownDesc": "The module is copied into your project, so you don't depend on a package. Add columns or change the design; if you don't want it, delete it along with the <code>src/features/users</code> folder."
+      "ownDesc": "The module is copied into your project, so you don't depend on a package. Add columns or change the design; if you don't want it, run <code>npx virastack remove users</code>."
     }
   }
 }
