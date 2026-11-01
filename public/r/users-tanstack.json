@@ -148,7 +148,7 @@
       "target": "src/features/users/constants/users.constants.ts"
     },
     {
-      "path": "registry/users/common/src/features/users/helpers/get-error-message.ts",
+      "path": "registry/users/tanstack/src/features/users/helpers/get-error-message.ts",
       "content": "import { ApiError } from \"@/lib/api\"\n\nexport function getErrorMessage(error: unknown) {\n  return error instanceof ApiError ? error.message : \"Something went wrong.\"\n}\n",
       "type": "registry:file",
       "target": "src/features/users/helpers/get-error-message.ts"
