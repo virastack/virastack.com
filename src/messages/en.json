@@ -338,7 +338,8 @@
     "subNavExamples": "Examples",
     "subNavBuilder": "Builder",
     "subNavSources": "Sources",
-    "subNavContribute": "Contribute"
+    "subNavContribute": "Contribute",
+    "subNavFeatures": "Features"
   },
   "StartBuilder": {
     "title": "Builder",
@@ -1616,5 +1617,67 @@
     "productGuide": "ViraStack Guide: Interactive guide to modern web standards",
     "productAcademy": "ViraStack Academy: React frontend roadmap",
     "guidePlay": "Step-by-step guide"
+  },
+  "StartFeatureCatalog": {
+    "filterLabel": "Filter by area",
+    "filterAll": "All",
+    "title": "Ready-made features",
+    "description": "More than UI: each comes with its screens and tests, plus the data layer, forms and state it needs. Add one to your project, then swap the mock data for your API.",
+    "group": {
+      "demo": "Demo",
+      "auth": "Auth",
+      "ecommerce": "E-commerce",
+      "admin": "Admin panel"
+    },
+    "status": {
+      "ready": "Ready",
+      "soon": "Coming soon"
+    },
+    "tag": {
+      "uiOnly": "UI only",
+      "mockApi": "Mock API",
+      "urlState": "URL state",
+      "form": "Form"
+    },
+    "items": {
+      "users": "A searchable user list with pagination in the URL, a validated form and favorites.",
+      "auth": "Sign-in, sign-up, forgot password and new password screens, with validation and error states.",
+      "products": "A product list and detail page with filters, search, pagination, images and variants. Choices stay in the URL.",
+      "cart": "A cart page with quantity updates, item removal and totals.",
+      "checkout": "Pick, add and edit addresses, then a payment step with a credit card UI. No value is sent to an API.",
+      "admin-products": "A product table with an add and edit form for variants, prices and images. For PIM screens.",
+      "admin-orders": "An order table and detail page with status filters, search, order lines, status history and actions. For OMS screens.",
+      "admin-customers": "A customer table, detail page and form with search, filters, orders and activity history.",
+      "admin-dashboard": "A starting dashboard with key metrics and charts.",
+      "admin-shell": "A panel shell with a sidebar. Installed automatically with the features that use it.",
+      "data-table": "A table that keeps pagination, filters and sorting in the URL. Installed automatically with the features that use it."
+    },
+    "included": {
+      "label": "In every feature",
+      "ui": "UI",
+      "uiDesc": "A working screen with loading, error and empty states",
+      "tests": "Tests",
+      "testsDesc": "Installed and tried on all four templates",
+      "packages": "Packages",
+      "packagesDesc": "Required packages install with it",
+      "own": "Your code",
+      "ownDesc": "Copied into your project, yours to change"
+    },
+    "packagesLabel": "Installed packages",
+    "packagesCount": "{count, plural, one {# package} other {# packages}}",
+    "detail": {
+      "back": "Features",
+      "preview": "Live preview",
+      "previewNote": "This preview fetches live data from <link>DummyJSON</link>; users you add are not saved.",
+      "aboutTitle": "What you get with this command",
+      "apiTitle": "Moving to your API",
+      "apiDesc": "On <nextjs>Next.js</nextjs>, set <code>NEXT_PUBLIC_API_URL</code> to your API's address. On <tanstack>TanStack Start</tanstack>, set <code>VITE_API_URL</code>. If your responses differ, adapt the module's <code>schemas</code> and <code>api</code> folders; the screens stay the same.",
+      "pageTitle": "A working page",
+      "pageDesc": "A project created with <start>Start</start> v2 comes with the <code>/users</code> page ready. To add it to an existing Start project, run <code>npx virastack add users</code>; files, packages and the route fall into place.",
+      "doneTitle": "What you don't have to write",
+      "doneDesc": "Search, pagination in the URL, loading, error and empty states, a validated form, favorites and tests come already written. You don't build any of it from scratch.",
+      "ownTitle": "The code is yours",
+      "ownDesc": "The module is copied into your project, so you don't depend on a package. Add columns or change the design; if you don't want it, delete it along with the <code>src/features/users</code> folder."
+    }
   }
 }

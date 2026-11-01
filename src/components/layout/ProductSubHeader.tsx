@@ -17,6 +17,7 @@ const subNavLabelKeys = {
   getStarted: "subNavGetStarted",
   examples: "subNavExamples",
   builder: "subNavBuilder",
+  features: "subNavFeatures",
 } as const satisfies Record<ProductSubNavId, string>;
 
 type ProductSubHeaderProps = {
@@ -36,6 +37,7 @@ export function ProductSubHeader({ product }: ProductSubHeaderProps) {
         href: item.href,
         label: t(subNavLabelKeys[item.id]),
         active: isProductSubNavItemActive(pathname, item),
+        badge: item.isNew ? t("new") : undefined,
       }))}
     />
   );

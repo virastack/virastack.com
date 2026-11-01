@@ -9,6 +9,7 @@ export type SectionSubNavItem = {
   href: string;
   label: string;
   active: boolean;
+  badge?: string;
 };
 
 type SectionSubHeaderProps = {
@@ -39,6 +40,11 @@ export function SectionSubHeader({ ariaLabel, items }: SectionSubHeaderProps) {
               )}
             >
               {item.label}
+              {item.badge ? (
+                <span className="ml-1.5 rounded-full bg-foreground/10 px-1 py-px text-[9px] leading-none font-medium text-muted-foreground">
+                  {item.badge}
+                </span>
+              ) : null}
             </Link>
           ))}
         </nav>

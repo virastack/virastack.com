@@ -338,7 +338,8 @@
     "subNavExamples": "Örnekler",
     "subNavBuilder": "Sihirbaz",
     "subNavSources": "Kaynaklar",
-    "subNavContribute": "Katkı"
+    "subNavContribute": "Katkı",
+    "subNavFeatures": "Modüller"
   },
   "StartBuilder": {
     "title": "Sihirbaz",
@@ -1616,5 +1617,67 @@
     "productGuide": "ViraStack Guide: Modern web standartları için interaktif rehber",
     "productAcademy": "ViraStack Academy: React ile frontend yol haritası",
     "guidePlay": "Adım adım rehber"
+  },
+  "StartFeatureCatalog": {
+    "filterLabel": "Alana göre filtrele",
+    "filterAll": "Tümü",
+    "title": "Hazır modüller",
+    "description": "Yalnızca arayüz değil: ekranları ve testleriyle, gerektiğinde veri katmanı, form ve state'iyle gelir. Projene kur, mock veriyi gerçek API'nle değiştir.",
+    "group": {
+      "demo": "Demo",
+      "auth": "Auth",
+      "ecommerce": "E-ticaret",
+      "admin": "Yönetim paneli"
+    },
+    "status": {
+      "ready": "Hazır",
+      "soon": "Yakında"
+    },
+    "tag": {
+      "uiOnly": "Yalnızca UI",
+      "mockApi": "Mock API",
+      "urlState": "URL state",
+      "form": "Form"
+    },
+    "items": {
+      "users": "Aranabilir kullanıcı listesi, URL'de sayfalama, doğrulanan form ve favoriler.",
+      "auth": "Giriş, kayıt, şifremi unuttum ve yeni şifre ekranları; doğrulama ve hata durumlarıyla.",
+      "products": "Ürün listesi ve detay sayfası: filtre, arama, sayfalama, görseller ve varyant seçimi. Seçimler URL'de kalır.",
+      "cart": "Sepet sayfası: adet güncelleme, ürün silme ve toplam hesabı.",
+      "checkout": "Adres seçme, ekleme ve düzenleme ile kredi kartı UI'ıyla ödeme adımı. Hiçbir değer API'ye gitmez.",
+      "admin-products": "Ürün tablosu ile ekleme ve düzenleme formu: varyant, fiyat, görsel. PIM ekranları için.",
+      "admin-orders": "Sipariş tablosu ve detayı: durum filtresi, arama, kalemler, durum geçmişi ve işlemler. OMS ekranları için.",
+      "admin-customers": "Müşteri tablosu, detayı ve formu: arama, filtre, siparişler ve hareket geçmişi.",
+      "admin-dashboard": "Özet metrikler ve grafiklerle başlangıç paneli.",
+      "admin-shell": "Sidebar'lı panel iskeleti. Onu kullanan modülle otomatik kurulur.",
+      "data-table": "Sayfalama, filtre ve sıralaması URL'de duran tablo. Onu kullanan modülle otomatik kurulur."
+    },
+    "included": {
+      "label": "Her modülde",
+      "ui": "UI",
+      "uiDesc": "Yükleme, hata ve boş durumlarıyla çalışan ekran",
+      "tests": "Test",
+      "testsDesc": "Dört template'te kurulup denenir",
+      "packages": "Paketler",
+      "packagesDesc": "Gerekli paketler kurulumla gelir",
+      "own": "Kod senin",
+      "ownDesc": "Projene kopyalanır, istediğin gibi değiştir"
+    },
+    "packagesLabel": "Kurulan paketler",
+    "packagesCount": "{count} paket",
+    "detail": {
+      "back": "Modüller",
+      "preview": "Canlı önizleme",
+      "previewNote": "Bu önizleme <link>DummyJSON</link> verisini canlı çeker; eklediğin kullanıcı kaydedilmez.",
+      "aboutTitle": "Bu komutla ne alıyorsun?",
+      "apiTitle": "Kendi API'ne geçiş",
+      "apiDesc": "<nextjs>Next.js</nextjs> kullanıyorsan <code>NEXT_PUBLIC_API_URL</code>, <tanstack>TanStack Start</tanstack> kullanıyorsan <code>VITE_API_URL</code> değerine kendi API adresini yaz. Yanıtın farklıysa modülün <code>schemas</code> ve <code>api</code> klasörlerini uyarlaman yeter; ekranlar aynı kalır.",
+      "pageTitle": "Çalışan bir sayfa",
+      "pageDesc": "<start>Start</start> v2 ile kurduğun projede <code>/users</code> sayfası hazır gelir. Var olan bir Start projesine eklemek için <code>npx virastack add users</code> yazman yeterli; dosyalar, paketler ve route yerine oturur.",
+      "doneTitle": "Yazman gerekmeyenler",
+      "doneDesc": "Arama, URL'de sayfalama, yükleme, hata ve boş durumları, doğrulanan form, favoriler ve testler yazılmış olarak gelir. Bunları sıfırdan kurmakla uğraşmazsın.",
+      "ownTitle": "Kod artık senin",
+      "ownDesc": "Modül projene kopyalanır, bir pakete bağlı kalmazsın. Sütun ekler, tasarımı değiştirirsin; istemezsen <code>src/features/users</code> klasörüyle birlikte silersin."
+    }
   }
 }

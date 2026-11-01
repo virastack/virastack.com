@@ -32,7 +32,7 @@ const contentSecurityPolicy = [
   "frame-ancestors 'none'",
   `script-src 'self' 'unsafe-inline' ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
   "worker-src 'self' blob:",
-  `connect-src 'self' ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
+  `connect-src 'self' https://dummyjson.com ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
 ].join("; ");
 
 const nextConfig: NextConfig = {
