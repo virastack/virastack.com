@@ -1671,7 +1671,7 @@
       "previewNote": "This preview fetches live data from <link>DummyJSON</link>; users you add are not saved.",
       "aboutTitle": "What you get with this command",
       "apiTitle": "Moving to your API",
-      "apiDesc": "On <nextjs>Next.js</nextjs>, set <code>NEXT_PUBLIC_API_URL</code> to your API's address. On <tanstack>TanStack Start</tanstack>, set <code>VITE_API_URL</code>. If your responses differ, adapt the module's <code>schemas</code> and <code>api</code> folders; the screens stay the same.",
+      "apiDesc": "In <code>.env.local</code>, set <code>NEXT_PUBLIC_API_URL</code> on <nextjs>Next.js</nextjs> or <code>VITE_API_URL</code> on <tanstack>TanStack Start</tanstack> to your API's address. If your responses differ, adapt these: <code>api</code>, <code>schemas</code>, <code>constants</code>, <code>UsersTable</code>, <code>AddUserForm</code> and the tests.",
       "pageTitle": "A working page",
       "pageDesc": "A project created with <start>Start</start> v2 comes with the <code>/users</code> page ready. To add it to an existing Start project, run <code>npx virastack add users</code>; files, packages and the route fall into place.",
       "doneTitle": "What you don't have to write",

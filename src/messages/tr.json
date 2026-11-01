@@ -1671,7 +1671,7 @@
       "previewNote": "Bu önizleme <link>DummyJSON</link> verisini canlı çeker; eklediğin kullanıcı kaydedilmez.",
       "aboutTitle": "Bu komutla ne alıyorsun?",
       "apiTitle": "Kendi API'ne geçiş",
-      "apiDesc": "<nextjs>Next.js</nextjs> kullanıyorsan <code>NEXT_PUBLIC_API_URL</code>, <tanstack>TanStack Start</tanstack> kullanıyorsan <code>VITE_API_URL</code> değerine kendi API adresini yaz. Yanıtın farklıysa modülün <code>schemas</code> ve <code>api</code> klasörlerini uyarlaman yeter; ekranlar aynı kalır.",
+      "apiDesc": "<code>.env.local</code> dosyasında, <nextjs>Next.js</nextjs> kullanıyorsan <code>NEXT_PUBLIC_API_URL</code>, <tanstack>TanStack Start</tanstack> kullanıyorsan <code>VITE_API_URL</code> değerine kendi API adresini yaz. Yanıtın farklıysa şu yerleri uyarla: <code>api</code>, <code>schemas</code>, <code>constants</code>, <code>UsersTable</code>, <code>AddUserForm</code> ve testler.",
       "pageTitle": "Çalışan bir sayfa",
       "pageDesc": "<start>Start</start> v2 ile kurduğun projede <code>/users</code> sayfası hazır gelir. Var olan bir Start projesine eklemek için <code>npx virastack add users</code> yazman yeterli; dosyalar, paketler ve route yerine oturur.",
       "doneTitle": "Yazman gerekmeyenler",
