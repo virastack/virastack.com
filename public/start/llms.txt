@@ -10,7 +10,8 @@ For inline CLI + template detail, prefer [llms-full.txt](https://virastack.com/s
 
 - [Introduction](https://virastack.com/start/docs): What Start is and why to use it
 - [Installation](https://virastack.com/start/docs/installation): Questions, setup order, design skills, post-install steps
-- [CLI](https://virastack.com/start/docs/cli): Commands, flags (`--agent`, `--tools`), `virastack add`, non-interactive usage
+- [CLI](https://virastack.com/start/docs/cli): Commands, flags (`--agent`, `--tools`), `virastack add` and `remove`, non-interactive usage
+- [Modules](https://virastack.com/start/docs/modules): `virastack add` and `remove` for ready features, adding them to a page, a checkout example
 - [Builder](https://virastack.com/start/builder): Step-by-step install command wizard
 - [Templates](https://virastack.com/start/docs/templates): Next.js / TanStack Start, with or without i18n, file tree and tests
 - [Scripts](https://virastack.com/start/docs/scripts): Day-to-day, quality, test and CI scripts

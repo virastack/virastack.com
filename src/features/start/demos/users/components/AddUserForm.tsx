@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import type { Control } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Field, FieldError, FieldLabel } from "@/features/start/demos/users/components/field";
 import { getErrorMessage } from "@/features/start/demos/users/helpers/get-error-message";
 import { useAddUser } from "@/features/start/demos/users/hooks/use-add-user";
 import { addUserSchema } from "@/features/start/demos/users/schemas/user.schema";
 import type { AddUserInput } from "@/features/start/demos/users/schemas/user.schema";
+import { Button } from "@/features/start/demos/users/ui/button";
+import { Field, FieldError, FieldLabel } from "@/features/start/demos/users/ui/field";
+import { Input } from "@/features/start/demos/users/ui/input";
 
 export function AddUserForm() {
   const addUser = useAddUser();

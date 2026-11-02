@@ -4,9 +4,9 @@ import { StarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
 import { useFavoriteIds } from "@/features/start/demos/users/hooks/use-favorite-ids";
 import { useFavoritesStore } from "@/features/start/demos/users/stores/favorites.store";
+import { Button } from "@/features/start/demos/users/ui/button";
 
 type FavoriteButtonProps = {
   userId: number;
@@ -25,7 +25,10 @@ export function FavoriteButton({ userId, userName }: FavoriteButtonProps) {
       aria-pressed={isFavorite}
       onClick={() => toggle(userId)}
     >
-      <StarIcon aria-hidden className={cn("size-4", isFavorite && "fill-current")} />
+      <StarIcon
+        aria-hidden
+        className={cn("size-4", isFavorite && "fill-amber-400 text-amber-400")}
+      />
     </Button>
   );
 }

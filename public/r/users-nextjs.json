@@ -23,12 +23,6 @@
   ],
   "files": [
     {
-      "path": "registry/users/nextjs/src/app/users/page.tsx",
-      "content": "import { Suspense } from \"react\"\nimport type { Metadata } from \"next\"\n\nimport { dehydrate, HydrationBoundary, noop } from \"@tanstack/react-query\"\n\nimport { makeQueryClient } from \"@/lib/query-client\"\n\nimport { usersQueryOptions } from \"@/features/users/api/user.queries\"\nimport { UsersDirectory } from \"@/features/users/components/UsersDirectory\"\nimport { UsersDirectorySkeleton } from \"@/features/users/components/UsersDirectorySkeleton\"\nimport { UsersPage } from \"@/features/users/components/UsersPage\"\nimport { loadUsersParams } from \"@/features/users/schemas/users-params.schema\"\n\nexport const metadata: Metadata = {\n  title: \"Users\",\n  description: \"A demo feature with a searchable user list, a validated form and favorites.\",\n  // A demo should not reach search results.\n  robots: { index: false, follow: false }\n}\n\nexport default function UsersRoute({ searchParams }: PageProps<\"/users\">) {\n  return (\n    <UsersPage>\n      <Suspense fallback={<UsersDirectorySkeleton />}>\n        <PrefetchedUsers searchParams={searchParams} />\n      </Suspense>\n    </UsersPage>\n  )\n}\n\n// Reading searchParams makes this route dynamic, so `next build` never calls DummyJSON.\nasync function PrefetchedUsers({ searchParams }: Pick<PageProps<\"/users\">, \"searchParams\">) {\n  const filters = await loadUsersParams(searchParams)\n  const queryClient = makeQueryClient()\n  // A failed prefetch is not dehydrated: the client fetches again and shows the error state.\n  await queryClient.query(usersQueryOptions(filters)).catch(noop)\n\n  return (\n    <HydrationBoundary state={dehydrate(queryClient)}>\n      <UsersDirectory />\n    </HydrationBoundary>\n  )\n}\n",
-      "type": "registry:file",
-      "target": "src/app/users/page.tsx"
-    },
-    {
       "path": "registry/users/common/src/features/users/api/add-user.api.test.ts",
       "content": "import { http, HttpResponse } from \"msw/http\"\nimport { describe, expect, it } from \"vitest\"\n\nimport { siteConfig } from \"@/config/site.config\"\n\nimport { addUser } from \"@/features/users/api/add-user.api\"\nimport { USERS_PATH } from \"@/features/users/constants/users.constants\"\nimport { server } from \"@/test/server\"\n\nconst ADD_USER_URL = `${siteConfig.apiUrl}${USERS_PATH}/add`\nconst input = { firstName: \"Ada\", lastName: \"Lovelace\", email: \"ada@example.com\" }\n\ndescribe(\"addUser\", () => {\n  it(\"posts the input and returns the created user\", async () => {\n    let body: unknown\n    server.use(\n      http.post(ADD_USER_URL, async ({ request }) => {\n        body = await request.json()\n        return HttpResponse.json({ id: 209, username: \"\", ...input }, { status: 201 })\n      })\n    )\n\n    await expect(addUser(input)).resolves.toEqual({\n      id: 209,\n      username: \"\",\n      role: \"user\",\n      ...input\n    })\n    expect(body).toEqual(input)\n  })\n})\n",
       "type": "registry:file",
@@ -117,12 +111,6 @@
       "content": "import { Skeleton } from \"@/components/ui/skeleton\"\nimport { UsersTableSkeleton } from \"@/features/users/components/UsersTableSkeleton\"\n\nexport function UsersDirectorySkeleton() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <Skeleton className=\"h-9 w-full\" />\n      <UsersTableSkeleton />\n    </div>\n  )\n}\n",
       "type": "registry:file",
       "target": "src/features/users/components/UsersDirectorySkeleton.tsx"
-    },
-    {
-      "path": "registry/users/nextjs/src/features/users/components/UsersPage.tsx",
-      "content": "import type { ReactNode } from \"react\"\nimport Link from \"next/link\"\n\nimport { ArrowLeftIcon } from \"lucide-react\"\n\nimport { buttonVariants } from \"@/components/ui/button\"\n\ntype UsersPageProps = {\n  children: ReactNode\n}\n\n/** The page frame. The route passes the list in, so the header shows while it loads. */\nexport function UsersPage({ children }: UsersPageProps) {\n  return (\n    <main className=\"mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-4 pb-6 sm:px-6 sm:pb-10\">\n      <div>\n        <Link href=\"/\" className={buttonVariants({ variant: \"ghost\", size: \"sm\" })}>\n          <ArrowLeftIcon aria-hidden />\n          Start page\n        </Link>\n      </div>\n      <header className=\"flex flex-wrap items-end justify-between gap-x-4 gap-y-2\">\n        <div>\n          <h1 className=\"text-3xl font-semibold tracking-tight\">Users</h1>\n          <p className=\"mt-1 text-pretty text-muted-foreground\">Live data from DummyJSON.</p>\n        </div>\n      </header>\n      {children}\n      <footer className=\"flex flex-col gap-2 border-t pt-4 text-sm text-muted-foreground\">\n        <GuideRow label=\"This demo:\" items={[\"src/features/users\"]} />\n        <GuideRow\n          label=\"Your API:\"\n          items={[\"NEXT_PUBLIC_API_URL\", \"api/\", \"schemas/\", \"AddUserForm\"]}\n        />\n        <GuideRow label=\"To remove:\" items={[\"npx virastack remove users\"]} />\n      </footer>\n    </main>\n  )\n}\n\nfunction GuideRow({ label, items }: { label: string; items: string[] }) {\n  return (\n    <p className=\"flex flex-wrap items-center gap-1.5\">\n      {label}\n      {items.map((item) => (\n        <code key={item} className=\"rounded bg-muted px-1.5 py-0.5 font-mono text-xs break-all\">\n          {item}\n        </code>\n      ))}\n    </p>\n  )\n}\n",
-      "type": "registry:file",
-      "target": "src/features/users/components/UsersPage.tsx"
     },
     {
       "path": "registry/users/common/src/features/users/components/UsersPagination.tsx",
@@ -219,7 +207,10 @@
     "product": "virastack-start",
     "framework": "nextjs",
     "minStartVersion": "2.0.0",
-    "pagePath": "/users"
+    "entry": {
+      "name": "UsersDirectory",
+      "file": "@/features/users/components/UsersDirectory"
+    }
   },
   "type": "registry:item"
 }

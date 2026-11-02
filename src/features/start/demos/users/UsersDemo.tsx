@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { FavoritesCount } from "@/features/start/demos/users/components/FavoritesCount";
 import { UsersDirectorySkeleton } from "@/features/start/demos/users/components/UsersDirectorySkeleton";
 import { makeQueryClient } from "@/features/start/demos/users/lib/query-client";
 
@@ -26,12 +25,7 @@ export function UsersDemo() {
   return (
     <NuqsAdapter>
       <QueryClientProvider client={queryClient}>
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-end">
-            <FavoritesCount />
-          </div>
-          <UsersDirectory />
-        </div>
+        <UsersDirectory />
       </QueryClientProvider>
     </NuqsAdapter>
   );

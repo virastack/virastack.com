@@ -15,7 +15,7 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 
 | Product | Install / entry | npm |
 | --- | --- | --- |
-| Start | `npx virastack@latest` | `virastack` (~1.1.0) |
+| Start | `npx virastack@latest` | `virastack` (~2.0.0) |
 | AI | `npx @virastack/ai init` | `@virastack/ai` (~2.0.0) |
 | Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.1.0) |
 | Password | `npm i @virastack/password` | `@virastack/password` (1.1.x) |

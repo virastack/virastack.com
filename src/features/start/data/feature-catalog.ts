@@ -1,4 +1,4 @@
-export const featureGroups = ["demo", "auth", "ecommerce", "admin"] as const;
+export const featureGroups = ["user", "ecommerce", "admin"] as const;
 
 export type FeatureGroup = (typeof featureGroups)[number];
 
@@ -16,13 +16,13 @@ export type CatalogFeature = {
 export const featureCatalog: readonly CatalogFeature[] = [
   {
     id: "users",
-    group: "demo",
+    group: "user",
     status: "ready",
     tags: ["urlState", "form"],
   },
   {
     id: "auth",
-    group: "auth",
+    group: "user",
     status: "soon",
     tags: ["mockApi", "form"],
     packages: ["@virastack/password"],
@@ -40,11 +40,18 @@ export const featureCatalog: readonly CatalogFeature[] = [
     tags: ["mockApi"],
   },
   {
-    id: "checkout",
+    id: "checkout-address",
     group: "ecommerce",
-    status: "soon",
-    tags: ["uiOnly", "form"],
-    packages: ["@virastack/mask", "@virastack/address"],
+    status: "ready",
+    tags: ["mockApi", "form"],
+    packages: ["@virastack/address", "@virastack/mask"],
+  },
+  {
+    id: "checkout-payment",
+    group: "ecommerce",
+    status: "ready",
+    tags: ["mockApi", "form"],
+    packages: ["@virastack/mask"],
   },
   {
     id: "admin-products",
@@ -73,18 +80,5 @@ export const featureCatalog: readonly CatalogFeature[] = [
     status: "soon",
     tags: ["mockApi"],
     packages: ["recharts"],
-  },
-  {
-    id: "admin-shell",
-    group: "admin",
-    status: "soon",
-    tags: ["uiOnly"],
-  },
-  {
-    id: "data-table",
-    group: "admin",
-    status: "soon",
-    tags: ["urlState"],
-    packages: ["@tanstack/react-table"],
   },
 ];

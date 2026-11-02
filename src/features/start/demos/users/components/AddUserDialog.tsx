@@ -2,7 +2,8 @@
 
 import { PlusIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { AddUserForm } from "@/features/start/demos/users/components/AddUserForm";
+import { Button } from "@/features/start/demos/users/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,8 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { AddUserForm } from "@/features/start/demos/users/components/AddUserForm";
+} from "@/features/start/demos/users/ui/dialog";
 
 export function AddUserDialog() {
   return (

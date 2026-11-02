@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
 import { BaseUiIcon } from "@/components/icons/base-ui";
-import { FramerIcon } from "@/components/icons/framer";
 import { NuqsIcon } from "@/components/icons/nuqs";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { Lucide } from "@/components/ui/svgs/lucide";
@@ -34,24 +33,18 @@ export function StartTemplatesDoc() {
     zod: stackMark(<Zod aria-hidden />),
     usehooks: (chunks: ReactNode) => <code>{chunks}</code>,
     baseui: stackMark(<BaseUiIcon className="size-full" />),
-    motion: stackMark(<FramerIcon className="size-full" />),
     lucide: stackMark(<Lucide aria-hidden />),
+    code: (chunks: ReactNode) => <code>{chunks}</code>,
   };
 
   const tree = `src/
 ├── app/ | routes/            # Next.js App Router | TanStack file-based routing
 ├── features/
 │   └── home/                 # ${t("templatesTreeCommentFeature")}
-│       ├── api/
 │       ├── components/
 │       ├── constants/
 │       ├── helpers/
-│       ├── hooks/
-│       ├── icons/
-│       ├── schemas/
-│       ├── stores/
-│       ├── types/
-│       └── index.ts
+│       └── icons/
 ├── components/
 │   ├── ui/
 │   └── shared/
@@ -60,6 +53,7 @@ export function StartTemplatesDoc() {
 ├── helpers/
 ├── hooks/
 ├── lib/
+├── messages/                 # ${t("templatesTreeCommentMessages")}
 ├── providers/
 ├── schemas/
 ├── stores/
@@ -68,7 +62,6 @@ export function StartTemplatesDoc() {
 ├── types/
 └── env.ts
 
-messages/                     # ${t("templatesTreeCommentMessages")}
 .agents/skills/               # ${t("templatesTreeCommentSkills")}
 .claude/                      # ${t("templatesTreeCommentClaude")}
 .cursor/rules/virastack/      # ${t("templatesTreeCommentRules")}
