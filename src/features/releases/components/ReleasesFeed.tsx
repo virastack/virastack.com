@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
+import { getReleases } from "@/features/releases/data/releases";
 import { Link } from "@/i18n/routing";
 
 export type ReleaseFeedEntry = {
@@ -31,6 +32,9 @@ export async function ReleasesFeed({
   activeProduct: EcosystemId | null;
 }) {
   const t = await getTranslations("ReleasesPage");
+  const productsWithNotes = new Set(
+    getReleases().flatMap((release) => release.products.map((product) => product.id)),
+  );
 
   return (
     <div className="flex flex-col gap-10">
@@ -60,7 +64,11 @@ export async function ReleasesFeed({
                   scroll={false}
                   aria-current={active ? "page" : undefined}
                   aria-label={`${siteConfig.name} ${palette.productName}`}
-                  className={cn(badgeClassName, badgeStateClassName(active))}
+                  className={cn(
+                    badgeClassName,
+                    badgeStateClassName(active),
+                    !active && !productsWithNotes.has(palette.id) && "opacity-50 hover:opacity-100",
+                  )}
                 >
                   <span aria-hidden className={cn("size-2 rounded-full", palette.bgClass)} />
                   <span className="font-medium text-foreground">{palette.productName}</span>

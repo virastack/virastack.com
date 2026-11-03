@@ -30,10 +30,48 @@ export type Release = {
 
 const releases: readonly Release[] = [
   {
+    id: "mask-2-2-0",
+    date: "2026-11-02",
+    products: [{ id: "mask", version: "2.2.0" }],
+    sources: [],
+    commits: [
+      {
+        repo: "virastack/form",
+        hash: "ea6406eb764c7e819a08a724ece2306c40f0597b",
+        title: "Add the fullName preset",
+      },
+      {
+        repo: "virastack/form",
+        hash: "2bb15e5234e5e1f513b09c558f0cc76b82ab6fc1",
+        title: "Clamp a negative max on blur",
+      },
+      {
+        repo: "virastack/form",
+        hash: "c263334c2d2af87e51067ae1f3fe6506f978d28a",
+        title: "Keep Turkish phone value and display in sync",
+      },
+    ],
+    copy: {
+      en: {
+        title: "`fullName` preset for name fields",
+        summary: "Name and card holder fields now accept only letters and single spaces.",
+        whatChanged:
+          '- **`fullName` preset:** Letters of any language and single spaces, starting with a letter, 70 characters at most. It sets `autoComplete: "name"`.\n- **Card holder name:** Use `{ preset: "fullName", autoComplete: "cc-name" }`.\n- **Hyphen and apostrophe:** They are not accepted by default. To allow them, spread `presets.fullName.options` into `definePreset` with your own `n` token.\n- **Negative `max` fix:** With `signed: true` and `max: -5`, typing `-10` gave `-50`. A negative `max` now applies on blur, and `parseMasked` returns `number.max` for `-3` instead of changing it to `-5`. A `max` of zero or above works as before.\n- **Turkish phone fix:** Pasting `0905551234567` into `{ preset: "phone", country: "TR" }` showed `(905) 551 23 45`, and the value did not match the display. It now gives `(555) 123 45 67`.',
+        why: "Mask 2.0 removed the `alpha` preset, so every name field needed its own pattern. The card form in the Start `checkout-card` module needed this first.",
+      },
+      tr: {
+        title: "Ad alanları için `fullName` preset'i",
+        summary:
+          "Ad soyad ve kart üzerindeki ad alanları artık yalnızca harf ve tek boşluk kabul ediyor.",
+        whatChanged:
+          '- **`fullName` preset\'i:** Her dilden harf ve tek boşluk kabul eder, harfle başlar, en çok 70 karakterdir. `autoComplete: "name"` ayarlar.\n- **Kart üzerindeki ad:** `{ preset: "fullName", autoComplete: "cc-name" }` kullan.\n- **Tire ve apostrof:** Varsayılan olarak kabul edilmez. İzin vermek için `presets.fullName.options` değerini kendi `n` token\'ınla `definePreset` içine aktar.\n- **Negatif `max` düzeltmesi:** `signed: true` ve `max: -5` iken `-10` yazınca `-50` oluyordu. Negatif `max` artık alan terk edilince uygulanıyor; `parseMasked` de `-3` değerini `-5`\'e çevirmek yerine `number.max` hatası döndürüyor. Sıfır ve üstü `max` değerleri eskisi gibi çalışıyor.\n- **Türkçe telefon düzeltmesi:** `{ preset: "phone", country: "TR" }` alanına `0905551234567` yapıştırınca `(905) 551 23 45` görünüyor, değer de ekranla uyuşmuyordu. Artık `(555) 123 45 67` oluyor.',
+        why: "Mask 2.0'da `alpha` preset'i kaldırılmıştı, bu yüzden her ad alanı kendi pattern'ini yazmak zorundaydı. İlk ihtiyaç Start `checkout-card` modülündeki kart formunda çıktı.",
+      },
+    },
+  },
+  {
     id: "start-2-0-0",
-    date: "2026-11-01",
-    // Stays a draft until AI, Start and these docs go live together.
-    draft: true,
+    date: "2026-11-03",
     products: [{ id: "start", version: "2.0.0" }],
     sources: [
       {
@@ -87,9 +125,9 @@ const releases: readonly Release[] = [
         summary:
           "Yeni projeler kısa bir başlangıç sayfasıyla kuruluyor, hazır modüller tek komutla eklenip kaldırılıyor; API katmanı ve araç sürümleri yenilendi, dört paket yöneticisi destekleniyor, Node aralığı yükseldi.",
         whatChanged: `- **Başlangıç sayfası:** Landing kalktı. Yerine sonraki adımları ve kullandığın stack'i sürümleriyle gösteren kısa bir sayfa geldi. Marka logosu font indirmeden inline SVG olarak çiziliyor.
-- **\`virastack add <modül>\`:** \`users\`, \`checkout-address\` ve \`checkout-payment\` modüllerini \`virastack.com/r\` registry'sinden dört template'e de kurar. Yalnızca feature kurar, sayfa oluşturmaz: CLI import satırını yazar, modülün sayfası framework'üne ve sayfa yoluna göre prompt ve manuel adımlar verir. \`init\` modül kurmaz; başlangıç sayfası hazır modüllere yönlendirir. i18n'de çeviriler \`src/messages\` içine birleştirilir; çakışma varsa hiçbir dosya değişmez.
+- **\`virastack add <modül>\`:** \`users\`, \`checkout-address\` ve \`checkout-card\` modüllerini \`virastack.com/r\` registry'sinden dört template'e de kurar. Yalnızca feature kurar, sayfa oluşturmaz: CLI import satırını yazar, modülün sayfası framework'üne ve sayfa yoluna göre prompt ve manuel adımlar verir. \`init\` modül kurmaz; başlangıç sayfası hazır modüllere yönlendirir. i18n'de çeviriler \`src/messages\` içine birleştirilir; çakışma varsa hiçbir dosya değişmez.
 - **\`checkout-address\`:** Teslimat ve fatura adresi seçimi, popup'ta ekleme ve düzenleme. Form \`@virastack/address\` ve \`@virastack/mask\` kullanır.
-- **\`checkout-payment\`:** Kayıtlı kart seçimi ve yeni kart formu. Kart numarası ve CVV network'e çıkmaz; POST yalnızca dummy token, marka, son dört hane, son kullanma tarihi ve adı taşır.
+- **\`checkout-card\`:** Kayıtlı kart seçimi ve yeni kart formu. Kart numarası ve CVV network'e çıkmaz; POST yalnızca dummy token, marka, son dört hane, son kullanma tarihi ve adı taşır.
 - **\`virastack remove <modül>\`:** Modülün dosyalarını, boş kalan klasörlerini ve çevirilerini siler, paketleri bırakır. Değiştirdiğin dosyalar varsa silmeden önce sorar.
 - **API katmanı:** \`api.ts\` içinde \`api.get(path, { schema })\` yanıtı doğrular ve tipi çıkarır. \`ApiError.kind\` hatayı \`http\`, \`network\`, \`timeout\` ve \`parse\` olarak ayırır. \`createApi({ baseUrl, getHeaders })\` ile auth başlıkları yalnızca kendi API'ne gider. Varsayılan zaman aşımı 10 saniye.
 - **[React](badge:react) Compiler:** [Next.js](badge:nextjs) ve [TanStack Start](badge:tanstack-start) template'lerinin ikisinde de açık. [Next.js](badge:nextjs) tarafında artık yalnızca production'da değil.
@@ -132,9 +170,9 @@ const releases: readonly Release[] = [
         summary:
           "New projects come with a short start page, and ready modules go in and out with one command; the API layer and tool versions were refreshed, four package managers are supported, and the Node range went up.",
         whatChanged: `- **Start page:** The landing page is gone. A short page now shows the next steps and your stack with its versions. The brand logo is an inline SVG, so no font is downloaded.
-- **\`virastack add <module>\`:** Installs \`users\`, \`checkout-address\` and \`checkout-payment\` from the \`virastack.com/r\` registry in all four templates. It installs only the feature and creates no page: the CLI prints the import line, and the module's page gives a prompt and manual steps for your framework and page path. \`init\` installs no module; the start page points to the ready modules. With i18n, translations are merged into \`src/messages\`; if anything conflicts, no file changes.
+- **\`virastack add <module>\`:** Installs \`users\`, \`checkout-address\` and \`checkout-card\` from the \`virastack.com/r\` registry in all four templates. It installs only the feature and creates no page: the CLI prints the import line, and the module's page gives a prompt and manual steps for your framework and page path. \`init\` installs no module; the start page points to the ready modules. With i18n, translations are merged into \`src/messages\`; if anything conflicts, no file changes.
 - **\`checkout-address\`:** Choose shipping and billing addresses, and add or edit them in a popup. The form uses \`@virastack/address\` and \`@virastack/mask\`.
-- **\`checkout-payment\`:** Choose a saved card or add a new one. The card number and CVV stay off the network; the POST carries only a dummy token, the brand, the last four digits, the expiry and the name.
+- **\`checkout-card\`:** Choose a saved card or add a new one. The card number and CVV stay off the network; the POST carries only a dummy token, the brand, the last four digits, the expiry and the name.
 - **\`virastack remove <module>\`:** Deletes the module's files, the folders they leave empty and its translations, and keeps the packages. It asks first if you changed any of those files.
 - **API layer:** In \`api.ts\`, \`api.get(path, { schema })\` validates the response and infers its type. \`ApiError.kind\` separates \`http\`, \`network\`, \`timeout\` and \`parse\` errors. With \`createApi({ baseUrl, getHeaders })\`, auth headers go only to your own API. The default timeout is 10 seconds.
 - **[React](badge:react) Compiler:** On in both the [Next.js](badge:nextjs) and [TanStack Start](badge:tanstack-start) templates. On [Next.js](badge:nextjs) it is no longer production only.
@@ -171,6 +209,135 @@ const releases: readonly Release[] = [
 - **MSW 3:** \`onUnhandledFrame\` replaces \`onUnhandledRequest\`, and imports go through \`msw/http\`.
 - **[pnpm](badge:pnpm):** The \`pnpm\` field in \`package.json\` is gone; settings live in \`pnpm-workspace.yaml\` with \`allowBuilds\`.
 - **Removed files:** \`public/llms.txt\`, \`.changeset\` and, in the non-i18n [Next.js](badge:nextjs) template, \`proxy.ts\`.`,
+      },
+    },
+  },
+  {
+    id: "ai-2-1-0",
+    date: "2026-11-03",
+    products: [{ id: "ai", version: "2.1.0" }],
+    sources: [
+      {
+        title: "Best practices for Claude Code",
+        url: "https://code.claude.com/docs/en/best-practices",
+      },
+      {
+        title: "Prompting best practices (Anthropic)",
+        url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+      },
+      {
+        title:
+          "Compound Prompt Constraints in LLM Code Generation: A Factorial Study of Format, Persona, and Urgency",
+        url: "https://arxiv.org/abs/2609.03156",
+      },
+      {
+        title:
+          "The Librarian Who Refused to Code: Model-Dependent Identity Enactment in LLM Code Generation",
+        url: "https://arxiv.org/abs/2607.17420",
+      },
+      { title: "Rules (Cursor)", url: "https://cursor.com/docs/rules" },
+      {
+        title: "Project Structure (Bulletproof React)",
+        url: "https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md",
+      },
+      {
+        title: "Server Side Request Forgery Prevention (OWASP)",
+        url: "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+      },
+      {
+        title: "Introduction (React Compiler)",
+        url: "https://react.dev/learn/react-compiler/introduction",
+      },
+      {
+        title: "startTransition (React)",
+        url: "https://react.dev/reference/react/startTransition",
+      },
+      {
+        title: "Prevent rerenders with useShallow (Zustand)",
+        url: "https://zustand.docs.pmnd.rs/learn/guides/prevent-rerenders-with-use-shallow",
+      },
+      { title: "Adapters (nuqs)", url: "https://nuqs.dev/docs/adapters" },
+      {
+        title: "QueryClient (TanStack Query)",
+        url: "https://tanstack.com/query/latest/docs/framework/react/reference/classes/QueryClient",
+      },
+      {
+        title: "Choose Authentication for React Apps (TanStack Start)",
+        url: "https://tanstack.com/start/latest/docs/framework/react/guide/authentication-overview",
+      },
+      { title: "Migration guide (Zod 4)", url: "https://zod.dev/v4/changelog" },
+      {
+        title: "Best practices for fonts (web.dev)",
+        url: "https://web.dev/articles/font-best-practices",
+      },
+      {
+        title: "September 2026 - cn (shadcn/ui)",
+        url: "https://ui.shadcn.com/docs/changelog/2026-09-cn",
+      },
+      {
+        title: "Button (shadcn/ui)",
+        url: "https://ui.shadcn.com/docs/components/base/button",
+      },
+      {
+        title: "Localization vs. Internationalization (W3C)",
+        url: "https://www.w3.org/International/questions/qa-i18n",
+      },
+    ],
+    commits: [
+      {
+        repo: "virastack/ai",
+        hash: "6a6cd9f342a36ff766233af736d1463a0cac4720",
+        title: "CLI fixes, rule revision and Markdown sources",
+      },
+      {
+        repo: "virastack/ai",
+        hash: "d6db0b8347ffaa09b09ef27482ebf4c9d46dadf8",
+        title: "Move upgrade notes out of the README",
+      },
+    ],
+    migrationCode: [{ kind: "npm", code: "npx @virastack/ai@2 init" }],
+    copy: {
+      tr: {
+        title: "Kurallar güncel dokümanlara göre yenilendi",
+        summary:
+          "Tüm kurallar kendi resmi dokümanıyla karşılaştırıldı ve sıfırdan kurulan projelerde denendi; CLI artık proje dışındaki dosyaları silemiyor ve kullanıcı metnini kaybetmiyor.",
+        whatChanged: `- **Veri kaybı:** Manifest'te kural klasörleri dışındaki kayıtlar yok sayılıyor. Dengesiz \`AGENTS.md\` işaretleri çalışmayı durduruyor, dosyaya dokunmuyor.
+- **\`AGENTS.md\`:** Persona ve guardrail bölümleri kalktı. Artık komutlar (kurulum ve tek dosya testi dahil), öncelik ve kural haritası var.
+- **Barrel:** Kurallar uygulama kodunda barrel dosyalarını yasaklıyor ve tek \`@/*\` alias kullanıyor. Yeni suffix \`*.action.ts\`, mesajlar \`src/messages/\` altında.
+- **Yükleme:** Server Action dosyaları \`nextjs\`, server function dosyaları \`tanstack-start\`, route'lar \`i18n\` kuralını alıyor. State kuralları component'lere ulaşsın diye \`react\` içine taşındı.
+- **Kural düzeltmeleri:** \`satisfies\`, \`useShallow\`, [React](badge:react) Compiler, \`font-display\`, \`startTransition\`, [Zod](badge:zod) 4 API'leri, [TanStack Query](badge:tanstack-query) \`query()\`, \`.validator\`, Base UI kalıpları, \`cn\` paketi.
+- **i18n:** Kural artık kelime kelime çeviri yerine localization istiyor ve dile duyarlı büyük-küçük harf ve sıralama API'lerini gösteriyor.
+- **[Cursor](badge:cursor):** Çıktı dokümana uygun \`globs\` kullanıyor; kural kaynakları GitHub'da okunabilsin diye \`.md\` oldu.
+- **CLI:** Üzerine yazma ve silme ayrı soruluyor, symlink'ler korunuyor. Yalnızca \`@tanstack/react-router\` olan proje [TanStack Start](badge:tanstack-start) sayılmıyor, Yarn 1 \`npx\` kullanıyor, lockfile repo köküne kadar aranıyor.`,
+        why: `- **Klonlanan repo tehlikeliydi:** Manifest commit'lenen bir dosya. İçindeki \`../outside.txt\` kaydı, \`init\` ve \`remove\` ile proje dışındaki dosyayı soru sormadan siliyordu; tek başına kalan bir işaret de kullanıcı metnini siliyordu. İkisini de testle ürettik.
+- **Persona:** Bir agent'ı gerçek repoda rol satırıyla ve onsuz karşılaştıran kontrollü çalışma bulamadık, yani **etkisi bilinmiyor**. Tek çağrılı çalışmalarda doğrulukta tutarlı bir kazanç görülmedi. [Claude Code](badge:claude) dokümanı bu dosyanın yalnızca koddan çıkarılamayanı taşımasını öneriyor. [Anthropic](badge:anthropic) rolü system prompt için öneriyor; bu dosya o kategoride değil.
+- **Yanlış yükleme:** Action güvenlik kuralları action yazılırken context'te değildi, state kuralları component yazılırken yüklenmiyordu.
+- **Yanlış içerik:** \`startTransition\` fonksiyonu hemen çalıştırır, ağır işi hızlandırmaz. \`ensureQueryData\` ve \`prefetchQuery\` kaldırılacak. nuqs [TanStack Start](badge:tanstack-start)'ı kapsamıyor. \`font-display: swap\` kendi şablonumuzda CLS 0.207'ye yol açıyordu; fallback ile 0.001'e indi.
+- **Örnekler:** \`forms\` örneği Server Component'ten render edilince build'i kırıyordu, \`api\` örneğindeki göreli URL server'da hata veriyordu, \`nextjs\` örneği yeni \`create-next-app\` projelerinde build'i kırıyordu.
+- **Sınırlar:** Sıfırdan kurulan [Next.js](badge:nextjs) ve [TanStack Start](badge:tanstack-start) projelerinde [Claude Code](badge:claude) ile görev başına kurallı ve kuralsız ikişer koşu yaptık. Kurallı koşuların hepsi tip, lint, build ve sayfa kontrolünden geçti; kuralsız TanStack koşuları eski \`.inputValidator\` yazıp 500 verdi. Bu az koşulu bir kontrol, kod kalitesi artışı iddiası değil. [Cursor](badge:cursor) çıktısı dokümana göre yazıldı, Cursor'da çalıştırılmadı.`,
+        migration:
+          "**Komutu çalıştır, elle taşınacak bir şey yok.** Değiştirmediğin kurallar güncellenir, değiştirdiklerin korunur ve listelenir. Mevcut barrel dosyaları ve alias'lar hata sayılmaz; toplu refactor gerekmez, yeni kod yeni kurallara uyar. Yalnızca `@tanstack/react-router` kullanıyorsan `--framework` vermen gerekir.",
+      },
+      en: {
+        title: "Rules rewritten against current docs",
+        summary:
+          "Every rule was compared with its official docs and tried in freshly created projects; the CLI can no longer delete files outside the project or lose your text.",
+        whatChanged: `- **Data loss:** Manifest entries outside the rule folders are ignored. Unbalanced \`AGENTS.md\` markers stop the run and leave the file untouched.
+- **\`AGENTS.md\`:** The persona and guardrails are gone. It now holds commands, including install and single-file tests, precedence and the rule map.
+- **Barrels:** The rules ban barrel files in application code and use one \`@/*\` alias. New suffix \`*.action.ts\`, and messages live in \`src/messages/\`.
+- **Loading:** Server Action files load \`nextjs\`, server function files load \`tanstack-start\`, and routes load \`i18n\`. State rules moved to \`react\` so they reach components.
+- **Rule corrections:** \`satisfies\`, \`useShallow\`, [React](badge:react) Compiler, \`font-display\`, \`startTransition\`, [Zod](badge:zod) 4 APIs, [TanStack Query](badge:tanstack-query) \`query()\`, \`.validator\`, Base UI patterns, the \`cn\` package.
+- **i18n:** The rule now asks for localization instead of word-for-word translation and shows locale-aware case and sorting APIs.
+- **[Cursor](badge:cursor):** Output uses \`globs\` as its docs describe; rule sources became \`.md\` so they read well on GitHub.
+- **CLI:** Overwriting and deleting are asked separately and symlinks stay symlinks. A project with only \`@tanstack/react-router\` no longer counts as [TanStack Start](badge:tanstack-start), Yarn 1 uses \`npx\`, and the lockfile is found up to the repository root.`,
+        why: `- **A cloned repository was dangerous:** The manifest is a committed file. A \`../outside.txt\` entry made \`init\` and \`remove\` delete a file outside the project without asking, and a lone marker deleted user text. We reproduced both in tests.
+- **Persona:** We found no controlled study comparing an agent in a real repository with and without a role line, so **its effect is unknown**. Single-call studies show no consistent gain in correctness. The [Claude Code](badge:claude) docs recommend this file hold only what the code cannot show. [Anthropic](badge:anthropic) recommends a role for system prompts, and this file is not one.
+- **Wrong loading:** Action security rules were not in context while writing actions, and state rules did not load while writing components.
+- **Wrong content:** \`startTransition\` runs its function immediately, so it does not speed up heavy work. \`ensureQueryData\` and \`prefetchQuery\` are being removed. nuqs does not cover [TanStack Start](badge:tanstack-start). \`font-display: swap\` caused CLS 0.207 in our own template; a fallback brought it to 0.001.
+- **Examples:** The \`forms\` example broke the build when rendered from a Server Component, the relative URL in \`api\` failed on the server, and the \`nextjs\` example broke the build in new \`create-next-app\` projects.
+- **Limits:** In freshly created [Next.js](badge:nextjs) and [TanStack Start](badge:tanstack-start) projects we ran [Claude Code](badge:claude) twice per task, with and without the rules. Every run with rules passed types, lint, build and the page check; runs without rules on TanStack wrote the old \`.inputValidator\` and returned 500. This is a small check, not a claim about code quality. [Cursor](badge:cursor) output follows its docs and was not run in Cursor.`,
+        migration:
+          "**Run the command; there is nothing to migrate by hand.** Rules you did not change are updated, and rules you changed are kept and listed. Existing barrel files and aliases are not errors; no refactor is needed, and new code follows the new rules. If you use only `@tanstack/react-router`, pass `--framework`.",
       },
     },
   },
