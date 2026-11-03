@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
 
 import { ChevronRight, SearchIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { debounce, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
@@ -13,8 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { featureMarks } from "@/features/start/constants/feature-tags.constants";
 import {
-  featureCatalog,
-  featureGroups,
+  visibleFeatures,
+  visibleGroups,
   type FeatureGroup,
 } from "@/features/start/data/feature-catalog";
 import {
@@ -27,17 +29,32 @@ const PackageIcon = featureMarks.packages.icon;
 
 const badgeClassName = "inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs";
 
-export function StartFeatureCatalog() {
+const SEARCH_DEBOUNCE_MS = 300;
+
+const catalogParams = {
+  group: parseAsStringLiteral(visibleGroups),
+  q: parseAsString.withDefault(""),
+};
+
+type CatalogViewProps = {
+  group: FeatureGroup | null;
+  search: string;
+  onGroupChange: (group: FeatureGroup | null) => void;
+  onSearchChange: (search: string) => void;
+};
+
+function CatalogView({ group, search, onGroupChange, onSearchChange }: CatalogViewProps) {
   const t = useTranslations("StartFeatureCatalog");
   const locale = useLocale();
-  const [group, setGroup] = useState<FeatureGroup | null>(null);
-  const [search, setSearch] = useState("");
 
   const query = search.trim().toLocaleLowerCase(locale);
-  const features = featureCatalog.filter(
+  const features = visibleFeatures.filter(
     (feature) =>
       (!group || feature.group === group) &&
-      `${feature.id} ${t(`items.${feature.id}`)}`.toLocaleLowerCase(locale).includes(query),
+      [feature.id, t(`names.${feature.id}`), t(`items.${feature.id}`), ...(feature.packages ?? [])]
+        .join(" ")
+        .toLocaleLowerCase(locale)
+        .includes(query),
   );
 
   return (
@@ -47,20 +64,30 @@ export function StartFeatureCatalog() {
           <button
             type="button"
             aria-pressed={group === null}
-            onClick={() => setGroup(null)}
-            className={cn(filterPillClassName, filterPillStateClassName(group === null))}
+            onClick={() => onGroupChange(null)}
+            className={cn(filterPillClassName, filterPillStateClassName(group === null), "gap-1.5")}
           >
             {t("filterAll")}
+            <span className="text-xs text-muted-foreground tabular-nums">
+              {visibleFeatures.length}
+            </span>
           </button>
-          {featureGroups.map((item) => (
+          {visibleGroups.map((item) => (
             <button
               key={item}
               type="button"
               aria-pressed={group === item}
-              onClick={() => setGroup(item)}
-              className={cn(filterPillClassName, filterPillStateClassName(group === item))}
+              onClick={() => onGroupChange(item)}
+              className={cn(
+                filterPillClassName,
+                filterPillStateClassName(group === item),
+                "gap-1.5",
+              )}
             >
               {t(`group.${item}`)}
+              <span className="text-xs text-muted-foreground tabular-nums">
+                {visibleFeatures.filter((feature) => feature.group === item).length}
+              </span>
             </button>
           ))}
         </div>
@@ -72,7 +99,7 @@ export function StartFeatureCatalog() {
           <Input
             type="search"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => onSearchChange(event.target.value)}
             placeholder={t("searchPlaceholder")}
             aria-label={t("searchPlaceholder")}
             className="pl-9"
@@ -98,12 +125,12 @@ export function StartFeatureCatalog() {
             )}
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="font-mono text-base font-semibold text-foreground">
+              <h3 className="text-base font-semibold text-foreground">
                 <Link
                   href={`/start/features/${feature.id}`}
                   className="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
                 >
-                  {feature.id}
+                  {t(`names.${feature.id}`)}
                 </Link>
               </h3>
               <ChevronRight className={featureCardChevronClassName} aria-hidden />
@@ -167,5 +194,36 @@ export function StartFeatureCatalog() {
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Group and search live in the URL, so a filtered list can be shared and survives going back. */
+function UrlCatalog() {
+  const [{ group, q }, setParams] = useQueryStates(catalogParams);
+
+  return (
+    <CatalogView
+      group={group}
+      search={q}
+      onGroupChange={(value) => setParams({ group: value })}
+      onSearchChange={(value) =>
+        setParams({ q: value || null }, { limitUrlUpdates: debounce(SEARCH_DEBOUNCE_MS) })
+      }
+    />
+  );
+}
+
+export function StartFeatureCatalog() {
+  return (
+    <NuqsAdapter>
+      {/* The fallback is the unfiltered list, so the static HTML still holds every card. */}
+      <Suspense
+        fallback={
+          <CatalogView group={null} search="" onGroupChange={() => {}} onSearchChange={() => {}} />
+        }
+      >
+        <UrlCatalog />
+      </Suspense>
+    </NuqsAdapter>
   );
 }

@@ -1,10 +1,14 @@
 "use client";
 
 import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { buildFileTree, type FileTreeNode } from "@/features/start/helpers/build-file-tree";
+import { useFeatureInstallStore } from "@/features/start/stores/feature-install.store";
+
+export type InstallVariant = "nextjs" | "tanstack" | "nextjs-i18n" | "tanstack-i18n";
 
 /** Folders down to this depth start open, so the module's own folders are visible at once. */
 const OPEN_DEPTH = 3;
@@ -52,5 +56,38 @@ export function FeatureFileTree({ files }: { files: readonly string[] }) {
         <FileTreeItem key={node.path} node={node} depth={0} />
       ))}
     </div>
+  );
+}
+
+const codeClassName = "rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground";
+
+/** The files of the template picked in `FeatureInstall`, plus where an i18n module adds its messages. */
+export function FeatureVariantFileTree({
+  feature,
+  files,
+}: {
+  feature: string;
+  files: Readonly<Record<InstallVariant, readonly string[]>>;
+}) {
+  const t = useTranslations("StartFeatureCatalog.detail");
+  const { framework, i18n } = useFeatureInstallStore();
+  // `virastack add` merges messages under the module's PascalCase name, e.g. `CheckoutAddress`.
+  const namespace = feature
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join("");
+
+  return (
+    <>
+      <FeatureFileTree files={files[i18n ? (`${framework}-i18n` as const) : framework]} />
+      {i18n ? (
+        <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+          {t.rich("filesMessagesNote", {
+            namespace,
+            code: (chunks) => <code className={codeClassName}>{chunks}</code>,
+          })}
+        </p>
+      ) : null}
+    </>
   );
 }

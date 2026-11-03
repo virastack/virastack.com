@@ -1,11 +1,15 @@
+import { useTranslations } from "next-intl";
+
 import { USERS_PAGE_SIZE } from "@/features/start/demos/users/constants/users.constants";
 import { Skeleton } from "@/features/start/demos/users/ui/skeleton";
 
 const ROWS = Array.from({ length: USERS_PAGE_SIZE }, (_, index) => index);
 
 export function UsersTableSkeleton() {
+  const t = useTranslations("Users");
+
   return (
-    <div role="status" aria-label="Loading users" className="flex flex-col gap-4">
+    <div role="status" aria-label={t("loading_users")} className="flex flex-col gap-4">
       <div className="rounded-lg border">
         <Skeleton className="m-3 h-5 w-24" />
         {ROWS.map((row) => (

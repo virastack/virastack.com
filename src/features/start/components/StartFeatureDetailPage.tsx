@@ -1,24 +1,27 @@
 import type { ReactNode } from "react";
 
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+
+import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
+import { cn } from "@/lib/utils";
 
 import { CopyButton } from "@/components/copy-button";
 import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { guideCardTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
-import { FeatureFileTree } from "@/features/start/components/FeatureFileTree";
+import { FeatureVariantFileTree } from "@/features/start/components/FeatureFileTree";
 import { FeatureInstall } from "@/features/start/components/FeatureInstall";
-import { featureCatalog } from "@/features/start/data/feature-catalog";
+import { featureCatalog, visibleFeatures } from "@/features/start/data/feature-catalog";
 import { CheckoutAddressDemo } from "@/features/start/demos/checkout-address/CheckoutAddressDemo";
 import {
   INSTALL_FILES as CHECKOUT_ADDRESS_FILES,
   INSTALL_ROUTE as CHECKOUT_ADDRESS_ROUTE,
 } from "@/features/start/demos/checkout-address/install-files";
-import { CheckoutPaymentDemo } from "@/features/start/demos/checkout-payment/CheckoutPaymentDemo";
+import { CheckoutCardDemo } from "@/features/start/demos/checkout-card/CheckoutCardDemo";
 import {
-  INSTALL_FILES as CHECKOUT_PAYMENT_FILES,
-  INSTALL_ROUTE as CHECKOUT_PAYMENT_ROUTE,
-} from "@/features/start/demos/checkout-payment/install-files";
+  INSTALL_FILES as CHECKOUT_CARD_FILES,
+  INSTALL_ROUTE as CHECKOUT_CARD_ROUTE,
+} from "@/features/start/demos/checkout-card/install-files";
 import {
   INSTALL_FILES as USERS_FILES,
   INSTALL_ROUTE as USERS_ROUTE,
@@ -34,7 +37,7 @@ const READY_CONTENT = {
     Demo: UsersDemo,
     files: USERS_FILES,
     route: USERS_ROUTE,
-    rows: ["list", "search", "form", "favorites", "states", "tests"],
+    rows: ["list", "search", "form", "actions", "states", "tests"],
     previewNote: "previewNote",
     apiKey: "api",
     hasMoreNote: true,
@@ -55,10 +58,10 @@ const READY_CONTENT = {
     apiKey: "addressApi",
     hasMoreNote: false,
   },
-  "checkout-payment": {
-    Demo: CheckoutPaymentDemo,
-    files: CHECKOUT_PAYMENT_FILES,
-    route: CHECKOUT_PAYMENT_ROUTE,
+  "checkout-card": {
+    Demo: CheckoutCardDemo,
+    files: CHECKOUT_CARD_FILES,
+    route: CHECKOUT_CARD_ROUTE,
     rows: ["paymentList", "paymentForm", "paymentSafety", "paymentTests"],
     previewNote: "paymentPreviewNote",
     apiKey: "paymentApi",
@@ -66,7 +69,9 @@ const READY_CONTENT = {
   },
 } as const;
 
-const USE_ITEMS = ["page", "api", "own"] as const;
+const USE_ITEMS = ["api", "own"] as const;
+
+const TEST_CARD_NUMBER = "5400360000000003";
 
 function getReadyContent(feature: string) {
   return feature in READY_CONTENT ? READY_CONTENT[feature as keyof typeof READY_CONTENT] : null;
@@ -77,6 +82,8 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
   const command = `npx virastack add ${feature}`;
   const isReady = featureCatalog.some((item) => item.id === feature && item.status === "ready");
   const content = isReady ? getReadyContent(feature) : null;
+  const group = featureCatalog.find((item) => item.id === feature)?.group;
+  const related = visibleFeatures.filter((item) => item.group === group && item.id !== feature);
   const tags = {
     ...guideCardTags(),
     testinglibrary: () => <AcademyBadge kind="testing-library" />,
@@ -105,7 +112,7 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl min-w-0 flex-col gap-6 px-6 pt-28 pb-24">
+    <div className="mx-auto flex w-full max-w-5xl min-w-0 flex-col gap-6 px-6 pt-28 pb-24">
       <Link
         href="/start/features"
         className="inline-flex w-fit items-center gap-1.5 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
@@ -116,7 +123,9 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
 
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0 space-y-2">
-          <h1 className="font-mono text-3xl font-semibold text-foreground">{feature}</h1>
+          <h1 className="text-3xl font-semibold tracking-tight text-balance text-foreground">
+            {t(`names.${feature}`)}
+          </h1>
           <p className="max-w-2xl text-pretty text-muted-foreground">{t(`items.${feature}`)}</p>
         </div>
         <div className="flex min-w-0 flex-wrap items-stretch gap-2">
@@ -138,19 +147,8 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
         </div>
       </header>
 
-      <section
-        aria-label={t("detail.preview")}
-        className="min-h-64 rounded-2xl border border-border p-4 sm:p-6"
-      >
-        {content ? (
-          <div className="mx-auto w-full max-w-xl">
-            <content.Demo />
-          </div>
-        ) : null}
-      </section>
-
       {content ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
           {t.rich(`detail.${content.previewNote}`, {
             link: (chunks) => (
               <a
@@ -162,24 +160,55 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
                 {chunks}
               </a>
             ),
+            card: (chunks) => (
+              <span className="inline-flex items-center gap-0.5 align-middle whitespace-nowrap">
+                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
+                  {chunks}
+                </code>
+                <CopyButton
+                  text={TEST_CARD_NUMBER}
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label={t("detail.copyTestCard")}
+                />
+              </span>
+            ),
           })}
         </p>
       ) : null}
 
-      {content ? <FeatureInstall route={content.route} /> : null}
-
-      <section aria-labelledby="feature-includes" className="mt-6 space-y-4">
-        <h2 id="feature-includes" className="text-xl font-semibold text-foreground">
-          {t("detail.includesTitle")}
-        </h2>
+      <section
+        aria-label={t("detail.preview")}
+        className="rounded-2xl border border-border bg-muted/30 px-4 py-10 sm:px-6 sm:py-16"
+      >
         {content ? (
-          <>
+          <div className="mx-auto w-full max-w-xl">
+            <content.Demo />
+          </div>
+        ) : (
+          <div className="m-auto max-w-sm space-y-1 text-center">
+            <p className="font-medium text-foreground">{t("detail.underConstructionTitle")}</p>
+            <p className="text-sm text-pretty text-muted-foreground">
+              {t("detail.underConstructionDesc")}
+            </p>
+          </div>
+        )}
+      </section>
+
+      {content ? (
+        <>
+          <FeatureInstall route={content.route} />
+
+          <section aria-labelledby="feature-includes" className="mt-6 space-y-4">
+            <h2 id="feature-includes" className="text-xl font-semibold text-foreground">
+              {t("detail.includesTitle")}
+            </h2>
             <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-pretty text-muted-foreground marker:text-muted-foreground/60">
               {content.rows.map((id) => (
                 <li key={id}>{t.rich(`detail.${id}Desc`, tags)}</li>
               ))}
             </ul>
-            {content.hasMoreNote ? (
+            {content.hasMoreNote && visibleFeatures.some(({ id }) => id === "admin-customers") ? (
               <p className="text-sm text-pretty text-muted-foreground">
                 {t.rich("detail.moreNote", {
                   link: (chunks) => (
@@ -193,46 +222,77 @@ export function StartFeatureDetailPage({ feature }: { feature: string }) {
                 })}
               </p>
             ) : null}
-          </>
-        ) : null}
-      </section>
+          </section>
 
-      <section aria-labelledby="feature-files" className="mt-6 space-y-4">
-        <h2 id="feature-files" className="text-xl font-semibold text-foreground">
-          {t("detail.filesTitle")}
-        </h2>
-        {content ? (
-          <>
+          <section aria-labelledby="feature-files" className="mt-6 space-y-4">
+            <h2 id="feature-files" className="text-xl font-semibold text-foreground">
+              {t("detail.filesTitle")}
+            </h2>
             <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
               {t.rich("detail.filesIntro", { ...tags, feature })}
             </p>
-            <FeatureFileTree files={[...content.files]} />
+            <FeatureVariantFileTree feature={feature} files={content.files} />
             <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
               {t.rich("detail.filesNote", tags)}
             </p>
-          </>
-        ) : null}
-      </section>
+          </section>
 
-      <section aria-labelledby="feature-use" className="mt-6 space-y-4">
-        <h2 id="feature-use" className="text-xl font-semibold text-foreground">
-          {t("detail.useTitle")}
-        </h2>
-        <dl className="grid gap-6 md:grid-cols-3">
-          {USE_ITEMS.map((item) => {
-            const key = item === "api" && content ? content.apiKey : item;
+          <section aria-labelledby="feature-use" className="mt-6 space-y-4">
+            <h2 id="feature-use" className="text-xl font-semibold text-foreground">
+              {t("detail.useTitle")}
+            </h2>
+            <dl className="grid gap-6 md:grid-cols-2">
+              {USE_ITEMS.map((item) => {
+                const key = item === "api" ? content.apiKey : item;
 
-            return (
-              <div key={item} className="min-w-0 space-y-1">
-                <dt className="font-medium text-foreground">{t(`detail.${key}Title`)}</dt>
-                <dd className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                  {content ? t.rich(`detail.${key}Desc`, { ...tags, feature }) : null}
-                </dd>
-              </div>
-            );
-          })}
-        </dl>
-      </section>
+                return (
+                  <div key={item} className="min-w-0 space-y-1">
+                    <dt className="font-medium text-foreground">{t(`detail.${key}Title`)}</dt>
+                    <dd className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                      {t.rich(`detail.${key}Desc`, { ...tags, feature })}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </section>
+        </>
+      ) : null}
+
+      {related.length > 0 ? (
+        <section aria-labelledby="feature-related" className="mt-6 space-y-4">
+          <h2 id="feature-related" className="text-xl font-semibold text-foreground">
+            {t("detail.relatedTitle")}
+          </h2>
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {related.map((item) => (
+              <li
+                key={item.id}
+                className={cn(
+                  featureCardClassName,
+                  "relative transition-colors",
+                  item.status === "soon" ? "border-dashed" : "hover:bg-accent/30",
+                )}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-base font-semibold text-foreground">
+                    <Link
+                      href={`/start/features/${item.id}`}
+                      className="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                    >
+                      {t(`names.${item.id}`)}
+                    </Link>
+                  </h3>
+                  <ChevronRight className={featureCardChevronClassName} aria-hidden />
+                </div>
+                <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
+                  {t(`items.${item.id}`)}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </div>
   );
 }

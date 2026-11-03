@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 import { createMask, useViraMask } from "@virastack/mask";
 import { useTranslations } from "next-intl";
 import { useForm, useWatch } from "react-hook-form";
+import type { ThemedToken } from "shiki/core";
 
 import { cn } from "@/lib/utils";
 
 import { CopyButton } from "@/components/copy-button";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PAGE_PATH_MASK } from "@/features/start/constants/page-path-mask.constants";
 import { buildFeatureRoute, type FeatureRouteInfo } from "@/features/start/helpers/feature-route";
@@ -18,28 +21,56 @@ import {
   filterPillClassName,
   filterPillStateClassName,
 } from "@/features/start/helpers/filter-pill";
+import { tokenizeTsx } from "@/features/start/helpers/highlight-tsx";
 import {
   useFeatureInstallStore,
   type InstallFramework,
 } from "@/features/start/stores/feature-install.store";
 
 const FRAMEWORKS = [
-  { id: "nextjs", label: "Next.js" },
-  { id: "tanstack", label: "TanStack Start" },
-] as const satisfies readonly { id: InstallFramework; label: string }[];
+  {
+    id: "nextjs",
+    label: "Next.js",
+    icon: <NextjsIconDark className="size-4 shrink-0 dark:invert" aria-hidden />,
+  },
+  { id: "tanstack", label: "TanStack Start", icon: <TanstackLogo className="size-4 shrink-0" /> },
+] as const satisfies readonly { id: InstallFramework; label: string; icon: ReactNode }[];
 
 const pageMask = createMask(PAGE_PATH_MASK);
+
+/** Highlighted lines once Shiki has loaded; plain text until then and if it fails. */
+function useTsxTokens(code: string) {
+  const [result, setResult] = useState<{ code: string; tokens: ThemedToken[][] } | null>(null);
+
+  useEffect(() => {
+    let isCurrent = true;
+    tokenizeTsx(code)
+      .then((tokens) => {
+        if (isCurrent) setResult({ code, tokens });
+      })
+      .catch(() => {});
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [code]);
+
+  // Tokens of an older code would show stale text, so they wait for their own code.
+  return result?.code === code ? result.tokens : null;
+}
 
 function CopyableCode({
   code,
   disabled,
   label,
   wrap = false,
+  tokens,
 }: {
   code: string;
   disabled: boolean;
   label?: string;
   wrap?: boolean;
+  tokens?: ThemedToken[][] | null;
 }) {
   return (
     <div className="relative min-w-0 rounded-lg border border-border bg-muted/30">
@@ -48,9 +79,21 @@ function CopyableCode({
           "max-h-96 overflow-auto p-3 pr-11 font-mono text-xs leading-relaxed text-foreground",
           wrap ? "whitespace-pre-wrap" : "whitespace-pre",
           disabled && "opacity-50",
+          "[&_span]:text-(color:--shiki-light) dark:[&_span]:text-(color:--shiki-dark)",
         )}
       >
-        {code}
+        {tokens
+          ? tokens.map((line, index) => (
+              <Fragment key={index}>
+                {line.map((token, tokenIndex) => (
+                  <span key={tokenIndex} style={token.htmlStyle as CSSProperties}>
+                    {token.content}
+                  </span>
+                ))}
+                {index < tokens.length - 1 ? "\n" : null}
+              </Fragment>
+            ))
+          : code}
       </pre>
       <CopyButton
         text={code}
@@ -87,6 +130,7 @@ export function FeatureInstall({ route }: { route: FeatureRouteInfo }) {
   const { file, code } = buildFeatureRoute(route, { framework, i18n, path });
   const frameworkLabel = FRAMEWORKS.find(({ id }) => id === framework)?.label;
   const command = `npx virastack add ${route.feature}`;
+  const tokens = useTsxTokens(code);
   const prompt = t("setupPrompt", {
     feature: route.feature,
     component: route.component,
@@ -111,14 +155,19 @@ export function FeatureInstall({ route }: { route: FeatureRouteInfo }) {
             {t("frameworkLabel")}
           </p>
           <div className="flex flex-wrap gap-2">
-            {FRAMEWORKS.map(({ id, label }) => (
+            {FRAMEWORKS.map(({ id, label, icon }) => (
               <button
                 key={id}
                 type="button"
                 aria-pressed={framework === id}
                 onClick={() => setFramework(id)}
-                className={cn(filterPillClassName, filterPillStateClassName(framework === id))}
+                className={cn(
+                  filterPillClassName,
+                  filterPillStateClassName(framework === id),
+                  "gap-1.5",
+                )}
               >
+                {icon}
                 {label}
               </button>
             ))}
@@ -189,7 +238,7 @@ export function FeatureInstall({ route }: { route: FeatureRouteInfo }) {
                   ),
                 })}
               </p>
-              <CopyableCode code={code} disabled={!isValid} />
+              <CopyableCode code={code} disabled={!isValid} tokens={tokens} />
             </li>
             <li>
               {t.rich("manualRun", {

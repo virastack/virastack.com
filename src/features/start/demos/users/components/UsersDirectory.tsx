@@ -1,16 +1,16 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
 import { AddUserDialog } from "@/features/start/demos/users/components/AddUserDialog";
-import { FavoritesCount } from "@/features/start/demos/users/components/FavoritesCount";
 import { UsersPagination } from "@/features/start/demos/users/components/UsersPagination";
 import { UsersTable } from "@/features/start/demos/users/components/UsersTable";
 import { UsersTableSkeleton } from "@/features/start/demos/users/components/UsersTableSkeleton";
 import { USERS_PAGE_SIZE } from "@/features/start/demos/users/constants/users.constants";
-import { getErrorMessage } from "@/features/start/demos/users/helpers/get-error-message";
+import { useErrorMessage } from "@/features/start/demos/users/hooks/use-error-message";
 import { useUsers } from "@/features/start/demos/users/hooks/use-users";
 import { useUsersParams } from "@/features/start/demos/users/hooks/use-users-params";
 import { Button } from "@/features/start/demos/users/ui/button";
@@ -25,6 +25,8 @@ import { Input } from "@/features/start/demos/users/ui/input";
 import { Label } from "@/features/start/demos/users/ui/label";
 
 export function UsersDirectory() {
+  const t = useTranslations("Users");
+  const getErrorMessage = useErrorMessage();
   const { page, q, debouncedQ, setPage, setSearch, clearSearch } = useUsersParams();
   const users = useUsers({ page, q: debouncedQ });
 
@@ -33,7 +35,7 @@ export function UsersDirectory() {
       <div className="flex items-center gap-2">
         <div className="relative min-w-0 flex-1">
           <Label htmlFor="users-search" className="sr-only">
-            Search users
+            {t("search_label")}
           </Label>
           <SearchIcon
             aria-hidden
@@ -42,7 +44,7 @@ export function UsersDirectory() {
           <Input
             id="users-search"
             type="search"
-            placeholder="Search users"
+            placeholder={t("search_label")}
             className="pl-9"
             value={q}
             onChange={(event) => setSearch(event.target.value)}
@@ -56,12 +58,12 @@ export function UsersDirectory() {
       ) : users.isError ? (
         <Empty role="alert" className="border">
           <EmptyHeader>
-            <EmptyTitle>Could not load users</EmptyTitle>
+            <EmptyTitle>{t("load_error_title")}</EmptyTitle>
             <EmptyDescription>{getErrorMessage(users.error)}</EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             <Button variant="outline" disabled={users.isFetching} onClick={() => users.refetch()}>
-              {users.isFetching ? "Retrying…" : "Retry"}
+              {users.isFetching ? t("retrying") : t("retry")}
             </Button>
           </EmptyContent>
         </Empty>
@@ -69,32 +71,34 @@ export function UsersDirectory() {
         users.data.total > 0 ? (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>This page is empty</EmptyTitle>
-              <EmptyDescription>{`The results end before page ${page}.`}</EmptyDescription>
+              <EmptyTitle>{t("empty_page_title")}</EmptyTitle>
+              <EmptyDescription>{t("empty_page_description", { page })}</EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
               <Button variant="outline" onClick={() => setPage(1)}>
-                Go to the first page
+                {t("go_to_first_page")}
               </Button>
             </EmptyContent>
           </Empty>
         ) : debouncedQ.trim() ? (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>No users found</EmptyTitle>
-              <EmptyDescription>{`Nothing matches “${debouncedQ.trim()}”.`}</EmptyDescription>
+              <EmptyTitle>{t("no_results_title")}</EmptyTitle>
+              <EmptyDescription>
+                {t("no_results_description", { query: debouncedQ.trim() })}
+              </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
               <Button variant="outline" onClick={() => clearSearch()}>
-                Clear search
+                {t("clear_search")}
               </Button>
             </EmptyContent>
           </Empty>
         ) : (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>No users yet</EmptyTitle>
-              <EmptyDescription>The API returned an empty list.</EmptyDescription>
+              <EmptyTitle>{t("no_users_title")}</EmptyTitle>
+              <EmptyDescription>{t("no_users_description")}</EmptyDescription>
             </EmptyHeader>
           </Empty>
         )
@@ -109,9 +113,7 @@ export function UsersDirectory() {
             total={users.data.total}
             totalPages={Math.ceil(users.data.total / USERS_PAGE_SIZE)}
             onPageChange={setPage}
-          >
-            <FavoritesCount />
-          </UsersPagination>
+          />
         </div>
       )}
     </div>

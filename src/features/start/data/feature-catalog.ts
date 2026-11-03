@@ -1,8 +1,8 @@
-export const featureGroups = ["user", "ecommerce", "admin"] as const;
+const featureGroups = ["user", "ecommerce", "admin"] as const;
 
 export type FeatureGroup = (typeof featureGroups)[number];
 
-export type FeatureTag = "uiOnly" | "mockApi" | "urlState" | "form";
+export type FeatureTag = "mockApi" | "urlState" | "form";
 
 export type CatalogFeature = {
   /** Registry item name, also the `virastack add` argument. */
@@ -47,7 +47,7 @@ export const featureCatalog: readonly CatalogFeature[] = [
     packages: ["@virastack/address", "@virastack/mask"],
   },
   {
-    id: "checkout-payment",
+    id: "checkout-card",
     group: "ecommerce",
     status: "ready",
     tags: ["mockApi", "form"],
@@ -82,3 +82,13 @@ export const featureCatalog: readonly CatalogFeature[] = [
     packages: ["recharts"],
   },
 ];
+
+/** Unready modules stay visible while developing and are left out of production builds. */
+export const visibleFeatures =
+  process.env.NODE_ENV === "production"
+    ? featureCatalog.filter(({ status }) => status === "ready")
+    : featureCatalog;
+
+export const visibleGroups = featureGroups.filter((group) =>
+  visibleFeatures.some((feature) => feature.group === group),
+);

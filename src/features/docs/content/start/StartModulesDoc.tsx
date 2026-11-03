@@ -11,13 +11,13 @@ import { featureCatalog } from "@/features/start/data/feature-catalog";
 import { Link } from "@/i18n/routing";
 
 const CHECKOUT_NEXT = `import { CheckoutAddress } from "@/features/checkout-address/components/CheckoutAddress"
-import { CheckoutPayment } from "@/features/checkout-payment/components/CheckoutPayment"
+import { CheckoutCard } from "@/features/checkout-card/components/CheckoutCard"
 
 export default function CheckoutPage() {
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-8 px-6 py-12">
       <CheckoutAddress />
-      <CheckoutPayment />
+      <CheckoutCard />
     </main>
   )
 }`;
@@ -25,7 +25,7 @@ export default function CheckoutPage() {
 const CHECKOUT_TANSTACK = `import { createFileRoute } from "@tanstack/react-router"
 
 import { CheckoutAddress } from "@/features/checkout-address/components/CheckoutAddress"
-import { CheckoutPayment } from "@/features/checkout-payment/components/CheckoutPayment"
+import { CheckoutCard } from "@/features/checkout-card/components/CheckoutCard"
 
 export const Route = createFileRoute("/checkout")({
   component: RouteComponent
@@ -35,13 +35,13 @@ function RouteComponent() {
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-8 px-6 py-12">
       <CheckoutAddress />
-      <CheckoutPayment />
+      <CheckoutCard />
     </main>
   )
 }`;
 
 const CHECKOUT_HOOKS = `const { shipping, billing } = useCheckoutAddress()
-const { card } = useCheckoutPayment()`;
+const { card } = useCheckoutCard()`;
 
 const code = (chunks: ReactNode) => <code>{chunks}</code>;
 
@@ -113,7 +113,7 @@ export function StartModulesDoc() {
         <h2 id="checkout">{t("modulesHeadingCheckout")}</h2>
         <p>{t.rich("modulesCheckoutP1", { code })}</p>
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add checkout-address")} />
-        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add checkout-payment")} />
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add checkout-card")} />
         <p>{t.rich("modulesCheckoutNext", { code })}</p>
         <pre>
           <code>{CHECKOUT_NEXT}</code>

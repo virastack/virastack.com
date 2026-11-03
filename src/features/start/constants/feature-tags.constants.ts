@@ -16,7 +16,6 @@ type FeatureMark = { icon: LucideIcon; textClass: string };
 /** Hues stay clear of the product colors, so a tag never reads as a product. */
 export const featureMarks: Record<FeatureTag | "ui" | "tests" | "packages" | "own", FeatureMark> = {
   ui: { icon: LayoutGridIcon, textClass: "text-cyan-600 dark:text-cyan-400" },
-  uiOnly: { icon: LayoutGridIcon, textClass: "text-cyan-600 dark:text-cyan-400" },
   mockApi: { icon: DatabaseIcon, textClass: "text-violet-600 dark:text-violet-400" },
   urlState: { icon: LinkIcon, textClass: "text-lime-600 dark:text-lime-400" },
   form: { icon: ClipboardListIcon, textClass: "text-teal-600 dark:text-teal-400" },
