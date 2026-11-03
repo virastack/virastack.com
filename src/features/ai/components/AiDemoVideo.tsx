@@ -6,8 +6,8 @@ import { ProductDemoVideo } from "@/features/product/components/ProductDemoVideo
  * Both files carry the hash of the video (`render-ai-intro.mjs` prints the new names),
  * so a re-render gets a new URL and the one-year `immutable` cache never serves a stale loop.
  */
-const SRC = "/ai/ai-intro.f8c12a83.mp4";
-const POSTER = "/ai/ai-intro-poster.f8c12a83.webp";
+const SRC = "/ai/ai-intro.fe5762de.mp4";
+const POSTER = "/ai/ai-intro-poster.fe5762de.webp";
 
 export function AiDemoVideo() {
   const t = useTranslations("Ai");
