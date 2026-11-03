@@ -5,4 +5,5 @@ export {
   getReleaseHref,
   getReleaseParams,
   getReleases,
+  releasePalettes,
 } from "@/features/releases/data/releases";

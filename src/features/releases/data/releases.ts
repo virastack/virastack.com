@@ -1,3 +1,4 @@
+import { brandPalettes } from "@/config/brand-palettes.config";
 import type { EcosystemId, EcosystemLocale } from "@/config/ecosystem.config";
 
 import type { AcademyBadgeKind } from "@/features/academy/constants/badge.constants";
@@ -430,6 +431,13 @@ export const startInstance = createStart(() => ({
     },
   },
 ];
+
+/** Academy and Guide are not versioned packages, so they get no release filter or page. */
+const productsWithoutReleases: readonly EcosystemId[] = ["academy", "guide"];
+
+export const releasePalettes = brandPalettes.filter(
+  (palette) => !productsWithoutReleases.includes(palette.id),
+);
 
 /** Newest first; drafts are left out of production builds. */
 export function getReleases(): readonly Release[] {
