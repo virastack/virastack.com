@@ -15,6 +15,7 @@ import {
   passwordExampleIds,
 } from "@/features/docs";
 import { getReleaseHref, getReleases } from "@/features/releases";
+import { readyFeatures } from "@/features/start";
 import { routing } from "@/i18n/routing";
 
 /**
@@ -22,7 +23,7 @@ import { routing } from "@/i18n/routing";
  * every URL with `new Date()` teaches crawlers to ignore the field, so bump this
  * when the pages change. Academy lessons carry their own `lastVerified` instead.
  */
-const SITE_LAST_MODIFIED = "2026-10-31";
+const SITE_LAST_MODIFIED = "2026-11-03";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lessonDate = (locale: string, track: string, lesson: string) =>
@@ -104,6 +105,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // The module catalog and the pages of modules `virastack add` can install; previews stay out.
+  const startFeatureEntries = routing.locales.flatMap((locale) =>
+    ["/start/features", ...readyFeatures.map(({ id }) => `/start/features/${id}`)].map((path) => ({
+      url: localeUrl(locale, path),
+      lastModified: SITE_LAST_MODIFIED,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  );
+
   const siteEntries = routing.locales.flatMap((locale) =>
     (["/about", "/brand", "/releases", "/support"] as const).map((path) => ({
       url: localeUrl(locale, path),
@@ -182,6 +193,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...docsFileEntries,
     ...guidePlayEntries,
     ...startBuilderEntries,
+    ...startFeatureEntries,
     ...siteEntries,
     ...releaseProductEntries,
     ...releaseEntries,

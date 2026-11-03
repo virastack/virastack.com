@@ -19,9 +19,14 @@ function isDocsPath(pathname: string) {
   return pathname.includes("/docs");
 }
 
+/** A module's demo alone, opened in the module page's iframe. */
+function isFeaturePreviewPath(pathname: string) {
+  return pathname.startsWith("/start/preview/");
+}
+
 export function AppShell({ children, header, footer }: AppShellProps) {
   const pathname = usePathname();
-  const immersive = isGuidePlayPath(pathname);
+  const immersive = isGuidePlayPath(pathname) || isFeaturePreviewPath(pathname);
   const docs = isDocsPath(pathname);
 
   return (

@@ -1,6 +1,6 @@
 # ViraStack Mask (full)
 
-> `@virastack/mask` (2.x): zero-dependency input masks for React Hook Form. Headless, no CSS, zero runtime dependencies. The form stores raw values; inputs show masked text. v1 docs: https://virastack.com/mask/v1/llms-full.txt
+> `@virastack/mask` (2.x): zero-dependency input masks for React Hook Form. Headless, no CSS, zero runtime dependencies. The form stores raw values; inputs show masked text.
 
 ## Install
 

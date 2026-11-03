@@ -11,14 +11,21 @@ For inline CLI + template detail, prefer [llms-full.txt](https://virastack.com/s
 - [Introduction](https://virastack.com/start/docs): What Start is and why to use it
 - [Installation](https://virastack.com/start/docs/installation): Questions, setup order, design skills, post-install steps
 - [CLI](https://virastack.com/start/docs/cli): Commands, flags (`--agent`, `--tools`), `virastack add` and `remove`, non-interactive usage
-- [Modules](https://virastack.com/start/docs/modules): `virastack add` and `remove` for ready features, adding them to a page, a checkout example
+- [Modules](https://virastack.com/start/docs/modules): Requirements, `virastack add` and `remove`, putting a module on a page with an agent or by hand, a checkout example, connecting your API
 - [Builder](https://virastack.com/start/builder): Step-by-step install command wizard
 - [Templates](https://virastack.com/start/docs/templates): Next.js / TanStack Start, with or without i18n, file tree and tests
 - [Scripts](https://virastack.com/start/docs/scripts): Day-to-day, quality, test and CI scripts
 - [i18n](https://virastack.com/start/docs/i18n): Locales and message files in multi-language templates
 - [llms-full.txt](https://virastack.com/start/llms-full.txt): Full machine-readable Start guide
-- [v1 llms.txt](https://virastack.com/start/v1/llms.txt): Archived 1.2 guide
 
+## Modules
+
+Installed with `npx virastack@latest add <module>` into projects created with Start 2.0 or newer. Each page has a live preview, the code for all four templates and a prompt that adds the module to a page.
+
+- [Module catalog](https://virastack.com/start/features): Ready modules
+- [users](https://virastack.com/start/features/users): User table with search, pagination, add, edit and delete
+- [checkout-address](https://virastack.com/start/features/checkout-address): Shipping and billing address picker with an address book
+- [checkout-card](https://virastack.com/start/features/checkout-card): Saved card picker; card number and CVV never leave the browser
 ## Product
 
 - [Start overview](https://virastack.com/start): Marketing page

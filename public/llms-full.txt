@@ -41,7 +41,7 @@ npx @virastack/ai init
 npx @virastack/ai remove
 ```
 
-Detects Next.js vs TanStack Start from `package.json`. Writes rules to `.claude/rules/virastack/` and `.cursor/rules/virastack/`, a managed block in `AGENTS.md`, an `@AGENTS.md` line in `CLAUDE.md` and a `.virastack/ai.json` manifest. v1 guide (archived): https://virastack.com/ai/v1/llms-full.txt. Details: https://virastack.com/ai/llms-full.txt
+Detects Next.js vs TanStack Start from `package.json`. Writes rules to `.claude/rules/virastack/` and `.cursor/rules/virastack/`, a managed block in `AGENTS.md`, an `@AGENTS.md` line in `CLAUDE.md` and a `.virastack/ai.json` manifest. Details: https://virastack.com/ai/llms-full.txt
 
 ## Mask (quick)
 

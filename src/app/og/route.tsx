@@ -212,6 +212,9 @@ export async function GET(request: NextRequest) {
       fonts,
       headers: {
         "Cache-Control": "public, immutable, no-transform, max-age=3600",
+        // Vercel's CDN caches a function response only with `s-maxage` or this header; without it
+        // every share preview re-rendered the image. The query string is part of the cache key.
+        "Vercel-CDN-Cache-Control": "public, max-age=31536000, immutable",
       },
     },
   );

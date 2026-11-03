@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type InstallFramework = "nextjs" | "tanstack";
+type InstallFramework = "nextjs" | "tanstack";
+
+/** A template as the registry names it, e.g. `users-nextjs-i18n`. */
+export type InstallVariant = InstallFramework | `${InstallFramework}-i18n`;
 
 type FeatureInstallState = {
   framework: InstallFramework;

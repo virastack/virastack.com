@@ -83,11 +83,12 @@ export const featureCatalog: readonly CatalogFeature[] = [
   },
 ];
 
+/** Modules `virastack add` can install today; the sitemap lists only these. */
+export const readyFeatures = featureCatalog.filter(({ status }) => status === "ready");
+
 /** Unready modules stay visible while developing and are left out of production builds. */
 export const visibleFeatures =
-  process.env.NODE_ENV === "production"
-    ? featureCatalog.filter(({ status }) => status === "ready")
-    : featureCatalog;
+  process.env.NODE_ENV === "production" ? readyFeatures : featureCatalog;
 
 export const visibleGroups = featureGroups.filter((group) =>
   visibleFeatures.some((feature) => feature.group === group),

@@ -12,7 +12,6 @@ For the CLI, installed files and rule list inline, prefer [llms-full.txt](https:
 - [AI docs](https://virastack.com/ai/docs): Current (v2) documentation
 - [Upgrade to v2](https://virastack.com/ai/docs/upgrade): Migration from v1
 - [llms-full.txt](https://virastack.com/ai/llms-full.txt): Full machine-readable AI guide
-- [v1 llms.txt](https://virastack.com/ai/v1/llms.txt): Archived v1.3 guide
 - [npm `@virastack/ai`](https://www.npmjs.com/package/@virastack/ai): Package registry
 - [GitHub](https://github.com/virastack/ai): Source and rule templates
 

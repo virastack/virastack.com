@@ -22,16 +22,7 @@ export function getPasswordDocsV1Nav(t: DocsPasswordV1Translate): DocsNavSection
   return [
     {
       title: t("navGettingStarted"),
-      items: [
-        { slug: "introduction", title: t("navIntroduction"), href: BASE },
-        { slug: "llms.txt", title: "llms.txt", href: "/password/v1/llms.txt", external: true },
-        {
-          slug: "llms-full.txt",
-          title: "llms-full.txt",
-          href: "/password/v1/llms-full.txt",
-          external: true,
-        },
-      ],
+      items: [{ slug: "introduction", title: t("navIntroduction"), href: BASE }],
     },
     {
       title: t("navUsage"),

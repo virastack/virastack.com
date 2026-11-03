@@ -4,7 +4,7 @@
 
 Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2). One hook, `useViraPassword()`; strength and confirmation are options of the same hook. Errors are keys (`password.tooShort`), not messages. Not a strength bar or generator component.
 
-For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt). 1.0 docs are archived at [v1/llms.txt](https://virastack.com/password/v1/llms.txt).
+For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt).
 
 ## Docs
 

@@ -118,4 +118,3 @@ Only the first 5 characters of the SHA-1 hash are sent (`Add-Padding`). Never th
 
 - Examples: https://virastack.com/password/examples
 - Upgrade from 1.0: https://virastack.com/password/docs/upgrade
-- 1.0 (archived): https://virastack.com/password/v1/llms-full.txt

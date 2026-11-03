@@ -25,20 +25,27 @@ const MAP_TILES = "https://*.cartocdn.com";
  * and give up the static prerender, so inline scripts stay allowed. What the policy
  * does close is every *external* script, worker and network origin we do not use.
  */
-const contentSecurityPolicy = [
-  "base-uri 'none'",
-  "object-src 'none'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-  `script-src 'self' 'unsafe-inline' ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
-  "worker-src 'self' blob:",
-  `connect-src 'self' https://dummyjson.com ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
-].join("; ");
+function buildContentSecurityPolicy(frameAncestors: string) {
+  return [
+    "base-uri 'none'",
+    "object-src 'none'",
+    "form-action 'self'",
+    `frame-ancestors ${frameAncestors}`,
+    `script-src 'self' 'unsafe-inline' ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
+    "worker-src 'self' blob:",
+    `connect-src 'self' https://dummyjson.com ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
+  ].join("; ");
+}
+
+const contentSecurityPolicy = buildContentSecurityPolicy("'none'");
+
+/** Start module demos open in an iframe on their own module page, and only there. */
+const FRAMEABLE_PATHS = ["/start/preview/:feature", "/:locale(en|tr)/start/preview/:feature"];
 
 const nextConfig: NextConfig = {
   reactCompiler: process.env.NODE_ENV === "production",
-  // Static pages inline their CSS, so no stylesheet request blocks the first paint.
-  experimental: { inlineCss: true },
+  // `inlineCss` is off: it copied the whole stylesheet into every page, so each uncached page view
+  // carried it from the origin. A shared CSS file is cached once on the CDN instead.
   turbopack: {
     root: path.join(import.meta.dirname),
   },
@@ -141,6 +148,14 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Listed after `/:path*`, so these keys override it: same-origin framing only.
+      ...FRAMEABLE_PATHS.map((source) => ({
+        source,
+        headers: [
+          { key: "Content-Security-Policy", value: buildContentSecurityPolicy("'self'") },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        ],
+      })),
     ];
   },
 };

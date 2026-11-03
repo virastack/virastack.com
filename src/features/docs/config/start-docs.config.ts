@@ -87,9 +87,13 @@ export function getStartDocsPage(slug: string, t: DocsStartTranslate): DocsPageM
       headings: [
         { id: "nedir", title: t("modulesHeadingWhat") },
         { id: "hazir", title: t("modulesHeadingList") },
+        { id: "requirements", title: t("modulesHeadingRequirements") },
         { id: "ekle", title: t("modulesHeadingAdd") },
         { id: "sayfa", title: t("modulesHeadingPage") },
+        { id: "with-an-agent", title: t("modulesHeadingPageAgent"), level: 3 },
+        { id: "by-hand", title: t("modulesHeadingPageHand"), level: 3 },
         { id: "checkout", title: t("modulesHeadingCheckout") },
+        { id: "api", title: t("modulesHeadingApi") },
         { id: "kaldir", title: t("modulesHeadingRemove") },
       ],
     },

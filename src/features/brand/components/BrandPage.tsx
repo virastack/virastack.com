@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import { BrandLockup } from "@/components/shared/BrandLockup";
 import { ProductDots } from "@/components/shared/ProductDots";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
+// import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
 import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 
 const linkClassName =
@@ -165,9 +165,11 @@ export function BrandPage() {
           </header>
         </RevealItem>
 
+        {/* Hidden until the new logos land. Restore it, and the import above, with them.
         <RevealItem>
           <BrandLogoSection />
         </RevealItem>
+        */}
 
         <RevealItem>
           <section className="space-y-6">

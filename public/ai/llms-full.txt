@@ -80,4 +80,3 @@ Run `npx @virastack/ai@latest init`. Rule files and `docs/` written by v1.x are 
 - Start: https://virastack.com/start/llms-full.txt
 - Guide: https://virastack.com/guide/llms-full.txt
 - Ecosystem: https://virastack.com/llms.txt
-- Archived v1: https://virastack.com/ai/v1/llms-full.txt
