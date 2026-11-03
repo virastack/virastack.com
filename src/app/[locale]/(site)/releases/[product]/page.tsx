@@ -3,12 +3,10 @@ import { notFound } from "next/navigation";
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { brandPalettes } from "@/config/brand-palettes.config";
-
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { getReleases, ReleasesPage } from "@/features/releases";
+import { getReleases, releasePalettes, ReleasesPage } from "@/features/releases";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {
@@ -19,11 +17,11 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    brandPalettes.map((palette) => ({ locale, product: palette.id })),
+    releasePalettes.map((palette) => ({ locale, product: palette.id })),
   );
 }
 
-const findPalette = (product: string) => brandPalettes.find((palette) => palette.id === product);
+const findPalette = (product: string) => releasePalettes.find((palette) => palette.id === product);
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, product } = await params;

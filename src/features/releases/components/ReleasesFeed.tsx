@@ -2,13 +2,12 @@ import type { ReactNode } from "react";
 
 import { getTranslations } from "next-intl/server";
 
-import { brandPalettes } from "@/config/brand-palettes.config";
 import type { EcosystemId } from "@/config/ecosystem.config";
 import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
-import { getReleases } from "@/features/releases/data/releases";
+import { getReleases, releasePalettes } from "@/features/releases/data/releases";
 import { Link } from "@/i18n/routing";
 
 export type ReleaseFeedEntry = {
@@ -54,7 +53,7 @@ export async function ReleasesFeed({
               {t("filterAll")}
             </Link>
           </li>
-          {brandPalettes.map((palette) => {
+          {releasePalettes.map((palette) => {
             const active = activeProduct === palette.id;
 
             return (

@@ -360,7 +360,7 @@
   "Academy": {
     "name": "Academy",
     "startRoadmap": "Yol haritasına başla",
-    "trustLine": "{guideCount} rehber · {resourceCount} kaynak · {authorCount} yazar ve konuşmacı · Son doğrulama: {verified}",
+    "trustLine": "{guideCount} rehber · {resourceCount} kaynak · {authorCount} yazar ve konuşmacı · <verifiedNote>Son doğrulama: {verified}</verifiedNote>",
     "trustLineNoVerified": "{guideCount} rehber · {resourceCount} kaynak · {authorCount} yazar ve konuşmacı",
     "authorsAmongSources": "Kaynaklar arasında <name>Kent C. Dodds</name>, <name>Addy Osmani</name>, <name>Dan Abramov</name>, <name>Dominik Dorfmeister</name>, <name>Matt Pocock</name> ve {count} kişi daha.",
     "viewAllSources": "Tüm kaynakları gör →",
