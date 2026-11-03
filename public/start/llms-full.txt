@@ -123,4 +123,6 @@ Docs: https://virastack.com/start/docs/modules
 - AI: https://virastack.com/ai/llms-full.txt
 - Mask: https://virastack.com/mask/llms-full.txt
 - Password: https://virastack.com/password/llms-full.txt
+- Address: https://virastack.com/address/llms-full.txt
 - Ecosystem: https://virastack.com/llms.txt
+- Archived v1: https://virastack.com/start/v1/llms-full.txt

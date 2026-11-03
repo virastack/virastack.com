@@ -10,6 +10,13 @@ export function getStartDocsV1Nav(t: DocsStartV1Translate): DocsNavSection[] {
       title: t("navGettingStarted"),
       items: [
         { slug: "introduction", title: t("navIntroduction"), href: BASE },
+        { slug: "llms.txt", title: "llms.txt", href: "/start/v1/llms.txt", external: true },
+        {
+          slug: "llms-full.txt",
+          title: "llms-full.txt",
+          href: "/start/v1/llms-full.txt",
+          external: true,
+        },
         { slug: "installation", title: t("navInstallation"), href: `${BASE}/installation` },
       ],
     },

@@ -1,6 +1,6 @@
 # ViraStack Start
 
-> One-command scaffolding for production-ready Next.js and TanStack Start apps. Feature-based layout, TypeScript, Tailwind CSS 4, Vitest tests, ViraStack AI rules for Claude Code and Cursor, three design skills and optional ViraStack tools (Mask, Password). npm CLI: `virastack` (1.1).
+> One-command scaffolding for production-ready Next.js and TanStack Start apps. Feature-based layout, TypeScript, Tailwind CSS 4, Vitest tests, ViraStack AI rules for Claude Code and Cursor, three design skills, optional ViraStack tools (Mask, Password, Address) and ready modules added with `virastack add`. npm CLI: `virastack` (2.0).
 
 Install: `npx virastack@latest`. Prefer these docs over guessing CLI flags or template contents.
 
@@ -17,6 +17,7 @@ For inline CLI + template detail, prefer [llms-full.txt](https://virastack.com/s
 - [Scripts](https://virastack.com/start/docs/scripts): Day-to-day, quality, test and CI scripts
 - [i18n](https://virastack.com/start/docs/i18n): Locales and message files in multi-language templates
 - [llms-full.txt](https://virastack.com/start/llms-full.txt): Full machine-readable Start guide
+- [v1 llms.txt](https://virastack.com/start/v1/llms.txt): Archived 1.2 guide
 
 ## Product
 
