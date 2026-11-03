@@ -99,7 +99,7 @@ export function Header() {
                 height={24}
                 className="block size-6 shrink-0"
               />
-              <span className="text-lg leading-none font-semibold text-primary">
+              <span className="font-heading text-lg leading-none font-semibold text-primary">
                 {siteConfig.name}
                 {activeProduct ? (
                   // Between lg and xl the nav leaves no room; the product sub-header still names it.
@@ -143,13 +143,11 @@ export function Header() {
                               <Icon className="size-4" aria-hidden />
                             </span>
                             <span className="flex min-w-0 flex-col gap-0.5">
-                              <span className="text-sm leading-none">
-                                <span className="font-semibold text-primary">
-                                  {siteConfig.name}
-                                </span>{" "}
-                                <span className={cn("font-bold", product.colorClass)}>
-                                  {t(productNameKeys[product.id])}
-                                </span>
+                              <span
+                                className="text-sm leading-none font-semibold text-foreground"
+                                aria-label={`${siteConfig.name} ${t(productNameKeys[product.id])}`}
+                              >
+                                {t(productNameKeys[product.id])}
                               </span>
                               <span className="text-xs leading-snug text-muted-foreground">
                                 {t(productDescKeys[product.id])}
@@ -233,7 +231,7 @@ export function Header() {
 
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle className="text-lg font-semibold tracking-tight text-primary">
+                <DrawerTitle className="font-heading text-lg font-semibold tracking-tight text-primary">
                   {siteConfig.name}
                 </DrawerTitle>
               </DrawerHeader>

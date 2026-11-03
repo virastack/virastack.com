@@ -637,16 +637,16 @@
       const RULES = [
         "core",
         "architecture",
-        "react",
         "typescript",
+        "react",
         "ui",
         "forms",
         "api",
         "server-state",
         "client-state",
         "i18n",
-        "performance",
         "testing",
+        "performance",
       ];
       const ENTER_AT = 1500; // the command is typed, then it waits a moment
       const FILES_AT = 2100; // first file line
@@ -656,26 +656,20 @@
 
       const row = (html) => `<div class="tl2">${html}</div>`;
 
-      /* The same command ran in both projects. Every rule is printed as its two files (Claude Code,
-         then Cursor), the two framework rules come last, then the three shared files. A chip lands
-         right after the line that creates its file, so the terminal and the cards finish together. */
-      const CLI_FILES = [];
-      RULES.forEach((r) =>
-        CLI_FILES.push(`.claude/rules/virastack/${r}.md`, `.cursor/rules/virastack/${r}.mdc`),
-      );
-      CLI_FILES.push(
-        ".claude/rules/virastack/nextjs.md",
-        ".claude/rules/virastack/tanstack-start.md",
-      );
-      CLI_FILES.push(
-        ".cursor/rules/virastack/nextjs.mdc",
-        ".cursor/rules/virastack/tanstack-start.mdc",
-      );
-      CLI_FILES.push(...FILE_TAGS);
+      /* What `init` prints in a Next.js project with i18n: every Claude Code rule in catalog order,
+         every Cursor rule, then the three shared files. The TanStack Start card shows that the same
+         command writes its framework's rule there. A chip lands right after the Claude Code line
+         that creates its file, so the terminal and the cards move together. */
+      const CATALOG = [...RULES.slice(0, 4), "nextjs", ...RULES.slice(4)];
+      const CLI_FILES = [
+        ...CATALOG.map((r) => `.claude/rules/virastack/${r}.md`),
+        ...CATALOG.map((r) => `.cursor/rules/virastack/${r}.mdc`),
+        ...FILE_TAGS,
+      ];
       const chipAt = {
-        shared: (i) => printAt(2 * i + 1) + 70,
-        fw: printAt(RULES.length * 2 + 3) + 70,
-        file: (k) => printAt(RULES.length * 2 + 4 + k) + 70,
+        shared: (i) => printAt(CATALOG.indexOf(RULES[i])) + 70,
+        fw: printAt(CATALOG.indexOf("nextjs")) + 70,
+        file: (k) => printAt(CATALOG.length * 2 + k) + 70,
       };
 
       function termLines(t) {
@@ -686,7 +680,13 @@
             `<span class="p">$</span> ${cmd.slice(0, clamp(Math.floor((t - 250) / 28), 0, cmd.length))}${t < ENTER_AT ? caret : ""}`,
           ),
         );
-        if (t >= ENTER_AT + 150) L.push(row("ViraStack AI v2.0.0"));
+        if (t >= ENTER_AT + 150) L.push(row("ViraStack AI v2.1.0"));
+        if (t >= ENTER_AT + 250) {
+          // one line in the real CLI; wrapped here to fit the narrow terminal
+          L.push(row('<span class="d">Framework: nextjs · Agents: claude, cursor</span>'));
+          L.push(row('<span class="d">i18n: yes · Package manager: pnpm</span>'));
+          L.push(row(""));
+        }
         const n = clamp(Math.floor((t - FILES_AT) / PER) + 1, 0, CLI_FILES.length);
         CLI_FILES.slice(0, n).forEach((f) =>
           L.push(row(`  <span class="plus">+</span> ${f} <span class="d">· created</span>`)),
@@ -740,7 +740,7 @@
           card.style.transform = `translateY(${(1 - k) * 14}px)`;
         });
         document.querySelectorAll("#side .cap").forEach((el) => {
-          el.style.opacity = ease((t - printAt(RULES.length * 2 + 4)) / 300);
+          el.style.opacity = ease((t - printAt(CATALOG.length * 2)) / 300);
         });
         document
           .querySelectorAll('#side .chips[data-p="0"] .chip')
@@ -753,13 +753,13 @@
           .forEach((el) => land(t, el, chipAt.fw, "#fdf2fe", "#f3c3fb"));
       }
 
-      /* ---------- clean result (folders and names from core.mdc / architecture.mdc) ---------- */
+      /* ---------- clean result (folders and names from the core and architecture rules) ---------- */
       const CHECKS = [
         ["Folder structure", "architecture"],
         ["Naming", "core"],
         ["Type safety", "typescript"],
         ["Data layer", "server-state · api"],
-        ["State", "client-state"],
+        ["State", "react · client-state"],
         ["Clean code", "react · testing"],
       ];
       /* one feature, the way the rules lay it out; g = the check a row belongs to */
@@ -781,14 +781,13 @@
         ["    user.store.ts", 4, true],
         ["  types/", 0, false],
         ["    user.types.ts", 2, true],
-        ["  index.ts", 0, false],
       ];
       /* what each check changes in the code; every pair comes from the rule it is listed under */
       const PAIRS = [
         [
           "architecture.md",
-          'import { useUsers } from "@/features/users/hooks/…"',
-          'import { useUsers } from "@/features/users"',
+          'import { UserCard } from "@/features/teams/…"',
+          'import { UserCard } from "@/components/shared/…"',
         ],
         ["core.md", "getUsers.ts · userCard.tsx · IUser", "get-users.api.ts · UserCard.tsx · User"],
         ["typescript.md", "const user = data as any", "type User = z.infer<typeof userSchema>"],
@@ -798,7 +797,7 @@
           "const { data } = useUsers(page)",
         ],
         [
-          "client-state.md",
+          "react.md",
           "const store = useUserStore()",
           "const id = useUserStore((s) => s.selectedId)",
         ],

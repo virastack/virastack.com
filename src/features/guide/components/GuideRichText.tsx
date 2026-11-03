@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { ProductId } from "@/types/product.types";
+import { getBrandPalette } from "@/config/brand-palettes.config";
 import { getProduct } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -42,7 +43,7 @@ export function GuideStackIcon({ icon, children }: { icon?: ReactNode; children:
   );
 }
 
-/** Brand lockup: ViraStack (primary) + product name (color, bold). */
+/** Brand lockup: ViraStack (primary) + product name (color, bold). Academy is not a `ProductId` but shares the lockup. */
 export function GuideProductMark({
   id,
   children,
@@ -52,14 +53,17 @@ export function GuideProductMark({
   tone = "body",
   brandClassName,
 }: {
-  id: ProductId;
+  id: ProductId | "academy";
   children: ReactNode;
   linked?: boolean;
   showBrand?: boolean;
   tone?: "heading" | "body";
   brandClassName?: string;
 }) {
-  const product = getProduct(id);
+  const product =
+    id === "academy"
+      ? { href: "/academy" as const, colorClass: getBrandPalette("academy").textClass }
+      : getProduct(id);
   const brandWeight =
     brandClassName ??
     (tone === "heading" ? "font-black text-primary" : "font-semibold text-primary");
@@ -76,13 +80,13 @@ export function GuideProductMark({
   );
 
   if (!linked) {
-    return <span className="mx-0.5 inline whitespace-nowrap">{mark}</span>;
+    return <span className="mx-0.5 inline font-heading whitespace-nowrap">{mark}</span>;
   }
 
   return (
     <Link
       href={product.href}
-      className="mx-0.5 inline whitespace-nowrap underline-offset-2 transition-opacity hover:underline hover:opacity-90"
+      className="mx-0.5 inline font-heading whitespace-nowrap underline-offset-2 transition-opacity hover:underline hover:opacity-90"
     >
       {mark}
     </Link>

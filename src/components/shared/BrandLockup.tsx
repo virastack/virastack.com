@@ -59,8 +59,9 @@ export function BrandLockup({
         )}
       />
       <Name
+        lang="en"
         className={cn(
-          "relative min-h-[1.05em] leading-[1.05] font-black tracking-tight",
+          "relative min-h-[1.05em] font-heading leading-[1.05] font-extrabold",
           nameClassName,
         )}
         style={{

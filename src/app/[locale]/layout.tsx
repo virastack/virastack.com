@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -17,7 +17,16 @@ import "@/styles/tailwind.css";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+});
+
+/** Headings and brand names; body text stays Inter. */
+const sora = Sora({
+  variable: "--font-sora",
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   preload: true,
   adjustFontFallback: true,
@@ -55,7 +64,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
+      className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full`}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >

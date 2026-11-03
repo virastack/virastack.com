@@ -30,31 +30,22 @@ function ExternalLink({ href, children }: { href: string; children: React.ReactN
   );
 }
 
-type BrandMarkTone = "heading" | "body";
-
-const brandWeightClass: Record<BrandMarkTone, string> = {
-  heading: "font-black",
-  body: "font-semibold",
-};
-
-const productWeightClass: Record<BrandMarkTone, string> = {
-  heading: "font-black",
-  body: "font-bold",
-};
-
+/** Same markup as `GuideProductMark`: ViraStack semibold + product name bold in its color; `heading` makes both black. */
 function BrandMarkPreview({
   productName,
   textClass,
-  tone,
+  heading = false,
 }: {
   productName: string;
   textClass: string;
-  tone: BrandMarkTone;
+  heading?: boolean;
 }) {
   return (
-    <span className="whitespace-nowrap">
-      <span className={cn("text-primary", brandWeightClass[tone])}>{siteConfig.name}</span>{" "}
-      <span className={cn(productWeightClass[tone], textClass)}>{productName}</span>
+    <span className="font-heading whitespace-nowrap">
+      <span className={cn("text-primary", heading ? "font-black" : "font-semibold")}>
+        {siteConfig.name}
+      </span>{" "}
+      <span className={cn(heading ? "font-black" : "font-bold", textClass)}>{productName}</span>
     </span>
   );
 }
@@ -128,11 +119,7 @@ function ProductCopyList() {
           >
             <p className="flex items-center gap-2.5 text-base">
               <Icon className={cn("size-5", palette.textClass)} strokeWidth={1.75} aria-hidden />
-              <BrandMarkPreview
-                productName={palette.productName}
-                textClass={palette.textClass}
-                tone="body"
-              />
+              <BrandMarkPreview productName={palette.productName} textClass={palette.textClass} />
             </p>
             <dl className="space-y-3">
               {rows.map(([label, text]) => (
@@ -159,6 +146,7 @@ if (!startPalette?.productName) {
 
 const startName = startPalette.productName;
 const startTextClass = startPalette.textClass;
+const StartIcon = productIcons.start;
 
 export function BrandPage() {
   const t = useTranslations("BrandPage");
@@ -193,7 +181,6 @@ export function BrandPage() {
                     <BrandMarkPreview
                       productName="Mask"
                       textClass={getBrandPalette("mask").textClass}
-                      tone="body"
                     />
                   ),
                 })}
@@ -209,7 +196,6 @@ export function BrandPage() {
                   <BrandMarkPreview
                     productName={palette.productName}
                     textClass={palette.textClass}
-                    tone="body"
                   />
                   <span className="flex items-center gap-2.5">
                     <span className="font-mono text-xs text-muted-foreground">{palette.shade}</span>
@@ -255,15 +241,11 @@ export function BrandPage() {
                 <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
                   {t("typeHeadingLabel")}
                 </p>
-                <p className="text-4xl tracking-tight lg:text-6xl">
-                  <BrandMarkPreview
-                    productName={startName}
-                    textClass={startTextClass}
-                    tone="heading"
-                  />
+                <p className="text-2xl tracking-tight">
+                  <BrandMarkPreview productName={startName} textClass={startTextClass} heading />
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
-                  font-black · text-4xl / lg:text-6xl · font-black · {startTextClass}
+                  font-black · text-2xl · font-black · {startTextClass}
                 </p>
               </div>
               <div className="space-y-1 border-t border-border pt-4">
@@ -271,11 +253,7 @@ export function BrandPage() {
                   {t("typeLogoLabel")}
                 </p>
                 <p className="text-lg leading-none">
-                  <BrandMarkPreview
-                    productName={startName}
-                    textClass={startTextClass}
-                    tone="body"
-                  />
+                  <BrandMarkPreview productName={startName} textClass={startTextClass} />
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
                   font-semibold · text-lg · font-bold · {startTextClass}
@@ -286,14 +264,22 @@ export function BrandPage() {
                   {t("typeBodyLabel")}
                 </p>
                 <p className="text-base">
-                  <BrandMarkPreview
-                    productName={startName}
-                    textClass={startTextClass}
-                    tone="body"
-                  />
+                  <BrandMarkPreview productName={startName} textClass={startTextClass} />
                 </p>
                 <p className="font-mono text-xs text-muted-foreground">
                   font-semibold · inherit (text-base) · font-bold · {startTextClass}
+                </p>
+              </div>
+              <div className="space-y-1 border-t border-border pt-4">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  {t("typeNavLabel")}
+                </p>
+                <p className="flex items-center gap-2.5 text-sm">
+                  <StartIcon className={cn("size-4", startTextClass)} aria-hidden />
+                  <span className="font-semibold text-foreground">{startName}</span>
+                </p>
+                <p className="font-mono text-xs text-muted-foreground">
+                  icon {startTextClass} · name font-semibold text-foreground · text-sm
                 </p>
               </div>
             </div>
@@ -359,7 +345,6 @@ export function BrandPage() {
                         <BrandMarkPreview
                           productName={palette.productName}
                           textClass={palette.textClass}
-                          tone="body"
                         />
                       </p>
                       <a
