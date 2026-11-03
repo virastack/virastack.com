@@ -35,7 +35,7 @@ const presetRows: Row[] = [
   ["numeric", "number"],
   [
     "email, url, username, alpha, password, text, zipCode",
-    "Removed; validate them in your schema or use definePreset",
+    "Removed; validate them in your schema or use definePreset. For person names, use fullName (2.2+) instead of alpha",
   ],
 ];
 

@@ -13,9 +13,8 @@ CLAUDE.md                        # @AGENTS.md (--agent claude)`;
 const AGENTS_BLOCK = `<!-- BEGIN:virastack-ai -->
 # ViraStack AI
 
-## Persona
 ## Commands
-## Operational Guardrails
+## Precedence
 ## Rules
 <!-- END:virastack-ai -->`;
 
@@ -52,8 +51,10 @@ export function AiInstalledFilesDoc() {
         </pre>
         <ul>
           <li>{t.rich("installedFilesAgentsCommands", docsRichTags)}</li>
+          <li>{t.rich("installedFilesAgentsPrecedence", docsRichTags)}</li>
           <li>{t.rich("installedFilesAgentsMap", docsRichTags)}</li>
           <li>{t.rich("installedFilesAgentsOutside", docsRichTags)}</li>
+          <li>{t.rich("installedFilesAgentsMarkers", docsRichTags)}</li>
         </ul>
 
         <h2 id="claude-md">{t("installedFilesHeadingClaude")}</h2>

@@ -38,7 +38,7 @@ v2: const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR
 | "date" (raw "01022020") | "date" (raw is ISO "2020-02-01" once complete) |
 | "currency" (US: 1,234.56, no symbol) | "currency" (same output). With a symbol: { preset: "currency", currency: "USD" } |
 | "zipCode" | { mask: "99999" } |
-| "email", "url", "password", "text", "username", "alpha" | Removed. Use a plain register() input and validate in the form schema (z.string().email(), .url(), regex). For "username" keep any slugify logic in your own onChange or setValueAs. |
+| "email", "url", "password", "text", "username", "alpha" | Removed. Use a plain register() input and validate in the form schema (z.string().email(), .url(), regex). For "username" keep any slugify logic in your own onChange or setValueAs. For a person's name, replace "alpha" with "fullName" (2.2+). |
 
 ## 6. Options
 | v1 | v2 |

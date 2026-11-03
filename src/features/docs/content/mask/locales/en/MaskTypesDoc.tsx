@@ -6,6 +6,7 @@ const presetCode = `type PresetName =
   | "phone" | "iban" // + country: "TR"
   | "card" | "cvv" | "expiry"
   | "tckn" | "vkn"
+  | "fullName"
   | "currency" | "number" // + country: "TR"
   | "date"
 

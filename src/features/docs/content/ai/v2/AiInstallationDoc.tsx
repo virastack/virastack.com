@@ -7,7 +7,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
 import { Link } from "@/i18n/routing";
 
-const OUTPUT = `ViraStack AI v2.0.0
+const OUTPUT = `ViraStack AI v2.1.0
 Framework: nextjs · Agents: claude, cursor · i18n: no · Package manager: pnpm
 
   + .claude/rules/virastack/core.md · created

@@ -137,7 +137,8 @@ export function MaskCustomMaskDoc() {
             <code>number</code>: <code>min</code>, <code>max</code>, <code>scale</code> (ondalık
             basamak), <code>signed</code>, <code>locale</code> (varsayılan <code>en-US</code>;
             Türkçe ayırıcılar için preset ile <code>country: &quot;TR&quot;</code>). Max yazarken,
-            min alan terk edilince uygulanır.
+            min alan terk edilince uygulanır. <code>signed</code> alanda negatif max da alan terk
+            edilince uygulanır.
           </li>
           <li>
             <code>currency</code>: ISO kodu ya da <code>{"{ code, locale, min, max, scale }"}</code>

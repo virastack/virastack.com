@@ -137,7 +137,8 @@ export function MaskCustomMaskDoc() {
             <code>number</code>: <code>min</code>, <code>max</code>, <code>scale</code> (fraction
             digits), <code>signed</code>, <code>locale</code> (default <code>en-US</code>; use the
             preset with <code>country: &quot;TR&quot;</code> for Turkish separators). Max applies
-            while typing, min on blur.
+            while typing, min on blur. With <code>signed</code>, a negative max also applies on
+            blur.
           </li>
           <li>
             <code>currency</code>: an ISO code or <code>{"{ code, locale, min, max, scale }"}</code>

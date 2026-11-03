@@ -140,7 +140,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getPage: getAiDocsPage,
     isSlug: isAiDocsSlug,
     versions: [
-      { id: "v2", label: "v2.0", latest: true },
+      { id: "v2", label: "v2.1", latest: true },
       { id: "v1", label: "v1.3", latest: false },
     ],
     archives: {
@@ -164,7 +164,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getPage: getMaskDocsPage,
     isSlug: isMaskDocsSlug,
     versions: [
-      { id: "v2", label: "v2.1", latest: true },
+      { id: "v2", label: "v2.2", latest: true },
       { id: "v1", label: "v1.1", latest: false },
     ],
     archives: {

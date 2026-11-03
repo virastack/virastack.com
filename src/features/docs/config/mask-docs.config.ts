@@ -28,7 +28,8 @@ export type MaskCustomizationPreview =
   | "numberTR"
   | "currencyTR"
   | "phoneTR"
-  | "ibanTR";
+  | "ibanTR"
+  | "fullNameCard";
 
 export type MaskExampleMeta = {
   /** URL segment under /examples/ */
@@ -212,6 +213,30 @@ const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [
     noteKeys: [],
     customizationKeys: [],
     errorKeys: ["vkn.incomplete", "vkn.invalid"],
+  },
+  {
+    id: "full-name",
+    preset: "fullName",
+    group: "identity",
+    maskPattern: "a[n…]",
+    formValue: "Ömer Gülçiçek",
+    placeholder: "Ömer Gülçiçek",
+    titleKey: "exampleFullNameTitle",
+    descriptionKey: "exampleFullNameDescription",
+    noteKeys: ["exampleFullNameNote0", "exampleFullNameNote1"],
+    customizationKeys: [
+      {
+        titleKey: "exampleFullNameCustomization0Title",
+        descriptionKey: "exampleFullNameCustomization0Description",
+        codeKey: "exampleFullNameCustomization0Code",
+        preview: "fullNameCard",
+      },
+      {
+        titleKey: "exampleFullNameCustomization1Title",
+        descriptionKey: "exampleFullNameCustomization1Description",
+        codeKey: "exampleFullNameCustomization1Code",
+      },
+    ],
   },
   {
     id: "iban",
