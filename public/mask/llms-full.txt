@@ -58,6 +58,7 @@ function Checkout() {
 | `expiry` | `12/28`, past months invalid | `1228` | `expiry.incomplete`, `expiry.invalid`, `expiry.min` |
 | `tckn` | `10000000146` | digits | `tckn.incomplete`, `tckn.invalid` |
 | `vkn` | `1234567890` | digits | `vkn.incomplete`, `vkn.invalid` |
+| `fullName` (2.2+) | `Ömer Gülçiçek`, letters of any language and single spaces, 70 characters at most | same text | none |
 | `currency` | `1,234.56` (no symbol); with a code `$1,234.56` (Intl) | `1234.56` | `currency.min`, `currency.max` |
 | `currency` + `country: "TR"` | `₺1.234,56` | `1234.56` | `currency.min`, `currency.max` |
 | `number` | `1,234` | `1234` | `number.min`, `number.max` |
