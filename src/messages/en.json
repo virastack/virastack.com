@@ -360,7 +360,7 @@
   "Academy": {
     "name": "Academy",
     "startRoadmap": "Start the roadmap",
-    "trustLine": "{guideCount, plural, one {# guide} other {# guides}} · {resourceCount, plural, one {# source} other {# sources}} · {authorCount, plural, one {# author and speaker} other {# authors and speakers}} · Last verified: {verified}",
+    "trustLine": "{guideCount, plural, one {# guide} other {# guides}} · {resourceCount, plural, one {# source} other {# sources}} · {authorCount, plural, one {# author and speaker} other {# authors and speakers}} · <verifiedNote>Last verified: {verified}</verifiedNote>",
     "trustLineNoVerified": "{guideCount, plural, one {# guide} other {# guides}} · {resourceCount, plural, one {# source} other {# sources}} · {authorCount, plural, one {# author and speaker} other {# authors and speakers}}",
     "authorsAmongSources": "Among the sources: <name>Kent C. Dodds</name>, <name>Addy Osmani</name>, <name>Dan Abramov</name>, <name>Dominik Dorfmeister</name>, <name>Matt Pocock</name>, and {count} more.",
     "viewAllSources": "View all sources →",

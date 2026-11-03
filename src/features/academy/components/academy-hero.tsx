@@ -9,6 +9,7 @@ import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
+import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
 import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
 import { Button } from "@/ui/button";
@@ -28,6 +29,15 @@ function authorName(chunks: ReactNode): ReactNode {
   return <span className="font-medium text-foreground">{chunks}</span>;
 }
 
+function verifiedNote(chunks: ReactNode): ReactNode {
+  return (
+    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+      {chunks}
+      <MaskCheckIcon />
+    </span>
+  );
+}
+
 export function AcademyHero({
   githubHref,
   startHref,
@@ -40,11 +50,12 @@ export function AcademyHero({
   const moreAuthorCount = Math.max(0, authorCount - ACADEMY_FEATURED_AUTHORS.length);
 
   const trustLine = verifiedLabel
-    ? t("trustLine", {
+    ? t.rich("trustLine", {
         guideCount,
         resourceCount,
         authorCount,
         verified: verifiedLabel,
+        verifiedNote,
       })
     : t("trustLineNoVerified", {
         guideCount,
