@@ -79,5 +79,5 @@ Rules for the report:
 ## Do not
 
 - Add terminology rows, change `brand.mdc` or rewrite copy the user did not ask about.
-- Touch Academy lesson content (`academy-lesson-writing` owns it).
+- Touch Academy lesson content (the `academy-lesson` skill in the academy repository owns it).
 - Commit.
