@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## ViraStack products
 
-- **Lockup:** Products are always `ViraStack` + short name: `ViraStack Start`, `ViraStack AI`, `ViraStack Mask`, `ViraStack Password`, `ViraStack Guide`, `ViraStack Academy`. Body copy uses the full lockup. The short name alone is used where the brand is already visible beside or above, e.g. product dots and the footer product list; keep the full lockup in `aria-label`.
+- **Lockup:** Products are always `ViraStack` + short name: `ViraStack Start`, `ViraStack AI`, `ViraStack Mask`, `ViraStack Password`, `ViraStack Guide`, `ViraStack Academy`. Body copy uses the full lockup. The short name alone is used only in navigation lists inside the brand chrome, where the brand is visible beside or above: header menu, footer product list, product dots, product sub-nav. Everywhere else (titles, cards, ecosystem, search, SEO/OG, releases) use the full lockup. Keep the full lockup in `aria-label` wherever the short name stands alone.
 - **Implementation:** Use rich-text tags backed by `guideProductTags` / `GuideProductMark` (`<start>Start</start>`). Never write the lockup as plain text in JSON.
 - **Academy:** Not a `ProductId`; use a local rich handler with brand span + bold name, colored from `brandPalettes` (id `academy`).
 - **Colors:** Read from `src/config/brand-palettes.config.ts` (single source; exposed as `text-brand-<id>` / `bg-brand-<id>-solid`). Never hardcode a product color. `ViraStack`'s own turquoise (`virastackColor`) colors the logo mark only; no product may use that hue.
@@ -24,10 +24,11 @@ alwaysApply: false
 ## Emphasis
 
 - **Bold:** key phrase or takeaway.
-- **Italic:** foreign or quoted word only. Product short names are never italic and always in the product color, in every context.
-- **Weights (two tiers):** Display (hero lockup): `ViraStack` `font-black` + product name `font-black`. UI (header, footer, search, running text): `ViraStack` `font-semibold` + product name `font-bold`.
+- **Italic:** foreign or quoted word only. Product short names are never italic and in the product color, in every context except navigation list items (header menu), where the name is neutral `text-foreground` and the icon carries the color.
+- **Weights:** Lockup (`BrandLockup`, heroes): `ViraStack` is the neutral outlined wordmark, the product name `font-black` in its color. Docs `h2` headings (`GuideProductMark tone="heading"`): `ViraStack` and the product name both `font-black`. Everywhere else (header logo, running text, card titles, search, dots tooltip): `ViraStack` `font-semibold text-primary` + product name `font-bold` in its color, via `GuideProductMark` (it also takes `id="academy"`).
+- **Navigation lists:** header menu items show the short name `font-semibold text-foreground`; the icon carries the product color.
 - **ViraStack color:** always `text-primary` (never `text-foreground`); the outlined wordmark is neutral decoration.
-- **Hero lockup:** big heroes show the outlined `ViraStack` wordmark (`BrandLockup`) above the black product name (Display tier).
+- **Hero lockup:** heroes use `BrandLockup`: outlined `ViraStack` above the `font-black` product name (font pairing: Sora for headings (`h1`–`h6` via the base layer) and brand names (`font-heading`: lockup, header logo, `GuideProductMark`), Inter for body text; Sora tops out at 800, so `font-black` renders 800 there); the home hero adds the product dots as its slot.
 - **Icons:** only through badges, not inline decoration.
 
 ## Sources

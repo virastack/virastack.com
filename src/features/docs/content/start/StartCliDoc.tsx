@@ -40,13 +40,20 @@ export function StartCliDoc() {
               </tr>
               <tr>
                 <td>
-                  <code>add &lt;tool&gt;</code>
+                  <code>add &lt;name&gt;</code>
                 </td>
                 <td>
                   {t.rich("cliCmdAdd", {
                     list: (chunks) => <code>{chunks}</code>,
+                    modules: (chunks) => <Link href="/start/docs/modules">{chunks}</Link>,
                   })}
                 </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>remove &lt;module&gt;</code>
+                </td>
+                <td>{t("cliCmdRemove")}</td>
               </tr>
               <tr>
                 <td>
@@ -195,6 +202,15 @@ export function StartCliDoc() {
             ai: (chunks) => <Link href="/ai/docs/installation">{chunks}</Link>,
           })}
         </p>
+        <p>
+          {t.rich("cliAddModules", {
+            code: (chunks) => <code>{chunks}</code>,
+            modules: (chunks) => <Link href="/start/docs/modules">{chunks}</Link>,
+          })}
+        </p>
+
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest add users")} />
+        <CodeBlockCommand {...convertNpmCommand("npx virastack@latest remove users")} />
 
         <h2 id="telemetry">{t("cliHeadingTelemetry")}</h2>
         <p>{t("cliTelemetryP1")}</p>

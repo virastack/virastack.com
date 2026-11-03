@@ -1,0 +1,208 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkout-card-nextjs-i18n",
+  "title": "Checkout card",
+  "author": "ViraStack <https://virastack.com>",
+  "description": "Choose or add a credit card, with the card number and CVV kept off the network.",
+  "dependencies": [
+    "@hookform/resolvers@^6.0.2",
+    "@tanstack/react-query@^5.105.0",
+    "@virastack/mask@^2.2.0",
+    "lucide-react@^1.66.0",
+    "react-hook-form@^7.91.0",
+    "zod@^4.6.7",
+    "zustand@^5.0.16"
+  ],
+  "devDependencies": [
+    "@testing-library/react@^16.3.3",
+    "@testing-library/user-event@^14.6.8",
+    "msw@^3.0.3",
+    "vitest@^5.0.5"
+  ],
+  "files": [
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/card.queries.ts",
+      "content": "import { queryOptions } from \"@tanstack/react-query\"\n\nimport { getCards } from \"@/features/checkout-card/api/get-cards.api\"\nimport { cardKeys } from \"@/features/checkout-card/api/query-keys\"\n\nexport const cardsQueryOptions = queryOptions({\n  queryKey: cardKeys.all,\n  queryFn: getCards,\n  // The dummy list only changes in this cache. With a real API, remove this line.\n  staleTime: Infinity\n})\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/card.queries.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/get-cards.api.ts",
+      "content": "import { DUMMY_CARDS } from \"@/features/checkout-card/constants/cards.constants\"\nimport type { SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\n/** No request yet: replace the body with a request to your API, `api.get(path, { schema })`. */\nexport async function getCards(): Promise<SavedCard[]> {\n  return DUMMY_CARDS\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/get-cards.api.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/query-keys.ts",
+      "content": "export const cardKeys = {\n  all: [\"cards\"] as const\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/query-keys.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/save-card.api.test.ts",
+      "content": "import { http, HttpResponse } from \"msw/http\"\nimport { describe, expect, it } from \"vitest\"\n\nimport { siteConfig } from \"@/config/site.config\"\n\nimport { saveCard } from \"@/features/checkout-card/api/save-card.api\"\nimport { tokenizeCard } from \"@/features/checkout-card/api/tokenize-card\"\nimport { CARDS_PATH } from \"@/features/checkout-card/constants/cards.constants\"\nimport { server } from \"@/test/server\"\n\nconst input = {\n  cardNumber: \"5400360000000003\",\n  holderName: \"Ömer Gülçiçek\",\n  expiry: \"1230\",\n  cvv: \"123\"\n}\n\ndescribe(\"tokenizeCard\", () => {\n  it(\"keeps only what is safe to send\", async () => {\n    const card = await tokenizeCard(input)\n\n    expect(card).toMatchObject({\n      cardAssociation: \"MASTER_CARD\",\n      lastFourDigits: \"0003\",\n      expireMonth: \"12\",\n      expireYear: \"2030\",\n      cardHolderName: \"Ömer Gülçiçek\"\n    })\n    expect(JSON.stringify(card)).not.toContain(input.cardNumber)\n    expect(card).not.toHaveProperty(\"cvv\")\n  })\n})\n\ndescribe(\"saveCard\", () => {\n  it(\"posts the token without the card number or CVV\", async () => {\n    let body = \"\"\n    server.use(\n      http.post(`${siteConfig.apiUrl}${CARDS_PATH}`, async ({ request }) => {\n        body = await request.text()\n        return HttpResponse.json({ status: 201, message: \"Created\" }, { status: 201 })\n      })\n    )\n\n    const saved = await saveCard(await tokenizeCard(input))\n\n    expect(body).toContain(\"tok_dummy_\")\n    expect(body).toContain(\"0003\")\n    expect(JSON.parse(body)).toMatchObject({ expireMonth: \"12\", expireYear: \"2030\" })\n    expect(body).not.toContain(input.cardNumber)\n    expect(body).not.toContain(\"cvv\")\n    expect(saved.cardBankName).toBeNull()\n  })\n})\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/save-card.api.test.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/save-card.api.ts",
+      "content": "import { api } from \"@/lib/api\"\n\nimport { CARDS_PATH } from \"@/features/checkout-card/constants/cards.constants\"\nimport { savedCardResponseSchema } from \"@/features/checkout-card/schemas/card.schema\"\nimport type { SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\n/**\n * Sends the token and display details only. The request is real, but DummyJSON only answers\n * 201 Created, so the result is built here. iyzico answers with the stored card, bank name\n * included; with your API, return its answer.\n */\nexport async function saveCard(card: Omit<SavedCard, \"cardBankName\">): Promise<SavedCard> {\n  await api.post(CARDS_PATH, card, { schema: savedCardResponseSchema })\n\n  return { ...card, cardBankName: null }\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/save-card.api.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/api/tokenize-card.ts",
+      "content": "import { getCardType } from \"@virastack/mask\"\n\nimport type {\n  CardAssociation,\n  CardFormInput,\n  SavedCard\n} from \"@/features/checkout-card/schemas/card.schema\"\n\nconst ASSOCIATIONS: Record<ReturnType<typeof getCardType>, CardAssociation | null> = {\n  visa: \"VISA\",\n  mastercard: \"MASTER_CARD\",\n  amex: \"AMERICAN_EXPRESS\",\n  troy: \"TROY\",\n  unknown: null\n}\n\n/**\n * The one place to connect a payment provider. With iyzico, its checkout form takes the card and\n * your server receives the `cardToken`. Card number and CVV must never reach your server or be\n * stored.\n */\nexport async function tokenizeCard(input: CardFormInput): Promise<Omit<SavedCard, \"cardBankName\">> {\n  return {\n    cardToken: `tok_dummy_${Date.now()}`,\n    cardAssociation: ASSOCIATIONS[getCardType(input.cardNumber)],\n    lastFourDigits: input.cardNumber.slice(-4),\n    // The form keeps MMYY; iyzico uses \"12\" and \"2030\".\n    expireMonth: input.expiry.slice(0, 2),\n    expireYear: `20${input.expiry.slice(2, 4)}`,\n    cardHolderName: input.holderName\n  }\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/api/tokenize-card.ts"
+    },
+    {
+      "path": "registry/checkout-card/nextjs-i18n/src/features/checkout-card/components/CardDetails.tsx",
+      "content": "import { useTranslations } from \"next-intl\"\n\nimport { BRAND_NAMES } from \"@/features/checkout-card/constants/cards.constants\"\nimport type { SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\nexport function CardDetails({ card }: { card: SavedCard }) {\n  const t = useTranslations(\"CheckoutCard\")\n\n  // iyzico keeps \"12\" and \"2030\"; the card shows 12/30.\n  const expiry = `${card.expireMonth}/${card.expireYear.slice(-2)}`\n\n  return (\n    <span className=\"flex min-w-0 flex-col gap-1 text-sm\">\n      <span className=\"font-medium\">\n        {card.cardBankName ? `${card.cardBankName} · ` : \"\"}\n        {card.cardAssociation ? BRAND_NAMES[card.cardAssociation] : t(\"brand_unknown\")}\n      </span>\n      <span className=\"font-mono tabular-nums\">•••• •••• •••• {card.lastFourDigits}</span>\n      <span className=\"text-muted-foreground\">\n        {card.cardHolderName} · {t(\"expires\")} {expiry}\n      </span>\n    </span>\n  )\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/components/CardDetails.tsx"
+    },
+    {
+      "path": "registry/checkout-card/nextjs-i18n/src/features/checkout-card/components/CardForm.tsx",
+      "content": "\"use client\"\n\nimport type { ReactNode } from \"react\"\n\nimport { zodResolver } from \"@hookform/resolvers/zod\"\nimport { maskResolver, useViraMask } from \"@virastack/mask\"\nimport { useTranslations } from \"next-intl\"\nimport { useForm } from \"react-hook-form\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { CARD_MASKS } from \"@/features/checkout-card/constants/cards.constants\"\nimport { useAddCard } from \"@/features/checkout-card/hooks/use-add-card\"\nimport { createCardFormSchema } from \"@/features/checkout-card/schemas/card.schema\"\nimport type { CardFormInput, SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\n/** The mask reports a key such as `card.invalid`, for the form to word. Others are the schema's. */\nfunction wordMaskError(message: string | undefined, maskMessage: string) {\n  return message && /^[a-z]+\\.[a-zA-Z]+$/.test(message) ? maskMessage : message\n}\n\nexport function CardForm({ onSaved }: { onSaved: (saved: SavedCard) => void }) {\n  const t = useTranslations(\"CheckoutCard\")\n  const addCard = useAddCard()\n  const form = useForm<CardFormInput>({\n    resolver: maskResolver(CARD_MASKS, zodResolver(createCardFormSchema(t))),\n    defaultValues: { cardNumber: \"\", holderName: \"\", expiry: \"\", cvv: \"\" }\n  })\n  const { holderName, cardNumber, expiry, cvv } = useViraMask(form, CARD_MASKS)\n  const { errors, isSubmitting } = form.formState\n\n  const onSubmit = form.handleSubmit(async (input) => {\n    try {\n      onSaved(await addCard.mutateAsync(input))\n    } catch {\n      form.setError(\"root.server\", { message: t(\"save_error\") })\n    }\n  })\n\n  return (\n    <form onSubmit={onSubmit} noValidate className=\"flex flex-col gap-4\">\n      <FormField name=\"holderName\" label={t(\"field_holder\")} error={errors.holderName?.message}>\n        <Input\n          {...holderName}\n          id=\"holderName\"\n          autoComplete=\"cc-name\"\n          aria-invalid={Boolean(errors.holderName)}\n          aria-describedby={errors.holderName ? \"holderName-error\" : undefined}\n        />\n      </FormField>\n      <FormField\n        name=\"cardNumber\"\n        label={t(\"field_number\")}\n        error={wordMaskError(errors.cardNumber?.message, t(\"error_number_invalid\"))}\n      >\n        <Input\n          {...cardNumber}\n          id=\"cardNumber\"\n          autoComplete=\"cc-number\"\n          placeholder=\"0000 0000 0000 0000\"\n          aria-invalid={Boolean(errors.cardNumber)}\n          aria-describedby={errors.cardNumber ? \"cardNumber-error\" : undefined}\n        />\n      </FormField>\n      <div className=\"grid gap-4 sm:grid-cols-2\">\n        <FormField\n          name=\"expiry\"\n          label={t(\"field_expiry\")}\n          error={wordMaskError(errors.expiry?.message, t(\"error_expiry_invalid\"))}\n        >\n          <Input\n            {...expiry}\n            id=\"expiry\"\n            autoComplete=\"cc-exp\"\n            placeholder=\"12/30\"\n            aria-invalid={Boolean(errors.expiry)}\n            aria-describedby={errors.expiry ? \"expiry-error\" : undefined}\n          />\n        </FormField>\n        <FormField\n          name=\"cvv\"\n          label={t(\"field_cvv\")}\n          error={wordMaskError(errors.cvv?.message, t(\"error_cvv_invalid\"))}\n        >\n          <Input\n            {...cvv}\n            id=\"cvv\"\n            autoComplete=\"cc-csc\"\n            placeholder=\"123\"\n            aria-invalid={Boolean(errors.cvv)}\n            aria-describedby={errors.cvv ? \"cvv-error\" : undefined}\n          />\n        </FormField>\n      </div>\n      {errors.root?.server ? (\n        <p role=\"alert\" className=\"text-sm text-destructive\">\n          {errors.root.server.message}\n        </p>\n      ) : null}\n      <Button type=\"submit\" className=\"self-start\" disabled={isSubmitting}>\n        {isSubmitting ? t(\"saving\") : t(\"save\")}\n      </Button>\n    </form>\n  )\n}\n\ntype FormFieldProps = {\n  name: string\n  label: string\n  error?: string\n  children: ReactNode\n}\n\nfunction FormField({ name, label, error, children }: FormFieldProps) {\n  return (\n    <Field data-invalid={Boolean(error)}>\n      <FieldLabel htmlFor={name}>{label}</FieldLabel>\n      {children}\n      {error ? <FieldError id={`${name}-error`}>{error}</FieldError> : null}\n    </Field>\n  )\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/components/CardForm.tsx"
+    },
+    {
+      "path": "registry/checkout-card/nextjs-i18n/src/features/checkout-card/components/CardPicker.tsx",
+      "content": "\"use client\"\n\nimport { useState } from \"react\"\n\nimport { ArrowLeftIcon, PlusIcon } from \"lucide-react\"\nimport { useTranslations } from \"next-intl\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Dialog,\n  DialogContent,\n  DialogDescription,\n  DialogHeader,\n  DialogTitle\n} from \"@/components/ui/dialog\"\nimport { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\nimport { CardDetails } from \"@/features/checkout-card/components/CardDetails\"\nimport { CardForm } from \"@/features/checkout-card/components/CardForm\"\nimport type { SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\ntype CardPickerProps = {\n  isOpen: boolean\n  onOpenChange: (isOpen: boolean) => void\n  cards: SavedCard[]\n  selectedToken: string | null\n  onSelect: (token: string) => void\n}\n\nexport function CardPicker({ isOpen, onOpenChange, ...props }: CardPickerProps) {\n  return (\n    <Dialog open={isOpen} onOpenChange={onOpenChange}>\n      <DialogContent className=\"max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] overflow-y-auto sm:max-w-lg\">\n        {/* Mounted only while open, so card details never outlive the dialog. */}\n        <CardPickerContent {...props} onClose={() => onOpenChange(false)} />\n      </DialogContent>\n    </Dialog>\n  )\n}\n\ntype CardPickerContentProps = Omit<CardPickerProps, \"isOpen\" | \"onOpenChange\"> & {\n  onClose: () => void\n}\n\n/** A saved card has no edit: its number is gone, so a changed card is a new card. */\nfunction CardPickerContent({ cards, selectedToken, onSelect, onClose }: CardPickerContentProps) {\n  const t = useTranslations(\"CheckoutCard\")\n  const [draftToken, setDraftToken] = useState(selectedToken)\n  const [isAdding, setIsAdding] = useState(cards.length === 0)\n\n  if (isAdding) {\n    return (\n      <>\n        <DialogHeader>\n          <DialogTitle>{t(\"form_title\")}</DialogTitle>\n          <DialogDescription>{t(\"form_description\")}</DialogDescription>\n        </DialogHeader>\n        {cards.length > 0 ? (\n          <Button\n            variant=\"ghost\"\n            size=\"sm\"\n            className=\"justify-self-start\"\n            onClick={() => setIsAdding(false)}\n          >\n            <ArrowLeftIcon aria-hidden />\n            {t(\"back\")}\n          </Button>\n        ) : null}\n        <CardForm\n          onSaved={(saved) => {\n            onSelect(saved.cardToken)\n            onClose()\n          }}\n        />\n      </>\n    )\n  }\n\n  return (\n    <>\n      <DialogHeader>\n        <DialogTitle>{t(\"picker_title\")}</DialogTitle>\n      </DialogHeader>\n      <RadioGroup\n        aria-label={t(\"picker_title\")}\n        value={draftToken ?? \"\"}\n        onValueChange={(value) => setDraftToken(String(value))}\n      >\n        {cards.map((card) => (\n          <Label\n            key={card.cardToken}\n            className=\"flex cursor-pointer items-start gap-3 rounded-lg border p-4 font-normal has-data-checked:border-foreground/40 has-data-checked:bg-muted/40\"\n          >\n            <RadioGroupItem value={card.cardToken} className=\"mt-0.5\" />\n            <CardDetails card={card} />\n          </Label>\n        ))}\n      </RadioGroup>\n      <div className=\"flex flex-wrap items-center justify-between gap-2\">\n        <Button variant=\"outline\" onClick={() => setIsAdding(true)}>\n          <PlusIcon aria-hidden />\n          {t(\"add_new\")}\n        </Button>\n        <Button\n          disabled={draftToken === null}\n          onClick={() => {\n            if (draftToken !== null) onSelect(draftToken)\n            onClose()\n          }}\n        >\n          {t(\"use_card\")}\n        </Button>\n      </div>\n    </>\n  )\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/components/CardPicker.tsx"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/components/CheckoutCard.test.tsx",
+      "content": "import { screen, within } from \"@testing-library/react\"\nimport userEvent from \"@testing-library/user-event\"\nimport type { UserEvent } from \"@testing-library/user-event\"\nimport { http, HttpResponse } from \"msw/http\"\nimport { beforeEach, describe, expect, it, vi } from \"vitest\"\n\nimport { siteConfig } from \"@/config/site.config\"\n\nimport { getCards } from \"@/features/checkout-card/api/get-cards.api\"\nimport { CheckoutCard } from \"@/features/checkout-card/components/CheckoutCard\"\nimport { CARDS_PATH } from \"@/features/checkout-card/constants/cards.constants\"\nimport { useCardSelectionStore } from \"@/features/checkout-card/stores/card-selection.store\"\nimport { renderWithProviders } from \"@/test/render\"\nimport { server } from \"@/test/server\"\n\nvi.mock(\"@/features/checkout-card/api/get-cards.api\", { spy: true })\n\nconst ADD_URL = `${siteConfig.apiUrl}${CARDS_PATH}`\n\nasync function renderPayment() {\n  renderWithProviders(<CheckoutCard />)\n  return screen.findByRole(\"region\", { name: \"Payment method\" })\n}\n\nasync function openPicker(user: UserEvent) {\n  await user.click(screen.getByRole(\"button\", { name: \"Change payment method\" }))\n  return screen.findByRole(\"dialog\")\n}\n\nasync function openForm(user: UserEvent) {\n  const dialog = await openPicker(user)\n  await user.click(within(dialog).getByRole(\"button\", { name: \"Add new card\" }))\n}\n\nasync function fillCard(user: UserEvent, number: string, expiry: string, cvv: string) {\n  await user.type(await screen.findByLabelText(\"Card number\"), number)\n  await user.type(screen.getByLabelText(\"Name on card\"), \"Ömer Gülçiçek\")\n  await user.type(screen.getByLabelText(\"Expiry (MM/YY)\"), expiry)\n  await user.type(screen.getByLabelText(\"CVV\"), cvv)\n}\n\ndescribe(\"CheckoutCard\", () => {\n  beforeEach(() => {\n    useCardSelectionStore.setState({ selectedToken: null })\n  })\n\n  it(\"starts with the name, focuses it on an empty submit and keeps only letters\", async () => {\n    const user = userEvent.setup()\n    await renderPayment()\n    await openForm(user)\n\n    const name = await screen.findByLabelText(\"Name on card\")\n    const inputs = within(screen.getByRole(\"dialog\")).getAllByRole(\"textbox\")\n    expect(inputs[0]).toBe(name)\n\n    await user.click(screen.getByRole(\"button\", { name: \"Save card\" }))\n    expect(name).toHaveFocus()\n    expect(name).toHaveAccessibleDescription(\"Enter the name on the card\")\n\n    await user.type(name, \"Ömer123  Gül\")\n    expect(name).toHaveValue(\"Ömer Gül\")\n  })\n\n  it(\"opens straight on the form when there is no card yet\", async () => {\n    vi.mocked(getCards).mockResolvedValueOnce([])\n    const user = userEvent.setup()\n    await renderPayment()\n\n    await user.click(screen.getByRole(\"button\", { name: \"Add card\" }))\n\n    const dialog = await screen.findByRole(\"dialog\")\n    expect(within(dialog).getByLabelText(\"Card number\")).toBeInTheDocument()\n    expect(within(dialog).queryByRole(\"button\", { name: \"Back to cards\" })).toBeNull()\n  })\n\n  it(\"shows only the chosen card\", async () => {\n    const payment = await renderPayment()\n\n    expect(within(payment).getByText(/Garanti BBVA/)).toBeInTheDocument()\n    expect(within(payment).getByText(/0003/)).toBeInTheDocument()\n    expect(screen.queryByText(/Akbank/)).not.toBeInTheDocument()\n  })\n\n  it(\"lists saved cards without an edit button and changes the card\", async () => {\n    const user = userEvent.setup()\n    const payment = await renderPayment()\n\n    const dialog = await openPicker(user)\n    expect(within(dialog).getAllByRole(\"radio\")).toHaveLength(3)\n    expect(within(dialog).queryByRole(\"button\", { name: /Edit/ })).not.toBeInTheDocument()\n\n    await user.click(within(dialog).getByRole(\"radio\", { name: /Akbank/ }))\n    await user.click(within(dialog).getByRole(\"button\", { name: \"Use this card\" }))\n\n    expect(await within(payment).findByText(/Akbank/)).toBeInTheDocument()\n    expect(useCardSelectionStore.getState().selectedToken).toBe(\"tok_dummy_akbank\")\n  })\n\n  it(\"sends nothing while the fields are empty\", async () => {\n    let requests = 0\n    server.use(\n      http.post(ADD_URL, () => {\n        requests += 1\n        return HttpResponse.json({ status: 201, message: \"Created\" }, { status: 201 })\n      })\n    )\n    const user = userEvent.setup()\n    await renderPayment()\n\n    await openForm(user)\n    await user.click(await screen.findByRole(\"button\", { name: \"Save card\" }))\n\n    expect(await screen.findByText(\"Enter the card number\")).toBeInTheDocument()\n    expect(screen.getByText(\"Enter the name on the card\")).toBeInTheDocument()\n    expect(screen.getByText(\"Enter the expiry date\")).toBeInTheDocument()\n    expect(screen.getByText(\"Enter the CVV\")).toBeInTheDocument()\n    expect(requests).toBe(0)\n  })\n\n  it(\"rejects a number that fails the Luhn check and a past expiry\", async () => {\n    const user = userEvent.setup()\n    await renderPayment()\n\n    await openForm(user)\n    await fillCard(user, \"5400360000000004\", \"0120\", \"123\")\n    await user.click(screen.getByRole(\"button\", { name: \"Save card\" }))\n\n    expect(await screen.findByText(\"Check the card number\")).toBeInTheDocument()\n    expect(screen.getByText(\"Enter a valid future date\")).toBeInTheDocument()\n  })\n\n  it(\"formats the fields and lets an Amex CVV have four digits\", async () => {\n    const user = userEvent.setup()\n    await renderPayment()\n\n    await openForm(user)\n    await fillCard(user, \"374427000000003\", \"1230\", \"1234\")\n\n    expect(screen.getByLabelText(\"Card number\")).toHaveValue(\"3744 270000 00003\")\n    expect(screen.getByLabelText(\"Expiry (MM/YY)\")).toHaveValue(\"12/30\")\n    expect(screen.getByLabelText(\"CVV\")).toHaveValue(\"1234\")\n  })\n\n  it(\"posts no card number or CVV, then shows the new card as chosen\", async () => {\n    let body = \"\"\n    server.use(\n      http.post(ADD_URL, async ({ request }) => {\n        body = await request.text()\n        return HttpResponse.json({ status: 201, message: \"Created\" }, { status: 201 })\n      })\n    )\n    const user = userEvent.setup()\n    const payment = await renderPayment()\n\n    await openForm(user)\n    await fillCard(user, \"4543590000000006\", \"1230\", \"321\")\n    expect(screen.getByLabelText(\"Card number\")).toHaveAttribute(\"autocomplete\", \"cc-number\")\n    await user.click(screen.getByRole(\"button\", { name: \"Save card\" }))\n\n    expect(await within(payment).findByText(/Visa/)).toBeInTheDocument()\n    expect(within(payment).getByText(/0006/)).toBeInTheDocument()\n    expect(body).toContain(\"tok_dummy_\")\n    expect(body).not.toContain(\"4543590000000006\")\n    expect(body).not.toContain(\"321\")\n    expect(screen.queryByRole(\"dialog\")).not.toBeInTheDocument()\n  })\n\n  it(\"keeps the input and shows an error when saving fails\", async () => {\n    server.use(http.post(ADD_URL, () => HttpResponse.json({}, { status: 500 })))\n    const user = userEvent.setup()\n    await renderPayment()\n\n    await openForm(user)\n    await fillCard(user, \"5400360000000003\", \"1230\", \"123\")\n    await user.click(screen.getByRole(\"button\", { name: \"Save card\" }))\n\n    expect(await screen.findByRole(\"alert\")).toHaveTextContent(/Could not save/)\n    expect(screen.getByLabelText(\"Name on card\")).toHaveValue(\"Ömer Gülçiçek\")\n  })\n})\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/components/CheckoutCard.test.tsx"
+    },
+    {
+      "path": "registry/checkout-card/nextjs-i18n/src/features/checkout-card/components/CheckoutCard.tsx",
+      "content": "\"use client\"\n\nimport { useState } from \"react\"\n\nimport { useTranslations } from \"next-intl\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Skeleton } from \"@/components/ui/skeleton\"\nimport { CardDetails } from \"@/features/checkout-card/components/CardDetails\"\nimport { CardPicker } from \"@/features/checkout-card/components/CardPicker\"\nimport { useCards } from \"@/features/checkout-card/hooks/use-cards\"\nimport { useCheckoutCard } from \"@/features/checkout-card/hooks/use-checkout-card\"\nimport { useCardSelectionStore } from \"@/features/checkout-card/stores/card-selection.store\"\n\n/** Only the chosen card shows on the page; the rest wait in the picker. */\nexport function CheckoutCard() {\n  const t = useTranslations(\"CheckoutCard\")\n  const cards = useCards()\n  const { card } = useCheckoutCard()\n  const setSelectedToken = useCardSelectionStore((state) => state.setSelectedToken)\n  const [isPickerOpen, setIsPickerOpen] = useState(false)\n\n  if (cards.isPending) {\n    return (\n      <div role=\"status\" aria-label={t(\"loading\")}>\n        <Skeleton className=\"h-24 w-full\" />\n      </div>\n    )\n  }\n\n  if (cards.isError) {\n    return (\n      <div role=\"alert\" className=\"flex flex-col items-start gap-3 rounded-lg border p-4\">\n        <p className=\"text-sm\">{t(\"load_error\")}</p>\n        <Button variant=\"outline\" onClick={() => cards.refetch()}>\n          {t(\"retry\")}\n        </Button>\n      </div>\n    )\n  }\n\n  return (\n    <section aria-label={t(\"title\")} className=\"flex min-w-0 flex-col gap-3\">\n      <h3 className=\"text-lg font-semibold tracking-tight\">{t(\"title\")}</h3>\n      <div className=\"flex items-start justify-between gap-3 rounded-lg border p-4\">\n        {card ? (\n          <CardDetails card={card} />\n        ) : (\n          <p className=\"text-sm text-muted-foreground\">{t(\"no_card\")}</p>\n        )}\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          className=\"shrink-0\"\n          aria-label={card ? t(\"change_label\") : undefined}\n          onClick={() => setIsPickerOpen(true)}\n        >\n          {card ? t(\"change\") : t(\"add\")}\n        </Button>\n      </div>\n      <CardPicker\n        isOpen={isPickerOpen}\n        onOpenChange={setIsPickerOpen}\n        cards={cards.data}\n        selectedToken={card?.cardToken ?? null}\n        onSelect={setSelectedToken}\n      />\n    </section>\n  )\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/components/CheckoutCard.tsx"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/constants/cards.constants.ts",
+      "content": "import type { CardAssociation, SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\n/** DummyJSON has no card API; this address only answers 201 Created. Point it at your own API. */\nexport const CARDS_PATH = \"/http/201\"\n\n/**\n * Starting data until you connect an API. Like a real saved card, each keeps only its last four\n * digits. They come from iyzico's sandbox test cards, which do no real payment:\n * https://docs.iyzico.com/en/add-ons/test-cards\n */\nexport const DUMMY_CARDS: SavedCard[] = [\n  {\n    cardToken: \"tok_dummy_garanti\",\n    cardAssociation: \"MASTER_CARD\",\n    lastFourDigits: \"0003\",\n    expireMonth: \"12\",\n    expireYear: \"2030\",\n    cardHolderName: \"Ömer Gülçiçek\",\n    cardBankName: \"Garanti BBVA\"\n  },\n  {\n    cardToken: \"tok_dummy_akbank\",\n    cardAssociation: \"MASTER_CARD\",\n    lastFourDigits: \"0006\",\n    expireMonth: \"12\",\n    expireYear: \"2030\",\n    cardHolderName: \"Ömer Gülçiçek\",\n    cardBankName: \"Akbank\"\n  },\n  {\n    cardToken: \"tok_dummy_is_bankasi\",\n    cardAssociation: \"VISA\",\n    lastFourDigits: \"0006\",\n    expireMonth: \"12\",\n    expireYear: \"2030\",\n    cardHolderName: \"Ömer Gülçiçek\",\n    cardBankName: \"Türkiye İş Bankası\"\n  }\n]\n\n/** The masks, shared by the form and its resolver. The CVV follows the card's network. */\nexport const CARD_MASKS = {\n  holderName: { preset: \"fullName\", autoComplete: \"cc-name\" },\n  cardNumber: \"card\",\n  expiry: \"expiry\",\n  cvv: { preset: \"cvv\", from: \"cardNumber\" }\n} as const\n\nexport const BRAND_NAMES: Record<CardAssociation, string> = {\n  VISA: \"Visa\",\n  MASTER_CARD: \"Mastercard\",\n  AMERICAN_EXPRESS: \"American Express\",\n  TROY: \"Troy\"\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/constants/cards.constants.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/hooks/use-add-card.ts",
+      "content": "\"use client\"\n\nimport { useMutation, useQueryClient } from \"@tanstack/react-query\"\n\nimport { cardKeys } from \"@/features/checkout-card/api/query-keys\"\nimport { saveCard } from \"@/features/checkout-card/api/save-card.api\"\nimport { tokenizeCard } from \"@/features/checkout-card/api/tokenize-card\"\nimport type { CardFormInput, SavedCard } from \"@/features/checkout-card/schemas/card.schema\"\n\nexport function useAddCard() {\n  const queryClient = useQueryClient()\n\n  return useMutation({\n    mutationFn: async (input: CardFormInput) => saveCard(await tokenizeCard(input)),\n    // With a real API, invalidate `cardKeys.all` instead.\n    onSuccess: (saved) =>\n      queryClient.setQueryData<SavedCard[]>(cardKeys.all, (cards = []) => [...cards, saved])\n  })\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/hooks/use-add-card.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/hooks/use-cards.ts",
+      "content": "\"use client\"\n\nimport { useQuery } from \"@tanstack/react-query\"\n\nimport { cardsQueryOptions } from \"@/features/checkout-card/api/card.queries\"\n\nexport function useCards() {\n  return useQuery(cardsQueryOptions)\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/hooks/use-cards.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/hooks/use-checkout-card.ts",
+      "content": "\"use client\"\n\nimport { useCards } from \"@/features/checkout-card/hooks/use-cards\"\nimport { useCardSelectionStore } from \"@/features/checkout-card/stores/card-selection.store\"\n\n/** What the module gives the next checkout step: the chosen card, with no card number or CVV. */\nexport function useCheckoutCard() {\n  const { data: cards = [] } = useCards()\n  const selectedToken = useCardSelectionStore((state) => state.selectedToken)\n\n  return { card: cards.find(({ cardToken }) => cardToken === selectedToken) ?? cards[0] ?? null }\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/hooks/use-checkout-card.ts"
+    },
+    {
+      "path": "registry/checkout-card/nextjs-i18n/src/features/checkout-card/schemas/card.schema.ts",
+      "content": "import type { useTranslations } from \"next-intl\"\nimport { z } from \"zod\"\n\n/** A factory, so validation errors come in the visitor's language. */\nexport function createCardFormSchema(t: ReturnType<typeof useTranslations<\"CheckoutCard\">>) {\n  return z.object({\n    cardNumber: z.string().min(1, t(\"error_number\")),\n    holderName: z.string().trim().min(1, t(\"error_holder\")).max(60, t(\"error_too_long\")),\n    expiry: z.string().min(1, t(\"error_expiry\")),\n    cvv: z.string().min(1, t(\"error_cvv\"))\n  })\n}\n\nexport const savedCardResponseSchema = z.object({ status: z.number() })\n\nexport type CardFormInput = z.infer<ReturnType<typeof createCardFormSchema>>\n\n/** iyzico's card networks. */\nexport type CardAssociation = \"VISA\" | \"MASTER_CARD\" | \"AMERICAN_EXPRESS\" | \"TROY\"\n\n/**\n * What may be kept and shown, named after iyzico's card storage so its answer maps over:\n * https://docs.iyzico.com/en/advanced/card-storage\n * There is no field for a card number or CVV on purpose.\n */\nexport type SavedCard = {\n  cardToken: string\n  /** `null` when the number belongs to none of iyzico's networks. */\n  cardAssociation: CardAssociation | null\n  lastFourDigits: string\n  expireMonth: string\n  expireYear: string\n  cardHolderName: string\n  /** iyzico returns it for cards issued in Türkiye. */\n  cardBankName: string | null\n}\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/schemas/card.schema.ts"
+    },
+    {
+      "path": "registry/checkout-card/common/src/features/checkout-card/stores/card-selection.store.ts",
+      "content": "import { create } from \"zustand\"\n\ntype CardSelectionState = {\n  /** Only the token: the cards themselves stay in the Query cache. */\n  selectedToken: string | null\n  setSelectedToken: (token: string) => void\n}\n\n// Client-only UI state, so a module-level store is fine. Not persisted, and never holds card data.\nexport const useCardSelectionStore = create<CardSelectionState>()((set) => ({\n  selectedToken: null,\n  setSelectedToken: (selectedToken) => set({ selectedToken })\n}))\n",
+      "type": "registry:file",
+      "target": "src/features/checkout-card/stores/card-selection.store.ts"
+    }
+  ],
+  "meta": {
+    "product": "virastack-start",
+    "framework": "nextjs",
+    "minStartVersion": "2.0.0",
+    "entry": {
+      "name": "CheckoutCard",
+      "file": "@/features/checkout-card/components/CheckoutCard"
+    },
+    "messages": {
+      "en": {
+        "CheckoutCard": {
+          "loading": "Loading cards",
+          "load_error": "Could not load your cards",
+          "retry": "Retry",
+          "title": "Payment method",
+          "change": "Change",
+          "change_label": "Change payment method",
+          "no_card": "No saved card yet.",
+          "picker_title": "Choose a card",
+          "use_card": "Use this card",
+          "add_new": "Add new card",
+          "back": "Back to cards",
+          "form_title": "Add new card",
+          "form_description": "The card number and CVV never leave this browser. The request carries a dummy token, the brand, the last four digits, the expiry and the name on the card.",
+          "field_number": "Card number",
+          "field_holder": "Name on card",
+          "field_expiry": "Expiry (MM/YY)",
+          "field_cvv": "CVV",
+          "save": "Save card",
+          "saving": "Saving…",
+          "save_error": "Could not save the card. Try again.",
+          "expires": "Expires",
+          "error_number": "Enter the card number",
+          "error_number_invalid": "Check the card number",
+          "error_holder": "Enter the name on the card",
+          "error_expiry": "Enter the expiry date",
+          "error_expiry_invalid": "Enter a valid future date",
+          "error_cvv": "Enter the CVV",
+          "error_cvv_invalid": "Check the CVV",
+          "error_too_long": "This is too long",
+          "add": "Add card",
+          "brand_unknown": "Card"
+        }
+      },
+      "tr": {
+        "CheckoutCard": {
+          "loading": "Kartlar yükleniyor",
+          "load_error": "Kartlar yüklenemedi",
+          "retry": "Tekrar dene",
+          "title": "Ödeme yöntemi",
+          "change": "Değiştir",
+          "change_label": "Ödeme yöntemini değiştir",
+          "no_card": "Henüz kayıtlı kart yok.",
+          "picker_title": "Kart seç",
+          "use_card": "Bu kartı kullan",
+          "add_new": "Yeni kart ekle",
+          "back": "Kartlara dön",
+          "form_title": "Yeni kart ekle",
+          "form_description": "Kart numarası ve CVV bu tarayıcıdan çıkmaz. İstek dummy token, marka, son dört hane, son kullanma tarihi ve kart üzerindeki adı taşır.",
+          "field_number": "Kart numarası",
+          "field_holder": "Kart üzerindeki ad",
+          "field_expiry": "Son kullanma (AA/YY)",
+          "field_cvv": "CVV",
+          "save": "Kartı kaydet",
+          "saving": "Kaydediliyor…",
+          "save_error": "Kart kaydedilemedi. Tekrar dene.",
+          "expires": "Son kullanma",
+          "error_number": "Kart numarasını gir",
+          "error_number_invalid": "Kart numarasını kontrol et",
+          "error_holder": "Kart üzerindeki adı gir",
+          "error_expiry": "Son kullanma tarihini gir",
+          "error_expiry_invalid": "Geçerli ve ileri bir tarih gir",
+          "error_cvv": "CVV gir",
+          "error_cvv_invalid": "CVV'yi kontrol et",
+          "error_too_long": "Bu alan çok uzun",
+          "add": "Kart ekle",
+          "brand_unknown": "Kart"
+        }
+      }
+    }
+  },
+  "type": "registry:item"
+}

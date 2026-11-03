@@ -1,82 +1,139 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
 
-import { useTranslations } from "next-intl";
+import { ChevronRight, SearchIcon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { debounce, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { featureCardClassName } from "@/lib/feature-card";
+import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
 import { CopyButton } from "@/components/copy-button";
+import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { featureMarks } from "@/features/start/constants/feature-tags.constants";
 import {
-  featureCatalog,
-  featureGroups,
+  visibleFeatures,
+  visibleGroups,
   type FeatureGroup,
 } from "@/features/start/data/feature-catalog";
+import {
+  filterPillClassName,
+  filterPillStateClassName,
+} from "@/features/start/helpers/filter-pill";
 import { Link } from "@/i18n/routing";
 
 const PackageIcon = featureMarks.packages.icon;
 
 const badgeClassName = "inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs";
 
-const filterClassName =
-  "inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium text-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring";
+const SEARCH_DEBOUNCE_MS = 300;
 
-function filterStateClassName(active: boolean) {
-  return active ? "border-foreground/40 bg-muted" : "border-border hover:bg-muted/60";
-}
+const catalogParams = {
+  group: parseAsStringLiteral(visibleGroups),
+  q: parseAsString.withDefault(""),
+};
 
-export function StartFeatureCatalog() {
+type CatalogViewProps = {
+  group: FeatureGroup | null;
+  search: string;
+  onGroupChange: (group: FeatureGroup | null) => void;
+  onSearchChange: (search: string) => void;
+};
+
+function CatalogView({ group, search, onGroupChange, onSearchChange }: CatalogViewProps) {
   const t = useTranslations("StartFeatureCatalog");
-  const [group, setGroup] = useState<FeatureGroup | null>(null);
+  const locale = useLocale();
 
-  const features = featureCatalog.filter((feature) => !group || feature.group === group);
+  const query = search.trim().toLocaleLowerCase(locale);
+  const features = visibleFeatures.filter(
+    (feature) =>
+      (!group || feature.group === group) &&
+      [feature.id, t(`names.${feature.id}`), t(`items.${feature.id}`), ...(feature.packages ?? [])]
+        .join(" ")
+        .toLocaleLowerCase(locale)
+        .includes(query),
+  );
 
   return (
     <div className="flex flex-col gap-8">
-      <div role="group" aria-label={t("filterLabel")} className="flex flex-wrap gap-2">
-        <button
-          type="button"
-          aria-pressed={group === null}
-          onClick={() => setGroup(null)}
-          className={cn(filterClassName, filterStateClassName(group === null))}
-        >
-          {t("filterAll")}
-        </button>
-        {featureGroups.map((item) => (
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div role="group" aria-label={t("filterLabel")} className="flex flex-wrap gap-2">
           <button
-            key={item}
             type="button"
-            aria-pressed={group === item}
-            onClick={() => setGroup(item)}
-            className={cn(filterClassName, filterStateClassName(group === item))}
+            aria-pressed={group === null}
+            onClick={() => onGroupChange(null)}
+            className={cn(filterPillClassName, filterPillStateClassName(group === null), "gap-1.5")}
           >
-            {t(`group.${item}`)}
+            {t("filterAll")}
+            <span className="text-xs text-muted-foreground tabular-nums">
+              {visibleFeatures.length}
+            </span>
           </button>
-        ))}
+          {visibleGroups.map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={group === item}
+              onClick={() => onGroupChange(item)}
+              className={cn(
+                filterPillClassName,
+                filterPillStateClassName(group === item),
+                "gap-1.5",
+              )}
+            >
+              {t(`group.${item}`)}
+              <span className="text-xs text-muted-foreground tabular-nums">
+                {visibleFeatures.filter((feature) => feature.group === item).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <div className="relative w-full md:w-64 md:shrink-0">
+          <SearchIcon
+            className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
+          <Input
+            type="search"
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchPlaceholder")}
+            className="pl-9"
+          />
+        </div>
       </div>
+
+      {features.length === 0 ? (
+        <p role="status" className="py-8 text-center text-sm text-muted-foreground">
+          {t("searchEmpty")}
+        </p>
+      ) : null}
 
       <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {features.map((feature) => (
-          <li key={feature.id} className={featureCardClassName}>
+          <li
+            key={feature.id}
+            id={feature.id}
+            className={cn(
+              featureCardClassName,
+              "relative scroll-mt-32 transition-colors",
+              feature.status === "soon" ? "border-dashed" : "hover:bg-accent/30",
+            )}
+          >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="font-mono text-base font-semibold text-foreground">
-                {feature.status === "ready" ? (
-                  <Link
-                    href={`/start/features/${feature.id}`}
-                    className="underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    {feature.id}
-                  </Link>
-                ) : (
-                  feature.id
-                )}
+              <h3 className="text-base font-semibold text-foreground">
+                <Link
+                  href={`/start/features/${feature.id}`}
+                  className="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                >
+                  {t(`names.${feature.id}`)}
+                </Link>
               </h3>
-              <span className="shrink-0 rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
-                {t(`status.${feature.status}`)}
-              </span>
+              <ChevronRight className={featureCardChevronClassName} aria-hidden />
             </div>
             <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
               {t(`items.${feature.id}`)}
@@ -94,7 +151,7 @@ export function StartFeatureCatalog() {
                   );
                 })}
                 {feature.packages ? (
-                  <li className="flex">
+                  <li className="relative z-10 flex">
                     <Popover>
                       <PopoverTrigger
                         aria-label={t("packagesLabel")}
@@ -121,7 +178,7 @@ export function StartFeatureCatalog() {
                   </li>
                 ) : null}
               </ul>
-              <div className="flex min-w-0 items-center justify-between gap-2 rounded-md border border-border py-1 pr-1 pl-3">
+              <div className="relative z-10 flex min-w-0 items-center justify-between gap-2 rounded-md border border-border bg-card py-1 pr-1 pl-3">
                 <code className="min-w-0 truncate font-mono text-xs text-foreground">
                   {`npx virastack add ${feature.id}`}
                 </code>
@@ -137,5 +194,36 @@ export function StartFeatureCatalog() {
         ))}
       </ul>
     </div>
+  );
+}
+
+/** Group and search live in the URL, so a filtered list can be shared and survives going back. */
+function UrlCatalog() {
+  const [{ group, q }, setParams] = useQueryStates(catalogParams);
+
+  return (
+    <CatalogView
+      group={group}
+      search={q}
+      onGroupChange={(value) => setParams({ group: value })}
+      onSearchChange={(value) =>
+        setParams({ q: value || null }, { limitUrlUpdates: debounce(SEARCH_DEBOUNCE_MS) })
+      }
+    />
+  );
+}
+
+export function StartFeatureCatalog() {
+  return (
+    <NuqsAdapter>
+      {/* The fallback is the unfiltered list, so the static HTML still holds every card. */}
+      <Suspense
+        fallback={
+          <CatalogView group={null} search="" onGroupChange={() => {}} onSearchChange={() => {}} />
+        }
+      >
+        <UrlCatalog />
+      </Suspense>
+    </NuqsAdapter>
   );
 }

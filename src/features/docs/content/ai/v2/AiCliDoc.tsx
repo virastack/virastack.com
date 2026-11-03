@@ -7,7 +7,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
 import { Link } from "@/i18n/routing";
 
-const OUTPUT = `ViraStack AI v2.0.0
+const OUTPUT = `ViraStack AI v2.1.0
 Framework: nextjs · Agents: claude, cursor · i18n: yes · Package manager: pnpm
 
   ~ .claude/rules/virastack/architecture.md · updated
@@ -21,7 +21,7 @@ Framework: nextjs · Agents: claude, cursor · i18n: yes · Package manager: pnp
   ~ .virastack/ai.json · updated
 
 2 created · 6 updated · 0 removed · 1 skipped
-ViraStack AI rules are ready.`;
+1 file(s) you changed were kept and may be out of date. Use --force to replace them.`;
 
 const OPTIONS = [
   { flag: "--agent <list>", key: "cliOptionAgent" },

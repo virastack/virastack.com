@@ -15,9 +15,9 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 
 | Product | Install / entry | npm |
 | --- | --- | --- |
-| Start | `npx virastack@latest` | `virastack` (~1.1.0) |
-| AI | `npx @virastack/ai init` | `@virastack/ai` (~2.0.0) |
-| Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.1.0) |
+| Start | `npx virastack@latest` | `virastack` (~2.0.0) |
+| AI | `npx @virastack/ai init` | `@virastack/ai` (~2.1.0) |
+| Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.2.0) |
 | Password | `npm i @virastack/password` | `@virastack/password` (1.1.x) |
 | Address | `npm i @virastack/address` | `@virastack/address` (1.0.x) |
 | Academy | https://virastack.com/academy | free curriculum (not an npm lib) |
@@ -60,7 +60,7 @@ const { phone, card, cvv } = useViraMask(form, {
 return <input {...phone} />
 ```
 
-Presets: `phone`, `iban`, `currency`, `number` (all take `country: "TR"` for the Turkish layout), `card`, `cvv`, `expiry`, `tckn`, `vkn`, `date`. Errors are keys (`tckn.invalid`). With Zod/Valibot: `resolver: maskResolver(masks, zodResolver(schema))`. Server: `parseMasked(masks, formData, schema?)` from `@virastack/mask/server`.
+Presets: `phone`, `iban`, `currency`, `number` (all take `country: "TR"` for the Turkish layout), `card`, `cvv`, `expiry`, `tckn`, `vkn`, `fullName`, `date`. Errors are keys (`tckn.invalid`). With Zod/Valibot: `resolver: maskResolver(masks, zodResolver(schema))`. Server: `parseMasked(masks, formData, schema?)` from `@virastack/mask/server`.
 
 Details: https://virastack.com/mask/llms-full.txt
 

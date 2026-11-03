@@ -5,10 +5,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { siteConfig } from "@/config/site.config";
 
-import { StartFeatureDetailPage } from "@/features/start/components/StartFeatureDetailPage";
-import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/canonical";
 
-const LIVE_FEATURES = ["users"];
+import { StartFeatureDetailPage } from "@/features/start/components/StartFeatureDetailPage";
+import { visibleFeatures } from "@/features/start/data/feature-catalog";
+import { routing } from "@/i18n/routing";
 
 type PageProps = {
   params: Promise<{ locale: string; product: string; feature: string }>;
@@ -18,16 +19,20 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    LIVE_FEATURES.map((feature) => ({ locale, product: "start", feature })),
+    visibleFeatures.map(({ id }) => ({ locale, product: "start", feature: id })),
   );
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale, feature } = await params;
+  const { locale, product, feature } = await params;
+  if (product !== "start" || !visibleFeatures.some(({ id }) => id === feature)) return {};
+
   const t = await getTranslations({ locale, namespace: "StartFeatureCatalog" });
 
   return {
-    title: { absolute: `${feature} · ${t("title")} · ${siteConfig.name} Start` },
+    title: { absolute: `${t(`names.${feature}`)} · ${siteConfig.name} Start` },
+    description: t(`items.${feature}`),
+    alternates: buildAlternates(locale, `/start/features/${feature}`),
   };
 }
 
@@ -35,7 +40,7 @@ export default async function Page({ params }: PageProps) {
   const { locale, product, feature } = await params;
   setRequestLocale(locale);
 
-  if (product !== "start" || !LIVE_FEATURES.includes(feature)) {
+  if (product !== "start" || !visibleFeatures.some(({ id }) => id === feature)) {
     notFound();
   }
 

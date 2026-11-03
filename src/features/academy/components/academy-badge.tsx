@@ -152,6 +152,9 @@ const ZedLogoDark = dynamic(() =>
   import("@/components/ui/svgs/zedLogoDark").then((m) => m.ZedLogoDark),
 );
 const Zod = dynamic(() => import("@/components/ui/svgs/zod").then((m) => m.Zod));
+const Msw = dynamic(() => import("@/components/ui/svgs/msw").then((m) => m.Msw));
+const Nuqs = dynamic(() => import("@/components/ui/svgs/nuqs").then((m) => m.Nuqs));
+const NuqsDark = dynamic(() => import("@/components/ui/svgs/nuqsDark").then((m) => m.NuqsDark));
 const Zustand = dynamic(() => import("@/components/ui/svgs/zustand").then((m) => m.Zustand));
 
 type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
@@ -310,6 +313,10 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
       return <Mdn className={iconClassName} aria-hidden />;
     case "owasp":
       return <Owasp viewBox="0 0 40 40" className={iconClassName} aria-hidden />;
+    case "msw":
+      return <Msw className={iconClassName} aria-hidden />;
+    case "nuqs":
+      return <ThemeIcon light={Nuqs} dark={NuqsDark} className={className} />;
     case "testing-library":
       return <TestingLibrary className={iconClassName} aria-hidden />;
     default:

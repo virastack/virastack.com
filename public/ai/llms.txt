@@ -21,7 +21,7 @@ For the CLI, installed files and rule list inline, prefer [llms-full.txt](https:
 - `.claude/rules/virastack/*.md`: Claude Code rules (`--agent claude`)
 - `.cursor/rules/virastack/*.mdc`: Cursor rules (`--agent cursor`)
 - `.agents/rules/virastack/*.md`: plain Markdown rules for any agent (`--agent none`)
-- `AGENTS.md`: managed `virastack-ai` block with persona, commands and rule map
+- `AGENTS.md`: managed `virastack-ai` block with commands, precedence and rule map
 - `CLAUDE.md`: gets an `@AGENTS.md` import line if missing
 - `.virastack/ai.json`: manifest of installed files with hashes
 

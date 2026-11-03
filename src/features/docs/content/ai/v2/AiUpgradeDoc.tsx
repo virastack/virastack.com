@@ -39,7 +39,18 @@ export function AiUpgradeDoc() {
     <>
       <DocsPageHeader title={t("upgradeTitle")} description={t("upgradeHeaderDesc")} />
       <DocsProse>
-        <h2 id="what-changed">{t("upgradeHeadingChanged")}</h2>
+        <h2 id="v2-1">{t("upgradeV21Heading")}</h2>
+        <p>{t.rich("upgradeV21P", docsRichTags)}</p>
+        <CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+        <ul>
+          <li>{t.rich("upgradeV21Rules", docsRichTags)}</li>
+          <li>{t.rich("upgradeV21Barrels", docsRichTags)}</li>
+          <li>{t.rich("upgradeV21Messages", docsRichTags)}</li>
+          <li>{t.rich("upgradeV21Router", docsRichTags)}</li>
+        </ul>
+
+        <h2 id="v1-to-v2">{t("upgradeHeadingV1")}</h2>
+        <h3 id="what-changed">{t("upgradeHeadingChanged")}</h3>
         <ul>
           <li>
             {t.rich("upgradeChangedLocation", {
@@ -54,7 +65,7 @@ export function AiUpgradeDoc() {
           <li>{t.rich("upgradeChangedApiError", docsRichTags)}</li>
         </ul>
 
-        <h2 id="renamed-rules">{t("upgradeHeadingRenamed")}</h2>
+        <h3 id="renamed-rules">{t("upgradeHeadingRenamed")}</h3>
         <div className="overflow-x-auto rounded-lg border border-border">
           <table>
             <thead>
@@ -99,7 +110,7 @@ export function AiUpgradeDoc() {
           })}
         </p>
 
-        <h2 id="command">{t("upgradeHeadingCommand")}</h2>
+        <h3 id="command">{t("upgradeHeadingCommand")}</h3>
         <p>{t("upgradeCommandP")}</p>
         <CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
         <ul>
@@ -113,7 +124,7 @@ export function AiUpgradeDoc() {
         </pre>
         <p>{t.rich("upgradeCommandDryRun", docsRichTags)}</p>
 
-        <h2 id="checklist">{t("upgradeHeadingChecklist")}</h2>
+        <h3 id="checklist">{t("upgradeHeadingChecklist")}</h3>
         <ul>
           <li>
             {t.rich("upgradeChecklistKept", {
@@ -127,7 +138,7 @@ export function AiUpgradeDoc() {
           <li>{t.rich("upgradeChecklistCommit", docsRichTags)}</li>
         </ul>
 
-        <h2 id="rollback">{t("upgradeHeadingRollback")}</h2>
+        <h3 id="rollback">{t("upgradeHeadingRollback")}</h3>
         <p>{t("upgradeRollbackP")}</p>
         <CodeBlockCommand {...convertNpmCommand("npx @virastack/ai remove")} />
         <CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@1 init")} />

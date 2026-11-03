@@ -1,23 +1,32 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { AddUserDialog } from "@/features/start/demos/users/components/AddUserDialog";
-import { UsersMessage } from "@/features/start/demos/users/components/UsersMessage";
 import { UsersPagination } from "@/features/start/demos/users/components/UsersPagination";
 import { UsersTable } from "@/features/start/demos/users/components/UsersTable";
 import { UsersTableSkeleton } from "@/features/start/demos/users/components/UsersTableSkeleton";
 import { USERS_PAGE_SIZE } from "@/features/start/demos/users/constants/users.constants";
-import { getErrorMessage } from "@/features/start/demos/users/helpers/get-error-message";
+import { useErrorMessage } from "@/features/start/demos/users/hooks/use-error-message";
 import { useUsers } from "@/features/start/demos/users/hooks/use-users";
 import { useUsersParams } from "@/features/start/demos/users/hooks/use-users-params";
+import { Button } from "@/features/start/demos/users/ui/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/features/start/demos/users/ui/empty";
+import { Input } from "@/features/start/demos/users/ui/input";
+import { Label } from "@/features/start/demos/users/ui/label";
 
 export function UsersDirectory() {
+  const t = useTranslations("Users");
+  const getErrorMessage = useErrorMessage();
   const { page, q, debouncedQ, setPage, setSearch, clearSearch } = useUsersParams();
   const users = useUsers({ page, q: debouncedQ });
 
@@ -26,7 +35,7 @@ export function UsersDirectory() {
       <div className="flex items-center gap-2">
         <div className="relative min-w-0 flex-1">
           <Label htmlFor="users-search" className="sr-only">
-            Search users
+            {t("search_label")}
           </Label>
           <SearchIcon
             aria-hidden
@@ -35,7 +44,7 @@ export function UsersDirectory() {
           <Input
             id="users-search"
             type="search"
-            placeholder="Search users"
+            placeholder={t("search_label")}
             className="pl-9"
             value={q}
             onChange={(event) => setSearch(event.target.value)}
@@ -47,39 +56,51 @@ export function UsersDirectory() {
       {users.isPending ? (
         <UsersTableSkeleton />
       ) : users.isError ? (
-        <UsersMessage
-          role="alert"
-          title="Could not load users"
-          description={getErrorMessage(users.error)}
-          action={
+        <Empty role="alert" className="border">
+          <EmptyHeader>
+            <EmptyTitle>{t("load_error_title")}</EmptyTitle>
+            <EmptyDescription>{getErrorMessage(users.error)}</EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
             <Button variant="outline" disabled={users.isFetching} onClick={() => users.refetch()}>
-              {users.isFetching ? "Retrying…" : "Retry"}
+              {users.isFetching ? t("retrying") : t("retry")}
             </Button>
-          }
-        />
+          </EmptyContent>
+        </Empty>
       ) : users.data.users.length === 0 ? (
         users.data.total > 0 ? (
-          <UsersMessage
-            title="This page is empty"
-            description={`The results end before page ${page}.`}
-            action={
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>{t("empty_page_title")}</EmptyTitle>
+              <EmptyDescription>{t("empty_page_description", { page })}</EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
               <Button variant="outline" onClick={() => setPage(1)}>
-                Go to the first page
+                {t("go_to_first_page")}
               </Button>
-            }
-          />
+            </EmptyContent>
+          </Empty>
         ) : debouncedQ.trim() ? (
-          <UsersMessage
-            title="No users found"
-            description={`Nothing matches “${debouncedQ.trim()}”.`}
-            action={
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>{t("no_results_title")}</EmptyTitle>
+              <EmptyDescription>
+                {t("no_results_description", { query: debouncedQ.trim() })}
+              </EmptyDescription>
+            </EmptyHeader>
+            <EmptyContent>
               <Button variant="outline" onClick={() => clearSearch()}>
-                Clear search
+                {t("clear_search")}
               </Button>
-            }
-          />
+            </EmptyContent>
+          </Empty>
         ) : (
-          <UsersMessage title="No users yet" description="The API returned an empty list." />
+          <Empty className="border">
+            <EmptyHeader>
+              <EmptyTitle>{t("no_users_title")}</EmptyTitle>
+              <EmptyDescription>{t("no_users_description")}</EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         )
       ) : (
         <div

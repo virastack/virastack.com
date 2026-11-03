@@ -1,5 +1,5 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { UsersTableSkeleton } from "@/features/start/demos/users/components/UsersTableSkeleton";
+import { Skeleton } from "@/features/start/demos/users/ui/skeleton";
 
 export function UsersDirectorySkeleton() {
   return (

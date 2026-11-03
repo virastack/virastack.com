@@ -35,7 +35,7 @@ const presetRows: Row[] = [
   ["numeric", "number"],
   [
     "email, url, username, alpha, password, text, zipCode",
-    "Kaldırıldı; şemanda doğrula ya da definePreset",
+    "Kaldırıldı; şemanda doğrula ya da definePreset. Kişi adları için alpha yerine fullName (2.2+)",
   ],
 ];
 

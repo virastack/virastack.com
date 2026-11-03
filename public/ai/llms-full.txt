@@ -36,7 +36,7 @@ Product: https://virastack.com/ai; Docs: https://virastack.com/ai/docs; Index: h
 | `CLAUDE.md` | `--agent claude` | Gets an `@AGENTS.md` import line if missing |
 | `.cursor/rules/virastack/*.mdc` | `--agent cursor` | Cursor rules, loaded by file path |
 | `.agents/rules/virastack/*.md` | `--agent none` | Plain Markdown rules for any agent |
-| `AGENTS.md` | always | Managed `virastack-ai` block: persona, commands, rule map |
+| `AGENTS.md` | always | Managed `virastack-ai` block: commands, precedence, rule map |
 | `.virastack/ai.json` | always | Manifest of installed files with hashes. Commit it |
 
 Content outside the managed `AGENTS.md` block is never touched.
@@ -49,16 +49,16 @@ Content outside the managed `AGENTS.md` block is never touched.
 | `architecture` | Always: folder tree, feature boundaries, imports |
 | `react` | `src/**/*.tsx`, hooks |
 | `typescript` | `src/**/*.{ts,tsx}` |
-| `ui` | `src/components/**`, feature components |
+| `ui` | `src/components/**`, feature components, `src/styles/` |
 | `forms` | `*Form*.tsx`, `schemas/` |
 | `api` | `src/lib/api.ts`, feature `api/` |
 | `server-state` | feature `api/` and `hooks/`, `src/providers/`, `src/lib/query-client.ts` |
 | `client-state` | `stores/` |
-| `i18n` | `messages/`, `src/i18n/`, components (only with `next-intl` or Paraglide) |
+| `i18n` | `src/messages/`, `src/i18n/`, routes, components (only with `next-intl` or Paraglide) |
 | `performance` | routes and components |
 | `testing` | `*.test.{ts,tsx}`, `src/test/` |
-| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts` (Next.js only) |
-| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts` (TanStack Start only) |
+| `nextjs` | `src/app/**`, `src/proxy.ts`, `next.config.ts`, feature `actions/` (Next.js only) |
+| `tanstack-start` | `src/routes/**`, `src/router.tsx`, `src/start.ts`, feature `api/` (TanStack Start only) |
 
 ## Supported tools
 

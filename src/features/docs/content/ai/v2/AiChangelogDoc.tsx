@@ -13,6 +13,25 @@ export function AiChangelogDoc() {
     <>
       <DocsPageHeader title={t("changelogTitle")} description={t("changelogHeaderDesc")} />
       <DocsProse>
+        <h2 id="v2-1-0">{t("changelogHeadingV21")}</h2>
+
+        <h3>{t("changelogChanged")}</h3>
+        <ul>
+          <li>{t.rich("changelogV21Agents", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Barrels", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Corrections", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Loading", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Cursor", docsRichTags)}</li>
+        </ul>
+
+        <h3>{t("changelogFixed")}</h3>
+        <ul>
+          <li>{t.rich("changelogV21Manifest", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Markers", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Prompt", docsRichTags)}</li>
+          <li>{t.rich("changelogV21Detect", docsRichTags)}</li>
+        </ul>
+
         <h2 id="v2-0-0">{t("changelogHeadingV2")}</h2>
 
         <h3>{t("changelogBreaking")}</h3>

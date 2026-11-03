@@ -52,6 +52,13 @@ function CustomizationPreview({ preview }: { preview: MaskCustomizationPreview }
           placeholder="TR00 0000 0000 0000 0000 0000 00"
         />
       );
+    case "fullNameCard":
+      return (
+        <MaskFieldDemo
+          config={{ preset: "fullName", autoComplete: "cc-name" }}
+          placeholder="Ömer Gülçiçek"
+        />
+      );
     case "currencyTR":
       return (
         <MaskFieldDemo

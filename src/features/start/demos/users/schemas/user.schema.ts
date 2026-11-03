@@ -1,3 +1,4 @@
+import type { useTranslations } from "next-intl";
 import { z } from "zod";
 
 export const userRoleSchema = z.enum(["admin", "moderator", "user"]);
@@ -8,10 +9,8 @@ export const userSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   username: z.string(),
-  email: z.email(),
-  image: z.string().optional(),
   role: userRoleSchema.default("user"),
-  // A new user comes back from `POST /users/add` without a company.
+  // The list can hold people without a company.
   company: z.object({ title: z.string(), department: z.string() }).optional(),
 });
 
@@ -22,13 +21,28 @@ export const usersPageSchema = z.object({
   limit: z.number(),
 });
 
-export const addUserSchema = z.object({
-  firstName: z.string().trim().min(1, "Enter a first name").max(50, "Use 50 characters or fewer"),
-  lastName: z.string().trim().min(1, "Enter a last name").max(50, "Use 50 characters or fewer"),
-  email: z.email("Enter a valid email address"),
-});
+/** A factory, so validation errors come in the visitor's language. */
+export function createUserFormSchema(t: ReturnType<typeof useTranslations<"Users">>) {
+  const tooLong = t("validation_max_length");
+
+  return z.object({
+    firstName: z.string().trim().min(1, t("validation_first_name")).max(50, tooLong),
+    lastName: z.string().trim().min(1, t("validation_last_name")).max(50, tooLong),
+    username: z
+      .string()
+      .trim()
+      .min(1, t("validation_username"))
+      .max(50, tooLong)
+      .regex(/^[\w.-]+$/, t("validation_username_format")),
+    title: z.string().trim().min(1, t("validation_title")).max(50, tooLong),
+    department: z.string().trim().min(1, t("validation_department")).max(50, tooLong),
+    role: userRoleSchema,
+  });
+}
+
+export const deletedUserSchema = z.object({ id: z.number() });
 
 export type User = z.infer<typeof userSchema>;
 export type UserRole = z.infer<typeof userRoleSchema>;
 export type UsersPage = z.infer<typeof usersPageSchema>;
-export type AddUserInput = z.infer<typeof addUserSchema>;
+export type UserFormInput = z.infer<ReturnType<typeof createUserFormSchema>>;

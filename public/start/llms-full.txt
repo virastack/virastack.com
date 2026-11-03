@@ -1,6 +1,6 @@
 # ViraStack Start (full)
 
-> `virastack` CLI (1.1), scaffold production-ready Next.js or TanStack Start apps with a feature-based layout, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
+> `virastack` CLI (2.0), scaffold production-ready Next.js or TanStack Start apps with a feature-based layout, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
 
 ## Install / run
 
@@ -16,7 +16,8 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | Command | Purpose |
 | --- | --- |
 | `init [name]` | Create a new project (interactive unless `--yes`) |
-| `add <tool>` | Add a ViraStack tool into an existing project (`mask`, `password`, `address`, `ai`) |
+| `add <name>` | Add a ViraStack tool (`mask`, `password`, `address`, `ai`) or a module (`users`, `checkout-address`, `checkout-card`) to an existing project |
+| `remove <module>` | Remove a module. Its packages stay. `--yes` also deletes files you changed |
 | `add ai --agent <list>` | Add AI rules for the given coding tools |
 
 ## Flags
@@ -37,7 +38,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 
 ## Interactive questions
 
-Order: template, AI coding tools (Claude Code, Cursor; both selected by default), i18n, extra tools (Mask, Password).
+Order: template, AI coding tools (Claude Code, Cursor; both selected by default), i18n, extra tools (Mask, Password, Address).
 
 ## Setup order
 
@@ -62,46 +63,53 @@ Four variants:
 
 1. `templates/nextjs`: Next.js 16 App Router, React 19, no i18n by default
 2. `templates/tanstack`: TanStack Start + Router, React 19, no i18n by default
-3. `templates-i18n/nextjs`: Next.js + `next-intl`, messages in root `messages/`
-4. `templates-i18n/tanstack`: TanStack Start + Paraglide
+3. `templates-i18n/nextjs`: Next.js + `next-intl`, messages in `src/messages/`
+4. `templates-i18n/tanstack`: TanStack Start + Paraglide, messages in `src/messages/`
 
 ### Shared stack (typical)
 
-- TypeScript 5 strict + `noUncheckedIndexedAccess`, Node `>=20.9`
+- TypeScript strict + `noUncheckedIndexedAccess` (`tsc` on TypeScript 7, `typescript-eslint` and `next build` on TypeScript 6), Node `^22.22.2 || ^24.15.0 || >=26.0.0`
 - Tailwind CSS 4 design tokens
-- UI: Base UI (unstyled), Motion, Sonner, Lucide, `next-themes`, CVA
+- UI: Base UI (unstyled), shadcn `components.json`, Sonner, Lucide, `next-themes`, CVA
 - Server state: TanStack Query 5
 - Client state: Zustand
-- URL state: `nuqs`
+- URL state: `nuqs` on Next.js, `validateSearch` on TanStack Start
 - Forms: React Hook Form + Zod
-- API: native `fetch` wrapper → typed `ApiError` (`message`, `status`, `data`)
+- API: `createApi({ baseUrl, getHeaders })` over native `fetch`, `api.get(path, { schema })` validates with Zod, `ApiError.kind` is `http`, `network`, `timeout` or `parse`
 - Env: Zod schema in `src/env.ts` (no `@t3-oss/env-nextjs` required)
 - Tests: Vitest, Testing Library, jsdom, MSW
-- Tooling: ESLint 9, Prettier 3, Husky, Knip, Commitlint, Changesets
+- Tooling: ESLint 10, Prettier 3, Husky, Knip, Commitlint
 - Agent: ViraStack AI v2 writes `.claude/rules/virastack/`, `.cursor/rules/virastack/`, an `AGENTS.md` block and `.virastack/ai.json` (see https://virastack.com/ai/llms-full.txt)
 - Intentionally omitted by default: Auth, DB/ORM, CSP
 
 ### Tests
 
 - `vitest.config.ts` and `src/test/`: jsdom setup, a `renderWithProviders` helper and an MSW server that fails on unhandled requests
-- Example tests in `features/landing`: a helper, an API function with MSW and a component
+- Example test in `features/home`: a helper. `virastack add users` adds a helper, an API function with MSW and a component
 
 ### Architecture for agents
 
 - Feature-based: default work under `src/features/[feature]/`
 - No cross-feature imports; promote to `src/` only when a second feature needs it
 - Shared constants live in `src/constants/`
-- Prefer aliases: `@/ui`, `@/hooks`, `@/schemas`, `@/layout`
-- Scaffold includes deletable `features/landing` demo, remove when building the real app
+- One alias: `@/*`. No barrels: import from the defining file. Shared folders must not import features or routes
+- Scaffold includes a deletable start page in `features/home`, remove it when building the real app
 - Search codebase for `FIXME:` after scaffold (site config, remote images, etc.)
 
 ### Formatting
 
 `.prettierignore` lists the AI rule files and skills, so `pnpm lint:ci` does not reformat files that ViraStack AI tracks by hash.
 
-### Template-local llms.txt
+## Modules
 
-Each generated app ships `public/llms.txt` describing that edition’s file tree (Next vs TanStack). Prefer that file inside a scaffolded repo.
+`npx virastack@latest add <module>` installs a working feature into `src/features/<module>` of a project created with Start 2.0 or newer: `users`, `checkout-address`, `checkout-card`. Modules run on a dummy API or dummy data; connecting a real API is the installer's work.
+
+- It adds missing packages and `components/ui` components, and merges messages into `src/messages` in i18n templates. If a file or message already exists, nothing changes.
+- It creates no page. Render the component from your own route. Each module has steps at `https://virastack.com/start/features/<module>`.
+- Features cannot import each other, so a page such as `/checkout` renders `CheckoutAddress` and `CheckoutCard` and reads `useCheckoutAddress` and `useCheckoutCard`.
+- `npx virastack@latest remove <module>` deletes its files, empty folders and messages. Packages and your page stay.
+
+Docs: https://virastack.com/start/docs/modules
 
 ## Scripts
 

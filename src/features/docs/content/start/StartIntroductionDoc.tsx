@@ -38,6 +38,7 @@ export function StartIntroductionDoc() {
         </p>
         <p>
           {t.rich("introductionP2", {
+            modules: (chunks) => <Link href="/start/docs/modules">{chunks}</Link>,
             mask: (chunks) => (
               <GuideProductMark id="mask" linked={false}>
                 {chunks}

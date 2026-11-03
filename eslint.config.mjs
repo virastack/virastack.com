@@ -25,6 +25,8 @@ const eslintConfig = defineConfig([
     ".content/**",
     // Third-party files copied from node_modules (see scripts/vendor-maplibre-worker.mjs).
     "public/vendor/**",
+    // Copied from the Start templates by `npm run sync:preview` there.
+    "src/features/start/demos/users/ui/**",
   ]),
 ]);
 

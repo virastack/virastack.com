@@ -43,6 +43,12 @@ import {
   passwordDocsSlugs,
 } from "@/features/docs/config/password-docs.config";
 import {
+  getStartDocsV1Nav,
+  getStartDocsV1Page,
+  isStartDocsV1Slug,
+  startDocsV1Slugs,
+} from "@/features/docs/config/start-docs-v1.config";
+import {
   getStartDocsNav,
   getStartDocsPage,
   isStartDocsSlug,
@@ -62,6 +68,7 @@ type DocsTranslate = (key: string) => string;
 
 type DocsMessageNamespace =
   | "DocsStart"
+  | "DocsStartV1"
   | "DocsAi"
   | "DocsAiV1"
   | "DocsMask"
@@ -108,8 +115,20 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getNav: getStartDocsNav,
     getPage: getStartDocsPage,
     isSlug: isStartDocsSlug,
-    versions: [{ id: "v1", label: "v1.1", latest: true }],
-    archives: {},
+    versions: [
+      { id: "v2", label: "v2.0", latest: true },
+      { id: "v1", label: "v1.2", latest: false },
+    ],
+    archives: {
+      v1: {
+        indexHref: "/start/docs/v1",
+        messageNamespace: "DocsStartV1",
+        slugs: startDocsV1Slugs,
+        getNav: getStartDocsV1Nav,
+        getPage: getStartDocsV1Page,
+        isSlug: isStartDocsV1Slug,
+      },
+    },
   },
   ai: {
     id: "ai",
@@ -121,7 +140,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getPage: getAiDocsPage,
     isSlug: isAiDocsSlug,
     versions: [
-      { id: "v2", label: "v2.0", latest: true },
+      { id: "v2", label: "v2.1", latest: true },
       { id: "v1", label: "v1.3", latest: false },
     ],
     archives: {
@@ -145,7 +164,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     getPage: getMaskDocsPage,
     isSlug: isMaskDocsSlug,
     versions: [
-      { id: "v2", label: "v2.1", latest: true },
+      { id: "v2", label: "v2.2", latest: true },
       { id: "v1", label: "v1.1", latest: false },
     ],
     archives: {

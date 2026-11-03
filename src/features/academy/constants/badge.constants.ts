@@ -37,6 +37,8 @@ export const ACADEMY_LIBRARY_BADGES = [
   "javascript",
   "mdn",
   "testing-library",
+  "msw",
+  "nuqs",
   "owasp",
 ] as const;
 
@@ -136,6 +138,8 @@ export const ACADEMY_BADGE_LABELS: Record<string, string> = {
   javascript: "JavaScript",
   mdn: "MDN",
   "testing-library": "Testing Library",
+  msw: "MSW",
+  nuqs: "nuqs",
   owasp: "OWASP",
   claude: "Claude",
   gpt: "GPT",

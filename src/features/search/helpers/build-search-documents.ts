@@ -3,6 +3,7 @@ import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
 import { DOCS_PRODUCT_IDS, docsProducts } from "@/features/docs/config/docs-products";
+import { searchSections } from "@/features/search/constants/search-sections.constants";
 import {
   collectByKeyPrefixes,
   exampleIdToKeyPrefix,
@@ -11,7 +12,7 @@ import {
   kebabToCamel,
 } from "@/features/search/helpers/message-utils";
 import { stripRichText } from "@/features/search/helpers/strip-rich-text";
-import type { SearchDocument } from "@/features/search/types/search.types";
+import type { SearchDocument, SearchSectionId } from "@/features/search/types/search.types";
 
 type Translate = (key: string) => string;
 
@@ -67,7 +68,7 @@ function buildLandingDocuments(
 
     return {
       id: `${product.id}:landing`,
-      productId: product.id,
+      sectionId: product.id,
       href: product.href,
       title: `${siteConfig.name} ${name}`,
       description,
@@ -89,7 +90,7 @@ function buildGuidePlayDocument(
 
   return {
     id: "guide:play",
-    productId: "guide",
+    sectionId: "guide",
     href: "/guide/play",
     title: `${siteConfig.name} ${name} · Play`,
     description: stripRichText(guideNs.learnTitle ?? ""),
@@ -120,7 +121,7 @@ function buildDocsDocuments(messages: Record<string, unknown>): SearchDocument[]
 
       documents.push({
         id: `${productId}:docs:${slug}`,
-        productId,
+        sectionId: productId,
         href: page.slug === "introduction" ? config.indexHref : `${config.indexHref}/${page.slug}`,
         title: page.title,
         description: page.description,
@@ -133,6 +134,48 @@ function buildDocsDocuments(messages: Record<string, unknown>): SearchDocument[]
   return documents;
 }
 
+/** Academy's own pages, from messages. Tracks and lessons arrive separately from the API. */
+function buildAcademyPageDocuments(
+  messages: Record<string, unknown>,
+  tNav: Translate,
+): SearchDocument[] {
+  const namespace = messages.Academy;
+  if (!isStringRecord(namespace)) return [];
+
+  const name = tNav("academyName");
+  const description = namespace.description ?? "";
+
+  return [
+    {
+      id: "academy:landing",
+      sectionId: "academy",
+      href: "/academy",
+      title: `${siteConfig.name} ${name}`,
+      description,
+      body: "",
+      kind: "landing",
+    },
+    {
+      id: "academy:sources",
+      sectionId: "academy",
+      href: "/academy/sources",
+      title: namespace.sourcesTitle ?? "",
+      description: stripRichText(namespace.sourcesDescription ?? ""),
+      body: collectByKeyPrefixes(namespace, ["sources"]),
+      kind: "landing",
+    },
+    {
+      id: "academy:contribute",
+      sectionId: "academy",
+      href: "/academy/contribute",
+      title: namespace.contributeTitle ?? "",
+      description: stripRichText(namespace.contributeDescription ?? ""),
+      body: collectByKeyPrefixes(namespace, ["contribute"]),
+      kind: "landing",
+    },
+  ];
+}
+
 export function buildSearchDocuments(
   messages: Record<string, unknown>,
   tProducts: Translate,
@@ -141,19 +184,20 @@ export function buildSearchDocuments(
   const landings = buildLandingDocuments(messages, tProducts, tNav);
   const docs = buildDocsDocuments(messages);
   const guidePlay = buildGuidePlayDocument(messages, tNav);
+  const academyPages = buildAcademyPageDocuments(messages, tNav);
 
-  return guidePlay ? [...landings, ...docs, guidePlay] : [...landings, ...docs];
+  return [...landings, ...docs, ...(guidePlay ? [guidePlay] : []), ...academyPages];
 }
 
 export function filterSearchDocuments(
   documents: SearchDocument[],
   query: string,
-  productFilter: ReadonlySet<ProductId>,
+  sectionFilter: ReadonlySet<SearchSectionId>,
 ): SearchDocument[] {
   const filtered =
-    productFilter.size === 0
+    sectionFilter.size === 0
       ? documents
-      : documents.filter((doc) => productFilter.has(doc.productId));
+      : documents.filter((doc) => sectionFilter.has(doc.sectionId));
 
   const normalized = query.trim().toLowerCase();
   if (!normalized) return filtered;
@@ -166,24 +210,19 @@ export function filterSearchDocuments(
   });
 }
 
-export function groupSearchDocumentsByProduct(
+export function groupSearchDocumentsBySection(
   documents: SearchDocument[],
-): Array<{ productId: ProductId; items: SearchDocument[] }> {
-  const order = products.map((product) => product.id);
-  const map = new Map<ProductId, SearchDocument[]>();
-
-  for (const productId of order) {
-    map.set(productId, []);
-  }
+): Array<{ sectionId: SearchSectionId; items: SearchDocument[] }> {
+  const map = new Map<SearchSectionId, SearchDocument[]>();
 
   for (const doc of documents) {
-    map.get(doc.productId)?.push(doc);
+    map.set(doc.sectionId, [...(map.get(doc.sectionId) ?? []), doc]);
   }
 
-  return order
-    .map((productId) => ({
-      productId,
-      items: map.get(productId) ?? [],
+  return searchSections
+    .map((section) => ({
+      sectionId: section.id,
+      items: map.get(section.id) ?? [],
     }))
     .filter((group) => group.items.length > 0);
 }

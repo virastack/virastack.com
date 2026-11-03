@@ -3,11 +3,9 @@
 import { useMemo, useState } from "react";
 
 import { FileTextIcon } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
+import { useLocale, useMessages, useTranslations } from "next-intl";
 
-import type { ProductId } from "@/types/product.types";
 import { productIcons } from "@/config/product-icons.config";
-import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
@@ -21,13 +19,27 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { productNameKeys } from "@/features/search/constants/product-name-keys.constants";
+import {
+  searchFilterSections,
+  searchSections,
+  sectionNameKeys,
+} from "@/features/search/constants/search-sections.constants";
 import {
   buildSearchDocuments,
   filterSearchDocuments,
-  groupSearchDocumentsByProduct,
+  groupSearchDocumentsBySection,
 } from "@/features/search/helpers/build-search-documents";
+import { useAcademySearchDocuments } from "@/features/search/hooks/use-academy-search-documents";
+import type { SearchKind, SearchSectionId } from "@/features/search/types/search.types";
 import { useRouter } from "@/i18n/routing";
+
+const kindLabelKeys = {
+  landing: "kindLanding",
+  docs: "kindDocs",
+  track: "kindTrack",
+  lesson: "kindLesson",
+  project: "kindProject",
+} as const satisfies Record<SearchKind, string>;
 
 type SiteSearchDialogProps = {
   open: boolean;
@@ -43,12 +55,14 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
   const t = useTranslations("Search");
   const tNav = useTranslations("Navigation");
   const tProducts = useTranslations("Products");
+  const locale = useLocale();
   const messages = useMessages() as Record<string, unknown>;
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [productFilter, setProductFilter] = useState<Set<ProductId>>(() => new Set());
+  const [sectionFilter, setSectionFilter] = useState<Set<SearchSectionId>>(() => new Set());
+  const academyDocuments = useAcademySearchDocuments(locale);
 
-  const documents = useMemo(
+  const staticDocuments = useMemo(
     () =>
       buildSearchDocuments(
         messages,
@@ -59,19 +73,19 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
   );
 
   const results = useMemo(
-    () => filterSearchDocuments(documents, query, productFilter),
-    [documents, productFilter, query],
+    () => filterSearchDocuments([...staticDocuments, ...academyDocuments], query, sectionFilter),
+    [academyDocuments, query, sectionFilter, staticDocuments],
   );
 
-  const groups = useMemo(() => groupSearchDocumentsByProduct(results), [results]);
+  const groups = useMemo(() => groupSearchDocumentsBySection(results), [results]);
 
-  const toggleProduct = (productId: ProductId) => {
-    setProductFilter((current) => {
+  const toggleSection = (sectionId: SearchSectionId) => {
+    setSectionFilter((current) => {
       const next = new Set(current);
-      if (next.has(productId)) {
-        next.delete(productId);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
       } else {
-        next.add(productId);
+        next.add(sectionId);
       }
       return next;
     });
@@ -98,26 +112,26 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
           <span className="mr-1 hidden text-xs text-muted-foreground sm:inline">
             {t("filterLabel")}
           </span>
-          {products.map((product) => {
-            const active = productFilter.has(product.id);
-            const Icon = productIcons[product.id];
+          {searchFilterSections.map((section) => {
+            const active = sectionFilter.has(section.id);
+            const Icon = productIcons[section.id];
 
             return (
               <button
-                key={product.id}
+                key={section.id}
                 type="button"
-                onClick={() => toggleProduct(product.id)}
+                onClick={() => toggleSection(section.id)}
                 aria-pressed={active}
                 className={cn(
                   "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs transition-colors",
                   active
                     ? "border-foreground/20 bg-muted text-foreground"
-                    : "border-transparent bg-transparent text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                    : "border-transparent bg-transparent text-foreground hover:bg-muted/60",
                 )}
               >
-                <Icon className={cn("size-3", product.colorClass)} aria-hidden />
-                <span className={cn("font-bold", active && product.colorClass)}>
-                  {tNav(productNameKeys[product.id])}
+                <Icon className={cn("size-3", section.colorClass)} aria-hidden />
+                <span className={cn("font-bold", active && section.colorClass)}>
+                  {tNav(sectionNameKeys[section.id])}
                 </span>
               </button>
             );
@@ -128,17 +142,18 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
           <CommandEmpty>{t("empty")}</CommandEmpty>
 
           {groups.map((group) => {
-            const product = products.find((item) => item.id === group.productId);
-            if (!product) return null;
+            const section = searchSections.find((item) => item.id === group.sectionId);
+            if (!section) return null;
 
             return (
               <CommandGroup
-                key={group.productId}
-                heading={`${siteConfig.name} ${tNav(productNameKeys[group.productId])}`}
+                key={group.sectionId}
+                heading={`${siteConfig.name} ${tNav(sectionNameKeys[group.sectionId])}`}
               >
                 {group.items.map((doc) => {
-                  const ProductIcon = productIcons[doc.productId];
-                  const ItemIcon = doc.kind === "landing" ? ProductIcon : FileTextIcon;
+                  const SectionIcon = productIcons[doc.sectionId];
+                  const ItemIcon =
+                    doc.kind === "landing" || doc.kind === "track" ? SectionIcon : FileTextIcon;
 
                   return (
                     <CommandItem
@@ -149,7 +164,7 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
                         router.push(doc.href);
                       }}
                     >
-                      <ItemIcon className={cn("size-4", product.colorClass)} aria-hidden />
+                      <ItemIcon className={cn("size-4", section.colorClass)} aria-hidden />
                       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                         <span className="truncate font-medium">{doc.title}</span>
                         {doc.description ? (
@@ -159,7 +174,7 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
                         ) : null}
                       </span>
                       <span className="shrink-0 text-[10px] tracking-wide text-muted-foreground uppercase">
-                        {doc.kind === "landing" ? t("kindLanding") : t("kindDocs")}
+                        {t(kindLabelKeys[doc.kind])}
                       </span>
                     </CommandItem>
                   );

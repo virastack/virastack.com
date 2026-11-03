@@ -30,8 +30,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0(react@19.3.1)
       '@virastack/mask':
-        specifier: 2.1.0
-        version: 2.1.0(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)
+        specifier: 2.2.0
+        version: 2.2.0(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)
       '@virastack/mask-v1':
         specifier: npm:@virastack/mask@1.1.0
         version: '@virastack/mask@1.1.0(react-dom@19.3.1(react@19.3.1))(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)'
@@ -2334,8 +2334,8 @@ packages:
       react-dom: '>=18.2.0'
       react-hook-form: '>=7'
 
-  '@virastack/mask@2.1.0':
-    resolution: {integrity: sha512-SA8KPyvELUvLfYO3jPNuvQ0wV92NT9AaizpWe3YSujEvBekvxzheUVcV0C9aiagz/7quYfif3zpGQHtmc/qg1Q==}
+  '@virastack/mask@2.2.0':
+    resolution: {integrity: sha512-JVzaPa0anaSZGgNYG4t4BFy6UFTkwcPG2Ur3gxAhQRmsMvO5f97408zUK61RAhiZRXPC0YNU3WxIhcW5Fu68vw==}
     engines: {node: '>=20'}
     peerDependencies:
       react: '>=18.2.0'
@@ -7516,7 +7516,7 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
       react-hook-form: 7.83.0(react@19.3.1)
 
-  '@virastack/mask@2.1.0(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)':
+  '@virastack/mask@2.2.0(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)':
     dependencies:
       react: 19.3.1
       react-hook-form: 7.83.0(react@19.3.1)

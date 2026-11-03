@@ -40,7 +40,7 @@ function DocsProductContent({
 }) {
   switch (product) {
     case "start":
-      return <StartDocsPage slug={slug} />;
+      return <StartDocsPage slug={slug} versionId={versionId} />;
     case "ai":
       return <AiDocsPage slug={slug} versionId={versionId} />;
     case "mask":

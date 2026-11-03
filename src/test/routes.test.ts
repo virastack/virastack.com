@@ -25,6 +25,7 @@ const UNKNOWN = [
   "/academy/nope-track",
   "/academy/react/nope-lesson",
   "/a/b/c/d",
+  "/api/search/academy/nope",
 ];
 
 const PAGES = [
@@ -50,6 +51,8 @@ const PAGES = [
   "/academy",
   "/tr/academy",
   "/academy/react",
+  "/api/search/academy/en",
+  "/api/search/academy/tr",
   "/about",
   "/brand",
   "/releases",

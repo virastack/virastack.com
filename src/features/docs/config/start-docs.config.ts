@@ -29,6 +29,7 @@ export function getStartDocsNav(t: DocsStartTranslate): DocsNavSection[] {
       title: t("navCli"),
       items: [
         { slug: "cli", title: t("navCliCommands"), href: `${BASE}/cli` },
+        { slug: "modules", title: t("navModules"), href: `${BASE}/modules` },
         { slug: "templates", title: t("navTemplates"), href: `${BASE}/templates` },
       ],
     },
@@ -79,6 +80,19 @@ export function getStartDocsPage(slug: string, t: DocsStartTranslate): DocsPageM
         { id: "telemetry", title: t("cliHeadingTelemetry") },
       ],
     },
+    modules: {
+      slug: "modules",
+      title: t("modulesTitle"),
+      description: t("modulesDescription"),
+      headings: [
+        { id: "nedir", title: t("modulesHeadingWhat") },
+        { id: "hazir", title: t("modulesHeadingList") },
+        { id: "ekle", title: t("modulesHeadingAdd") },
+        { id: "sayfa", title: t("modulesHeadingPage") },
+        { id: "checkout", title: t("modulesHeadingCheckout") },
+        { id: "kaldir", title: t("modulesHeadingRemove") },
+      ],
+    },
     templates: {
       slug: "templates",
       title: t("templatesTitle"),
@@ -125,6 +139,7 @@ export const startDocsSlugs = [
   "introduction",
   "installation",
   "cli",
+  "modules",
   "templates",
   "scripts",
   "i18n",

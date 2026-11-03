@@ -3,10 +3,7 @@ import type { ReactNode } from "react";
 import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
-
-import { cn } from "@/lib/utils";
 
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
@@ -15,8 +12,6 @@ import { AcademyBadge } from "@/features/academy/components/academy-badge";
 import { GuideProductMark, guideProductTags } from "@/features/guide/components/GuideRichText";
 import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
-
-const academyPalette = brandPalettes.find((palette) => palette.id === "academy");
 
 /** Order matches the copy: complement, headless and typed, Turkey-ready, evidence. */
 const principleIds = [1, 2, 3, 4] as const;
@@ -65,13 +60,9 @@ function richHandlers() {
     mask: products.mask,
     br: () => <br />,
     academy: (chunks: ReactNode) => (
-      <Link
-        href="/academy"
-        className="mx-0.5 inline whitespace-nowrap underline-offset-2 transition-opacity hover:underline hover:opacity-90"
-      >
-        <span className="font-semibold text-primary">{siteConfig.name}</span>{" "}
-        <span className={cn("font-bold", academyPalette?.textClass)}>{chunks}</span>
-      </Link>
+      <GuideProductMark id="academy" linked>
+        {chunks}
+      </GuideProductMark>
     ),
     sources: (chunks: ReactNode) => (
       <Link href="/academy/sources" className={linkClassName}>
