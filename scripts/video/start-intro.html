@@ -199,272 +199,194 @@
         background: radial-gradient(closest-side, rgb(0 201 80 / 0.3), rgb(0 201 80 / 0));
       }
 
-      .nav {
+      #pg .nav {
         position: absolute;
         inset: 0 0 auto;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        height: 60px;
+        justify-content: flex-end;
+        height: 56px;
         padding: 0 30px;
       }
 
-      .brand,
-      .links {
-        display: flex;
-        align-items: center;
-      }
-
-      .brand {
-        gap: 10px;
-      }
-
-      .links {
-        gap: 22px;
-      }
-
-      .mark {
-        width: 26px;
-        height: 26px;
-        border-radius: 9px;
-        background: linear-gradient(135deg, #00c950, #14b8a6);
-        box-shadow:
-          0 4px 14px rgb(0 201 80 / 0.45),
-          inset 0 1px 0 rgb(255 255 255 / 0.55);
-      }
-
-      .pb {
-        display: block;
-        height: 10px;
-        border-radius: 6px;
-        background: var(--fg);
-      }
-
-      .pb.sm {
-        height: 8px;
-        background: #cfcfcf;
-      }
-
-      .navbtn {
-        display: grid;
-        place-items: center;
-        width: 86px;
+      #pg .tg {
+        width: 32px;
         height: 32px;
-        border-radius: 999px;
-        background: var(--fg);
-      }
-
-      .navbtn b {
-        width: 44px;
-        height: 7px;
-        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
         background: #fff;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
       }
 
-      .hero {
+      #pg .col {
         position: absolute;
-        inset: 100px 0 auto;
+        inset: 40px 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
 
-      .h1 {
+      #pg .lk {
         display: flex;
-        gap: 14px;
-        height: 40px;
-        margin-bottom: 14px;
+        flex-direction: column;
+        align-items: center;
       }
 
-      .h1 i {
+      #pg .lk i {
         display: block;
-        height: 100%;
         border-radius: 12px;
       }
 
-      .h1 i {
-        background: #e2e2e2;
+      #pg .lk .a {
+        width: 330px;
+        height: 36px;
+        background: #e6e6e6;
       }
 
-      .sub {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        margin: 8px 0 26px;
+      #pg .lk .b {
+        width: 190px;
+        height: 34px;
+        margin-top: 6px;
+        background: linear-gradient(90deg, #00c950, #14b8a6);
+        box-shadow: 0 10px 28px -10px rgb(0 201 80 / 0.6);
       }
 
-      .sub > div {
-        display: flex;
-        gap: 10px;
-      }
-
-      .sub b {
-        display: block;
+      #pg .sub {
+        width: 300px;
         height: 10px;
+        margin: 16px 0 16px;
         border-radius: 6px;
-        background: #ebebeb;
+        background: #e6e6e6;
       }
 
-      .cta {
-        display: flex;
-        gap: 12px;
-      }
-
-      .btn {
-        position: relative;
+      #pg .btn {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        height: 44px;
-        overflow: hidden;
-        border-radius: 999px;
-      }
-
-      .btn.p {
-        width: 158px;
+        width: 210px;
+        height: 38px;
+        border-radius: 8px;
         background: linear-gradient(#2e2e2e, #121212);
         box-shadow:
           0 8px 20px -10px rgb(10 10 10 / 0.5),
           inset 0 1px 0 rgb(255 255 255 / 0.16);
       }
 
-      .btn.p b {
-        width: 62px;
+      #pg .btn b {
+        width: 120px;
         height: 8px;
         border-radius: 5px;
         background: #fff;
       }
 
-      .btn.s {
-        width: 128px;
+      #pg .btn i {
+        width: 9px;
+        height: 9px;
+        border-radius: 3px;
+        background: rgb(255 255 255 / 0.7);
+      }
+
+      #pg .steps {
+        width: 460px;
+        margin-top: 26px;
+      }
+
+      #pg .steps .hd {
+        display: block;
+        width: 78px;
+        height: 9px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        background: var(--fg);
+      }
+
+      #pg .rw {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 14px;
+        margin-bottom: 11px;
+      }
+
+      #pg .rw b {
+        display: block;
+        height: 8px;
+        border-radius: 5px;
+        background: #cfcfcf;
+      }
+
+      #pg .rw i {
+        display: block;
+        height: 8px;
+        border-radius: 5px;
+        background: #e8e8e8;
+      }
+
+      #pg .stk {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: 560px;
+        margin-top: 14px;
+      }
+
+      #pg .sc {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 26px;
+        padding: 0 10px;
+        border-radius: 7px;
+        background: #f0f0f0;
+      }
+
+      #pg .sc i {
+        width: 11px;
+        height: 11px;
+        border-radius: 4px;
+        background: #bdbdbd;
+      }
+
+      #pg .sc b {
+        display: block;
+        height: 7px;
+        border-radius: 4px;
+        background: #cfcfcf;
+      }
+
+      #pg .lnk {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      #pg .ol {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 92px;
+        height: 32px;
         border: 1px solid #e0e0e0;
+        border-radius: 8px;
         background: #fff;
         box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
       }
 
-      .btn.s i {
-        width: 14px;
-        height: 14px;
-        border-radius: 999px;
-        background: #d4d4d4;
-      }
-
-      .btn.s b {
-        width: 48px;
-        height: 8px;
-        border-radius: 5px;
+      #pg .ol b {
+        display: block;
+        height: 7px;
+        border-radius: 4px;
         background: var(--fg);
       }
 
-      .cards {
-        position: absolute;
-        inset: 346px 0 auto;
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-        mask-image: linear-gradient(#000 52%, transparent 98%);
-      }
-
-      .gc {
-        width: 272px;
-        height: 150px;
-        padding: 16px;
-        border: 1px solid rgb(0 0 0 / 0.07);
-        border-radius: 18px;
-        background: rgb(255 255 255 / 0.82);
-        box-shadow:
-          0 1px 2px rgb(0 0 0 / 0.04),
-          0 24px 48px -24px rgb(10 60 30 / 0.4),
-          inset 0 1px 0 #fff;
-      }
-
-      .gc .ch {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-      }
-
-      .gc .ic {
-        width: 22px;
-        height: 22px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #00c950, #14b8a6);
-        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5);
-      }
-
-      .gc .ic.v {
-        background: linear-gradient(135deg, #8b5cf6, #c084fc);
-      }
-
-      .gc .ic.t {
-        background: linear-gradient(135deg, #14b8a6, #38bdf8);
-      }
-
-      .spark {
-        display: block;
-        width: 100%;
-        height: 46px;
-        margin-top: 4px;
-        overflow: visible;
-      }
-
-      .mini {
-        display: flex;
-        align-items: flex-end;
-        gap: 7px;
-        height: 46px;
-        margin-top: 8px;
-      }
-
-      .mini i {
-        flex: 1;
-        border-radius: 5px 5px 2px 2px;
-        background: linear-gradient(#00c950, #8be9ab);
-      }
-
-      .pill {
-        display: inline-block;
-        width: 46px;
-        height: 18px;
-        margin-left: auto;
-        border-radius: 999px;
-        background: #e2f9e9;
-        box-shadow: inset 0 0 0 1px #bff0cf;
-      }
-
-      .avs {
-        display: flex;
-        margin: 12px 0 14px;
-      }
-
-      .avs i {
-        width: 30px;
-        height: 30px;
-        margin-left: -8px;
-        border: 2px solid #fff;
-        border-radius: 999px;
-      }
-
-      .avs i:first-child {
-        margin-left: 0;
-      }
-
-      .trk {
+      #pg .ol i {
+        width: 8px;
         height: 8px;
-        overflow: hidden;
-        border-radius: 999px;
-        background: #ececec;
-      }
-
-      .trk b {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border-radius: 999px;
-        background: linear-gradient(90deg, #00c950, #14b8a6);
-        transform-origin: left;
+        border-radius: 3px;
+        background: #bdbdbd;
       }
 
       /* ---------- prompt showcase: logos beside the terminal ---------- */
@@ -1131,7 +1053,7 @@
           t: 9500,
           d: 450,
           run: "Configuring ViraStack AI rules...",
-          done: "🤖 ViraStack AI agent rules successfully integrated.",
+          done: "ViraStack AI rules added.",
         },
         { t: 9950, d: 450, run: "Installing design skills...", done: "Design skills installed." },
         {
@@ -1266,7 +1188,6 @@
           "UI",
           [
             ["baseUi", "Base UI"],
-            ["motion", "Motion"],
             ["lucide", "Lucide React"],
           ],
         ],
@@ -1284,20 +1205,17 @@
           `<div class="grp" data-g="${i}"><span class="k">${k}</span><div class="chips">${items.map((c) => chip(c, big)).join("")}</div></div>`,
       ).join("");
 
-      /* Real shape of a scaffolded project: src, then one feature with its own folders. */
+      /* The architecture rule's shape: one feature with its main folders, then the shared src folders. */
       const TREE = [
         ["acme-app/", ""],
         ["  src/", ""],
-        ["    app/", ""],
         ["    features/", "hl"],
-        ["      landing/", "hl2"],
+        ["      &lt;feature-name&gt;/", "hl2"],
         ["        api/", "hl2"],
         ["        components/", "hl2"],
         ["        hooks/", "hl2"],
         ["        schemas/", "hl2"],
         ["        stores/", "hl2"],
-        ["        types/", "hl2"],
-        ["        index.ts", "hl2"],
         ["    components/", ""],
         ["    lib/", ""],
       ];
@@ -1373,33 +1291,27 @@
       }
 
       /* ---------- ready: the finished site ---------- */
-      const bars = (n, fn) => Array.from({ length: n }, (_, i) => fn(i)).join("");
+      const STEP_ROWS = [
+        [118, 96],
+        [150, 118],
+        [160, 126],
+      ];
+      const CHIP_W = [34, 32, 56, 62, 54, 82, 52, 90, 26, 32];
+      const LINK_W = [26, 56, 44, 44];
       $("pg").innerHTML = `
         <div class="dots"></div>
         <i class="gl g1"></i>
-        <div class="nav">
-          <div class="brand"><i class="mark"></i><b class="pb" style="width:64px"></b></div>
-          <div class="links">${[46, 40, 54, 44].map((w) => `<b class="pb sm" style="width:${w}px"></b>`).join("")}</div>
-          <div class="navbtn"><b></b></div>
-        </div>
-        <div class="hero">
-          <div class="h1 a"><i style="width:280px"></i></div>
-          <div class="h1 b"><i style="width:400px"></i></div>
-          <div class="sub"><div><b style="width:344px"></b></div><div><b style="width:264px"></b></div></div>
-          <div class="cta"><div class="btn p"><b></b></div><div class="btn s"><i></i><b></b></div></div>
-        </div>
-        <div class="cards">
-          <div class="gc"><div class="ch"><i class="ic"></i><b class="pb sm" style="width:70px"></b></div>
-            <b class="pb" style="width:96px;height:16px;margin:12px 0 8px"></b>
-            <svg class="spark" viewBox="0 0 240 46"><defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c950" stop-opacity=".35"/><stop offset="1" stop-color="#00c950" stop-opacity="0"/></linearGradient></defs>
-              <path class="sa" d="M0 36C30 34 42 14 74 20S126 38 156 16 206 4 240 8V46H0Z" fill="url(#sg)"/>
-              <path class="sl" pathLength="1" d="M0 36C30 34 42 14 74 20S126 38 156 16 206 4 240 8" fill="none" stroke="#00c950" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"/></svg></div>
-          <div class="gc"><div class="ch"><i class="ic v"></i><b class="pb sm" style="width:58px"></b><span class="pill"></span></div>
-            <b class="pb" style="width:84px;height:16px;margin:12px 0 0"></b>
-            <div class="mini">${[0.4, 0.62, 0.5, 0.78, 0.58, 0.9, 0.7, 1].map((h) => `<i data-h="${h}"></i>`).join("")}</div></div>
-          <div class="gc"><div class="ch"><i class="ic t"></i><b class="pb sm" style="width:76px"></b></div>
-            <div class="avs">${["#00c950,#14b8a6", "#8b5cf6,#c084fc", "#f59e0b,#fcd34d", "#14b8a6,#38bdf8"].map((g) => `<i style="background:linear-gradient(135deg,${g})"></i>`).join("")}</div>
-            <div class="trk"><b data-p="0.72"></b></div></div>
+        <div class="nav"><div class="tg"></div></div>
+        <div class="col">
+          <div class="lk"><i class="a"></i><i class="b"></i></div>
+          <div class="sub"></div>
+          <div class="btn"><b></b><i></i></div>
+          <div class="steps">
+            <b class="hd"></b>
+            ${STEP_ROWS.map(([l, r]) => `<div class="rw"><b style="width:${l}px"></b><i style="width:${r}px"></i></div>`).join("")}
+          </div>
+          <div class="stk">${CHIP_W.map((w) => `<div class="sc"><i></i><b style="width:${w}px"></b></div>`).join("")}</div>
+          <div class="lnk">${LINK_W.map((w) => `<div class="ol"><b style="width:${w}px"></b><i></i></div>`).join("")}</div>
         </div>`;
 
       function siteView(p) {
@@ -1416,28 +1328,14 @@
           el.style.opacity = o * (0.88 + 0.12 * Math.sin(p / 700 + i * 2));
           el.style.transform = `translate(${Math.sin(p / 1500 + i) * 14}px, ${Math.cos(p / 1300 + i) * 8}px) scale(${0.7 + 0.3 * o})`;
         });
-        q(".brand, .navbtn").forEach((el, i) => rise(el, k(350 + i * 350, 450), -10));
-        q(".links .pb").forEach((el, i) => rise(el, k(480 + i * 70, 400), -10));
-        rise(q(".h1.a")[0], k(800, 550), 16, 8);
-        const b = q(".h1.b")[0];
-        rise(b, k(1000, 550), 16, 8);
-        q(".sub > div").forEach((el, i) => rise(el, k(1300 + i * 120, 450), 10));
-        q(".btn").forEach((el, i) => rise(el, k(1550 + i * 130, 450), 12));
-
-        q(".gc").forEach((el, i) => {
-          const o = k(2150 + i * 160, 650);
-          el.style.opacity = o;
-          el.style.transform = `translateY(${(1 - o) * 56 + Math.sin(p / 800 + i * 1.7) * 3 * o}px)`;
-        });
-        q(".sl")[0].setAttribute("stroke-dashoffset", String(1 - k(2500, 1300)));
-        q(".sa")[0].style.opacity = k(3100, 700);
-        q(".mini i").forEach((el, i) => {
-          el.style.transformOrigin = "bottom";
-          el.style.transform = `scaleY(${ease((p - 2700 - i * 80) / 500) * Number(el.dataset.h)})`;
-          el.style.height = "100%";
-        });
-        const fill = q(".trk b")[0];
-        fill.style.transform = `scaleX(${ease((p - 2800) / 1000) * Number(fill.dataset.p)})`;
+        rise(q(".tg")[0], k(300, 450), -10);
+        q(".lk i").forEach((el, i) => rise(el, k(500 + i * 200, 550), 16, 8));
+        rise(q(".sub")[0], k(1000, 450), 10);
+        rise(q(".btn")[0], k(1200, 450), 12);
+        rise(q(".hd")[0], k(1600, 400), 10);
+        q(".rw").forEach((el, i) => rise(el, k(1750 + i * 140, 450), 10));
+        q(".sc").forEach((el, i) => rise(el, k(2250 + i * 55, 400), 10));
+        q(".ol").forEach((el, i) => rise(el, k(2900 + i * 100, 400), 10));
       }
 
       /* ---------- opener ---------- */
