@@ -144,8 +144,8 @@ export function PasswordStrengthDoc() {
         <p>
           <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır. Kısa
           parçalar yanlış pozitife yol açar: <code>dev@virastack.com</code> için <code>dev</code>{" "}
-          parçası <code>devoted-garden-path</code>&#32;parolasını reddeder. Sizin için önemliyse
-          4&apos;e çıkarın.
+          parçası <code>devoted-garden-path</code>&#32;parolasını reddeder. Senin için önemliyse
+          4&apos;e çıkar.
         </p>
         <PasswordExamplePreview id="forbidden" />
 

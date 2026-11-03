@@ -44,9 +44,9 @@ export function PasswordServerDoc() {
 
         <h2 id="hash">Neyi hash&apos;lemeli</h2>
         <p>
-          <code>result.password</code>&#32;değerini hash&apos;leyin: NFKC ile normalleştirilmiştir;
+          <code>result.password</code>&#32;değerini hash&apos;le: NFKC ile normalleştirilmiştir;
           başka klavyede yazılan aynı parola girişte de doğrulanır. Giriş formundaki parolayı da{" "}
-          <code>normalizePassword</code>&#32;ile aynı şekilde normalleştirin.
+          <code>normalizePassword</code>&#32;ile aynı şekilde normalleştir.
         </p>
 
         <h2 id="nextjs">SSR ve Next.js</h2>

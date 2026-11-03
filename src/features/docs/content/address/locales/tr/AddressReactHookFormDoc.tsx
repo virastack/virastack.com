@@ -163,14 +163,14 @@ export function AddressReactHookFormDoc() {
         <h2 id="form-provider">FormProvider</h2>
         <p>
           Adres alanlarını ayrı bir bileşene taşıdığında formu prop olarak geçirmek yerine bağlamdan
-          alın:
+          al:
         </p>
         <DocsCodeBlock code={providerCode} />
 
         <h2 id="duzenleme">Düzenleme formu</h2>
         <p>
-          Hook formdaki adresle başlar; ayrıca <code>defaultValue</code>&#32;vermeniz gerekmez.
-          Adlar büyük/küçük harf ve Türkçe karakter farkı gözetmeden eşleşir: veritabanından{" "}
+          Hook formdaki adresle başlar; ayrıca <code>defaultValue</code>&#32;vermen gerekmez. Adlar
+          büyük/küçük harf ve Türkçe karakter farkı gözetmeden eşleşir: veritabanından{" "}
           <code>&quot;Fatih&quot;</code>&#32;gelse de seçim doğru dolar.
         </p>
         <DocsCodeBlock code={editCode} />
@@ -184,7 +184,7 @@ export function AddressReactHookFormDoc() {
           &#32;içindeki <code>values</code>&#32;seçeneği ve bir seviyeye <code>setValue()</code>
           &#32;select&apos;leri günceller, form kirlenmez. Boş değerlerle <code>form.reset()</code>
           &#32;adresi de temizler; yanında <code>address.reset()</code>
-          &#32;çağırmanız gerekmez. Yeni ilde ya da ilçede olmayan bir seviye formdan da düşer.
+          &#32;çağırman gerekmez. Yeni ilde ya da ilçede olmayan bir seviye formdan da düşer.
         </p>
 
         <h2 id="zod">Zod ile doğrulama</h2>

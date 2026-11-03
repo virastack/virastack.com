@@ -206,7 +206,7 @@ export function AddressUiLibrariesDoc() {
         <p>
           Bir ilçe birkaç yüz mahalle ve köy tutabilir; en kalabalığı <strong>Artvin</strong>
           &apos;in Yusufeli ilçesidir (674). Bu seviyede aranabilir bir select kullan; listen
-          binlerce satır çizecekse sanallaştırın.
+          binlerce satır çizecekse sanallaştır.
         </p>
       </DocsProse>
     </>

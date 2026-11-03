@@ -36,7 +36,7 @@ export function PasswordAccessibilityDoc() {
             <code>aria-pressed</code> ekran okuyucuya parolanın görünüp görünmediğini söyler;{" "}
             <code>aria-controls</code>&#32;butonu input&apos;a bağlar.
           </li>
-          <li>Etiket İngilizcedir; btnProps ile çevirin:</li>
+          <li>Etiket İngilizcedir; btnProps ile çevir:</li>
         </ul>
         <DocsCodeBlock code={labelCode} lang="tsx" />
 
@@ -53,13 +53,13 @@ export function PasswordAccessibilityDoc() {
         <h2 id="canli">Canlı bölge</h2>
         <p>
           <code>strengthProps</code>&apos;u gücü gösteren elemana spread et. Her kuralı değil kısa
-          bir seviyeyi duyurun; yazarken gürültü olmasın.
+          bir seviyeyi duyur; yazarken gürültü olmasın.
         </p>
         <DocsCodeBlock code={liveCode} lang="tsx" />
 
         <h2 id="caps">Caps Lock</h2>
         <p>
-          <code>capsLock</code>, input odaktayken Caps Lock açıksa true olur. Metinle uyarın; tek
+          <code>capsLock</code>, input odaktayken Caps Lock açıksa true olur. Metinle uyar; tek
           başına renk yeterli değildir.
         </p>
 

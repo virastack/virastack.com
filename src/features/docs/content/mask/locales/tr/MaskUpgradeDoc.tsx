@@ -102,7 +102,7 @@ export function MaskUpgradeDoc() {
       <DocsProse>
         <h2 id="prompt">Yapay zekâ ile tek adımda</h2>
         <p>
-          Prompt&apos;u kopyalayıp projenizde <AcademyBadge kind="claudeCode" />,{" "}
+          Prompt&apos;u kopyalayıp projende <AcademyBadge kind="claudeCode" />,{" "}
           <AcademyBadge kind="cursor" /> ya da <AcademyBadge kind="codex" />
           &#32;gibi bir agent&apos;a ver. Agent tüm kullanımları bulur, v2&apos;ye çevirir, tip
           kontrolü ve testleri çalıştırır; sonunda biçimi değişen verileri (tarih ISO, TR
@@ -113,7 +113,7 @@ export function MaskUpgradeDoc() {
           label="v1 → v2 upgrade prompt"
           copyLabel="Kopyala"
         />
-        <p>Elle yapmak isterseniz aşağıdaki tablolar aynı adımları anlatır.</p>
+        <p>Elle yapmak istersen aşağıdaki tablolar aynı adımları anlatır.</p>
         <p>
           v1 dokümanı <Link href="/mask/docs/v1">arşivde</Link> duruyor. Gereksinimler:{" "}
           <AcademyBadge kind="react" label="React 18.2+" />,{" "}
@@ -129,7 +129,7 @@ export function MaskUpgradeDoc() {
         </p>
 
         <h2 id="raw">rawValue kalktı</h2>
-        <p>Form zaten ham değeri tutar. Dönen nesneyi doğrudan yayın.</p>
+        <p>Form zaten ham değeri tutar. Dönen nesneyi doğrudan spread et.</p>
         <DocsCodeBlock code={rawCode} lang="tsx" />
 
         <h2 id="presetler">Presetler</h2>
@@ -141,7 +141,7 @@ export function MaskUpgradeDoc() {
         <h2 id="dogrulama">Resolver ile doğrulama</h2>
         <p>
           v1&apos;de resolver varken maske doğrulaması sessizce duruyordu. v2&apos;de
-          resolver&apos;ı sarın:
+          resolver&apos;ı sar:
         </p>
         <DocsCodeBlock code={resolverCode} lang="ts" />
 

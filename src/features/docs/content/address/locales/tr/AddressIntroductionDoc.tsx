@@ -385,7 +385,7 @@ export function AddressIntroductionDoc() {
         </ul>
         <p>
           Kapsam dışı: sokak, bina ve kapı numarası (veri setinde yoktur, serbest metin olarak
-          alın), yurt dışı adresler, harita ve konumdan adres bulma, hazır select bileşeni.
+          alırsın), yurt dışı adresler, harita ve konumdan adres bulma, hazır select bileşeni.
         </p>
       </DocsProse>
     </>

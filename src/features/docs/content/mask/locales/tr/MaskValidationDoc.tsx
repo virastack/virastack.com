@@ -102,16 +102,16 @@ export function MaskValidationDoc() {
 
         <h2 id="ozel">Özel doğrulama</h2>
         <p>
-          <code>validate</code> yerleşik kontrollerden sonra çalışır. Preset üzerinde verirseniz
-          ikisi birlikte uygulanır.
+          <code>validate</code> yerleşik kontrollerden sonra çalışır. Preset üzerinde verirsen ikisi
+          birlikte uygulanır.
         </p>
         <DocsCodeBlock code={customCode} lang="tsx" />
 
         <h2 id="resolver">Zod, Valibot ve resolver</h2>
         <p>
           <AcademyBadge kind="react-hook-form" />, resolver varken <code>register</code>{" "}
-          doğrulamasını atlar. Resolver&apos;ı <code>maskResolver</code> ile sarın; şema hataları ve
-          maske hataları birlikte gelir. Sarmazsanız geliştirme modunda konsola uyarı düşer.
+          doğrulamasını atlar. Resolver&apos;ı <code>maskResolver</code> ile sar; şema hataları ve
+          maske hataları birlikte gelir. Sarmazsan geliştirme modunda konsola uyarı düşer.
         </p>
         <DocsCodeBlock code={resolverCode} lang="tsx" />
         <p>

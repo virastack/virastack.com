@@ -53,7 +53,7 @@ export function MaskUseViraMaskDoc() {
         <h2 id="temel">Temel kullanım</h2>
         <p>
           İlk argüman <code>useForm()</code> dönüşüdür, ikincisi şema. Tip formdan gelir; ayrıca
-          yazmanız gerekmez.
+          yazman gerekmez.
         </p>
         <ComponentPreview
           preview={
@@ -158,7 +158,7 @@ export function MaskUseViraMaskDoc() {
           </li>
           <li>
             Resolver (<AcademyBadge kind="zod" />, Valibot) kullanıyorsan{" "}
-            <Link href="/mask/docs/validation#resolver">maskResolver</Link> ile sarın.
+            <Link href="/mask/docs/validation#resolver">maskResolver</Link> ile sar.
           </li>
           <li>IME (Çince, Japonca, ölü tuşlar) bitene kadar biçimlendirme bekler.</li>
         </ul>

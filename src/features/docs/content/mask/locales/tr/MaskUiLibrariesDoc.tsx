@@ -67,7 +67,7 @@ export function MaskUiLibrariesDoc() {
       />
       <DocsProse>
         <p>
-          Dönen nesneyi input&apos;a yayın. Bileşen <code>ref</code>&apos;i gerçek{" "}
+          Dönen nesneyi input&apos;a spread et. Bileşen <code>ref</code>&apos;i gerçek{" "}
           <code>&lt;input&gt;</code>&apos;a iletmelidir (
           <AcademyBadge kind="react" label="React 19" />
           &apos;da prop olarak, <AcademyBadge kind="react" label="React 18" />

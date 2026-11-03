@@ -199,7 +199,7 @@ export function AddressUseViraAddressDoc() {
         </p>
         <DocsCodeBlock code={basicCode} />
         <p>
-          Elle bağlamak istemiyorsanız aynı şeyi{" "}
+          Elle bağlamak istemiyorsan aynı şeyi{" "}
           <Link href="/address/docs/ui-libraries">prop getter&apos;lar</Link>&#32;tek satırda yapar.{" "}
           <code>setProvince</code>&#32;plaka kodunu sayı veya metin olarak alır.
         </p>
@@ -274,7 +274,7 @@ export function AddressUseViraAddressDoc() {
         <p>
           Hook mahalleleri yalnızca il değiştiğinde okur; her render&apos;da yeni bir{" "}
           <code>source</code>&#32;nesnesi vermek yüklemeyi tekrarlatmaz. Yalnızca mahallelerin
-          nereden geldiğini değiştirmek istiyorsanız <code>setLoader</code>&#32;daha kısadır; bkz.{" "}
+          nereden geldiğini değiştirmek istiyorsan <code>setLoader</code>&#32;daha kısadır; bkz.{" "}
           <Link href="/address/docs/data">veri seti</Link>.
         </p>
       </DocsProse>

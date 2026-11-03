@@ -102,7 +102,7 @@ export function AddressPostalCodeDoc() {
           rakam girilince yapılır. Daha az rakamla düzenlerken adres yerinde kalır.
         </p>
         <p>
-          <code>names.postalCode</code>&#32;verdiyseniz input o adı taşır. Aynı formda gizli{" "}
+          <code>names.postalCode</code>&#32;verdiysen input o adı taşır. Aynı formda gizli{" "}
           <code>getPostalCodeProps()</code>&#32;input&apos;unu ayrıca kullanma; ikisi aynı alanı
           gönderir.
         </p>

@@ -12,7 +12,7 @@ const patternCode = `const { inputProps, btnProps } = useViraPassword({
 
 return (
   <div className="relative">
-    <input {...inputProps} placeholder="Parolanız" />
+    <input {...inputProps} placeholder="Parola" />
     <button {...btnProps} />
   </div>
 )`;
@@ -26,7 +26,7 @@ function Example() {
 
   return (
     <div style={{ position: "relative" }}>
-      <Input {...inputProps} placeholder="Parolanız" />
+      <Input {...inputProps} placeholder="Parola" />
       <Button {...restBtn} type="text" style={{ position: "absolute", right: 4, top: "50%", transform: "translateY(-50%)" }}>
         {children}
       </Button>
@@ -43,7 +43,7 @@ function Example() {
 
   return (
     <Box position="relative">
-      <Input {...inputProps} placeholder="Parolanız" pe="10" />
+      <Input {...inputProps} placeholder="Parola" pe="10" />
       <IconButton
         {...restBtn}
         aria-label={restBtn["aria-label"] ?? "Toggle password visibility"}
@@ -74,7 +74,7 @@ export async function PasswordUiLibrariesDoc() {
         </p>
         <p>
           Paket yalnızca görünürlük mantığını ve erişilebilir props’ları yönetir; markup ve stil
-          size aittir. shadcn/Tailwind, Ant Design (kendi CSS’i + <code>style</code>/
+          sana aittir. shadcn/Tailwind, Ant Design (kendi CSS’i + <code>style</code>/
           <code>className</code>) veya Chakra (style props) fark etmez; aynı hook her UI kitine
           bağlanır.
         </p>

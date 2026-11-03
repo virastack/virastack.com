@@ -46,7 +46,7 @@ export function MaskHelpersDoc() {
       <DocsProse>
         <p>
           Hepsi React&apos;siz ve saf fonksiyonlardır. Sunucuda <code>@virastack/mask/server</code>
-          &apos;dan içe aktarın.
+          &apos;dan içe aktar.
         </p>
 
         <h2 id="create-mask">createMask</h2>

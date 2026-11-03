@@ -122,7 +122,7 @@ export function MaskCustomMaskDoc() {
 
         <h2 id="dinamik">Dinamik maske</h2>
         <p>
-          Dizi verirseniz değeri bütünüyle alan ilk desen seçilir. Fonksiyon değeri ve{" "}
+          Dizi verirsen değeri bütünüyle alan ilk desen seçilir. Fonksiyon değeri ve{" "}
           <code>ctx.from</code> (bağlı alanın değeri) ile desen döner.
         </p>
         <DocsCodeBlock code={dynamicCode} lang="tsx" />

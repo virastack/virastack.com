@@ -27,7 +27,7 @@ export function PasswordPwnedDoc() {
       <DocsProse>
         <h2 id="kullanim">Kullanım</h2>
         <p>
-          Siz çağırmadıkça kapalıdır. Ücretsiz Pwned Passwords range API&apos;sini kullanır; anahtar
+          Sen çağırmadıkça kapalıdır. Ücretsiz Pwned Passwords range API&apos;sini kullanır; anahtar
           ve bağımlılık gerekmez.
         </p>
         <PasswordExamplePreview id="pwned" />
@@ -66,7 +66,7 @@ export function PasswordPwnedDoc() {
             çıkmaz. Yanıtlar dolgu (padding) içerir.
           </li>
           <li>
-            Sunucudan çağırın. Tarayıcıdan çağrılırsa Have I Been Pwned kullanıcının IP&apos;sini
+            Sunucudan çağır. Tarayıcıdan çağrılırsa Have I Been Pwned kullanıcının IP&apos;sini
             görür.
           </li>
           <li>
