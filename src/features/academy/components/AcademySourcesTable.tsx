@@ -6,6 +6,7 @@ import { Info } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { formatMonthYear } from "@/helpers/format-date";
+import { isOneOf } from "@/helpers/is-one-of";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -30,7 +31,7 @@ type AcademySourcesTableProps = {
 };
 
 function isFilterValue(value: unknown): value is FilterValue {
-  return typeof value === "string" && (SOURCE_FILTERS as readonly string[]).includes(value);
+  return isOneOf(SOURCE_FILTERS, value);
 }
 
 /**

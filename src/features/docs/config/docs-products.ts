@@ -3,6 +3,8 @@ import { createTranslator } from "next-intl";
 import type { AppMessages } from "@/types/messages.types";
 import type { ProductId } from "@/types/product.types";
 
+import { isOneOf } from "@/helpers/is-one-of";
+
 import {
   addressDocsSlugs,
   getAddressDocsNav,
@@ -64,7 +66,7 @@ export const DOCS_PRODUCT_IDS = ["start", "ai", "mask", "password", "address"] a
 export type DocsProductId = (typeof DOCS_PRODUCT_IDS)[number];
 
 export function isDocsProductId(value: string): value is DocsProductId {
-  return (DOCS_PRODUCT_IDS as readonly string[]).includes(value);
+  return isOneOf(DOCS_PRODUCT_IDS, value);
 }
 
 type DocsMessageNamespace =

@@ -1,3 +1,5 @@
+import { isOneOf } from "@/helpers/is-one-of";
+
 const featureGroups = ["user", "ecommerce", "admin"] as const;
 
 const featureIds = [
@@ -17,7 +19,7 @@ const featureIds = [
 export type FeatureId = (typeof featureIds)[number];
 
 export function isFeatureId(value: string): value is FeatureId {
-  return (featureIds as readonly string[]).includes(value);
+  return isOneOf(featureIds, value);
 }
 
 export type FeatureGroup = (typeof featureGroups)[number];

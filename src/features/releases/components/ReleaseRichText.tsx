@@ -1,7 +1,7 @@
 import Markdown from "react-markdown";
 
 import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
-import type { AcademyBadgeKind } from "@/features/academy/constants/badge.constants";
+import { isAcademyBadgeKind } from "@/features/academy/constants/badge.constants";
 
 const BADGE_PREFIX = "badge:";
 
@@ -25,9 +25,10 @@ export function ReleaseRichText({ children }: { children: string }) {
             {text}
           </code>
         ),
-        a: ({ href = "" }) => (
-          <AcademyBadge kind={href.slice(BADGE_PREFIX.length) as AcademyBadgeKind} />
-        ),
+        a: ({ href = "", children: text }) => {
+          const kind = href.slice(BADGE_PREFIX.length);
+          return isAcademyBadgeKind(kind) ? <AcademyBadge kind={kind} /> : text;
+        },
       }}
     >
       {children}

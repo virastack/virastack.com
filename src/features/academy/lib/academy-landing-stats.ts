@@ -1,4 +1,4 @@
-import type { Emphasis, Link, ListItem, PhrasingContent, Root } from "mdast";
+import type { Emphasis, ListItem, PhrasingContent, Root } from "mdast";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 
@@ -124,7 +124,7 @@ function readItemTitle(item: ListItem): string | undefined {
       if (inline.type !== "link") {
         continue;
       }
-      const link = inline as Link;
+      const link = inline;
       const title = phrasingText(link.children).trim();
       if (title) {
         return title;

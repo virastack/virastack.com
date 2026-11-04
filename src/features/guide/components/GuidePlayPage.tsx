@@ -109,12 +109,9 @@ export function GuidePlayPage() {
           href="/guide"
           className={cn(
             buttonVariants({ variant: isStyled ? "outline" : "ghost", size: "icon" }),
-            cn(
-              !isStyled &&
-                "border border-neutral-300 bg-white text-black dark:border-neutral-700 dark:bg-black dark:text-white",
-            ),
+            !isStyled &&
+              "border border-neutral-300 bg-white text-black dark:border-neutral-700 dark:bg-black dark:text-white",
           )}
-          type="button"
           aria-label={t("close")}
         >
           <XIcon className="size-4" />

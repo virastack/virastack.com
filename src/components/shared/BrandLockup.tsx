@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { siteConfig } from "@/config/site.config";
 
@@ -49,7 +49,7 @@ export function BrandLockup({
   return (
     <div
       className={cn("relative flex w-full flex-col", alignClassName, sizeClassName, className)}
-      style={{ "--s": nameScale } as CSSProperties}
+      style={{ "--s": nameScale }}
     >
       <OutlineWordmark
         filled={filled}

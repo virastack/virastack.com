@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type PackageManager = "prompt" | "pnpm" | "yarn" | "npm" | "bun";
+export const PACKAGE_MANAGERS = ["prompt", "pnpm", "yarn", "npm", "bun"] as const;
+
+export type PackageManager = (typeof PACKAGE_MANAGERS)[number];
 
 type PackageManagerState = {
   packageManager: PackageManager;

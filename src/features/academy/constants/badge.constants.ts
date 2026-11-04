@@ -1,3 +1,5 @@
+import { isOneOf } from "@/helpers/is-one-of";
+
 export const ACADEMY_QUERY_BADGES = ["getBy", "queryBy", "findBy"] as const;
 
 export const ACADEMY_LIBRARY_BADGES = [
@@ -165,5 +167,5 @@ export const ACADEMY_BADGE_LABELS: Record<string, string> = {
 };
 
 export function isAcademyBadgeKind(value: string): value is AcademyBadgeKind {
-  return (ACADEMY_BADGE_KINDS as readonly string[]).includes(value);
+  return isOneOf(ACADEMY_BADGE_KINDS, value);
 }

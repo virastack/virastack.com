@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useViraPassword } from "@virastack/password";
-import { evaluate, type PasswordIssue } from "@virastack/password/strength";
+import { evaluate } from "@virastack/password/strength";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
@@ -22,6 +22,11 @@ const schema = z
       ctx.addIssue({ code: "custom", path: ["confirm"], message: "password.mismatch" });
     }
   });
+
+/** The message for an issue code `zodResolver` put on the field; `undefined` for anything else. */
+function issueText(message: string | undefined) {
+  return Object.entries(passwordMessages).find(([issue]) => issue === message)?.[1];
+}
 
 export function SignupForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -45,18 +50,14 @@ export function SignupForm() {
         <input {...inputProps} {...form.register("password")} />
         <button {...btnProps} />
       </div>
-      {errors.password && (
-        <p role="alert">{passwordMessages[errors.password.message as PasswordIssue]}</p>
-      )}
+      {errors.password && <p role="alert">{issueText(errors.password.message)}</p>}
 
       <label htmlFor={confirmProps.id}>Confirm password</label>
       <div>
         <input {...confirmProps} {...form.register("confirm")} />
         <button {...confirmButton} />
       </div>
-      {errors.confirm && (
-        <p role="alert">{passwordMessages[errors.confirm.message as PasswordIssue]}</p>
-      )}
+      {errors.confirm && <p role="alert">{issueText(errors.confirm.message)}</p>}
 
       <div>
         <button type="submit">Create account</button>

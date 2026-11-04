@@ -1,5 +1,11 @@
 import { brandPalettes } from "@/config/brand-palettes.config";
-import type { EcosystemId, EcosystemLocale } from "@/config/ecosystem.config";
+import {
+  ECOSYSTEM_LOCALES,
+  type EcosystemId,
+  type EcosystemLocale,
+} from "@/config/ecosystem.config";
+
+import { isOneOf } from "@/helpers/is-one-of";
 
 import type { AcademyBadgeKind } from "@/features/academy/constants/badge.constants";
 
@@ -451,6 +457,11 @@ export function getReleaseParams(release: Release) {
   const product = release.products[0];
 
   return { product: product?.id ?? "", version: `v${product?.version ?? ""}` };
+}
+
+/** The release's copy in `locale`, or English for any locale it was not written in. */
+export function getReleaseCopy(release: Release, locale: string): ReleaseCopy {
+  return release.copy[isOneOf(ECOSYSTEM_LOCALES, locale) ? locale : "en"];
 }
 
 export function getReleaseHref(release: Release) {

@@ -2,17 +2,9 @@ import type { PhrasingContent, Root, Text } from "mdast";
 import { visit } from "unist-util-visit";
 
 import { isAcademyBadgeKind } from "@/features/academy/constants/badge.constants";
+import type { AcademyBadgeNode } from "@/features/academy/types/academy-mdast.types";
 
 const BADGE_PATTERN = /\[!([A-Za-z][A-Za-z-]*)\]/g;
-
-type BadgeNode = {
-  type: "academyBadge";
-  kind: string;
-  data: {
-    hName: "span";
-    hProperties: { "data-academy-badge": string };
-  };
-};
 
 /**
  * Turns `[!cursor]` tokens into `academyBadge` nodes rendered as badges.
@@ -44,7 +36,7 @@ export function remarkAcademyBadges() {
           parts.push({ type: "text", value: value.slice(lastIndex, start) });
         }
 
-        const badge: BadgeNode = {
+        const badge: AcademyBadgeNode = {
           type: "academyBadge",
           kind,
           data: {
@@ -52,7 +44,7 @@ export function remarkAcademyBadges() {
             hProperties: { "data-academy-badge": kind },
           },
         };
-        parts.push(badge as unknown as PhrasingContent);
+        parts.push(badge);
         lastIndex = start + match[0].length;
       }
 

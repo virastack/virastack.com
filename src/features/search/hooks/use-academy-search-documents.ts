@@ -1,5 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react";
 
+import { searchDocumentsSchema } from "@/features/search/schemas/search-document.schema";
 import type { SearchDocument } from "@/features/search/types/search.types";
 
 const EMPTY: SearchDocument[] = [];
@@ -16,7 +17,10 @@ async function load(locale: string) {
     const response = await fetch(`/api/search/academy/${locale}`);
     if (!response.ok) return;
 
-    loaded.set(locale, (await response.json()) as SearchDocument[]);
+    const documents = searchDocumentsSchema.safeParse(await response.json());
+    if (!documents.success) return;
+
+    loaded.set(locale, documents.data);
     listeners.forEach((listener) => listener());
   } catch {
     // Search keeps working without lessons; the next open tries again.

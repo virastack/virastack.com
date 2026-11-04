@@ -1,3 +1,4 @@
+import type { ProductId } from "@/types/product.types";
 import { getBrandPalette } from "@/config/brand-palettes.config";
 import { products } from "@/config/products.config";
 
@@ -12,10 +13,10 @@ type Pillar = {
   items: readonly PillarItem[];
 };
 
-function product(id: PillarItem["id"]): PillarItem {
+function product(id: ProductId): PillarItem {
   const found = products.find((item) => item.id === id);
   if (!found) throw new Error(`Unknown product: ${id}`);
-  return { id, href: found.href as PillarItem["href"], colorClass: found.colorClass };
+  return { id, href: found.href, colorClass: found.colorClass };
 }
 
 /** Learn → Start → Build: the order the homepage tells the ecosystem story in. */

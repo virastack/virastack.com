@@ -3,13 +3,11 @@ import type { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import type { EcosystemLocale } from "@/config/ecosystem.config";
-
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { ReleaseDate, ReleaseProducts } from "@/features/releases/components/ReleaseMeta";
 import { ReleaseRichText } from "@/features/releases/components/ReleaseRichText";
-import type { Release } from "@/features/releases/data/releases";
+import { getReleaseCopy, type Release } from "@/features/releases/data/releases";
 import { Link } from "@/i18n/routing";
 
 const linkClassName =
@@ -25,9 +23,9 @@ function ReleaseSection({ title, children }: { title: string; children: ReactNod
 }
 
 export async function ReleaseDetailPage({ release }: { release: Release }) {
-  const locale = (await getLocale()) as EcosystemLocale;
+  const locale = await getLocale();
   const t = await getTranslations("ReleasesPage");
-  const copy = release.copy[locale];
+  const copy = getReleaseCopy(release, locale);
 
   return (
     <article className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-8 px-6 pt-28 pb-24">

@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 
 import { useViraMask, type MaskField } from "@virastack/mask";
 import { useTranslations } from "next-intl";
@@ -51,18 +44,16 @@ const fieldClassName = cn(
 
 const plainClassName = "h-9 w-full border border-neutral-400 bg-white px-2 text-sm text-black";
 
-/** Appends one character the way a keystroke would, then lets the mask format it. */
-function typeIntoMask(field: MaskField, input: HTMLInputElement | null, char: string) {
+/**
+ * Appends one character the way a keystroke would: the native setter keeps React's value
+ * tracker honest, and the `input` event reaches the mask's `onChange` as a real change event.
+ */
+function typeIntoMask(input: HTMLInputElement | null, char: string) {
   if (!input) return;
 
   const valueSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
   valueSetter?.call(input, input.value + char);
-
-  field.onChange({
-    target: input,
-    currentTarget: input,
-    nativeEvent: { isComposing: false },
-  } as unknown as ChangeEvent<HTMLInputElement>);
+  input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
 function wait(ms: number, timers: number[]) {
@@ -93,9 +84,8 @@ async function typeMaskField(
 ) {
   for (const char of text) {
     if (cancelled()) return;
-    const field = getField();
-    if (!field) return;
-    typeIntoMask(field, getInput(), char);
+    if (!getField()) return;
+    typeIntoMask(getInput(), char);
     await wait(CHAR_MS, timers);
   }
 }

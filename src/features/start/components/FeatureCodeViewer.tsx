@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import { ChevronRightIcon, FolderIcon, FolderOpenIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { toCssStyle } from "@/lib/css-style";
 import { cn } from "@/lib/utils";
 
 import { CopyButton } from "@/components/shared/CopyButton";
@@ -85,7 +86,7 @@ function TreeItem({
   activePath: string | undefined;
   onSelect: (path: string) => void;
 }) {
-  const indent = { "--indent": `${0.5 + depth * 1.25}rem` } as CSSProperties;
+  const indent: CSSProperties = { "--indent": `${0.5 + depth * 1.25}rem` };
 
   if (node.children.length > 0) {
     return (
@@ -161,7 +162,7 @@ function CodeLines({ code }: { code: string }) {
               {typeof line === "string"
                 ? line
                 : line.map((token, tokenIndex) => (
-                    <span key={tokenIndex} style={token.htmlStyle as CSSProperties}>
+                    <span key={tokenIndex} style={toCssStyle(token.htmlStyle)}>
                       {token.content}
                     </span>
                   ))}

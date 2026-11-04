@@ -1,4 +1,5 @@
 import {
+  ACADEMY_BADGE_KINDS,
   ACADEMY_BADGE_LABELS,
   type AcademyBadgeKind,
 } from "@/features/academy/constants/badge.constants";
@@ -133,9 +134,10 @@ function resolveOrganizationBadge(name: string): AcademyBadgeKind | undefined {
     return aliased;
   }
 
-  for (const [badgeKind, label] of Object.entries(ACADEMY_BADGE_LABELS)) {
-    if (normalizeAcademySourceKey(label) === key) {
-      return badgeKind as AcademyBadgeKind;
+  for (const badgeKind of ACADEMY_BADGE_KINDS) {
+    const label = ACADEMY_BADGE_LABELS[badgeKind];
+    if (label && normalizeAcademySourceKey(label) === key) {
+      return badgeKind;
     }
   }
 

@@ -1,6 +1,8 @@
 import type { Heading, List, ListItem, PhrasingContent, Root, Text } from "mdast";
 import { visit } from "unist-util-visit";
 
+import type { AcademyCitationNode } from "@/features/academy/types/academy-mdast.types";
+
 const CITATION_PATTERN = /\[\^(\d+)\]/g;
 
 const RESOURCE_HEADINGS = new Set([
@@ -12,15 +14,6 @@ const RESOURCE_HEADINGS = new Set([
   "sources",
   "references",
 ]);
-
-type CitationNode = {
-  type: "academyCitation";
-  identifier: string;
-  data: {
-    hName: "sup";
-    hProperties: { "data-academy-citation": string };
-  };
-};
 
 /**
  * Stable fragment id for a lesson citation, shared by the marker and its source row.
@@ -171,7 +164,7 @@ export function remarkAcademyCitations() {
           parts.push({ type: "text", value: value.slice(lastIndex, start) });
         }
 
-        const citation: CitationNode = {
+        const citation: AcademyCitationNode = {
           type: "academyCitation",
           identifier,
           data: {
@@ -179,7 +172,7 @@ export function remarkAcademyCitations() {
             hProperties: { "data-academy-citation": identifier },
           },
         };
-        parts.push(citation as unknown as PhrasingContent);
+        parts.push(citation);
         lastIndex = start + match[0].length;
       }
 

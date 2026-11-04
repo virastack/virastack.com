@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { z } from "zod";
+
 import { Reveal } from "@/components/shared/Reveal";
 
 type ProductDemoVideoProps = {
@@ -23,6 +25,11 @@ type ProductDemoVideoProps = {
  * and visitors who prefer reduced motion, turned on data saver or sit on a 2g
  * connection get the poster with controls instead of autoplay and prefetching.
  */
+const networkInformationSchema = z.looseObject({
+  saveData: z.boolean().optional(),
+  effectiveType: z.string().optional(),
+});
+
 export function ProductDemoVideo({ src, poster, label }: ProductDemoVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -30,10 +37,10 @@ export function ProductDemoVideo({ src, poster, label }: ProductDemoVideoProps) 
     const video = videoRef.current;
     if (!video) return;
 
-    // Not in every browser's types; where missing, nothing changes.
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
-    ).connection;
+    // Not in every browser or in the DOM types; where missing, nothing changes.
+    const connection = networkInformationSchema.safeParse(
+      "connection" in navigator ? navigator.connection : undefined,
+    ).data;
     const reduced =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       connection?.saveData === true ||

@@ -6,8 +6,13 @@ import { TerminalIcon, TextAlignStartIcon } from "lucide-react";
 import { ScrollArea } from "@base-ui/react/scroll-area";
 
 import { cn } from "@/lib/utils";
+import { isOneOf } from "@/helpers/is-one-of";
 
-import { usePackageManagerStore, type PackageManager } from "@/stores/package-manager.store";
+import {
+  PACKAGE_MANAGERS,
+  usePackageManagerStore,
+  type PackageManager,
+} from "@/stores/package-manager.store";
 
 import { CopyButton } from "@/components/shared/CopyButton";
 import { IconSwap, IconSwapItem } from "@/components/shared/IconSwap";
@@ -136,7 +141,7 @@ export function CodeBlockCommand({
         className="gap-0"
         value={packageManager}
         onValueChange={(value) => {
-          setPackageManager(value as PackageManager);
+          if (isOneOf(PACKAGE_MANAGERS, value)) setPackageManager(value);
         }}
       >
         <ScrollArea.Root className="w-full pr-10 shadow-[inset_0_-1px_0_0] shadow-border">

@@ -3,6 +3,20 @@ import { cn } from "@/lib/utils";
 
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { highlightAcademyCode } from "@/features/academy/lib/highlight-academy-code";
+import {
+  playgroundPayloadSchema,
+  type PlaygroundPayload,
+} from "@/features/academy/schemas/playground.schema";
+
+function parsePlaygroundPayload(text: string): PlaygroundPayload {
+  try {
+    const result = playgroundPayloadSchema.safeParse(JSON.parse(text));
+    if (result.success) return result.data;
+  } catch {
+    // Not JSON: the block is plain markup, handled below.
+  }
+  return { title: "Testing Playground", markup: text };
+}
 
 type AcademyCodeBlockProps = {
   language: string;
@@ -22,12 +36,7 @@ export async function AcademyCodeBlock({ language, code, className }: AcademyCod
   }
 
   if (language === "testing-playground") {
-    let payload: { title?: string; src?: string; markup?: string; query?: string } = {};
-    try {
-      payload = JSON.parse(trimmed) as typeof payload;
-    } catch {
-      payload = { title: "Testing Playground", markup: trimmed };
-    }
+    const payload = parsePlaygroundPayload(trimmed);
 
     return (
       <div

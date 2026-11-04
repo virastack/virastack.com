@@ -1,3 +1,5 @@
+import { isOneOf } from "@/helpers/is-one-of";
+
 export const ACADEMY_RESOURCE_KINDS = [
   "doc",
   "article",
@@ -28,7 +30,7 @@ const ACADEMY_RESOURCE_KIND_ALIASES: Record<string, AcademyResourceKind> = {
 };
 
 export function isAcademyResourceKind(value: string): value is AcademyResourceKind {
-  return (ACADEMY_RESOURCE_KINDS as readonly string[]).includes(value);
+  return isOneOf(ACADEMY_RESOURCE_KINDS, value);
 }
 
 /**

@@ -44,6 +44,10 @@ const calloutConfig = {
   },
 } as const;
 
+function isCalloutKind(kind: string): kind is keyof typeof calloutConfig {
+  return Object.hasOwn(calloutConfig, kind);
+}
+
 type AcademyCalloutProps = {
   kind: string;
   children: React.ReactNode;
@@ -51,7 +55,7 @@ type AcademyCalloutProps = {
 
 export function AcademyCallout({ kind, children }: AcademyCalloutProps) {
   const t = useTranslations("Academy");
-  const config = calloutConfig[kind as keyof typeof calloutConfig] ?? calloutConfig.TIP;
+  const config = isCalloutKind(kind) ? calloutConfig[kind] : calloutConfig.TIP;
   const Icon = config.Icon;
 
   return (

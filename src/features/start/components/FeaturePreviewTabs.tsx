@@ -5,13 +5,17 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MonitorIcon, SmartphoneIcon, TabletIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import { getFrameWindow } from "@/lib/frame-window";
 import { cn } from "@/lib/utils";
+import { isOneOf } from "@/helpers/is-one-of";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureCodeViewer } from "@/features/start/components/FeatureCodeViewer";
 import { getPathname } from "@/i18n/routing";
 
-type View = "preview" | "code";
+const VIEWS = ["preview", "code"] as const;
+
+type View = (typeof VIEWS)[number];
 
 /** Phone below Tailwind's `sm` (640px), tablet at `md` (768px), desktop as wide as the page. */
 const DEVICES = [
@@ -37,7 +41,7 @@ function FeaturePreviewFrame({ src, width, title }: { src: string; width: string
 
     const observe = () => {
       observer?.disconnect();
-      const frameWindow = frame.contentWindow as (Window & typeof globalThis) | null;
+      const frameWindow = getFrameWindow(frame);
       const root = frame.contentDocument?.querySelector("[data-feature-preview]");
       if (!frameWindow || !root) return;
 
@@ -86,7 +90,12 @@ export function FeaturePreviewTabs({ feature, actions }: { feature: string; acti
   const width = DEVICES.find(({ id }) => id === device)?.width ?? "100%";
 
   return (
-    <Tabs value={view} onValueChange={(value) => setView(value as View)}>
+    <Tabs
+      value={view}
+      onValueChange={(value) => {
+        if (isOneOf(VIEWS, value)) setView(value);
+      }}
+    >
       <div className="flex flex-wrap items-center gap-2">
         <TabsList>
           <TabsTrigger value="preview" className="px-3">

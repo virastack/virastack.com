@@ -14,6 +14,22 @@ const eslintConfig = defineConfig([
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
   },
+  // Parse outside data with Zod instead of asserting its type; `as const` stays allowed.
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: [
+      // shadcn components stay as generated.
+      "src/components/ui/**",
+      // Low-level wrappers may assert once so callers do not have to.
+      "src/lib/**",
+      "src/**/*.test.{ts,tsx}",
+      // Copied from the Start registry by `npm run sync:preview`; fixed there.
+      "src/features/start/demos/**",
+    ],
+    rules: {
+      "@typescript-eslint/consistent-type-assertions": ["error", { assertionStyle: "never" }],
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

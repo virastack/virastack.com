@@ -1,3 +1,5 @@
+import { keysOf } from "@/lib/object";
+
 import { CheckoutAddressDemo } from "@/features/start/demos/checkout-address/CheckoutAddressDemo";
 import { CheckoutCardDemo } from "@/features/start/demos/checkout-card/CheckoutCardDemo";
 import { UsersDemo } from "@/features/start/demos/users/UsersDemo";
@@ -11,7 +13,7 @@ const FEATURE_DEMOS = {
 
 export type DemoFeature = keyof typeof FEATURE_DEMOS;
 
-export const demoFeatures = Object.keys(FEATURE_DEMOS) as DemoFeature[];
+export const demoFeatures = keysOf(FEATURE_DEMOS);
 
 export function isDemoFeature(feature: string): feature is DemoFeature {
   return feature in FEATURE_DEMOS;

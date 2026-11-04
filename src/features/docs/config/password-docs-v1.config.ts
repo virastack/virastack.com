@@ -1,5 +1,7 @@
 import type { Translator } from "@/types/messages.types";
 
+import { isOneOf } from "@/helpers/is-one-of";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/password/docs/v1";
@@ -17,7 +19,7 @@ export const passwordDocsV1Slugs = [
 ] as const;
 
 export function isPasswordDocsV1Slug(slug: string): boolean {
-  return (passwordDocsV1Slugs as readonly string[]).includes(slug);
+  return isOneOf(passwordDocsV1Slugs, slug);
 }
 
 export function getPasswordDocsV1Nav(t: DocsPasswordV1Translate): DocsNavSection[] {

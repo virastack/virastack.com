@@ -15,7 +15,9 @@ import {
 import { stripRichText } from "@/features/search/helpers/strip-rich-text";
 import type { SearchDocument, SearchSectionId } from "@/features/search/types/search.types";
 
-type Translate = (key: string) => string;
+/** Raw messages: rich-text tags stay in, `stripRichText` removes them. */
+type NavigationText = (key: keyof AppMessages["Navigation"]) => string;
+type ProductsText = (key: keyof AppMessages["Products"]) => string;
 
 const PRODUCT_MESSAGE_NS = {
   start: "Start",
@@ -56,8 +58,8 @@ function docsKeyPrefixesForSlug(slug: string): string[] {
 
 function buildLandingDocuments(
   messages: Record<string, unknown>,
-  tProducts: Translate,
-  tNav: Translate,
+  tProducts: ProductsText,
+  tNav: NavigationText,
 ): SearchDocument[] {
   return products.map((product) => {
     const name = tNav(PRODUCT_NAME_KEYS[product.id]);
@@ -81,7 +83,7 @@ function buildLandingDocuments(
 
 function buildGuidePlayDocument(
   messages: Record<string, unknown>,
-  tNav: Translate,
+  tNav: NavigationText,
 ): SearchDocument | null {
   const guideNs = messages.Guide;
   if (!isStringRecord(guideNs)) return null;
@@ -138,7 +140,7 @@ function buildDocsDocuments(messages: AppMessages, locale: string): SearchDocume
 /** Academy's own pages, from messages. Tracks and lessons arrive separately from the API. */
 function buildAcademyPageDocuments(
   messages: Record<string, unknown>,
-  tNav: Translate,
+  tNav: NavigationText,
 ): SearchDocument[] {
   const namespace = messages.Academy;
   if (!isStringRecord(namespace)) return [];
@@ -180,8 +182,8 @@ function buildAcademyPageDocuments(
 export function buildSearchDocuments(
   messages: AppMessages,
   locale: string,
-  tProducts: Translate,
-  tNav: Translate,
+  tProducts: ProductsText,
+  tNav: NavigationText,
 ): SearchDocument[] {
   const landings = buildLandingDocuments(messages, tProducts, tNav);
   const docs = buildDocsDocuments(messages, locale);

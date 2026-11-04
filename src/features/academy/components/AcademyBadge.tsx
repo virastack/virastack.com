@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
+import { isOneOf } from "@/helpers/is-one-of";
 
 import {
   ACADEMY_BADGE_LABELS,
@@ -325,7 +326,7 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
 }
 
 function isCompanyBadge(kind: string): boolean {
-  return (ACADEMY_COMPANY_BADGES as readonly string[]).includes(kind);
+  return isOneOf(ACADEMY_COMPANY_BADGES, kind);
 }
 
 type AcademyBadgeProps = {
@@ -336,7 +337,7 @@ type AcademyBadgeProps = {
 
 export function AcademyBadge({ kind, label: labelProp, className }: AcademyBadgeProps) {
   const label = labelProp ?? ACADEMY_BADGE_LABELS[kind] ?? kind;
-  const isQuery = (ACADEMY_QUERY_BADGES as readonly string[]).includes(kind);
+  const isQuery = isOneOf(ACADEMY_QUERY_BADGES, kind);
   const company = isCompanyBadge(kind);
   const icon = isQuery ? null : <AcademyBadgeIcon kind={kind} />;
   const iconSize = company ? "size-3.5" : "size-3";

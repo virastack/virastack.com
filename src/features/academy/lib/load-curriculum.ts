@@ -32,7 +32,7 @@ export function loadAcademyCurriculum(locale: string): AcademyCurriculum {
     return cached;
   }
 
-  const raw = JSON.parse(readFileSync(getCurriculumPath(key), "utf8")) as unknown;
+  const raw: unknown = JSON.parse(readFileSync(getCurriculumPath(key), "utf8"));
   const curriculum = academyCurriculumSchema.parse(raw);
   cachedCurricula.set(key, curriculum);
   return curriculum;

@@ -1,4 +1,4 @@
-import type { Emphasis, Link, ListItem, PhrasingContent, Root } from "mdast";
+import type { Emphasis, ListItem, PhrasingContent, Root } from "mdast";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 
@@ -179,7 +179,7 @@ function readItemLink(item: ListItem): { title: string; href: string } | undefin
       if (inline.type !== "link") {
         continue;
       }
-      const link = inline as Link;
+      const link = inline;
       const title = phrasingText(link.children).trim();
       const href = link.url.trim();
       if (title && href) {

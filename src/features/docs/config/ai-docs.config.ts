@@ -1,5 +1,7 @@
 import type { Translator } from "@/types/messages.types";
 
+import { isOneOf } from "@/helpers/is-one-of";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/ai/docs";
@@ -19,7 +21,7 @@ export const aiDocsSlugs = [
 ] as const;
 
 export function isAiDocsSlug(slug: string): boolean {
-  return (aiDocsSlugs as readonly string[]).includes(slug);
+  return isOneOf(aiDocsSlugs, slug);
 }
 
 export function getAiDocsNav(t: DocsAiTranslate): DocsNavSection[] {

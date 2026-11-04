@@ -8,6 +8,7 @@ import { getProduct, isProductId } from "@/config/products.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 import { buildDocsSeoTitle } from "@/lib/seo-title";
+import { isOneOf } from "@/helpers/is-one-of";
 
 import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
 import {
@@ -33,7 +34,7 @@ type PageProps = {
 };
 
 function isExamplesProductId(value: string): value is ExamplesProductId {
-  return (EXAMPLES_PRODUCTS as readonly string[]).includes(value);
+  return isOneOf(EXAMPLES_PRODUCTS, value);
 }
 
 /**

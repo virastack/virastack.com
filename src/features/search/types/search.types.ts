@@ -1,16 +1,13 @@
-import type { ProductId } from "@/types/product.types";
+import type { z } from "zod";
 
-/** Products plus Academy, which is a site section rather than a product. */
-export type SearchSectionId = ProductId | "academy";
+import type {
+  SEARCH_KINDS,
+  SEARCH_SECTION_IDS,
+  searchDocumentSchema,
+} from "@/features/search/schemas/search-document.schema";
 
-export type SearchKind = "landing" | "docs" | "track" | "lesson" | "project";
+export type SearchSectionId = (typeof SEARCH_SECTION_IDS)[number];
 
-export type SearchDocument = {
-  id: string;
-  sectionId: SearchSectionId;
-  href: string;
-  title: string;
-  description: string;
-  body: string;
-  kind: SearchKind;
-};
+export type SearchKind = (typeof SEARCH_KINDS)[number];
+
+export type SearchDocument = z.infer<typeof searchDocumentSchema>;

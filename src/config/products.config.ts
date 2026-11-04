@@ -7,7 +7,7 @@ export const products: readonly Product[] = ecosystem
   .filter((entry): entry is typeof entry & { id: ProductId } => entry.id !== "academy")
   .map((entry) => ({
     id: entry.id,
-    href: entry.href as Product["href"],
+    href: `/${entry.id}`,
     github: entry.github,
     colorClass: getBrandPalette(entry.id).textClass,
   }));

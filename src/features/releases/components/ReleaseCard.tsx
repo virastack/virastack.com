@@ -1,18 +1,16 @@
 import { ChevronRight } from "lucide-react";
 import { getLocale } from "next-intl/server";
 
-import type { EcosystemLocale } from "@/config/ecosystem.config";
-
 import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
 import { ReleaseDate, ReleaseProducts } from "@/features/releases/components/ReleaseMeta";
-import { getReleaseHref, type Release } from "@/features/releases/data/releases";
+import { getReleaseCopy, getReleaseHref, type Release } from "@/features/releases/data/releases";
 import { Link } from "@/i18n/routing";
 
 export async function ReleaseCard({ release }: { release: Release }) {
-  const locale = (await getLocale()) as EcosystemLocale;
-  const copy = release.copy[locale];
+  const locale = await getLocale();
+  const copy = getReleaseCopy(release, locale);
 
   return (
     <article>

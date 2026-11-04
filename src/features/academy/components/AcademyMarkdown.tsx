@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import type {
   BlockContent,
   Content,
-  Heading,
   List,
   ListItem,
+  Node,
   PhrasingContent,
   Root,
   RootContent,
@@ -54,6 +54,8 @@ import {
 } from "@/features/academy/lib/remark-academy-tables";
 import { Link } from "@/i18n/routing";
 
+const HEADING_TAGS = { 1: "h1", 2: "h2", 3: "h3", 4: "h4", 5: "h5", 6: "h6" } as const;
+
 type AcademyMarkdownProps = {
   content: string;
 };
@@ -61,22 +63,33 @@ type AcademyMarkdownProps = {
 const INLINE_CODE_CLASS =
   "rounded-md border border-border bg-muted/40 px-1 py-0.5 font-mono text-xs font-normal text-foreground md:text-sm";
 
-function getAlertKind(node: BlockContent): string | null {
-  const data = node.data as { hProperties?: { "data-academy-alert"?: string } } | undefined;
-  return data?.hProperties?.["data-academy-alert"] ?? null;
+function isRoot(node: Node): node is Root {
+  return node.type === "root";
 }
 
-function getBadgeKind(node: PhrasingContent): string | null {
-  const data = node.data as { hProperties?: { "data-academy-badge"?: string } } | undefined;
-  return data?.hProperties?.["data-academy-badge"] ?? null;
+function readStringProperty(node: BlockContent | PhrasingContent, name: string): string | null {
+  const value = node.data?.hProperties?.[name];
+  return typeof value === "string" ? value : null;
+}
+
+function getAlertKind(node: BlockContent): string | null {
+  return readStringProperty(node, "data-academy-alert");
+}
+
+/** Badge kind of an `academyBadge` node, or of any node marked with `data-academy-badge`. */
+function findBadgeKind(node: PhrasingContent): string | null {
+  return (
+    readStringProperty(node, "data-academy-badge") ??
+    (node.type === "academyBadge" ? node.kind : null)
+  );
 }
 
 function isBadgeNode(node: PhrasingContent): boolean {
-  return node.type === ("academyBadge" as string) || getBadgeKind(node) !== null;
+  return findBadgeKind(node) !== null;
 }
 
 function readBadgeKind(node: PhrasingContent): string {
-  return getBadgeKind(node) ?? (node as { kind?: string }).kind ?? "";
+  return findBadgeKind(node) ?? "";
 }
 
 function readNodeId(data: { hProperties?: unknown } | undefined): string | undefined {
@@ -288,8 +301,8 @@ async function renderPhrasing(
           out.push(<AcademyBadge key={key} kind={readBadgeKind(node)} />);
           break;
         }
-        if ("children" in node && Array.isArray(node.children)) {
-          out.push(...(await renderPhrasing(node.children as PhrasingContent[], key)));
+        if ("children" in node) {
+          out.push(...(await renderPhrasing(node.children, key)));
         }
         break;
       }
@@ -632,8 +645,9 @@ function createAcademyProcessor() {
 
 async function parseAcademyMarkdown(content: string): Promise<Root> {
   const processor = createAcademyProcessor();
-  const tree = processor.parse(content) as Root;
-  return (await processor.run(tree)) as Root;
+  const tree = await processor.run(processor.parse(content));
+  if (!isRoot(tree)) throw new Error("Academy Markdown did not produce a root node");
+  return tree;
 }
 
 async function renderInlineMarkdown(content: string, key: string): Promise<ReactNode> {
@@ -702,21 +716,15 @@ async function renderBlock(
         );
         break;
       case "heading": {
-        if (isAcademyResourceHeading(node as Heading)) {
+        if (isAcademyResourceHeading(node)) {
           const following = findFollowingResourceList(nodes, i);
           if (following) {
             skippedIndexes.add(following.index);
-            out.push(
-              await renderResourceLinks(
-                getAcademyHeadingText(node as Heading),
-                following.list,
-                key,
-              ),
-            );
+            out.push(await renderResourceLinks(getAcademyHeadingText(node), following.list, key));
             break;
           }
         }
-        const Tag = `h${node.depth}` as "h2" | "h3" | "h4";
+        const Tag = HEADING_TAGS[node.depth];
         const size =
           node.depth === 2
             ? "pt-4 text-xl font-semibold tracking-tight text-foreground"

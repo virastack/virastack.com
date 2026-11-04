@@ -5,6 +5,7 @@ import { getBrandPalette } from "@/config/brand-palettes.config";
 import { getProduct } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
+import { fromEntries } from "@/lib/object";
 import { cn } from "@/lib/utils";
 
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
@@ -150,7 +151,7 @@ export function guideProductTags(
   const linked = options.linked ?? true;
   const showBrand = options.showBrand ?? true;
 
-  return Object.fromEntries(
+  return fromEntries(
     ids.map((id) => {
       function ProductTag(chunks: ReactNode) {
         return (
@@ -160,7 +161,7 @@ export function guideProductTags(
         );
       }
 
-      return [id, ProductTag as RichChunk];
+      return [id, ProductTag] as const;
     }),
   );
 }

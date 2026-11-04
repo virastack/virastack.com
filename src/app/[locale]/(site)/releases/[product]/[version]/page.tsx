@@ -3,14 +3,13 @@ import { notFound } from "next/navigation";
 
 import { setRequestLocale } from "next-intl/server";
 
-import type { EcosystemLocale } from "@/config/ecosystem.config";
-
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
 import { ReleaseDetailPage } from "@/features/releases/components/ReleaseDetailPage";
 import {
   findRelease,
+  getReleaseCopy,
   getReleaseHref,
   getReleaseParams,
   getReleases,
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const release = findRelease(product, version);
   if (!release) return {};
 
-  const { title, summary: description } = release.copy[locale as EcosystemLocale];
+  const { title, summary: description } = getReleaseCopy(release, locale);
   const path = getReleaseHref(release);
   const og = buildOgImageMetadata({ title, description, path });
 

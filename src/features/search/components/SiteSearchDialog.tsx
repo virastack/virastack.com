@@ -67,8 +67,8 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
       buildSearchDocuments(
         messages,
         locale,
-        (key) => String(tProducts.raw(key as "startDesc")),
-        (key) => String(tNav.raw(key as "startName")),
+        (key) => String(tProducts.raw(key)),
+        (key) => String(tNav.raw(key)),
       ),
     [locale, messages, tNav, tProducts],
   );

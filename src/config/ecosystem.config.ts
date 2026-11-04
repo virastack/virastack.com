@@ -11,7 +11,9 @@ import {
 
 export type EcosystemId = "academy" | "start" | "ai" | "mask" | "password" | "address" | "guide";
 
-export type EcosystemLocale = "en" | "tr";
+export const ECOSYSTEM_LOCALES = ["en", "tr"] as const;
+
+export type EcosystemLocale = (typeof ECOSYSTEM_LOCALES)[number];
 
 /**
  * Three lengths of the same product description:
