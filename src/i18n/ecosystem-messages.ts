@@ -1,4 +1,4 @@
-import { ecosystem, type EcosystemLocale } from "@/config/ecosystem.config";
+import { ecosystem, type EcosystemId, type EcosystemLocale } from "@/config/ecosystem.config";
 
 type Messages = Record<string, Record<string, unknown>>;
 
@@ -43,3 +43,13 @@ export function withEcosystemMessages(messages: Messages, locale: EcosystemLocal
     },
   };
 }
+
+type ProductId = Exclude<EcosystemId, "academy">;
+
+/** The keys `withEcosystemMessages` adds, so next-intl's `AppConfig` can type them. */
+export type EcosystemMessages = {
+  Navigation: Record<`${EcosystemId}Desc`, string>;
+  Home: Record<`ecosystem${Capitalize<EcosystemId>}Desc`, string>;
+  Products: Record<`${ProductId}Desc` | `${ProductId}Meta`, string>;
+  Academy: Record<"description" | "descriptionRich" | "metaDescription", string>;
+};

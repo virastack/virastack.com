@@ -43,7 +43,7 @@ const contentSecurityPolicy = buildContentSecurityPolicy("'none'");
 const FRAMEABLE_PATHS = ["/start/preview/:feature", "/:locale(en|tr)/start/preview/:feature"];
 
 const nextConfig: NextConfig = {
-  reactCompiler: process.env.NODE_ENV === "production",
+  reactCompiler: true,
   // `inlineCss` is off: it copied the whole stylesheet into every page, so each uncached page view
   // carried it from the origin. A shared CSS file is cached once on the CDN instead.
   turbopack: {

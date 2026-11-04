@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 
 export default function NotFound() {
@@ -11,9 +11,9 @@ export default function NotFound() {
       <p className="text-sm font-medium text-muted-foreground">404</p>
       <h1 className="text-2xl font-semibold tracking-tight">{t("pageNotFound")}</h1>
       <p className="max-w-md text-sm text-muted-foreground">{t("pageNotFoundDesc")}</p>
-      <Button nativeButton={false} render={<Link href="/" />}>
+      <Link href="/" className={buttonVariants()}>
         {t("goHome")}
-      </Button>
+      </Link>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import type { AppMessages } from "@/types/messages.types";
 import type { ProductId } from "@/types/product.types";
 import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
@@ -99,18 +100,18 @@ function buildGuidePlayDocument(
   };
 }
 
-function buildDocsDocuments(messages: Record<string, unknown>): SearchDocument[] {
+function buildDocsDocuments(messages: AppMessages, locale: string): SearchDocument[] {
   const documents: SearchDocument[] = [];
 
   for (const productId of DOCS_PRODUCT_IDS) {
     const config = docsProducts[productId];
-    const namespace = messages[config.messageNamespace];
+    const namespace: unknown = messages[config.messageNamespace];
     if (!isStringRecord(namespace)) continue;
 
-    const t: Translate = (key) => namespace[key] ?? key;
+    const texts = config.texts(messages, locale);
 
     for (const slug of config.slugs) {
-      const page = config.getPage(slug, t);
+      const page = texts.getPage(slug);
       if (!page) continue;
 
       const prefixes = docsKeyPrefixesForSlug(slug);
@@ -177,12 +178,13 @@ function buildAcademyPageDocuments(
 }
 
 export function buildSearchDocuments(
-  messages: Record<string, unknown>,
+  messages: AppMessages,
+  locale: string,
   tProducts: Translate,
   tNav: Translate,
 ): SearchDocument[] {
   const landings = buildLandingDocuments(messages, tProducts, tNav);
-  const docs = buildDocsDocuments(messages);
+  const docs = buildDocsDocuments(messages, locale);
   const guidePlay = buildGuidePlayDocument(messages, tNav);
   const academyPages = buildAcademyPageDocuments(messages, tNav);
 

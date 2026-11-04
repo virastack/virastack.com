@@ -3,11 +3,17 @@ import type { ReactNode } from "react";
 import { ArrowLeftIcon, SparklesIcon, SquareTerminalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import type { AppMessages } from "@/types/messages.types";
+
 import { CopyButton } from "@/components/shared/CopyButton";
 import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { guideCardTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
-import { featureCatalog, visibleFeatures } from "@/features/start/data/feature-catalog";
+import {
+  featureCatalog,
+  visibleFeatures,
+  type FeatureId,
+} from "@/features/start/data/feature-catalog";
 import { INSTALL_ROUTE as CHECKOUT_ADDRESS_ROUTE } from "@/features/start/demos/checkout-address/install-files";
 import { INSTALL_ROUTE as CHECKOUT_CARD_ROUTE } from "@/features/start/demos/checkout-card/install-files";
 import { INSTALL_ROUTE as USERS_ROUTE } from "@/features/start/demos/users/install-files";
@@ -22,16 +28,28 @@ type InstallRoute = {
   routeSearch?: { name: string; file: string };
 };
 
+type DetailKey = keyof AppMessages["StartFeatureCatalog"]["detail"];
+/** Ids that have a `<id>Desc` message. */
+type DetailRow = { [Key in DetailKey]: Key extends `${infer Id}Desc` ? Id : never }[DetailKey];
+/** Ids that have both a `<id>Title` and a `<id>Desc` message. */
+type DetailItem = {
+  [Key in DetailKey]: Key extends `${infer Id}Title`
+    ? `${Id}Desc` extends DetailKey
+      ? Id
+      : never
+    : never;
+}[DetailKey];
+
 type ReadyContent = {
   route: InstallRoute;
-  rows: readonly string[];
-  previewNote: string;
-  apiKey: string;
+  rows: readonly DetailRow[];
+  previewNote: Extract<DetailKey, `${string}reviewNote`>;
+  apiKey: DetailItem;
   hasMoreNote: boolean;
 };
 
 /** What each ready module shows. A module missing here renders as an empty template. */
-const READY_CONTENT: Record<string, ReadyContent> = {
+const READY_CONTENT: Partial<Record<FeatureId, ReadyContent>> = {
   users: {
     route: USERS_ROUTE,
     rows: ["list", "search", "form", "tests"],
@@ -61,7 +79,7 @@ const TEST_CARD_NUMBER = "5400360000000003";
 
 const previewClassName = "rounded-2xl border border-border bg-muted/30 px-4 py-10 sm:px-6 sm:py-16";
 
-export function StartFeatureDetailPage({ feature }: { feature: string }) {
+export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
   const t = useTranslations("StartFeatureCatalog");
   const command = `npx virastack add ${feature}`;
   const isReady = featureCatalog.some((item) => item.id === feature && item.status === "ready");

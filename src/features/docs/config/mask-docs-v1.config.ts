@@ -1,8 +1,10 @@
+import type { Translator } from "@/types/messages.types";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/mask/docs/v1";
 
-type DocsMaskV1Translate = (key: string) => string;
+type DocsMaskV1Translate = Translator<"DocsMaskV1">;
 
 export const maskDocsV1Slugs = [
   "introduction",

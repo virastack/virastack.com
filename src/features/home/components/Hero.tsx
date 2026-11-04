@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { Reveal } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
@@ -55,25 +55,25 @@ export function Hero() {
         className="mt-2 flex flex-col items-center gap-5"
       >
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <Button size="lg" nativeButton={false} render={<Link href="/academy" />}>
+          <Link href="/academy" className={buttonVariants({ size: "lg" })}>
             <span>{t("ctaLearn")}</span>
             <ChevronRightIcon
               data-icon="inline-end"
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
-          </Button>
-          <Button size="lg" variant="outline" nativeButton={false} render={<Link href="/start" />}>
+          </Link>
+          <Link href="/start" className={buttonVariants({ variant: "outline", size: "lg" })}>
             <span>{t("ctaStart")}</span>
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-lg"
-            nativeButton={false}
+          </Link>
+          <a
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noreferrer"
+            className={buttonVariants({ variant: "outline", size: "icon-lg" })}
             aria-label="GitHub"
-            render={<a href={siteConfig.links.github} target="_blank" rel="noreferrer" />}
           >
             <GithubIcon className="size-4" />
-          </Button>
+          </a>
         </div>
       </Reveal>
     </section>

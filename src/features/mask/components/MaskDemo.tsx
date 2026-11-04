@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useForm, useWatch } from "react-hook-form";
 
 import { Reveal } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
@@ -70,18 +70,13 @@ export function MaskDemo({ inHero = false }: MaskDemoProps) {
       </div>
 
       <div className="mt-6 flex justify-center">
-        <Button
-          variant="ghost"
-          size="sm"
-          nativeButton={false}
-          render={<Link href="/mask/examples" />}
-        >
+        <Link href="/mask/examples" className={buttonVariants({ variant: "ghost", size: "sm" })}>
           <span>{t("demoMoreExamples")}</span>
           <ChevronRightIcon
             data-icon="inline-end"
             className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
           />
-        </Button>
+        </Link>
       </div>
     </Reveal>
   );

@@ -1,12 +1,31 @@
 const featureGroups = ["user", "ecommerce", "admin"] as const;
 
+const featureIds = [
+  "users",
+  "auth",
+  "products",
+  "cart",
+  "checkout-address",
+  "checkout-card",
+  "admin-products",
+  "admin-orders",
+  "admin-customers",
+  "admin-dashboard",
+] as const;
+
+/** Registry item name, also the `virastack add` argument. */
+export type FeatureId = (typeof featureIds)[number];
+
+export function isFeatureId(value: string): value is FeatureId {
+  return (featureIds as readonly string[]).includes(value);
+}
+
 export type FeatureGroup = (typeof featureGroups)[number];
 
 export type FeatureTag = "mockApi" | "urlState" | "form";
 
 export type CatalogFeature = {
-  /** Registry item name, also the `virastack add` argument. */
-  id: string;
+  id: FeatureId;
   group: FeatureGroup;
   status: "ready" | "soon";
   tags: readonly FeatureTag[];

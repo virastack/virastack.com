@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { LogoDownloadSelect } from "@/features/brand/components/LogoDownloadSelect";
 
 type LogoVariant = {
@@ -100,15 +100,14 @@ export function BrandLogoSection() {
               {variant.hasDropdown ? (
                 <LogoDownloadSelect />
               ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  nativeButton={false}
-                  render={<a href={variant.downloadHref} download={variant.downloadFilename} />}
+                <a
+                  href={variant.downloadHref}
+                  download={variant.downloadFilename}
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
                 >
                   {t("logoDownload")}
                   <DownloadIcon data-icon="inline-end" />
-                </Button>
+                </a>
               )}
             </div>
           </div>

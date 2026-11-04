@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 
 export default function Error({ error, retry }: { error: unknown; retry: () => void }) {
@@ -20,9 +20,9 @@ export default function Error({ error, retry }: { error: unknown; retry: () => v
       <p className="max-w-md text-sm text-muted-foreground">{t("somethingWentWrongDesc")}</p>
       <div className="flex gap-3">
         <Button onClick={retry}>{t("tryAgain")}</Button>
-        <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
+        <Link href="/" className={buttonVariants({ variant: "outline" })}>
           {t("goHome")}
-        </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+import { createTranslator } from "next-intl";
+
+import type { AppMessages } from "@/types/messages.types";
 import type { ProductId } from "@/types/product.types";
 
 import {
@@ -64,8 +67,6 @@ export function isDocsProductId(value: string): value is DocsProductId {
   return (DOCS_PRODUCT_IDS as readonly string[]).includes(value);
 }
 
-type DocsTranslate = (key: string) => string;
-
 type DocsMessageNamespace =
   | "DocsStart"
   | "DocsStartV1"
@@ -84,13 +85,18 @@ type DocsVersion = {
   latest: boolean;
 };
 
+type DocsVersionTexts = {
+  getNav: () => DocsNavSection[];
+  getPage: (slug: string) => DocsPageMeta | undefined;
+};
+
 /** Content of one docs version. */
 type DocsVersionContent = {
   indexHref: string;
   messageNamespace: DocsMessageNamespace;
   slugs: readonly string[];
-  getNav: (t: DocsTranslate) => DocsNavSection[];
-  getPage: (slug: string, t: DocsTranslate) => DocsPageMeta | undefined;
+  /** Builds nav and page meta from this version's own namespace, so its keys stay typed. */
+  texts: (messages: AppMessages, locale: string) => DocsVersionTexts;
   isSlug: (slug: string) => boolean;
 };
 
@@ -112,8 +118,10 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     indexHref: "/start/docs",
     messageNamespace: "DocsStart",
     slugs: startDocsSlugs,
-    getNav: getStartDocsNav,
-    getPage: getStartDocsPage,
+    texts: (messages, locale) => {
+      const t = createTranslator({ locale, messages, namespace: "DocsStart" });
+      return { getNav: () => getStartDocsNav(t), getPage: (slug) => getStartDocsPage(slug, t) };
+    },
     isSlug: isStartDocsSlug,
     versions: [
       { id: "v2", label: "v2.0", latest: true },
@@ -124,8 +132,13 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
         indexHref: "/start/docs/v1",
         messageNamespace: "DocsStartV1",
         slugs: startDocsV1Slugs,
-        getNav: getStartDocsV1Nav,
-        getPage: getStartDocsV1Page,
+        texts: (messages, locale) => {
+          const t = createTranslator({ locale, messages, namespace: "DocsStartV1" });
+          return {
+            getNav: () => getStartDocsV1Nav(t),
+            getPage: (slug) => getStartDocsV1Page(slug, t),
+          };
+        },
         isSlug: isStartDocsV1Slug,
       },
     },
@@ -136,8 +149,10 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     indexHref: "/ai/docs",
     messageNamespace: "DocsAi",
     slugs: aiDocsSlugs,
-    getNav: getAiDocsNav,
-    getPage: getAiDocsPage,
+    texts: (messages, locale) => {
+      const t = createTranslator({ locale, messages, namespace: "DocsAi" });
+      return { getNav: () => getAiDocsNav(t), getPage: (slug) => getAiDocsPage(slug, t) };
+    },
     isSlug: isAiDocsSlug,
     versions: [
       { id: "v2", label: "v2.1", latest: true },
@@ -148,8 +163,10 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
         indexHref: "/ai/docs/v1",
         messageNamespace: "DocsAiV1",
         slugs: aiDocsV1Slugs,
-        getNav: getAiDocsV1Nav,
-        getPage: getAiDocsV1Page,
+        texts: (messages, locale) => {
+          const t = createTranslator({ locale, messages, namespace: "DocsAiV1" });
+          return { getNav: () => getAiDocsV1Nav(t), getPage: (slug) => getAiDocsV1Page(slug, t) };
+        },
         isSlug: isAiDocsV1Slug,
       },
     },
@@ -160,8 +177,10 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     indexHref: "/mask/docs",
     messageNamespace: "DocsMask",
     slugs: maskDocsSlugs,
-    getNav: getMaskDocsNav,
-    getPage: getMaskDocsPage,
+    texts: (messages, locale) => {
+      const t = createTranslator({ locale, messages, namespace: "DocsMask" });
+      return { getNav: () => getMaskDocsNav(t), getPage: (slug) => getMaskDocsPage(slug, t) };
+    },
     isSlug: isMaskDocsSlug,
     versions: [
       { id: "v2", label: "v2.2", latest: true },
@@ -172,8 +191,13 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
         indexHref: "/mask/docs/v1",
         messageNamespace: "DocsMaskV1",
         slugs: maskDocsV1Slugs,
-        getNav: getMaskDocsV1Nav,
-        getPage: getMaskDocsV1Page,
+        texts: (messages, locale) => {
+          const t = createTranslator({ locale, messages, namespace: "DocsMaskV1" });
+          return {
+            getNav: () => getMaskDocsV1Nav(t),
+            getPage: (slug) => getMaskDocsV1Page(slug, t),
+          };
+        },
         isSlug: isMaskDocsV1Slug,
       },
     },
@@ -184,8 +208,13 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     indexHref: "/password/docs",
     messageNamespace: "DocsPassword",
     slugs: passwordDocsSlugs,
-    getNav: getPasswordDocsNav,
-    getPage: getPasswordDocsPage,
+    texts: (messages, locale) => {
+      const t = createTranslator({ locale, messages, namespace: "DocsPassword" });
+      return {
+        getNav: () => getPasswordDocsNav(t),
+        getPage: (slug) => getPasswordDocsPage(slug, t),
+      };
+    },
     isSlug: isPasswordDocsSlug,
     versions: [
       { id: "v1.1", label: "v1.1", latest: true },
@@ -196,8 +225,13 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
         indexHref: "/password/docs/v1",
         messageNamespace: "DocsPasswordV1",
         slugs: passwordDocsV1Slugs,
-        getNav: getPasswordDocsV1Nav,
-        getPage: getPasswordDocsV1Page,
+        texts: (messages, locale) => {
+          const t = createTranslator({ locale, messages, namespace: "DocsPasswordV1" });
+          return {
+            getNav: () => getPasswordDocsV1Nav(t),
+            getPage: (slug) => getPasswordDocsV1Page(slug, t),
+          };
+        },
         isSlug: isPasswordDocsV1Slug,
       },
     },
@@ -208,8 +242,10 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     indexHref: "/address/docs",
     messageNamespace: "DocsAddress",
     slugs: addressDocsSlugs,
-    getNav: getAddressDocsNav,
-    getPage: getAddressDocsPage,
+    texts: (messages, locale) => {
+      const t = createTranslator({ locale, messages, namespace: "DocsAddress" });
+      return { getNav: () => getAddressDocsNav(t), getPage: (slug) => getAddressDocsPage(slug, t) };
+    },
     isSlug: isAddressDocsSlug,
     versions: [{ id: "v1", label: "v1.0", latest: true }],
     archives: {},

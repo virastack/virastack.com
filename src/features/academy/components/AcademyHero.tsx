@@ -9,7 +9,7 @@ import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
 import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
@@ -87,10 +87,10 @@ export function AcademyHero({
         delay={0.1}
         className="mt-2 flex flex-wrap items-center justify-center gap-2"
       >
-        <Button size="lg" nativeButton={false} render={<a href={startHref} />}>
+        <a href={startHref} className={buttonVariants({ size: "lg" })}>
           <span>{t("startRoadmap")}</span>
           <ArrowDown data-icon="inline-end" aria-hidden className="size-3.5" />
-        </Button>
+        </a>
         <GithubRepoButton href={githubHref} label="virastack/academy" />
       </Reveal>
       <div className="mt-6 flex flex-col items-center gap-3">

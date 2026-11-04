@@ -56,7 +56,7 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
   const tNav = useTranslations("Navigation");
   const tProducts = useTranslations("Products");
   const locale = useLocale();
-  const messages = useMessages() as Record<string, unknown>;
+  const messages = useMessages();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [sectionFilter, setSectionFilter] = useState<Set<SearchSectionId>>(() => new Set());
@@ -66,10 +66,11 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
     () =>
       buildSearchDocuments(
         messages,
+        locale,
         (key) => String(tProducts.raw(key as "startDesc")),
         (key) => String(tNav.raw(key as "startName")),
       ),
-    [messages, tNav, tProducts],
+    [locale, messages, tNav, tProducts],
   );
 
   const results = useMemo(

@@ -1,8 +1,10 @@
+import type { Translator } from "@/types/messages.types";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/password/docs/v1";
 
-type DocsPasswordV1Translate = (key: string) => string;
+type DocsPasswordV1Translate = Translator<"DocsPasswordV1">;
 
 export const passwordDocsV1Slugs = [
   "introduction",

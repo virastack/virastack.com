@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates } from "@/lib/canonical";
 
 import { StartFeatureDetailPage } from "@/features/start/components/StartFeatureDetailPage";
-import { visibleFeatures } from "@/features/start/data/feature-catalog";
+import { isFeatureId, visibleFeatures } from "@/features/start/data/feature-catalog";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {
@@ -25,7 +25,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, product, feature } = await params;
-  if (product !== "start" || !visibleFeatures.some(({ id }) => id === feature)) return {};
+  if (
+    product !== "start" ||
+    !isFeatureId(feature) ||
+    !visibleFeatures.some(({ id }) => id === feature)
+  ) {
+    return {};
+  }
 
   const t = await getTranslations({ locale, namespace: "StartFeatureCatalog" });
 
@@ -40,7 +46,11 @@ export default async function Page({ params }: PageProps) {
   const { locale, product, feature } = await params;
   setRequestLocale(locale);
 
-  if (product !== "start" || !visibleFeatures.some(({ id }) => id === feature)) {
+  if (
+    product !== "start" ||
+    !isFeatureId(feature) ||
+    !visibleFeatures.some(({ id }) => id === feature)
+  ) {
     notFound();
   }
 

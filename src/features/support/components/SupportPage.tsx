@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
@@ -68,15 +68,15 @@ export function SupportPage() {
         <StorySection
           title={t("starTitle")}
           action={
-            <Button
-              variant="outline"
-              size="lg"
-              nativeButton={false}
-              render={<a href={siteConfig.links.github} target="_blank" rel="noreferrer" />}
+            <a
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "outline", size: "lg" })}
             >
               <StarIcon data-icon="inline-start" className="size-4" />
               <span>{t("starCta")}</span>
-            </Button>
+            </a>
           }
         >
           <p>{t.rich("starBody", rich)}</p>

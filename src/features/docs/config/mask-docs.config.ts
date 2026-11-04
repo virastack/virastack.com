@@ -1,20 +1,21 @@
 import type { Country, MaskSpec, PresetName } from "@virastack/mask";
 
+import type { Translator } from "@/types/messages.types";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/mask/docs";
 
-type DocsMaskTranslate = ((key: string) => string) & {
-  /** Prefer for code snippets, ICU treats `{`/`}` as placeholders. */
-  raw?: (key: string) => unknown;
-};
+type DocsMaskTranslate = Translator<"DocsMask">;
+type DocsMaskKey = Parameters<DocsMaskTranslate>[0];
+/** Prefixes that have both a `<prefix>Title` and a `<prefix>Description` message. */
+type DocsMaskCheckKey = {
+  [Key in DocsMaskKey]: Key extends `${infer Prefix}CheckTitle` ? `${Prefix}Check` : never;
+}[DocsMaskKey];
 
 /** Code strings must use raw messages; otherwise next-intl ICU eats `{ ... }`. */
-function translateCode(t: DocsMaskTranslate, key: string): string {
-  if (typeof t.raw === "function") {
-    return String(t.raw(key));
-  }
-  return t(key);
+function translateCode(t: DocsMaskTranslate, key: DocsMaskKey): string {
+  return String(t.raw(key));
 }
 
 export type MaskExampleGroup = "payment" | "identity" | "contact" | "misc";
@@ -69,18 +70,18 @@ type MaskExampleDef = {
   maskPattern?: string;
   formValue?: string;
   placeholder?: string;
-  titleKey: string;
-  descriptionKey: string;
-  noteKeys: string[];
+  titleKey: DocsMaskKey;
+  descriptionKey: DocsMaskKey;
+  noteKeys: DocsMaskKey[];
   customizationKeys: {
-    titleKey: string;
-    descriptionKey: string;
-    codeKey: string;
+    titleKey: DocsMaskKey;
+    descriptionKey: DocsMaskKey;
+    codeKey: DocsMaskKey;
     preview?: MaskCustomizationPreview;
   }[];
   errorKeys?: string[];
   /** Message key prefix for the built-in validation callout (`<key>Title`, `<key>Description`). */
-  checkKey?: string;
+  checkKey?: DocsMaskCheckKey;
 };
 
 const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [

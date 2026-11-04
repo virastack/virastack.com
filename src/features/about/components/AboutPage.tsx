@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { AboutTimeline } from "@/features/about/components/AboutTimeline";
 import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { GuideProductMark, guideProductTags } from "@/features/guide/components/GuideRichText";
@@ -164,7 +164,7 @@ export function AboutPage() {
 
         <RevealItem>
           <div className="flex flex-wrap items-center gap-2 border-t border-border pt-10">
-            <Button size="lg" nativeButton={false} render={<Link href="/start" />}>
+            <Link href="/start" className={buttonVariants({ size: "lg" })}>
               <span>
                 {t.rich("ctaStart", {
                   start: (chunks) => (
@@ -182,15 +182,10 @@ export function AboutPage() {
                 data-icon="inline-end"
                 className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
               />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              nativeButton={false}
-              render={<Link href="/support" />}
-            >
+            </Link>
+            <Link href="/support" className={buttonVariants({ variant: "outline", size: "lg" })}>
               {t("ctaSupport")}
-            </Button>
+            </Link>
             <GithubRepoButton href={siteConfig.links.github} label="virastack" />
           </div>
         </RevealItem>

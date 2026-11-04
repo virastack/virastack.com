@@ -3,7 +3,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+import { buttonVariants } from "@/components/ui/button";
 import type { DocsNavItem } from "@/features/docs/types/docs.types";
 import { Link } from "@/i18n/routing";
 
@@ -39,28 +41,22 @@ function PagerButton({ item, direction }: { item: DocsNavItem; direction: "prev"
 
   if (item.external) {
     return (
-      <Button
-        variant="outline"
-        size="lg"
-        nativeButton={false}
-        render={<a href={item.href} />}
-        className={className}
+      <a
+        href={item.href}
+        className={cn(buttonVariants({ variant: "outline", size: "lg" }), className)}
       >
         {content}
-      </Button>
+      </a>
     );
   }
 
   return (
-    <Button
-      variant="outline"
-      size="lg"
-      nativeButton={false}
-      render={<Link href={item.href} />}
-      className={className}
+    <Link
+      href={item.href}
+      className={cn(buttonVariants({ variant: "outline", size: "lg" }), className)}
     >
       {content}
-    </Button>
+    </Link>
   );
 }
 

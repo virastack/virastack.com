@@ -1,8 +1,10 @@
+import type { Translator } from "@/types/messages.types";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/ai/docs";
 
-type DocsAiTranslate = (key: string) => string;
+type DocsAiTranslate = Translator<"DocsAi">;
 
 export const aiDocsSlugs = [
   "introduction",

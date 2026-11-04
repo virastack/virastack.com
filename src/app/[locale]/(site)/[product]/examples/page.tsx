@@ -43,8 +43,10 @@ export function generateStaticParams() {
 
 const productLabels = { mask: "Mask", password: "Password" } as const;
 
-function getExamplesIndexPage(product: ExamplesProductId, t: (key: string) => string) {
-  return product === "mask" ? getMaskDocsPage("examples", t) : getPasswordDocsPage("examples", t);
+async function getExamplesIndexPage(product: ExamplesProductId, locale: string) {
+  return product === "mask"
+    ? getMaskDocsPage("examples", await getTranslations({ locale, namespace: "DocsMask" }))
+    : getPasswordDocsPage("examples", await getTranslations({ locale, namespace: "DocsPassword" }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -56,11 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const product = getProduct(productParam);
   const path = `${product.href}/examples`;
-  const t = await getTranslations({
-    locale,
-    namespace: productParam === "mask" ? "DocsMask" : "DocsPassword",
-  });
-  const page = getExamplesIndexPage(productParam, t);
+  const page = await getExamplesIndexPage(productParam, locale);
   if (!page) return {};
 
   const title = await buildDocsSeoTitle({
@@ -104,11 +102,7 @@ export default async function Page({ params }: PageProps) {
 
   const product = getProduct(productParam);
   const path = `${product.href}/examples`;
-  const t = await getTranslations({
-    locale,
-    namespace: productParam === "mask" ? "DocsMask" : "DocsPassword",
-  });
-  const page = getExamplesIndexPage(productParam, t);
+  const page = await getExamplesIndexPage(productParam, locale);
 
   return (
     <main className="flex-1">

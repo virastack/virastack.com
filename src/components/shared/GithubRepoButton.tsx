@@ -1,5 +1,5 @@
 import { GithubIcon } from "@/components/shared/icons/GithubIcon";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 type GithubRepoButtonProps = {
   href: string;
@@ -9,14 +9,14 @@ type GithubRepoButtonProps = {
 
 export function GithubRepoButton({ href, label }: GithubRepoButtonProps) {
   return (
-    <Button
-      variant="outline"
-      size="lg"
-      nativeButton={false}
-      render={<a href={href} target="_blank" rel="noreferrer" />}
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className={buttonVariants({ variant: "outline", size: "lg" })}
     >
       <GithubIcon data-icon="inline-start" className="size-3.5" />
       <span>{label}</span>
-    </Button>
+    </a>
   );
 }

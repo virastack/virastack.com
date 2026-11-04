@@ -12,7 +12,9 @@ import type { ProductId } from "@/types/product.types";
 import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+import { buttonVariants } from "@/components/ui/button";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
@@ -132,10 +134,10 @@ export function Step7Final() {
             </div>
           ))}
         </dl>
-        <Button size="lg" className="w-fit" nativeButton={false} render={<Link href="/" />}>
+        <Link href="/" className={cn(buttonVariants({ size: "lg" }), "w-fit")}>
           <span>{t("step7Cta")}</span>
           <ChevronRightIcon data-icon="inline-end" />
-        </Button>
+        </Link>
       </div>
     </section>
   );

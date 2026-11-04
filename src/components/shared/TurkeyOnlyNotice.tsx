@@ -25,7 +25,7 @@ export function TurkeyOnlyNotice({ variant = "block", className }: TurkeyOnlyNot
       <p
         role="note"
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border border-orange-600/30 bg-orange-500/10 px-3 py-1 text-xs text-muted-foreground dark:border-orange-400/30 dark:bg-orange-400/10",
+          "inline-flex items-center gap-1.5 rounded-full border border-warning/30 bg-warning/10 px-3 py-1 text-xs text-muted-foreground",
           className,
         )}
       >
@@ -44,7 +44,7 @@ export function TurkeyOnlyNotice({ variant = "block", className }: TurkeyOnlyNot
     <div
       role="note"
       className={cn(
-        "not-prose my-6 flex gap-3 rounded-xl border border-orange-600/30 bg-orange-500/10 p-4 dark:border-orange-400/30 dark:bg-orange-400/10",
+        "not-prose my-6 flex gap-3 rounded-xl border border-warning/30 bg-warning/10 p-4",
         className,
       )}
     >

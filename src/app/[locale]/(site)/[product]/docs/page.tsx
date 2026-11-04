@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { getProduct, isProductId } from "@/config/products.config";
 
@@ -65,8 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const docs = getDocsProduct(productParam);
   if (!docs) return {};
 
-  const t = await getTranslations({ locale, namespace: docs.messageNamespace });
-  const page = docs.getPage("introduction", t);
+  const page = docs.texts(await getMessages({ locale }), locale).getPage("introduction");
   if (!page) return {};
 
   const title = await buildDocsSeoTitle({
@@ -111,8 +110,7 @@ export default async function DocsIndexPage({ params }: PageProps) {
   }
 
   const product = getProduct(productParam);
-  const t = await getTranslations({ locale, namespace: docs.messageNamespace });
-  const page = docs.getPage("introduction", t);
+  const page = docs.texts(await getMessages({ locale }), locale).getPage("introduction");
 
   return (
     <main className="flex flex-1 flex-col">

@@ -1,8 +1,10 @@
+import type { Translator } from "@/types/messages.types";
+
 import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.types";
 
 const BASE = "/address/docs";
 
-type DocsAddressTranslate = (key: string) => string;
+type DocsAddressTranslate = Translator<"DocsAddress">;
 
 export function getAddressDocsNav(t: DocsAddressTranslate): DocsNavSection[] {
   return [

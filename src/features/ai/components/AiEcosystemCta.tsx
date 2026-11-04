@@ -4,7 +4,7 @@ import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Reveal } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
@@ -28,7 +28,7 @@ export function AiEcosystemCta() {
           })}
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          <Button size="lg" nativeButton={false} render={<Link href="/start" />}>
+          <Link href="/start" className={buttonVariants({ size: "lg" })}>
             <span>
               {t.rich("ctaStart", {
                 start: (chunks) => (
@@ -46,7 +46,7 @@ export function AiEcosystemCta() {
               data-icon="inline-end"
               className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
             />
-          </Button>
+          </Link>
         </div>
       </Reveal>
     </section>

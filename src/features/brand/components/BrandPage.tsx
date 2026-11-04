@@ -8,6 +8,7 @@ import {
   virastackColor,
   type BrandPalette,
 } from "@/config/brand-palettes.config";
+import type { EcosystemId } from "@/config/ecosystem.config";
 import { productIcons, productIconSlugs } from "@/config/product-icons.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -83,7 +84,15 @@ const richTags = {
   ),
 };
 
-const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+const homeDescKeys = {
+  academy: "ecosystemAcademyDesc",
+  start: "ecosystemStartDesc",
+  ai: "ecosystemAiDesc",
+  mask: "ecosystemMaskDesc",
+  password: "ecosystemPasswordDesc",
+  address: "ecosystemAddressDesc",
+  guide: "ecosystemGuideDesc",
+} as const satisfies Record<EcosystemId, `ecosystem${Capitalize<EcosystemId>}Desc`>;
 
 /** Short, medium, long and meta descriptions of every product, read from `ecosystem.config.ts`. */
 function ProductCopyList() {
@@ -99,7 +108,7 @@ function ProductCopyList() {
         const Icon = productIcons[palette.id];
         const rows: [string, ReactNode][] = [
           [t("copyShort"), tNav(`${palette.id}Desc`)],
-          [t("copyMedium"), tHome.rich(`ecosystem${capitalize(palette.id)}Desc`, richTags)],
+          [t("copyMedium"), tHome.rich(homeDescKeys[palette.id], richTags)],
           [
             t("copyLong"),
             palette.id === "academy"

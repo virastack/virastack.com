@@ -1,3 +1,5 @@
+import type { Translator } from "@/types/messages.types";
+
 import {
   passwordExampleSketch,
   type PasswordExampleCodeId,
@@ -6,7 +8,7 @@ import type { DocsNavSection, DocsPageMeta } from "@/features/docs/types/docs.ty
 
 const BASE = "/password/docs";
 
-type DocsPasswordTranslate = (key: string) => string;
+type DocsPasswordTranslate = Translator<"DocsPassword">;
 
 export type PasswordExampleComponentId = PasswordExampleCodeId;
 

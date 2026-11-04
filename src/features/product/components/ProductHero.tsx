@@ -15,7 +15,7 @@ import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
 import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
@@ -61,6 +61,15 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
       : { href: `${product.href}/docs` as const, label: t("readTheDocs") };
   const installCommand = installCommands[product.id];
   const github = parseGithubLink(product.github);
+  const primaryContent = (
+    <>
+      <span>{primary.label}</span>
+      <ChevronRightIcon
+        data-icon="inline-end"
+        className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
+      />
+    </>
+  );
 
   const copy = (
     <div
@@ -108,23 +117,15 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
             aside ? "justify-center lg:justify-start" : "justify-center",
           )}
         >
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={
-              primary.href.startsWith("#") ? (
-                <a href={primary.href} />
-              ) : (
-                <Link href={primary.href} />
-              )
-            }
-          >
-            <span>{primary.label}</span>
-            <ChevronRightIcon
-              data-icon="inline-end"
-              className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
-            />
-          </Button>
+          {primary.href.startsWith("#") ? (
+            <a href={primary.href} className={buttonVariants({ size: "lg" })}>
+              {primaryContent}
+            </a>
+          ) : (
+            <Link href={primary.href} className={buttonVariants({ size: "lg" })}>
+              {primaryContent}
+            </Link>
+          )}
           <GithubRepoButton
             href={product.github}
             label={github.pkg ? `${github.slug.split("/")[0]}/${github.pkg}` : github.slug}

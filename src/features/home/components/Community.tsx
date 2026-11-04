@@ -3,8 +3,10 @@ import { useTranslations } from "next-intl";
 
 import { siteConfig } from "@/config/site.config";
 
+import { cn } from "@/lib/utils";
+
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Community() {
   const t = useTranslations("Home");
@@ -25,15 +27,15 @@ export function Community() {
       </RevealGroup>
 
       <Reveal mode="view">
-        <Button
-          variant="outline"
-          className="h-10 px-4 py-2"
-          nativeButton={false}
-          render={<a href={siteConfig.links.github} target="_blank" rel="noreferrer" />}
+        <a
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noreferrer"
+          className={cn(buttonVariants({ variant: "outline" }), "h-10 px-4 py-2")}
         >
           <StarIcon className="size-4" />
           <span>{t("communityGithub")}</span>
-        </Button>
+        </a>
       </Reveal>
     </section>
   );

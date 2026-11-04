@@ -11,7 +11,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 import { Reveal } from "@/components/shared/Reveal";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { checkPasswordLeak } from "@/features/password/actions/check-pwned";
@@ -123,18 +123,16 @@ export function PasswordDemo({ inHero = false }: PasswordDemoProps) {
       </form>
 
       <div className="mt-6 flex justify-center">
-        <Button
-          variant="ghost"
-          size="sm"
-          nativeButton={false}
-          render={<Link href="/password/examples" />}
+        <Link
+          href="/password/examples"
+          className={buttonVariants({ variant: "ghost", size: "sm" })}
         >
           <span>{t("demoMoreExamples")}</span>
           <ChevronRightIcon
             data-icon="inline-end"
             className="transition-transform duration-200 ease-out group-hover/button:translate-x-0.5"
           />
-        </Button>
+        </Link>
       </div>
     </Reveal>
   );

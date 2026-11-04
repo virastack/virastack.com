@@ -9,39 +9,38 @@ const calloutConfig = {
   TIP: {
     labelKey: "calloutTip" as const,
     Icon: Lightbulb,
-    className: "border-sky-600/30 bg-sky-500/10 dark:border-sky-400/30 dark:bg-sky-400/10",
-    iconClassName: "text-sky-600 dark:text-sky-400",
+    className: "border-info/30 bg-info/10",
+    iconClassName: "text-info",
   },
   NOTE: {
     labelKey: "calloutTip" as const,
     Icon: Lightbulb,
-    className: "border-sky-600/30 bg-sky-500/10 dark:border-sky-400/30 dark:bg-sky-400/10",
-    iconClassName: "text-sky-600 dark:text-sky-400",
+    className: "border-info/30 bg-info/10",
+    iconClassName: "text-info",
   },
   WARNING: {
     labelKey: "calloutWarning" as const,
     Icon: TriangleAlert,
-    className: "border-amber-600/30 bg-amber-500/10 dark:border-amber-400/30 dark:bg-amber-400/10",
-    iconClassName: "text-amber-600 dark:text-amber-400",
+    className: "border-warning/30 bg-warning/10",
+    iconClassName: "text-warning",
   },
   CAUTION: {
     labelKey: "calloutCaution" as const,
     Icon: CircleAlert,
-    className: "border-rose-600/30 bg-rose-500/10 dark:border-rose-400/30 dark:bg-rose-400/10",
-    iconClassName: "text-rose-600 dark:text-rose-400",
+    className: "border-destructive/30 bg-destructive/10",
+    iconClassName: "text-destructive",
   },
   DO: {
     labelKey: "calloutDo" as const,
     Icon: Check,
-    className:
-      "border-emerald-600/30 bg-emerald-500/10 dark:border-emerald-400/30 dark:bg-emerald-400/10",
-    iconClassName: "text-emerald-600 dark:text-emerald-400",
+    className: "border-success/30 bg-success/10",
+    iconClassName: "text-success",
   },
   DONT: {
     labelKey: "calloutDont" as const,
     Icon: X,
-    className: "border-rose-600/30 bg-rose-500/10 dark:border-rose-400/30 dark:bg-rose-400/10",
-    iconClassName: "text-rose-600 dark:text-rose-400",
+    className: "border-destructive/30 bg-destructive/10",
+    iconClassName: "text-destructive",
   },
 } as const;
 

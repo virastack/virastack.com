@@ -22,7 +22,7 @@ import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { XLogo } from "@/components/shared/icons/XLogo";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -184,24 +184,24 @@ export function Header() {
         <div className="flex items-center gap-0.5 lg:justify-self-end">
           <SiteSearch />
           <div className="hidden items-center gap-0.5 sm:flex">
-            <Button
-              variant="ghost"
-              size="icon"
-              nativeButton={false}
-              render={<a href={siteConfig.links.github} target="_blank" rel="noreferrer" />}
+            <a
+              href={siteConfig.links.github}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "ghost", size: "icon" })}
               aria-label={t("github")}
             >
               <GithubIcon className="size-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              nativeButton={false}
-              render={<a href={siteConfig.links.twitter} target="_blank" rel="noreferrer" />}
+            </a>
+            <a
+              href={siteConfig.links.twitter}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "ghost", size: "icon" })}
               aria-label={t("twitter")}
             >
               <XLogo className="size-4" />
-            </Button>
+            </a>
             <Separator
               orientation="vertical"
               className="mx-0.5 data-vertical:h-4 data-vertical:self-auto"
@@ -296,26 +296,24 @@ export function Header() {
               <DrawerFooter className="border-t border-border p-4 pt-4">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-0.5">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      nativeButton={false}
-                      render={<a href={siteConfig.links.github} target="_blank" rel="noreferrer" />}
+                    <a
+                      href={siteConfig.links.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={buttonVariants({ variant: "ghost", size: "icon" })}
                       aria-label={t("github")}
                     >
                       <GithubIcon className="size-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      nativeButton={false}
-                      render={
-                        <a href={siteConfig.links.twitter} target="_blank" rel="noreferrer" />
-                      }
+                    </a>
+                    <a
+                      href={siteConfig.links.twitter}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={buttonVariants({ variant: "ghost", size: "icon" })}
                       aria-label={t("twitter")}
                     >
                       <XLogo className="size-4" />
-                    </Button>
+                    </a>
                   </div>
                   <div className="flex items-center gap-0.5">
                     <LanguageSwitcher />

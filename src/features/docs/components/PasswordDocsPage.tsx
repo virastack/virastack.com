@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { getTranslations } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
@@ -68,9 +68,9 @@ export async function PasswordDocsPage({ slug, versionId }: PasswordDocsPageProp
   const docs = docsProducts.password;
   const content = getDocsVersionContent(docs, versionId);
   const version = docs.versions.find((item) => (versionId ? item.id === versionId : item.latest));
-  const t = await getTranslations(content.messageNamespace);
+  const texts = content.texts(await getMessages(), await getLocale());
   const tDocs = await getTranslations("Docs");
-  const page = content.getPage(slug, t);
+  const page = texts.getPage(slug);
   const render = passwordDocsContent[versionId ?? "latest"]?.[slug];
 
   if (!page || !version || !render) {
@@ -90,7 +90,7 @@ export async function PasswordDocsPage({ slug, versionId }: PasswordDocsPageProp
 
   return (
     <DocsLayout
-      sections={content.getNav(t)}
+      sections={texts.getNav()}
       docsIndexHref={content.indexHref}
       slug={slug}
       headings={page.headings}

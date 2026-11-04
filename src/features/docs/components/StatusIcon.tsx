@@ -19,19 +19,19 @@ const statusIcons = {
   yes: {
     icon: CircleCheckIcon,
     strokeWidth: 2.5,
-    className: cn("text-emerald-600 dark:text-emerald-500", filled),
+    className: cn("text-success", filled),
     labelKey: "statusYes",
   },
   no: {
     icon: CircleXIcon,
     strokeWidth: 2.5,
-    className: cn("text-rose-600 dark:text-rose-500", filled),
+    className: cn("text-destructive", filled),
     labelKey: "statusNo",
   },
   partial: {
     icon: CircleDashedIcon,
     strokeWidth: 2.5,
-    className: "text-amber-600 dark:text-amber-400",
+    className: "text-warning",
     labelKey: "statusPartial",
   },
   na: {

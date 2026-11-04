@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Step0Content } from "@/features/guide/components/steps/Step0Content";
 import { Step1Engine } from "@/features/guide/components/steps/Step1Engine";
 import { Step2Foundation } from "@/features/guide/components/steps/Step2Foundation";
@@ -105,20 +105,20 @@ export function GuidePlayPage() {
       style={!isStyled ? { fontFamily: '"Times New Roman", Times, serif' } : undefined}
     >
       <div className="fixed top-3 right-3 z-50">
-        <Button
-          type="button"
-          variant={isStyled ? "outline" : "ghost"}
-          size="icon"
-          nativeButton={false}
-          render={<Link href="/guide" />}
-          aria-label={t("close")}
+        <Link
+          href="/guide"
           className={cn(
-            !isStyled &&
-              "border border-neutral-300 bg-white text-black dark:border-neutral-700 dark:bg-black dark:text-white",
+            buttonVariants({ variant: isStyled ? "outline" : "ghost", size: "icon" }),
+            cn(
+              !isStyled &&
+                "border border-neutral-300 bg-white text-black dark:border-neutral-700 dark:bg-black dark:text-white",
+            ),
           )}
+          type="button"
+          aria-label={t("close")}
         >
           <XIcon className="size-4" />
-        </Button>
+        </Link>
       </div>
 
       <div

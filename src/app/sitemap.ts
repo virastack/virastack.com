@@ -1,19 +1,16 @@
 import type { MetadataRoute } from "next";
 
+import { getMessages } from "next-intl/server";
+
 import { products } from "@/config/products.config";
 
 import { localeUrl } from "@/lib/canonical";
 
 import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
-import { getAddressDocsNav } from "@/features/docs/config/address-docs.config";
-import { getAiDocsNav } from "@/features/docs/config/ai-docs.config";
-import { getMaskDocsNav, maskExampleIds } from "@/features/docs/config/mask-docs.config";
-import {
-  getPasswordDocsNav,
-  passwordExampleIds,
-} from "@/features/docs/config/password-docs.config";
-import { getStartDocsNav } from "@/features/docs/config/start-docs.config";
+import { DOCS_PRODUCT_IDS, docsProducts } from "@/features/docs/config/docs-products";
+import { maskExampleIds } from "@/features/docs/config/mask-docs.config";
+import { passwordExampleIds } from "@/features/docs/config/password-docs.config";
 import { getReleaseHref, getReleases } from "@/features/releases/data/releases";
 import { readyFeatures } from "@/features/start/data/feature-catalog";
 import { routing } from "@/i18n/routing";
@@ -25,7 +22,7 @@ import { routing } from "@/i18n/routing";
  */
 const SITE_LAST_MODIFIED = "2026-11-03";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lessonDate = (locale: string, track: string, lesson: string) =>
     loadAcademyLesson(locale, track, lesson)?.frontmatter.lastVerified ?? SITE_LAST_MODIFIED;
 
@@ -46,18 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   // Hrefs are locale-independent; titles are ignored for the sitemap.
-  const startDocsNav = getStartDocsNav((key) => key);
-  const aiDocsNav = getAiDocsNav((key) => key);
-  const maskDocsNav = getMaskDocsNav((key) => key);
-  const passwordDocsNav = getPasswordDocsNav((key) => key);
-  const addressDocsNav = getAddressDocsNav((key) => key);
-  const docsHrefs = [
-    ...startDocsNav,
-    ...aiDocsNav,
-    ...maskDocsNav,
-    ...passwordDocsNav,
-    ...addressDocsNav,
-  ].flatMap((section) => section.items.map((item) => item.href));
+  const messages = await getMessages({ locale: routing.defaultLocale });
+  const docsHrefs = DOCS_PRODUCT_IDS.flatMap((id) =>
+    docsProducts[id].texts(messages, routing.defaultLocale).getNav(),
+  ).flatMap((section) => section.items.map((item) => item.href));
 
   const maskExampleHrefs = [
     "/mask/examples",
