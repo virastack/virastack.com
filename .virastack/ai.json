@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/@virastack/ai@2/schema.json",
+  "version": 1,
+  "cliVersion": "2.1.0",
+  "framework": "nextjs",
+  "agents": [
+    "claude"
+  ],
+  "claudeImport": "created",
+  "files": {
+    ".claude/rules/virastack/api.md": "cd89e6888bbd4701b094e705ccad8b6759f633a3665a0f5d4dea438796d44e73",
+    ".claude/rules/virastack/architecture.md": "5963124f9839abb5ad9ca5134070291fcd80a53edca28d2c2dbee51e47f80958",
+    ".claude/rules/virastack/client-state.md": "721b95b3e12efd21fbd898f9c2060485f6d0c994fed6f1d7f876c0814f8c4cd8",
+    ".claude/rules/virastack/core.md": "60760d2b40be393834fac929a5ef9ad42da11044b402429054b6e8cd4082bad2",
+    ".claude/rules/virastack/forms.md": "5fc63a71ba018498207548d341f51e39ec83ea325d8a6d31be6de72b374e35f8",
+    ".claude/rules/virastack/i18n.md": "6598c5b75b1c3ee25c062413a2c0aa92bc2febc6fc05c276876d6fcf94fa0055",
+    ".claude/rules/virastack/nextjs.md": "a0a2f0a0e524541ca6ce83cce434da086869a2f8c52cf8807b53cfcec766dde4",
+    ".claude/rules/virastack/performance.md": "279eaa041fbeee0599a967ba46649d874eb1ca5faca18118c4417989b4fe1000",
+    ".claude/rules/virastack/react.md": "764d16b8283794f5bdc4d0db5af98193104632dec7cbda39b1d90664df0e59f0",
+    ".claude/rules/virastack/server-state.md": "7a6a7983e72fdad441e502449ffd23572ea7ff298260d30d18c1926ae4ada145",
+    ".claude/rules/virastack/testing.md": "1ecf42da7ebf2c9cb23ec161f109a265edf00d6f52dbc4e5b92075443aa3d4bd",
+    ".claude/rules/virastack/typescript.md": "d5ce4f8b311952e95aff24fb73b1621e808d0cdf9beacc0c6bcd006ca297da0f",
+    ".claude/rules/virastack/ui.md": "7bde9df4a476877b55d3e3423bff400f78b0c9d5c5a42801c9054e9865ff84a2"
+  }
+}

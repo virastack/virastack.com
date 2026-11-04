@@ -1,0 +1,41 @@
+<!-- Managed by @virastack/ai -->
+
+# Architecture
+
+USE WHEN: Always. Where code lives in src/, feature boundaries and import rules.
+
+## Folder tree
+
+Create folders only from this tree.
+
+```text
+src/
+├── app/                 # routes only
+├── features/<feature>/  # api, components, constants, helpers, hooks, icons,
+│                        # schemas, stores, types
+│                        # actions (Server Actions)
+├── components/          # layout, shared, ui
+├── i18n/
+├── messages/            # one JSON file per locale
+├── assets/  config/  constants/  helpers/  hooks/  lib/
+├── providers/  schemas/  stores/  styles/  test/  types/
+└── env.ts
+```
+
+## Placement
+
+- Code starts in `features/<feature>/` and moves to the shared `src/` folders when a second feature needs it.
+- A feature creates only the subfolders it needs.
+- Features never import each other: share through the shared folders or compose at the route level.
+- Imports flow one way: shared folders, then features, then routes. Shared folders never import features or routes.
+- Route files only load data, set metadata and render feature components.
+- `constants/`: static lists and config objects.
+- `helpers/`: pure functions without package imports; anything importing a package goes to `lib/`.
+- `lib/`: configured library instances (`api.ts`, `query-client.ts`, `utils.ts`).
+- `schemas/`: Zod schemas, the single source for API functions, forms and types.
+- `assets/`: files imported by code; URL-served files go to `public/`.
+
+## Imports
+
+- Use the `@/*` path alias; do not add others.
+- Parent-relative imports (`../`) are banned; same-folder `./` is fine.

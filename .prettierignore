@@ -4,3 +4,7 @@ pnpm-lock.yaml
 public
 CHANGELOG.md
 .changeset
+# Managed by @virastack/ai; formatting them breaks its update check
+.claude/rules/virastack
+.virastack
+AGENTS.md
