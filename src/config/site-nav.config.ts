@@ -23,6 +23,4 @@ type HeaderNavLink = {
 export const headerNavLinks: readonly HeaderNavLink[] = [
   { href: "/academy", labelKey: "academy", isNew: true },
   { href: "/about", labelKey: "about" },
-  { href: "/support", labelKey: "support" },
-  { href: "/releases", labelKey: "releases", isNew: true },
 ];
