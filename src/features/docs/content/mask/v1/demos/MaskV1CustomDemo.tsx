@@ -3,8 +3,8 @@
 import { useViraMask } from "@virastack/mask-v1";
 import { useForm } from "react-hook-form";
 
+import { MaskFieldMeta } from "@/components/shared/MaskFieldMeta";
 import { Input } from "@/components/ui/input";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 type CustomForm = {
   code: string;

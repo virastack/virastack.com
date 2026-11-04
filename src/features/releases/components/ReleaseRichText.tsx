@@ -1,7 +1,8 @@
 import Markdown from "react-markdown";
 
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
-import { isAcademyBadgeKind } from "@/features/academy/constants/badge.constants";
+import { isAcademyBadgeKind } from "@/constants/academy-badge.constants";
+
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 
 const BADGE_PREFIX = "badge:";
 

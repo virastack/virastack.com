@@ -5,9 +5,9 @@ import type { ComponentProps } from "react";
 import { useTranslations } from "next-intl";
 import type { FieldError } from "react-hook-form";
 
+import { MaskFieldMeta } from "@/components/shared/MaskFieldMeta";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 /** Maps a mask error key (`tckn.invalid`) to a demo message by its suffix. */
 export function useMaskErrorText() {

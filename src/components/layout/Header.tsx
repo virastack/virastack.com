@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 import { MenuIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -40,7 +40,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Separator } from "@/components/ui/separator";
-import { SiteSearch } from "@/features/search/components/SiteSearch";
 import { Link, usePathname } from "@/i18n/routing";
 
 const productNameKeys = {
@@ -63,7 +62,12 @@ const productDescKeys = {
 
 const academyPalette = getBrandPalette("academy");
 
-export function Header() {
+type HeaderProps = {
+  /** Site search, passed in by the layout because it belongs to the search feature. */
+  search: ReactNode;
+};
+
+export function Header({ search }: HeaderProps) {
   const t = useTranslations("Navigation");
 
   /** Academy is a product, so its name carries the product color instead of plain text. */
@@ -182,7 +186,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-0.5 lg:justify-self-end">
-          <SiteSearch />
+          {search}
           <div className="hidden items-center gap-0.5 sm:flex">
             <a
               href={siteConfig.links.github}

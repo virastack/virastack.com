@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { buildDocsGithubIssueUrl } from "@/lib/docs-github-issue";
 import { parseGithubLink } from "@/lib/github";
-
-import { buildDocsGithubIssueUrl } from "@/features/docs/lib/docs-github-issue";
 
 const labels = { page: "Page", problem: "Problem", comment: "Comment" };
 

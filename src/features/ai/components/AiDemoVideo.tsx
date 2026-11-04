@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import { ProductDemoVideo } from "@/features/product/components/ProductDemoVideo";
+import { ProductDemoVideo } from "@/components/shared/ProductDemoVideo";
 
 /**
  * Both files carry the hash of the video (`render-ai-intro.mjs` prints the new names),

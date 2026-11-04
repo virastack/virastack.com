@@ -18,9 +18,11 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
 
+import { ACADEMY_COMPANY_NAME_TO_KIND } from "@/constants/academy-badge.constants";
+
 import { cn } from "@/lib/utils";
 
-import { AcademyBadge, AcademyBadgeLogo } from "@/features/academy/components/AcademyBadge";
+import { AcademyBadge, AcademyBadgeLogo } from "@/components/shared/AcademyBadge";
 import { AcademyCallout } from "@/features/academy/components/AcademyCallout";
 import { AcademyCodeBlock } from "@/features/academy/components/AcademyCodeBlock";
 import { AcademyDetails } from "@/features/academy/components/AcademyDetails";
@@ -28,7 +30,6 @@ import {
   AcademyResourceLinks,
   type AcademyResourceLinkItem,
 } from "@/features/academy/components/AcademyResourceLinks";
-import { ACADEMY_COMPANY_NAME_TO_KIND } from "@/features/academy/constants/badge.constants";
 import {
   parseAcademyResourceKind,
   type AcademyResourceKind,

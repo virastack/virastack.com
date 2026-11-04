@@ -8,8 +8,8 @@ import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 
+import { GuideProductMark, guideStackTags } from "@/components/shared/GuideRichText";
 import { Label } from "@/components/ui/label";
-import { GuideProductMark, guideStackTags } from "@/features/guide/components/GuideRichText";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideStepProps } from "@/features/guide/types/guide.types";
 

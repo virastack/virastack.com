@@ -6,6 +6,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { getProduct, isProductId } from "@/config/products.config";
 
 import { buildAlternates, localeUrl } from "@/lib/canonical";
+import { docsPagePath } from "@/lib/docs-github-issue";
 import { buildOgImageMetadata } from "@/lib/og";
 import { buildDocsSeoTitle } from "@/lib/seo-title";
 
@@ -22,7 +23,6 @@ import {
   resolveDocsRoute,
   type DocsProductId,
 } from "@/features/docs/config/docs-products";
-import { docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

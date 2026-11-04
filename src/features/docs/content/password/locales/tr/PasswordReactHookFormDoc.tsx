@@ -1,8 +1,8 @@
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 const registerCode = `const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
 

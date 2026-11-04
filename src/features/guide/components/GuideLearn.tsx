@@ -4,13 +4,13 @@ import { TypeIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { FeaturesSection, type FeatureItem } from "@/components/shared/FeaturesSection";
+import { guideCardTags } from "@/components/shared/GuideRichText";
 import { ClaudeAiIcon } from "@/components/ui/svgs/claudeAiIcon";
 import { Html5 } from "@/components/ui/svgs/html5";
 import { ReactDark } from "@/components/ui/svgs/reactDark";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
-import { guideCardTags } from "@/features/guide/components/GuideRichText";
 
 const logoTone = "bg-muted";
 

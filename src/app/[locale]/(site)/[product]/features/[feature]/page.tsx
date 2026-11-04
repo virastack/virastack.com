@@ -4,11 +4,11 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { siteConfig } from "@/config/site.config";
+import { isFeatureId, visibleFeatures } from "@/config/start-modules.config";
 
 import { buildAlternates } from "@/lib/canonical";
 
 import { StartFeatureDetailPage } from "@/features/start/components/StartFeatureDetailPage";
-import { isFeatureId, visibleFeatures } from "@/features/start/data/feature-catalog";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

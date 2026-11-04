@@ -4,6 +4,8 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import { StartCliDoc } from "@/features/docs/content/start/StartCliDoc";
@@ -19,7 +21,6 @@ import { StartV1InstallationDoc } from "@/features/docs/content/start/v1/StartV1
 import { StartV1IntroductionDoc } from "@/features/docs/content/start/v1/StartV1IntroductionDoc";
 import { StartV1ScriptsDoc } from "@/features/docs/content/start/v1/StartV1ScriptsDoc";
 import { StartV1TemplatesDoc } from "@/features/docs/content/start/v1/StartV1TemplatesDoc";
-import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 /** The note's migration section is the upgrade guide from 1.x. */

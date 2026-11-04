@@ -4,6 +4,8 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import { MaskBanksDoc } from "@/features/docs/content/mask/MaskBanksDoc";
@@ -23,7 +25,6 @@ import { MaskV1TypesDoc } from "@/features/docs/content/mask/v1/MaskV1TypesDoc";
 import { MaskV1UiLibrariesDoc } from "@/features/docs/content/mask/v1/MaskV1UiLibrariesDoc";
 import { MaskV1UseViraMaskDoc } from "@/features/docs/content/mask/v1/MaskV1UseViraMaskDoc";
 import { MaskV1ValidationDoc } from "@/features/docs/content/mask/v1/MaskV1ValidationDoc";
-import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 const UPGRADE_HREF = "/mask/docs/upgrade";

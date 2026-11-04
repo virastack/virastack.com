@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import {
   getMaskDocsPage,
@@ -10,7 +12,6 @@ import {
 } from "@/features/docs/config/mask-docs.config";
 import { MaskExampleDetailDoc } from "@/features/docs/content/mask/MaskExampleDetailDoc";
 import { MaskExamplesDoc } from "@/features/docs/content/mask/MaskExamplesDoc";
-import { buildDocsGithubIssueUrl } from "@/features/docs/lib/docs-github-issue";
 
 const EXAMPLES_INDEX = "/mask/examples";
 

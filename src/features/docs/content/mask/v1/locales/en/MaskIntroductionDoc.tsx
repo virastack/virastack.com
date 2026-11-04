@@ -1,8 +1,8 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 export function MaskIntroductionDoc() {

@@ -4,16 +4,12 @@ import { ArrowLeftIcon, SparklesIcon, SquareTerminalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { AppMessages } from "@/types/messages.types";
+import { featureCatalog, visibleFeatures, type FeatureId } from "@/config/start-modules.config";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { CopyButton } from "@/components/shared/CopyButton";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
-import { guideCardTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
+import { guideCardTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
-import {
-  featureCatalog,
-  visibleFeatures,
-  type FeatureId,
-} from "@/features/start/data/feature-catalog";
 import { INSTALL_ROUTE as CHECKOUT_ADDRESS_ROUTE } from "@/features/start/demos/checkout-address/install-files";
 import { INSTALL_ROUTE as CHECKOUT_CARD_ROUTE } from "@/features/start/demos/checkout-card/install-files";
 import { INSTALL_ROUTE as USERS_ROUTE } from "@/features/start/demos/users/install-files";

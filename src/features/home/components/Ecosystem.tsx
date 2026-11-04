@@ -10,8 +10,8 @@ import { siteConfig } from "@/config/site.config";
 import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { homePillars } from "@/features/home/constants/pillars";
 import { Link } from "@/i18n/routing";
 

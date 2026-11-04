@@ -1,5 +1,6 @@
+import { docsPagePath } from "@/lib/docs-github-issue";
+
 import type { DocsProductConfig } from "@/features/docs/config/docs-products";
-import { docsPagePath } from "@/features/docs/lib/docs-github-issue";
 
 export type DocsVersionLink = {
   id: string;

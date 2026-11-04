@@ -5,12 +5,12 @@ import { useTranslations } from "next-intl";
 
 import { siteConfig } from "@/config/site.config";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
+import { GuideProductMark, guideProductTags } from "@/components/shared/GuideRichText";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { AboutTimeline } from "@/features/about/components/AboutTimeline";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
-import { GuideProductMark, guideProductTags } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 /** Order matches the copy: complement, headless and typed, Turkey-ready, evidence. */

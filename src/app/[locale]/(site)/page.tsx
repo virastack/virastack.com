@@ -9,6 +9,7 @@ import { buildHomeJsonLd } from "@/lib/json-ld";
 import { buildLandingOgImageMetadata } from "@/lib/og";
 
 import { JsonLd } from "@/components/shared/JsonLd";
+import { AcademyShowcase } from "@/features/academy/components/AcademyShowcase";
 import { HomePage } from "@/features/home/components/HomePage";
 import { routing } from "@/i18n/routing";
 
@@ -56,7 +57,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="relative isolate flex-1">
       <JsonLd data={buildHomeJsonLd({ locale, description: t("metaDesc") })} />
-      <HomePage />
+      <HomePage academy={<AcademyShowcase />} />
     </main>
   );
 }

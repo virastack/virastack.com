@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import type { ProductId } from "@/types/product.types";
 import { getProduct, isProductId, products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -13,7 +14,14 @@ import { getProductSeoName } from "@/lib/seo-title";
 
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PageGlow } from "@/components/shared/PageGlow";
+import { AddressFeatures } from "@/features/address/components/AddressFeatures";
+import { AiLanding } from "@/features/ai/components/AiLanding";
+import { GuideLanding } from "@/features/guide/components/GuideLanding";
+import { MaskLanding } from "@/features/mask/components/MaskLanding";
+import { PasswordLanding } from "@/features/password/components/PasswordLanding";
 import { ProductPage } from "@/features/product/components/ProductPage";
+import { StartDemoVideo } from "@/features/start/components/StartDemoVideo";
+import { StartFeatures } from "@/features/start/components/StartFeatures";
 import { routing } from "@/i18n/routing";
 
 const productNameKeys = {
@@ -116,7 +124,32 @@ export default async function Page({ params }: PageProps) {
         />
       ) : null}
       <PageGlow colorClass={product.colorClass} />
-      <ProductPage product={product} />
+      <ProductPage product={product}>
+        <ProductSections id={product.id} />
+      </ProductPage>
     </main>
   );
+}
+
+/** Each product's sections under the shared hero; they live in that product's feature. */
+function ProductSections({ id }: { id: ProductId }) {
+  switch (id) {
+    case "start":
+      return (
+        <>
+          <StartDemoVideo />
+          <StartFeatures />
+        </>
+      );
+    case "ai":
+      return <AiLanding />;
+    case "mask":
+      return <MaskLanding />;
+    case "password":
+      return <PasswordLanding />;
+    case "address":
+      return <AddressFeatures />;
+    case "guide":
+      return <GuideLanding />;
+  }
 }

@@ -73,7 +73,7 @@ Rules come from `.cursor/rules/brand.mdc` and `.cursor/rules/terminology.mdc`; r
 | ViraStack product                                 | a product tag backed by `GuideProductMark`                        | `<GuideProductMark id="mask" />` |
 | Internal link                                     | `<link>...</link>` with a `Link` handler                          | `<Link href="...">`              |
 
-- A badge kind must exist in `src/features/academy/constants/badge.constants.ts`. A missing `t.rich` handler goes into `docsRichTags`, not into a local object.
+- A badge kind must exist in `src/constants/academy-badge.constants.ts`. A missing `t.rich` handler goes into `docsRichTags`, not into a local object.
 - Bold: one or two key phrases per paragraph at most, never a whole sentence. No italic for emphasis (only a foreign or quoted word). Product names are never italic.
 - Products follow the lockup rule in `brand.mdc`: `ViraStack Start` in running text.
 - Badges, release notes (`[Next.js](badge:nextjs)`) and Academy (`[!nextjs]`) use different syntaxes; use only the docs syntax here.

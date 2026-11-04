@@ -6,7 +6,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import type { FeatureTag } from "@/features/start/data/feature-catalog";
+import type { FeatureTag } from "@/config/start-modules.config";
 
 type FeatureMark = { icon: LucideIcon; textClass: string };
 

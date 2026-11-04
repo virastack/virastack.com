@@ -13,6 +13,7 @@ import { Providers } from "@/providers/Providers";
 import { AppShell } from "@/components/layout/AppShell";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { SiteSearch } from "@/features/search/components/SiteSearch";
 import { routing } from "@/i18n/routing";
 
 import "@/styles/tailwind.css";
@@ -76,7 +77,7 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           <Providers>
-            <AppShell header={<Header />} footer={<Footer />}>
+            <AppShell header={<Header search={<SiteSearch />} />} footer={<Footer />}>
               {children}
             </AppShell>
           </Providers>

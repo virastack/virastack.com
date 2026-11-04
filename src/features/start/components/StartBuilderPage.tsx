@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import { StartCliCommandBuilder } from "@/features/docs/components/StartCliCommandBuilder";
+import { StartCliCommandBuilder } from "@/components/shared/StartCliCommandBuilder";
 
 export async function StartBuilderPage() {
   const t = await getTranslations("StartBuilder");

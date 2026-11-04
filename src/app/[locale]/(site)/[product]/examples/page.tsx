@@ -11,10 +11,10 @@ import { buildDocsSeoTitle } from "@/lib/seo-title";
 import { isOneOf } from "@/helpers/is-one-of";
 
 import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
+import { MaskExamplesPage } from "@/features/docs/components/MaskExamplesPage";
+import { PasswordExamplesPage } from "@/features/docs/components/PasswordExamplesPage";
 import { getMaskDocsPage } from "@/features/docs/config/mask-docs.config";
 import { getPasswordDocsPage } from "@/features/docs/config/password-docs.config";
-import { MaskExamplesPage } from "@/features/mask/components/MaskExamplesPage";
-import { PasswordExamplesPage } from "@/features/password/components/PasswordExamplesPage";
 import { routing } from "@/i18n/routing";
 
 const EXAMPLES_PRODUCTS = ["mask", "password"] as const;

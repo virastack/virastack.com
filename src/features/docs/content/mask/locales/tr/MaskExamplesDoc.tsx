@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
+import { MaskCheckIcon } from "@/components/shared/MaskCheckIcon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
 import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 import {

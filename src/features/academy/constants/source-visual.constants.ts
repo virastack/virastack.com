@@ -2,7 +2,8 @@ import {
   ACADEMY_BADGE_KINDS,
   ACADEMY_BADGE_LABELS,
   type AcademyBadgeKind,
-} from "@/features/academy/constants/badge.constants";
+} from "@/constants/academy-badge.constants";
+
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
 import { normalizeAcademySourceKey } from "@/features/academy/constants/source-kind.constants";
 

@@ -1,3 +1,4 @@
+import type { AcademyBadgeKind } from "@/constants/academy-badge.constants";
 import { brandPalettes } from "@/config/brand-palettes.config";
 import {
   ECOSYSTEM_LOCALES,
@@ -6,8 +7,6 @@ import {
 } from "@/config/ecosystem.config";
 
 import { isOneOf } from "@/helpers/is-one-of";
-
-import type { AcademyBadgeKind } from "@/features/academy/constants/badge.constants";
 
 export type ReleaseCopy = {
   title: string;

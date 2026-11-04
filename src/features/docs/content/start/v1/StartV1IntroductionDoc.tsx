@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
 
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { GuideProductMark, GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 export function StartV1IntroductionDoc() {

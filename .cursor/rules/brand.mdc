@@ -18,7 +18,7 @@ alwaysApply: false
 ## Technology names
 
 - React, Next.js, TanStack Start, TypeScript, Tailwind CSS, shadcn/ui and similar are labeled with `AcademyBadge` (icon badge), not plain text.
-- Valid `kind` values and labels: `src/features/academy/constants/badge.constants.ts`.
+- Valid `kind` values and labels: `src/constants/academy-badge.constants.ts`.
 - In rich text, expose a handler per tech (`<react>React</react>` → `<AcademyBadge kind="react" />`).
 
 ## Emphasis

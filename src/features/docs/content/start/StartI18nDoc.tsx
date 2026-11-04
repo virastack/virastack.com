@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { GuideStackIcon } from "@/components/shared/GuideRichText";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const rich = {

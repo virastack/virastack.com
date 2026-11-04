@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { guideStackTags } from "@/features/guide/components/GuideRichText";
+import { guideStackTags } from "@/components/shared/GuideRichText";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideStepProps } from "@/features/guide/types/guide.types";
 

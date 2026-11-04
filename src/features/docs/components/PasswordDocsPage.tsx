@@ -4,6 +4,8 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import { PasswordAccessibilityDoc } from "@/features/docs/content/password/PasswordAccessibilityDoc";
@@ -26,7 +28,6 @@ import { PasswordV1IntroductionDoc } from "@/features/docs/content/password/v1/P
 import { PasswordV1TypesDoc } from "@/features/docs/content/password/v1/PasswordV1TypesDoc";
 import { PasswordV1UiLibrariesDoc } from "@/features/docs/content/password/v1/PasswordV1UiLibrariesDoc";
 import { PasswordV1UseViraPasswordDoc } from "@/features/docs/content/password/v1/PasswordV1UseViraPasswordDoc";
-import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 const UPGRADE_HREF = "/password/docs/upgrade";

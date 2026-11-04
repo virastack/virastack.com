@@ -23,5 +23,5 @@ export const searchDocumentSchema = z.object({
   kind: z.enum(SEARCH_KINDS),
 });
 
-/** Academy tracks and lessons from `/api/search/academy/[locale]`. */
+/** Academy tracks, lessons and docs pages from `/api/search/[locale]`. */
 export const searchDocumentsSchema = z.array(searchDocumentSchema);

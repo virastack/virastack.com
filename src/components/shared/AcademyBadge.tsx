@@ -2,15 +2,15 @@ import type { ComponentType, ReactNode, SVGProps } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-import { cn } from "@/lib/utils";
-import { isOneOf } from "@/helpers/is-one-of";
-
 import {
   ACADEMY_BADGE_LABELS,
   ACADEMY_COMPANY_BADGES,
   ACADEMY_QUERY_BADGES,
   type AcademyBadgeKind,
-} from "@/features/academy/constants/badge.constants";
+} from "@/constants/academy-badge.constants";
+
+import { cn } from "@/lib/utils";
+import { isOneOf } from "@/helpers/is-one-of";
 
 /**
  * Brand logos load on demand: a page ships only the SVGs of the badges it renders,

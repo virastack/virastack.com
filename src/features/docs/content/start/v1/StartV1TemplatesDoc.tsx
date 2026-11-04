@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
 import { BaseUiIcon } from "@/components/shared/icons/BaseUiIcon";
 import { FramerIcon } from "@/components/shared/icons/FramerIcon";
 import { NuqsIcon } from "@/components/shared/icons/NuqsIcon";
@@ -12,7 +13,6 @@ import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
 import { Zod } from "@/components/ui/svgs/zod";
 import { Zustand } from "@/components/ui/svgs/zustand";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
-import { GuideProductMark, GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 function stackMark(icon?: ReactNode) {

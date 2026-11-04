@@ -1,9 +1,9 @@
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
 import { ChakraUi } from "@/components/ui/svgs/chakraUi";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
 

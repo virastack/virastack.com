@@ -2,13 +2,14 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { readyFeatures } from "@/config/start-modules.config";
+
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
-import { readyFeatures } from "@/features/start/data/feature-catalog";
 import { Link } from "@/i18n/routing";
 
 const catalogLink = (chunks: ReactNode) => <Link href="/start/features">{chunks}</Link>;

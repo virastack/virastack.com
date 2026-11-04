@@ -1,8 +1,8 @@
 "use client";
 
+import { AcademyBadgeLogo } from "@/components/shared/AcademyBadge";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { AcademyBadgeLogo } from "@/features/academy/components/AcademyBadge";
 import {
   getAcademySourceInitials,
   resolveAcademySourceVisual,

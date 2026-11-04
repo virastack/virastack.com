@@ -4,6 +4,8 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
 import { AiV1IntroductionDoc } from "@/features/docs/content/ai/v1/AiV1IntroductionDoc";
@@ -16,7 +18,6 @@ import { AiIntroductionDoc } from "@/features/docs/content/ai/v2/AiIntroductionD
 import { AiRulesDoc } from "@/features/docs/content/ai/v2/AiRulesDoc";
 import { AiSupportedToolsDoc } from "@/features/docs/content/ai/v2/AiSupportedToolsDoc";
 import { AiUpgradeDoc } from "@/features/docs/content/ai/v2/AiUpgradeDoc";
-import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 const UPGRADE_HREF = "/ai/docs/upgrade";

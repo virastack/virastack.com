@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { MaskPasswordPinDemo } from "@/features/docs/components/MaskPasswordPinDemo";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 /**
  * ViraStack Mask with ViraStack Password: a password and a masked PIN, both with show/hide.

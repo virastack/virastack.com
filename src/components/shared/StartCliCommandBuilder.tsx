@@ -7,10 +7,18 @@ import { toast, Toaster } from "sonner";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 import { cn } from "@/lib/utils";
+import {
+  buildStartCliCommand,
+  START_CLI_AGENTS,
+  type StartCliAgent,
+  type StartCliTemplate,
+  type StartCliTool,
+} from "@/helpers/build-start-cli-command";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 import { CodeBlockCommand, usePackageManager } from "@/components/shared/CodeBlockCommand";
+import { guideProductTags, guideStackTags } from "@/components/shared/GuideRichText";
 import { Button } from "@/components/ui/button";
 import {
   Questionnaire,
@@ -26,14 +34,6 @@ import {
   QuestionnaireSubmit,
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire";
-import {
-  buildStartCliCommand,
-  START_CLI_AGENTS,
-  type StartCliAgent,
-  type StartCliTemplate,
-  type StartCliTool,
-} from "@/features/docs/lib/build-start-cli-command";
-import { guideProductTags, guideStackTags } from "@/features/guide/components/GuideRichText";
 
 const NAME_PLACEHOLDER = "my-app";
 

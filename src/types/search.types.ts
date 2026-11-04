@@ -4,7 +4,7 @@ import type {
   SEARCH_KINDS,
   SEARCH_SECTION_IDS,
   searchDocumentSchema,
-} from "@/features/search/schemas/search-document.schema";
+} from "@/schemas/search-document.schema";
 
 export type SearchSectionId = (typeof SEARCH_SECTION_IDS)[number];
 

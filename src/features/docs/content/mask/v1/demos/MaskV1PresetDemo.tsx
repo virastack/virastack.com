@@ -4,8 +4,8 @@ import { useViraMask, type MaskPreset } from "@virastack/mask-v1";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
+import { MaskFieldMeta } from "@/components/shared/MaskFieldMeta";
 import { Input } from "@/components/ui/input";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 type MaskPresetDemoProps = {
   preset: MaskPreset;

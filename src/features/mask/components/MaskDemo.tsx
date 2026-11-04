@@ -5,11 +5,11 @@ import { createMask, getCardType, useViraMask } from "@virastack/mask";
 import { useTranslations } from "next-intl";
 import { useForm, useWatch } from "react-hook-form";
 
+import { MaskFieldMeta } from "@/components/shared/MaskFieldMeta";
 import { Reveal } from "@/components/shared/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 import { Link } from "@/i18n/routing";
 
 type DemoForm = {

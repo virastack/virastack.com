@@ -41,7 +41,7 @@ Read these before writing:
 - One note may list several products when one decision changed them together.
 - `sources`: title as `Page title (Site)`, the page's real title in its original language. Only pages that support a claim in the note. No blogs, summaries or vendor marketing; the source rules match Academy's (official docs, recognized engineers, independent institutions).
 - `commits`: public commits on the product's `main`, full hash. A commit that is not on the remote yet is a blocker for publishing, not for drafting.
-- `migrationCode`: one block per technology, `kind` from `src/features/academy/constants/badge.constants.ts`. Only code you ran (or that `release-check` will run) in a project from before the change.
+- `migrationCode`: one block per technology, `kind` from `src/constants/academy-badge.constants.ts`. Only code you ran (or that `release-check` will run) in a project from before the change.
 
 ## Copy
 

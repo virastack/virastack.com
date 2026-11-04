@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { guideBadgeTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 
 export function AiHowItWorks() {
   const t = useTranslations("Ai");

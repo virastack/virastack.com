@@ -1,7 +1,8 @@
 import type { PhrasingContent, Root, Text } from "mdast";
 import { visit } from "unist-util-visit";
 
-import { isAcademyBadgeKind } from "@/features/academy/constants/badge.constants";
+import { isAcademyBadgeKind } from "@/constants/academy-badge.constants";
+
 import type { AcademyBadgeNode } from "@/features/academy/types/academy-mdast.types";
 
 const BADGE_PATTERN = /\[!([A-Za-z][A-Za-z-]*)\]/g;

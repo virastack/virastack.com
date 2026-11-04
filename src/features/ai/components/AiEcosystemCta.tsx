@@ -3,9 +3,9 @@
 import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { guideBadgeTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { Reveal } from "@/components/shared/Reveal";
 import { buttonVariants } from "@/components/ui/button";
-import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 export function AiEcosystemCta() {

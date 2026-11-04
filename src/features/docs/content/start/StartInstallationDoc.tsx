@@ -3,12 +3,12 @@ import { useTranslations } from "next-intl";
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
-import { GuideProductMark, GuideStackIcon } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 export function StartInstallationDoc() {

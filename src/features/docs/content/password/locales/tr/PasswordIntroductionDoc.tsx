@@ -1,10 +1,10 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const entries: [string, string, string][] = [

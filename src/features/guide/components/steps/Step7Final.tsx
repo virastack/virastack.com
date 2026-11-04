@@ -14,8 +14,8 @@ import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { buttonVariants } from "@/components/ui/button";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const CONFETTI_COLORS = brandPalettes.map((palette) => palette.hex);

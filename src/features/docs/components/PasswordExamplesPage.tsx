@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import {
   getPasswordDocsPage,
@@ -10,7 +12,6 @@ import {
 } from "@/features/docs/config/password-docs.config";
 import { PasswordExampleDetailDoc } from "@/features/docs/content/password/PasswordExampleDetailDoc";
 import { PasswordExamplesDoc } from "@/features/docs/content/password/PasswordExamplesDoc";
-import { buildDocsGithubIssueUrl } from "@/features/docs/lib/docs-github-issue";
 
 const EXAMPLES_INDEX = "/password/examples";
 

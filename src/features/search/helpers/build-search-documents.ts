@@ -1,19 +1,17 @@
 import type { AppMessages } from "@/types/messages.types";
 import type { ProductId } from "@/types/product.types";
+import type { SearchDocument, SearchSectionId } from "@/types/search.types";
 import { products } from "@/config/products.config";
 import { siteConfig } from "@/config/site.config";
 
-import { DOCS_PRODUCT_IDS, docsProducts } from "@/features/docs/config/docs-products";
-import { searchSections } from "@/features/search/constants/search-sections.constants";
 import {
   collectByKeyPrefixes,
-  exampleIdToKeyPrefix,
   flattenMessageStrings,
   isStringRecord,
-  kebabToCamel,
-} from "@/features/search/helpers/message-utils";
-import { stripRichText } from "@/features/search/helpers/strip-rich-text";
-import type { SearchDocument, SearchSectionId } from "@/features/search/types/search.types";
+} from "@/helpers/message-utils";
+import { stripRichText } from "@/helpers/strip-rich-text";
+
+import { searchSections } from "@/features/search/constants/search-sections.constants";
 
 /** Raw messages: rich-text tags stay in, `stripRichText` removes them. */
 type NavigationText = (key: keyof AppMessages["Navigation"]) => string;
@@ -45,16 +43,6 @@ const PRODUCT_NAME_KEYS = {
   address: "addressName",
   guide: "guideName",
 } as const satisfies Record<ProductId, string>;
-
-function docsKeyPrefixesForSlug(slug: string): string[] {
-  if (slug.startsWith("examples/")) {
-    const exampleId = slug.slice("examples/".length);
-    return [exampleIdToKeyPrefix(exampleId), "exampleDetail"];
-  }
-
-  const camel = kebabToCamel(slug);
-  return [camel, `nav${camel.charAt(0).toUpperCase()}${camel.slice(1)}`];
-}
 
 function buildLandingDocuments(
   messages: Record<string, unknown>,
@@ -102,41 +90,6 @@ function buildGuidePlayDocument(
   };
 }
 
-function buildDocsDocuments(messages: AppMessages, locale: string): SearchDocument[] {
-  const documents: SearchDocument[] = [];
-
-  for (const productId of DOCS_PRODUCT_IDS) {
-    const config = docsProducts[productId];
-    const namespace: unknown = messages[config.messageNamespace];
-    if (!isStringRecord(namespace)) continue;
-
-    const texts = config.texts(messages, locale);
-
-    for (const slug of config.slugs) {
-      const page = texts.getPage(slug);
-      if (!page) continue;
-
-      const prefixes = docsKeyPrefixesForSlug(slug);
-      const headingText = page.headings.map((heading) => heading.title).join(" ");
-      const body = [page.description, headingText, collectByKeyPrefixes(namespace, prefixes)].join(
-        " ",
-      );
-
-      documents.push({
-        id: `${productId}:docs:${slug}`,
-        sectionId: productId,
-        href: page.slug === "introduction" ? config.indexHref : `${config.indexHref}/${page.slug}`,
-        title: page.title,
-        description: page.description,
-        body,
-        kind: "docs",
-      });
-    }
-  }
-
-  return documents;
-}
-
 /** Academy's own pages, from messages. Tracks and lessons arrive separately from the API. */
 function buildAcademyPageDocuments(
   messages: Record<string, unknown>,
@@ -181,16 +134,14 @@ function buildAcademyPageDocuments(
 
 export function buildSearchDocuments(
   messages: AppMessages,
-  locale: string,
   tProducts: ProductsText,
   tNav: NavigationText,
 ): SearchDocument[] {
   const landings = buildLandingDocuments(messages, tProducts, tNav);
-  const docs = buildDocsDocuments(messages, locale);
   const guidePlay = buildGuidePlayDocument(messages, tNav);
   const academyPages = buildAcademyPageDocuments(messages, tNav);
 
-  return [...landings, ...docs, ...(guidePlay ? [guidePlay] : []), ...academyPages];
+  return [...landings, ...(guidePlay ? [guidePlay] : []), ...academyPages];
 }
 
 export function filterSearchDocuments(

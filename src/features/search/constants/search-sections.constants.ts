@@ -1,7 +1,6 @@
+import type { SearchSectionId } from "@/types/search.types";
 import { getBrandPalette } from "@/config/brand-palettes.config";
 import { products } from "@/config/products.config";
-
-import type { SearchSectionId } from "@/features/search/types/search.types";
 
 export const sectionNameKeys = {
   start: "startName",

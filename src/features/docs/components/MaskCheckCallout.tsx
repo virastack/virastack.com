@@ -1,4 +1,4 @@
-import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
+import { MaskCheckIcon } from "@/components/shared/MaskCheckIcon";
 
 type MaskCheckCalloutProps = {
   /** "Built-in validation" */

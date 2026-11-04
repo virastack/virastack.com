@@ -7,10 +7,10 @@ import { useViraPassword } from "@virastack/password";
 import { useTranslations } from "next-intl";
 import { useForm, useWatch } from "react-hook-form";
 
+import { MaskFieldMeta } from "@/components/shared/MaskFieldMeta";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MaskFieldMeta } from "@/features/mask/components/MaskFieldMeta";
 
 type PinForm = {
   password: string;

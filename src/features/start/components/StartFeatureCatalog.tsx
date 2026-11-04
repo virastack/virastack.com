@@ -7,6 +7,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { debounce, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
+import { visibleFeatures, visibleGroups, type FeatureGroup } from "@/config/start-modules.config";
+
 import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
@@ -14,11 +16,6 @@ import { CopyButton } from "@/components/shared/CopyButton";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { featureMarks } from "@/features/start/constants/feature-tags.constants";
-import {
-  visibleFeatures,
-  visibleGroups,
-  type FeatureGroup,
-} from "@/features/start/data/feature-catalog";
 import {
   filterPillClassName,
   filterPillStateClassName,

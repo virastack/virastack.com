@@ -8,13 +8,13 @@ import { siteConfig } from "@/config/site.config";
 import { fromEntries } from "@/lib/object";
 import { cn } from "@/lib/utils";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { Typescript } from "@/components/ui/svgs/typescript";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { Link } from "@/i18n/routing";
 
 const STACK_URLS = {

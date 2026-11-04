@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { ReleaseDate, ReleaseProducts } from "@/features/releases/components/ReleaseMeta";
 import { ReleaseRichText } from "@/features/releases/components/ReleaseRichText";
 import { getReleaseCopy, type Release } from "@/features/releases/data/releases";

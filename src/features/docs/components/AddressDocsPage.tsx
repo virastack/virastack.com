@@ -4,6 +4,8 @@ import { getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
+import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
+
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { getAddressDocsNav, getAddressDocsPage } from "@/features/docs/config/address-docs.config";
 import { AddressDataDoc } from "@/features/docs/content/address/AddressDataDoc";
@@ -15,7 +17,6 @@ import { AddressServerDoc } from "@/features/docs/content/address/AddressServerD
 import { AddressTypesDoc } from "@/features/docs/content/address/AddressTypesDoc";
 import { AddressUiLibrariesDoc } from "@/features/docs/content/address/AddressUiLibrariesDoc";
 import { AddressUseViraAddressDoc } from "@/features/docs/content/address/AddressUseViraAddressDoc";
-import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 
 const DOCS_INDEX = "/address/docs";
 

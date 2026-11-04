@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { FileTextIcon } from "lucide-react";
 import { useLocale, useMessages, useTranslations } from "next-intl";
 
+import type { SearchKind, SearchSectionId } from "@/types/search.types";
 import { productIcons } from "@/config/product-icons.config";
 import { siteConfig } from "@/config/site.config";
 
@@ -29,8 +30,7 @@ import {
   filterSearchDocuments,
   groupSearchDocumentsBySection,
 } from "@/features/search/helpers/build-search-documents";
-import { useAcademySearchDocuments } from "@/features/search/hooks/use-academy-search-documents";
-import type { SearchKind, SearchSectionId } from "@/features/search/types/search.types";
+import { useRemoteSearchDocuments } from "@/features/search/hooks/use-remote-search-documents";
 import { useRouter } from "@/i18n/routing";
 
 const kindLabelKeys = {
@@ -60,22 +60,21 @@ export function SiteSearchDialog({ open, onOpenChange, shortcutLabel }: SiteSear
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [sectionFilter, setSectionFilter] = useState<Set<SearchSectionId>>(() => new Set());
-  const academyDocuments = useAcademySearchDocuments(locale);
+  const remoteDocuments = useRemoteSearchDocuments(locale);
 
   const staticDocuments = useMemo(
     () =>
       buildSearchDocuments(
         messages,
-        locale,
         (key) => String(tProducts.raw(key)),
         (key) => String(tNav.raw(key)),
       ),
-    [locale, messages, tNav, tProducts],
+    [messages, tNav, tProducts],
   );
 
   const results = useMemo(
-    () => filterSearchDocuments([...staticDocuments, ...academyDocuments], query, sectionFilter),
-    [academyDocuments, query, sectionFilter, staticDocuments],
+    () => filterSearchDocuments([...staticDocuments, ...remoteDocuments], query, sectionFilter),
+    [remoteDocuments, query, sectionFilter, staticDocuments],
   );
 
   const groups = useMemo(() => groupSearchDocumentsBySection(results), [results]);

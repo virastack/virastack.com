@@ -7,13 +7,13 @@ import { useTranslations } from "next-intl";
 
 import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
+import { guideBadgeTags } from "@/components/shared/GuideRichText";
+import { MaskCheckIcon } from "@/components/shared/MaskCheckIcon";
 import { Reveal } from "@/components/shared/Reveal";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ACADEMY_FEATURED_AUTHORS } from "@/features/academy/constants/featured-authors.constants";
-import { MaskCheckIcon } from "@/features/docs/components/MaskCheckIcon";
-import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 type AcademyHeroProps = {

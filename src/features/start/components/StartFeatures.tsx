@@ -9,7 +9,7 @@ import {
 import { useTranslations } from "next-intl";
 
 import { FeaturesSection, type FeatureItem } from "@/components/shared/FeaturesSection";
-import { guideCardTags } from "@/features/guide/components/GuideRichText";
+import { guideCardTags } from "@/components/shared/GuideRichText";
 
 export function StartFeatures() {
   const t = useTranslations("Start");

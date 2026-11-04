@@ -1,13 +1,13 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
+import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
 import { StatusIcon } from "@/features/docs/components/StatusIcon";
-import { GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const quickStartCode = `import { useForm } from "react-hook-form"

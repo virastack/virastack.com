@@ -15,8 +15,8 @@ import { useTranslations } from "next-intl";
 import { featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
+import { guideCardTags } from "@/components/shared/GuideRichText";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { guideCardTags } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 type RuleItem = {

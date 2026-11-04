@@ -1,4 +1,4 @@
-import { stripRichText } from "@/features/search/helpers/strip-rich-text";
+import { stripRichText } from "@/helpers/strip-rich-text";
 
 export function isStringRecord(value: unknown): value is Record<string, string> {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;

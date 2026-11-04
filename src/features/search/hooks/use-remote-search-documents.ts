@@ -1,7 +1,7 @@
 import { useCallback, useSyncExternalStore } from "react";
 
-import { searchDocumentsSchema } from "@/features/search/schemas/search-document.schema";
-import type { SearchDocument } from "@/features/search/types/search.types";
+import type { SearchDocument } from "@/types/search.types";
+import { searchDocumentsSchema } from "@/schemas/search-document.schema";
 
 const EMPTY: SearchDocument[] = [];
 
@@ -14,7 +14,7 @@ async function load(locale: string) {
 
   pending.add(locale);
   try {
-    const response = await fetch(`/api/search/academy/${locale}`);
+    const response = await fetch(`/api/search/${locale}`);
     if (!response.ok) return;
 
     const documents = searchDocumentsSchema.safeParse(await response.json());
@@ -23,14 +23,14 @@ async function load(locale: string) {
     loaded.set(locale, documents.data);
     listeners.forEach((listener) => listener());
   } catch {
-    // Search keeps working without lessons; the next open tries again.
+    // Search keeps working with the in-page results; the next open tries again.
   } finally {
     pending.delete(locale);
   }
 }
 
-/** Academy tracks and lessons; empty until the first fetch for the locale resolves. */
-export function useAcademySearchDocuments(locale: string): SearchDocument[] {
+/** Academy tracks and lessons and docs pages; empty until the first fetch for the locale resolves. */
+export function useRemoteSearchDocuments(locale: string): SearchDocument[] {
   const subscribe = useCallback(
     (listener: () => void) => {
       listeners.add(listener);

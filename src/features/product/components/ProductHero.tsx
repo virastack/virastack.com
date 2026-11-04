@@ -12,11 +12,11 @@ import { cn } from "@/lib/utils";
 
 import { BrandLockup } from "@/components/shared/BrandLockup";
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
+import { guideBadgeTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
 import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
 import { buttonVariants } from "@/components/ui/button";
-import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 
 const productNameKeys = {

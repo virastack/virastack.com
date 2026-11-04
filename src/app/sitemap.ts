@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { getMessages } from "next-intl/server";
 
 import { products } from "@/config/products.config";
+import { readyFeatures } from "@/config/start-modules.config";
 
 import { localeUrl } from "@/lib/canonical";
 
@@ -12,7 +13,6 @@ import { DOCS_PRODUCT_IDS, docsProducts } from "@/features/docs/config/docs-prod
 import { maskExampleIds } from "@/features/docs/config/mask-docs.config";
 import { passwordExampleIds } from "@/features/docs/config/password-docs.config";
 import { getReleaseHref, getReleases } from "@/features/releases/data/releases";
-import { readyFeatures } from "@/features/start/data/feature-catalog";
 import { routing } from "@/i18n/routing";
 
 /**

@@ -15,10 +15,10 @@ import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
 
 import { BrandLockup } from "@/components/shared/BrandLockup";
+// import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
+import { guideBadgeTags } from "@/components/shared/GuideRichText";
 import { ProductDots } from "@/components/shared/ProductDots";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-// import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
-import { guideBadgeTags } from "@/features/guide/components/GuideRichText";
 
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
