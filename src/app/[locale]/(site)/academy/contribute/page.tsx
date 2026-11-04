@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { AcademyContributePageView } from "@/features/academy";
+import { AcademyContributePageView } from "@/features/academy/components/academy-contribute-page";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

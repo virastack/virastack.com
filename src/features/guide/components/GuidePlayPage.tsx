@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
+import { Button } from "@/components/ui/button";
 import { Step0Content } from "@/features/guide/components/steps/Step0Content";
 import { Step1Engine } from "@/features/guide/components/steps/Step1Engine";
 import { Step2Foundation } from "@/features/guide/components/steps/Step2Foundation";
@@ -18,7 +19,6 @@ import { Step5Atmosphere } from "@/features/guide/components/steps/Step5Atmosphe
 import { Step6AI } from "@/features/guide/components/steps/Step6AI";
 import { Step7Final } from "@/features/guide/components/steps/Step7Final";
 import type { GuideFont } from "@/features/guide/types/guide.types";
-import { Button } from "@/ui/button";
 import { Link, useRouter } from "@/i18n/routing";
 
 const LAST_STEP = 7;

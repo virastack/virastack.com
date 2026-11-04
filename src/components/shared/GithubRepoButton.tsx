@@ -1,5 +1,5 @@
-import { GithubIcon } from "@/components/icons";
-import { Button } from "@/ui/button";
+import { GithubIcon } from "@/components/icons/github";
+import { Button } from "@/components/ui/button";
 
 type GithubRepoButtonProps = {
   href: string;

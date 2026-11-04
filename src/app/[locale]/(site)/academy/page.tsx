@@ -5,7 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildLandingOgImageMetadata } from "@/lib/og";
 
-import { AcademyLanding } from "@/features/academy";
+import { AcademyLanding } from "@/features/academy/components/academy-landing";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

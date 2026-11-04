@@ -13,7 +13,7 @@ import { getProductSeoName } from "@/lib/seo-title";
 
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PageGlow } from "@/components/shared/PageGlow";
-import { ProductPage } from "@/features/product";
+import { ProductPage } from "@/features/product/components/ProductPage";
 import { routing } from "@/i18n/routing";
 
 const productNameKeys = {

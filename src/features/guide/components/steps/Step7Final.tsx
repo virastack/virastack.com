@@ -12,8 +12,8 @@ import type { ProductId } from "@/types/product.types";
 import { brandPalettes } from "@/config/brand-palettes.config";
 import { siteConfig } from "@/config/site.config";
 
+import { Button } from "@/components/ui/button";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";
-import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
 const CONFETTI_COLORS = brandPalettes.map((palette) => palette.hex);

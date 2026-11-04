@@ -6,27 +6,23 @@ import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
-import {
-  MaskBanksDoc,
-  MaskCustomMaskDoc,
-  MaskHelpersDoc,
-  MaskIntroductionDoc,
-  MaskServerDoc,
-  MaskTypesDoc,
-  MaskUiLibrariesDoc,
-  MaskUpgradeDoc,
-  MaskUseViraMaskDoc,
-  MaskValidationDoc,
-} from "@/features/docs/content/mask";
-import {
-  MaskV1CustomMaskDoc,
-  MaskV1HelpersDoc,
-  MaskV1IntroductionDoc,
-  MaskV1TypesDoc,
-  MaskV1UiLibrariesDoc,
-  MaskV1UseViraMaskDoc,
-  MaskV1ValidationDoc,
-} from "@/features/docs/content/mask/v1";
+import { MaskBanksDoc } from "@/features/docs/content/mask/MaskBanksDoc";
+import { MaskCustomMaskDoc } from "@/features/docs/content/mask/MaskCustomMaskDoc";
+import { MaskHelpersDoc } from "@/features/docs/content/mask/MaskHelpersDoc";
+import { MaskIntroductionDoc } from "@/features/docs/content/mask/MaskIntroductionDoc";
+import { MaskServerDoc } from "@/features/docs/content/mask/MaskServerDoc";
+import { MaskTypesDoc } from "@/features/docs/content/mask/MaskTypesDoc";
+import { MaskUiLibrariesDoc } from "@/features/docs/content/mask/MaskUiLibrariesDoc";
+import { MaskUpgradeDoc } from "@/features/docs/content/mask/MaskUpgradeDoc";
+import { MaskUseViraMaskDoc } from "@/features/docs/content/mask/MaskUseViraMaskDoc";
+import { MaskValidationDoc } from "@/features/docs/content/mask/MaskValidationDoc";
+import { MaskV1CustomMaskDoc } from "@/features/docs/content/mask/v1/MaskV1CustomMaskDoc";
+import { MaskV1HelpersDoc } from "@/features/docs/content/mask/v1/MaskV1HelpersDoc";
+import { MaskV1IntroductionDoc } from "@/features/docs/content/mask/v1/MaskV1IntroductionDoc";
+import { MaskV1TypesDoc } from "@/features/docs/content/mask/v1/MaskV1TypesDoc";
+import { MaskV1UiLibrariesDoc } from "@/features/docs/content/mask/v1/MaskV1UiLibrariesDoc";
+import { MaskV1UseViraMaskDoc } from "@/features/docs/content/mask/v1/MaskV1UseViraMaskDoc";
+import { MaskV1ValidationDoc } from "@/features/docs/content/mask/v1/MaskV1ValidationDoc";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 

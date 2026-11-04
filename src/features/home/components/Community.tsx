@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { siteConfig } from "@/config/site.config";
 
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 
 export function Community() {
   const t = useTranslations("Home");

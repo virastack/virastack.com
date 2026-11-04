@@ -4,8 +4,8 @@ import { ChevronRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Reveal } from "@/components/shared/Reveal";
+import { Button } from "@/components/ui/button";
 import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
-import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
 export function AiEcosystemCta() {

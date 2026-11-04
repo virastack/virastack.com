@@ -8,13 +8,13 @@ import type { EcosystemLocale } from "@/config/ecosystem.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
+import { ReleaseDetailPage } from "@/features/releases/components/ReleaseDetailPage";
 import {
   findRelease,
   getReleaseHref,
   getReleaseParams,
   getReleases,
-  ReleaseDetailPage,
-} from "@/features/releases";
+} from "@/features/releases/data/releases";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

@@ -7,7 +7,7 @@ import { ScrollArea } from "@base-ui/react/scroll-area";
 
 import { cn } from "@/lib/utils";
 
-import { usePackageManagerStore, type PackageManager } from "@/stores";
+import { usePackageManagerStore, type PackageManager } from "@/stores/package-manager.store";
 
 import { CopyButton } from "@/components/copy-button";
 import { IconSwap, IconSwapItem } from "@/components/icon-swap";

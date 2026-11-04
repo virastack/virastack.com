@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site.config";
 
 import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 
 const linkClassName =
   "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";

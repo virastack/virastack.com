@@ -8,7 +8,8 @@ import {
   getPasswordExample,
   getPasswordExamplesNav,
 } from "@/features/docs/config/password-docs.config";
-import { PasswordExampleDetailDoc, PasswordExamplesDoc } from "@/features/docs/content/password";
+import { PasswordExampleDetailDoc } from "@/features/docs/content/password/PasswordExampleDetailDoc";
+import { PasswordExamplesDoc } from "@/features/docs/content/password/PasswordExamplesDoc";
 import { buildDocsGithubIssueUrl } from "@/features/docs/lib/docs-github-issue";
 
 const EXAMPLES_INDEX = "/password/examples";

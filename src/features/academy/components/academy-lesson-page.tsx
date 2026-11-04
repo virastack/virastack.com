@@ -1,8 +1,8 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { formatDate } from "@/helpers";
+import { formatDate } from "@/helpers/format-date";
 
-import { GithubIcon } from "@/components/icons";
+import { GithubIcon } from "@/components/icons/github";
 import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
 import { AcademyMarkdown } from "@/features/academy/components/academy-markdown";
 import { LessonPager } from "@/features/academy/components/lesson-pager";

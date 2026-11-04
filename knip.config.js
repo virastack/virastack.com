@@ -8,17 +8,7 @@ const config = {
     "vitest.config.ts",
   ],
   project: ["src/**/*.{ts,tsx,js,jsx}"],
-  ignore: [
-    "src/components/ui/**",
-    // Shared-layer barrels reserved for Rule-of-Three promotions
-    "src/hooks/index.ts",
-    "src/schemas/index.ts",
-    "src/constants/index.ts",
-    "src/features/**/data/index.ts",
-    "src/features/**/data/*.data.tsx",
-    "src/features/**/schemas/index.ts",
-    "src/i18n/routing.ts",
-  ],
+  ignore: ["src/components/ui/**", "src/features/**/data/*.data.tsx", "src/i18n/routing.ts"],
   ignoreDependencies: [
     "tailwindcss",
     "tw-animate-css",

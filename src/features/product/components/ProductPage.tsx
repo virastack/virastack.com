@@ -1,13 +1,14 @@
 import type { Product } from "@/types/product.types";
 
-import { AddressFeatures } from "@/features/address";
-import { AiLanding } from "@/features/ai";
-import { GuideLanding } from "@/features/guide";
-import { MaskLanding } from "@/features/mask";
-import { PasswordLanding } from "@/features/password";
+import { AddressFeatures } from "@/features/address/components/AddressFeatures";
+import { AiLanding } from "@/features/ai/components/AiLanding";
+import { GuideLanding } from "@/features/guide/components/GuideLanding";
+import { MaskLanding } from "@/features/mask/components/MaskLanding";
+import { PasswordLanding } from "@/features/password/components/PasswordLanding";
 import { ProductHero } from "@/features/product/components/ProductHero";
 import { ProductHeroDemo } from "@/features/product/components/ProductHeroDemo";
-import { StartDemoVideo, StartFeatures } from "@/features/start";
+import { StartDemoVideo } from "@/features/start/components/StartDemoVideo";
+import { StartFeatures } from "@/features/start/components/StartFeatures";
 
 type ProductPageProps = {
   product: Product;

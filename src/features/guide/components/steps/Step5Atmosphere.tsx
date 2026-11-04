@@ -6,9 +6,9 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 
+import { Button } from "@/components/ui/button";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideStepProps } from "@/features/guide/types/guide.types";
-import { Button } from "@/ui/button";
 
 export function Step5Atmosphere({ onNext, isCompleted, isStyled }: GuideStepProps) {
   const t = useTranslations("Guide");

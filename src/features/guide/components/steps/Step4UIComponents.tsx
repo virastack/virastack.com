@@ -15,10 +15,10 @@ import { useForm } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 
+import { Label } from "@/components/ui/label";
 import { GuideProductMark, guideStackTags } from "@/features/guide/components/GuideRichText";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideStepProps } from "@/features/guide/types/guide.types";
-import { Label } from "@/ui/label";
 
 type CardForm = {
   cardNumber: string;

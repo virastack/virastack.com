@@ -9,18 +9,18 @@ import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 import { buildDocsSeoTitle } from "@/lib/seo-title";
 
+import { AddressDocsPage } from "@/features/docs/components/AddressDocsPage";
+import { AiDocsPage } from "@/features/docs/components/AiDocsPage";
+import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
+import { MaskDocsPage } from "@/features/docs/components/MaskDocsPage";
+import { PasswordDocsPage } from "@/features/docs/components/PasswordDocsPage";
+import { StartDocsPage } from "@/features/docs/components/StartDocsPage";
 import {
-  AddressDocsPage,
-  AiDocsPage,
   DOCS_PRODUCT_IDS,
   getDocsProduct,
   isDocsProductId,
-  MaskDocsPage,
-  PasswordDocsPage,
-  StartDocsPage,
   type DocsProductId,
-} from "@/features/docs";
-import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
+} from "@/features/docs/config/docs-products";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

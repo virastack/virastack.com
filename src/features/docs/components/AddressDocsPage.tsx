@@ -6,17 +6,15 @@ import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { getAddressDocsNav, getAddressDocsPage } from "@/features/docs/config/address-docs.config";
-import {
-  AddressDataDoc,
-  AddressHelpersDoc,
-  AddressIntroductionDoc,
-  AddressPostalCodeDoc,
-  AddressReactHookFormDoc,
-  AddressServerDoc,
-  AddressTypesDoc,
-  AddressUiLibrariesDoc,
-  AddressUseViraAddressDoc,
-} from "@/features/docs/content/address";
+import { AddressDataDoc } from "@/features/docs/content/address/AddressDataDoc";
+import { AddressHelpersDoc } from "@/features/docs/content/address/AddressHelpersDoc";
+import { AddressIntroductionDoc } from "@/features/docs/content/address/AddressIntroductionDoc";
+import { AddressPostalCodeDoc } from "@/features/docs/content/address/AddressPostalCodeDoc";
+import { AddressReactHookFormDoc } from "@/features/docs/content/address/AddressReactHookFormDoc";
+import { AddressServerDoc } from "@/features/docs/content/address/AddressServerDoc";
+import { AddressTypesDoc } from "@/features/docs/content/address/AddressTypesDoc";
+import { AddressUiLibrariesDoc } from "@/features/docs/content/address/AddressUiLibrariesDoc";
+import { AddressUseViraAddressDoc } from "@/features/docs/content/address/AddressUseViraAddressDoc";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 
 const DOCS_INDEX = "/address/docs";

@@ -15,8 +15,8 @@ import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { NpxInstallCommand } from "@/components/shared/NpxInstallCommand";
 import { Reveal } from "@/components/shared/Reveal";
 import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
+import { Button } from "@/components/ui/button";
 import { guideBadgeTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
-import { Button } from "@/ui/button";
 import { Link } from "@/i18n/routing";
 
 const productNameKeys = {

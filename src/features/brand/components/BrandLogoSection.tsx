@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
+import { Button } from "@/components/ui/button";
 import { LogoDownloadSelect } from "@/features/brand/components/LogoDownloadSelect";
-import { Button } from "@/ui/button";
 
 type LogoVariant = {
   id: "icon" | "wordmarkLight" | "wordmarkDark";

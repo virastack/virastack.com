@@ -9,7 +9,7 @@ import { buildHomeJsonLd } from "@/lib/json-ld";
 import { buildLandingOgImageMetadata } from "@/lib/og";
 
 import { JsonLd } from "@/components/shared/JsonLd";
-import { HomePage } from "@/features/home";
+import { HomePage } from "@/features/home/components/HomePage";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

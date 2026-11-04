@@ -12,7 +12,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "@/ui/context-menu";
+} from "@/components/ui/context-menu";
 import { Link } from "@/i18n/routing";
 
 function downloadFile(href: string, filename: string) {

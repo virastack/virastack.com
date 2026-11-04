@@ -8,7 +8,8 @@ import {
   getMaskExample,
   getMaskExamplesNav,
 } from "@/features/docs/config/mask-docs.config";
-import { MaskExampleDetailDoc, MaskExamplesDoc } from "@/features/docs/content/mask";
+import { MaskExampleDetailDoc } from "@/features/docs/content/mask/MaskExampleDetailDoc";
+import { MaskExamplesDoc } from "@/features/docs/content/mask/MaskExamplesDoc";
 import { buildDocsGithubIssueUrl } from "@/features/docs/lib/docs-github-issue";
 
 const EXAMPLES_INDEX = "/mask/examples";

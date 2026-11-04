@@ -25,7 +25,7 @@ Before writing, read the product's `CHANGELOG.md`, the release note in `src/feat
 
 Archive the docs of the **last published version**, not the working tree: take the files from the commit that matches that release. Commits after it may already contain new-version text.
 
-1. **Content:** copy the pages into `content/<product>/v<N>/` with versioned component names (`StartV1CliDoc`) and an `index.ts`. `<N>` is the old major.
+1. **Content:** copy the pages into `content/<product>/v<N>/` with versioned component names (`StartV1CliDoc`), imported from their own files (no `index.ts` barrel). `<N>` is the old major.
 2. **Messages:** messages-based products copy their namespace to `Docs<Product>V<N>` in both `src/messages/tr.json` and `en.json`, and add it to `DocsMessageNamespace`.
 3. **Config:** add `config/<product>-docs-v<N>.config.ts` with `BASE = "/<product>/docs/v<N>"`, its nav, pages and slugs (see `start-docs-v1.config.ts`).
 4. **Register:** in `docs-products.ts`, add the archive under `archives` and to `versions` with the last minor as label (`{ id: "v1", label: "v1.2", latest: false }`). The latest entry gets the new label.

@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { siteNavLinks } from "@/config/site-nav.config";
 import { siteConfig } from "@/config/site.config";
 
-import { GithubIcon, XLogo } from "@/components/icons";
+import { GithubIcon } from "@/components/icons/github";
+import { XLogo } from "@/components/icons/x";
 import { ProductDots } from "@/components/shared/ProductDots";
 import { Link } from "@/i18n/routing";
 

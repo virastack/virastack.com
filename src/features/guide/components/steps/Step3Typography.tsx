@@ -4,9 +4,9 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
+import { Button } from "@/components/ui/button";
 import { GuideStepCta } from "@/features/guide/components/GuideStepCta";
 import type { GuideFont, GuideStepProps } from "@/features/guide/types/guide.types";
-import { Button } from "@/ui/button";
 
 type Step3TypographyProps = GuideStepProps & {
   font: GuideFont;

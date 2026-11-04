@@ -6,18 +6,16 @@ import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
-import { AiV1IntroductionDoc } from "@/features/docs/content/ai/v1";
-import {
-  AiChangelogDoc,
-  AiCliDoc,
-  AiCustomizationDoc,
-  AiInstallationDoc,
-  AiInstalledFilesDoc,
-  AiIntroductionDoc,
-  AiRulesDoc,
-  AiSupportedToolsDoc,
-  AiUpgradeDoc,
-} from "@/features/docs/content/ai/v2";
+import { AiV1IntroductionDoc } from "@/features/docs/content/ai/v1/AiV1IntroductionDoc";
+import { AiChangelogDoc } from "@/features/docs/content/ai/v2/AiChangelogDoc";
+import { AiCliDoc } from "@/features/docs/content/ai/v2/AiCliDoc";
+import { AiCustomizationDoc } from "@/features/docs/content/ai/v2/AiCustomizationDoc";
+import { AiInstallationDoc } from "@/features/docs/content/ai/v2/AiInstallationDoc";
+import { AiInstalledFilesDoc } from "@/features/docs/content/ai/v2/AiInstalledFilesDoc";
+import { AiIntroductionDoc } from "@/features/docs/content/ai/v2/AiIntroductionDoc";
+import { AiRulesDoc } from "@/features/docs/content/ai/v2/AiRulesDoc";
+import { AiSupportedToolsDoc } from "@/features/docs/content/ai/v2/AiSupportedToolsDoc";
+import { AiUpgradeDoc } from "@/features/docs/content/ai/v2/AiUpgradeDoc";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 

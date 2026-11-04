@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { LanguagesIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "@/i18n/routing";
 
 const locales = [

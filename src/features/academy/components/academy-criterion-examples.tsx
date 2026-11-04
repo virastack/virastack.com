@@ -1,12 +1,12 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { AcademyBadgeLogo } from "@/features/academy/components/academy-badge";
 import {
   getAcademySourceInitials,
   resolveAcademySourceVisual,
 } from "@/features/academy/constants/source-visual.constants";
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/ui/avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 
 export type AcademyCriterionExample = {
   name: string;

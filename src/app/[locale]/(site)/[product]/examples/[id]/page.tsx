@@ -9,15 +9,17 @@ import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 import { buildDocsSeoTitle } from "@/lib/seo-title";
 
+import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
 import {
   getMaskDocsPage,
   getMaskExample,
+  maskExampleIds,
+} from "@/features/docs/config/mask-docs.config";
+import {
   getPasswordDocsPage,
   getPasswordExample,
-  maskExampleIds,
   passwordExampleIds,
-} from "@/features/docs";
-import { DocsJsonLd } from "@/features/docs/components/DocsJsonLd";
+} from "@/features/docs/config/password-docs.config";
 import { MaskExamplesPage } from "@/features/mask/components/MaskExamplesPage";
 import { PasswordExamplesPage } from "@/features/password/components/PasswordExamplesPage";
 import { routing } from "@/i18n/routing";

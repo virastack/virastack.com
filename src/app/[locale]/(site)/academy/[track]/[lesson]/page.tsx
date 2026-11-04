@@ -6,12 +6,9 @@ import { setRequestLocale } from "next-intl/server";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import {
-  AcademyLessonPageView,
-  findAcademyLesson,
-  getPublishedLessonPaths,
-  loadAcademyLesson,
-} from "@/features/academy";
+import { AcademyLessonPageView } from "@/features/academy/components/academy-lesson-page";
+import { findAcademyLesson, getPublishedLessonPaths } from "@/features/academy/lib/load-curriculum";
+import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

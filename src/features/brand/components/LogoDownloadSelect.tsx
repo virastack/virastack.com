@@ -9,14 +9,14 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 
 type LogoDownloadLabelKey =
   "logoDownloadPng" | "logoDownloadWebp" | "logoDownloadSvg" | "logoDownloadZip";

@@ -15,12 +15,14 @@ import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
-import { GithubIcon, XLogo } from "@/components/icons";
+import { GithubIcon } from "@/components/icons/github";
+import { XLogo } from "@/components/icons/x";
 import { AcademySubHeader } from "@/components/layout/AcademySubHeader";
 import { HeaderLogoContextMenu } from "@/components/layout/HeaderLogoContextMenu";
 import { ProductSubHeader } from "@/components/layout/ProductSubHeader";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -28,8 +30,6 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { SiteSearch } from "@/features/search";
-import { Button } from "@/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -38,8 +38,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/ui/navigation-menu";
-import { Separator } from "@/ui/separator";
+} from "@/components/ui/navigation-menu";
+import { Separator } from "@/components/ui/separator";
+import { SiteSearch } from "@/features/search/components/SiteSearch";
 import { Link, usePathname } from "@/i18n/routing";
 
 const productNameKeys = {

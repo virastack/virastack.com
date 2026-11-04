@@ -5,7 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { AboutPage } from "@/features/about";
+import { AboutPage } from "@/features/about/components/AboutPage";
 import { routing } from "@/i18n/routing";
 
 type PageProps = {

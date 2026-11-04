@@ -1,4 +1,5 @@
-import { getAcademyTracks, loadAcademyLesson } from "@/features/academy";
+import { getAcademyTracks } from "@/features/academy/lib/load-curriculum";
+import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import type { SearchDocument } from "@/features/search/types/search.types";
 
 const CITATION = /\[\^\d+\]/g;

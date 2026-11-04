@@ -5,13 +5,20 @@ import { useMemo, useState } from "react";
 import { Info } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
-import { formatMonthYear } from "@/helpers";
+import { formatMonthYear } from "@/helpers/format-date";
 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AcademySourceRow } from "@/features/academy/components/academy-source-row";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 
 const SOURCE_FILTERS = ["all", "official", "engineer", "institution"] as const;
 

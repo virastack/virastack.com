@@ -6,23 +6,19 @@ import { getProduct } from "@/config/products.config";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
-import {
-  StartCliDoc,
-  StartI18nDoc,
-  StartInstallationDoc,
-  StartIntroductionDoc,
-  StartModulesDoc,
-  StartScriptsDoc,
-  StartTemplatesDoc,
-} from "@/features/docs/content/start";
-import {
-  StartV1CliDoc,
-  StartV1I18nDoc,
-  StartV1InstallationDoc,
-  StartV1IntroductionDoc,
-  StartV1ScriptsDoc,
-  StartV1TemplatesDoc,
-} from "@/features/docs/content/start/v1";
+import { StartCliDoc } from "@/features/docs/content/start/StartCliDoc";
+import { StartI18nDoc } from "@/features/docs/content/start/StartI18nDoc";
+import { StartInstallationDoc } from "@/features/docs/content/start/StartInstallationDoc";
+import { StartIntroductionDoc } from "@/features/docs/content/start/StartIntroductionDoc";
+import { StartModulesDoc } from "@/features/docs/content/start/StartModulesDoc";
+import { StartScriptsDoc } from "@/features/docs/content/start/StartScriptsDoc";
+import { StartTemplatesDoc } from "@/features/docs/content/start/StartTemplatesDoc";
+import { StartV1CliDoc } from "@/features/docs/content/start/v1/StartV1CliDoc";
+import { StartV1I18nDoc } from "@/features/docs/content/start/v1/StartV1I18nDoc";
+import { StartV1InstallationDoc } from "@/features/docs/content/start/v1/StartV1InstallationDoc";
+import { StartV1IntroductionDoc } from "@/features/docs/content/start/v1/StartV1IntroductionDoc";
+import { StartV1ScriptsDoc } from "@/features/docs/content/start/v1/StartV1ScriptsDoc";
+import { StartV1TemplatesDoc } from "@/features/docs/content/start/v1/StartV1TemplatesDoc";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/features/docs/lib/docs-github-issue";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 

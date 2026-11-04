@@ -8,9 +8,11 @@ import { setRequestLocale } from "next-intl/server";
 import { brandColorsCss } from "@/config/brand-palettes.config";
 import { defaultMetadata } from "@/config/seo.config";
 
-import { Providers } from "@/providers";
+import { Providers } from "@/providers/Providers";
 
-import { AppShell, Footer, Header } from "@/layout";
+import { AppShell } from "@/components/layout/AppShell";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
 import { routing } from "@/i18n/routing";
 
 import "@/styles/tailwind.css";

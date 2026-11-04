@@ -4,8 +4,13 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ACADEMY_GITHUB_ISSUES_NEW } from "@/features/academy/lib/content-path";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/ui/accordion";
 import { Link } from "@/i18n/routing";
 
 const linkClassName =

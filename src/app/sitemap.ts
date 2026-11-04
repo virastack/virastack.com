@@ -4,18 +4,18 @@ import { products } from "@/config/products.config";
 
 import { localeUrl } from "@/lib/canonical";
 
-import { getAcademyTracks, getPublishedLessonPaths, loadAcademyLesson } from "@/features/academy";
+import { getAcademyTracks, getPublishedLessonPaths } from "@/features/academy/lib/load-curriculum";
+import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
+import { getAddressDocsNav } from "@/features/docs/config/address-docs.config";
+import { getAiDocsNav } from "@/features/docs/config/ai-docs.config";
+import { getMaskDocsNav, maskExampleIds } from "@/features/docs/config/mask-docs.config";
 import {
-  getAddressDocsNav,
-  getAiDocsNav,
-  getMaskDocsNav,
   getPasswordDocsNav,
-  getStartDocsNav,
-  maskExampleIds,
   passwordExampleIds,
-} from "@/features/docs";
-import { getReleaseHref, getReleases } from "@/features/releases";
-import { readyFeatures } from "@/features/start";
+} from "@/features/docs/config/password-docs.config";
+import { getStartDocsNav } from "@/features/docs/config/start-docs.config";
+import { getReleaseHref, getReleases } from "@/features/releases/data/releases";
+import { readyFeatures } from "@/features/start/data/feature-catalog";
 import { routing } from "@/i18n/routing";
 
 /**
