@@ -35,7 +35,7 @@ import {
   QuestionnaireTitle,
 } from "@/components/ui/questionnaire";
 
-const NAME_PLACEHOLDER = "my-app";
+const DEFAULT_NAME = "acme-app";
 
 const QUESTIONNAIRE_ITEMS = [
   { name: "name", required: true },
@@ -72,7 +72,7 @@ const QUESTIONNAIRE_ITEMS = [
 export function StartCliCommandBuilder() {
   const t = useTranslations("DocsStart");
   const [packageManager] = usePackageManager();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(DEFAULT_NAME);
   const [template, setTemplate] = useState<StartCliTemplate | null>(null);
   const [agents, setAgents] = useState<StartCliAgent[]>([...START_CLI_AGENTS]);
   const [i18n, setI18n] = useState<boolean | null>(null);
@@ -142,7 +142,7 @@ export function StartCliCommandBuilder() {
   }
 
   function handleReset(): void {
-    setName("");
+    setName(DEFAULT_NAME);
     setTemplate(null);
     setAgents([...START_CLI_AGENTS]);
     setI18n(null);
@@ -198,7 +198,7 @@ export function StartCliCommandBuilder() {
             <QuestionnaireChoices>
               <QuestionnaireInput
                 aria-label={t("cliBuilderName")}
-                placeholder={NAME_PLACEHOLDER}
+                placeholder={DEFAULT_NAME}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 autoComplete="off"
