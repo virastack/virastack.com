@@ -1950,7 +1950,8 @@
     "items": {
       "users": "Arama, sayfalama, ekleme ve satır işlemleri içeren kullanıcı tablosu.",
       "auth": "Giriş, kayıt, şifremi unuttum ve yeni şifre ekranları. Doğrulama ve hata durumları hazır gelir.",
-      "products": "Ürün listesi ve görselli detay sayfası: filtre, arama, sayfalama ve varyant seçimi. Seçimler URL'de kalır, link paylaşılabilir.",
+      "product-list": "Görselli ürün listesi: filtre, arama ve sayfalama. Seçimler URL'de kalır, link paylaşılabilir.",
+      "product-detail": "Görsel galerili ürün sayfası ve varyant seçimi.",
       "cart": "Sepet sayfası: adet güncellenir, ürün silinir, toplam her değişiklikte yeniden hesaplanır.",
       "checkout-address": "Seçili adres ekranda görünür; adres listeleme, ekleme ve düzenleme popup'ta yapılır. Teslimat ve fatura adresi ayrı seçilebilir.",
       "checkout-card": "Seçili kart ekranda görünür; kayıtlı kartlar popup'ta listelenir, yeni kart eklenir. Kart numarası ve CVV network'e çıkmaz, ödeme sağlayıcını tek noktadan bağlarsın.",
@@ -1962,7 +1963,8 @@
     "names": {
       "users": "Kullanıcılar",
       "auth": "Giriş ve kayıt",
-      "products": "Ürünler",
+      "product-list": "Ürün listeleme",
+      "product-detail": "Ürün detay",
       "cart": "Sepet",
       "checkout-address": "Teslimat ve fatura adresi",
       "checkout-card": "Kartla ödeme",
@@ -2000,6 +2002,8 @@
       },
       "underConstructionTitle": "Yapım aşamasında",
       "underConstructionDesc": "Bu modül henüz hazır değil. Hazır olduğunda önizlemesi burada görünecek.",
+      "plannedTitle": "Planlı",
+      "plannedDesc": "Bu modül planda; üzerinde henüz çalışılmaya başlanmadı.",
       "previewNote": "Bu önizleme <link>DummyJSON</link> verisini canlı çeker; eklediğin, düzenlediğin veya sildiğin kullanıcı kaydedilmez.",
       "apiTitle": "Kendi API'ne geçiş",
       "apiDesc": "<code>.env.local</code> dosyasında API adresini <code>NEXT_PUBLIC_API_URL</code> (<nextjs>Next.js</nextjs>) ya da <code>VITE_API_URL</code> (<tanstack>TanStack Start</tanstack>) değerine yaz. Yanıtın farklıysa <code>api</code> ve <code>schemas</code> klasörlerini, onları kullanan bileşenleri uyarla.",

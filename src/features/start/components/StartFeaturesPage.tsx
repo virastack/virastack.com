@@ -66,7 +66,7 @@ export function StartFeaturesPage() {
         <h1 className="text-4xl font-semibold tracking-tight text-balance text-foreground lg:text-5xl">
           {t("title")}
         </h1>
-        <p className="max-w-2xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
+        <p className="text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
           {t("description")}
         </p>
       </header>

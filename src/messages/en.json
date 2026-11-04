@@ -1950,7 +1950,8 @@
     "items": {
       "users": "A user table with search, pagination, and actions to add, edit and delete users.",
       "auth": "Sign-in, sign-up, forgot password and new password screens. Validation and error states come ready.",
-      "products": "A product list and detail page with images, filters, search, pagination and variants. Choices stay in shareable URLs.",
+      "product-list": "A product list with images, filters, search and pagination. Choices stay in shareable URLs.",
+      "product-detail": "A product page with an image gallery and variant selection.",
       "cart": "A cart page: update quantities, remove items, and the total recalculates with every change.",
       "checkout-address": "The chosen address shows on the page; listing, adding and editing happen in a popup. Shipping and billing can differ.",
       "checkout-card": "The chosen card shows on the page; saved cards are listed in a popup, where you can add a new one. The card number and CVV never reach the network, and you connect your payment provider in one place.",
@@ -1962,7 +1963,8 @@
     "names": {
       "users": "Users",
       "auth": "Sign-in and sign-up",
-      "products": "Products",
+      "product-list": "Product list",
+      "product-detail": "Product detail",
       "cart": "Cart",
       "checkout-address": "Shipping and billing address",
       "checkout-card": "Card payment",
@@ -2000,6 +2002,8 @@
       },
       "underConstructionTitle": "Under construction",
       "underConstructionDesc": "This module isn't ready yet. Its preview will appear here when it is.",
+      "plannedTitle": "Planned",
+      "plannedDesc": "This module is on the plan. Work on it hasn't started yet.",
       "previewNote": "This preview fetches live data from <link>DummyJSON</link>; users you add, edit or delete are not saved.",
       "apiTitle": "Moving to your API",
       "apiDesc": "In <code>.env.local</code>, set your API's address in <code>NEXT_PUBLIC_API_URL</code> (<nextjs>Next.js</nextjs>) or <code>VITE_API_URL</code> (<tanstack>TanStack Start</tanstack>). If your responses differ, adapt the <code>api</code> and <code>schemas</code> folders and the components that use them.",

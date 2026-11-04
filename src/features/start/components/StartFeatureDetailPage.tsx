@@ -78,7 +78,8 @@ const previewClassName = "rounded-2xl border border-border bg-muted/30 px-4 py-1
 export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
   const t = useTranslations("StartFeatureCatalog");
   const command = `npx virastack add ${feature}`;
-  const isReady = featureCatalog.some((item) => item.id === feature && item.status === "ready");
+  const status = featureCatalog.find((item) => item.id === feature)?.status;
+  const isReady = status === "ready";
   const content = isReady ? (READY_CONTENT[feature] ?? null) : null;
   const tags = {
     ...guideCardTags(),
@@ -210,9 +211,11 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
       ) : (
         <section aria-label={t("detail.preview")} className={previewClassName}>
           <div className="m-auto max-w-sm space-y-1 text-center">
-            <p className="font-medium text-foreground">{t("detail.underConstructionTitle")}</p>
+            <p className="font-medium text-foreground">
+              {status === "planned" ? t("detail.plannedTitle") : t("detail.underConstructionTitle")}
+            </p>
             <p className="text-sm text-pretty text-muted-foreground">
-              {t("detail.underConstructionDesc")}
+              {status === "planned" ? t("detail.plannedDesc") : t("detail.underConstructionDesc")}
             </p>
           </div>
         </section>

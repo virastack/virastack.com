@@ -1,30 +1,39 @@
 "use client";
 
 import { Suspense } from "react";
+import Image from "next/image";
 
-import { ChevronRight, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { debounce, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { visibleFeatures, visibleGroups, type FeatureGroup } from "@/config/start-modules.config";
+import {
+  featureGroups,
+  visibleFeatures,
+  visibleGroups,
+  type FeatureGroup,
+  type FeatureId,
+  type FeatureStatus,
+} from "@/config/start-modules.config";
 
-import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
-import { CopyButton } from "@/components/shared/CopyButton";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { featureMarks } from "@/features/start/constants/feature-tags.constants";
 import {
   filterPillClassName,
   filterPillStateClassName,
 } from "@/features/start/helpers/filter-pill";
 import { Link } from "@/i18n/routing";
 
-const PackageIcon = featureMarks.packages.icon;
+/** Modules with screenshots in `public/start/features/`: `<id>-<locale>-<light|dark>.webp`. */
+const PREVIEW_IMAGE_IDS: readonly FeatureId[] = ["users", "checkout-address", "checkout-card"];
 
-const badgeClassName = "inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs";
+const STATUS_RANK: Record<FeatureStatus, number> = { ready: 0, building: 1, planned: 2 };
+
+function hasPreviewImage(id: FeatureId): boolean {
+  return PREVIEW_IMAGE_IDS.includes(id);
+}
 
 const SEARCH_DEBOUNCE_MS = 300;
 
@@ -45,14 +54,28 @@ function CatalogView({ group, search, onGroupChange, onSearchChange }: CatalogVi
   const locale = useLocale();
 
   const query = search.trim().toLocaleLowerCase(locale);
-  const features = visibleFeatures.filter(
-    (feature) =>
-      (!group || feature.group === group) &&
-      [feature.id, t(`names.${feature.id}`), t(`items.${feature.id}`), ...(feature.packages ?? [])]
-        .join(" ")
-        .toLocaleLowerCase(locale)
-        .includes(query),
-  );
+  // A group shows its own order. "All" puts ready modules first, then building, then planned,
+  // each by group and then by order.
+  const features = visibleFeatures
+    .filter(
+      (feature) =>
+        (!group || feature.group === group) &&
+        [
+          feature.id,
+          t(`names.${feature.id}`),
+          t(`items.${feature.id}`),
+          ...(feature.packages ?? []),
+        ]
+          .join(" ")
+          .toLocaleLowerCase(locale)
+          .includes(query),
+    )
+    .toSorted(
+      (a, b) =>
+        (group ? 0 : STATUS_RANK[a.status] - STATUS_RANK[b.status]) ||
+        featureGroups.indexOf(a.group) - featureGroups.indexOf(b.group) ||
+        a.order - b.order,
+    );
 
   return (
     <div className="flex flex-col gap-8">
@@ -110,82 +133,56 @@ function CatalogView({ group, search, onGroupChange, onSearchChange }: CatalogVi
         </p>
       ) : null}
 
-      <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => (
           <li
             key={feature.id}
             id={feature.id}
             className={cn(
-              featureCardClassName,
-              "relative scroll-mt-32 transition-colors",
-              feature.status === "soon" ? "border-dashed" : "hover:bg-accent/30",
+              "group relative scroll-mt-32 rounded-3xl border border-border bg-muted/40 p-1 transition-colors duration-150 ease-out hover:bg-muted/70",
+              feature.status !== "ready" && "border-dashed",
             )}
           >
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="text-base font-semibold text-foreground">
+            <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-border bg-background">
+              {hasPreviewImage(feature.id) ? (
+                <>
+                  <Image
+                    src={`/start/features/${feature.id}-${locale}-light.webp`}
+                    alt=""
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover dark:hidden"
+                  />
+                  <Image
+                    src={`/start/features/${feature.id}-${locale}-dark.webp`}
+                    alt=""
+                    fill
+                    unoptimized
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="hidden object-cover dark:block"
+                  />
+                </>
+              ) : (
+                <p className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  {feature.status === "planned"
+                    ? t("detail.plannedTitle")
+                    : t("detail.underConstructionTitle")}
+                </p>
+              )}
+            </div>
+            <div className="flex items-baseline justify-between gap-3 p-2">
+              <h3 className="min-w-0 text-sm font-medium tracking-tight text-foreground">
                 <Link
                   href={`/start/features/${feature.id}`}
-                  className="outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                  className="outline-none after:absolute after:inset-0 after:rounded-3xl focus-visible:after:ring-2 focus-visible:after:ring-ring"
                 >
                   {t(`names.${feature.id}`)}
                 </Link>
               </h3>
-              <ChevronRight className={featureCardChevronClassName} aria-hidden />
-            </div>
-            <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
-              {t(`items.${feature.id}`)}
-            </p>
-            <div className="mt-auto flex flex-col gap-3 pt-1">
-              <ul className="flex flex-wrap gap-1.5">
-                {feature.tags.map((tag) => {
-                  const { icon: Icon, textClass } = featureMarks[tag];
-
-                  return (
-                    <li key={tag} className={cn(badgeClassName, "text-foreground")}>
-                      <Icon className={cn("size-3 shrink-0", textClass)} aria-hidden />
-                      {t(`tag.${tag}`)}
-                    </li>
-                  );
-                })}
-                {feature.packages ? (
-                  <li className="relative z-10 flex">
-                    <Popover>
-                      <PopoverTrigger
-                        aria-label={t("packagesLabel")}
-                        className={cn(
-                          badgeClassName,
-                          "cursor-pointer text-foreground outline-none hover:bg-muted/70 focus-visible:ring-2 focus-visible:ring-ring",
-                        )}
-                      >
-                        <PackageIcon
-                          className={cn("size-3 shrink-0", featureMarks.packages.textClass)}
-                          aria-hidden
-                        />
-                        {t("packagesCount", { count: feature.packages.length })}
-                      </PopoverTrigger>
-                      <PopoverContent className="rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md">
-                        <p className="mb-2 font-medium">{t("packagesLabel")}</p>
-                        <ul className="flex flex-col gap-1 font-mono text-muted-foreground">
-                          {feature.packages.map((name) => (
-                            <li key={name}>{name}</li>
-                          ))}
-                        </ul>
-                      </PopoverContent>
-                    </Popover>
-                  </li>
-                ) : null}
-              </ul>
-              <div className="relative z-10 flex min-w-0 items-center justify-between gap-2 rounded-md border border-border bg-card py-1 pr-1 pl-3">
-                <code className="min-w-0 truncate font-mono text-xs text-foreground">
-                  {`npx virastack add ${feature.id}`}
-                </code>
-                <CopyButton
-                  text={`npx virastack add ${feature.id}`}
-                  variant="ghost"
-                  size="icon-sm"
-                  className="shrink-0"
-                />
-              </div>
+              <span className="shrink-0 text-sm text-muted-foreground">
+                {t(`group.${feature.group}`)}
+              </span>
             </div>
           </li>
         ))}

@@ -1,11 +1,12 @@
 import { isOneOf } from "@/helpers/is-one-of";
 
-const featureGroups = ["user", "ecommerce", "admin"] as const;
+export const featureGroups = ["user", "ecommerce", "admin"] as const;
 
 const featureIds = [
   "users",
   "auth",
-  "products",
+  "product-list",
+  "product-detail",
   "cart",
   "checkout-address",
   "checkout-card",
@@ -24,12 +25,20 @@ export function isFeatureId(value: string): value is FeatureId {
 
 export type FeatureGroup = (typeof featureGroups)[number];
 
-export type FeatureTag = "mockApi" | "urlState" | "form";
+type FeatureTag = "mockApi" | "urlState" | "form";
+
+export type FeatureStatus = "ready" | "building" | "planned";
 
 export type CatalogFeature = {
   id: FeatureId;
   group: FeatureGroup;
-  status: "ready" | "soon";
+  /**
+   * `ready`: installable with `virastack add`. `building`: in progress, shown everywhere as under
+   * construction. `planned`: not started, shown only in local development.
+   */
+  status: FeatureStatus;
+  /** Position inside its group on the catalog page; not shown. */
+  order: number;
   tags: readonly FeatureTag[];
   packages?: readonly string[];
 };
@@ -39,31 +48,43 @@ export const featureCatalog: readonly CatalogFeature[] = [
     id: "users",
     group: "user",
     status: "ready",
+    order: 1,
     tags: ["urlState", "form"],
   },
   {
     id: "auth",
     group: "user",
-    status: "soon",
+    status: "planned",
+    order: 2,
     tags: ["mockApi", "form"],
     packages: ["@virastack/password"],
   },
   {
-    id: "products",
+    id: "product-list",
     group: "ecommerce",
-    status: "soon",
+    status: "building",
+    order: 1,
     tags: ["mockApi", "urlState"],
+  },
+  {
+    id: "product-detail",
+    group: "ecommerce",
+    status: "building",
+    order: 2,
+    tags: ["mockApi"],
   },
   {
     id: "cart",
     group: "ecommerce",
-    status: "soon",
+    status: "planned",
+    order: 5,
     tags: ["mockApi"],
   },
   {
     id: "checkout-address",
     group: "ecommerce",
     status: "ready",
+    order: 3,
     tags: ["mockApi", "form"],
     packages: ["@virastack/address", "@virastack/mask"],
   },
@@ -71,34 +92,39 @@ export const featureCatalog: readonly CatalogFeature[] = [
     id: "checkout-card",
     group: "ecommerce",
     status: "ready",
+    order: 4,
     tags: ["mockApi", "form"],
     packages: ["@virastack/mask"],
   },
   {
     id: "admin-products",
     group: "admin",
-    status: "soon",
+    status: "planned",
+    order: 1,
     tags: ["mockApi", "urlState", "form"],
     packages: ["@tanstack/react-table"],
   },
   {
     id: "admin-orders",
     group: "admin",
-    status: "soon",
+    status: "planned",
+    order: 2,
     tags: ["mockApi", "urlState"],
     packages: ["@tanstack/react-table"],
   },
   {
     id: "admin-customers",
     group: "admin",
-    status: "soon",
+    status: "planned",
+    order: 3,
     tags: ["mockApi", "urlState", "form"],
     packages: ["@tanstack/react-table"],
   },
   {
     id: "admin-dashboard",
     group: "admin",
-    status: "soon",
+    status: "planned",
+    order: 4,
     tags: ["mockApi"],
     packages: ["recharts"],
   },
@@ -107,9 +133,11 @@ export const featureCatalog: readonly CatalogFeature[] = [
 /** Modules `virastack add` can install today; the sitemap lists only these. */
 export const readyFeatures = featureCatalog.filter(({ status }) => status === "ready");
 
-/** Unready modules stay visible while developing and are left out of production builds. */
+/** Planned modules show only in local development; ready and building ones also in production. */
 export const visibleFeatures =
-  process.env.NODE_ENV === "production" ? readyFeatures : featureCatalog;
+  process.env.NODE_ENV === "production"
+    ? featureCatalog.filter(({ status }) => status !== "planned")
+    : featureCatalog;
 
 export const visibleGroups = featureGroups.filter((group) =>
   visibleFeatures.some((feature) => feature.group === group),
