@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { siteConfig } from "@/config/site.config";
 
-import { GithubIcon } from "@/components/icons/github";
+import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";

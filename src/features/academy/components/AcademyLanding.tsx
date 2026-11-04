@@ -3,8 +3,8 @@ import { getLocale } from "next-intl/server";
 import { formatMonthYear } from "@/helpers/format-date";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { AcademyHero } from "@/features/academy/components/academy-hero";
-import { AcademyTrackCard } from "@/features/academy/components/academy-track-card";
+import { AcademyHero } from "@/features/academy/components/AcademyHero";
+import { AcademyTrackCard } from "@/features/academy/components/AcademyTrackCard";
 import { getAcademyGroupAnchor } from "@/features/academy/constants/group-anchors.constants";
 import { getAcademyLandingStats } from "@/features/academy/lib/academy-landing-stats";
 import { ACADEMY_GITHUB_REPO } from "@/features/academy/lib/content-path";

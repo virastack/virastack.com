@@ -15,11 +15,11 @@ import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
-import { GithubIcon } from "@/components/icons/github";
-import { XLogo } from "@/components/icons/x";
 import { AcademySubHeader } from "@/components/layout/AcademySubHeader";
 import { HeaderLogoContextMenu } from "@/components/layout/HeaderLogoContextMenu";
 import { ProductSubHeader } from "@/components/layout/ProductSubHeader";
+import { GithubIcon } from "@/components/shared/icons/GithubIcon";
+import { XLogo } from "@/components/shared/icons/XLogo";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { Button } from "@/components/ui/button";

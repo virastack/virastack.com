@@ -20,14 +20,14 @@ import { unified } from "unified";
 
 import { cn } from "@/lib/utils";
 
-import { AcademyBadge, AcademyBadgeLogo } from "@/features/academy/components/academy-badge";
-import { AcademyCallout } from "@/features/academy/components/academy-callout";
-import { AcademyCodeBlock } from "@/features/academy/components/academy-code-block";
-import { AcademyDetails } from "@/features/academy/components/academy-details";
+import { AcademyBadge, AcademyBadgeLogo } from "@/features/academy/components/AcademyBadge";
+import { AcademyCallout } from "@/features/academy/components/AcademyCallout";
+import { AcademyCodeBlock } from "@/features/academy/components/AcademyCodeBlock";
+import { AcademyDetails } from "@/features/academy/components/AcademyDetails";
 import {
   AcademyResourceLinks,
   type AcademyResourceLinkItem,
-} from "@/features/academy/components/academy-resource-links";
+} from "@/features/academy/components/AcademyResourceLinks";
 import { ACADEMY_COMPANY_NAME_TO_KIND } from "@/features/academy/constants/badge.constants";
 import {
   parseAcademyResourceKind,

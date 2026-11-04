@@ -1,7 +1,7 @@
 import { MoveRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { TurkuazMark } from "@/components/icons/turkuaz";
+import { TurkuazMark } from "@/components/shared/icons/TurkuazMark";
 
 export function AboutTimeline() {
   const t = useTranslations("AboutPage");

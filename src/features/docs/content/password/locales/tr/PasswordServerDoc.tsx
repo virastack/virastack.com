@@ -1,5 +1,5 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 

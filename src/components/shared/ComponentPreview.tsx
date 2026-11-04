@@ -7,7 +7,7 @@ import { AnimatePresence, m, useReducedMotion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
-import { CopyButton } from "@/components/copy-button";
+import { CopyButton } from "@/components/shared/CopyButton";
 
 /** ~3 code lines (padding + line-height); 3rd line sits in the fade. */
 const COLLAPSED_HEIGHT = 88;

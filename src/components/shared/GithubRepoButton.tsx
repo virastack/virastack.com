@@ -1,4 +1,4 @@
-import { GithubIcon } from "@/components/icons/github";
+import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { Button } from "@/components/ui/button";
 
 type GithubRepoButtonProps = {

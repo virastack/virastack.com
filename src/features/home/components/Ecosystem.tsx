@@ -11,10 +11,9 @@ import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature
 import { cn } from "@/lib/utils";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
+import { homePillars } from "@/features/home/constants/pillars";
 import { Link } from "@/i18n/routing";
-
-import { homePillars } from "../constants/pillars";
 
 type EcosystemItemId = "academy" | ProductId;
 

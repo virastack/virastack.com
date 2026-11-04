@@ -7,7 +7,7 @@ const SAFE_SEGMENT = /^[a-z0-9][a-z0-9._-]{0,31}$/i;
 const telemetryBodySchema = z.object({
   event: z.enum(["create", "add"]),
   properties: z
-    .object({
+    .looseObject({
       template: z.enum(["nextjs", "tanstack"]).optional(),
       i18n: z.boolean().optional(),
       tools: z.array(z.string().max(32)).max(20).optional(),
@@ -23,7 +23,6 @@ const telemetryBodySchema = z.object({
       nodeVersion: z.string().max(32).optional(),
       platform: z.string().max(32).optional(),
     })
-    .passthrough()
     .default({}),
 });
 

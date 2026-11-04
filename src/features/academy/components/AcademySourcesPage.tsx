@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
+import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
 import {
   AcademyCriterionExamples,
   type AcademyCriterionExample,
-} from "@/features/academy/components/academy-criterion-examples";
-import { AcademySourcesTable } from "@/features/academy/components/academy-sources-table";
+} from "@/features/academy/components/AcademyCriterionExamples";
+import { AcademySourcesTable } from "@/features/academy/components/AcademySourcesTable";
 import {
   collectAcademySources,
   type AcademySourceEntry,

@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { featureCardChevronClassName, getInteractiveCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
-import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
+import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
 import type { AcademyTrack } from "@/features/academy/types/academy.types";
 import { Link } from "@/i18n/routing";

@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 import { getTranslations } from "next-intl/server";
 
-import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
-import { AcademyContributeFaq } from "@/features/academy/components/academy-contribute-faq";
+import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
+import { AcademyContributeFaq } from "@/features/academy/components/AcademyContributeFaq";
 import {
   ACADEMY_GITHUB_ISSUES_NEW,
   ACADEMY_GITHUB_REPO,

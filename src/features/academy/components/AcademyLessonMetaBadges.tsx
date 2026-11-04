@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import { AcademyResourceBadge } from "@/features/academy/components/academy-resource-badge";
+import { AcademyResourceBadge } from "@/features/academy/components/AcademyResourceBadge";
 import type { AcademyResourceKind } from "@/features/academy/constants/resource.constants";
 import type { AcademyResourceCount } from "@/features/academy/lib/count-lesson-resources";
 

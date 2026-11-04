@@ -6,8 +6,8 @@ import { useViraMask } from "@virastack/mask";
 import { useViraPassword } from "@virastack/password";
 import { useForm, useWatch } from "react-hook-form";
 
-import { passwordMessages } from "../password-messages";
-import { policy } from "../password-policy";
+import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
+import { policy } from "@/features/docs/content/password/examples/password-policy";
 
 type Values = { phone: string; password: string; confirm: string };
 

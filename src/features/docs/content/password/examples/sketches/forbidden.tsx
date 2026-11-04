@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { useViraPassword } from "@virastack/password";
 
-import { passwordMessages } from "../password-messages";
-import { policy } from "../password-policy";
+import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
+import { policy } from "@/features/docs/content/password/examples/password-policy";
 
 export function NewPasswordField() {
   const [email, setEmail] = useState("hello@virastack.com");

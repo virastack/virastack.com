@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 
 import { usePackageManagerStore, type PackageManager } from "@/stores/package-manager.store";
 
-import { CopyButton } from "@/components/copy-button";
-import { IconSwap, IconSwapItem } from "@/components/icon-swap";
-import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "@/components/tabs";
+import { CopyButton } from "@/components/shared/CopyButton";
+import { IconSwap, IconSwapItem } from "@/components/shared/IconSwap";
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "@/components/shared/Tabs";
 
 export type { PackageManager };
 

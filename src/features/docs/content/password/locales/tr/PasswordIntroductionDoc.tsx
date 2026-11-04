@@ -1,7 +1,7 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";

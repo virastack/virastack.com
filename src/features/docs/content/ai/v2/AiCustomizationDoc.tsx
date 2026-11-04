@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";
 

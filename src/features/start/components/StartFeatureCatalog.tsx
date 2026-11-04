@@ -10,7 +10,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { featureCardChevronClassName, featureCardClassName } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
-import { CopyButton } from "@/components/copy-button";
+import { CopyButton } from "@/components/shared/CopyButton";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { featureMarks } from "@/features/start/constants/feature-tags.constants";

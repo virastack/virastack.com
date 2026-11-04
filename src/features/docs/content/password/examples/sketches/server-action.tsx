@@ -4,9 +4,9 @@ import { useActionState, useState } from "react";
 
 import { useViraPassword } from "@virastack/password";
 
-import { passwordMessages } from "../password-messages";
-import { policy } from "../password-policy";
-import { signup, type SignupState } from "../signup-action";
+import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
+import { policy } from "@/features/docs/content/password/examples/password-policy";
+import { signup, type SignupState } from "@/features/docs/content/password/examples/signup-action";
 
 export function SignupForm() {
   const [state, action, pending] = useActionState<SignupState, FormData>(signup, null);

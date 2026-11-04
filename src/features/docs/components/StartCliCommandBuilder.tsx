@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-import { CodeBlockCommand, usePackageManager } from "@/components/code-block-command";
+import { CodeBlockCommand, usePackageManager } from "@/components/shared/CodeBlockCommand";
 import { Button } from "@/components/ui/button";
 import {
   Questionnaire,

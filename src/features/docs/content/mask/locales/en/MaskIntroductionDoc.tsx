@@ -1,9 +1,9 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
 import { StatusIcon } from "@/features/docs/components/StatusIcon";

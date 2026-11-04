@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 
 import { siteConfig } from "@/config/site.config";
 
-import { GithubIcon } from "@/components/icons/github";
+import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 
 export function Maintainer() {

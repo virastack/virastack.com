@@ -13,7 +13,7 @@ import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
 import { Tailwindcss } from "@/components/ui/svgs/tailwindcss";
 import { Typescript } from "@/components/ui/svgs/typescript";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { Link } from "@/i18n/routing";
 
 const STACK_URLS = {

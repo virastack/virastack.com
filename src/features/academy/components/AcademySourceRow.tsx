@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { AcademyBadgeLogo } from "@/features/academy/components/academy-badge";
-import { AcademySourceGuides } from "@/features/academy/components/academy-source-guides";
+import { AcademyBadgeLogo } from "@/features/academy/components/AcademyBadge";
+import { AcademySourceGuides } from "@/features/academy/components/AcademySourceGuides";
 import { resolveAcademySourceVisual } from "@/features/academy/constants/source-visual.constants";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
 

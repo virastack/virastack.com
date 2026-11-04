@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { CopyButton } from "@/components/copy-button";
+import { CopyButton } from "@/components/shared/CopyButton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Select,

@@ -2,10 +2,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { formatDate } from "@/helpers/format-date";
 
-import { GithubIcon } from "@/components/icons/github";
-import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
-import { AcademyMarkdown } from "@/features/academy/components/academy-markdown";
-import { LessonPager } from "@/features/academy/components/lesson-pager";
+import { GithubIcon } from "@/components/shared/icons/GithubIcon";
+import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
+import { AcademyMarkdown } from "@/features/academy/components/AcademyMarkdown";
+import { LessonPager } from "@/features/academy/components/LessonPager";
 import { formatLessonNumber } from "@/features/academy/lib/load-curriculum";
 import { getAcademyLessonEditUrl } from "@/features/academy/lib/load-lesson";
 import type {

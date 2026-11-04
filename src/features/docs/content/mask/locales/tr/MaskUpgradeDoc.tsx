@@ -1,5 +1,5 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPromptBlock } from "@/features/docs/components/DocsPromptBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MASK_UPGRADE_PROMPT } from "@/features/docs/content/mask/mask-upgrade-prompt";

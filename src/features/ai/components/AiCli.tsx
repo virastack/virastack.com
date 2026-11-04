@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { Link } from "@/i18n/routing";
 

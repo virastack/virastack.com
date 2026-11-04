@@ -1,5 +1,5 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 
 const sharedCode = `// lib/checkout-masks.ts — "use client" yok

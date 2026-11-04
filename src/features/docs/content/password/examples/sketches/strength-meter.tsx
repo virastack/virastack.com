@@ -2,8 +2,8 @@
 
 import { useViraPassword } from "@virastack/password";
 
-import { passwordMessages } from "../password-messages";
-import { policy } from "../password-policy";
+import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
+import { policy } from "@/features/docs/content/password/examples/password-policy";
 
 // Filled bars per level
 const bars = { weak: 1, fair: 2, good: 3, strong: 4 };

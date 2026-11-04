@@ -7,13 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, retry }: { error: unknown; retry: () => void }) {
   const t = useTranslations("Common");
 
   useEffect(() => {
@@ -25,7 +19,7 @@ export default function Error({
       <h1 className="text-2xl font-semibold tracking-tight">{t("somethingWentWrong")}</h1>
       <p className="max-w-md text-sm text-muted-foreground">{t("somethingWentWrongDesc")}</p>
       <div className="flex gap-3">
-        <Button onClick={reset}>{t("tryAgain")}</Button>
+        <Button onClick={retry}>{t("tryAgain")}</Button>
         <Button variant="outline" nativeButton={false} render={<Link href="/" />}>
           {t("goHome")}
         </Button>

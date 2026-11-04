@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-import { CopyStateIcon } from "@/components/copy-button";
+import { CopyStateIcon } from "@/components/shared/CopyButton";
 import { Reveal } from "@/components/shared/Reveal";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";

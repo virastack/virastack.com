@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-import { CopyStateIcon } from "@/components/copy-button";
+import { CopyStateIcon } from "@/components/shared/CopyButton";
 
 const DEFAULT_COMMAND = "npx virastack@latest";
 

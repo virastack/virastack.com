@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Nodejs } from "@/components/ui/svgs/nodejs";

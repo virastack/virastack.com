@@ -1,4 +1,4 @@
-import { CopyButton } from "@/components/copy-button";
+import { CopyButton } from "@/components/shared/CopyButton";
 
 type DocsPromptBlockProps = {
   /** Prompt text for an AI coding agent. */

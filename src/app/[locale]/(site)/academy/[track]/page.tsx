@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site.config";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { AcademyTrackPageView } from "@/features/academy/components/academy-track-page";
+import { AcademyTrackPageView } from "@/features/academy/components/AcademyTrackPage";
 import { findAcademyTrack, getAcademyTracks } from "@/features/academy/lib/load-curriculum";
 import { routing } from "@/i18n/routing";
 

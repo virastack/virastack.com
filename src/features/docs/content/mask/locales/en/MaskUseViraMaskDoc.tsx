@@ -1,6 +1,6 @@
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
 import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";

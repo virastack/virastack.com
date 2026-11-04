@@ -6,7 +6,7 @@ import { setRequestLocale } from "next-intl/server";
 import { buildAlternates, localeUrl } from "@/lib/canonical";
 import { buildOgImageMetadata } from "@/lib/og";
 
-import { AcademyLessonPageView } from "@/features/academy/components/academy-lesson-page";
+import { AcademyLessonPageView } from "@/features/academy/components/AcademyLessonPage";
 import { findAcademyLesson, getPublishedLessonPaths } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import { routing } from "@/i18n/routing";

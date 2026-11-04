@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { StatusIcon } from "@/features/docs/components/StatusIcon";
 import { docsRichTags } from "@/features/docs/lib/docs-rich-tags";

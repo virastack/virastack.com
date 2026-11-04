@@ -136,7 +136,7 @@ export function GuidePlayPage() {
         <AnimatePresence>
           {steps.slice(0, maxStep + 1).map((step, index) => (
             <m.div
-              key={index}
+              key={step.key}
               id={`guide-step-${index}`}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}

@@ -8,8 +8,8 @@ import { evaluate, type PasswordIssue } from "@virastack/password/strength";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
-import { passwordMessages } from "../password-messages";
-import { policy } from "../password-policy";
+import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
+import { policy } from "@/features/docs/content/password/examples/password-policy";
 
 // The same policy inside a Zod schema: errors are keys, messages come from your map.
 const schema = z

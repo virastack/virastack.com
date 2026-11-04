@@ -9,7 +9,7 @@ import { GithubRepoButton } from "@/components/shared/GithubRepoButton";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
 import { AboutTimeline } from "@/features/about/components/AboutTimeline";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { GuideProductMark, guideProductTags } from "@/features/guide/components/GuideRichText";
 import { Link } from "@/i18n/routing";
 

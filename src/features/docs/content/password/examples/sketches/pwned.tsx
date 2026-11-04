@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { useViraPassword } from "@virastack/password";
 import type { PwnedResult } from "@virastack/password/pwned";
 
-import { checkPassword } from "../pwned-action";
+import { checkPassword } from "@/features/docs/content/password/examples/pwned-action";
 
 export function LeakCheck() {
   const [result, setResult] = useState<PwnedResult | null>(null);

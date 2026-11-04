@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 
 import { useTranslations } from "next-intl";
 
-import { BaseUiIcon } from "@/components/icons/base-ui";
-import { FramerIcon } from "@/components/icons/framer";
-import { NuqsIcon } from "@/components/icons/nuqs";
+import { BaseUiIcon } from "@/components/shared/icons/BaseUiIcon";
+import { FramerIcon } from "@/components/shared/icons/FramerIcon";
+import { NuqsIcon } from "@/components/shared/icons/NuqsIcon";
 import { TanstackLogo } from "@/components/shared/TanstackLogo";
 import { Lucide } from "@/components/ui/svgs/lucide";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";

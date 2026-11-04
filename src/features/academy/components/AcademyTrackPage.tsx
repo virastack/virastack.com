@@ -1,9 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { AcademyBackLink } from "@/features/academy/components/academy-back-link";
-import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
-import { TrackLessonRow } from "@/features/academy/components/track-lesson-row";
-import { TrackPager } from "@/features/academy/components/track-pager";
+import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
+import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
+import { TrackLessonRow } from "@/features/academy/components/TrackLessonRow";
+import { TrackPager } from "@/features/academy/components/TrackPager";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
 import {
   findAcademyTrackNeighbours,

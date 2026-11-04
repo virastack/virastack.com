@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import { ArrowLeftIcon, SparklesIcon, SquareTerminalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { CopyButton } from "@/components/copy-button";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { CopyButton } from "@/components/shared/CopyButton";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { guideCardTags, GuideProductMark } from "@/features/guide/components/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
 import { featureCatalog, visibleFeatures } from "@/features/start/data/feature-catalog";

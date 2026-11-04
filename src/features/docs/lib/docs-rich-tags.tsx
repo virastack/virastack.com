@@ -1,6 +1,6 @@
 import { Children, type ReactNode } from "react";
 
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 
 function renderBadge(kind: string, chunks: ReactNode) {
   return <AcademyBadge kind={kind} label={Children.toArray(chunks).join("")} />;

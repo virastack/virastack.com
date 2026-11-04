@@ -6,7 +6,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import type { EcosystemLocale } from "@/config/ecosystem.config";
 
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { ReleaseDate, ReleaseProducts } from "@/features/releases/components/ReleaseMeta";
 import { ReleaseRichText } from "@/features/releases/components/ReleaseRichText";
 import type { Release } from "@/features/releases/data/releases";

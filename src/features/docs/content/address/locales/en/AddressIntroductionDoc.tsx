@@ -1,11 +1,11 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
 import { AddressDemo } from "@/components/shared/AddressDemo";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { ComponentPreview } from "@/components/shared/ComponentPreview";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
-import { AcademyBadge } from "@/features/academy/components/academy-badge";
+import { AcademyBadge } from "@/features/academy/components/AcademyBadge";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { StatusIcon } from "@/features/docs/components/StatusIcon";
 import { GuideProductMark } from "@/features/guide/components/GuideRichText";

@@ -1,7 +1,7 @@
 import { convertNpmCommand } from "@/lib/convert-npm-command";
 import { cn } from "@/lib/utils";
 
-import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
 import { highlightAcademyCode } from "@/features/academy/lib/highlight-academy-code";
 
 type AcademyCodeBlockProps = {

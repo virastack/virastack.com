@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AcademySourceRow } from "@/features/academy/components/academy-source-row";
+import { AcademySourceRow } from "@/features/academy/components/AcademySourceRow";
 import type { AcademySourceEntry } from "@/features/academy/lib/collect-academy-sources";
 
 const SOURCE_FILTERS = ["all", "official", "engineer", "institution"] as const;

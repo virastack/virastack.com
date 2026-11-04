@@ -8,8 +8,8 @@ import {
 } from "@/lib/feature-card";
 import { cn } from "@/lib/utils";
 
-import { AcademyLessonMetaBadges } from "@/features/academy/components/academy-lesson-meta-badges";
-import { AcademyTrackIcon } from "@/features/academy/components/academy-track-icon";
+import { AcademyLessonMetaBadges } from "@/features/academy/components/AcademyLessonMetaBadges";
+import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
 import { getLessonIconTag } from "@/features/academy/constants/track-icon.constants";
 import { countLessonResources } from "@/features/academy/lib/count-lesson-resources";
 import { formatLessonNumber } from "@/features/academy/lib/load-curriculum";

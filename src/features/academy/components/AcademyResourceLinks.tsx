@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
 
-import { AcademyResourceBadge } from "@/features/academy/components/academy-resource-badge";
+import { AcademyResourceBadge } from "@/features/academy/components/AcademyResourceBadge";
 import type { AcademyResourceKind } from "@/features/academy/constants/resource.constants";
 
 export type AcademyResourceLinkItem = {
