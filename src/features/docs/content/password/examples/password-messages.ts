@@ -13,4 +13,5 @@ export const passwordMessages: Record<PasswordIssue, string> = {
   "password.repetitive": "Avoid repeats and sequences like aaaa or 1234.",
   "password.containsPersonalInfo": "Don't use your name or email.",
   "password.mismatch": "Passwords don't match.",
+  "password.pwned": "This password appeared in a data breach. Choose another one.",
 };

@@ -30,15 +30,78 @@ const defaultRows: Row[] = [
   ["inputProps.id", "aria-controls kept the hook's id", "aria-controls follows inputProps.id"],
 ];
 
+const v12Rows: Row[] = [
+  [
+    "Level",
+    "Rises with uppercase letters, digits and symbols",
+    "Rises with length only: +5 good, +10 strong",
+  ],
+  [
+    "forbidden and blocklist",
+    "Searched inside the password: “kaliteli” fails for the name Ali",
+    "The whole password is compared: “ali1990” fails, “kaliteli” passes",
+  ],
+  ["aaaabbbbccccdddd", "Valid (fair)", "password.repetitive"],
+  ["legacy preset", "Supported", "Deprecated; use require if you must"],
+];
+
+const v12Code = `npm install @virastack/password@^1.2`;
+
 export function PasswordUpgradeDoc() {
   return (
     <>
       <DocsPageHeader
-        title="Upgrading from 1.0 to 1.1"
-        description="1.1 adds features without breaking the hook. A few defaults changed; each can be turned off."
+        title="Upgrading"
+        description="1.2 follows NIST more closely and 1.1 added features. Neither changes the hook's API."
       />
       <DocsProse>
-        <h2 id="ozet">Summary</h2>
+        <h2 id="v1-2">1.1 → 1.2</h2>
+        <DocsCodeBlock code={v12Code} lang="bash" />
+        <p>
+          The API stays the same. The policy follows NIST SP 800-63B-4 more closely, so the same
+          password can get a different result: check tests that pin a <code>level</code> or an
+          issue.
+        </p>
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <table>
+            <thead>
+              <tr>
+                <th>Behavior</th>
+                <th>1.1</th>
+                <th>1.2</th>
+              </tr>
+            </thead>
+            <tbody>
+              {v12Rows.map(([behavior, before, after]) => (
+                <tr key={behavior}>
+                  <td>{behavior}</td>
+                  <td>{before}</td>
+                  <td>{after}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li>
+            <Link href="/password/docs/react-hook-form#form">@virastack/password/form</Link>:{" "}
+            <code>useViraPasswordForm</code>&#32;binds the fields to React Hook Form.
+          </li>
+          <li>
+            <code>mfa</code> preset (8 characters with a second factor) and the{" "}
+            <code>normalization</code>&#32;option (<code>NFKC</code> by default, or <code>NFC</code>
+            ), on the <Link href="/password/docs/strength">strength</Link> page.
+          </li>
+          <li>
+            <code>
+              validatePassword(..., {"{"} pwned {"}"})
+            </code>
+            : the policy and Have I Been Pwned in{" "}
+            <Link href="/password/docs/server#sizinti">one call</Link>.
+          </li>
+        </ul>
+
+        <h2 id="ozet">1.0 → 1.1</h2>
         <DocsCodeBlock code={installCode} lang="bash" />
         <p>
           The hook&apos;s options and return value are the same; new fields are additions. The 1.0

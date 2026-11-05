@@ -11,6 +11,7 @@ const entries: [string, string, string][] = [
   ["@virastack/password", "useViraPassword, mergeProps, composeRefs, ikonlar", "client"],
   ["@virastack/password/strength", "definePolicy, evaluate, normalizePassword", "client + server"],
   ["@virastack/password/server", "validatePassword (+ strength dışa aktarımları)", "server"],
+  ["@virastack/password/form", "useViraPasswordForm (React Hook Form)", "client"],
   ["@virastack/password/pwned", "checkPwned", "server (önerilen)"],
 ];
 

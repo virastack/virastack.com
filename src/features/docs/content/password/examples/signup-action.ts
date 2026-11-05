@@ -15,6 +15,6 @@ export async function signup(_state: SignupState, formData: FormData): Promise<S
   });
   if (!result.valid) return { ok: false, issues: result.issues };
 
-  // await createUser(email, await hash(result.password)) — result.password is NFKC-normalized
+  // await createUser(email, await hash(result.password)) — result.password is normalized with the policy
   return { ok: true, issues: [] };
 }

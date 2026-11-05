@@ -26,6 +26,7 @@ const PASSWORD_EXAMPLE_IDS = [
   "show-hide",
   "strength-meter",
   "confirm",
+  "form-binding",
   "react-hook-form-zod",
   "server-action",
   "forbidden",
@@ -62,6 +63,11 @@ export function getPasswordExamples(t: DocsPasswordTranslate): PasswordExampleMe
       t("exampleConfirmNote0"),
       t("exampleConfirmNote1"),
       t("exampleConfirmNote2"),
+    ]),
+    example("form-binding", t("exampleFormBindingTitle"), t("exampleFormBindingDescription"), [
+      t("exampleFormBindingNote0"),
+      t("exampleFormBindingNote1"),
+      t("exampleFormBindingNote2"),
     ]),
     example("react-hook-form-zod", t("exampleRhfZodTitle"), t("exampleRhfZodDescription"), [
       t("exampleRhfZodNote0"),
@@ -227,6 +233,7 @@ export function getPasswordDocsPage(
       ["kapsam", t("introductionHeadingScope")],
     ]),
     upgrade: page("upgrade", t("upgradeTitle"), t("upgradeDescription"), [
+      ["v1-2", "1.1 → 1.2"],
       ["ozet", t("upgradeHeadingSummary")],
       ["varsayilanlar", t("upgradeHeadingDefaults")],
       ["yeni", t("upgradeHeadingNew")],
@@ -258,6 +265,7 @@ export function getPasswordDocsPage(
       ["gorunurluk", t("confirmHeadingVisibility")],
     ]),
     "react-hook-form": page("react-hook-form", "React Hook Form", t("rhfDescription"), [
+      ["form", "useViraPasswordForm()"],
       ["register", "register()"],
       ["value", "useWatch()"],
       ["rule", "rule & deps"],
@@ -268,6 +276,7 @@ export function getPasswordDocsPage(
     server: page("server", t("serverTitle"), t("serverDescription"), [
       ["giris", t("serverHeadingEntry")],
       ["server-action", "Server Action"],
+      ["sizinti", t("serverHeadingPwned")],
       ["hash", t("serverHeadingHash")],
       ["nextjs", t("serverHeadingNext")],
     ]),
@@ -301,6 +310,7 @@ export function getPasswordDocsPage(
       ["result", "UseViraPasswordResult"],
       ["strength", "/strength"],
       ["server", "/server"],
+      ["form", "/form"],
       ["pwned", "/pwned"],
     ]),
     "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription"), [

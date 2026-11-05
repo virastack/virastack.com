@@ -1,6 +1,6 @@
 # ViraStack Password (full)
 
-> `@virastack/password` (1.1.x): headless password hook for React. Show/hide, NIST-style strength, confirmation, server validation, optional Have I Been Pwned check. Zero runtime dependencies. Errors are keys, not messages.
+> `@virastack/password` (1.2.x): headless password hook for React. Show/hide, NIST-style strength, confirmation, server validation, optional Have I Been Pwned check. Zero runtime dependencies. Errors are keys, not messages.
 
 ## Install
 
@@ -18,15 +18,16 @@ Docs: https://virastack.com/password/docs; Index: https://virastack.com/password
 | `@virastack/password` | `useViraPassword`, `mergeProps`, `composeRefs`, `EyeIcon`, `EyeOffIcon`, `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes` | client (`"use client"`) |
 | `@virastack/password/strength` | `definePolicy`, `evaluate`, `normalizePassword` | client + server |
 | `@virastack/password/server` | `validatePassword` + the strength exports | server |
+| `@virastack/password/form` | `useViraPasswordForm` (React Hook Form, optional peer ≥ 7.55) | client (`"use client"`) |
 | `@virastack/password/pwned` | `checkPwned` | server (recommended) |
 
 ## Critical rules for agents
 
-1. One hook: `useViraPassword`. There is no `useViraPasswordStrength` or `useViraPasswordConfirm`.
+1. One hook: `useViraPassword`, plus `useViraPasswordForm` that binds it to React Hook Form. There is no `useViraPasswordStrength` or `useViraPasswordConfirm`.
 2. Spread `inputProps` on the input and `btnProps` on the toggle (`type="button"` is included).
-3. With React Hook Form, pass `value` from `useWatch` (reset/setValue fire no input events). `inputProps` holds attributes only (no ref, no handlers): spread it before or after `register("password", pw.rule)` or a Mask field.
+3. With React Hook Form, prefer `useViraPasswordForm` from `@virastack/password/form`: its `inputProps` include `register()`. With `useViraPassword`, pass `value` from `useWatch` (reset/setValue fire no input events); `inputProps` holds attributes only (no ref, no handlers): spread it before or after `register("password", pw.rule)` or a Mask field.
 4. Define the policy once in a file without `"use client"`; import it in the form and on the server.
-5. Always validate again on the server with `validatePassword`. Hash `result.password` (NFKC).
+5. Always validate again on the server with `validatePassword`. Hash `result.password` (normalized with the policy, NFKC by default).
 6. Map issue keys to messages yourself. Never block paste.
 7. Call `checkPwned` from the server; on `unknown`, let the user continue.
 8. Mask and Password can share one `useForm`, never the same input.
@@ -41,7 +42,8 @@ Docs: https://virastack.com/password/docs; Index: https://virastack.com/password
 | `hideOnBlur` | `false` | hide when focus leaves the field or the tab is hidden |
 | `autoComplete` | `current-password` | `new-password` with `policy` or `matchWith`; `false` omits it |
 | `policy` | - | from `definePolicy()`; enables `strength`, `issues` |
-| `forbidden` | - | values the password must not contain (email, name) |
+| `forbidden` | - | values the password must not be (email, name), compared as a whole |
+| `normalization` | `"NFKC"` | `"NFC"` for the `matchWith` comparison; follows `policy` |
 | `matchWith` | - | confirm field: the password to repeat |
 | `value` | - | current value (e.g. `useWatch`) |
 | `icons` | Eye / EyeOff | `{ show, hide }` |
@@ -63,27 +65,33 @@ evaluate(password, policy, { forbidden: [email, name] })
 // { score: 0-4, level: "weak"|"fair"|"good"|"strong", length, valid, checks, issues }
 ```
 
-- `nist` (default): 15–64 characters, no composition rules (NIST SP 800-63B-4). `legacy`: 8–64, lowercase + uppercase + digit + symbol. Every value can be overridden: `minLength`, `maxLength`, `require`, `blockCommon`, `blockRepetitive`, `blocklist`, `minTokenLength` (default 3).
-- NFKC normalization; length in code points; zero-width characters don't count; no truncation.
-- `forbidden`: emails split into the local part and its pieces (domain ignored), names into words; case, accents and simple leetspeak ignored.
-- Keys: `password.tooShort`, `password.tooLong`, `password.noLowercase`, `password.noUppercase`, `password.noDigit`, `password.noSymbol`, `password.common`, `password.blocked`, `password.repetitive`, `password.containsPersonalInfo`, `password.mismatch`.
+- `nist` (default): 15–64 characters, no composition rules (NIST SP 800-63B-4). `mfa`: 8–64, for a password used with a second factor. `legacy` (deprecated): 8–64, lowercase + uppercase + digit + symbol. Every value can be overridden: `minLength`, `maxLength`, `require`, `blockCommon`, `blockRepetitive`, `blocklist`, `minTokenLength` (default 3), `normalization` (`"NFKC"` default or `"NFC"`).
+- NFKC normalization by default (`normalization: "NFC"` follows NIST; switching changes the hashed value); length in code points; zero-width characters don't count; no truncation.
+- `forbidden` and `blocklist` compare the whole password after removing digits, symbols, leetspeak and repetition (NIST): "ali1990" fails for the name Ali, "kaliteli-sabah-kahvesi" passes. Emails split into the local part and its pieces (domain ignored), names into words; case and accents ignored.
+- Level: valid passwords are `fair` at the minimum, `good` from +5 characters, `strong` from +10. Character classes don't change it.
+- Keys: `password.tooShort`, `password.tooLong`, `password.noLowercase`, `password.noUppercase`, `password.noDigit`, `password.noSymbol`, `password.common`, `password.blocked`, `password.repetitive`, `password.containsPersonalInfo`, `password.mismatch`, `password.pwned` (server, with the `pwned` option).
 - Score 0–1 fails the policy, 2–4 passes. It is a heuristic, not a crack-time estimate.
 
 ## Hook with strength and confirm (React Hook Form)
 
 ```tsx
-const form = useForm({ defaultValues: { password: "", confirm: "" } })
-const [password, confirmValue] = useWatch({ control: form.control, name: ["password", "confirm"] })
-const pw = useViraPassword({ policy, value: password })
-const confirm = useViraPassword({ matchWith: password, value: confirmValue })
+import { useViraPasswordForm } from "@virastack/password/form"
 
-<input {...pw.inputProps} {...form.register("password", { ...pw.rule, deps: ["confirm"] })} />
-<button {...pw.btnProps} />
-<p {...pw.strengthProps}>{pw.strength?.level}</p>
-<input {...confirm.inputProps} {...form.register("confirm", confirm.rule)} />
+const form = useForm({ defaultValues: { email: "", password: "", confirm: "" } })
+const { password, confirm } = useViraPasswordForm(form, {
+  name: "password",
+  confirm: "confirm",
+  policy,
+  forbidden: ["email"], // field names
+})
+
+<input {...password.inputProps} /> {/* register() is inside */}
+<button {...password.btnProps} />
+<p {...password.strengthProps}>{password.strength?.level}</p>
+<input {...confirm.inputProps} />
 ```
 
-`deps` only runs on user input; after `setValue("password", …)` call `trigger("confirm")`.
+Values come from `useWatch`; the confirm field is re-checked when the password changes and the password when a `forbidden` field changes (after the user left the field or submitted). No `value`, `deps` or `trigger`.
 
 ## Server
 
@@ -93,16 +101,17 @@ import { validatePassword } from "@virastack/password/server"
 import { policy } from "@/lib/password-policy"
 
 export async function signup(formData: FormData) {
-  const result = validatePassword(formData.get("password"), policy, {
+  const result = await validatePassword(formData.get("password"), policy, {
     forbidden: [formData.get("email")],
     confirm: formData.get("confirm"),
+    pwned: { timeout: 3000 }, // optional: also checks Have I Been Pwned, returns a Promise
   })
   if (!result.valid) return { issues: result.issues }
   // hash result.password
 }
 ```
 
-Non-string input counts as empty.
+Non-string input counts as empty. Without `pwned`, `validatePassword` is synchronous; with it, a breached password gets `password.pwned` and a failed lookup never blocks.
 
 ## Leaked passwords
 
@@ -117,4 +126,4 @@ Only the first 5 characters of the SHA-1 hash are sent (`Add-Padding`). Never th
 ## Links
 
 - Examples: https://virastack.com/password/examples
-- Upgrade from 1.0: https://virastack.com/password/docs/upgrade
+- Upgrading (1.1 → 1.2, 1.0 → 1.1): https://virastack.com/password/docs/upgrade

@@ -13,6 +13,7 @@ interface UseViraPasswordOptions {
   policy?: Policy
   forbidden?: readonly unknown[]
   matchWith?: string
+  normalization?: "NFKC" | "NFC"
   value?: string
   icons?: { show: ReactNode; hide: ReactNode }
   disabled?: boolean
@@ -37,17 +38,41 @@ const resultCode = `interface UseViraPasswordResult {
 }`;
 
 const strengthCode = `import type {
-  Policy, PolicyOptions, PolicyPreset, StrengthResult, StrengthScore,
+  Policy, PolicyOptions, PolicyPreset, Normalization, StrengthResult, StrengthScore,
   StrengthLevel, PasswordChecks, PasswordIssue, EvaluateOptions,
 } from "@virastack/password/strength"
 
+type PolicyPreset = "nist" | "mfa" | "legacy"
+type Normalization = "NFKC" | "NFC"
 type StrengthScore = 0 | 1 | 2 | 3 | 4
 type StrengthLevel = "weak" | "fair" | "good" | "strong"`;
 
 const serverCode = `import type { PasswordValidation, ValidatePasswordOptions } from "@virastack/password/server"
 
 interface PasswordValidation extends StrengthResult {
-  password: string // NFKC-normalized
+  password: string // normalized with the policy
+  pwned?: PwnedResult // with the pwned option
+}
+
+interface ValidatePasswordOptions extends EvaluateOptions {
+  confirm?: unknown
+  pwned?: boolean | CheckPwnedOptions // true → Promise<PasswordValidation>
+}`;
+
+const formCode = `import type { UseViraPasswordFormOptions, UseViraPasswordFormResult } from "@virastack/password/form"
+
+interface UseViraPasswordFormOptions<TFieldValues, TConfirm> {
+  name: FieldPath<TFieldValues>
+  confirm?: TConfirm
+  policy?: Policy
+  forbidden?: readonly FieldPath<TFieldValues>[]
+  normalization?: "NFKC" | "NFC"
+  // + every UseViraPasswordOptions except value, matchWith, id and inputProps
+}
+
+interface UseViraPasswordFormResult<TConfirm> {
+  password: UseViraPasswordResult
+  confirm: TConfirm extends string ? UseViraPasswordResult : null
 }`;
 
 const pwnedCode = `import type { CheckPwnedOptions, PwnedResult } from "@virastack/password/pwned"
@@ -70,6 +95,8 @@ export function PasswordTypesDoc() {
         <DocsCodeBlock code={strengthCode} lang="ts" />
         <h2 id="server">/server</h2>
         <DocsCodeBlock code={serverCode} lang="ts" />
+        <h2 id="form">/form</h2>
+        <DocsCodeBlock code={formCode} lang="ts" />
         <h2 id="pwned">/pwned</h2>
         <DocsCodeBlock code={pwnedCode} lang="ts" />
       </DocsProse>

@@ -219,7 +219,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     },
     isSlug: isPasswordDocsSlug,
     versions: [
-      { id: "v1.1", label: "v1.1", latest: true },
+      { id: "v1.1", label: "v1.2", latest: true },
       { id: "v1", label: "v1.0", latest: false },
     ],
     archives: {

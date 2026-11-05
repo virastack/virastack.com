@@ -36,6 +36,31 @@ export type Release = {
 
 const releases: readonly Release[] = [
   {
+    id: "password-1-2-0",
+    date: "2026-11-05",
+    draft: true,
+    products: [{ id: "password", version: "1.2.0" }],
+    sources: [],
+    copy: {
+      en: {
+        title: "Password follows NIST more closely, and binds to React Hook Form",
+        summary:
+          "Whole-password checks, a length-based level, an mfa preset, a React Hook Form binding and a leaked password check in validatePassword.",
+        whatChanged:
+          '- **Whole-password comparison:** `forbidden` values and the `blocklist` are compared with the whole password after removing digits, symbols, leetspeak and repetition. "ali1990" still fails for the name Ali; "kalitelibirsabahkahvesi" no longer does.\n- **Level by length:** A valid password is `fair` at the minimum, `good` from 5 characters more and `strong` from 10 more. Uppercase letters, digits and symbols no longer raise it.\n- **Repetition:** Runs such as "aaaabbbbccccdddd" are rejected.\n- **`@virastack/password/form`:** `useViraPasswordForm` registers the password and confirm fields and re-checks them against each other; no `value`, `deps` or `trigger`.\n- **`mfa` preset:** 8 characters for a password used with a second factor. `legacy` is deprecated.\n- **`normalization` option:** NFKC by default, or NFC as NIST recommends.\n- **`validatePassword(..., { pwned })`:** The policy and Have I Been Pwned in one call.',
+        why: 'Searching the password for a user\'s name rejected ordinary Turkish words that contain short names like "ali" or "can", and a level that rose with uppercase letters and digits brought composition rules back through the meter. NIST SP 800-63B-4 asks for neither.',
+      },
+      tr: {
+        title: "Password NIST'e daha yakından uyuyor ve React Hook Form'a bağlanıyor",
+        summary:
+          "Parolanın tamamına bakan kontroller, uzunluğa göre seviye, mfa şablonu, React Hook Form bağlantısı ve validatePassword içinde sızıntı kontrolü.",
+        whatChanged:
+          '- **Parolanın tamamı karşılaştırılır:** `forbidden` değerleri ve `blocklist`, rakam, sembol, leetspeak ve tekrar çıkarıldıktan sonra parolanın tamamıyla karşılaştırılır. Ali adı için "ali1990" yine reddedilir; "kalitelibirsabahkahvesi" artık reddedilmez.\n- **Uzunluğa göre seviye:** Geçerli bir parola en az uzunlukta `fair`, 5 karakter fazlasıyla `good`, 10 karakter fazlasıyla `strong` olur. Büyük harf, rakam ve sembol seviyeyi artırmaz.\n- **Tekrar:** "aaaabbbbccccdddd" gibi diziler reddedilir.\n- **`@virastack/password/form`:** `useViraPasswordForm` parola ve tekrar alanlarını kaydeder ve birbirine göre yeniden kontrol eder; `value`, `deps` veya `trigger` gerekmez.\n- **`mfa` şablonu:** İkinci faktörle kullanılan parola için 8 karakter. `legacy` kullanımdan kalkıyor.\n- **`normalization` seçeneği:** Varsayılan NFKC, ya da NIST\'in önerdiği NFC.\n- **`validatePassword(..., { pwned })`:** Politika ve Have I Been Pwned tek çağrıda.',
+        why: 'Parolanın içinde kullanıcı adı aramak, "ali" veya "can" gibi kısa adları içeren sıradan Türkçe kelimeleri reddediyordu; büyük harf ve rakamla artan seviye de bileşim kurallarını göstergeden geri getiriyordu. NIST SP 800-63B-4 ikisini de istemiyor.',
+      },
+    },
+  },
+  {
     id: "mask-2-3-0",
     date: "2026-11-05",
     products: [{ id: "mask", version: "2.3.0" }],

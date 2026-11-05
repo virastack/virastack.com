@@ -11,7 +11,8 @@ export function NewPasswordField() {
   const [email, setEmail] = useState("hello@virastack.com");
   const [name, setName] = useState("Vira Stack");
 
-  // Email: the local part and its pieces ("hello"). Name: each word ("vira", "stack").
+  // Email: the local part ("hello"). Name: the whole name and each word ("virastack", "vira", "stack").
+  // The whole password is compared: "vira-1990-2024" fails, "viral-garden-path" passes.
   const { inputProps, btnProps, issues, strengthProps } = useViraPassword({
     policy,
     forbidden: [email, name],
@@ -38,7 +39,7 @@ export function NewPasswordField() {
       <p {...strengthProps}>
         {issues.includes("password.containsPersonalInfo")
           ? passwordMessages["password.containsPersonalInfo"]
-          : "Try vira-garden-path"}
+          : "Try vira-1990-2024, then viral-garden-path"}
       </p>
     </>
   );

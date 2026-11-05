@@ -10,21 +10,26 @@ evaluate("correct horse battery staple", policy)
 // {
 //   score: 0,            // 0–1 politikayı geçmez, 2–4 geçer
 //   level: "weak",       // "weak" | "fair" | "good" | "strong"
-//   length: 28,          // NFKC sonrası karakter (code point)
+//   length: 28,          // normalleştirme sonrası karakter (code point)
 //   valid: false,
 //   checks: { minLength: true, maxLength: true, notCommon: false, ... },
 //   issues: ["password.common"],
 // }`;
 
-const customCode = `definePolicy({ preset: "nist", minLength: 8 }) // ikinci faktörle (MFA)
-definePolicy({ preset: "legacy", require: { symbol: false } })
-definePolicy({ blocklist: ["acme", "acme pay"] }) // ürün adın, herhangi bir yerde
-definePolicy({ minTokenLength: 4 }) // kısa adlarda daha az yanlış pozitif
+const customCode = `definePolicy({ preset: "mfa" }) // 8 karakter, ikinci faktörle
+definePolicy({ require: { digit: true } }) // bileşim kuralı, mecbursan
+definePolicy({ blocklist: ["acme", "acme pay"] }) // parolanın tamamı ürün adın olamaz
+definePolicy({ normalization: "NFC" }) // NIST'in önerisi; varsayılan NFKC
 definePolicy({ blockCommon: false, blockRepetitive: false })`;
 
 const forbiddenCode = `evaluate(password, policy, { forbidden: [email, name, username] })
 // "hello@virastack.com" → "hello" (alan adı yok sayılır)
-// "Vira Stack" → "vira stack", "vira", "stack"`;
+// "Vira Stack" → "virastack", "vira", "stack"
+
+// Rakam, sembol, leetspeak ve tekrar çıkarıldıktan sonra parolanın tamamı karşılaştırılır:
+evaluate("vira-1990-2024!", policy, { forbidden: ["Vira Stack"] }) // containsPersonalInfo
+evaluate("v1ra-v1ra-v1ra-2024", policy, { forbidden: ["Vira Stack"] }) // containsPersonalInfo
+evaluate("viral-garden-path", policy, { forbidden: ["Vira Stack"] }) // geçer`;
 
 const presetRows: [string, string, string][] = [
   [
@@ -32,7 +37,8 @@ const presetRows: [string, string, string][] = [
     "15–64",
     "Yok. NIST SP 800-63B-4'e göre: uzunluk ve yasak liste, bileşim kuralı yok",
   ],
-  ["legacy", "8–64", "Küçük harf, büyük harf, rakam ve sembol"],
+  ["mfa", "8–64", "Yok. Parola ikinci bir faktörle kullanılıyorsa (NIST SP 800-63B-4)"],
+  ["legacy (kullanımdan kalkıyor)", "8–64", "Küçük harf, büyük harf, rakam ve sembol"],
 ];
 
 const issueRows: [string, string][] = [
@@ -42,9 +48,16 @@ const issueRows: [string, string][] = [
     "Gerekli bir karakter sınıfı eksik (legacy)",
   ],
   ["password.common", "Yaygın bir parola; etrafında rakam, sembol veya leetspeak olsa bile"],
-  ["password.blocked", "Politikanın blocklist'indeki bir kelimeyi içerir"],
+  [
+    "password.blocked",
+    "Politikanın blocklist'indeki bir kelimedir; etrafında rakam veya sembol olsa da",
+  ],
   ["password.repetitive", "Tekrar veya dizi: aaaa…, abcabc…, 12345…, qwerty…"],
-  ["password.containsPersonalInfo", "forbidden değerlerinden birini içerir"],
+  [
+    "password.containsPersonalInfo",
+    "Bir forbidden değeri ya da onun bir parçasıdır; etrafında rakam veya sembol olsa da",
+  ],
+  ["password.pwned", "Bir veri sızıntısında var (pwned ile validatePassword, yalnızca sunucu)"],
 ];
 
 export function PasswordStrengthDoc() {
@@ -115,16 +128,17 @@ export function PasswordStrengthDoc() {
           </table>
         </div>
         <p>
-          Skor, uzunluk ve karakter çeşitliliğinden çıkan bir sezgiseldir; kırılma süresi tahmini
-          değildir.
+          Geçerli bir parola en az uzunlukta <code>fair</code>, 5 karakter fazlasıyla{" "}
+          <code>good</code>, 10 karakter fazlasıyla <code>strong</code> olur. Büyük harf, rakam veya
+          sembol seviyeyi değiştirmez: NIST bileşim kurallarını kaldırdı, gösterge de onları geri
+          getirmez. Tekrarlanan karakterler az katkı yapar. Kırılma süresi tahmini değildir.
         </p>
         <p>
           <strong>Karmaşık bir 14 karakterlik parola neden zayıf?</strong> Skor evrensel bir kurala
           değil, politikaya göre hesaplanır. Varsayılan <code>nist</code> şablonu 15 karakter ister;
           daha kısa parolalar ne kadar karışık olursa olsun politikayı geçemez ve 0–1 alır. 15
-          karakterden sonra skor uzunluk ve çeşitlilikle artar. Daha kısa parola mı gerekiyor?{" "}
-          <code>minLength: 8</code> (NIST ikinci faktörle buna izin verir) veya <code>legacy</code>{" "}
-          şablonunu kullan.
+          karakterden sonra skor uzunlukla artar. Daha kısa parola mı gerekiyor? <code>mfa</code>{" "}
+          şablonunu kullan: parola ikinci bir faktörle kullanılıyorsa NIST 8 karaktere izin verir.
         </p>
 
         <h2 id="hook">Hook içinde</h2>
@@ -137,23 +151,27 @@ export function PasswordStrengthDoc() {
 
         <h2 id="forbidden">forbidden</h2>
         <p>
-          Paket kullanıcını bilmez; değerleri sen verirsin. Eşleştirme büyük/küçük harfi, aksanı ve
-          basit leetspeak&apos;i yok sayar.
+          Paket kullanıcını bilmez; değerleri sen verirsin. NIST&apos;in istediği gibi parolanın
+          tamamı karşılaştırılır, içinde kelime aranmaz: parola bir değer ya da onun bir parçasıysa
+          (etrafında rakam, sembol, leetspeak veya tekrar olsa da) reddedilir. Büyük/küçük harf ve
+          aksan yok sayılır.
         </p>
         <DocsCodeBlock code={forbiddenCode} lang="ts" />
         <p>
-          <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır. Kısa
-          parçalar yanlış pozitife yol açar: <code>dev@virastack.com</code> için <code>dev</code>{" "}
-          parçası <code>devoted-garden-path</code>&#32;parolasını reddeder. Senin için önemliyse
-          4&apos;e çıkar.
+          Sıradan bir kelimenin içindeki kısa bir ad eşleşme sayılmaz: <code>Ali</code> adıyla{" "}
+          <code>kaliteli-sabah-kahvesi</code>&#32;geçer, <code>ali1990</code>&#32;geçmez.{" "}
+          <code>minTokenLength</code>&apos;ten (varsayılan 3) kısa parçalar yok sayılır.
         </p>
         <PasswordExamplePreview id="forbidden" />
 
         <h2 id="unicode">Unicode</h2>
         <ul>
           <li>
-            Parola NFKC ile normalleştirilir; farklı klavyelerde yazılan aynı metin aynı sonucu
-            verir.
+            Parola varsayılan olarak NFKC ile normalleştirilir; farklı klavyelerde yazılan aynı
+            metin, tam genişlikli harfler dahil, aynı sonucu verir.{" "}
+            <code>normalization: &quot;NFC&quot;</code>&#32;NIST&apos;in önerisine uyar; tam
+            genişlikli harfleri ve bitişik harfleri olduğu gibi bırakır. Değiştirmek hash&apos;lenen
+            parolayı değiştirir; kullanıcın olmadan önce seç.
           </li>
           <li>Uzunluk code point sayar: bir emoji veya Türkçe harf bir kez sayılır.</li>
           <li>Sıfır genişlikli karakterler uzunluğa sayılmaz.</li>

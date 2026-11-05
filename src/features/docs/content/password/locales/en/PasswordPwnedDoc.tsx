@@ -1,6 +1,7 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+import { Link } from "@/i18n/routing";
 
 const optionsCode = `checkPwned(password, {
   signal,         // AbortSignal
@@ -32,6 +33,11 @@ export function PasswordPwnedDoc() {
         </p>
         <PasswordExamplePreview id="pwned" />
         <DocsCodeBlock code={optionsCode} lang="ts" />
+        <p>
+          On sign-up, pass <code>pwned</code> to <code>validatePassword</code>&#32;instead: it
+          checks the policy and the breach list in one call, and only sends a request when the
+          policy passes. See <Link href="/password/docs/server#sizinti">server validation</Link>.
+        </p>
 
         <h2 id="sonuc">Result</h2>
         <div className="overflow-x-auto rounded-lg border border-border">

@@ -9,7 +9,14 @@ const result = validatePassword(formData.get("password"), policy, {
   forbidden: [formData.get("email")],
   confirm: formData.get("confirm"), // farklıysa password.mismatch ekler
 })
-// result.valid, result.issues, result.score, result.password (NFKC)`;
+// result.valid, result.issues, result.score, result.password (normalleştirilmiş)`;
+
+const pwnedCode = `const result = await validatePassword(formData.get("password"), policy, {
+  forbidden: [formData.get("email")],
+  confirm: formData.get("confirm"),
+  pwned: { timeout: 3000 }, // ya da true; checkPwned seçenekleri
+})
+// result.issues "password.pwned" içerebilir; result.pwned = { status, count? }`;
 
 const routeCode = `// app/api/password/route.ts
 import { validatePassword } from "@virastack/password/server"
@@ -42,11 +49,22 @@ export function PasswordServerDoc() {
         <PasswordExamplePreview id="server-action" />
         <DocsCodeBlock code={routeCode} lang="ts" />
 
+        <h2 id="sizinti">Sızıntı kontrolü</h2>
+        <p>
+          <code>pwned</code> verirsen <code>validatePassword</code>&#32;parolayı Have I Been
+          Pwned&apos;de de arar ve Promise döndürür. İstek yalnızca politika geçince gider. Sızmış
+          bir parola <code>password.pwned</code> ve 0 skor alır; başarısız bir sorgu asla engellemez
+          (<code>pwned.status</code> <code>unknown</code> olur).
+        </p>
+        <DocsCodeBlock code={pwnedCode} lang="ts" />
+
         <h2 id="hash">Neyi hash&apos;lemeli</h2>
         <p>
-          <code>result.password</code>&#32;değerini hash&apos;le: NFKC ile normalleştirilmiştir;
-          başka klavyede yazılan aynı parola girişte de doğrulanır. Giriş formundaki parolayı da{" "}
-          <code>normalizePassword</code>&#32;ile aynı şekilde normalleştir.
+          <code>result.password</code>&#32;değerini hash&apos;le: politikanın{" "}
+          <code>normalization</code> ayarıyla (varsayılan NFKC) normalleştirilmiştir; başka klavyede
+          yazılan aynı parola girişte de doğrulanır. Giriş formundaki parolayı da{" "}
+          <code>normalizePassword(password, policy.normalization)</code>&#32;ile aynı şekilde
+          normalleştir.
         </p>
 
         <h2 id="nextjs">SSR ve Next.js</h2>

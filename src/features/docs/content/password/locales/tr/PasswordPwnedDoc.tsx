@@ -1,6 +1,7 @@
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+import { Link } from "@/i18n/routing";
 
 const optionsCode = `checkPwned(password, {
   signal,         // AbortSignal
@@ -32,6 +33,11 @@ export function PasswordPwnedDoc() {
         </p>
         <PasswordExamplePreview id="pwned" />
         <DocsCodeBlock code={optionsCode} lang="ts" />
+        <p>
+          Kayıtta bunun yerine <code>validatePassword</code>&apos;a <code>pwned</code> ver:
+          politikayı ve sızıntı listesini tek çağrıda kontrol eder, istek yalnızca politika geçince
+          gider. Bkz. <Link href="/password/docs/server#sizinti">sunucu doğrulaması</Link>.
+        </p>
 
         <h2 id="sonuc">Sonuç</h2>
         <div className="overflow-x-auto rounded-lg border border-border">

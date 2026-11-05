@@ -9,6 +9,7 @@ import { PasswordField as CustomIconsField } from "./sketches/custom-icons";
 import { PasswordField as CustomTextField } from "./sketches/custom-text";
 import { LockedPasswordField } from "./sketches/disabled";
 import { NewPasswordField as ForbiddenField } from "./sketches/forbidden";
+import { SignupForm as FormBindingForm } from "./sketches/form-binding";
 import { SignupForm as MaskSignupForm } from "./sketches/mask-signup";
 import { PasswordField as ProgrammaticField } from "./sketches/programmatic";
 import { NewPasswordField as PropMergeField } from "./sketches/prop-merge";
@@ -23,6 +24,7 @@ const previews = {
   "show-hide": PasswordField,
   "strength-meter": StrengthField,
   confirm: NewPasswordFields,
+  "form-binding": FormBindingForm,
   "react-hook-form-zod": ZodSignupForm,
   "server-action": ServerSignupForm,
   forbidden: ForbiddenField,

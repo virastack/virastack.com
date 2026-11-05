@@ -18,6 +18,7 @@ const examples = {
   "show-hide": [["sketches/show-hide.tsx", "components/password-field.tsx"]],
   "strength-meter": [["sketches/strength-meter.tsx", "components/new-password-field.tsx"]],
   confirm: [["sketches/confirm.tsx", "components/new-password-fields.tsx"]],
+  "form-binding": [["sketches/form-binding.tsx", "components/signup-form.tsx"]],
   "react-hook-form-zod": [["sketches/react-hook-form-zod.tsx", "components/signup-form.tsx"]],
   "server-action": [
     ["sketches/server-action.tsx", "components/signup-form.tsx"],

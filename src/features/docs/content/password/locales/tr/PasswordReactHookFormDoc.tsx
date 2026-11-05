@@ -4,6 +4,19 @@ import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 
+const formCode = `import { useViraPasswordForm } from "@virastack/password/form"
+
+const { password, confirm } = useViraPasswordForm(form, {
+  name: "password",
+  confirm: "confirm",    // isteğe bağlı
+  policy,                // isteğe bağlı
+  forbidden: ["email"],  // alan adları
+})
+
+<input {...password.inputProps} /> // register() zaten içinde
+<button {...password.btnProps} />
+<input {...confirm.inputProps} />`;
+
 const registerCode = `const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
 
 // inputProps yalnızca öznitelik taşır: register()'dan önce ya da sonra spread et
@@ -46,6 +59,23 @@ export function PasswordReactHookFormDoc() {
           <AcademyBadge kind="react-hook-form" />
           &#32;tek doğruluk kaynağı olarak kalır. Hook yalnızca input&apos;a props ekler; form
           değerini hiçbir zaman tutmaz.
+        </p>
+
+        <h2 id="form">useViraPasswordForm()</h2>
+        <p>
+          <code>@virastack/password/form</code>&#32;parola ve tekrar alanlarını forma bağlar.
+          Alanları kurallarıyla kaydeder, değerleri <code>useWatch</code> ile okur (
+          <code>reset()</code> ve <code>setValue()</code>&#32;takip edilir) ve kullanıcı alandan
+          çıktıktan ya da formu gönderdikten sonra, parola değişince tekrar alanını,{" "}
+          <code>forbidden</code>&#32;alanı değişince parolayı yeniden kontrol eder.{" "}
+          <code>value</code>, <code>deps</code> veya <code>trigger</code>&#32;gerekmez.
+        </p>
+        <DocsCodeBlock code={formCode} lang="tsx" />
+        <PasswordExamplePreview id="form-binding" />
+        <p>
+          <code>react-hook-form</code>&#32;isteğe bağlı bir peer&apos;dır (7.55+); kök giriş ona
+          ihtiyaç duymaz. Bir input&apos;u ViraStack Mask alanıyla ya da bir resolver ile
+          paylaşacaksan hook&apos;u aşağıdaki gibi kendin bağla.
         </p>
 
         <h2 id="register">register()</h2>

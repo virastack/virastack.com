@@ -4,6 +4,19 @@ import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 
+const formCode = `import { useViraPasswordForm } from "@virastack/password/form"
+
+const { password, confirm } = useViraPasswordForm(form, {
+  name: "password",
+  confirm: "confirm",    // optional
+  policy,                // optional
+  forbidden: ["email"],  // field names
+})
+
+<input {...password.inputProps} /> // register() is already inside
+<button {...password.btnProps} />
+<input {...confirm.inputProps} />`;
+
 const registerCode = `const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
 
 // inputProps holds attributes only: spread it before or after register()
@@ -46,6 +59,23 @@ export function PasswordReactHookFormDoc() {
           <AcademyBadge kind="react-hook-form" />
           &#32;stays the single source of truth. The hook only adds props to the input; it never
           holds the form value.
+        </p>
+
+        <h2 id="form">useViraPasswordForm()</h2>
+        <p>
+          <code>@virastack/password/form</code>&#32;binds the password and confirm fields to the
+          form. It registers them with their rules, reads values with <code>useWatch</code> (so{" "}
+          <code>reset()</code> and <code>setValue()</code>&#32;are followed), and checks the confirm
+          field again when the password changes and the password when a <code>forbidden</code>
+          &#32;field changes, once the user has left the field or submitted. No <code>value</code>,{" "}
+          <code>deps</code> or <code>trigger</code>.
+        </p>
+        <DocsCodeBlock code={formCode} lang="tsx" />
+        <PasswordExamplePreview id="form-binding" />
+        <p>
+          <code>react-hook-form</code>&#32;is an optional peer (7.55+); the root entry doesn&apos;t
+          need it. To share an input with a ViraStack Mask field, or with a resolver, bind the hook
+          yourself as below.
         </p>
 
         <h2 id="register">register()</h2>
