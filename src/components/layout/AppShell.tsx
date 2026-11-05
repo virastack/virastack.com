@@ -15,10 +15,6 @@ function isGuidePlayPath(pathname: string) {
   return pathname === "/guide/play" || pathname.endsWith("/guide/play");
 }
 
-function isDocsPath(pathname: string) {
-  return pathname.includes("/docs");
-}
-
 /** A module's demo alone, opened in the module page's iframe. */
 function isFeaturePreviewPath(pathname: string) {
   return pathname.startsWith("/start/preview/");
@@ -27,7 +23,6 @@ function isFeaturePreviewPath(pathname: string) {
 export function AppShell({ children, header, footer }: AppShellProps) {
   const pathname = usePathname();
   const immersive = isGuidePlayPath(pathname) || isFeaturePreviewPath(pathname);
-  const docs = isDocsPath(pathname);
 
   return (
     <>
@@ -37,7 +32,7 @@ export function AppShell({ children, header, footer }: AppShellProps) {
       <div id="main-content" tabIndex={-1} className="flex flex-1 flex-col outline-none">
         {children}
       </div>
-      {immersive || docs ? null : footer}
+      {immersive ? null : footer}
     </>
   );
 }
