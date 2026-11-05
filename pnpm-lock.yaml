@@ -36,8 +36,8 @@ importers:
         specifier: npm:@virastack/mask@1.1.0
         version: '@virastack/mask@1.1.0(react-dom@19.3.1(react@19.3.1))(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)'
       '@virastack/password':
-        specifier: 1.1.1
-        version: 1.1.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: 1.2.0
+        version: 1.2.0(react-dom@19.3.1(react@19.3.1))(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2338,12 +2338,16 @@ packages:
       react: '>=18.2.0'
       react-hook-form: '>=7.55.0'
 
-  '@virastack/password@1.1.1':
-    resolution: {integrity: sha512-iqmqv7SlG4FGiP4e6hzSzb8hc3ZxPPPv+3bj36MUFvAH4hFjVORdStOkudeD9aesMLjXypRDbxwJk96rJyOrqQ==}
+  '@virastack/password@1.2.0':
+    resolution: {integrity: sha512-m6pUADHuRwL6/RuYMV9HHWiG+CJt43dozvZ7KovwhpQOYrG0w4oP8v/cPt6tqXGUBH+fUAMFi6V8sFZc6nOaEQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
+      react-hook-form: '>=7.55.0'
+    peerDependenciesMeta:
+      react-hook-form:
+        optional: true
 
   '@vitest/expect@3.2.7':
     resolution: {integrity: sha512-E8eBXaKibuvH2pSZErOjdVb5vF4PbKYcrnluBTYxEk1l/VhhwZg1kZQsdtjq+CsF5CFydf2Rdkz7jDHKSisi3w==}
@@ -7523,10 +7527,12 @@ snapshots:
       react: 19.3.1
       react-hook-form: 7.83.0(react@19.3.1)
 
-  '@virastack/password@1.1.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@virastack/password@1.2.0(react-dom@19.3.1(react@19.3.1))(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)':
     dependencies:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
+    optionalDependencies:
+      react-hook-form: 7.83.0(react@19.3.1)
 
   '@vitest/expect@3.2.7':
     dependencies:
