@@ -101,6 +101,24 @@ const nextConfig: NextConfig = {
           permanent: true,
         },
       ]),
+      // Password has one docs version: the 1.0 archive and the upgrade page were removed.
+      ...["", "/:locale"].flatMap((prefix) => [
+        {
+          source: `${prefix}/password/docs/upgrade`,
+          destination: `${prefix}/password/docs`,
+          permanent: true,
+        },
+        {
+          source: `${prefix}/password/docs/v1`,
+          destination: `${prefix}/password/docs`,
+          permanent: true,
+        },
+        {
+          source: `${prefix}/password/docs/v1/:path*`,
+          destination: `${prefix}/password/docs/:path*`,
+          permanent: true,
+        },
+      ]),
       {
         source: "/password/docs/examples",
         destination: "/password/examples",

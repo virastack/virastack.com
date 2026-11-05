@@ -9,18 +9,17 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 ## Docs
 
 - [Introduction](https://virastack.com/password/docs): Install, entry points, requirements
-- [Upgrading](https://virastack.com/password/docs/upgrade): 1.1 → 1.2 behavior changes, 1.0 → 1.1 defaults
 - [useViraPassword()](https://virastack.com/password/docs/use-vira-password): Every option, return value, prop merging
+- [React Hook Form](https://virastack.com/password/docs/react-hook-form): `useViraPassword(form, schema)`, `register`, `useWatch`, Controller, Zod, ViraStack Mask
 - [Strength](https://virastack.com/password/docs/strength): `definePolicy`, `evaluate`, presets (`nist`, `mfa`), whole-password `forbidden`, normalization
 - [Confirm password](https://virastack.com/password/docs/confirm): `matchWith`, `matches`, `rule`
-- [React Hook Form](https://virastack.com/password/docs/react-hook-form): `useViraPassword(form, schema)`, `register`, `useWatch`, Controller, Zod, ViraStack Mask
 - [Accessibility](https://virastack.com/password/docs/accessibility): ARIA, focus, live region, Caps Lock
 - [Customization](https://virastack.com/password/docs/customization): Icons, props, automatic hiding, autoComplete
+- [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra
 - [Server validation](https://virastack.com/password/docs/server): `validatePassword`, the `pwned` option, what to hash, Next.js
 - [Leaked passwords](https://virastack.com/password/docs/pwned): `checkPwned`, k-anonymity, fail open
 - [Helpers](https://virastack.com/password/docs/helpers): `mergeProps`, `composeRefs`, core helpers, icons
 - [Types](https://virastack.com/password/docs/types): All exported types
-- [UI libraries](https://virastack.com/password/docs/ui-libraries): shadcn, Ant Design, Chakra
 - [Examples](https://virastack.com/password/examples): Live demos index
 
 ## Notable examples

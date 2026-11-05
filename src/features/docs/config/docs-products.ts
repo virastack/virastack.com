@@ -36,12 +36,6 @@ import {
   maskDocsSlugs,
 } from "@/features/docs/config/mask-docs.config";
 import {
-  getPasswordDocsV1Nav,
-  getPasswordDocsV1Page,
-  isPasswordDocsV1Slug,
-  passwordDocsV1Slugs,
-} from "@/features/docs/config/password-docs-v1.config";
-import {
   getPasswordDocsNav,
   getPasswordDocsPage,
   isPasswordDocsSlug,
@@ -77,7 +71,6 @@ type DocsMessageNamespace =
   | "DocsMask"
   | "DocsMaskV1"
   | "DocsPassword"
-  | "DocsPasswordV1"
   | "DocsAddress";
 
 type DocsVersion = {
@@ -218,25 +211,8 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
       };
     },
     isSlug: isPasswordDocsSlug,
-    versions: [
-      { id: "v1.1", label: "v1.2", latest: true },
-      { id: "v1", label: "v1.0", latest: false },
-    ],
-    archives: {
-      v1: {
-        indexHref: "/password/docs/v1",
-        messageNamespace: "DocsPasswordV1",
-        slugs: passwordDocsV1Slugs,
-        texts: (messages, locale) => {
-          const t = createTranslator({ locale, messages, namespace: "DocsPasswordV1" });
-          return {
-            getNav: () => getPasswordDocsV1Nav(t),
-            getPage: (slug) => getPasswordDocsV1Page(slug, t),
-          };
-        },
-        isSlug: isPasswordDocsV1Slug,
-      },
-    },
+    versions: [{ id: "v1", label: "v1.2", latest: true }],
+    archives: {},
   },
   address: {
     id: "address",

@@ -13,12 +13,12 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 - [useViraMask()](https://virastack.com/mask/docs/use-vira-mask): Schema, linked fields (`from`), return props, React Hook Form compatibility
 - [Custom mask](https://virastack.com/mask/docs/custom-mask): Pattern syntax, tokens, optional and fixed parts, dynamic masks, number/currency/date, `definePreset`
 - [Validation](https://virastack.com/mask/docs/validation): Error keys, custom validators, `maskResolver` for Zod/Valibot
-- [Server](https://virastack.com/mask/docs/server): `@virastack/mask/server`, `parseMasked`, Standard Schema
-- [Helpers](https://virastack.com/mask/docs/helpers): `createMask`, validators, `toMinorUnits`
 - [Bank detection](https://virastack.com/mask/docs/banks): `getTurkishBank(iban)`, `turkishBanks` (70 TCMB participants), live demo
 - [Test data](https://virastack.com/mask/docs/testing): `@virastack/mask/testing` (2.3+), `generateTCKN`, `generateIBAN`, seeds for repeatable values
-- [Types](https://virastack.com/mask/docs/types): `PresetName`, `MaskOptions`, schema and field types
 - [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn/ui, Ant Design, Chakra
+- [Server validation](https://virastack.com/mask/docs/server): `@virastack/mask/server`, `parseMasked`, Standard Schema
+- [Helpers](https://virastack.com/mask/docs/helpers): `createMask`, validators, `toMinorUnits`
+- [Types](https://virastack.com/mask/docs/types): `PresetName`, `MaskOptions`, schema and field types
 - [Examples](https://virastack.com/mask/examples): Live preset index
 
 ## Notable examples

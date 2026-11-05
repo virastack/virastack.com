@@ -10,7 +10,16 @@ export function getAddressDocsNav(t: DocsAddressTranslate): DocsNavSection[] {
   return [
     {
       title: t("navGettingStarted"),
-      items: [{ slug: "introduction", title: t("navIntroduction"), href: BASE }],
+      items: [
+        { slug: "introduction", title: t("navIntroduction"), href: BASE },
+        { slug: "llms.txt", title: "llms.txt", href: "/address/llms.txt", external: true },
+        {
+          slug: "llms-full.txt",
+          title: "llms-full.txt",
+          href: "/address/llms-full.txt",
+          external: true,
+        },
+      ],
     },
     {
       title: t("navUsage"),
@@ -22,7 +31,7 @@ export function getAddressDocsNav(t: DocsAddressTranslate): DocsNavSection[] {
       ],
     },
     {
-      title: t("navServerAndData"),
+      title: t("navServer"),
       items: [
         { slug: "server", title: t("navServerValidation"), href: `${BASE}/server` },
         { slug: "data", title: t("navDataset"), href: `${BASE}/data` },

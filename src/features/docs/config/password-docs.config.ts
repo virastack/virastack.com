@@ -144,7 +144,6 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
       title: t("navGettingStarted"),
       items: [
         { slug: "introduction", title: t("navIntroduction"), href: BASE },
-        { slug: "upgrade", title: t("navUpgrade"), href: `${BASE}/upgrade` },
         { slug: "llms.txt", title: "llms.txt", href: "/password/llms.txt", external: true },
         {
           slug: "llms-full.txt",
@@ -162,11 +161,12 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
           title: "useViraPassword()",
           href: `${BASE}/use-vira-password`,
         },
+        { slug: "react-hook-form", title: "React Hook Form", href: `${BASE}/react-hook-form` },
         { slug: "strength", title: t("navStrength"), href: `${BASE}/strength` },
         { slug: "confirm", title: t("navConfirm"), href: `${BASE}/confirm` },
-        { slug: "react-hook-form", title: "React Hook Form", href: `${BASE}/react-hook-form` },
         { slug: "accessibility", title: t("navAccessibility"), href: `${BASE}/accessibility` },
         { slug: "customization", title: t("navCustomization"), href: `${BASE}/customization` },
+        { slug: "ui-libraries", title: t("navUiLibraries"), href: `${BASE}/ui-libraries` },
       ],
     },
     {
@@ -181,7 +181,6 @@ export function getPasswordDocsNav(t: DocsPasswordTranslate): DocsNavSection[] {
       items: [
         { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
         { slug: "types", title: t("navTypes"), href: `${BASE}/types` },
-        { slug: "ui-libraries", title: t("navUiLibraries"), href: `${BASE}/ui-libraries` },
       ],
     },
   ];
@@ -231,13 +230,6 @@ export function getPasswordDocsPage(
       ["peer", t("introductionHeadingPeer")],
       ["neden", t("introductionHeadingWhy")],
       ["kapsam", t("introductionHeadingScope")],
-    ]),
-    upgrade: page("upgrade", t("upgradeTitle"), t("upgradeDescription"), [
-      ["v1-2", "1.1 → 1.2"],
-      ["ozet", t("upgradeHeadingSummary")],
-      ["varsayilanlar", t("upgradeHeadingDefaults")],
-      ["yeni", t("upgradeHeadingNew")],
-      ["paket", t("upgradeHeadingPackage")],
     ]),
     "use-vira-password": page(
       "use-vira-password",
@@ -350,7 +342,6 @@ export function isPasswordDocsSlug(slug: string): boolean {
 
 export const passwordDocsSlugs = [
   "introduction",
-  "upgrade",
   "use-vira-password",
   "strength",
   "confirm",

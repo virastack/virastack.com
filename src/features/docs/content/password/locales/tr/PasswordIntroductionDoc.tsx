@@ -38,7 +38,7 @@ export function PasswordIntroductionDoc() {
         <PasswordExamplePreview id="show-hide" />
         <p>
           1.0&apos;dan mı geliyorsun? Hiçbir şey kırılmaz;{" "}
-          <Link href="/password/docs/upgrade">geçiş rehberine</Link> bak. Canlı demolar{" "}
+          <Link href="/releases/password">sürüm notlarına</Link> bak. Canlı demolar{" "}
           <Link href="/password/examples">örnekler</Link>&#32;sayfasında.
         </p>
 

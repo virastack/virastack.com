@@ -38,7 +38,7 @@ export function PasswordIntroductionDoc() {
         <PasswordExamplePreview id="show-hide" />
         <p>
           Coming from 1.0? Nothing breaks; see the{" "}
-          <Link href="/password/docs/upgrade">upgrade guide</Link>. Live demos are on the{" "}
+          <Link href="/releases/password">release notes</Link>. Live demos are on the{" "}
           <Link href="/password/examples">examples</Link>&#32;page.
         </p>
 

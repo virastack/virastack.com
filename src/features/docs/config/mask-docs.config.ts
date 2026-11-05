@@ -469,12 +469,7 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
       items: [
         { slug: "introduction", title: t("navIntroduction"), href: BASE },
         { slug: "upgrade", title: t("navUpgrade"), href: `${BASE}/upgrade` },
-        {
-          slug: "llms.txt",
-          title: "llms.txt",
-          href: "/mask/llms.txt",
-          external: true,
-        },
+        { slug: "llms.txt", title: "llms.txt", href: "/mask/llms.txt", external: true },
         {
           slug: "llms-full.txt",
           title: "llms-full.txt",
@@ -486,19 +481,23 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
     {
       title: t("navUsage"),
       items: [
-        { slug: "use-vira-mask", title: t("navUseViraMask"), href: `${BASE}/use-vira-mask` },
+        { slug: "use-vira-mask", title: "useViraMask()", href: `${BASE}/use-vira-mask` },
         { slug: "custom-mask", title: t("navCustomMask"), href: `${BASE}/custom-mask` },
         { slug: "validation", title: t("navValidation"), href: `${BASE}/validation` },
-        { slug: "server", title: t("navServer"), href: `${BASE}/server` },
-        { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
         { slug: "banks", title: t("navBanks"), href: `${BASE}/banks` },
         { slug: "testing", title: t("navTesting"), href: `${BASE}/testing` },
+        { slug: "ui-libraries", title: t("navUiLibraries"), href: `${BASE}/ui-libraries` },
+      ],
+    },
+    {
+      title: t("navServer"),
+      items: [{ slug: "server", title: t("navServerValidation"), href: `${BASE}/server` }],
+    },
+    {
+      title: t("navReference"),
+      items: [
+        { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
         { slug: "types", title: t("navTypes"), href: `${BASE}/types` },
-        {
-          slug: "ui-libraries",
-          title: t("navUiLibraries"),
-          href: `${BASE}/ui-libraries`,
-        },
       ],
     },
   ];
