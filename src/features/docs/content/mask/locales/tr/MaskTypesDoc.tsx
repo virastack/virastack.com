@@ -5,7 +5,7 @@ import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse"
 const presetCode = `type PresetName =
   | "phone" | "iban" // + country: "TR"
   | "card" | "cvv" | "expiry"
-  | "tckn" | "vkn"
+  | "tckn" | "vkn" | "plate"
   | "fullName"
   | "currency" | "number" // + country: "TR"
   | "date"

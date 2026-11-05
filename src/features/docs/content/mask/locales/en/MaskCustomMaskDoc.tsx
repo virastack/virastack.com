@@ -33,14 +33,14 @@ const numberDateCode = `useViraMask(form, {
 const presetCode = `// masks.ts — shared by the client and the server
 import { definePreset } from "@virastack/mask/server"
 
-export const plate = definePreset("plate", {
-  mask: "99 a[aa] 99[99]",
+export const orderNo = definePreset("orderNo", {
+  mask: "aa-9999",
   transform: "uppercase",
-  validate: (value) => !value.startsWith("00") || "plate.city",
+  validate: (value) => !value.startsWith("XX") || "orderNo.reserved",
 })
 
 // form
-useViraMask(form, { plate, backupPlate: { preset: plate } })`;
+useViraMask(form, { orderNo, returnNo: { preset: orderNo } })`;
 
 export function MaskCustomMaskDoc() {
   return (
@@ -161,7 +161,7 @@ export function MaskCustomMaskDoc() {
         <h2 id="preset">definePreset</h2>
         <p>
           Define your team&apos;s mask once. The name prefixes its error keys (
-          <code>plate.incomplete</code>). The hook, the server and tests use the same object.
+          <code>orderNo.incomplete</code>). The hook, the server and tests use the same object.
         </p>
         <DocsCodeBlock code={presetCode} lang="tsx" />
       </DocsProse>

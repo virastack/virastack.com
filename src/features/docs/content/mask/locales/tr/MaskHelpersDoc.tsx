@@ -18,6 +18,7 @@ const validatorsCode = `import {
   isValidCard,
   isValidIBAN,
   isValidLuhn,
+  isValidPlate,
   isValidTCKN,
   isValidVKN,
 } from "@virastack/mask"
@@ -28,7 +29,9 @@ isValidTCKN("10000000146")       // true
 isValidVKN("1234567890")         // true
 isValidIBAN("DE89 3704 0044 0532 0130 00") // true, her ülke
 isValidIBAN("TR330006100519786457841326")  // true
-isValidIBAN("TR33000610051978645784132")   // false: TR IBAN 26 karakter olmalı`;
+isValidIBAN("TR33000610051978645784132")   // false: TR IBAN 26 karakter olmalı
+isValidPlate("34 ABC 123")      // true: il kodu 01–81 ve resmî harf/rakam grupları
+isValidPlate("34 AB 12")        // false: 2 harften sonra 3–4 rakam`;
 
 const moneyCode = `import { toMinorUnits } from "@virastack/mask"
 
@@ -58,6 +61,20 @@ export function MaskHelpersDoc() {
 
         <h2 id="validators">Doğrulayıcılar</h2>
         <DocsCodeBlock code={validatorsCode} lang="ts" />
+        <p>
+          <code>isValidPlate</code> ve <code>plate</code> preset&apos;i kuralları{" "}
+          <a
+            href="https://www.mevzuat.gov.tr/anasayfa/MevzuatFihristDetayIframe?MevzuatTur=7&MevzuatNo=24356&MevzuatTertip=5"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Araçların Satış, Devir ve Tescil Hizmetlerinin Yürütülmesi Hakkında Yönetmelik
+          </a>
+          &apos;in 34. maddesinden alır: il kodu 01–81, ardından 1 harf ve 4–5 rakam, 2 harf ve 3–4
+          rakam ya da 3 harf ve 2–3 rakam. Yönetmelik hiçbir Latin harfini hariç tutmaz; Q, W ve X
+          geçer, Türkçe harfler geçmez. Ad, soyad veya unvan içeren plakalar (madde 37) ve özel
+          tahsisli plakalar (madde 36) kontrol edilmez.
+        </p>
         <p>
           Bir Türkiye IBAN&apos;ının hangi bankaya ait olduğunu bulmak için{" "}
           <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullan. Test ve seed verisinde

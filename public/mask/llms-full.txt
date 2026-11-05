@@ -58,6 +58,7 @@ function Checkout() {
 | `expiry` | `12/28`, past months invalid | `1228` | `expiry.incomplete`, `expiry.invalid`, `expiry.min` |
 | `tckn` | `10000000146` | digits | `tckn.incomplete`, `tckn.invalid` |
 | `vkn` | `1234567890` | digits | `vkn.incomplete`, `vkn.invalid` |
+| `plate` (2.3+) | `34 ABC 123`; province 01–81, then 1 letter + 4–5, 2 letters + 3–4 or 3 letters + 2–3 digits ([article 34 of the vehicle registration regulation](https://www.mevzuat.gov.tr/anasayfa/MevzuatFihristDetayIframe?MevzuatTur=7&MevzuatNo=24356&MevzuatTertip=5)) | `34ABC123` | `plate.incomplete`, `plate.invalid` |
 | `fullName` (2.2+) | `Ömer Gülçiçek`, letters of any language and single spaces, 70 characters at most | same text | none |
 | `currency` | `1,234.56` (no symbol); with a code `$1,234.56` (Intl) | `1234.56` | `currency.min`, `currency.max` |
 | `currency` + `country: "TR"` | `₺1.234,56` | `1234.56` | `currency.min`, `currency.max` |
@@ -90,7 +91,7 @@ Returned props per key: `name`, `ref`, `defaultValue`, `onChange`, `onBlur`, `on
 - `number: { min, max, scale, signed, locale }`, `currency: "USD" | { code, locale, min, max, scale }`, `date: { format, min, max, minAge }` (formats `DD/MM/YYYY`, `MM/DD/YYYY`, `YYYY-MM-DD`, `DD.MM.YYYY`, `MM/YY`, `MM/YYYY`).
 - `mask`, `number`, `currency` and `date` exclude each other (type error).
 - `validate: (value, ctx) => true | false | "my.key"` runs after built-in checks.
-- `definePreset("plate", { mask: "99 a[aa] 99[99]", transform: "uppercase" })` → error keys `plate.*`.
+- `definePreset("orderNo", { mask: "aa-9999", transform: "uppercase" })` → error keys `orderNo.*`.
 
 ## Server
 
@@ -107,7 +108,7 @@ export async function checkout(formData: FormData) {
 
 ## Helpers
 
-`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
+`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length), `isValidPlate` (2.3+; spaces, hyphens and lowercase OK; Latin A–Z, Q/W/X included; name plates and special plates not checked) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
 
 ## Test data (2.3+)
 

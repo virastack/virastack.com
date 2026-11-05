@@ -27,10 +27,11 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 - [Phone](https://virastack.com/mask/examples/phone): E.164; `{ preset: "phone", country: "TR" }` for `(555) 123 45 67` (type +90, 0 or 555), raw 10 digits
 - [IBAN](https://virastack.com/mask/examples/iban): every country, mod-97 and country length; `{ preset: "iban", country: "TR" }` writes `TR` for you
 - [TCKN](https://virastack.com/mask/examples/tckn): Turkish national ID
+- [Plate](https://virastack.com/mask/examples/plate): Turkish registration plate (2.3+), rules from the official registration regulation
 - [Full name](https://virastack.com/mask/examples/full-name): Letters of any language and single spaces; `autoComplete: "cc-name"` for the name on a card
 - [Currency](https://virastack.com/mask/examples/currency): Intl formatting, `{ preset: "currency", country: "TR" }` for `₺1.234,56`, follows a currency select
 - [Date](https://virastack.com/mask/examples/date): ISO value, min/max, minAge, start/end
-- [Custom mask](https://virastack.com/mask/examples/custom): `definePreset` plate example
+- [Custom mask](https://virastack.com/mask/examples/custom): `definePreset` order number example
 
 ## Product
 

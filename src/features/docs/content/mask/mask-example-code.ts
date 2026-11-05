@@ -1,17 +1,17 @@
 /** Code shown next to the single-field example previews. */
 export function buildExampleCode(preset: string, placeholder: string, country?: string): string {
-  if (preset === "plate") {
+  if (preset === "custom") {
     return `import { useForm } from "react-hook-form"
 import { definePreset, useViraMask } from "@virastack/mask"
 
-// 9 digit · a letter · [optional part]
-const plateMask = definePreset("plate", { mask: "99 a[aa] 99[99]", transform: "uppercase" })
+// a letter · 9 digit · literals like "-" are display only
+const orderNoMask = definePreset("orderNo", { mask: "aa-9999", transform: "uppercase" })
 
 function Example() {
-  const form = useForm<{ plate: string }>()
-  const { plate } = useViraMask(form, { plate: plateMask })
+  const form = useForm<{ orderNo: string }>()
+  const { orderNo } = useViraMask(form, { orderNo: orderNoMask })
 
-  return <input {...plate} placeholder="${placeholder}" />
+  return <input {...orderNo} placeholder="${placeholder}" />
 }`;
   }
 

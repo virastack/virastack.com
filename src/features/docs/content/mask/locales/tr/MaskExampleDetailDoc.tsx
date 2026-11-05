@@ -87,7 +87,7 @@ export async function MaskExampleDetailDoc({ id }: MaskExampleDetailDocProps) {
     ? buildCreditCardCode()
     : isPassword
       ? buildPasswordCode()
-      : buildExampleCode(example.preset ?? "plate", example.placeholder ?? "", example.country);
+      : buildExampleCode(example.preset ?? "custom", example.placeholder ?? "", example.country);
 
   return (
     <>
