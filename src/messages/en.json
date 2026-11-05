@@ -16,8 +16,10 @@
     "communityTitle": "Community",
     "communityDesc": "If you like ViraStack or want to support it, leave a star on GitHub. Reporting a bug, suggesting an idea, or contributing code matters just as much.",
     "communityGithub": "Leave a star on GitHub",
+    "communityStars": "stars",
     "metaDesc": "Free frontend guides, Next.js and TanStack Start templates, AI rules, and headless form hooks. Learn, start, build.",
     "heroBadge": "Open source · MIT · Free",
+    "heroDownloads": "downloads · last 3 months",
     "ctaLearn": "Start learning",
     "learnTitle": "Learn",
     "startTitle": "Start",
@@ -350,6 +352,7 @@
   "Products": {
     "readTheDocs": "Read the docs",
     "startExperience": "Start the experience",
+    "githubStars": "stars",
     "startName": "Start",
     "aiName": "AI",
     "maskName": "Mask",

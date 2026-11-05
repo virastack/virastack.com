@@ -50,9 +50,11 @@ type ProductHeroProps = {
   product: Product;
   /** Live demo of the product, set beside the copy from `lg` up. */
   aside?: ReactNode;
+  /** Stars of the product's repository, shown on the GitHub button when set. */
+  githubStars?: number;
 };
 
-export function ProductHero({ product, aside }: ProductHeroProps) {
+export function ProductHero({ product, aside, githubStars }: ProductHeroProps) {
   const t = useTranslations("Products");
   const tAi = useTranslations("Ai");
   const primary =
@@ -129,6 +131,7 @@ export function ProductHero({ product, aside }: ProductHeroProps) {
           <GithubRepoButton
             href={product.github}
             label={github.pkg ? `${github.slug.split("/")[0]}/${github.pkg}` : github.slug}
+            stars={githubStars}
           />
         </div>
 

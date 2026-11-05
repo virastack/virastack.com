@@ -16,8 +16,10 @@
     "communityTitle": "Topluluk",
     "communityDesc": "Beğendiysen ya da destek olmak istiyorsan GitHub’da bir yıldız bırak. Hata bildirmek, öneri vermek ya da kod katkısı yapmak da aynı ölçüde değerli.",
     "communityGithub": "GitHub’da yıldız bırak",
+    "communityStars": "yıldız",
     "metaDesc": "Ücretsiz frontend rehberleri, Next.js ve TanStack Start şablonları, AI kuralları ve headless form hook’ları. Öğren, başlat, geliştir.",
     "heroBadge": "Açık kaynak · MIT · Ücretsiz",
+    "heroDownloads": "indirme · son 3 ay",
     "ctaLearn": "Öğrenmeye başla",
     "learnTitle": "Öğren",
     "startTitle": "Başlat",
@@ -350,6 +352,7 @@
   "Products": {
     "readTheDocs": "Dokümantasyon",
     "startExperience": "Deneyimi başlat",
+    "githubStars": "yıldız",
     "startName": "Start",
     "aiName": "AI",
     "maskName": "Mask",

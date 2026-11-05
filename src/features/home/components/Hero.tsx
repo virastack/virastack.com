@@ -12,6 +12,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 
 import { HeroBrand } from "./HeroBrand";
+import { HeroStats } from "./HeroStats";
 
 export function Hero() {
   const t = useTranslations("Home");
@@ -76,6 +77,8 @@ export function Hero() {
           </a>
         </div>
       </Reveal>
+
+      <HeroStats />
     </section>
   );
 }

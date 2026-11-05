@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { Reveal, RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { buttonVariants } from "@/components/ui/button";
 
+import { CommunityStars } from "./CommunityStars";
+
 export function Community() {
   const t = useTranslations("Home");
 
@@ -33,8 +35,9 @@ export function Community() {
           rel="noreferrer"
           className={cn(buttonVariants({ variant: "outline" }), "h-10 px-4 py-2")}
         >
-          <StarIcon className="size-4" />
+          <StarIcon className="size-4 fill-transparent transition-colors duration-200 group-hover/button:fill-warning group-hover/button:text-warning" />
           <span>{t("communityGithub")}</span>
+          <CommunityStars />
         </a>
       </Reveal>
     </section>

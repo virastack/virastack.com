@@ -380,3 +380,14 @@
 @utility animate-reveal-late {
   animation: reveal-late 700ms ease-out backwards;
 }
+
+/* Safety net for CountUp: it stays hidden until it starts counting, and shows after 2.5 s if scripts never ran. */
+@keyframes count-up-fallback {
+  to {
+    visibility: visible;
+  }
+}
+
+@utility animate-count-up-fallback {
+  animation: count-up-fallback 0s 2.5s forwards;
+}
