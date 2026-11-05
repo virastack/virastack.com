@@ -36,6 +36,30 @@ export type Release = {
 
 const releases: readonly Release[] = [
   {
+    id: "mask-2-3-0",
+    date: "2026-11-05",
+    draft: true,
+    products: [{ id: "mask", version: "2.3.0" }],
+    sources: [],
+    copy: {
+      en: {
+        title: "Test data with `@virastack/mask/testing`",
+        summary:
+          "Generate valid TCKNs and IBANs for tests and seed data, the same value for the same seed.",
+        whatChanged:
+          '- **New `@virastack/mask/testing` entry:** Test and seed data generators. The root and `/server` entries don\'t export them, so they never reach production bundles. No React and no `"use client"`, about 2 KB.\n- **`generateTCKN()`:** A TCKN that passes `isValidTCKN`. No list is kept; every number is made on the spot.\n- **`generateIBAN(country, { bank })`:** Turkish IBANs follow the national layout with a bank from `turkishBanks`; `bank: "0062"` picks Garanti. Every country in the IBAN registry works, with a digits-only account part that passes `isValidIBAN`.\n- **`seed` option:** An integer seed gives the same value on every run and platform, so snapshots and seed data stay stable.',
+        why: "Tests and seed scripts kept copying the same few example numbers, and a hand-made TCKN or IBAN usually fails the checksum. A generated value can belong to a real person or account, so the generators are for tests and seed data only.",
+      },
+      tr: {
+        title: "`@virastack/mask/testing` ile test verisi",
+        summary: "Test ve seed verisi için geçerli TCKN ve IBAN üret; aynı seed aynı değeri verir.",
+        whatChanged:
+          "- **Yeni `@virastack/mask/testing` girişi:** Test ve seed verisi üreteçleri. Kök ve `/server` girişleri bunları export etmez, üretim bundle'ına girmezler. React ve `\"use client\"` yok, boyutu yaklaşık 2 KB.\n- **`generateTCKN()`:** `isValidTCKN` kontrolünü geçen bir TCKN. Liste tutulmaz, her numara anında üretilir.\n- **`generateIBAN(country, { bank })`:** Türk IBAN'ları `turkishBanks` listesinden bir bankayla ulusal düzene uyar; `bank: \"0062\"` Garanti'yi seçer. IBAN kaydındaki her ülke çalışır; hesap kısmı yalnızca rakamdır ve `isValidIBAN` kontrolünü geçer.\n- **`seed` seçeneği:** Tam sayı bir seed her çalıştırmada ve platformda aynı değeri verir; snapshot'lar ve seed verisi değişmez.",
+        why: "Test ve seed betikleri hep aynı birkaç örnek numarayı kopyalıyordu; elle yazılan TCKN ya da IBAN da çoğu zaman kontrol hanesine takılıyor. Üretilen değer gerçek bir kişiye ya da hesaba denk gelebileceği için üreteçler yalnızca test ve seed verisi içindir.",
+      },
+    },
+  },
+  {
     id: "mask-2-2-0",
     date: "2026-11-02",
     products: [{ id: "mask", version: "2.2.0" }],

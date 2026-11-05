@@ -13,6 +13,7 @@ import { MaskCustomMaskDoc } from "@/features/docs/content/mask/MaskCustomMaskDo
 import { MaskHelpersDoc } from "@/features/docs/content/mask/MaskHelpersDoc";
 import { MaskIntroductionDoc } from "@/features/docs/content/mask/MaskIntroductionDoc";
 import { MaskServerDoc } from "@/features/docs/content/mask/MaskServerDoc";
+import { MaskTestingDoc } from "@/features/docs/content/mask/MaskTestingDoc";
 import { MaskTypesDoc } from "@/features/docs/content/mask/MaskTypesDoc";
 import { MaskUiLibrariesDoc } from "@/features/docs/content/mask/MaskUiLibrariesDoc";
 import { MaskUpgradeDoc } from "@/features/docs/content/mask/MaskUpgradeDoc";
@@ -39,6 +40,7 @@ const maskDocsContent: Record<string, Record<string, () => ReactNode>> = {
     server: () => <MaskServerDoc />,
     helpers: () => <MaskHelpersDoc />,
     banks: () => <MaskBanksDoc />,
+    testing: () => <MaskTestingDoc />,
     types: () => <MaskTypesDoc />,
     "ui-libraries": () => <MaskUiLibrariesDoc />,
   },

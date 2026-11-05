@@ -478,6 +478,7 @@ export function getMaskDocsNav(t: DocsMaskTranslate): DocsNavSection[] {
         { slug: "server", title: t("navServer"), href: `${BASE}/server` },
         { slug: "helpers", title: t("navHelpers"), href: `${BASE}/helpers` },
         { slug: "banks", title: t("navBanks"), href: `${BASE}/banks` },
+        { slug: "testing", title: t("navTesting"), href: `${BASE}/testing` },
         { slug: "types", title: t("navTypes"), href: `${BASE}/types` },
         {
           slug: "ui-libraries",
@@ -601,6 +602,18 @@ export function getMaskDocsPage(slug: string, t: DocsMaskTranslate): DocsPageMet
         { id: "kaynak", title: t("banksHeadingSource") },
       ],
     },
+    testing: {
+      slug: "testing",
+      title: t("testingTitle"),
+      description: t("testingDescription"),
+      headings: [
+        { id: "giris", title: t("testingHeadingEntry") },
+        { id: "deneyin", title: t("testingHeadingTry") },
+        { id: "tckn", title: "generateTCKN" },
+        { id: "iban", title: "generateIBAN" },
+        { id: "seed", title: t("testingHeadingSeed") },
+      ],
+    },
     types: {
       slug: "types",
       title: t("typesTitle"),
@@ -671,6 +684,7 @@ export const maskDocsSlugs = [
   "server",
   "helpers",
   "banks",
+  "testing",
   "types",
   "ui-libraries",
 ] as const;

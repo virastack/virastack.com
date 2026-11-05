@@ -60,7 +60,9 @@ export function MaskHelpersDoc() {
         <DocsCodeBlock code={validatorsCode} lang="ts" />
         <p>
           Bir Türkiye IBAN&apos;ının hangi bankaya ait olduğunu bulmak için{" "}
-          <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullan.
+          <Link href="/mask/docs/banks">getTurkishBank</Link>&#32;kullan. Test ve seed verisinde
+          geçerli TCKN ve IBAN için <Link href="/mask/docs/testing">test verisi</Link> sayfasına
+          bak.
         </p>
 
         <h2 id="money">Para</h2>

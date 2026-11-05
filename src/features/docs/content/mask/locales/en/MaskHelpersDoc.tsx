@@ -60,7 +60,8 @@ export function MaskHelpersDoc() {
         <DocsCodeBlock code={validatorsCode} lang="ts" />
         <p>
           To find the bank behind a Turkish IBAN, use{" "}
-          <Link href="/mask/docs/banks">getTurkishBank</Link>.
+          <Link href="/mask/docs/banks">getTurkishBank</Link>. For valid TCKNs and IBANs in tests
+          and seed data, see <Link href="/mask/docs/testing">test data</Link>.
         </p>
 
         <h2 id="money">Money</h2>

@@ -16,6 +16,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/mask/llm
 - [Server](https://virastack.com/mask/docs/server): `@virastack/mask/server`, `parseMasked`, Standard Schema
 - [Helpers](https://virastack.com/mask/docs/helpers): `createMask`, validators, `toMinorUnits`
 - [Bank detection](https://virastack.com/mask/docs/banks): `getTurkishBank(iban)`, `turkishBanks` (70 TCMB participants), live demo
+- [Test data](https://virastack.com/mask/docs/testing): `@virastack/mask/testing` (2.3+), `generateTCKN`, `generateIBAN`, seeds for repeatable values
 - [Types](https://virastack.com/mask/docs/types): `PresetName`, `MaskOptions`, schema and field types
 - [UI libraries](https://virastack.com/mask/docs/ui-libraries): shadcn/ui, Ant Design, Chakra
 - [Examples](https://virastack.com/mask/examples): Live preset index

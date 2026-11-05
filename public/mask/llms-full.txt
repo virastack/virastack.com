@@ -109,6 +109,22 @@ export async function checkout(formData: FormData) {
 
 `createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
 
+## Test data (2.3+)
+
+Tests and seed data only: a generated value can belong to a real person or account.
+
+```ts
+import { generateIBAN, generateTCKN } from "@virastack/mask/testing" // not exported from the root or /server
+
+generateTCKN()                       // passes isValidTCKN, new value per call
+generateTCKN({ seed: 1 })            // "49537717654" on every run (integer seed)
+generateIBAN()                       // Turkish IBAN, random bank from turkishBanks, no spaces
+generateIBAN("TR", { bank: "0062" }) // Garanti; getTurkishBank finds the bank
+generateIBAN("DE", { seed: 1 })      // any registry country; digits-only BBAN, passes isValidIBAN, not national BBAN rules
+```
+
+Unknown country, unknown bank code or `bank` outside `TR` throws.
+
 ## Upgrade from v1
 
 `useViraMask({ form, schema })` → `useViraMask(form, schema)`; `rawValue` removed; `phone` → `{ preset: "phone", country: "TR" }` for the Turkish layout or E.164 `"phone"`; `iban` → `{ preset: "iban", country: "TR" }` (value keeps `TR`) or global `"iban"`; `taxNumber` → `vkn`; `numeric` → `number`; `email`, `url`, `username`, `alpha`, `password`, `text`, `zipCode` removed; `resolveMask` → `mask` function; `errorMessage` → error keys; `mergeRefs`, `applyMask`, `formatCurrency` removed (use `createMask`). Full guide: https://virastack.com/mask/docs/upgrade
