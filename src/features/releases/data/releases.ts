@@ -38,7 +38,6 @@ const releases: readonly Release[] = [
   {
     id: "mask-2-3-0",
     date: "2026-11-05",
-    draft: true,
     products: [{ id: "mask", version: "2.3.0" }],
     sources: [],
     copy: {
