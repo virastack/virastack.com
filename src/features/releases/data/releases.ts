@@ -36,6 +36,34 @@ export type Release = {
 
 const releases: readonly Release[] = [
   {
+    id: "start-2-1-0",
+    date: "2026-11-05",
+    products: [{ id: "start", version: "2.1.0" }],
+    sources: [],
+    copy: {
+      en: {
+        title: "A shorter, clearer ViraStack Start CLI",
+        summary:
+          "Step counters, a ViraStack badge, colored help and short errors; projects and templates are unchanged.",
+        whatChanged:
+          "- **Badge and accent color:** The run starts with a ViraStack badge and the version. Step counters, spinners and highlights use the terminal's cyan, so they follow your theme.\n- **Step counters:** Each step shows `[n/total]`. A long step shows a dimmed timer, and a failed step gets a red mark.\n- **Short errors:** A failure shows its first line and the command's last 8 lines, dimmed, instead of the whole output.\n- **Design skills:** They are added one by one with progress, and their names show on a dimmed line under the step.\n- **Next steps:** Only the commands, without a frame or a docs link.\n- **Tool choices:** Short names (`mask`, `password`, `address`, `ai`) instead of package names.\n- **Colored `--help`:** Headings are bold, commands and flags cyan. `NO_COLOR` keeps it plain.\n- **Shorter run:** The telemetry notice, the selection summary and the closing line are gone. Telemetry itself is unchanged; `--telemetry-disable` turns it off.\n- **Turkish copy:** The CLI addresses you as \"sen\".",
+        why: "- **Less to read:** The run printed a notice, a summary of your own choices and a closing line around the steps. Now it shows the steps and the commands you need next.\n- **Errors you can act on:** A failed install printed the whole command output. The first line and the last lines usually hold the reason.\n- **Limits:** We checked the output with tests and on macOS. We did not try Windows terminals or light terminal themes.",
+        migration:
+          "**Nothing to do.** Projects created with 2.0.0 are the same; only the CLI's output changed.",
+      },
+      tr: {
+        title: "Daha kısa ve net bir ViraStack Start CLI'ı",
+        summary:
+          "Adım sayaçları, ViraStack rozeti, renkli yardım ve kısa hatalar; projeler ve şablonlar değişmedi.",
+        whatChanged:
+          "- **Rozet ve vurgu rengi:** Kurulum ViraStack rozeti ve sürümle başlar. Adım sayaçları, spinner'lar ve vurgular terminalin kendi turkuazını kullanır, böylece temana uyar.\n- **Adım sayaçları:** Her adım `[n/toplam]` gösterir. Uzun süren adımda soluk bir süre görünür, başarısız adım kırmızı işaret alır.\n- **Kısa hatalar:** Bir hata, komutun tüm çıktısı yerine ilk satırını ve son 8 satırını soluk olarak gösterir.\n- **Tasarım skill'leri:** Tek tek ve ilerlemeyle eklenir; adları adımın altında soluk bir satırda görünür.\n- **Sonraki adımlar:** Çerçeve ve doküman linki olmadan yalnızca komutlar.\n- **Araç seçimi:** Paket adları yerine kısa adlar (`mask`, `password`, `address`, `ai`).\n- **Renkli `--help`:** Başlıklar kalın, komutlar ve flag'ler turkuaz. `NO_COLOR` düz bırakır.\n- **Daha kısa kurulum:** Telemetri bildirimi, seçim özeti ve kapanış satırı kaldırıldı. Telemetri aynı şekilde çalışıyor; `--telemetry-disable` ile kapatabilirsin.\n- **Türkçe metinler:** CLI artık \"sen\" diye hitap ediyor.",
+        why: "- **Daha az okuma:** Kurulum, adımların etrafında bir bildirim, kendi seçimlerinin özeti ve bir kapanış satırı yazıyordu. Artık adımları ve sonra çalıştıracağın komutları gösteriyor.\n- **İşe yarayan hatalar:** Başarısız bir kurulum komutun tüm çıktısını yazıyordu. Sebep çoğu zaman ilk satırda ve son satırlarda.\n- **Sınırlar:** Çıktıyı testlerle ve macOS'te denedik. Windows terminallerinde ve açık terminal temalarında denemedik.",
+        migration:
+          "**Yapman gereken bir şey yok.** 2.0.0 ile oluşturulan projeler aynı; yalnızca CLI'ın çıktısı değişti.",
+      },
+    },
+  },
+  {
     id: "password-1-2-0",
     date: "2026-11-05",
     products: [{ id: "password", version: "1.2.0" }],
