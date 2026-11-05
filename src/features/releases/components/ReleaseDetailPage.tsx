@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 
 import { ArrowLeft } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -7,7 +8,7 @@ import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { DocsCodeBlock } from "@/components/shared/DocsCodeBlock";
 import { ReleaseDate, ReleaseProducts } from "@/features/releases/components/ReleaseMeta";
 import { ReleaseRichText } from "@/features/releases/components/ReleaseRichText";
-import { getReleaseCopy, type Release } from "@/features/releases/data/releases";
+import { getReleaseCopy, getReleaseLocale, type Release } from "@/features/releases/data/releases";
 import { Link } from "@/i18n/routing";
 
 const linkClassName =
@@ -49,6 +50,21 @@ export async function ReleaseDetailPage({ release }: { release: Release }) {
           {copy.summary}
         </p>
       </header>
+
+      {release.images?.map((image) => {
+        const imageLocale = getReleaseLocale(locale);
+        return (
+          <Image
+            key={image.src.en}
+            src={image.src[imageLocale]}
+            alt={image.alt[imageLocale]}
+            width={image.width}
+            height={image.height}
+            unoptimized
+            className="h-auto w-full"
+          />
+        );
+      })}
 
       <div className="space-y-6">
         <ReleaseSection title={t("whatChanged")}>

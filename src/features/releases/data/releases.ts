@@ -31,7 +31,18 @@ export type Release = {
   commits?: readonly { repo: string; hash: string; title: string }[];
   /** One block per technology, labeled with its badge. */
   migrationCode?: readonly { kind: AcademyBadgeKind; code: string }[];
+  /** Images shown under the summary, one file per language, e.g. how a CLI looked in this version. */
+  images?: readonly ReleaseImage[];
   copy: Record<EcosystemLocale, ReleaseCopy>;
+};
+
+export type ReleaseImage = {
+  /** A file under `public/<product>/releases/`, one per language. Not under `/releases`: the version route matches it. */
+  src: Record<EcosystemLocale, string>;
+  alt: Record<EcosystemLocale, string>;
+  /** Size of the files in pixels, so the page reserves the space before they load. */
+  width: number;
+  height: number;
 };
 
 const releases: readonly Release[] = [
@@ -40,6 +51,20 @@ const releases: readonly Release[] = [
     date: "2026-11-05",
     products: [{ id: "start", version: "2.1.0" }],
     sources: [],
+    images: [
+      {
+        src: {
+          en: "/start/releases/cli-2.1.0-en.webp",
+          tr: "/start/releases/cli-2.1.0-tr.webp",
+        },
+        alt: {
+          en: "Terminal output of npx virastack my-app with the 2.1.0 CLI: a ViraStack badge with the version, five steps numbered 1/5 to 5/5 with their times, the design skills on a dimmed line, and the next steps.",
+          tr: "2.1.0 CLI ile npx virastack my-app terminal çıktısı: sürümlü ViraStack rozeti, 1/5'ten 5/5'e numaralı ve süreli beş adım, soluk satırda tasarım skill'leri ve sonraki adımlar.",
+        },
+        width: 1766,
+        height: 928,
+      },
+    ],
     copy: {
       en: {
         title: "A shorter, clearer ViraStack Start CLI",
@@ -535,8 +560,13 @@ export function getReleaseParams(release: Release) {
 }
 
 /** The release's copy in `locale`, or English for any locale it was not written in. */
+/** The note's language for a site locale; English when the note has no such language. */
+export function getReleaseLocale(locale: string): EcosystemLocale {
+  return isOneOf(ECOSYSTEM_LOCALES, locale) ? locale : "en";
+}
+
 export function getReleaseCopy(release: Release, locale: string): ReleaseCopy {
-  return release.copy[isOneOf(ECOSYSTEM_LOCALES, locale) ? locale : "en"];
+  return release.copy[getReleaseLocale(locale)];
 }
 
 export function getReleaseHref(release: Release) {
