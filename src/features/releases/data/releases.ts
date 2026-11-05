@@ -47,6 +47,36 @@ export type ReleaseImage = {
 
 const releases: readonly Release[] = [
   {
+    id: "ai-2-2-0",
+    date: "2026-11-05",
+    products: [{ id: "ai", version: "2.2.0" }],
+    sources: [
+      { title: "NO_COLOR: disabling ANSI color output by default", url: "https://no-color.org/" },
+    ],
+    copy: {
+      en: {
+        title: "Badge, colored help and short errors in the ViraStack AI CLI",
+        summary:
+          "The CLI now looks like ViraStack Start: a badge with the version, colored help and errors marked in red.",
+        whatChanged:
+          '- **Title:** `init` and `remove` start with a "ViraStack AI" badge on the accent color ViraStack Start uses, with the version dimmed next to it.\n- **`--help`:** Headings are bold, commands and flags use the accent color. The text and its layout stay the same.\n- **Errors:** An error starts with a red `✖`. A long message keeps its first line and at most its last 8 lines, dimmed.\n- **When colors show:** Only in an interactive terminal. A non-empty `NO_COLOR` turns them off; `FORCE_COLOR` turns them on, and `0` or `false` turns them off. Pipes, CI logs and the ViraStack Start setup get plain text.',
+        why: "- **Same look as Start:** The ViraStack Start CLI got a badge, colored help and short errors, while the AI CLI still printed plain text, so the two looked like different products.\n- **No dependency:** The colors are a few ANSI codes, so `@virastack/ai` still has no runtime dependencies.\n- **Limits:** We checked the output with tests and on macOS. We did not try Windows terminals or light terminal themes.",
+        migration:
+          "**Nothing to do.** The text of the output is the same; only its colors changed, and errors now start with `✖`. A script that matches an error message exactly should allow the `✖ ` prefix.",
+      },
+      tr: {
+        title: "ViraStack AI CLI'da rozet, renkli yardım ve kısa hatalar",
+        summary:
+          "CLI artık ViraStack Start gibi görünüyor: sürümlü rozet, renkli yardım ve kırmızı işaretli hatalar.",
+        whatChanged:
+          "- **Başlık:** `init` ve `remove`, ViraStack Start'ın vurgu rengindeki \"ViraStack AI\" rozetiyle başlar; sürüm yanında soluk görünür.\n- **`--help`:** Başlıklar kalın, komutlar ve flag'ler vurgu renginde. Metin ve düzeni aynı kalır.\n- **Hatalar:** Hata kırmızı bir `✖` ile başlar. Uzun bir mesajın ilk satırı ve en çok son 8 satırı soluk olarak gösterilir.\n- **Renkler ne zaman görünür:** Yalnızca etkileşimli terminalde. Boş olmayan `NO_COLOR` renkleri kapatır; `FORCE_COLOR` açar, `0` ya da `false` değeri kapatır. Pipe, CI logları ve ViraStack Start kurulumu düz metin alır.",
+        why: "- **Start ile aynı görünüm:** ViraStack Start CLI'ı rozet, renkli yardım ve kısa hatalar aldı; AI CLI'ı ise hâlâ düz metin yazıyordu, iki araç farklı ürünler gibi görünüyordu.\n- **Bağımlılık yok:** Renkler birkaç ANSI kodundan ibaret, bu yüzden `@virastack/ai` hâlâ hiçbir runtime bağımlılığı taşımıyor.\n- **Sınırlar:** Çıktıyı testlerle ve macOS'te denedik. Windows terminallerinde ve açık terminal temalarında denemedik.",
+        migration:
+          "**Yapman gereken bir şey yok.** Çıktının metni aynı; yalnızca renkleri değişti ve hatalar artık `✖` ile başlıyor. Bir hata mesajını birebir eşleyen bir betiğin varsa `✖ ` önekine izin ver.",
+      },
+    },
+  },
+  {
     id: "start-2-1-0",
     date: "2026-11-05",
     products: [{ id: "start", version: "2.1.0" }],
