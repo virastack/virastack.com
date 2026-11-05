@@ -4,13 +4,11 @@ import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 
-const formCode = `import { useViraPasswordForm } from "@virastack/password/form"
+const formCode = `import { useViraPassword } from "@virastack/password"
 
-const { password, confirm } = useViraPasswordForm(form, {
-  name: "password",
-  confirm: "confirm",    // optional
-  policy,                // optional
-  forbidden: ["email"],  // field names
+const { password, confirm } = useViraPassword(form, {
+  password: { policy, forbidden: ["email"] }, // field names
+  confirm: { matchWith: "password" },
 })
 
 <input {...password.inputProps} /> // register() is already inside
@@ -61,21 +59,27 @@ export function PasswordReactHookFormDoc() {
           holds the form value.
         </p>
 
-        <h2 id="form">useViraPasswordForm()</h2>
+        <h2 id="form">useViraPassword(form)</h2>
         <p>
-          <code>@virastack/password/form</code>&#32;binds the password and confirm fields to the
-          form. It registers them with their rules, reads values with <code>useWatch</code> (so{" "}
-          <code>reset()</code> and <code>setValue()</code>&#32;are followed), and checks the confirm
-          field again when the password changes and the password when a <code>forbidden</code>
-          &#32;field changes, once the user has left the field or submitted. No <code>value</code>,{" "}
+          Pass the form first, as with <code>useViraMask(form, schema)</code>. One entry per field:
+          the key is the field name (set <code>name</code> when it differs), <code>matchWith</code>{" "}
+          and <code>forbidden</code>&#32;take field names, and <code>rules</code>&#32;adds more
+          React Hook Form rules such as <code>required</code>.
+        </p>
+        <p>
+          Each field is registered with its rule. Values are read from the form, so{" "}
+          <code>reset()</code> and <code>setValue()</code>&#32;are followed, and a field is checked
+          again when the field it depends on changes (the confirm field with the password, the
+          password with the email), once the user has left it or submitted. No <code>value</code>,{" "}
           <code>deps</code> or <code>trigger</code>.
         </p>
         <DocsCodeBlock code={formCode} lang="tsx" />
         <PasswordExamplePreview id="form-binding" />
         <p>
-          <code>react-hook-form</code>&#32;is an optional peer (7.55+); the root entry doesn&apos;t
-          need it. To share an input with a ViraStack Mask field, or with a resolver, bind the hook
-          yourself as below.
+          <code>react-hook-form</code>&#32;is an optional peer (7.55+): the hook only uses its types
+          and the methods of the form you pass, and <code>useViraPassword()</code>&#32;without a
+          form works as before. To share an input with a ViraStack Mask field, or with a resolver,
+          bind the hook yourself as below.
         </p>
 
         <h2 id="register">register()</h2>

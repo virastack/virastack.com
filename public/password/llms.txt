@@ -2,7 +2,7 @@
 
 > Headless password hook for React: show/hide, NIST-style strength, password confirmation, server validation and an optional leaked password check. npm: `@virastack/password` (1.2.x). Zero runtime dependencies, ~2 KB for the hook.
 
-Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2); `react-hook-form` (≥ 7.55, optional, for `@virastack/password/form`). One hook, `useViraPassword()`; strength and confirmation are options of the same hook. Errors are keys (`password.tooShort`), not messages. Not a strength bar or generator component.
+Install: `npm install @virastack/password`. Peers: `react`, `react-dom` (≥ 18.2); `react-hook-form` (≥ 7.55, optional, for `useViraPassword(form, schema)`). One hook, `useViraPassword()`; strength and confirmation are options of the same hook. Errors are keys (`password.tooShort`), not messages. Not a strength bar or generator component.
 
 For inline API + examples, prefer [llms-full.txt](https://virastack.com/password/llms-full.txt).
 
@@ -13,7 +13,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 - [useViraPassword()](https://virastack.com/password/docs/use-vira-password): Every option, return value, prop merging
 - [Strength](https://virastack.com/password/docs/strength): `definePolicy`, `evaluate`, presets (`nist`, `mfa`), whole-password `forbidden`, normalization
 - [Confirm password](https://virastack.com/password/docs/confirm): `matchWith`, `matches`, `rule`
-- [React Hook Form](https://virastack.com/password/docs/react-hook-form): `useViraPasswordForm`, `register`, `useWatch`, Controller, Zod, ViraStack Mask
+- [React Hook Form](https://virastack.com/password/docs/react-hook-form): `useViraPassword(form, schema)`, `register`, `useWatch`, Controller, Zod, ViraStack Mask
 - [Accessibility](https://virastack.com/password/docs/accessibility): ARIA, focus, live region, Caps Lock
 - [Customization](https://virastack.com/password/docs/customization): Icons, props, automatic hiding, autoComplete
 - [Server validation](https://virastack.com/password/docs/server): `validatePassword`, the `pwned` option, what to hash, Next.js
@@ -27,7 +27,7 @@ For inline API + examples, prefer [llms-full.txt](https://virastack.com/password
 
 - [Strength meter](https://virastack.com/password/examples/strength-meter): Your own bar on `score`, `level` and issue keys
 - [Confirm password](https://virastack.com/password/examples/confirm): `matchWith`
-- [React Hook Form binding](https://virastack.com/password/examples/form-binding): `useViraPasswordForm` with password, confirm and `forbidden` fields
+- [React Hook Form binding](https://virastack.com/password/examples/form-binding): `useViraPassword(form, schema)` with password, confirm and `forbidden` fields
 - [React Hook Form + Zod](https://virastack.com/password/examples/react-hook-form-zod): Same policy in a Zod schema
 - [Server Action](https://virastack.com/password/examples/server-action): `validatePassword` with FormData
 - [Personal info](https://virastack.com/password/examples/forbidden): `forbidden: [email, name]`

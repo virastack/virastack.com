@@ -15,17 +15,16 @@ Docs: https://virastack.com/password/docs; Index: https://virastack.com/password
 
 | Import | Exports | Runs on |
 | --- | --- | --- |
-| `@virastack/password` | `useViraPassword`, `mergeProps`, `composeRefs`, `EyeIcon`, `EyeOffIcon`, `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes` | client (`"use client"`) |
+| `@virastack/password` | `useViraPassword` (alone, or `useViraPassword(form, schema)` with React Hook Form, optional peer ≥ 7.55), `mergeProps`, `composeRefs`, `EyeIcon`, `EyeOffIcon`, `getInputType`, `getButtonAriaAttributes`, `getInputAriaAttributes` | client (`"use client"`) |
 | `@virastack/password/strength` | `definePolicy`, `evaluate`, `normalizePassword` | client + server |
 | `@virastack/password/server` | `validatePassword` + the strength exports | server |
-| `@virastack/password/form` | `useViraPasswordForm` (React Hook Form, optional peer ≥ 7.55) | client (`"use client"`) |
 | `@virastack/password/pwned` | `checkPwned` | server (recommended) |
 
 ## Critical rules for agents
 
-1. One hook: `useViraPassword`, plus `useViraPasswordForm` that binds it to React Hook Form. There is no `useViraPasswordStrength` or `useViraPasswordConfirm`.
+1. One hook: `useViraPassword(options)` alone, `useViraPassword(form, schema)` with React Hook Form (same shape as `useViraMask(form, schema)`). There is no `useViraPasswordStrength` or `useViraPasswordConfirm`.
 2. Spread `inputProps` on the input and `btnProps` on the toggle (`type="button"` is included).
-3. With React Hook Form, prefer `useViraPasswordForm` from `@virastack/password/form`: its `inputProps` include `register()`. With `useViraPassword`, pass `value` from `useWatch` (reset/setValue fire no input events); `inputProps` holds attributes only (no ref, no handlers): spread it before or after `register("password", pw.rule)` or a Mask field.
+3. With React Hook Form, prefer `useViraPassword(form, schema)`: one entry per field, `matchWith` and `forbidden` take field names, `rules` adds more rules, and `inputProps` include `register()`. With `useViraPassword(options)`, pass `value` from `useWatch` (reset/setValue fire no input events); `inputProps` holds attributes only (no ref, no handlers): spread it before or after `register("password", pw.rule)` or a Mask field.
 4. Define the policy once in a file without `"use client"`; import it in the form and on the server.
 5. Always validate again on the server with `validatePassword`. Hash `result.password` (normalized with the policy, NFKC by default).
 6. Map issue keys to messages yourself. Never block paste.
@@ -75,14 +74,12 @@ evaluate(password, policy, { forbidden: [email, name] })
 ## Hook with strength and confirm (React Hook Form)
 
 ```tsx
-import { useViraPasswordForm } from "@virastack/password/form"
+import { useViraPassword } from "@virastack/password"
 
 const form = useForm({ defaultValues: { email: "", password: "", confirm: "" } })
-const { password, confirm } = useViraPasswordForm(form, {
-  name: "password",
-  confirm: "confirm",
-  policy,
-  forbidden: ["email"], // field names
+const { password, confirm } = useViraPassword(form, {
+  password: { policy, forbidden: ["email"] }, // field names
+  confirm: { matchWith: "password" },
 })
 
 <input {...password.inputProps} /> {/* register() is inside */}
@@ -91,7 +88,7 @@ const { password, confirm } = useViraPasswordForm(form, {
 <input {...confirm.inputProps} />
 ```
 
-Values come from `useWatch`; the confirm field is re-checked when the password changes and the password when a `forbidden` field changes (after the user left the field or submitted). No `value`, `deps` or `trigger`.
+Values are read from the form (`reset`/`setValue` included); a field is re-checked when the field it depends on changes: the confirm field with the password, the password with a `forbidden` field (after the user left the field or submitted). No `value`, `deps` or `trigger`.
 
 ## Server
 

@@ -4,13 +4,11 @@ import { GuideProductMark } from "@/components/shared/GuideRichText";
 import { DocsPageHeader, DocsProse } from "@/features/docs/components/DocsProse";
 import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
 
-const formCode = `import { useViraPasswordForm } from "@virastack/password/form"
+const formCode = `import { useViraPassword } from "@virastack/password"
 
-const { password, confirm } = useViraPasswordForm(form, {
-  name: "password",
-  confirm: "confirm",    // isteğe bağlı
-  policy,                // isteğe bağlı
-  forbidden: ["email"],  // alan adları
+const { password, confirm } = useViraPassword(form, {
+  password: { policy, forbidden: ["email"] }, // alan adları
+  confirm: { matchWith: "password" },
 })
 
 <input {...password.inputProps} /> // register() zaten içinde
@@ -61,20 +59,26 @@ export function PasswordReactHookFormDoc() {
           değerini hiçbir zaman tutmaz.
         </p>
 
-        <h2 id="form">useViraPasswordForm()</h2>
+        <h2 id="form">useViraPassword(form)</h2>
         <p>
-          <code>@virastack/password/form</code>&#32;parola ve tekrar alanlarını forma bağlar.
-          Alanları kurallarıyla kaydeder, değerleri <code>useWatch</code> ile okur (
-          <code>reset()</code> ve <code>setValue()</code>&#32;takip edilir) ve kullanıcı alandan
-          çıktıktan ya da formu gönderdikten sonra, parola değişince tekrar alanını,{" "}
-          <code>forbidden</code>&#32;alanı değişince parolayı yeniden kontrol eder.{" "}
-          <code>value</code>, <code>deps</code> veya <code>trigger</code>&#32;gerekmez.
+          <code>useViraMask(form, schema)</code>&#32;gibi önce formu ver. Her alan için bir giriş
+          yaz: anahtar alan adıdır (farklıysa <code>name</code> ver), <code>matchWith</code> ve{" "}
+          <code>forbidden</code>&#32;alan adı alır, <code>rules</code> ise <code>required</code>
+          &#32;gibi ek React Hook Form kuralları ekler.
+        </p>
+        <p>
+          Her alan kuralıyla kaydedilir. Değerler formdan okunur, bu yüzden <code>reset()</code> ve{" "}
+          <code>setValue()</code>&#32;takip edilir. Kullanıcı alandan çıktıktan ya da formu
+          gönderdikten sonra, bağlı olduğu alan değişince alan yeniden kontrol edilir (tekrar alanı
+          parolayla, parola e-postayla). <code>value</code>, <code>deps</code> veya{" "}
+          <code>trigger</code>&#32;gerekmez.
         </p>
         <DocsCodeBlock code={formCode} lang="tsx" />
         <PasswordExamplePreview id="form-binding" />
         <p>
-          <code>react-hook-form</code>&#32;isteğe bağlı bir peer&apos;dır (7.55+); kök giriş ona
-          ihtiyaç duymaz. Bir input&apos;u ViraStack Mask alanıyla ya da bir resolver ile
+          <code>react-hook-form</code>&#32;isteğe bağlı bir peer&apos;dır (7.55+): hook yalnızca
+          tiplerini ve verdiğin formun metotlarını kullanır, formsuz <code>useViraPassword()</code>
+          &#32;eskisi gibi çalışır. Bir input&apos;u ViraStack Mask alanıyla ya da bir resolver ile
           paylaşacaksan hook&apos;u aşağıdaki gibi kendin bağla.
         </p>
 

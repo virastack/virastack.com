@@ -59,21 +59,18 @@ interface ValidatePasswordOptions extends EvaluateOptions {
   pwned?: boolean | CheckPwnedOptions // true → Promise<PasswordValidation>
 }`;
 
-const formCode = `import type { UseViraPasswordFormOptions, UseViraPasswordFormResult } from "@virastack/password/form"
+const formCode = `import type { ViraPasswordFieldConfig, ViraPasswordFields } from "@virastack/password"
 
-interface UseViraPasswordFormOptions<TFieldValues, TConfirm> {
-  name: FieldPath<TFieldValues>
-  confirm?: TConfirm
-  policy?: Policy
-  forbidden?: readonly FieldPath<TFieldValues>[]
-  normalization?: "NFKC" | "NFC"
-  // + every UseViraPasswordOptions except value, matchWith, id and inputProps
+// useViraPassword(form, schema): one entry per field
+interface ViraPasswordFieldConfig<TFieldValues> {
+  name?: Path<TFieldValues> // when the key is not the field name
+  matchWith?: Path<TFieldValues> // the field to repeat
+  forbidden?: readonly Path<TFieldValues>[]
+  rules?: RegisterOptions<TFieldValues> // validate runs after the password check
+  // + every UseViraPasswordOptions except value
 }
 
-interface UseViraPasswordFormResult<TConfirm> {
-  password: UseViraPasswordResult
-  confirm: TConfirm extends string ? UseViraPasswordResult : null
-}`;
+type ViraPasswordFields<K> = { readonly [P in K]: UseViraPasswordResult }`;
 
 const pwnedCode = `import type { CheckPwnedOptions, PwnedResult } from "@virastack/password/pwned"
 
@@ -95,7 +92,7 @@ export function PasswordTypesDoc() {
         <DocsCodeBlock code={strengthCode} lang="ts" />
         <h2 id="server">/server</h2>
         <DocsCodeBlock code={serverCode} lang="ts" />
-        <h2 id="form">/form</h2>
+        <h2 id="form">useViraPassword(form)</h2>
         <DocsCodeBlock code={formCode} lang="ts" />
         <h2 id="pwned">/pwned</h2>
         <DocsCodeBlock code={pwnedCode} lang="ts" />

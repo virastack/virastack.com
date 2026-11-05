@@ -79,8 +79,9 @@ export function PasswordUpgradeDoc() {
         </div>
         <ul>
           <li>
-            <Link href="/password/docs/react-hook-form#form">@virastack/password/form</Link>:{" "}
-            <code>useViraPasswordForm</code>&#32;alanları React Hook Form&apos;a bağlar.
+            <Link href="/password/docs/react-hook-form#form">useViraPassword(form, schema)</Link>:
+            alanları <code>useViraMask(form, schema)</code>&#32;gibi React Hook Form&apos;a bağlar.{" "}
+            <code>useViraPassword(options)</code>&#32;eskisi gibi çalışır.
           </li>
           <li>
             <code>mfa</code> şablonu (ikinci faktörle 8 karakter) ve <code>normalization</code>{" "}

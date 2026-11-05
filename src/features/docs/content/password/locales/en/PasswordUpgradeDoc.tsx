@@ -84,8 +84,9 @@ export function PasswordUpgradeDoc() {
         </div>
         <ul>
           <li>
-            <Link href="/password/docs/react-hook-form#form">@virastack/password/form</Link>:{" "}
-            <code>useViraPasswordForm</code>&#32;binds the fields to React Hook Form.
+            <Link href="/password/docs/react-hook-form#form">useViraPassword(form, schema)</Link>:
+            binds the fields to React Hook Form, like <code>useViraMask(form, schema)</code>.{" "}
+            <code>useViraPassword(options)</code>&#32;works as before.
           </li>
           <li>
             <code>mfa</code> preset (8 characters with a second factor) and the{" "}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useViraPasswordForm } from "@virastack/password/form";
+import { useViraPassword } from "@virastack/password";
 import { useForm } from "react-hook-form";
 
 import { passwordMessages } from "@/features/docs/content/password/examples/password-messages";
@@ -22,13 +22,11 @@ export function SignupForm() {
   });
   const { errors } = form.formState;
 
-  // Registers both fields with their rules. The confirm field is checked again when the
+  // One entry per field, as in useViraMask. The confirm field is checked again when the
   // password changes, and the password when the email changes: no value, deps or trigger.
-  const { password, confirm } = useViraPasswordForm(form, {
-    name: "password",
-    confirm: "confirm",
-    policy,
-    forbidden: ["email"],
+  const { password, confirm } = useViraPassword(form, {
+    password: { policy, forbidden: ["email"] },
+    confirm: { matchWith: "password" },
   });
 
   return (

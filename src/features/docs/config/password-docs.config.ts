@@ -265,7 +265,7 @@ export function getPasswordDocsPage(
       ["gorunurluk", t("confirmHeadingVisibility")],
     ]),
     "react-hook-form": page("react-hook-form", "React Hook Form", t("rhfDescription"), [
-      ["form", "useViraPasswordForm()"],
+      ["form", "useViraPassword(form)"],
       ["register", "register()"],
       ["value", "useWatch()"],
       ["rule", "rule & deps"],
