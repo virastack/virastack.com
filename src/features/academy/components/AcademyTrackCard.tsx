@@ -5,8 +5,9 @@ import { featureCardChevronClassName, getInteractiveCardClassName } from "@/lib/
 import { cn } from "@/lib/utils";
 
 import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
+import { AcademyTrackProgress } from "@/features/academy/components/AcademyTrackProgress";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
-import { hasPublishedLessons } from "@/features/academy/lib/load-curriculum";
+import { getPublishedLessonIds, hasPublishedLessons } from "@/features/academy/lib/load-curriculum";
 import type { AcademyTrack } from "@/features/academy/types/academy.types";
 import { Link } from "@/i18n/routing";
 
@@ -70,6 +71,11 @@ export async function AcademyTrackCard({ track, className }: AcademyTrackCardPro
         <p className="text-xs leading-relaxed text-pretty text-muted-foreground md:text-sm">
           {track.description}
         </p>
+        <AcademyTrackProgress
+          lessonIds={getPublishedLessonIds(track)}
+          variant="compact"
+          className="pt-1.5"
+        />
       </div>
     </div>
   );

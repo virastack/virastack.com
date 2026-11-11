@@ -10,9 +10,10 @@ import { cn } from "@/lib/utils";
 
 import { AcademyLessonMetaBadges } from "@/features/academy/components/AcademyLessonMetaBadges";
 import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
+import { TrackLessonIndex } from "@/features/academy/components/TrackLessonIndex";
 import { getLessonIconTag } from "@/features/academy/constants/track-icon.constants";
 import { countLessonResources } from "@/features/academy/lib/count-lesson-resources";
-import { formatLessonNumber } from "@/features/academy/lib/load-curriculum";
+import { formatLessonNumber, getAcademyLessonId } from "@/features/academy/lib/load-curriculum";
 import { loadAcademyLesson } from "@/features/academy/lib/load-lesson";
 import type { AcademyLessonEntry } from "@/features/academy/types/academy.types";
 import { Link } from "@/i18n/routing";
@@ -30,12 +31,17 @@ export async function TrackLessonRow({ trackSlug, entry }: TrackLessonRowProps) 
   const document = loadAcademyLesson(locale, trackSlug, lesson.slug);
   const counts = document ? countLessonResources(document.body) : [];
   const iconTag = getLessonIconTag(trackSlug, lesson.slug);
+  const lessonId = getAcademyLessonId(trackSlug, lesson.slug);
 
   const body = (
     <>
-      <span className="mt-0.5 w-5 shrink-0 font-mono text-xs text-muted-foreground tabular-nums md:mt-1 md:text-sm">
-        {formatLessonNumber(number)}
-      </span>
+      {isComingSoon ? (
+        <span className="mt-0.5 w-5 shrink-0 font-mono text-xs text-muted-foreground tabular-nums md:mt-1 md:text-sm">
+          {formatLessonNumber(number)}
+        </span>
+      ) : (
+        <TrackLessonIndex lessonId={lessonId} label={formatLessonNumber(number)} />
+      )}
       {iconTag ? (
         <AcademyTrackIcon
           tag={iconTag}

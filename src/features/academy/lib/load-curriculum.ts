@@ -77,6 +77,19 @@ export function hasPublishedLessons(track: AcademyTrack): boolean {
   );
 }
 
+/** `track/lesson` ids of the published lessons, the keys the progress store uses. */
+export function getPublishedLessonIds(track: AcademyTrack): string[] {
+  return track.lessonGroups.flatMap((group) =>
+    group.lessons
+      .filter((lesson) => lesson.status === "published")
+      .map((lesson) => getAcademyLessonId(track.slug, lesson.slug)),
+  );
+}
+
+export function getAcademyLessonId(trackSlug: string, lessonSlug: string): string {
+  return `${trackSlug}/${lessonSlug}`;
+}
+
 export function getNumberedLessonGroups(track: AcademyTrack): AcademyNumberedLessonGroup[] {
   let counter = 0;
 

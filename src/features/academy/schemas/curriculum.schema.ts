@@ -35,9 +35,19 @@ export const academyCurriculumSchema = z.object({
   groups: z.array(academyTrackGroupSchema).min(1),
 });
 
+const academyQuizQuestionSchema = z.object({
+  question: z.string().min(1),
+  code: z.string().min(1).optional(),
+  lang: z.string().min(1).optional(),
+  options: z.array(z.string().min(1)).length(4),
+  answer: z.number().int().min(0).max(3),
+  explanation: z.string().min(1),
+});
+
 export const academyLessonFrontmatterSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   lastVerified: z.string().min(1),
   translationKey: z.string().min(1),
+  quiz: z.array(academyQuizQuestionSchema).length(3).optional(),
 });

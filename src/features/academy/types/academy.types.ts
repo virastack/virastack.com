@@ -53,11 +53,26 @@ export type AcademyLessonLookup = {
   total: number;
 };
 
+export type AcademyQuizQuestion = {
+  question: string;
+  code?: string;
+  lang?: string;
+  options: readonly string[];
+  answer: number;
+  explanation: string;
+};
+
+/** A quiz question as the client renders it: the code sample already highlighted. */
+export type AcademyQuizItem = Omit<AcademyQuizQuestion, "code" | "lang"> & {
+  codeHtml: string | null;
+};
+
 export type AcademyLessonFrontmatter = {
   title: string;
   description: string;
   lastVerified: string;
   translationKey: string;
+  quiz?: readonly AcademyQuizQuestion[];
 };
 
 export type AcademyLessonDocument = {

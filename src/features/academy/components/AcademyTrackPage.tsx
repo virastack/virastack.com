@@ -2,12 +2,14 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
 import { AcademyTrackIcon } from "@/features/academy/components/AcademyTrackIcon";
+import { AcademyTrackProgress } from "@/features/academy/components/AcademyTrackProgress";
 import { TrackLessonRow } from "@/features/academy/components/TrackLessonRow";
 import { TrackPager } from "@/features/academy/components/TrackPager";
 import { getTrackIconTags } from "@/features/academy/constants/track-icon.constants";
 import {
   findAcademyTrackNeighbours,
   getNumberedLessonGroups,
+  getPublishedLessonIds,
 } from "@/features/academy/lib/load-curriculum";
 import type { AcademyTrack } from "@/features/academy/types/academy.types";
 
@@ -25,7 +27,10 @@ export async function AcademyTrackPageView({ track }: AcademyTrackPageProps) {
   return (
     <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
-        <AcademyBackLink />
+        <div className="flex items-center justify-between gap-4">
+          <AcademyBackLink />
+          <AcademyTrackProgress lessonIds={getPublishedLessonIds(track)} variant="full" />
+        </div>
         <header className="space-y-3 border-b border-border pb-8">
           <h1 className="flex flex-wrap items-center gap-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             {iconTags.length > 0 ? (

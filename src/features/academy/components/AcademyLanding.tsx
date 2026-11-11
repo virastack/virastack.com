@@ -4,6 +4,7 @@ import { formatMonthYear } from "@/helpers/format-date";
 
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
 import { AcademyHero } from "@/features/academy/components/AcademyHero";
+import { AcademyProgressReset } from "@/features/academy/components/AcademyProgressReset";
 import { AcademyTrackCard } from "@/features/academy/components/AcademyTrackCard";
 import { getAcademyGroupAnchor } from "@/features/academy/constants/group-anchors.constants";
 import { getAcademyLandingStats } from "@/features/academy/lib/academy-landing-stats";
@@ -50,6 +51,9 @@ export async function AcademyLanding() {
           </div>
         </section>
       ))}
+      <div className="mx-auto flex max-w-2xl justify-center px-6 pb-16">
+        <AcademyProgressReset />
+      </div>
     </>
   );
 }

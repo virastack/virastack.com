@@ -4,14 +4,31 @@ import { formatDate } from "@/helpers/format-date";
 
 import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
+import { AcademyLessonCompleteButton } from "@/features/academy/components/AcademyLessonCompleteButton";
+import { AcademyLessonQuiz } from "@/features/academy/components/AcademyLessonQuiz";
 import { AcademyMarkdown } from "@/features/academy/components/AcademyMarkdown";
 import { LessonPager } from "@/features/academy/components/LessonPager";
-import { formatLessonNumber } from "@/features/academy/lib/load-curriculum";
+import { highlightAcademyCode } from "@/features/academy/lib/highlight-academy-code";
+import { formatLessonNumber, getAcademyLessonId } from "@/features/academy/lib/load-curriculum";
 import { getAcademyLessonEditUrl } from "@/features/academy/lib/load-lesson";
 import type {
   AcademyLessonDocument,
   AcademyLessonLookup,
+  AcademyQuizItem,
 } from "@/features/academy/types/academy.types";
+
+/** Code samples are highlighted here on the server; the quiz itself is a client component. */
+async function toQuizItems(document: AcademyLessonDocument): Promise<AcademyQuizItem[] | null> {
+  const quiz = document.frontmatter.quiz;
+  if (!quiz) return null;
+
+  return Promise.all(
+    quiz.map(async ({ code, lang, ...question }) => ({
+      ...question,
+      codeHtml: code ? await highlightAcademyCode(code, lang ?? "tsx") : null,
+    })),
+  );
+}
 
 type AcademyLessonPageViewProps = {
   lookup: AcademyLessonLookup;
@@ -24,6 +41,8 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
   const { track, entry, previous, next, total } = lookup;
   const { lesson, number } = entry;
   const editUrl = getAcademyLessonEditUrl(document);
+  const lessonId = getAcademyLessonId(track.slug, lesson.slug);
+  const quiz = lesson.kind === "lesson" ? await toQuizItems(document) : null;
 
   return (
     <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
@@ -50,6 +69,14 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
       </div>
 
       <AcademyMarkdown content={document.body} />
+
+      {quiz ? (
+        <div className="border-t border-border pt-10">
+          <AcademyLessonQuiz lessonId={lessonId} questions={quiz} />
+        </div>
+      ) : null}
+
+      <AcademyLessonCompleteButton lessonId={lessonId} />
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6">
         <a
