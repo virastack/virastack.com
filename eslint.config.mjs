@@ -104,6 +104,8 @@ const eslintConfig = defineConfig([
     "public/vendor/**",
     // Copied from the Start templates by `npm run sync:preview` there.
     "src/features/start/demos/users/ui/**",
+    // Remotion release videos are a separate project with their own dependencies.
+    "videos/**",
   ]),
 ]);
 
