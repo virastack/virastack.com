@@ -49,7 +49,7 @@ The version defaults to the package's `package.json`.
 
 It checks these mechanically and works out the stage (preparation, on main, tagged, published):
 
-- **Preparation:** the semver step from the npm `latest` (warns when it skips a version), `package.json` and the lockfile, the CHANGELOG heading on top with content, and the releases.ts note (it exists, has no `draft: true`, its date matches the CHANGELOG, it has `commits`, and it is on the site's `origin/main`).
+- **Preparation:** the semver step from the npm `latest` (warns when it skips a version), `package.json` and the lockfile, the CHANGELOG heading on top with content, and the releases.ts note (it exists, has no `draft: true`, its date matches the CHANGELOG, it has `commits`, and it is on the site's `origin/main`). A patch version gets no note and no page: the script passes both checks and warns if a patch note exists.
 - **Git and CI:** clean working tree, the version on `origin/main`, the CI run for the `origin/main` commit, and the tag: pushed, on main, and its `package.json` holds the version.
 - **Release:** the Release workflow run for the tag, the version on npm, the dist-tags, and the GitHub Release. A prerelease must go to `next`, never `latest`, and a stale `next` gets a warning. Only `ai`'s release.yml publishes prereleases to `next`; for `start` and `form`, a prerelease is ❌.
 - **Site and after:** the live page `virastack.com/releases/<product>/v<version>`, the site's pinned dependency (mask, password, address), the `start/scripts/build-registry.js` ranges, and the "güncel" heading in `ROADMAP.md` with no "yayın bekliyor" left.

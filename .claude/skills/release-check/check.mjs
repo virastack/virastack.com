@@ -325,7 +325,18 @@ const localNote = findNote(
 );
 const mainNote = findNote(git(["show", `origin/main:${RELEASES_FILE}`], SITE));
 const siteNoteLines = [];
-if (!localNote && !mainNote) {
+// Patch versions are small fixes: they go to the CHANGELOG only, never to the releases page.
+const isPatch = Boolean(parsed && !isPre && parsed.patch > 0);
+if (isPatch) {
+  add(
+    G1,
+    "Sitede sürüm notu var mı?",
+    localNote || mainNote ? "warn" : "ok",
+    localNote || mainNote
+      ? `Patch sürüm (${version}) için releases.ts'te not var; patch'ler yalnızca CHANGELOG'a girer, notu kaldır.`
+      : `Patch sürüm (${version}); site notu yazılmaz, CHANGELOG yeterli.`,
+  );
+} else if (!localNote && !mainNote) {
   add(
     G1,
     "Sitede sürüm notu var mı?",
@@ -573,8 +584,10 @@ if (!tagPushed) {
 const G4 = "Site ve sonrası";
 
 const pageUrl = `${SITE_URL}/releases/${productId}/v${version}`;
-const pageStatus = await httpStatus(pageUrl);
-if (pageStatus === 200) add(G4, "Sürüm notu sitede yayında mı?", "ok", `${pageUrl} → 200.`);
+const pageStatus = isPatch ? null : await httpStatus(pageUrl);
+if (isPatch)
+  add(G4, "Sürüm notu sitede yayında mı?", "ok", "Patch sürüm; sürüm notu sayfası olmaz.");
+else if (pageStatus === 200) add(G4, "Sürüm notu sitede yayında mı?", "ok", `${pageUrl} → 200.`);
 else if (pageStatus === null)
   add(G4, "Sürüm notu sitede yayında mı?", "unknown", `${pageUrl} açılamadı.`);
 else

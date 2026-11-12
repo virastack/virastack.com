@@ -18,6 +18,7 @@ Read these before writing:
 ## Version
 
 - Semver follows the shipped content, not the headline. Any new feature is at least minor; anything that breaks an existing project or its upgrade path is major.
+- Only major and minor versions get a note. A patch version (`2.1.1`) is a small fix: it goes to the product's `CHANGELOG.md` only, never to `releases.ts`.
 - The version and date equal `package.json` and the `CHANGELOG.md` heading.
 - A major version also needs the docs rewritten and the old docs archived (`docs-writing`). A minor or patch version updates the current docs.
 
