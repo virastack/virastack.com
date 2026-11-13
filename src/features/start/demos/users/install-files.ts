@@ -5,3 +5,4 @@ export const INSTALL_ROUTE = {
   fallback: "UsersDirectorySkeleton",
   routeSearch: { name: "usersRouteSearch", file: "users-params.schema" },
 };
+export const INSTALL_PAGES: readonly string[] = [];

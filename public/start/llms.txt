@@ -26,6 +26,7 @@ Installed with `npx virastack@latest add <module>` into projects created with St
 - [users](https://virastack.com/start/features/users): User table with search, pagination, add, edit and delete
 - [checkout-address](https://virastack.com/start/features/checkout-address): Shipping and billing address picker with an address book
 - [checkout-card](https://virastack.com/start/features/checkout-card): Saved card picker; card number and CVV never leave the browser
+- [products](https://virastack.com/start/features/products): Paginated product list with search, category and sorting in the URL, and a page per product; brings its pages
 ## Product
 
 - [Start overview](https://virastack.com/start): Marketing page

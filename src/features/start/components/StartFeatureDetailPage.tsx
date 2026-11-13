@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ArrowLeftIcon, SparklesIcon, SquareTerminalIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 
 import type { AppMessages } from "@/types/messages.types";
 import { featureCatalog, visibleFeatures, type FeatureId } from "@/config/start-modules.config";
@@ -12,6 +12,10 @@ import { guideCardTags, GuideProductMark } from "@/components/shared/GuideRichTe
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
 import { INSTALL_ROUTE as CHECKOUT_ADDRESS_ROUTE } from "@/features/start/demos/checkout-address/install-files";
 import { INSTALL_ROUTE as CHECKOUT_CARD_ROUTE } from "@/features/start/demos/checkout-card/install-files";
+import {
+  INSTALL_PAGES as PRODUCTS_PAGES,
+  INSTALL_ROUTE as PRODUCTS_ROUTE,
+} from "@/features/start/demos/products/install-files";
 import { INSTALL_ROUTE as USERS_ROUTE } from "@/features/start/demos/users/install-files";
 import { Link } from "@/i18n/routing";
 
@@ -38,9 +42,13 @@ type DetailItem = {
 
 type ReadyContent = {
   route: InstallRoute;
+  /** The URLs of the pages the module brings itself; the prompt then asks for no page. */
+  pages?: readonly string[];
   rows: readonly DetailRow[];
   previewNote: Extract<DetailKey, `${string}reviewNote`>;
   apiKey: DetailItem;
+  /** "The code is yours", for a module that has more to say there than `own`. */
+  ownKey?: DetailItem;
   hasMoreNote: boolean;
 };
 
@@ -67,6 +75,15 @@ const READY_CONTENT: Partial<Record<FeatureId, ReadyContent>> = {
     apiKey: "paymentApi",
     hasMoreNote: false,
   },
+  products: {
+    route: PRODUCTS_ROUTE,
+    pages: PRODUCTS_PAGES,
+    rows: ["productList", "productDetail", "productPages", "productData", "productTests"],
+    previewNote: "productPreviewNote",
+    apiKey: "productApi",
+    ownKey: "productOwn",
+    hasMoreNote: false,
+  },
 };
 
 const USE_ITEMS = ["api", "own"] as const;
@@ -77,6 +94,7 @@ const previewClassName = "rounded-2xl border border-border bg-muted/30 px-4 py-1
 
 export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
   const t = useTranslations("StartFeatureCatalog");
+  const format = useFormatter();
   const command = `npx virastack add ${feature}`;
   const status = featureCatalog.find((item) => item.id === feature)?.status;
   const isReady = status === "ready";
@@ -108,24 +126,35 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
     ),
   };
 
-  // One prompt for both frameworks: the agent reads the project and writes the page itself.
-  const prompt = content
-    ? t("detail.readyPrompt", {
-        feature,
-        component: content.route.component,
-        notes: [
-          content.route.fallback
-            ? t("detail.readyPromptFallback", {
-                component: content.route.component,
-                fallback: content.route.fallback,
-              })
-            : "",
-          content.route.routeSearch
-            ? t("detail.readyPromptSearch", { feature, ...content.route.routeSearch })
-            : "",
-        ].join(""),
-      })
-    : t("detail.prompt", { feature });
+  const [firstPage] = content?.pages ?? [];
+  // One prompt for both frameworks: the agent reads the project and writes the page itself, unless
+  // the module brings its pages, which `add` puts in place.
+  const prompt = !content
+    ? t("detail.prompt", { feature })
+    : content.pages && firstPage
+      ? t("detail.readyPromptPages", {
+          feature,
+          pages: format.list(
+            content.pages.map((page) => `\`${page}\``),
+            { type: "conjunction" },
+          ),
+          page: firstPage,
+        })
+      : t("detail.readyPrompt", {
+          feature,
+          component: content.route.component,
+          notes: [
+            content.route.fallback
+              ? t("detail.readyPromptFallback", {
+                  component: content.route.component,
+                  fallback: content.route.fallback,
+                })
+              : "",
+            content.route.routeSearch
+              ? t("detail.readyPromptSearch", { feature, ...content.route.routeSearch })
+              : "",
+          ].join(""),
+        });
 
   // Both copy actions look alike: the icon names what is copied and turns into a check.
   const actions = (
@@ -254,7 +283,7 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
             </h2>
             <dl className="grid gap-6 md:grid-cols-2">
               {USE_ITEMS.map((item) => {
-                const key = item === "api" ? content.apiKey : item;
+                const key = item === "api" ? content.apiKey : (content.ownKey ?? item);
 
                 return (
                   <div key={item} className="min-w-0 space-y-1">

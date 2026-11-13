@@ -5,8 +5,7 @@ export const featureGroups = ["user", "ecommerce", "admin"] as const;
 const featureIds = [
   "users",
   "auth",
-  "product-list",
-  "product-detail",
+  "products",
   "cart",
   "checkout-address",
   "checkout-card",
@@ -60,18 +59,12 @@ export const featureCatalog: readonly CatalogFeature[] = [
     packages: ["@virastack/password"],
   },
   {
-    id: "product-list",
+    id: "products",
     group: "ecommerce",
-    status: "building",
+    status: "ready",
     order: 1,
     tags: ["mockApi", "urlState"],
-  },
-  {
-    id: "product-detail",
-    group: "ecommerce",
-    status: "building",
-    order: 2,
-    tags: ["mockApi"],
+    packages: ["embla-carousel-react"],
   },
   {
     id: "cart",

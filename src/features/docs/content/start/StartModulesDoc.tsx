@@ -83,7 +83,7 @@ export function StartModulesDoc() {
         <p>{t("modulesAddConflict")}</p>
 
         <h2 id="sayfa">{t("modulesHeadingPage")}</h2>
-        <p>{t("modulesPageP")}</p>
+        <p>{t.rich("modulesPageP", tags)}</p>
         <h3 id="with-an-agent">{t("modulesHeadingPageAgent")}</h3>
         <p>{t.rich("modulesPageAgentP", tags)}</p>
         <h3 id="by-hand">{t("modulesHeadingPageHand")}</h3>
@@ -107,7 +107,7 @@ export function StartModulesDoc() {
         <CodeBlockCommand {...convertNpmCommand("npx virastack@latest remove users")} />
         <p>{t("modulesRemoveP")}</p>
         <p>{t.rich("modulesRemoveChanged", tags)}</p>
-        <p>{t("modulesRemovePage")}</p>
+        <p>{t.rich("modulesRemovePage", tags)}</p>
       </DocsProse>
     </>
   );

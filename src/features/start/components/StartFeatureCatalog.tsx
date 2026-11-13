@@ -27,7 +27,12 @@ import {
 import { Link } from "@/i18n/routing";
 
 /** Modules with screenshots in `public/start/features/`: `<id>-<locale>-<light|dark>.webp`. */
-const PREVIEW_IMAGE_IDS: readonly FeatureId[] = ["users", "checkout-address", "checkout-card"];
+const PREVIEW_IMAGE_IDS: readonly FeatureId[] = [
+  "users",
+  "checkout-address",
+  "checkout-card",
+  "products",
+];
 
 const STATUS_RANK: Record<FeatureStatus, number> = { ready: 0, building: 1, planned: 2 };
 

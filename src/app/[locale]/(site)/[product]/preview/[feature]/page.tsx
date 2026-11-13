@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { SearchParams } from "nuqs/server";
 
 import { siteConfig } from "@/config/site.config";
 
@@ -14,6 +15,7 @@ import { routing } from "@/i18n/routing";
 
 type PageProps = {
   params: Promise<{ locale: string; product: string; feature: string }>;
+  searchParams: Promise<SearchParams>;
 };
 
 /** Only the module pages' iframes open this, so it stays out of search results and the sitemap. */
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { locale, product, feature } = await params;
   setRequestLocale(locale);
 
@@ -45,5 +47,5 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  return <FeatureDemoPage feature={feature} />;
+  return <FeatureDemoPage feature={feature} searchParams={searchParams} />;
 }

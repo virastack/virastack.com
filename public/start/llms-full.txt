@@ -16,7 +16,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | Command | Purpose |
 | --- | --- |
 | `init [name]` | Create a new project (interactive unless `--yes`) |
-| `add <name>` | Add a ViraStack tool (`mask`, `password`, `address`, `ai`) or a module (`users`, `checkout-address`, `checkout-card`) to an existing project |
+| `add <name>` | Add a ViraStack tool (`mask`, `password`, `address`, `ai`) or a module (`users`, `checkout-address`, `checkout-card`, `products`) to an existing project |
 | `remove <module>` | Remove a module. Its packages stay. `--yes` also deletes files you changed |
 | `add ai --agent <list>` | Add AI rules for the given coding tools |
 
@@ -31,6 +31,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | `--i18n` / `--no-i18n` | Multi-language templates on/off |
 | `--yes`, `-y` | Non-interactive defaults |
 | `--skip-install` | Skip package install (AI rules and skills are still added) |
+| `--no-pages` | With `add`: install a module without its pages |
 | `--tr` | Turkish CLI prompts / success messages |
 | `--telemetry-disable` | Disable anonymous usage tracking |
 | `-v`, `--version` | Version |
@@ -102,12 +103,13 @@ Four variants:
 
 ## Modules
 
-`npx virastack@latest add <module>` installs a working feature into `src/features/<module>` of a project created with Start 2.0 or newer: `users`, `checkout-address`, `checkout-card`. Modules run on a dummy API or dummy data; connecting a real API is the installer's work.
+`npx virastack@latest add <module>` installs a working feature into `src/features/<module>` of a project created with Start 2.0 or newer: `users`, `checkout-address`, `checkout-card`, `products`. Modules run on a dummy API or dummy data; connecting a real API is the installer's work.
 
 - It adds missing packages and `components/ui` components, and merges messages into `src/messages` in i18n templates. If a file or message already exists, nothing changes.
-- It creates no page. Render the component from your own route. Each module's page at `https://virastack.com/start/features/<module>` has a live preview, its code for all four templates and a prompt that adds it to a page.
+- A module with pages brings them: `products` adds `/products` and `/products/<id>` (server-rendered first view, real 404 for a missing product). If the project already has a route at one of those URLs, nothing changes; `--no-pages` installs the feature alone.
+- Other modules create no page. Render the component from your own route. Each module's page at `https://virastack.com/start/features/<module>` has a live preview, its code for all four templates and a prompt that adds it to a page.
 - Features cannot import each other, so a page such as `/checkout` renders `CheckoutAddress` and `CheckoutCard` and reads `useCheckoutAddress` and `useCheckoutCard`.
-- `npx virastack@latest remove <module>` deletes its files, empty folders and messages. Packages and your page stay.
+- `npx virastack@latest remove <module>` deletes its files, its pages, empty folders and messages. Packages stay. A page you changed (or your own after `--no-pages`) is listed first and deleted only on a yes; with `--yes` or without a terminal it stays, with a warning.
 
 Docs: https://virastack.com/start/docs/modules
 

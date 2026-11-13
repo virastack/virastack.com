@@ -113,6 +113,12 @@ export function StartCliDoc() {
               </tr>
               <tr>
                 <td>
+                  <code>--no-pages</code>
+                </td>
+                <td>{t.rich("cliFlagNoPages", { code: (chunks) => <code>{chunks}</code> })}</td>
+              </tr>
+              <tr>
+                <td>
                   <code>--tr</code>
                 </td>
                 <td>

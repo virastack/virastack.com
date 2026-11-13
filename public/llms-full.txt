@@ -31,7 +31,7 @@ npx virastack@latest init my-app --template nextjs --agent claude,cursor --tools
 
 Commands: `init [name]`, `add <tool|module>`, `remove <module>`. Flags: `--template nextjs|tanstack`, `--agent claude,cursor|none`, `--tools mask,password,address`, `--i18n` / `--no-i18n`, `--yes`, `--skip-install`, `--tr`, `--telemetry-disable`.
 
-Templates ship a feature-based layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, URL state (`nuqs` on Next.js, `validateSearch` on TanStack Start), RHF + Zod, Base UI, Vitest + MSW tests, ViraStack AI rules and three design skills. Ready modules (`users`, `checkout-address`, `checkout-card`) install into `src/features/<module>` with `npx virastack@latest add <module>` and run on dummy data. Details: https://virastack.com/start/llms-full.txt
+Templates ship a feature-based layout, TypeScript strict, Tailwind CSS 4, TanStack Query, Zustand, URL state (`nuqs` on Next.js, `validateSearch` on TanStack Start), RHF + Zod, Base UI, Vitest + MSW tests, ViraStack AI rules and three design skills. Ready modules (`users`, `checkout-address`, `checkout-card`, `products`) install into `src/features/<module>` with `npx virastack@latest add <module>` and run on dummy data. Details: https://virastack.com/start/llms-full.txt
 
 ## AI (quick)
 
