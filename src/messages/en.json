@@ -1138,6 +1138,7 @@
     "modulesAddMessages": "Merges its text into <code>src/messages</code> in i18n templates. For a language the module has no translation for, it adds the English text and tells you.",
     "modulesAddConflict": "If the project already has a file or text with the same name, nothing changes and the CLI lists the conflicts. If the module is already installed, the command does nothing.",
     "modulesAddNoPage": "<bold>A module with pages brings them:</bold> <code>products</code> adds its list at <code>/products</code> and a page per product under it. If your project already has a route at one of those addresses, nothing changes and the CLI lists it; <code>--no-pages</code> installs the feature alone. Other modules create no page: you decide where they show up.",
+    "modulesAddLoading": "<bold>In a <nextjs>Next.js</nextjs> project created before Start 2.2,</bold> delete <code>src/app/loading.tsx</code>. While it stays, a missing product answers 200 instead of 404 and the page's content is hidden without JavaScript. New projects do not have this file.",
     "modulesHeadingPage": "Add it to a page",
     "modulesPageP": "A module without pages, or one installed with <code>--no-pages</code>, goes on a page of yours, in one of two ways. Either way the module's code stays as it is; only a new page gets written.",
     "modulesHeadingCheckout": "Example: a checkout page",

@@ -80,6 +80,7 @@ export function StartModulesDoc() {
           <li>{t.rich("modulesAddOutput", tags)}</li>
         </ul>
         <p>{t.rich("modulesAddNoPage", tags)}</p>
+        <p>{t.rich("modulesAddLoading", tags)}</p>
         <p>{t("modulesAddConflict")}</p>
 
         <h2 id="sayfa">{t("modulesHeadingPage")}</h2>

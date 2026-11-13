@@ -15,10 +15,10 @@ This file is a self-contained overview for LLMs. For the deepest API detail, pre
 
 | Product | Install / entry | npm |
 | --- | --- | --- |
-| Start | `npx virastack@latest` | `virastack` (~2.0.0) |
-| AI | `npx @virastack/ai init` | `@virastack/ai` (~2.1.0) |
-| Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.2.0) |
-| Password | `npm i @virastack/password` | `@virastack/password` (1.1.x) |
+| Start | `npx virastack@latest` | `virastack` (~2.2.0) |
+| AI | `npx @virastack/ai init` | `@virastack/ai` (~2.2.0) |
+| Mask | `npm i @virastack/mask` | `@virastack/mask` (~2.3.0) |
+| Password | `npm i @virastack/password` | `@virastack/password` (1.2.x) |
 | Address | `npm i @virastack/address` | `@virastack/address` (1.0.x) |
 | Academy | https://virastack.com/academy | free curriculum (not an npm lib) |
 | Guide | https://virastack.com/guide/play | site experience (not an npm lib) |

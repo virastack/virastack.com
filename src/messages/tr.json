@@ -1138,6 +1138,7 @@
     "modulesAddMessages": "i18n şablonlarında metinleri <code>src/messages</code> içine birleştirir. Modülün çevirisi olmayan bir dil varsa İngilizce metni ekler ve sana bildirir.",
     "modulesAddConflict": "Projede aynı adlı bir dosya veya metin varsa hiçbir şey değişmez; CLI çakışmaları listeler. Modül zaten kuruluysa komut bir şey yapmaz.",
     "modulesAddNoPage": "<bold>Sayfası olan modül sayfalarını da getirir:</bold> <code>products</code> listesini <code>/products</code> adresine, her ürünün sayfasını da onun altına kurar. Projende bu adreslerden birinde route varsa hiçbir şey değişmez, CLI onu listeler; <code>--no-pages</code> yalnızca feature'ı kurar. Diğer modüller sayfa oluşturmaz, hangi adreste görüneceklerine sen karar verirsin.",
+    "modulesAddLoading": "<bold>Start 2.2'den önce kurulan <nextjs>Next.js</nextjs> projesinde</bold> <code>src/app/loading.tsx</code> dosyasını sil. Bu dosya durdukça olmayan bir ürün 404 yerine 200 döner ve sayfanın içeriği JavaScript olmadan görünmez. Yeni projelerde bu dosya yok.",
     "modulesHeadingPage": "Sayfana ekle",
     "modulesPageP": "Sayfası olmayan bir modülü ya da <code>--no-pages</code> ile kurduğun modülü kendi sayfana iki yoldan ekleyebilirsin. İkisinde de modülün kodu aynı kalır, yalnızca yeni bir sayfa yazılır.",
     "modulesHeadingCheckout": "Örnek: checkout sayfası",

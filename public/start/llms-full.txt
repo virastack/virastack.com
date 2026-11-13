@@ -1,6 +1,6 @@
 # ViraStack Start (full)
 
-> `virastack` CLI (2.0), scaffold production-ready Next.js or TanStack Start apps with a feature-based layout, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
+> `virastack` CLI (2.2), scaffold production-ready Next.js or TanStack Start apps with a feature-based layout, TypeScript strict, Tailwind CSS 4, Vitest tests, ViraStack AI rules, design skills and optional ViraStack tools.
 
 ## Install / run
 
@@ -107,6 +107,7 @@ Four variants:
 
 - It adds missing packages and `components/ui` components, and merges messages into `src/messages` in i18n templates. If a file or message already exists, nothing changes.
 - A module with pages brings them: `products` adds `/products` and `/products/<id>` (server-rendered first view, real 404 for a missing product). If the project already has a route at one of those URLs, nothing changes; `--no-pages` installs the feature alone.
+- In a Next.js project created before Start 2.2, delete `src/app/loading.tsx`: while it stays, a missing product answers 200 instead of 404 and the page's content is hidden without JavaScript. New projects do not have this file.
 - Other modules create no page. Render the component from your own route. Each module's page at `https://virastack.com/start/features/<module>` has a live preview, its code for all four templates and a prompt that adds it to a page.
 - Features cannot import each other, so a page such as `/checkout` renders `CheckoutAddress` and `CheckoutCard` and reads `useCheckoutAddress` and `useCheckoutCard`.
 - `npx virastack@latest remove <module>` deletes its files, its pages, empty folders and messages. Packages stay. A page you changed (or your own after `--no-pages`) is listed first and deleted only on a yes; with `--yes` or without a terminal it stays, with a warning.
