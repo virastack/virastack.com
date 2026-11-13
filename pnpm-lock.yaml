@@ -27,8 +27,8 @@ importers:
         specifier: ^1.38.1
         version: 1.38.1
       '@virastack/address':
-        specifier: 1.0.0
-        version: 1.0.0(react@19.3.1)
+        specifier: 1.0.1
+        version: 1.0.1(react@19.3.1)
       '@virastack/mask':
         specifier: 2.3.0
         version: 2.3.0(react-hook-form@7.83.0(react@19.3.1))(react@19.3.1)
@@ -2317,8 +2317,8 @@ packages:
   '@upstash/redis@1.38.1':
     resolution: {integrity: sha512-hVqkWmhqobH7hpdzSCSrOwK7gWNASOAdf85l6/yxdB+giCYNYfl8FkSKxnqW2sqCdLDP7HzRTvy/ILC1AjBMUA==}
 
-  '@virastack/address@1.0.0':
-    resolution: {integrity: sha512-OIkjziHb2OKF4pZAqtPpB/QqX44S19KryW4CjTRGSx+a1pK74k73xGaOUlWYmmErvv8LfuFB5VmOP6Gknw7/yQ==}
+  '@virastack/address@1.0.1':
+    resolution: {integrity: sha512-yMGZ99K81j2IJUAqKSQjr/oS3lNMxQino8wWUby1LSsf0Iem8aRSxzpL+4PNFrxuElC/uG8lRKd4aYJI0A1DOw==}
     engines: {node: '>=20'}
     peerDependencies:
       react: '>=18.2.0'
@@ -7528,7 +7528,7 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  '@virastack/address@1.0.0(react@19.3.1)':
+  '@virastack/address@1.0.1(react@19.3.1)':
     optionalDependencies:
       react: 19.3.1
 

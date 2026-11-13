@@ -54,7 +54,7 @@
     "@tanstack/react-hotkeys": "^0.10.0",
     "@tanstack/react-query": "^5.105.1",
     "@upstash/redis": "^1.38.1",
-    "@virastack/address": "1.0.0",
+    "@virastack/address": "1.0.1",
     "@virastack/mask": "2.3.0",
     "@virastack/mask-v1": "npm:@virastack/mask@1.1.0",
     "@virastack/password": "1.2.0",

@@ -280,8 +280,8 @@ export function AddressIntroductionDoc() {
                 <td>Son sürüm</td>
                 <td>
                   <span className="flex flex-col items-center gap-1">
-                    <code>0.0.0</code>
-                    <span className="text-xs text-muted-foreground">Yayınlanmadı</span>
+                    <code>1.0.1</code>
+                    <span className="text-xs text-muted-foreground">Kasım 2026</span>
                   </span>
                 </td>
                 <td>

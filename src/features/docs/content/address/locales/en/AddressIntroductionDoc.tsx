@@ -319,8 +319,8 @@ export function AddressIntroductionDoc() {
                 <td>Latest release</td>
                 <td>
                   <span className="flex flex-col items-center gap-1">
-                    <code>0.0.0</code>
-                    <span className="text-xs text-muted-foreground">Not published</span>
+                    <code>1.0.1</code>
+                    <span className="text-xs text-muted-foreground">Nov 2026</span>
                   </span>
                 </td>
                 <td>
