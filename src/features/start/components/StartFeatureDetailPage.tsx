@@ -10,6 +10,10 @@ import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { guideCardTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
+import {
+  INSTALL_PAGES as CART_PAGES,
+  INSTALL_ROUTE as CART_ROUTE,
+} from "@/features/start/demos/cart/install-files";
 import { INSTALL_ROUTE as CHECKOUT_ADDRESS_ROUTE } from "@/features/start/demos/checkout-address/install-files";
 import { INSTALL_ROUTE as CHECKOUT_CARD_ROUTE } from "@/features/start/demos/checkout-card/install-files";
 import {
@@ -82,6 +86,15 @@ const READY_CONTENT: Partial<Record<FeatureId, ReadyContent>> = {
     previewNote: "productPreviewNote",
     apiKey: "productApi",
     ownKey: "productOwn",
+    hasMoreNote: false,
+  },
+  cart: {
+    route: CART_ROUTE,
+    pages: CART_PAGES,
+    rows: ["cartList", "cartSummary", "cartCoupon", "cartData", "cartTests"],
+    previewNote: "cartPreviewNote",
+    apiKey: "cartApi",
+    ownKey: "cartOwn",
     hasMoreNote: false,
   },
 };
@@ -208,6 +221,7 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
       {content ? (
         <p className="text-sm leading-relaxed text-pretty text-muted-foreground">
           {t.rich(`detail.${content.previewNote}`, {
+            code: tags.code,
             link: (chunks) => (
               <a
                 href={DUMMY_JSON_URL}

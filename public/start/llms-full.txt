@@ -16,7 +16,7 @@ Docs: https://virastack.com/start/docs; Index: https://virastack.com/start/llms.
 | Command | Purpose |
 | --- | --- |
 | `init [name]` | Create a new project (interactive unless `--yes`) |
-| `add <name>` | Add a ViraStack tool (`mask`, `password`, `address`, `ai`) or a module (`users`, `checkout-address`, `checkout-card`, `products`) to an existing project |
+| `add <name>` | Add a ViraStack tool (`mask`, `password`, `address`, `ai`) or a module (`users`, `checkout-address`, `checkout-card`, `products`, `cart`) to an existing project |
 | `remove <module>` | Remove a module. Its packages stay. `--yes` also deletes files you changed |
 | `add ai --agent <list>` | Add AI rules for the given coding tools |
 
@@ -103,10 +103,10 @@ Four variants:
 
 ## Modules
 
-`npx virastack@latest add <module>` installs a working feature into `src/features/<module>` of a project created with Start 2.0 or newer: `users`, `checkout-address`, `checkout-card`, `products`. Modules run on a dummy API or dummy data; connecting a real API is the installer's work.
+`npx virastack@latest add <module>` installs a working feature into `src/features/<module>` of a project created with Start 2.0 or newer: `users`, `checkout-address`, `checkout-card`, `products`, `cart`. Modules run on a dummy API or dummy data; connecting a real API is the installer's work.
 
 - It adds missing packages and `components/ui` components, and merges messages into `src/messages` in i18n templates. If a file or message already exists, nothing changes.
-- A module with pages brings them: `products` adds `/products` and `/products/<id>` (server-rendered first view, real 404 for a missing product). If the project already has a route at one of those URLs, nothing changes; `--no-pages` installs the feature alone.
+- A module with pages brings them: `products` adds `/products` and `/products/<id>` (server-rendered first view, real 404 for a missing product), `cart` adds `/cart`. If the project already has a route at one of those URLs, nothing changes; `--no-pages` installs the feature alone.
 - In a Next.js project created before Start 2.2, delete `src/app/loading.tsx`: while it stays, a missing product answers 200 instead of 404 and the page's content is hidden without JavaScript. New projects do not have this file.
 - Other modules create no page. Render the component from your own route. Each module's page at `https://virastack.com/start/features/<module>` has a live preview, its code for all four templates and a prompt that adds it to a page.
 - Features cannot import each other, so a page such as `/checkout` renders `CheckoutAddress` and `CheckoutCard` and reads `useCheckoutAddress` and `useCheckoutCard`.

@@ -3,6 +3,8 @@ import type { SearchParams } from "nuqs/server";
 import { keysOf } from "@/lib/object";
 import { cn } from "@/lib/utils";
 
+import { PreviewLinkGuard } from "@/features/start/components/PreviewLinkGuard";
+import { CartDemo } from "@/features/start/demos/cart/CartDemo";
 import { CheckoutAddressDemo } from "@/features/start/demos/checkout-address/CheckoutAddressDemo";
 import { CheckoutCardDemo } from "@/features/start/demos/checkout-card/CheckoutCardDemo";
 import { ProductListDemo } from "@/features/start/demos/products/ProductListDemo";
@@ -14,10 +16,17 @@ const FEATURE_DEMOS = {
   "checkout-address": CheckoutAddressDemo,
   "checkout-card": CheckoutCardDemo,
   products: ProductListDemo,
+  cart: CartDemo,
 } as const;
 
-/** A grid needs the room a form does not: the same width as the page Start writes for it. */
-const WIDE_DEMOS = new Set<DemoFeature>(["products"]);
+/**
+ * A grid or a two-column page needs the room a form does not: the same width as the page Start
+ * writes for it.
+ */
+const WIDE_DEMOS = new Set<DemoFeature>(["products", "cart"]);
+
+/** Demos whose links would take the visitor off the module they came to see. */
+const LINKLESS_DEMOS = new Set<DemoFeature>(["cart"]);
 
 export type DemoFeature = keyof typeof FEATURE_DEMOS;
 
@@ -43,7 +52,13 @@ export function FeatureDemoPage({ feature, searchParams }: FeatureDemoPageProps)
   return (
     <main data-feature-preview className="px-4 py-10 sm:px-6 sm:py-16">
       <div className={cn("mx-auto w-full", WIDE_DEMOS.has(feature) ? "max-w-4xl" : "max-w-xl")}>
-        <Demo searchParams={searchParams} />
+        {LINKLESS_DEMOS.has(feature) ? (
+          <PreviewLinkGuard>
+            <Demo searchParams={searchParams} />
+          </PreviewLinkGuard>
+        ) : (
+          <Demo searchParams={searchParams} />
+        )}
       </div>
     </main>
   );

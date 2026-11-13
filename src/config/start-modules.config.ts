@@ -69,8 +69,8 @@ export const featureCatalog: readonly CatalogFeature[] = [
   {
     id: "cart",
     group: "ecommerce",
-    status: "planned",
-    order: 5,
+    status: "ready",
+    order: 2,
     tags: ["mockApi"],
   },
   {

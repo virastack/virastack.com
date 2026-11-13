@@ -32,6 +32,7 @@ const PREVIEW_IMAGE_IDS: readonly FeatureId[] = [
   "checkout-address",
   "checkout-card",
   "products",
+  "cart",
 ];
 
 const STATUS_RANK: Record<FeatureStatus, number> = { ready: 0, building: 1, planned: 2 };
