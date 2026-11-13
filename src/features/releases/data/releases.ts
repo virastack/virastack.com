@@ -47,6 +47,71 @@ export type ReleaseImage = {
 
 const releases: readonly Release[] = [
   {
+    id: "start-2-2-0",
+    date: "2026-11-13",
+    products: [{ id: "start", version: "2.2.0" }],
+    sources: [
+      {
+        title: "loading.js (Next.js)",
+        url: "https://nextjs.org/docs/app/api-reference/file-conventions/loading#status-codes",
+      },
+    ],
+    commits: [
+      {
+        repo: "virastack/start",
+        hash: "1a0eab15f0abf3d09a25802b2695e697fe977a12",
+        title: "Install a module's pages, with --no-pages and a route check",
+      },
+      {
+        repo: "virastack/start",
+        hash: "6acb55c85179eebc30f8b8091b615d1a5f5e5a26",
+        title: "Add the products module, with its pages",
+      },
+      {
+        repo: "virastack/start",
+        hash: "71dfdc5e41231e156760902a84cec335d6448c24",
+        title: "Drop the root loading.tsx from the Next.js template",
+      },
+    ],
+    migrationCode: [{ kind: "nextjs", code: "rm src/app/loading.tsx" }],
+    images: [
+      {
+        src: {
+          en: "/start/releases/products-2.2.0-en.webp",
+          tr: "/start/releases/products-2.2.0-tr.webp",
+        },
+        alt: {
+          en: "The products module's list on the Womens Bags category: a search field, a category picker, and product cards with a discount badge, brand, title, rating and price.",
+          tr: "Products modülünün Womens Bags kategorisindeki listesi: arama alanı, kategori seçici ve indirim rozeti, marka, başlık, puan ve fiyat gösteren ürün kartları.",
+        },
+        width: 1600,
+        height: 1000,
+      },
+    ],
+    copy: {
+      en: {
+        title: "Modules can bring their own pages, starting with products",
+        summary:
+          "add installs a module's pages after checking the project's routes, --no-pages leaves them out, and the new products module comes with a list and a product page.",
+        whatChanged:
+          "- **Module pages:** `add` installs the pages a module brings and lists their URLs. `users`, `checkout-address` and `checkout-card` bring no page and install as before.\n- **`products` module:** A product list with search, category, sorting and pagination in the URL, and a page for each product with a gallery, details and reviews. On [Next.js](badge:nextjs) and [TanStack Start](badge:tanstack-start) the server renders the first view, a missing product answers 404, and the title, description, Open Graph tags and JSON-LD come from the data.\n- **`add --no-pages`:** Installs the feature without its pages and prints the import line. A later `add` adds the pages that are missing.\n- **Route check:** `add` stops, writing nothing, when the project already has a route at one of the module's URLs. It reads the App Router and the Pages Router on [Next.js](badge:nextjs) and file routes on [TanStack Start](badge:tanstack-start).\n- **Route tree:** On [TanStack Start](badge:tanstack-start), `add` and `remove` regenerate `src/routeTree.gen.ts`.\n- **shadcn components:** A module can bring a [shadcn/ui](badge:shadcn) component no template has, `card` for `products`. `add` installs it only when the project lacks it and never overwrites one.\n- **`remove`:** Deletes the module's pages and the folders they leave empty. A page that differs from the module's is listed first and deleted only on a yes; with `--yes` it stays.\n- **Next.js template:** The root `src/app/loading.tsx` is gone.",
+        why: "- **Module pages:** A list and its product page link to each other, so the module needs URLs of its own. Before, `add` installed only the feature, and you or your agent wrote the page for your framework.\n- **Route check:** A module page next to a route that already answers the same URL leaves two routes for one address. `add` now refuses before it writes anything, and `--no-pages` keeps your own page.\n- **Route tree:** Without it, the typecheck failed right after `add` on [TanStack Start](badge:tanstack-start), until the dev server or a build rewrote the file.\n- **`loading.tsx`:** A root `loading.tsx` streams every page, and a streamed response starts with status 200. With the file, a product that does not exist answered 200; without it, 404. The page's content also stayed in a hidden element until JavaScript ran.\n- **Measured:** With Lighthouse 12 (mobile) on production builds of the four templates, the products pages scored SEO 100 and CLS 0, and performance between 85 and 92.\n- **Limits:** We tested on macOS, not on Windows, and in a project created with 2.1.1, not with 2.0.0 or 2.1.0. `products` reads DummyJSON and its images load from there unresized. `Add to cart` and the favourite button only show a toast, since there is no cart module yet.",
+        migration:
+          "**Nothing to do: existing projects are unchanged.**\n\n- **Adding the module:** Run `npx virastack add products` in your project.\n- **Next.js projects created before 2.2.0:** Delete the root `loading.tsx` so a product that does not exist answers 404 instead of 200. The i18n template never had the file.",
+      },
+      tr: {
+        title: "Modüller kendi sayfalarını getirebiliyor, ilki products",
+        summary:
+          "add, projenin route'larını kontrol ettikten sonra modülün sayfalarını da kurar, --no-pages onları dışarıda bırakır; yeni products modülü liste ve ürün sayfasıyla gelir.",
+        whatChanged:
+          "- **Modül sayfaları:** `add`, modülün getirdiği sayfaları kurar ve adreslerini listeler. `users`, `checkout-address` ve `checkout-card` sayfa getirmez, eskisi gibi kurulur.\n- **`products` modülü:** Arama, kategori, sıralama ve sayfayı URL'de tutan bir ürün listesi ve her ürün için galeri, ayrıntılar ve yorumlarla bir sayfa. [Next.js](badge:nextjs) ve [TanStack Start](badge:tanstack-start)'ta ilk görünümü server render eder, olmayan ürün 404 döner; başlık, açıklama, Open Graph etiketleri ve JSON-LD veriden gelir.\n- **`add --no-pages`:** Feature'ı sayfaları olmadan kurar ve import satırını yazar. Sonradan çalıştırılan `add` eksik sayfaları ekler.\n- **Route kontrolü:** Projede modülün adreslerinden birine çıkan bir route varsa `add` hiçbir şey yazmadan durur. [Next.js](badge:nextjs)'te App Router ve Pages Router'ı, [TanStack Start](badge:tanstack-start)'ta dosya route'larını okur.\n- **Route ağacı:** [TanStack Start](badge:tanstack-start)'ta `add` ve `remove`, `src/routeTree.gen.ts` dosyasını yeniden üretir.\n- **shadcn bileşenleri:** Bir modül, hiçbir şablonda olmayan bir [shadcn/ui](badge:shadcn) bileşeni getirebilir; `products` için `card`. `add` onu yalnızca projede yoksa kurar, var olanın üzerine yazmaz.\n- **`remove`:** Modülün sayfalarını ve boş kalan klasörleri siler. Modülünkinden farklı bir sayfa önce listelenir ve yalnızca onay verirsen silinir; `--yes` ile yerinde kalır.\n- **Next.js şablonu:** Kök `src/app/loading.tsx` kaldırıldı.",
+        why: "- **Modül sayfaları:** Liste ve ürün sayfası birbirine link verir, bu yüzden modülün kendi adreslerine ihtiyacı var. Önceden `add` yalnızca feature'ı kuruyordu; sayfayı framework'üne göre sen ya da agent'ın yazıyordu.\n- **Route kontrolü:** Aynı adrese zaten çıkan bir route'un yanına modül sayfası eklenirse tek adres için iki route kalır. `add` artık bir şey yazmadan önce durur; kendi sayfanı korumak için `--no-pages` var.\n- **Route ağacı:** Bu olmadan [TanStack Start](badge:tanstack-start)'ta `add` sonrası typecheck, dev server ya da build dosyayı yeniden yazana kadar düşüyordu.\n- **`loading.tsx`:** Kök `loading.tsx` her sayfayı stream eder ve stream edilen yanıt 200 durum koduyla başlar. Dosya varken olmayan bir ürün 200 döndü, dosya yokken 404. Sayfanın içeriği de JavaScript çalışana kadar gizli bir elemanda kaldı.\n- **Ölçtük:** Dört şablonun production build'lerinde Lighthouse 12 (mobil) ile products sayfaları SEO 100 ve CLS 0 aldı; performance 85 ile 92 arasında çıktı.\n- **Sınırlar:** macOS'te denedik, Windows'ta denemedik; 2.1.1 ile oluşturulmuş bir projede denedik, 2.0.0 ve 2.1.0 ile denemedik. `products` DummyJSON'u okur ve görselleri oradan boyutlandırılmadan gelir. `Add to cart` ve favori düğmesi yalnızca bildirim gösterir, çünkü henüz sepet modülü yok.",
+        migration:
+          "**Yapman gereken bir şey yok: mevcut projeler değişmedi.**\n\n- **Modülü eklemek:** Projende `npx virastack add products` çalıştır.\n- **2.2.0'dan önce oluşturulmuş Next.js projeleri:** Olmayan bir ürünün 200 yerine 404 dönmesi için kök `loading.tsx` dosyasını sil. i18n şablonunda bu dosya hiç yoktu.",
+      },
+    },
+  },
+  {
     id: "ai-2-2-0",
     date: "2026-11-05",
     products: [{ id: "ai", version: "2.2.0" }],
