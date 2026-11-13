@@ -681,6 +681,24 @@ if (existsSync(roadmapPath)) {
     );
 }
 
+// The docs version selector and the llms files name the version by hand, so they go stale.
+const DOCS_TITLE = "Docs sürüm etiketi ve llms güncel mi?";
+if (isPre) {
+  add(G4, DOCS_TITLE, "pending", "Ön sürüm; docs ve llms kararlı sürümle güncellenir.");
+} else {
+  const docs = checkDocsVersions(productId, product.npm, parsed);
+  if (docs.missing.length)
+    add(G4, DOCS_TITLE, "unknown", `Bulunamadı: ${docs.missing.join("; ")}.`);
+  else if (docs.stale.length)
+    add(
+      G4,
+      DOCS_TITLE,
+      "fail",
+      `${parsed.major}.${parsed.minor} olmalı: ${docs.stale.join("; ")}.`,
+    );
+  else add(G4, DOCS_TITLE, "ok", `${docs.found.join("; ")}.`);
+}
+
 // ---------- report ----------
 
 const counts = countStatuses(results);
@@ -713,6 +731,93 @@ if (asJson) {
   );
 }
 process.exit(counts.fail ? 1 : 0);
+
+// ---------- docs version ----------
+
+/**
+ * A written version, such as `2.2`, `2.2.0`, `2.x`, `v2` or `1.0.x`, against the one under check:
+ * the major must match, and the minor too when it is a number. The patch never counts.
+ */
+function matchesMinor(written, current) {
+  const [major, minor] = written.replace(/^[v~^]/, "").split(".");
+  if (Number(major) !== current.major) return false;
+  return minor === undefined || minor === "x" || Number(minor) === current.minor;
+}
+
+/** The latest entry's label in `docs-products.ts`, read as text: the product's `versions` block. */
+function readDocsLabel(id) {
+  const file = join(SITE, "src/features/docs/config/docs-products.ts");
+  if (!existsSync(file)) return { file, label: null };
+  const source = readFileSync(file, "utf8");
+  const start = source.search(new RegExp(`\\n  ${id}: \\{`));
+  const block = start === -1 ? "" : /versions:\s*\[([\s\S]*?)\]/.exec(source.slice(start))?.[1];
+  const latest = (block ?? "").match(/\{[^}]*latest:\s*true[^}]*\}/)?.[0];
+  return { file, label: /label:\s*"([^"]+)"/.exec(latest ?? "")?.[1] ?? null };
+}
+
+/**
+ * The docs selector label, the product's own llms headers and the ecosystem lists, against the
+ * version under check. A product llms header without a version makes no claim, so it passes.
+ */
+function checkDocsVersions(id, npm, current) {
+  const found = [];
+  const stale = [];
+  const missing = [];
+  const name = npm.replace(/[/.]/g, "\\$&");
+  const relative = (file) => file.slice(SITE.length + 1);
+  const compare = (file, written) => {
+    if (matchesMinor(written, current)) found.push(`${relative(file)} ${written}`);
+    else stale.push(`${relative(file)} ${written}`);
+  };
+
+  const docs = readDocsLabel(id);
+  if (!docs.label) missing.push(`${relative(docs.file)} içinde ${id} için latest etiketi`);
+  else if (docs.label === `v${current.major}.${current.minor}`)
+    found.push(`docs etiketi ${docs.label}`);
+  else stale.push(`${relative(docs.file)} etiketi ${docs.label}`);
+
+  for (const file of ["llms.txt", "llms-full.txt"].map((f) => join(SITE, "public", id, f))) {
+    if (!existsSync(file)) {
+      missing.push(relative(file));
+      continue;
+    }
+    // The summary line under the title names the package, and the version right after it.
+    const header =
+      readFileSync(file, "utf8")
+        .split("\n")
+        .find((line) => line.startsWith("> ")) ?? "";
+    const written = new RegExp(
+      `\`${name}\`(?:\\s+CLI)?\\s*\\(?(v?\\d+(?:\\.(?:\\d+|x)){0,2})\\b`,
+    ).exec(header)?.[1];
+    if (written) compare(file, written);
+  }
+
+  const lists = [
+    // "Package versions (approx.): `virastack@2.2.0`, ..."
+    ["llms.txt", (text) => new RegExp(`\`${name}@(\\d+(?:\\.(?:\\d+|x)){1,2})\``).exec(text)?.[1]],
+    // "| Start | ... | `virastack` (~2.2.0) |"
+    [
+      "llms-full.txt",
+      (text) =>
+        text
+          .split("\n")
+          .filter((line) => line.startsWith("|"))
+          .map(
+            (line) =>
+              new RegExp(`\`${name}\`\\s*\\(~?(\\d+(?:\\.(?:\\d+|x)){1,2})\\)`).exec(line)?.[1],
+          )
+          .find(Boolean),
+    ],
+  ];
+  for (const [fileName, read] of lists) {
+    const file = join(SITE, "public", fileName);
+    const written = existsSync(file) ? read(readFileSync(file, "utf8")) : undefined;
+    if (written) compare(file, written);
+    else missing.push(`${relative(file)} içinde ${npm}`);
+  }
+
+  return { found, stale, missing };
+}
 
 // ---------- every product and the site ----------
 
