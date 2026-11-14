@@ -32,6 +32,12 @@ ViraStack brings free frontend guides, ready-made project templates, AI rules, a
 | [![ViraStack Address](https://img.shields.io/badge/ViraStack-Address-%23fb2c36)](https://virastack.com/address)    | `/address`  | Turkish address hook: province, district, neighbourhood and postal code |
 | [![ViraStack Guide](https://img.shields.io/badge/ViraStack-Guide-%23ffb900)](https://virastack.com/guide)          | `/guide`    | An interactive guide through modern web standards, step by step         |
 
+## Development
+
+- `pnpm install`, then `pnpm dev`.
+- Academy lessons live in [virastack/academy](https://github.com/virastack/academy). `pnpm content:pull` clones them into `.content/`; `pnpm build` does it first, `pnpm dev` does not.
+- `pnpm test:unit` needs no build. `pnpm test` also runs the HTTP suite, which serves the production build: run `pnpm build` first, or point `TEST_BASE_URL` at a running server.
+
 ## License
 
 [MIT](LICENSE) © [Ömer Gülçiçek](https://omergulcicek.com)
