@@ -105,14 +105,32 @@ function isWhitespaceText(node: PhrasingContent): boolean {
   return node.type === "text" && node.value.trim().length === 0;
 }
 
+const BREAK_TAG = /^<br\s*\/?>$/i;
+
 function isBreakNode(node: PhrasingContent): boolean {
   if (node.type === "break") {
     return true;
   }
   if (node.type === "html") {
-    return /^<br\s*\/?>$/i.test(node.value.trim());
+    return BREAK_TAG.test(node.value.trim());
   }
   return false;
+}
+
+/**
+ * Lessons come from another repository, so their raw HTML is never injected: `<br>` stays a
+ * line break and anything else, such as a `<product name>` placeholder, shows as plain text.
+ */
+function renderRawHtml(value: string, key: string, block: boolean): ReactNode {
+  const html = value.trim();
+  if (html === "") return null;
+  if (BREAK_TAG.test(html)) return <br key={key} />;
+  if (!block) return html;
+  return (
+    <p key={key} className="leading-relaxed text-pretty text-muted-foreground">
+      {html}
+    </p>
+  );
 }
 
 function flattenPhrasingText(nodes: readonly PhrasingContent[]): string {
@@ -295,7 +313,7 @@ async function renderPhrasing(
         out.push(renderCitation(node.identifier, key));
         break;
       case "html":
-        out.push(<span key={key} dangerouslySetInnerHTML={{ __html: node.value }} />);
+        out.push(renderRawHtml(node.value, key, false));
         break;
       default: {
         if (isBadgeNode(node)) {
@@ -772,7 +790,7 @@ async function renderBlock(
         out.push(<hr key={key} className="border-border" />);
         break;
       case "html":
-        out.push(<div key={key} dangerouslySetInnerHTML={{ __html: node.value }} />);
+        out.push(renderRawHtml(node.value, key, true));
         break;
       case "footnoteDefinition":
         out.push(
