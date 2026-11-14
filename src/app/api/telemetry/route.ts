@@ -1,10 +1,10 @@
-import { parseTelemetryBody, recordTelemetryEvent } from "@/lib/telemetry";
+import { checkTelemetryRateLimit, parseTelemetryBody, recordTelemetryEvent } from "@/lib/telemetry";
 
 export const runtime = "nodejs";
 
 /**
  * Anonymous CLI usage ingest for `npx virastack`.
- * Accepts create/add events; increments Upstash Redis counters. Never stores PII.
+ * Accepts create, add and remove events; increments Upstash Redis counters. Never stores PII.
  */
 export async function POST(request: Request) {
   let json: unknown;
@@ -20,11 +20,23 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Vercel sets x-forwarded-for itself, so a client cannot spoof it.
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { allowed, reset } = await checkTelemetryRateLimit(ip);
+    if (!allowed) {
+      const retryAfter = Math.max(1, Math.ceil((reset - Date.now()) / 1000));
+      return Response.json(
+        { error: "Too many requests" },
+        { status: 429, headers: { "Retry-After": String(retryAfter) } },
+      );
+    }
+
     const recorded = await recordTelemetryEvent(parsed.data);
     if (!recorded) {
       return Response.json({ error: "Telemetry unavailable" }, { status: 503 });
     }
-  } catch {
+  } catch (error) {
+    console.error("Telemetry failed", error);
     return Response.json({ error: "Telemetry failed" }, { status: 500 });
   }
 
