@@ -17,6 +17,10 @@ const isDev = process.env.NODE_ENV !== "production";
 
 // Vercel's preview toolbar (and its Pusher socket); production never loads it.
 const VERCEL_LIVE = "https://vercel.live";
+// Google Analytics 4: the gtag.js script and the endpoints it sends hits to.
+const GA_SCRIPT = "https://www.googletagmanager.com";
+const GA_CONNECT =
+  "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com";
 // Guide map: style JSON, vector tiles, glyphs and sprites.
 const MAP_TILES = "https://*.cartocdn.com";
 
@@ -31,9 +35,9 @@ function buildContentSecurityPolicy(frameAncestors: string) {
     "object-src 'none'",
     "form-action 'self'",
     `frame-ancestors ${frameAncestors}`,
-    `script-src 'self' 'unsafe-inline' ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
+    `script-src 'self' 'unsafe-inline' ${GA_SCRIPT} ${VERCEL_LIVE}${isDev ? " 'unsafe-eval'" : ""}`,
     "worker-src 'self' blob:",
-    `connect-src 'self' https://dummyjson.com ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
+    `connect-src 'self' https://dummyjson.com ${GA_CONNECT} ${MAP_TILES} ${VERCEL_LIVE} wss://ws-us3.pusher.com${isDev ? " ws:" : ""}`,
   ].join("; ");
 }
 

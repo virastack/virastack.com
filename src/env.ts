@@ -20,6 +20,11 @@ const serverSchema = z.object({
 const clientSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.url().default(PUBLIC_ENV_DEFAULTS.NEXT_PUBLIC_APP_URL),
   NEXT_PUBLIC_APP_NAME: z.string().min(1).default(PUBLIC_ENV_DEFAULTS.NEXT_PUBLIC_APP_NAME),
+  // Google Analytics 4 measurement ID; without it no analytics script loads.
+  NEXT_PUBLIC_GA_ID: z
+    .string()
+    .regex(/^G-[A-Z0-9]+$/)
+    .optional(),
 });
 
 const serverParsed = serverSchema.safeParse({
@@ -29,6 +34,7 @@ const serverParsed = serverSchema.safeParse({
 const clientParsed = clientSchema.safeParse({
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
+  NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
 });
 
 if (!serverParsed.success || !clientParsed.success) {

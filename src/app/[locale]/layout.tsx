@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { notFound } from "next/navigation";
 
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 
 import { brandColorsCss } from "@/config/brand-palettes.config";
 import { defaultMetadata } from "@/config/seo.config";
+import { env } from "@/env";
 
 import { Providers } from "@/providers/Providers";
 
@@ -64,6 +66,9 @@ export default async function RootLayout({
 
   setRequestLocale(locale);
 
+  // Only the production site counts visits; previews and local dev stay out of the reports.
+  const gaId = process.env.VERCEL_ENV === "production" ? env.NEXT_PUBLIC_GA_ID : undefined;
+
   return (
     <html
       lang={locale}
@@ -83,6 +88,7 @@ export default async function RootLayout({
           </Providers>
         </NextIntlClientProvider>
       </body>
+      {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
     </html>
   );
 }
