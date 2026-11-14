@@ -82,3 +82,10 @@ describe("known routes", () => {
     expect(wrong).toEqual([]);
   });
 });
+
+describe("cron routes", () => {
+  // Only Vercel Cron, with CRON_SECRET, may run them.
+  it("reject a request without the secret", async () => {
+    expect(await status("/api/cron/redis-ping")).toBe(401);
+  });
+});
