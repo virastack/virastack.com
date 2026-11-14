@@ -54,8 +54,8 @@ function ExampleAvatar({ item }: { item: AcademyCriterionExample }) {
     <Tooltip>
       <TooltipTrigger
         render={
-          <span
-            tabIndex={0}
+          <button
+            type="button"
             aria-label={item.name}
             className="relative z-0 rounded-full outline-none hover:z-10 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring"
           />

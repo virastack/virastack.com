@@ -71,7 +71,14 @@ export function LogoDownloadSelect() {
             return (
               <DropdownMenuItem
                 key={format.labelKey}
-                render={<a href={format.href} download={format.filename} />}
+                // Base UI renders the item children inside the anchor; the lint rule cannot see them.
+                render={
+                  <a
+                    href={format.href}
+                    download={format.filename}
+                    aria-label={t(format.labelKey)}
+                  />
+                }
               >
                 <span className="flex-1">{t(format.labelKey)}</span>
                 <Icon className="text-muted-foreground" />

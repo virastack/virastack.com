@@ -2,6 +2,7 @@ import { existsSync, readdirSync } from "node:fs";
 
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 const PARENT_IMPORT = {
@@ -73,6 +74,12 @@ const eslintConfig = defineConfig([
       ],
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
+  },
+  // eslint-config-next registers jsx-a11y but turns on only a few rules; use the full set.
+  {
+    files: ["src/**/*.tsx"],
+    ignores: ["src/components/ui/**", "src/features/start/demos/**"],
+    rules: jsxA11y.flatConfigs.recommended.rules,
   },
   ...boundaries,
   // Parse outside data with Zod instead of asserting its type; `as const` stays allowed.
