@@ -1,0 +1,52 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const ownRules = `.claude/rules/
+├── virastack/        # managed by ViraStack AI
+└── team.md           # yours
+.cursor/rules/
+├── virastack/        # managed by ViraStack AI
+└── team.mdc          # yours`;
+
+export const output2 = `## Project rules
+
+- Ignore the ViraStack \`testing\` rule: this project uses Playwright for end-to-end tests.`;
+
+<DocsPageHeader
+  title="Customization"
+  description="Keep project rules next to ViraStack’s, override a rule by name, and decide what happens to edited files."
+/>
+
+<DocsProse>
+
+<h2 id="own-rules">Your own rules</h2>
+
+Put project rules next to the `virastack/` folder, not inside it. ViraStack AI never reads, changes or deletes them:
+
+<pre><code>{ownRules}</code></pre>
+
+For other agents, write project instructions in `AGENTS.md` above or below the `virastack-ai` block.
+
+<h2 id="override">Override a rule by name</h2>
+
+The block tells agents that your own project instructions override ViraStack rules, and to mention any conflict. Write them in your own rule file or in `AGENTS.md`:
+
+<pre><code>{output2}</code></pre>
+
+<h2 id="editing">Editing a managed rule</h2>
+
+- `init` notices the change from the manifest hash and asks before overwriting it.
+- In CI, or with `--yes`, the file is skipped and keeps your version, so it no longer gets updates.
+- `remove` keeps it unless you confirm.
+
+Prefer your own rule file over editing a managed one: you keep your change and still get updates.
+
+<h2 id="force">When to use --force</h2>
+
+Use `--force` when you want to drop your edits to managed files and take the current version:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init --force")} />
+
+With `remove`, `--force` also deletes managed files you changed. In both cases your own rule files and text outside the `AGENTS.md` block stay.
+
+</DocsProse>

@@ -1,0 +1,92 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const migrationOutput = `  - .cursor/rules/core-principles.mdc (v1) · removed
+  - docs/architecture-guide.md (v1) · removed
+  - docs/MEMORIES.md (v1) · removed
+  ! .cursor/rules/ui-components.mdc (v1) · kept: v1 file you changed; delete it yourself if no longer needed`;
+
+<DocsPageHeader
+  title="Upgrade guide"
+  description="Move between ViraStack AI versions: what changed, the command to run and what to check by hand."
+/>
+
+<DocsProse>
+
+<h2 id="v2-1">From v2.0 to v2.1</h2>
+
+Run `init` again. There is nothing to migrate by hand:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+- Rules you did not change are updated. Rules you changed are kept and listed; use `--force` to replace them.
+- The rules now ban barrel files and use one `@/*` alias. Your existing `index.ts` files and aliases are not errors, and nothing asks you to refactor them. New code follows the new rules.
+- The `i18n` rule now expects `src/messages/`. An existing root `messages/` folder keeps working; a project instruction can say so.
+- A project with only `@tanstack/react-router` is no longer treated as <AcademyBadge kind="tanstack-start" label="TanStack Start" />; pass `--framework` if you still want those rules.
+
+<h2 id="v1-to-v2">From v1 to v2</h2>
+
+<h3 id="what-changed">What changed</h3>
+
+- Rules moved from `.cursor/rules/*.mdc` to `.cursor/rules/virastack/`, and <AcademyBadge kind="claudeCode" label="Claude Code" /> gets its own copy in `.claude/rules/virastack/`. See [installed files](/ai/docs/installed-files).
+- `docs/architecture-guide.md` became the always-loaded `architecture` rule. `docs/MEMORIES.md` is gone.
+- `AGENTS.md` is no longer replaced. ViraStack writes only its `virastack-ai` block.
+- The <AcademyBadge kind="nextjs" label="Next.js" /> block (`nextjs-agent-rules`) is no longer written by ViraStack AI. Next.js and ViraStack Start add it to new projects; the copy v1 wrote is removed if you never edited it.
+- `features/*/data/` became `constants/`, and the rules no longer use the `@/data` alias or `*.data.ts` files.
+- `ApiError` uses `message`, `status` and `data`, matching ViraStack Start’s `src/lib/api.ts`.
+
+<h3 id="renamed-rules">Renamed rules</h3>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>v1 file</th><th>v2 rule</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`.cursor/rules/core-principles.mdc`</td><td>`core`</td></tr>
+      <tr><td>`docs/architecture-guide.md`</td><td>`architecture`</td></tr>
+      <tr><td>`.cursor/rules/react-best-practices.mdc`</td><td>`react`</td></tr>
+      <tr><td>`.cursor/rules/ui-components.mdc`</td><td>`ui`</td></tr>
+      <tr><td>`.cursor/rules/tanstack-query.mdc`</td><td>`server-state`</td></tr>
+      <tr><td>`.cursor/rules/state-management.mdc`</td><td>`client-state`</td></tr>
+      <tr><td>`docs/MEMORIES.md`</td><td>Removed</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Same name, rewritten content: <span>`api`</span><span>, `forms`</span><span>, `i18n`</span><span>, `nextjs`</span><span>, `performance`</span><span>, `tanstack-start`</span><span>, `testing`</span><span>, `typescript`</span>.
+
+<h3 id="command">One command</h3>
+
+Commit or stash your work, then run in the project root:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+- v1 rule files and `docs/` files you never edited are removed.
+- v1 files you edited are kept and listed, so you can move your changes and delete them yourself.
+- An unedited v1 `AGENTS.md` is replaced by the new block. If you edited it, your content is kept, the block is added below it and the CLI warns you.
+- The v1 `CLAUDE.md` (`@AGENTS.md`) is kept.
+
+<pre><code>{migrationOutput}</code></pre>
+
+Lines marked `(v1)` are the migration. Add `--dry-run` to see them before anything is written.
+
+<h3 id="checklist">Check by hand</h3>
+
+- **Kept v1 rule files:** move your changes into your own rule file (see [customization](/ai/docs/customization)), then delete the old file.
+- **Old `AGENTS.md` content:** if the CLI warned you, remove the v1 part above the block so agents do not get duplicate instructions.
+- **Filled-in `docs/MEMORIES.md`:** it is kept. Move what is still useful into `AGENTS.md` outside the block, then delete it.
+- **`@/data` in your code:** rename `data/` folders to `constants/` and remove the alias from `tsconfig.json`, or agents will keep two patterns.
+- **Commit** the result, including `.virastack/ai.json`.
+
+<h3 id="rollback">Roll back</h3>
+
+Remove v2, then install v1 again:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai remove")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@1 init")} />
+
+The v1 documentation stays in the [v1 archive](/ai/docs/v1).
+
+</DocsProse>

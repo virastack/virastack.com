@@ -1,0 +1,52 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const ownRules = `.claude/rules/
+├── virastack/        # managed by ViraStack AI
+└── team.md           # yours
+.cursor/rules/
+├── virastack/        # managed by ViraStack AI
+└── team.mdc          # yours`;
+
+export const output2 = `## Project rules
+
+- Ignore the ViraStack \`testing\` rule: this project uses Playwright for end-to-end tests.`;
+
+<DocsPageHeader
+  title="Özelleştirme"
+  description="Proje kurallarını ViraStack’inkilerin yanında tut, bir kuralı adıyla geçersiz kıl ve düzenlenen dosyalara ne olacağına karar ver."
+/>
+
+<DocsProse>
+
+<h2 id="own-rules">Kendi kuralların</h2>
+
+Proje kurallarını `virastack/` klasörünün içine değil yanına koy. ViraStack AI onları okumaz, değiştirmez ve silmez:
+
+<pre><code>{ownRules}</code></pre>
+
+Diğer agent’lar için proje talimatlarını `AGENTS.md` içinde `virastack-ai` bloğunun üstüne veya altına yaz.
+
+<h2 id="override">Bir kuralı adıyla geçersiz kılma</h2>
+
+Blok, agent’lara kendi proje talimatlarının ViraStack kurallarının önüne geçtiğini ve çelişki varsa bunu belirtmelerini söyler. Talimatları kendi kural dosyana veya `AGENTS.md` içine yaz:
+
+<pre><code>{output2}</code></pre>
+
+<h2 id="editing">Yönetilen bir kuralı düzenleme</h2>
+
+- `init` değişikliği manifestteki özetten anlar ve üzerine yazmadan önce sorar.
+- CI’da veya `--yes` ile dosya atlanır ve senin sürümün kalır. Bu yüzden artık güncelleme almaz.
+- `remove` sen onaylamadan onu silmez.
+
+Yönetilen bir kuralı düzenlemek yerine kendi kural dosyanı tercih et. Böylece değişikliğin kalır ve güncellemeleri de alırsın.
+
+<h2 id="force">--force ne zaman kullanılır</h2>
+
+Yönetilen dosyalardaki düzenlemelerini bırakıp güncel sürümü almak istediğinde `--force` kullan:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init --force")} />
+
+`remove` ile `--force`, değiştirdiğin yönetilen dosyaları da siler. İki durumda da kendi kural dosyaların ve `AGENTS.md` bloğunun dışındaki metin korunur.
+
+</DocsProse>

@@ -41,69 +41,31 @@ export function getStartDocsV1Page(
       slug: "introduction",
       title: t("introductionTitle"),
       description: t("introductionDescription"),
-      headings: [
-        { id: "neden", title: t("introductionHeadingWhy") },
-        { id: "sablonda-neler-var", title: t("introductionHeadingWhatsIn") },
-        { id: "baslarken", title: t("introductionHeadingGettingStarted") },
-      ],
     },
     installation: {
       slug: "installation",
       title: t("installationTitle"),
       description: t("installationDescription"),
-      headings: [
-        { id: "hizli-baslangic", title: t("installationHeadingQuick") },
-        { id: "cli-sorulari", title: t("installationHeadingQuestions") },
-        { id: "sonrasi", title: t("installationHeadingAfter") },
-        { id: "skills", title: t("installationHeadingSkills"), level: 3 },
-        { id: "prettierignore", title: t("installationHeadingPrettier"), level: 3 },
-        { id: "calistir", title: t("installationHeadingRun"), level: 3 },
-        { id: "fixme", title: t("installationHeadingFixme") },
-      ],
     },
     cli: {
       slug: "cli",
       title: t("cliTitle"),
       description: t("cliDescription"),
-      headings: [
-        { id: "kullanim", title: t("cliHeadingUsage") },
-        { id: "bayraklar", title: t("cliHeadingFlags") },
-        { id: "add", title: t("cliHeadingAdd") },
-        { id: "telemetry", title: t("cliHeadingTelemetry") },
-      ],
     },
     templates: {
       slug: "templates",
       title: t("templatesTitle"),
       description: t("templatesDescription"),
-      headings: [
-        { id: "framework", title: t("templatesHeadingFramework") },
-        { id: "stack", title: t("templatesHeadingStack") },
-        { id: "testler", title: t("templatesHeadingTests") },
-        { id: "klasor-yapisi", title: t("templatesHeadingStructure") },
-      ],
     },
     scripts: {
       slug: "scripts",
       title: t("scriptsTitle"),
       description: t("scriptsDescription"),
-      headings: [
-        { id: "gunluk", title: t("scriptsHeadingDaily") },
-        { id: "kalite", title: t("scriptsHeadingQuality") },
-        { id: "framework", title: t("scriptsHeadingFramework") },
-        { id: "ci", title: t("scriptsHeadingCi") },
-      ],
     },
     i18n: {
       slug: "i18n",
       title: t("i18nTitle"),
       description: t("i18nDescription"),
-      headings: [
-        { id: "ne-zaman", title: t("i18nHeadingWhen") },
-        { id: "nextjs", title: t("i18nTocNext") },
-        { id: "tanstack", title: t("i18nTocTanstack") },
-        { id: "varsayilan", title: t("i18nHeadingDefault") },
-      ],
     },
   };
 

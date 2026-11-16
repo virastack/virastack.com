@@ -1,0 +1,33 @@
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+import { Typescript } from "@/components/ui/svgs/typescript";
+
+<DocsPageHeader
+  title="Introduction"
+  description={<><GuideProductMark id="start" linked={false}>{"Start"}</GuideProductMark>{" is a production-focused CLI that creates a modern React project in one command."}</>}
+/>
+
+<DocsProse>
+
+It cuts configuration fatigue with <GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> or <GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon> templates, feature-based architecture, strict <GuideStackIcon icon={<Typescript aria-hidden />}>TypeScript</GuideStackIcon>, and AI agent rules.
+
+Optional ecosystem tools such as <GuideProductMark id="mask" linked={false}>Mask</GuideProductMark>, <GuideProductMark id="password" linked={false}>Password</GuideProductMark> and <GuideProductMark id="address" linked={false}>Address</GuideProductMark> can be selected during setup. Ready [modules](/start/docs/modules) go in and out of a project with one command.
+
+<h2 id="neden">Why <GuideProductMark id="start" linked={false} tone="heading">Start</GuideProductMark>?</h2>
+
+- **Interactive CLI**: guided setup instead of a long flag checklist.
+- **Production-ready base**: ESLint, Prettier, Husky, Knip, Commitlint, and CI come ready.
+- **Agent-ready**: setup writes <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> rules for the AI coding tools you pick and installs three design skills, so assistants match the project architecture.
+
+<h2 id="sablonda-neler-var">What’s in the template?</h2>
+
+Every template ships a feature-based layout, theme support, Zod env validation, and the same shared packages for state, forms, and UI. The full list with icons is on the [templates → shared stack](/start/docs/templates#stack) page. Optional multi-language setup is covered under [i18n](/start/docs/i18n).
+
+Auth and database are intentionally out of scope; the architecture is left ready for you to add them when needed. Tests come ready with Vitest, Testing Library and MSW.
+
+<h2 id="baslarken">Getting started</h2>
+
+Ready to create a project? Follow [installation](/start/docs/installation). For flags and non-interactive use see [CLI](/start/docs/cli); for framework and folder layout see [templates](/start/docs/templates).
+
+</DocsProse>

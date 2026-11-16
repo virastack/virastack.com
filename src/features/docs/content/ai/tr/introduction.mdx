@@ -1,0 +1,40 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Giriş"
+  description="ViraStack AI ne yapar, neden var ve onu kuran tek komut."
+/>
+
+<DocsProse>
+
+<p><AcademyBadge kind="virastack" label="ViraStack AI" /> (`@virastack/ai`), <AcademyBadge kind="nextjs" label="Next.js" /> veya <AcademyBadge kind="tanstack-start" label="TanStack Start" /> projesine AI kodlama agent’ları için mimari kurallar yazar. Kurallar kodun nerede duracağını, hangi kütüphanenin nasıl kullanılacağını anlatır. Böylece agent’lar projenin geri kalanına uyan kod yazar.</p>
+
+<h2 id="what">Ne yapar</h2>
+
+- 14 kuralı her aracın kendi biçiminde yazar: <AcademyBadge kind="claudeCode" label="Claude Code" /> için `.claude/rules/virastack/`, <AcademyBadge kind="cursor" label="Cursor" /> için `.cursor/rules/virastack/`.
+- `AGENTS.md` dosyasına projenin komutlarını ve tüm kuralların haritasını içeren yönetilen bir blok ekler. <AcademyBadge kind="codex" label="Codex" />, <AcademyBadge kind="copilot" label="Copilot" /> ve diğer agent’lar da kuralları buradan bulur.
+- `package.json` üzerinden <AcademyBadge kind="nextjs" label="Next.js" /> veya <AcademyBadge kind="tanstack-start" label="TanStack Start" />’ı tespit eder ve sadece o framework’ün kurallarını kurar. `i18n` kuralı sadece `next-intl` veya `Paraglide` kuruluysa eklenir.
+- Kurduğu her dosyayı `.virastack/ai.json` içine kaydeder. Güncellemeler sadece senin değiştirmediğin kuralları yeniler.
+
+<h2 id="why">Neden ViraStack AI?</h2>
+
+- **Tek standart, her araç:** <AcademyBadge kind="claudeCode" label="Claude Code" /> ve <AcademyBadge kind="cursor" label="Cursor" />’ı birlikte kullanan bir ekip, iki araçta da aynı kuralları alır.
+- **Güncel stack için yazıldı:** <AcademyBadge kind="nextjs" label="Next.js" /> 16, <AcademyBadge kind="react" label="React" /> 19, <AcademyBadge kind="tanstack-start" label="TanStack Start" />, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> 5, <AcademyBadge kind="zustand" label="Zustand" /> 5, <AcademyBadge kind="zod" label="Zod" /> 4 ve <AcademyBadge kind="tailwind" label="Tailwind CSS" /> 4; kural örnekleri sıfırdan kurulan projelerde derlenip çalıştırılır.
+- **Dosyalarını ezmez:** kurallar kendi `virastack/` klasörlerinde durur. `AGENTS.md` ve `CLAUDE.md` sadece küçük bir yönetilen blok veya import satırı alır.
+
+<h2 id="quick-start">Tek komut</h2>
+
+Proje kök dizininde çalıştır:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init")} />
+
+Yeni bir proje mi başlatıyorsun? [ViraStack Start](/start/docs), bu kurallar kurulu halde <AcademyBadge kind="nextjs" label="Next.js" /> veya <AcademyBadge kind="tanstack-start" label="TanStack Start" /> projesi oluşturur.
+
+<h2 id="next-steps">Sonraki adımlar</h2>
+
+- [Kurulum](/ai/docs/installation): gereksinimler, AI aracı seçimi ve güncelleme.
+- [Kural kataloğu](/ai/docs/rules): her kuralın neyi kapsadığı ve ne zaman yüklendiği.
+- [v2’ye geçiş](/ai/docs/upgrade): v1 projesini yeni yapıya taşıma.
+
+</DocsProse>

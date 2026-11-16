@@ -1,0 +1,66 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const output = `ViraStack AI v2.1.0
+Framework: nextjs · Agents: claude, cursor · i18n: no · Package manager: pnpm
+
+  + .claude/rules/virastack/core.md · created
+  + .claude/rules/virastack/architecture.md · created
+  ...
+  + .cursor/rules/virastack/nextjs.mdc · created
+  + AGENTS.md · created
+  + CLAUDE.md · created
+  + .virastack/ai.json · created
+
+27 created · 0 updated · 0 removed · 0 skipped
+ViraStack AI rules are ready.`;
+
+<DocsPageHeader
+  title="Installation"
+  description="Requirements, the install command, choosing AI tools and updating."
+/>
+
+<DocsProse>
+
+<h2 id="requirements">Requirements</h2>
+
+- You need Node.js 20.9 or newer.
+- Your `package.json` should include `next` for <AcademyBadge kind="nextjs" label="Next.js" /> or `@tanstack/react-start` for <AcademyBadge kind="tanstack-start" label="TanStack Start" />. If it includes neither, pass `--framework`.
+- Run the command in the project root, next to `package.json`.
+
+<h2 id="install">Install</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init")} />
+
+The CLI prints what it detected, then every file it writes. With no flags it installs rules for both <AcademyBadge kind="claudeCode" label="Claude Code" /> and <AcademyBadge kind="cursor" label="Cursor" />:
+
+<pre><code>{output}</code></pre>
+
+Commit the new files, including `.virastack/ai.json`. Teammates and future updates rely on it.
+
+<h2 id="choose-tools">Choose your AI tools</h2>
+
+Use `--agent` to install rules only for the tools you use:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init --agent claude")} />
+
+- `--agent claude`: `.claude/rules/virastack/` and the `@AGENTS.md` line in `CLAUDE.md`.
+- `--agent cursor`: `.cursor/rules/virastack/`.
+- `--agent claude,cursor`: both. This is the default.
+- `--agent none`: plain Markdown rules in `.agents/rules/virastack/`, read through the `AGENTS.md` map.
+
+The choice is saved in `.virastack/ai.json` and reused by the next `init`. Run `init` with a different `--agent` to switch; the other tool’s rule files are removed.
+
+<h2 id="with-start">With ViraStack Start</h2>
+
+[ViraStack Start](/start/docs/installation) asks “Which AI coding tools do you use?” and runs ViraStack AI with your answer. In an existing Start project, add or refresh the rules with `add ai`:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent claude")} />
+
+<h2 id="update">Update</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+Run `init` again. Rules you did not change are updated, rules a new version drops are removed, and rules you changed are kept unless you confirm. See [customization](/ai/docs/customization) for changed rules and `--force`.
+
+</DocsProse>

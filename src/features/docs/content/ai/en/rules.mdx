@@ -1,0 +1,27 @@
+import { AiRulesTable } from "@/features/docs/components/AiRulesTable";
+
+<DocsPageHeader
+  title="Rule catalog"
+  description="Two rules always load. The others load when the agent works on matching files."
+/>
+
+<DocsProse>
+
+<h2 id="loading">How rules load</h2>
+
+- `core` and `architecture` are always loaded.
+- The others carry file patterns: `paths` in <AcademyBadge kind="claudeCode" label="Claude Code" />, `globs` in <AcademyBadge kind="cursor" label="Cursor" />. The tool loads a rule when the agent reads or edits a matching file.
+- Other agents follow the `AGENTS.md` map, which gives each rule’s “Use when” line.
+
+<h2 id="catalog">Catalog</h2>
+
+<AiRulesTable />
+
+<h2 id="conditional">What changes per project</h2>
+
+- `nextjs` is installed only in <AcademyBadge kind="nextjs" label="Next.js" /> projects, `tanstack-start` only in <AcademyBadge kind="tanstack-start" label="TanStack Start" /> projects.
+- `i18n` is installed only when `next-intl` or `@inlang/paraglide-js` is a dependency. Add the library later and run `init` again to get it.
+- Rules shared by both frameworks keep only the lines for yours, for example the `QueryProvider` setup in `server-state`.
+- Commands inside the rules (`lint`, `typecheck`, `test`, `shadcn add`) use your package manager.
+
+</DocsProse>

@@ -1,0 +1,67 @@
+<DocsPageHeader
+  title="Değişiklik günlüğü"
+  description="Her ViraStack AI sürümünde neyin değiştiği."
+/>
+
+<DocsProse>
+
+<h2 id="v2-1-0">v2.1.0</h2>
+
+<h3>Değişenler</h3>
+
+- `AGENTS.md` içinden persona ve guardrail bölümleri kalktı; artık komutlar (kurulum ve tek dosya testi dahil), öncelik ve kural haritası var.
+- Kurallar barrel dosyaları yasaklıyor ve tek `@/*` alias kullanıyor. Yeni suffix: `*.action.ts`. Mesajlar `src/messages/` altına taşındı.
+- Güncel dokümanlara göre kural düzeltmeleri: `satisfies`, `useShallow`, React Compiler, fontlar, `startTransition`, <AcademyBadge kind="zod" label="Zod" /> 4, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> `query()`, Base UI, `cn` paketi ve localization.
+- Kurallar geçerli oldukları yerde yükleniyor: Server Action dosyaları `nextjs`, server function dosyaları `tanstack-start`, route’lar `i18n` alır. State kuralları component’lere ulaşsın diye `react` içine taşındı.
+- Kural kaynakları Markdown oldu. <AcademyBadge kind="cursor" label="Cursor" /> çıktısı, Cursor dokümanına uygun olarak süslü parantezsiz, virgülle ayrılmış `globs` kullanıyor. Kurulum yolları ve kural adları değişmedi.
+
+<h3>Düzeltilenler</h3>
+
+- Commit edilen manifest artık kural klasörleri dışındaki dosyaları silemiyor; geçersiz hash conflict sayılıyor.
+- Dengesiz veya tekrarlı `AGENTS.md` işaretleri çalışmayı durdurur ve dosyaya dokunmaz; metnin kaybolmaz.
+- Üzerine yazma ve silme ayrı soruluyor. Symlink’ler korunuyor. Kapanış mesajları atlanan dosyaları bildiriyor, okunamayan manifest uyarı veriyor.
+- Tek başına `@tanstack/react-router` <AcademyBadge kind="tanstack-start" label="TanStack Start" /> sayılmıyor, Yarn 1 `npx` kullanıyor, lockfile repo köküne kadar aranıyor.
+
+<h2 id="v2-0-0">v2.0.0</h2>
+
+<h3>Uyumsuz değişiklikler</h3>
+
+- Kurallar `.claude/rules/virastack/` ve `.cursor/rules/virastack/` içine, `--agent none` ile `.agents/rules/virastack/` içine kurulur. `docs/MEMORIES.md` ve `docs/architecture-guide.md` artık yazılmıyor.
+- Beş kuralın adı değişti ve mimari rehberi `architecture` kuralı oldu. [Ad değişikliği tablosuna](/ai/docs/upgrade#renamed-rules) bak.
+- `AGENTS.md` artık baştan yazılmıyor. Sadece `virastack-ai` bloğu yazılır.
+- `ApiError`, ViraStack Start’ın `src/lib/api.ts` dosyasını izler (`message`, `status`, `data`).
+
+<h3>Eklenenler</h3>
+
+- `--agent`, `remove`, `--dry-run`, `--yes` ve `--framework`.
+- `.virastack/ai.json` manifesti: güncellemeler dokunulmamış kuralları yeniler, düzenlenenlerin üzerine yazmadan önce sorar ve kaldırılanları siler.
+- Otomatik v1 taşıması: düzenlenmemiş v1 dosyaları silinir, düzenlenenler korunur ve listelenir.
+- Kurallardaki komutlar tespit edilen paket yöneticisini kullanır.
+- `i18n` kuralı sadece `next-intl` veya Paraglide ile kurulur. Framework’e özel satırlar sadece senin framework’ün için görünür.
+
+<h3>Değişenler</h3>
+
+- 14 kuralın tamamı <AcademyBadge kind="nextjs" label="Next.js" /> 16, <AcademyBadge kind="react" label="React" /> 19.2, <AcademyBadge kind="tanstack-start" label="TanStack Start" />, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> 5, <AcademyBadge kind="zustand" label="Zustand" /> 5, <AcademyBadge kind="zod" label="Zod" /> 4 ve <AcademyBadge kind="tailwind" label="Tailwind CSS" /> 4 için yeniden yazıldı. v1’den yaklaşık %30 daha kısa.
+- <AcademyBadge kind="nextjs" label="Next.js" /> 16: async `params`, `proxy.ts`, `cacheComponents` ile `"use cache"`, `priority` yerine `preload`.
+- <AcademyBadge kind="tanstack-start" label="TanStack Start" />: `@tanstack/react-start` import’ları, `useSuspenseQuery` ile `ensureQueryData`.
+- <AcademyBadge kind="tanstack-query" label="TanStack Query" />: sorgu başına tek `queryOptions`, ince hook’lar, gerektiğinde optimistic update.
+- <AcademyBadge kind="zustand" label="Zustand" />: `useShallow`, SSR için istek başına store, kalıcı state için `useIsClient` veya `skipHydration`.
+- Test kuralı, ViraStack Start’ın kurduğu <AcademyBadge kind="vitest" label="Vitest" />, Testing Library ve MSW’yi esas alır.
+- Performans kuralı sadece LCP, INP ve CLS bütçelerini tutar. Erişilebilirlik `ui` kuralına taşındı.
+
+<h3>Kaldırılanlar</h3>
+
+- Sohbet dönemi kuralları (`INTENTIONAL_TODO`, genel yorum yasağı), `@/data` alias’ı ve `*.data.ts` isimlendirmesi, TTI ve API p95 bütçeleri.
+
+<h2 id="v1">v1</h2>
+
+- **1.3.2**: UI teslim kontrol listesi, odak ve başlık kuralları, responsive kontroller için Tailwind kırılımları.
+- **1.3.1**: önce sözleşme API kuralları, branded type’lar, optimistic update şablonu, “ölç ya da geri al” performans kuralı.
+- **1.3.0**: framework ayrımı, framework’e özel `AGENTS.md`, `--framework` bayrağı, CLI testleri.
+- **1.2**: framework tespiti, üzerine yazma sorusu ve `--force`, `--tr`, önce fetch API client’ı.
+- **1.1**: `CLAUDE.md`, pakete duyarlı kurallar, nuqs ile URL state, isimlendirme kuralları, <AcademyBadge kind="tailwind" label="Tailwind CSS" /> v4 sınıfları.
+- **1.0**: ilk sürüm, `npx @virastack/ai init` <AcademyBadge kind="cursor" label="Cursor" /> kurallarını yazar.
+
+Tüm geçmiş [GitHub’daki CHANGELOG](https://github.com/virastack/ai/blob/main/CHANGELOG.md) dosyasında.
+
+</DocsProse>

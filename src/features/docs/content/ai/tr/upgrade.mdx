@@ -1,0 +1,92 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const migrationOutput = `  - .cursor/rules/core-principles.mdc (v1) · removed
+  - docs/architecture-guide.md (v1) · removed
+  - docs/MEMORIES.md (v1) · removed
+  ! .cursor/rules/ui-components.mdc (v1) · kept: v1 file you changed; delete it yourself if no longer needed`;
+
+<DocsPageHeader
+  title="Yükseltme rehberi"
+  description="ViraStack AI sürümleri arasında geçiş: neler değişti, hangi komut çalışır ve elle ne kontrol edilir."
+/>
+
+<DocsProse>
+
+<h2 id="v2-1">v2.0’dan v2.1’e</h2>
+
+`init` komutunu yeniden çalıştır. Elle taşınacak bir şey yok:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+- Değiştirmediğin kurallar güncellenir. Değiştirdiklerin korunur ve listelenir; değiştirmek için `--force` kullan.
+- Kurallar artık barrel dosyaları yasaklıyor ve tek `@/*` alias kullanıyor. Mevcut `index.ts` dosyaların ve alias’ların hata sayılmaz, toplu refactor gerekmez. Yeni kod yeni kurallara uyar.
+- `i18n` kuralı artık `src/messages/` bekliyor. Kökteki mevcut `messages/` klasörü çalışmaya devam eder; bunu bir proje talimatıyla belirtebilirsin.
+- Yalnızca `@tanstack/react-router` olan proje artık <AcademyBadge kind="tanstack-start" label="TanStack Start" /> sayılmıyor; bu kuralları yine istersen `--framework` ver.
+
+<h2 id="v1-to-v2">v1’den v2’ye</h2>
+
+<h3 id="what-changed">Neler değişti</h3>
+
+- Kurallar `.cursor/rules/*.mdc` yerine `.cursor/rules/virastack/` içine taşındı. <AcademyBadge kind="claudeCode" label="Claude Code" /> kendi kopyasını `.claude/rules/virastack/` içinde alır. [Kurulan dosyalar](/ai/docs/installed-files) sayfasına bak.
+- `docs/architecture-guide.md` her zaman yüklenen `architecture` kuralı oldu. `docs/MEMORIES.md` kaldırıldı.
+- `AGENTS.md` artık baştan yazılmıyor. ViraStack sadece kendi `virastack-ai` bloğunu yazar.
+- <AcademyBadge kind="nextjs" label="Next.js" /> bloğunu (`nextjs-agent-rules`) artık ViraStack AI yazmıyor. Yeni projelerde onu Next.js ve ViraStack Start ekler. v1’in yazdığı kopya, düzenlenmediyse silinir.
+- `features/*/data/` klasörü `constants/` oldu. Kurallar artık `@/data` alias’ını ve `*.data.ts` dosyalarını kullanmıyor.
+- `ApiError`, ViraStack Start’ın `src/lib/api.ts` dosyasıyla aynı şekilde `message`, `status` ve `data` kullanır.
+
+<h3 id="renamed-rules">Yeniden adlandırılan kurallar</h3>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>v1 dosyası</th><th>v2 kuralı</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`.cursor/rules/core-principles.mdc`</td><td>`core`</td></tr>
+      <tr><td>`docs/architecture-guide.md`</td><td>`architecture`</td></tr>
+      <tr><td>`.cursor/rules/react-best-practices.mdc`</td><td>`react`</td></tr>
+      <tr><td>`.cursor/rules/ui-components.mdc`</td><td>`ui`</td></tr>
+      <tr><td>`.cursor/rules/tanstack-query.mdc`</td><td>`server-state`</td></tr>
+      <tr><td>`.cursor/rules/state-management.mdc`</td><td>`client-state`</td></tr>
+      <tr><td>`docs/MEMORIES.md`</td><td>Kaldırıldı</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Adı aynı, içeriği yeniden yazıldı: <span>`api`</span><span>, `forms`</span><span>, `i18n`</span><span>, `nextjs`</span><span>, `performance`</span><span>, `tanstack-start`</span><span>, `testing`</span><span>, `typescript`</span>.
+
+<h3 id="command">Tek komut</h3>
+
+Çalışmanı commit et veya stash’le, sonra proje kök dizininde çalıştır:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+- Hiç düzenlemediğin v1 kural dosyaları ve `docs/` dosyaları silinir.
+- Düzenlediğin v1 dosyaları korunur ve listelenir. Değişikliklerini taşıyıp onları kendin silebilirsin.
+- Düzenlenmemiş bir v1 `AGENTS.md` yeni blokla değiştirilir. Düzenlediysen içeriğin korunur, blok altına eklenir ve CLI seni uyarır.
+- v1 `CLAUDE.md` (`@AGENTS.md`) korunur.
+
+<pre><code>{migrationOutput}</code></pre>
+
+`(v1)` ile işaretli satırlar taşımadır. Yazmadan önce görmek için `--dry-run` ekle.
+
+<h3 id="checklist">Elle kontrol et</h3>
+
+- **Korunan v1 kural dosyaları:** değişikliklerini kendi kural dosyana taşı ([özelleştirme](/ai/docs/customization) sayfasına bak), sonra eski dosyayı sil.
+- **Eski `AGENTS.md` içeriği:** CLI uyardıysa bloğun üstündeki v1 kısmını sil. Böylece agent’lar tekrar eden talimat almaz.
+- **Doldurulmuş `docs/MEMORIES.md`:** korunur. Hâlâ işe yarayanları `AGENTS.md` içinde bloğun dışına taşı, sonra dosyayı sil.
+- **Kodunda `@/data`:** `data/` klasörlerini `constants/` olarak değiştir ve alias’ı `tsconfig.json` dosyasından kaldır. Yoksa agent’lar iki farklı deseni sürdürür.
+- Sonucu `.virastack/ai.json` dahil **commit et**.
+
+<h3 id="rollback">Geri dönüş</h3>
+
+v2’yi kaldır, sonra v1’i tekrar kur:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai remove")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@1 init")} />
+
+v1 dokümanı [v1 arşivinde](/ai/docs/v1) durur.
+
+</DocsProse>

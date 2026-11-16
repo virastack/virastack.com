@@ -1,0 +1,83 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Komutlar ve bayraklar"
+  description="Etkileşimli sihirbaz veya bayraklarla sessiz kurulum. CI ve script’ler için uygun."
+/>
+
+<DocsProse>
+
+<h2 id="kullanim">Kullanım</h2>
+
+CLI’yi etkileşimli çalıştır veya sessiz kurulum için bayrak kullan. Adım adım ilerlemek istersen [Sihirbaz](/start/builder)’a git.
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest")} />
+
+<h2 id="bayraklar">Komutlar ve bayraklar</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Komut / bayrak</th><th>Açıklama</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`init [name]`</td><td>Yeni proje oluşturur (varsayılan; komut yazılmazsa da çalışır)</td></tr>
+      <tr><td>`add <name>`</td><td>Mevcut projeye araç (`mask`, `password`, `address`, `ai`) veya [modül](/start/docs/modules) ekler</td></tr>
+      <tr><td>`remove <module>`</td><td>Modülü kaldırır. Paketleri durur</td></tr>
+      <tr><td>`--name <name>`</td><td>Proje adı (veya konumsal argüman / `.`)</td></tr>
+      <tr><td>`--template <name>`</td><td>`nextjs` / `tanstack`</td></tr>
+      <tr><td>`--tools <list>`</td><td>Virgülle ayrılmış araçlar (`mask,password,address`)</td></tr>
+      <tr><td>`--agent <list>`</td><td>AI kodlama araçları: `claude`, `cursor` (virgülle) veya `none`. Değer verilmezse `--yes` ikisini de seçer</td></tr>
+      <tr><td>`--i18n` / `--no-i18n`</td><td>i18n şablonunu açar veya kapatır</td></tr>
+      <tr><td>`--yes`, `-y`</td><td>Sessiz kurulum (bayraklar + varsayılanlar)</td></tr>
+      <tr><td>`--skip-install`</td><td>Bağımlılık kurulumunu atlar. AI kuralları ve tasarım skill’leri yine eklenir</td></tr>
+      <tr><td>`--no-pages`</td><td>`add` ile: modülü sayfaları olmadan kurar, o adreslerde kendi sayfaları olan projeler için</td></tr>
+      <tr><td>`--tr`</td><td><span className="mr-1.5" aria-hidden>🇹🇷</span>Türkçe prompt’lar</td></tr>
+      <tr><td>`--telemetry-disable`</td><td>Anonim kullanım verisini kalıcı olarak kapatır</td></tr>
+      <tr><td>`-v`, `--version`</td><td>CLI sürümünü yazdırır</td></tr>
+      <tr><td>`-h`, `--help`</td><td>Kullanımı gösterir</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Türkçe prompt’lar için `--tr`, varsayılanlarla hızlı kurulum için `--yes` kullan.
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest my-app --template nextjs --agent claude --i18n --yes")} />
+
+<h2 id="add">add ve remove</h2>
+
+Mevcut bir projeye ViraStack aracı eklemek için proje kökünde `add` komutunu çalıştır:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add mask")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add password")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add address")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent cursor")} />
+
+Kullanılabilir araçlar:
+
+- `mask`: `@virastack/mask` kurar
+- `password`: `@virastack/password` kurar
+- `address`: `@virastack/address` kurar
+- `ai`: `@virastack/ai init` çalıştırır (verilmişse `--agent` ile). Değiştirdiğin dosyalar korunur.
+
+`init` sırasında `mask`, `password` ve `address` isteğe bağlıdır; AI kuralları ve tasarım skill’leri otomatik eklenir. Atladığın bir araç veya mevcut bir uygulama için `add` kullan. Start dışındaki projelerde [ViraStack AI](/ai/docs/installation)’ı doğrudan çalıştır.
+
+Aynı komut, Start ile kurulan bir projeye modül de kurar; `products` ve `cart` gibi sayfası olan modüller sayfalarını da getirir. `remove` modülü kaldırır. Neler kurduklarını ve sayfaya nasıl eklendiklerini [modüller](/start/docs/modules) sayfasında bulabilirsin.
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add users")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest remove users")} />
+
+<h2 id="telemetry">Telemetri</h2>
+
+ViraStack istatistik tutabilmek için anonim kullanım verisi toplar (örneğin şablon, i18n tercihi, seçilen araçlar ve AI kodlama araçları, paket yöneticisi ve CLI sürümü). Kişisel veri, proje adı veya dosya yolları toplanmaz.
+
+Bu verileri paylaşmak istemiyorsan:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest --telemetry-disable")} />
+
+</DocsProse>

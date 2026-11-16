@@ -1,0 +1,92 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { StartModulesTable } from "@/features/docs/components/StartModulesTable";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Modüller"
+  description="Modül neler kurar, sayfana nasıl gelir, API'ne nasıl bağlanır ve nasıl kaldırılır."
+/>
+
+<DocsProse>
+
+<h2 id="nedir">Modül nedir</h2>
+
+Modül, `src/features/<ad>` içinde çalışan bir feature'dır: bileşenler, API fonksiyonları, hook'lar, şemalar ve testler, şablonla ve <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> kurallarıyla aynı yapıda.
+
+Modüller dummy API veya dummy veriyle çalışır. Gerçek API'ni bağlamak ve yanıt modelini uyarlamak sana kalır.
+
+<h2 id="hazir">Hazır modüller</h2>
+
+<StartModulesTable />
+
+Her modülün canlı önizlemesi, dört şablondaki kodu ve agent'a vereceğin prompt [modül kataloğunda](/start/features).
+
+<h2 id="requirements">Gereksinimler</h2>
+
+- **ViraStack Start 2.0 veya üstüyle kurulan bir proje.** Start ile kurulmamış bir projede komut çalışmaz; daha eski bir Start projesinde gereken sürümü yazar ve hiçbir şey kurmaz.
+- Dört şablonun hepsi: <AcademyBadge kind="nextjs" label="Next.js" /> ve <AcademyBadge kind="tanstack-start" label="TanStack Start" />, i18n açık veya kapalı. CLI şablonu projeden okur ve ona uygun dosyaları kurar.
+- İnternet bağlantısı. Modüller ViraStack registry'sinden indirilir.
+
+<h2 id="ekle">Modül ekle</h2>
+
+Projenin kökünde çalıştır:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add users")} />
+
+Komut şunları yapar:
+
+- Modülün dosyalarını `src/features/<ad>` içine kopyalar.
+- Eksik paketleri ve `components/ui` bileşenlerini, projenin paket yöneticisiyle kurar.
+- i18n şablonlarında metinleri `src/messages` içine birleştirir. Modülün çevirisi olmayan bir dil varsa İngilizce metni ekler ve sana bildirir.
+- Testleri modülle birlikte gelir; projenin `test` script'i onları da çalıştırır.
+- Bitince modülün sayfalarının nerede olduğunu yazar; sayfası olmayan modülde ana bileşenin import satırını ve modül sayfasının linkini.
+
+**Sayfası olan modül sayfalarını da getirir:** `products` listesini `/products` adresine, her ürünün sayfasını da onun altına; `cart` sepeti `/cart` adresine kurar. Projende bu adreslerden birinde route varsa hiçbir şey değişmez, CLI onu listeler; `--no-pages` yalnızca feature'ı kurar. Diğer modüller sayfa oluşturmaz, hangi adreste görüneceklerine sen karar verirsin.
+
+**Start 2.2'den önce kurulan <AcademyBadge kind="nextjs" label="Next.js" /> projesinde** `src/app/loading.tsx` dosyasını sil. Bu dosya durdukça olmayan bir ürün 404 yerine 200 döner ve sayfanın içeriği JavaScript olmadan görünmez. Yeni projelerde bu dosya yok.
+
+Projede aynı adlı bir dosya veya metin varsa hiçbir şey değişmez; CLI çakışmaları listeler. Modül zaten kuruluysa komut bir şey yapmaz.
+
+<h2 id="sayfa">Sayfana ekle</h2>
+
+Sayfası olmayan bir modülü ya da `--no-pages` ile kurduğun modülü kendi sayfana iki yoldan ekleyebilirsin. İkisinde de modülün kodu aynı kalır, yalnızca yeni bir sayfa yazılır.
+
+<h3 id="with-an-agent">AI kodlama aracıyla</h3>
+
+Modül sayfasındaki **Prompt** butonu, iki framework için de çalışan bir prompt kopyalar. Agent'ın modülü kurar, framework'üne uygun bir sayfa açar, ana bileşeni gösterir ve `typecheck`, `test`, `lint:ci` script'lerini çalıştırır.
+
+<h3 id="by-hand">Kendin ekle</h3>
+
+Framework'ünün route yapısında yeni bir sayfa aç, modülün ana bileşenini import et ve göster. Bileşenin adı ve yolu, CLI'ın kurulumdan sonra yazdığı import satırında ve modül sayfasının **Kod** sekmesinde.
+
+- <AcademyBadge kind="nextjs" label="Next.js" />: `src/app` altında bir `page.tsx`; i18n şablonlarında `src/app/[locale]` altında.
+- <AcademyBadge kind="tanstack-start" label="TanStack Start" />: `src/routes` altında bir route dosyası; i18n şablonlarında `src/routes/{-$lang}` altında.
+
+Arama ve sayfalamayı URL'de tutan modüller (ör. `users`) iki adım daha ister: <AcademyBadge kind="nextjs" label="Next.js" />'te bileşeni `Suspense` içine al, <AcademyBadge kind="tanstack-start" label="TanStack Start" />'ta modülün arama şemasını route tanımına ekle. Modül sayfasındaki prompt bunları kendisi söyler.
+
+<h2 id="checkout">Örnek: checkout sayfası</h2>
+
+`checkout-address` ve `checkout-card` ayrı modüllerdir. İkisini de `add` ile kur, `CheckoutAddress` ve `CheckoutCard` bileşenlerini aynı sayfada göster.
+
+Feature'lar birbirini, paylaşılan klasörler de feature'ları import edemez; bu yüzden ikisini sayfa bağlar. Seçilen adresi `useCheckoutAddress`, seçilen kartı `useCheckoutCard` hook'u verir.
+
+Kart tarafı token, banka, marka, son dört hane, son kullanma tarihi ve adı taşır; kart numarası ve CVV tarayıcıdan çıkmaz. <AcademyBadge kind="nextjs" label="Next.js" />'te hook'ları sayfanın yanındaki bir client component'te, <AcademyBadge kind="tanstack-start" label="TanStack Start" />'ta route bileşeninde çağır.
+
+<h2 id="api">Kendi API'ne bağla</h2>
+
+API adresini `.env.local` dosyasında `NEXT_PUBLIC_API_URL` (<AcademyBadge kind="nextjs" label="Next.js" />) ya da `VITE_API_URL` (<AcademyBadge kind="tanstack-start" label="TanStack Start" />) değerine yaz.
+
+Yanıt biçimin farklıysa modülün `schemas` ve `api` klasörlerini uyarla. Hangi dosyaların değişeceği her modülün sayfasında, **Nasıl kullanırsın?** bölümünde.
+
+<h2 id="kaldir">Modülü kaldır</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest remove users")} />
+
+Modülün dosyalarını, boş kalan klasörlerini ve metinlerini siler. Paketler durur, çünkü başka kodlar da kullanıyor olabilir.
+
+Bu dosyalardan değiştirdiklerin varsa önce listeler ve sorar. Script'te bunları da silmek için `--yes` ver; vermezsen hiçbir şey değişmez.
+
+Modülün kendi sayfaları da silinir. Değiştirdiğin bir sayfa ya da `--no-pages` sonrası kendi sayfan, bir şey silinmeden önce listelenir ve yalnızca onaylarsan silinir; `--yes` ile ya da script'te durur, CLI hâlâ modülü import edebileceğini söyler. Başka bir yerde kendin yazdığın sayfa durur, import'unu kendin kaldır.
+
+</DocsProse>

@@ -25,8 +25,8 @@ Before writing, read the product's `CHANGELOG.md`, the release note in `src/feat
 
 Archive the docs of the **last published version**, not the working tree: take the files from the commit that matches that release. Commits after it may already contain new-version text.
 
-1. **Content:** copy the pages into `content/<product>/v<N>/` with versioned component names (`StartV1CliDoc`), imported from their own files (no `index.ts` barrel). `<N>` is the old major.
-2. **Messages:** messages-based products copy their namespace to `Docs<Product>V<N>` in both `src/messages/tr.json` and `en.json`, and add it to `DocsMessageNamespace`.
+1. **Content:** copy the MDX pages into `content/<product>/v<N>/en/` and `tr/`, registered in `content/<product>/v<N>/<product>-docs-v<N>-content.ts`. `<N>` is the old major.
+2. **Messages:** copy the namespace's nav, title and description keys to `Docs<Product>V<N>` in both `src/messages/tr.json` and `en.json`, and add it to `DocsMessageNamespace`.
 3. **Config:** add `config/<product>-docs-v<N>.config.ts` with `BASE = "/<product>/docs/v<N>"`, its nav, pages and slugs (see `start-docs-v1.config.ts`).
 4. **Register:** in `docs-products.ts`, add the archive under `archives` and to `versions` with the last minor as label (`{ id: "v1", label: "v1.2", latest: false }`). The latest entry gets the new label.
 5. **Page:** the product's `components/<Product>DocsPage.tsx` renders the archive, and its `UPGRADE_HREF` points to the upgrade page or, when there is none, the release note. Each archived page shows `DocsArchiveNotice`.
@@ -35,14 +35,11 @@ Archive the docs of the **last published version**, not the working tree: take t
 
 Then rewrite the latest pages from the new code, as if no old docs existed. Reuse a sentence only after checking it is still true.
 
-## Two content shapes
+## Content shape
 
-Check which one the product uses before editing:
+Every product's docs are **MDX**: one file per locale, `content/<product>/en/<slug>.mdx` and `tr/<slug>.mdx` (archives: `content/<product>/v<N>/`), registered in `content/<product>/<product>-docs-content.ts`. `messages` keeps only the nav, page titles and descriptions (`Docs<Product>`). Prose is markdown; headings stay `<h2 id="...">` so the ids are fixed; a fenced block with a language renders as `DocsCodeBlock`. `DocsPageHeader`, `DocsProse`, `DocsCodeBlock` and `AcademyBadge` need no import (`lib/docs-mdx-components.tsx`); a markdown link to a site path renders as the locale-aware `Link`; other components, `Link` written as JSX included, are imported with `@/`. A table built from config (`StartModulesTable`, `AiRulesTable`) is a component in `components/`, so a new module or rule shows up without editing the MDX. A line holding only JSX is block JSX in MDX, so a paragraph or list item that is only a badge gets its own `<p>` or `<li>` tags. The table of contents and the site search read each page's headings and prose from its MDX file at build time (`lib/docs-mdx-source.ts`), so headings have no keys in `messages`; write each `<h2 id="...">` on its own line. Prettier skips `*.mdx`. Example pages (`Examples`, `ExampleDetail`) are built from config and stay locale TSX in `content/<product>/locales/`.
 
-- **Messages-based** (Start, AI): page components in `content/<product>/` (AI: `content/ai/v2/`) render keys from the product namespace (`DocsStart`, `DocsAi`) with `t()` and `t.rich(key, docsRichTags)`. Copy lives in `src/messages/tr.json` and `en.json`.
-- **MDX** (Mask, Password, Address): one file per locale, `content/<product>/en/<slug>.mdx` and `tr/<slug>.mdx` (Mask v1: `content/mask/v1/`), registered in `content/<product>/<product>-docs-content.ts`. Prose is markdown; headings stay `<h2 id="...">` so the ids are fixed; a fenced block with a language renders as `DocsCodeBlock`. `DocsPageHeader`, `DocsProse`, `DocsCodeBlock`, `AcademyBadge` and `Link` need no import (`lib/docs-mdx-components.tsx`); other components are imported with `@/`. A line holding only JSX is block JSX in MDX, so a paragraph or list item that is only a badge gets its own `<p>` or `<li>` tags. The table of contents and the site search read each page's headings and prose from its MDX file at build time (`lib/docs-mdx-source.ts`), so headings have no keys in `messages`; write each `<h2 id="...">` on its own line. Prettier skips `*.mdx`. Example pages (`Examples`, `ExampleDetail`) are built from config and stay locale TSX in `content/<product>/locales/`.
-
-New products use the messages-based shape. Edit both locales in the same change; the English page is localized, not translated word for word.
+New products use the same shape. Edit both locales in the same change; the English page is localized, not translated word for word.
 
 ## Page structure
 
@@ -65,15 +62,15 @@ Rules come from `.cursor/rules/brand.mdc` and `.cursor/rules/terminology.mdc`; r
 
 ## Markup
 
-| Need                                              | Messages-based (`t.rich`)                                         | MDX                              |
-| :------------------------------------------------ | :---------------------------------------------------------------- | :------------------------------- |
-| Identifier, file, command, flag, package, env var | `<code>api.ts</code>`                                             | `` `api.ts` ``                   |
-| Key phrase                                        | `<bold>...</bold>`                                                | `**...**`                        |
-| Technology                                        | `<nextjs>Next.js</nextjs>` (handlers in `lib/docs-rich-tags.tsx`) | `<AcademyBadge kind="nextjs" />` |
-| ViraStack product                                 | a product tag backed by `GuideProductMark`                        | `<GuideProductMark id="mask" />` |
-| Internal link                                     | `<link>...</link>` with a `Link` handler                          | `[...](/mask/docs/...)`          |
+| Need                                              | MDX                              |
+| :------------------------------------------------ | :------------------------------- |
+| Identifier, file, command, flag, package, env var | `` `api.ts` ``                   |
+| Key phrase                                        | `**...**`                        |
+| Technology                                        | `<AcademyBadge kind="nextjs" />` |
+| ViraStack product                                 | `<GuideProductMark id="mask" />` |
+| Internal link                                     | `[...](/mask/docs/...)`          |
 
-- A badge kind must exist in `src/constants/academy-badge.constants.ts`. A missing `t.rich` handler goes into `docsRichTags`, not into a local object.
+- A badge kind must exist in `src/constants/academy-badge.constants.ts`.
 - Bold: one or two key phrases per paragraph at most, never a whole sentence. No italic for emphasis (only a foreign or quoted word). Product names are never italic.
 - Products follow the lockup rule in `brand.mdc`: `ViraStack Start` in running text.
 - Badges, release notes (`[Next.js](badge:nextjs)`) and Academy (`[!nextjs]`) use different syntaxes; use only the docs syntax here.

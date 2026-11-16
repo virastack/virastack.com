@@ -1,0 +1,74 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { Nodejs } from "@/components/ui/svgs/nodejs";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Installation"
+  description="Prerequisites, the install command, what the CLI asks, and what to do next."
+/>
+
+<DocsProse>
+
+<h2 id="hizli-baslangic">Quick start</h2>
+
+<p><GuideStackIcon icon={<Nodejs aria-hidden />}>Node.js</GuideStackIcon> 20.9+ is required. pnpm is recommended; npm, yarn, and bun are also supported.</p>
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest")} />
+
+This opens the interactive menu. For silent installs and every flag, see the [CLI](/start/docs/v1/cli) page.
+
+<h2 id="cli-sorulari">What does the CLI ask?</h2>
+
+1. **Project name**: folder name
+2. **Template**: <GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> App Router or <GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon>
+3. **AI coding tools**: <AcademyBadge kind="claudeCode" label="Claude Code" />, <AcademyBadge kind="cursor" label="Cursor" /> or both (both are preselected). Selecting none installs plain rules in `.agents/rules/`.
+4. **i18n**: do you want the multi-language template?
+5. **Tools**: optional packages like `@virastack/mask`, `@virastack/password` and `@virastack/address`.
+
+<h2 id="sonrasi">After installation</h2>
+
+The CLI then sets up the project in this order:
+
+1. Creates the git repository and installs dependencies, so husky can set up its hooks.
+2. Next.js only: writes the Next.js block to `AGENTS.md`, which points agents to the docs in `node_modules/next/dist/docs/`.
+3. Runs <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> with your AI tool choice: rules in `.claude/rules/virastack/` and `.cursor/rules/virastack/`, plus the rule map in `AGENTS.md`. See [installed files](/ai/docs/installed-files).
+4. Installs three design skills.
+5. Makes the first commit, so `git status` is clean.
+
+<h3 id="skills">Design skills</h3>
+
+The three skills are copied to `.agents/skills/`, which Cursor and other agents read. With Claude Code they also go to `.claude/skills/`; if Claude Code is your only tool, only there. Skills are copied as files, not symlinks.
+
+- `emil-design-eng` ([emilkowalski/skills](https://github.com/emilkowalski/skills)): Emil Kowalski’s design engineering for animation, interaction and polish.
+- `better-ui` ([jakubkrehel/skills](https://github.com/jakubkrehel/skills)): Jakub Krehel’s interface polish for surfaces, icons and motion, with exact values.
+- `better-accessibility` ([jakubkrehel/skills](https://github.com/jakubkrehel/skills)): accessible components, focus handling and semantic markup.
+
+Each skill installs on its own, so one failure does not stop the others. Skills are skipped only when you are offline; the CLI then prints the command to add them later. `--skip-install` does not skip them.
+
+<h3 id="prettierignore">Why .prettierignore lists AI files</h3>
+
+The template’s `.prettierignore` excludes `AGENTS.md`, `CLAUDE.md`, `.agents`, `.claude`, `.cursor`, `.virastack` and `skills-lock.json`. ViraStack AI tracks these files by hash; if Prettier reformatted them, the next update would treat them as your edits and stop updating them. It also keeps `lint:ci` from failing on files you did not write.
+
+<h3 id="calistir">Run the project</h3>
+
+Enter the project directory and start the dev server:
+
+<CodeBlockCommand {...convertNpmCommand("npm run dev")} />
+
+The homepage renders the sample `landing` feature. Delete it when you build your product.
+
+<h2 id="fixme">First steps (FIXME)</h2>
+
+Templates mark the first steps with `FIXME:` comments. Search the repo for that marker, then update these in order:
+
+1. **Step 1: Site metadata** (`src/config/site.config.ts`): replace the default description and social links with your product name, copy, and URLs. Name and base URL come from `.env`:
+   - For **Next.js**: `NEXT_PUBLIC_APP_NAME`, `NEXT_PUBLIC_APP_URL`
+   - For **TanStack Start**: `VITE_APP_NAME`, `VITE_APP_URL`
+2. **Step 2: Remote images (Next.js only)** (`next.config.ts`): add your CDNs or media hosts under `images.remotePatterns`. This FIXME exists only in Next templates; TanStack Start has no equivalent.
+3. **Step 3: API auth header** (`src/lib/api.ts`): when you pick an auth solution, attach the token in `buildHeaders` (the commented `Authorization: Bearer` example). Shared across all templates.
+4. **Step 4: Env and assets**: update name/URL in `.env`; when adding variables, keep `src/env.ts` and `.env.example` in sync with your template’s prefix (`NEXT_PUBLIC_*` or `VITE_*`). Swap favicon and static files under `public/`.
+
+</DocsProse>

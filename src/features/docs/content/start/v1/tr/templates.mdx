@@ -1,0 +1,107 @@
+import { BaseUiIcon } from "@/components/shared/icons/BaseUiIcon";
+import { FramerIcon } from "@/components/shared/icons/FramerIcon";
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
+import { Lucide } from "@/components/ui/svgs/lucide";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { NuqsIcon } from "@/components/shared/icons/NuqsIcon";
+import { ReactHookForm } from "@/components/ui/svgs/reactHookForm";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+import { Zod } from "@/components/ui/svgs/zod";
+import { Zustand } from "@/components/ui/svgs/zustand";
+
+export const output = `src/
+├── app/ | routes/            # Next.js App Router | TanStack file-based routing
+├── features/
+│   └── landing/              # Örnek feature (silinebilir)
+│       ├── api/
+│       ├── components/
+│       ├── constants/
+│       ├── helpers/
+│       ├── hooks/
+│       ├── icons/
+│       ├── schemas/
+│       ├── stores/
+│       ├── types/
+│       └── index.ts
+├── components/
+│   ├── ui/
+│   └── shared/
+├── config/
+├── constants/
+├── helpers/
+├── hooks/
+├── lib/
+├── providers/
+├── schemas/
+├── stores/
+├── styles/
+├── test/                     # Vitest kurulumu, render yardımcısı, MSW sunucusu
+├── types/
+└── env.ts
+
+messages/                     # Sadece i18n şablonlarında
+.agents/skills/               # emil-design-eng, better-ui, better-accessibility
+.claude/                      # Kurallar ve skill’ler (Claude Code ile)
+.cursor/rules/virastack/      # ViraStack AI kuralları (Cursor ile)
+.virastack/ai.json            # ViraStack AI manifesti
+AGENTS.md
+CLAUDE.md`;
+
+<DocsPageHeader
+  title="Şablonlar"
+  description="Dört üretim şablonu: Next.js ve TanStack Start, her biri sade veya i18n’li."
+/>
+
+<DocsProse>
+
+<h2 id="framework">Framework seçimi</h2>
+
+CLI’de iki ana framework vardır; ikisi de eşit önceliklidir:
+
+- **<GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> App Router**: Server Components, Turbopack, React Compiler. next-intl ile i18n şablonu ayrı tutulur.
+- **<GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon>**: tip güvenli routing ve SSR. i18n için Paraglide JS kullanılır.
+
+Çoklu dil desteği kod içinden silinerek değil, **ayrı şablonlar** ile sağlanır. CLI “Çoklu dil desteği ister misin?” diye sorduğunda ilgili şablon kopyalanır:
+
+- `templates`: sade (tek dil)
+- `templates-i18n`: dil yönlendirmesi ve çeviri altyapısı içerir; mesajlar kökteki `messages/` klasöründedir
+
+<h2 id="stack">Ortak stack</h2>
+
+Framework’e özel routing dışında her şablon aşağıdaki paketlerle gelir:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Alan</th><th>Paketler</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>**State**</td><td><GuideStackIcon icon={<TanstackLogo />}>TanStack Query</GuideStackIcon>, <GuideStackIcon icon={<Zustand aria-hidden />}>Zustand</GuideStackIcon>, <GuideStackIcon icon={<NuqsIcon className="size-full" />}>nuqs</GuideStackIcon></td></tr>
+      <tr><td>**Form**</td><td><GuideStackIcon icon={<ReactHookForm aria-hidden />}>React Hook Form</GuideStackIcon>, <GuideStackIcon icon={<Zod aria-hidden />}>Zod</GuideStackIcon></td></tr>
+      <tr><td>**Hooks**</td><td>`usehooks-ts`</td></tr>
+      <tr><td>**UI**</td><td><GuideStackIcon icon={<BaseUiIcon className="size-full" />}>Base UI</GuideStackIcon>, <GuideStackIcon icon={<FramerIcon className="size-full" />}>Motion</GuideStackIcon>, <GuideStackIcon icon={<Lucide aria-hidden />}>Lucide React</GuideStackIcon></td></tr>
+    </tbody>
+  </table>
+</div>
+
+Tema desteği ve Zod ile env doğrulama da şablonla birlikte gelir.
+
+<p><GuideProductMark id="ai" linked={false}>AI</GuideProductMark> bu seçimleri agent kurallarına dönüştürür ([kural kataloğuna](/ai/docs/rules) bak). Start ayrıca üç tasarım skill’i kurar: `emil-design-eng`, `better-ui` ve `better-accessibility` ([ayrıntılar](/start/docs/v1/installation#skills)).</p>
+
+<h2 id="testler">Testler</h2>
+
+Her şablon `Vitest`, Testing Library ve MSW kurulu ve hazır gelir.
+
+- `vitest.config.ts` ve `src/test/`: jsdom kurulumu, `renderWithProviders` yardımcısı ve yakalanmayan isteklerde hata veren bir MSW sunucusu.
+- landing feature’ında örnek testler: bir yardımcı fonksiyon (`get-initials.test.ts`), MSW ile bir API fonksiyonu (`get-users.api.test.ts`) ve bir bileşen (`CartDemo.test.tsx`).
+- `pnpm test` bir kez çalışır, `pnpm test:watch` izlemeye devam eder. CI testleri build’den önce çalıştırır. [Komutlar](/start/docs/v1/scripts) sayfasına bak.
+
+<h2 id="klasor-yapisi">Klasör yapısı</h2>
+
+<pre><code>{output}</code></pre>
+
+ESLint, feature’lar arası import’ları ve üst dizine giden `../` import’larını engeller. Bu ağaçtaki sınırlar sadece önerilmez, uygulanır.
+
+Kuruluma dönmek için [kurulum](/start/docs/v1/installation), bayraklar için [CLI](/start/docs/v1/cli) sayfalarına bak.
+
+</DocsProse>

@@ -1,0 +1,55 @@
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
+
+export const geminiSettings = `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }`;
+
+export const aiderSettings = `read: AGENTS.md`;
+
+<DocsPageHeader
+  title="Supported tools"
+  description="Which tools load the rules natively, which read them from AGENTS.md, and the two that need one setting."
+/>
+
+<DocsProse>
+
+<h2 id="tools">AI coding tools</h2>
+
+<p><AcademyBadge kind="claudeCode" label="Claude Code" /> and <AcademyBadge kind="cursor" label="Cursor" /> load the rules from their own folders. Every other tool reads the managed `AGENTS.md` block, which lists each rule with its file path and when to read it.</p>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Tool</th><th>Native rules</th><th>From the AGENTS.md map</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><AcademyBadge kind="claudeCode" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" />`.claude/rules/virastack/`</span></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" /></span></td></tr>
+      <tr><td><AcademyBadge kind="cursor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" />`.cursor/rules/virastack/`</span></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" /></span></td></tr>
+      <tr><td><AcademyBadge kind="codex" /></td><td><StatusIcon status="no" label="Not supported" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" /></span></td></tr>
+      <tr><td><AcademyBadge kind="copilot" /></td><td><StatusIcon status="no" label="Not supported" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" /></span></td></tr>
+      <tr><td><AcademyBadge kind="geminiCli" /></td><td><StatusIcon status="no" label="Not supported" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" />one setting</span></td></tr>
+      <tr><td>Aider</td><td><StatusIcon status="no" label="Not supported" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" />one setting</span></td></tr>
+      <tr><td>Other tools that read AGENTS.md (Windsurf, Zed, …)</td><td><StatusIcon status="no" label="Not supported" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Supported" /></span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+Native rules load automatically when the agent touches matching files. Tools without native rules read the “Always” rules at the start of a task and the matching rule before editing, as the map tells them.
+
+<h2 id="gemini-cli">Gemini CLI</h2>
+
+<p><AcademyBadge kind="geminiCli" label="Gemini CLI" /> reads `GEMINI.md` by default. Add `AGENTS.md` in `.gemini/settings.json`:</p>
+
+<pre><code>{geminiSettings}</code></pre>
+
+<h2 id="aider">Aider</h2>
+
+Aider reads extra files listed in `.aider.conf.yml`:
+
+<pre><code>{aiderSettings}</code></pre>
+
+<h2 id="frameworks">Frameworks</h2>
+
+- **<AcademyBadge kind="nextjs" label="Next.js" /> 16** with the App Router. i18n with `next-intl`.
+- **<AcademyBadge kind="tanstack-start" label="TanStack Start" />**. i18n with Paraglide JS (`@inlang/paraglide-js`).
+- The framework is read from `package.json`. Use `--framework nextjs` or `--framework tanstack` to override it.
+
+</DocsProse>

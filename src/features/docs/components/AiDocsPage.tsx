@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
@@ -7,37 +5,14 @@ import { getProduct } from "@/config/products.config";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
+import { DocsMdx } from "@/features/docs/components/DocsMdx";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
-import { AiV1IntroductionDoc } from "@/features/docs/content/ai/v1/AiV1IntroductionDoc";
-import { AiChangelogDoc } from "@/features/docs/content/ai/v2/AiChangelogDoc";
-import { AiCliDoc } from "@/features/docs/content/ai/v2/AiCliDoc";
-import { AiCustomizationDoc } from "@/features/docs/content/ai/v2/AiCustomizationDoc";
-import { AiInstallationDoc } from "@/features/docs/content/ai/v2/AiInstallationDoc";
-import { AiInstalledFilesDoc } from "@/features/docs/content/ai/v2/AiInstalledFilesDoc";
-import { AiIntroductionDoc } from "@/features/docs/content/ai/v2/AiIntroductionDoc";
-import { AiRulesDoc } from "@/features/docs/content/ai/v2/AiRulesDoc";
-import { AiSupportedToolsDoc } from "@/features/docs/content/ai/v2/AiSupportedToolsDoc";
-import { AiUpgradeDoc } from "@/features/docs/content/ai/v2/AiUpgradeDoc";
+import { aiDocsContent } from "@/features/docs/content/ai/ai-docs-content";
+import { aiDocsV1Content } from "@/features/docs/content/ai/v1/ai-docs-v1-content";
+import { readDocsMdxHeadings } from "@/features/docs/lib/docs-mdx-source";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 const UPGRADE_HREF = "/ai/docs/upgrade";
-
-const aiDocsContent: Record<string, Record<string, () => ReactNode>> = {
-  latest: {
-    introduction: () => <AiIntroductionDoc />,
-    installation: () => <AiInstallationDoc />,
-    "supported-tools": () => <AiSupportedToolsDoc />,
-    cli: () => <AiCliDoc />,
-    "installed-files": () => <AiInstalledFilesDoc />,
-    rules: () => <AiRulesDoc />,
-    customization: () => <AiCustomizationDoc />,
-    upgrade: () => <AiUpgradeDoc />,
-    changelog: () => <AiChangelogDoc />,
-  },
-  v1: {
-    introduction: () => <AiV1IntroductionDoc />,
-  },
-};
 
 type AiDocsPageProps = {
   slug: string;
@@ -49,12 +24,13 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
   const docs = docsProducts.ai;
   const content = getDocsVersionContent(docs, versionId);
   const version = docs.versions.find((item) => (versionId ? item.id === versionId : item.latest));
-  const texts = content.texts(await getMessages(), await getLocale());
+  const locale = await getLocale();
+  const texts = content.texts(await getMessages(), locale);
   const tDocs = await getTranslations("Docs");
   const page = texts.getPage(slug);
-  const render = aiDocsContent[versionId ?? "latest"]?.[slug];
+  const pageContent = (versionId === "v1" ? aiDocsV1Content : aiDocsContent)[slug];
 
-  if (!page || !version || !render) {
+  if (!page || !version || !pageContent) {
     return null;
   }
 
@@ -74,7 +50,7 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
       sections={texts.getNav()}
       docsIndexHref={content.indexHref}
       slug={slug}
-      headings={page.headings ?? []}
+      headings={readDocsMdxHeadings({ product: "ai", version: versionId, locale, slug })}
       githubIssueHref={githubIssueHref}
       versions={{
         current: version.id,
@@ -82,7 +58,7 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
         upgradeHref: UPGRADE_HREF,
       }}
     >
-      {render()}
+      <DocsMdx content={pageContent} />
     </DocsLayout>
   );
 }

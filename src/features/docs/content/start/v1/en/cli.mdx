@@ -1,0 +1,75 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Commands and flags"
+  description="Interactive wizard or silent install with flags, suited for CI and scripts."
+/>
+
+<DocsProse>
+
+<h2 id="kullanim">Usage</h2>
+
+Run the CLI interactively, or pass flags for a silent install. Prefer a guided flow? Use the [Builder](/start/builder).
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest")} />
+
+<h2 id="bayraklar">Commands and flags</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Command / flag</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`init [name]`</td><td>Create a new project (default; also runs with no command)</td></tr>
+      <tr><td>`add <tool>`</td><td>Add a tool to an existing project (`mask`, `password`, `address`, `ai`)</td></tr>
+      <tr><td>`--name <name>`</td><td>Project name (or positional argument / `.`)</td></tr>
+      <tr><td>`--template <name>`</td><td>`nextjs` / `tanstack`</td></tr>
+      <tr><td>`--tools <list>`</td><td>Comma-separated tools (`mask,password,address`)</td></tr>
+      <tr><td>`--agent <list>`</td><td>AI coding tools: `claude`, `cursor` (comma separated) or `none`. With `--yes` and no value, both are selected</td></tr>
+      <tr><td>`--i18n` / `--no-i18n`</td><td>Enable or disable the i18n template</td></tr>
+      <tr><td>`--yes`, `-y`</td><td>Silent install (flags + defaults)</td></tr>
+      <tr><td>`--skip-install`</td><td>Skip dependency install. AI rules and design skills are still added</td></tr>
+      <tr><td>`--tr`</td><td><span className="mr-1.5" aria-hidden>🇹🇷</span>Turkish prompts</td></tr>
+      <tr><td>`--telemetry-disable`</td><td>Permanently disable anonymous usage data</td></tr>
+      <tr><td>`-v`, `--version`</td><td>Print the CLI version</td></tr>
+      <tr><td>`-h`, `--help`</td><td>Show usage</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Use `--tr` for Turkish prompts, and `--yes` for a quick install with defaults.
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest my-app --template nextjs --agent claude --i18n --yes")} />
+
+<h2 id="add">add command</h2>
+
+To add a ViraStack tool to an existing project, run the `add` command from the project root:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add mask")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add password")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add address")} />
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent cursor")} />
+
+Available tools:
+
+- `mask`: installs `@virastack/mask`
+- `password`: installs `@virastack/password`
+- `address`: installs `@virastack/address`
+- `ai`: runs `@virastack/ai init` (with `--agent` when given). Files you changed are kept.
+
+During `init`, `mask`, `password` and `address` are optional; AI rules and design skills are added automatically. Use `add` for a tool you skipped or for an existing app. Outside Start projects, run [ViraStack AI](/ai/docs/installation) directly.
+
+<h2 id="telemetry">Telemetry</h2>
+
+ViraStack collects anonymous usage data so we can keep statistics (for example template, i18n preference, selected tools and AI coding tools, package manager, and CLI version). No personal data, project name, or file paths are collected.
+
+If you prefer not to share this data:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest --telemetry-disable")} />
+
+</DocsProse>

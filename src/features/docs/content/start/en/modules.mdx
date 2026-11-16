@@ -1,0 +1,92 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { StartModulesTable } from "@/features/docs/components/StartModulesTable";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Modules"
+  description="What a module installs, how it gets onto your page, how it connects to your API and how to remove it."
+/>
+
+<DocsProse>
+
+<h2 id="nedir">What a module is</h2>
+
+A module is a feature that runs inside `src/features/<name>`: components, API functions, hooks, schemas and tests, in the same structure as the template and the <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> rules.
+
+Modules run on a dummy API or dummy data. Connecting your real API and adapting the response model is up to you.
+
+<h2 id="hazir">Ready modules</h2>
+
+<StartModulesTable />
+
+Each module's live preview, its code for all four templates and the prompt for your agent are in the [module catalog](/start/features).
+
+<h2 id="requirements">Requirements</h2>
+
+- **A project created with ViraStack Start 2.0 or newer.** The command does not run in a project not created with Start; in an older Start project it prints the version it needs and installs nothing.
+- Any of the four templates: <AcademyBadge kind="nextjs" label="Next.js" /> and <AcademyBadge kind="tanstack-start" label="TanStack Start" />, with or without i18n. The CLI reads the template from the project and installs the matching files.
+- An internet connection. Modules download from the ViraStack registry.
+
+<h2 id="ekle">Add a module</h2>
+
+Run it in the project root:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add users")} />
+
+The command:
+
+- Copies the module's files into `src/features/<name>`.
+- Installs missing packages and `components/ui` components with the project's package manager.
+- Merges its text into `src/messages` in i18n templates. For a language the module has no translation for, it adds the English text and tells you.
+- Brings the module's tests; the project's `test` script runs them too.
+- Prints where the module's pages are; for a module without pages, the main component's import line and the module page's link.
+
+**A module with pages brings them:** `products` adds its list at `/products` and a page per product under it, and `cart` adds the cart at `/cart`. If your project already has a route at one of those addresses, nothing changes and the CLI lists it; `--no-pages` installs the feature alone. Other modules create no page: you decide where they show up.
+
+**In a <AcademyBadge kind="nextjs" label="Next.js" /> project created before Start 2.2,** delete `src/app/loading.tsx`. While it stays, a missing product answers 200 instead of 404 and the page's content is hidden without JavaScript. New projects do not have this file.
+
+If the project already has a file or text with the same name, nothing changes and the CLI lists the conflicts. If the module is already installed, the command does nothing.
+
+<h2 id="sayfa">Add it to a page</h2>
+
+A module without pages, or one installed with `--no-pages`, goes on a page of yours, in one of two ways. Either way the module's code stays as it is; only a new page gets written.
+
+<h3 id="with-an-agent">With an AI coding tool</h3>
+
+The **Prompt** button on the module's page copies one prompt that works for both frameworks. Your agent installs the module, opens a page the way your framework does it, renders the main component and runs the `typecheck`, `test` and `lint:ci` scripts.
+
+<h3 id="by-hand">By hand</h3>
+
+Open a new page in your framework's routing, then import and render the module's main component. Its name and path are in the import line the CLI prints after installing and in the **Code** tab of the module's page.
+
+- <AcademyBadge kind="nextjs" label="Next.js" />: a `page.tsx` under `src/app`; under `src/app/[locale]` in i18n templates.
+- <AcademyBadge kind="tanstack-start" label="TanStack Start" />: a route file under `src/routes`; under `src/routes/{-$lang}` in i18n templates.
+
+Modules that keep search and pagination in the URL (such as `users`) need two more steps: on <AcademyBadge kind="nextjs" label="Next.js" />, wrap the component in `Suspense`; on <AcademyBadge kind="tanstack-start" label="TanStack Start" />, add the module's search schema to the route definition. The prompt on the module's page spells these out.
+
+<h2 id="checkout">Example: a checkout page</h2>
+
+`checkout-address` and `checkout-card` are separate modules. Install both with `add`, then render `CheckoutAddress` and `CheckoutCard` on the same page.
+
+Features cannot import each other, and shared folders cannot import features, so the page ties the two together. The `useCheckoutAddress` hook returns the chosen address and `useCheckoutCard` the chosen card.
+
+The card side carries a token, the bank, the brand, the last four digits, the expiry and the name; the card number and CVV never leave the browser. Call the hooks in a client component next to the page on <AcademyBadge kind="nextjs" label="Next.js" />, and in the route component on <AcademyBadge kind="tanstack-start" label="TanStack Start" />.
+
+<h2 id="api">Connect your API</h2>
+
+Set your API's address in `.env.local`: `NEXT_PUBLIC_API_URL` on <AcademyBadge kind="nextjs" label="Next.js" /> or `VITE_API_URL` on <AcademyBadge kind="tanstack-start" label="TanStack Start" />.
+
+If your responses differ, adapt the module's `schemas` and `api` folders. Each module's page lists the files to change under **How do you use it?**.
+
+<h2 id="kaldir">Remove a module</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest remove users")} />
+
+Deletes the module's files, the folders it leaves empty and its text. Packages stay, because other code may use them.
+
+If you changed any of those files, it lists them and asks first. In a script, pass `--yes` to delete them too; without it nothing changes.
+
+The module's own pages go with it. A page you changed, or your own page after `--no-pages`, is listed before anything is deleted and goes only if you say yes; with `--yes` or in a script it stays, and the CLI warns that it may still import the module. A page you wrote yourself elsewhere stays: remove its import yourself.
+
+</DocsProse>

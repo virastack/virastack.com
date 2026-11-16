@@ -1,0 +1,66 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const output = `ViraStack AI v2.1.0
+Framework: nextjs · Agents: claude, cursor · i18n: no · Package manager: pnpm
+
+  + .claude/rules/virastack/core.md · created
+  + .claude/rules/virastack/architecture.md · created
+  ...
+  + .cursor/rules/virastack/nextjs.mdc · created
+  + AGENTS.md · created
+  + CLAUDE.md · created
+  + .virastack/ai.json · created
+
+27 created · 0 updated · 0 removed · 0 skipped
+ViraStack AI rules are ready.`;
+
+<DocsPageHeader
+  title="Kurulum"
+  description="Gereksinimler, kurulum komutu, AI aracı seçimi ve güncelleme."
+/>
+
+<DocsProse>
+
+<h2 id="requirements">Gereksinimler</h2>
+
+- Node.js 20.9 veya daha yeni bir sürüm gerekir.
+- `package.json` dosyanda <AcademyBadge kind="nextjs" label="Next.js" /> için `next` ya da <AcademyBadge kind="tanstack-start" label="TanStack Start" /> için `@tanstack/react-start` bulunmalı. İkisi de yoksa `--framework` ile belirtebilirsin.
+- Komutu projenin kök klasöründe, `package.json` dosyasının yanında çalıştır.
+
+<h2 id="install">Kurulum</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init")} />
+
+CLI önce tespit ettiklerini, sonra yazdığı her dosyayı listeler. Bayraksız çalıştırıldığında <AcademyBadge kind="claudeCode" label="Claude Code" /> ve <AcademyBadge kind="cursor" label="Cursor" /> için kural kurar:
+
+<pre><code>{output}</code></pre>
+
+Yeni dosyaları `.virastack/ai.json` dahil commit et. Ekip arkadaşların ve sonraki güncellemeler bu dosyaya dayanır.
+
+<h2 id="choose-tools">AI araçlarını seç</h2>
+
+Sadece kullandığın araçlar için kural kurmak üzere `--agent` kullan:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init --agent claude")} />
+
+- `--agent claude`: `.claude/rules/virastack/` ve `CLAUDE.md` içinde `@AGENTS.md` satırı.
+- `--agent cursor`: `.cursor/rules/virastack/`.
+- `--agent claude,cursor`: ikisi birden. Varsayılan budur.
+- `--agent none`: `.agents/rules/virastack/` içinde düz Markdown kurallar. Agent’lar bunları `AGENTS.md` haritasından okur.
+
+Seçim `.virastack/ai.json` içine kaydedilir ve sonraki `init` aynı seçimi kullanır. Değiştirmek için `init` komutunu farklı bir `--agent` ile çalıştır. Diğer aracın kural dosyaları silinir.
+
+<h2 id="with-start">ViraStack Start ile</h2>
+
+[ViraStack Start](/start/docs/installation) kurulumda “Hangi AI kodlama araçlarını kullanıyorsun?” diye sorar ve ViraStack AI’ı cevabınla çalıştırır. Mevcut bir Start projesinde kuralları `add ai` ile ekle veya yenile:
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest add ai --agent claude")} />
+
+<h2 id="update">Güncelleme</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@2 init")} />
+
+`init` komutunu tekrar çalıştır. Değiştirmediğin kurallar güncellenir, yeni sürümün kaldırdığı kurallar silinir. Değiştirdiğin kurallar sen onaylamadan korunur. Değiştirilmiş kurallar ve `--force` için [özelleştirme](/ai/docs/customization) sayfasına bak.
+
+</DocsProse>

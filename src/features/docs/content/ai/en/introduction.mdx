@@ -1,0 +1,40 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Introduction"
+  description="What ViraStack AI does, why it exists and the one command that installs it."
+/>
+
+<DocsProse>
+
+<p><AcademyBadge kind="virastack" label="ViraStack AI" /> (`@virastack/ai`) writes architecture rules for AI coding agents into a <AcademyBadge kind="nextjs" label="Next.js" /> or <AcademyBadge kind="tanstack-start" label="TanStack Start" /> project. The rules describe where code lives, which libraries to use and how, so agents write code that matches the rest of the project.</p>
+
+<h2 id="what">What it does</h2>
+
+- Writes 14 rules in each tool’s native format: `.claude/rules/virastack/` for <AcademyBadge kind="claudeCode" label="Claude Code" /> and `.cursor/rules/virastack/` for <AcademyBadge kind="cursor" label="Cursor" />.
+- Adds a managed block to `AGENTS.md` with the project’s commands and a map of every rule, so <AcademyBadge kind="codex" label="Codex" />, <AcademyBadge kind="copilot" label="Copilot" /> and other agents find them too.
+- Detects <AcademyBadge kind="nextjs" label="Next.js" /> or <AcademyBadge kind="tanstack-start" label="TanStack Start" /> from `package.json` and installs only that framework’s rules. The `i18n` rule is added only when `next-intl` or `Paraglide` is installed.
+- Records every installed file in `.virastack/ai.json`, so updates replace only rules you did not change.
+
+<h2 id="why">Why ViraStack AI?</h2>
+
+- **One standard, every tool:** a team using <AcademyBadge kind="claudeCode" label="Claude Code" /> and <AcademyBadge kind="cursor" label="Cursor" /> side by side gets the same rules in both.
+- **Written for the current stack:** <AcademyBadge kind="nextjs" label="Next.js" /> 16, <AcademyBadge kind="react" label="React" /> 19, <AcademyBadge kind="tanstack-start" label="TanStack Start" />, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> 5, <AcademyBadge kind="zustand" label="Zustand" /> 5, <AcademyBadge kind="zod" label="Zod" /> 4 and <AcademyBadge kind="tailwind" label="Tailwind CSS" /> 4; rule examples are built and run in freshly created projects.
+- **Never overwrites your files:** rules live in their own `virastack/` folders. `AGENTS.md` and `CLAUDE.md` only get a small managed block or import line.
+
+<h2 id="quick-start">One command</h2>
+
+Run it in the project root:
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai init")} />
+
+Starting a new project? [ViraStack Start](/start/docs) scaffolds <AcademyBadge kind="nextjs" label="Next.js" /> or <AcademyBadge kind="tanstack-start" label="TanStack Start" /> with these rules already installed.
+
+<h2 id="next-steps">Next steps</h2>
+
+- [Installation](/ai/docs/installation): requirements, choosing AI tools and updating.
+- [Rule catalog](/ai/docs/rules): what each rule covers and when it loads.
+- [Upgrade to v2](/ai/docs/upgrade): moving a v1 project to the new layout.
+
+</DocsProse>

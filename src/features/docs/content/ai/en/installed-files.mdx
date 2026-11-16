@@ -1,0 +1,76 @@
+export const tree = `.claude/rules/virastack/*.md     # --agent claude
+.cursor/rules/virastack/*.mdc    # --agent cursor
+.agents/rules/virastack/*.md     # --agent none
+.virastack/ai.json               # manifest
+AGENTS.md                        # virastack-ai block
+CLAUDE.md                        # @AGENTS.md (--agent claude)`;
+
+export const agentsBlock = `<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Commands
+## Precedence
+## Rules
+<!-- END:virastack-ai -->`;
+
+<DocsPageHeader
+  title="Installed files"
+  description="Where the rules go, what the AGENTS.md block contains and how the manifest tracks files."
+/>
+
+<DocsProse>
+
+<h2 id="tree">File tree</h2>
+
+<pre><code>{tree}</code></pre>
+
+Rule files are only written for the tools you select. `AGENTS.md` and `.virastack/ai.json` are always written.
+
+<h2 id="agents-md">AGENTS.md block</h2>
+
+ViraStack AI owns only the part between the `BEGIN:virastack-ai` and `END:virastack-ai` markers:
+
+<pre><code>{agentsBlock}</code></pre>
+
+- **Commands** use the package manager found from your lockfile (`pnpm lint && pnpm typecheck`, `npm test`, …).
+- **Precedence** says your own project instructions override ViraStack rules, and framework docs decide API facts.
+- **Rules** lists where each tool reads the rules and a table of every rule with when to use it.
+- Your own text above or below the block, and the <AcademyBadge kind="nextjs" label="Next.js" /> block (`BEGIN:nextjs-agent-rules`), stay byte for byte.
+- If the markers are unbalanced or repeated, the CLI stops and leaves the file as it is, so you can fix it by hand.
+
+<h2 id="claude-md">CLAUDE.md</h2>
+
+With `--agent claude`, `CLAUDE.md` gets an `@AGENTS.md` import line so <AcademyBadge kind="claudeCode" label="Claude Code" /> reads the block. The file is created if it does not exist; otherwise the line is added at the top and the rest stays. `remove` undoes exactly what was done. If `CLAUDE.md` is a symlink to `AGENTS.md`, the link stays and no line is added.
+
+<h2 id="manifest">Manifest</h2>
+
+`.virastack/ai.json` records what was installed. Commit it and do not edit it by hand.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Field</th><th>Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`$schema`</td><td>JSON schema for editor validation.</td></tr>
+      <tr><td>`version`</td><td>Manifest format version (`1`).</td></tr>
+      <tr><td>`cliVersion`</td><td>The `@virastack/ai` version that wrote the file.</td></tr>
+      <tr><td>`framework`</td><td>`nextjs` or `tanstack`.</td></tr>
+      <tr><td>`agents`</td><td>The selected tools: `claude`, `cursor` or `none`.</td></tr>
+      <tr><td>`claudeImport`</td><td>`created` or `inserted`: how the `@AGENTS.md` line got into `CLAUDE.md`.</td></tr>
+      <tr><td>`files`</td><td>Each managed file with the sha256 hash of what was written. A different hash means you changed the file.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="managed">What is managed</h2>
+
+ViraStack AI creates, updates and removes only these:
+
+- Rule files inside the `virastack/` folders. Each starts with a “Managed by @virastack/ai” comment.
+- The `virastack-ai` block in `AGENTS.md` and the manifest.
+- The `@AGENTS.md` line in `CLAUDE.md`.
+
+Anything else, including your own rule files next to the `virastack/` folders, is never touched.
+
+</DocsProse>

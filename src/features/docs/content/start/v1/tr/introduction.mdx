@@ -1,0 +1,33 @@
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+import { Typescript } from "@/components/ui/svgs/typescript";
+
+<DocsPageHeader
+  title="Giriş"
+  description={<><GuideProductMark id="start" linked={false}>{"Start"}</GuideProductMark>{", modern React projesini tek komutla oluşturan üretim odaklı bir CLI’dir."}</>}
+/>
+
+<DocsProse>
+
+Yapılandırma yorgunluğunu azaltır: <GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> veya <GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon> şablonları, feature tabanlı mimari, strict <GuideStackIcon icon={<Typescript aria-hidden />}>TypeScript</GuideStackIcon> ve AI agent kuralları.
+
+Kurulumda isteğe bağlı olarak <GuideProductMark id="mask" linked={false}>Mask</GuideProductMark>, <GuideProductMark id="password" linked={false}>Password</GuideProductMark> ve <GuideProductMark id="address" linked={false}>Address</GuideProductMark> gibi ekosistem araçlarını da seçebilirsin.
+
+<h2 id="neden">Neden <GuideProductMark id="start" linked={false} tone="heading">Start</GuideProductMark>?</h2>
+
+- **İnteraktif CLI**: uzun bayrak listesi yerine adım adım yönlendirme.
+- **Üretime hazır temel**: ESLint, Prettier, Husky, Knip, Commitlint ve CI hazır gelir.
+- **Agent uyumlu**: kurulum, seçtiğin AI kodlama araçları için <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> kurallarını yazar ve üç tasarım skill’i kurar. Asistanlar proje mimarisine uyumlu kod üretir.
+
+<h2 id="sablonda-neler-var">Şablonda neler var?</h2>
+
+Her şablon feature tabanlı yapı, tema desteği, Zod env doğrulama ve state / form / UI için aynı ortak paketleri getirir. İkonlu tam liste [şablonlar → ortak stack](/start/docs/v1/templates#stack) sayfasında. İsteğe bağlı çoklu dil için [i18n](/start/docs/v1/i18n) sayfasına bak.
+
+Kimlik doğrulama ve veritabanı bilerek kapsam dışında bırakıldı; mimari, gerektiğinde eklemen için hazır. Testler Vitest, Testing Library ve MSW ile hazır gelir.
+
+<h2 id="baslarken">Başlarken</h2>
+
+Proje oluşturmaya hazır mısın? [Kurulum](/start/docs/v1/installation) sayfasına geç. Bayraklar ve sessiz kurulum için [CLI](/start/docs/v1/cli); framework ve klasör yapısı için [şablonlar](/start/docs/v1/templates).
+
+</DocsProse>

@@ -1,0 +1,55 @@
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
+
+export const geminiSettings = `{ "context": { "fileName": ["AGENTS.md", "GEMINI.md"] } }`;
+
+export const aiderSettings = `read: AGENTS.md`;
+
+<DocsPageHeader
+  title="Desteklenen araçlar"
+  description="Hangi araç kuralları doğrudan yükler, hangisi AGENTS.md üzerinden okur ve tek ayar isteyen iki araç."
+/>
+
+<DocsProse>
+
+<h2 id="tools">AI kodlama araçları</h2>
+
+<p><AcademyBadge kind="claudeCode" label="Claude Code" /> ve <AcademyBadge kind="cursor" label="Cursor" /> kuralları kendi klasörlerinden yükler. Diğer araçlar yönetilen `AGENTS.md` bloğunu okur. Bu blok her kuralı dosya yolu ve ne zaman okunacağıyla listeler.</p>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Araç</th><th>Kendi kural klasörü</th><th>AGENTS.md haritasından</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><AcademyBadge kind="claudeCode" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" />`.claude/rules/virastack/`</span></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" /></span></td></tr>
+      <tr><td><AcademyBadge kind="cursor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" />`.cursor/rules/virastack/`</span></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" /></span></td></tr>
+      <tr><td><AcademyBadge kind="codex" /></td><td><StatusIcon status="no" label="Desteklenmiyor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" /></span></td></tr>
+      <tr><td><AcademyBadge kind="copilot" /></td><td><StatusIcon status="no" label="Desteklenmiyor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" /></span></td></tr>
+      <tr><td><AcademyBadge kind="geminiCli" /></td><td><StatusIcon status="no" label="Desteklenmiyor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" />tek ayar</span></td></tr>
+      <tr><td>Aider</td><td><StatusIcon status="no" label="Desteklenmiyor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" />tek ayar</span></td></tr>
+      <tr><td>AGENTS.md okuyan diğer araçlar (Windsurf, Zed, …)</td><td><StatusIcon status="no" label="Desteklenmiyor" /></td><td><span className="inline-flex items-center gap-1.5"><StatusIcon status="yes" label="Destekleniyor" /></span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+Kendi klasöründen yüklenen kurallar, agent eşleşen dosyalara dokunduğunda otomatik yüklenir. Bu desteği olmayan araçlar, haritanın söylediği gibi görev başında “Always” kurallarını, düzenlemeden önce de ilgili kuralı okur.
+
+<h2 id="gemini-cli">Gemini CLI</h2>
+
+<p><AcademyBadge kind="geminiCli" label="Gemini CLI" /> varsayılan olarak `GEMINI.md` okur. `.gemini/settings.json` içine `AGENTS.md` ekle:</p>
+
+<pre><code>{geminiSettings}</code></pre>
+
+<h2 id="aider">Aider</h2>
+
+Aider, `.aider.conf.yml` içinde listelenen ek dosyaları okur:
+
+<pre><code>{aiderSettings}</code></pre>
+
+<h2 id="frameworks">Framework’ler</h2>
+
+- App Router ile **<AcademyBadge kind="nextjs" label="Next.js" /> 16**. i18n için `next-intl`.
+- **<AcademyBadge kind="tanstack-start" label="TanStack Start" />**. i18n için Paraglide JS (`@inlang/paraglide-js`).
+- Framework `package.json` dosyasından okunur. Değiştirmek için `--framework nextjs` veya `--framework tanstack` kullan.
+
+</DocsProse>

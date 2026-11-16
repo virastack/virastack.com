@@ -1,0 +1,74 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark, GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { Nodejs } from "@/components/ui/svgs/nodejs";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+<DocsPageHeader
+  title="Kurulum"
+  description="Gereksinimler, kurulum komutu, CLI soruları ve sonraki adımlar."
+/>
+
+<DocsProse>
+
+<h2 id="hizli-baslangic">Hızlı başlangıç</h2>
+
+Şablonlar <GuideStackIcon icon={<Nodejs aria-hidden />}>Node.js</GuideStackIcon> ^22.22.2, ^24.15.0 veya 26 ve üstünü ister. Önerilen paket yöneticisi pnpm’dir; npm, yarn ve bun da desteklenir.
+
+<CodeBlockCommand {...convertNpmCommand("npx virastack@latest")} />
+
+Bu komut etkileşimli menüyü açar. Sessiz kurulum ve tüm bayraklar için [CLI](/start/docs/cli) sayfasına bak.
+
+<h2 id="cli-sorulari">CLI ne sorar?</h2>
+
+1. **Proje adı**: klasör adı
+2. **Şablon**: <GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> App Router veya <GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon>
+3. **AI kodlama araçları**: <AcademyBadge kind="claudeCode" label="Claude Code" />, <AcademyBadge kind="cursor" label="Cursor" /> veya ikisi (ikisi de seçili gelir). Hiçbirini seçmezsen düz kurallar `.agents/rules/` içine kurulur.
+4. **i18n**: çoklu dil şablonu istiyor musun?
+5. **Araçlar**: `@virastack/mask`, `@virastack/password`, `@virastack/address` gibi opsiyonel paketler.
+
+<h2 id="sonrasi">Kurulum sonrası</h2>
+
+Ardından CLI projeyi şu sırayla hazırlar:
+
+1. Git deposunu oluşturur ve bağımlılıkları kurar. Böylece husky hook’larını kurabilir.
+2. Sadece Next.js: `AGENTS.md` dosyasına Next.js bloğunu yazar. Bu blok agent’ları `node_modules/next/dist/docs/` içindeki dokümana yönlendirir.
+3. <GuideProductMark id="ai" linked={false}>AI</GuideProductMark> seçtiğin AI araçlarıyla çalışır: kurallar `.claude/rules/virastack/` ve `.cursor/rules/virastack/` içine, kural haritası `AGENTS.md` içine yazılır. [Kurulan dosyalar](/ai/docs/installed-files) sayfasına bak.
+4. Üç tasarım skill’i kurar.
+5. İlk commit’i atar. `git status` temiz kalır.
+
+<h3 id="skills">Tasarım skill’leri</h3>
+
+Üç skill, Cursor ve diğer agent’ların okuduğu `.agents/skills/` içine kopyalanır. Claude Code seçiliyse `.claude/skills/` içine de gider; Claude Code tek araçsa yalnızca oraya. Skill’ler symlink değil, dosya olarak kopyalanır.
+
+- `emil-design-eng` ([emilkowalski/skills](https://github.com/emilkowalski/skills)): Emil Kowalski’nin animasyon, etkileşim ve detay odaklı tasarım mühendisliği.
+- `better-ui` ([jakubkrehel/skills](https://github.com/jakubkrehel/skills)): Jakub Krehel’in yüzey, ikon ve animasyon için net değerler veren arayüz cilası.
+- `better-accessibility` ([jakubkrehel/skills](https://github.com/jakubkrehel/skills)): erişilebilir bileşenler, odak yönetimi ve semantik HTML.
+
+Her skill ayrı kurulur. Biri başarısız olursa diğerleri durmaz. Skill’ler sadece çevrimdışıyken atlanır; CLI o zaman sonradan eklemek için komutu yazdırır. `--skip-install` onları atlamaz.
+
+<h3 id="prettierignore">.prettierignore neden AI dosyalarını içerir</h3>
+
+Şablonun `.prettierignore` dosyası `AGENTS.md`, `CLAUDE.md`, `.agents`, `.claude`, `.cursor`, `.virastack` ve `skills-lock.json` dosyalarını hariç tutar. ViraStack AI bu dosyaları özetle (hash) izler; Prettier biçimlendirseydi sonraki güncelleme onları senin düzenlemen sayıp güncellemeyi bırakırdı. Böylece `lint:ci` da senin yazmadığın dosyalar yüzünden başarısız olmaz.
+
+<h3 id="calistir">Projeyi çalıştır</h3>
+
+Proje dizinine girip geliştirme sunucusunu başlat:
+
+<CodeBlockCommand {...convertNpmCommand("npm run dev")} />
+
+Ana sayfa `src/features/home` içindeki kısa başlangıç sayfasıdır. Kendi ürününe geçerken silebilirsin.
+
+<h2 id="fixme">İlk yapılacaklar (FIXME)</h2>
+
+Şablonlar ilk yapılacakları `FIXME:` yorumlarıyla işaretler. Repoda bu işareti ara, sonra sırayla güncelle:
+
+1. **Adım 1: Site meta verisi** (`src/config/site.config.ts`): varsayılan açıklama ve sosyal linkleri ürün adın, metnin ve URL’lerinle değiştir. Ad ve kök URL `.env` üzerinden gelir:
+   - **Next.js** için `NEXT_PUBLIC_APP_NAME`, `NEXT_PUBLIC_APP_URL`
+   - **TanStack Start** için `VITE_APP_NAME`, `VITE_APP_URL`
+2. **Adım 2: Uzak görseller (yalnızca Next.js)** (`next.config.ts`): CDN veya medya host’larını `images.remotePatterns` altına ekle. Bu FIXME yalnızca Next şablonlarındadır; TanStack Start’ta karşılığı yoktur.
+3. **Adım 3: API auth header** (`src/lib/api.ts`): auth isteğe bağlı olduğu için bu adımda FIXME işareti yok. Auth çözümünü seçtikten sonra `createApi` çağrısına `getHeaders` ver. Bu başlıklar yalnızca kendi API’ne gider. Tüm şablonlarda ortaktır.
+4. **Adım 4: Env ve asset’ler**: `.env` içinde ad/URL’yi güncelle; yeni değişken eklerken `src/env.ts` ve `.env.example` dosyalarını şablonunun prefix’iyle (`NEXT_PUBLIC_*` veya `VITE_*`) senkron tut. Favicon ve statikleri `public/` altında değiştir, web manifest’teki FIXME’nin istediği 192x192 ve 512x512 ikonları ekle.
+
+</DocsProse>

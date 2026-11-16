@@ -1,0 +1,27 @@
+import { AiRulesTable } from "@/features/docs/components/AiRulesTable";
+
+<DocsPageHeader
+  title="Kural kataloğu"
+  description="İki kural her zaman yüklenir. Diğerleri agent eşleşen dosyalarda çalışırken yüklenir."
+/>
+
+<DocsProse>
+
+<h2 id="loading">Kurallar nasıl yüklenir</h2>
+
+- `core` ve `architecture` her zaman yüklenir.
+- Diğerleri dosya desenleri taşır: <AcademyBadge kind="claudeCode" label="Claude Code" />’da `paths`, <AcademyBadge kind="cursor" label="Cursor" />’da `globs`. Agent eşleşen bir dosyayı okuduğunda veya düzenlediğinde araç kuralı yükler.
+- Diğer agent’lar `AGENTS.md` haritasını izler. Harita her kural için “Use when” satırını verir.
+
+<h2 id="catalog">Katalog</h2>
+
+<AiRulesTable />
+
+<h2 id="conditional">Projeye göre değişenler</h2>
+
+- `nextjs` sadece <AcademyBadge kind="nextjs" label="Next.js" /> projelerine, `tanstack-start` sadece <AcademyBadge kind="tanstack-start" label="TanStack Start" /> projelerine kurulur.
+- `i18n` sadece `next-intl` veya `@inlang/paraglide-js` bağımlılıksa kurulur. Kütüphaneyi sonradan eklersen `init` komutunu tekrar çalıştır.
+- İki framework’ün ortak kuralları sadece seninkine ait satırları tutar. Örneğin `server-state` içindeki `QueryProvider` kurulumu.
+- Kurallardaki komutlar (`lint`, `typecheck`, `test`, `shadcn add`) senin paket yöneticini kullanır.
+
+</DocsProse>

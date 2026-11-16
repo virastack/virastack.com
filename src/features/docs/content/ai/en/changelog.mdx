@@ -1,0 +1,67 @@
+<DocsPageHeader
+  title="Changelog"
+  description="What changed in each ViraStack AI release."
+/>
+
+<DocsProse>
+
+<h2 id="v2-1-0">v2.1.0</h2>
+
+<h3>Changed</h3>
+
+- `AGENTS.md` drops the persona and guardrails; it holds commands, including install and single-file tests, precedence and the rule map.
+- The rules ban barrel files and use one `@/*` alias. New suffix: `*.action.ts`. Messages move to `src/messages/`.
+- Rule corrections checked against current docs: `satisfies`, `useShallow`, React Compiler, fonts, `startTransition`, <AcademyBadge kind="zod" label="Zod" /> 4, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> `query()`, Base UI, the `cn` package and localization.
+- Rules load where they apply: Server Action files load `nextjs`, server function files load `tanstack-start`, routes load `i18n`. State rules moved to `react` so they reach components.
+- Rule sources are Markdown. <AcademyBadge kind="cursor" label="Cursor" /> output uses comma separated `globs` without brace patterns, following Cursor’s docs. Installed paths and rule names do not change.
+
+<h3>Fixed</h3>
+
+- A committed manifest can no longer delete files outside the rule folders; a bad hash is a conflict.
+- Unbalanced or repeated `AGENTS.md` markers stop the run with the file untouched, so your text is not lost.
+- Overwriting and deleting are asked separately. Symlinks stay symlinks. Closing messages report skipped files, and an unreadable manifest gives a warning.
+- `@tanstack/react-router` alone is not <AcademyBadge kind="tanstack-start" label="TanStack Start" />, Yarn 1 uses `npx`, and the lockfile is found up to the repository root.
+
+<h2 id="v2-0-0">v2.0.0</h2>
+
+<h3>Breaking</h3>
+
+- Rules install to `.claude/rules/virastack/` and `.cursor/rules/virastack/`, or `.agents/rules/virastack/` with `--agent none`. `docs/MEMORIES.md` and `docs/architecture-guide.md` are no longer written.
+- Five rules were renamed and the architecture guide became the `architecture` rule. See the [rename table](/ai/docs/upgrade#renamed-rules).
+- `AGENTS.md` is no longer replaced; only the `virastack-ai` block is written.
+- `ApiError` follows ViraStack Start’s `src/lib/api.ts` (`message`, `status`, `data`).
+
+<h3>Added</h3>
+
+- `--agent`, `remove`, `--dry-run`, `--yes` and `--framework`.
+- The `.virastack/ai.json` manifest: updates replace untouched rules, ask before overwriting edited ones and remove dropped ones.
+- Automatic v1 migration: unedited v1 files are removed, edited ones are kept and listed.
+- Commands in the rules use the detected package manager.
+- The `i18n` rule installs only with `next-intl` or Paraglide; framework-specific lines appear only for your framework.
+
+<h3>Changed</h3>
+
+- All 14 rules rewritten for <AcademyBadge kind="nextjs" label="Next.js" /> 16, <AcademyBadge kind="react" label="React" /> 19.2, <AcademyBadge kind="tanstack-start" label="TanStack Start" />, <AcademyBadge kind="tanstack-query" label="TanStack Query" /> 5, <AcademyBadge kind="zustand" label="Zustand" /> 5, <AcademyBadge kind="zod" label="Zod" /> 4 and <AcademyBadge kind="tailwind" label="Tailwind CSS" /> 4, about 30% shorter than v1.
+- <AcademyBadge kind="nextjs" label="Next.js" /> 16: async `params`, `proxy.ts`, `"use cache"` with `cacheComponents`, `preload` instead of `priority`.
+- <AcademyBadge kind="tanstack-start" label="TanStack Start" />: `@tanstack/react-start` imports, `ensureQueryData` with `useSuspenseQuery`.
+- <AcademyBadge kind="tanstack-query" label="TanStack Query" />: one `queryOptions` factory per query, thin hooks, optimistic updates only when needed.
+- <AcademyBadge kind="zustand" label="Zustand" />: `useShallow`, per-request stores for SSR, `useIsClient` or `skipHydration` for persisted state.
+- Testing assumes <AcademyBadge kind="vitest" label="Vitest" />, Testing Library and MSW, as shipped by ViraStack Start.
+- Performance keeps only LCP, INP and CLS budgets; accessibility moved to `ui`.
+
+<h3>Removed</h3>
+
+- Chat-era rules (`INTENTIONAL_TODO`, the blanket comment ban), the `@/data` alias and `*.data.ts` naming, TTI and API p95 budgets.
+
+<h2 id="v1">v1</h2>
+
+- **1.3.2**: UI delivery checklist, focus and heading rules, Tailwind breakpoints for responsive checks.
+- **1.3.1**: contract-first API rules, branded types, optimistic update template, “keep or revert” performance rule.
+- **1.3.0**: framework isolation, framework-specific `AGENTS.md`, `--framework` flag, CLI tests.
+- **1.2**: framework detection, overwrite prompt and `--force`, `--tr`, fetch-first API client.
+- **1.1**: `CLAUDE.md`, package-aware rules, URL state with nuqs, naming conventions, <AcademyBadge kind="tailwind" label="Tailwind CSS" /> v4 classes.
+- **1.0**: first release, `npx @virastack/ai init` writes <AcademyBadge kind="cursor" label="Cursor" /> rules.
+
+The full history is in the [CHANGELOG on GitHub](https://github.com/virastack/ai/blob/main/CHANGELOG.md).
+
+</DocsProse>

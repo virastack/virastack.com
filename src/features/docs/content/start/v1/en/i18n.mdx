@@ -1,0 +1,46 @@
+import { GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+
+<DocsPageHeader
+  title="i18n"
+  description="Only for the multi-language templates: how locales and the default language are wired."
+/>
+
+<DocsProse>
+
+<h2 id="ne-zaman">When this applies</h2>
+
+This page only applies if you chose multi-language support at install time (the **templates-i18n** copy). Plain templates have no locale routing. Template overview: [templates](/start/docs/v1/templates).
+
+<h2 id="nextjs"><GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> (next-intl)</h2>
+
+Config lives in `src/i18n/routing.ts`. The scaffold ships with `en` and `tr`.
+
+- `locales` / `defaultLocale`: which languages exist and which one is the fallback (`en` by default).
+- Copy lives in `messages/en.json` and `messages/tr.json` at the project root (loaded via `src/i18n/request.ts`).
+- `localePrefix: "as-needed"`: the default locale has no URL prefix (`/`); others use `/tr/…`.
+
+For APIs and patterns beyond this scaffold, see the [next-intl docs](https://next-intl.dev).
+
+<h2 id="tanstack"><GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon> (Paraglide)</h2>
+
+Locales are defined in `project.inlang/settings.json`. Routing uses the `$lang` segment under `src/routes/`.
+
+- `sourceLanguageTag`: source / default language (`en` by default). `languageTags`: all locales.
+- Messages live under `messages/{languageTag}.json` (for example `messages/en.json`).
+- App routes use `/$lang`: both locales are prefixed (`/en/…` and `/tr/…`). `/` redirects to `/en` (`baseLocale`). This is not Next-style as-needed.
+
+For Paraglide details, see the [Paraglide JS docs](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+
+<h2 id="varsayilan">Change the default language</h2>
+
+If you want to make another language the default:
+
+1. **Next.js**: set `defaultLocale` in `src/i18n/routing.ts` (for example `"tr"`). With `as-needed`, the new default loses its URL prefix.
+2. **TanStack Start**: set `sourceLanguageTag` in `project.inlang/settings.json` (and regenerate Paraglide so `baseLocale` updates). `/` will redirect to that locale; URLs stay prefixed for every language (`/tr/…`, `/en/…`).
+3. Update product copy in the matching message files. Keep `site.config` / SEO locale fields consistent if you expose them.
+
+To add a new language, register it in the locale list, create its message file, and expose it in the language switcher. See the next-intl or Paraglide docs for details.
+
+</DocsProse>

@@ -1,0 +1,76 @@
+export const output = `typecheck → lint:ci → knip → test → build`;
+
+<DocsPageHeader
+  title="Script’ler"
+  description="İşe göre doğru script: yerel geliştirme, kalite kapıları ve CI."
+/>
+
+<DocsProse>
+
+Her şablon aynı kalite script’leriyle gelir. Framework’e özel olanlar aşağıda. Tercihen pnpm; npm, yarn ve bun aynı şekilde çalışır.
+
+<h2 id="gunluk">Günlük</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Komut</th><th>Ne zaman kullan</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm dev`</td><td>Yerel geliştirme sunucusunu başlatır (Next.js Turbopack; TanStack Start Vite, port 3000).</td></tr>
+      <tr><td>`pnpm build`</td><td>Üretim build’i. Deploy öncesi veya build’i yerelde doğrulamak için.</td></tr>
+      <tr><td>`pnpm start`</td><td>Üretim build’ini sunar (Next.js) veya Vite build’ini önizler (TanStack Start).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="kalite">Kalite</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Komut</th><th>Ne zaman kullan</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm lint`</td><td>Önbellekli ESLint. Kod yazarken erken yakalamak için.</td></tr>
+      <tr><td>`pnpm lint:fix`</td><td>ESLint sorunlarını otomatik düzeltir, ardından Prettier yazar.</td></tr>
+      <tr><td>`pnpm lint:ci`</td><td>CI için katı lint: sıfır uyarı + Prettier check. GitHub Actions ile aynı kapı.</td></tr>
+      <tr><td>`pnpm format`</td><td>Tüm repoyu Prettier ile formatlar.</td></tr>
+      <tr><td>`pnpm format:check`</td><td>Dosya yazmadan format kontrolü (CI dostu).</td></tr>
+      <tr><td>`pnpm typecheck`</td><td>tsc --noEmit ile TypeScript kontrolü. Tip değiştirdiysen push öncesi çalıştır.</td></tr>
+      <tr><td>`pnpm knip`</td><td>Kullanılmayan dosya, export ve bağımlılıkları bulur. Şablonu sade tutar.</td></tr>
+      <tr><td>`pnpm test`</td><td>Test paketini Vitest ile bir kez çalıştırır. CI bunu build’den önce çalıştırır.</td></tr>
+      <tr><td>`pnpm test:watch`</td><td>Kod yazarken Vitest’i izleme modunda çalıştırır.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Husky commit’te lint-staged, push’ta ilgili kontrolleri çalıştırır. CI yerelde kırılmadıkça tam suite’i elle koşman nadiren gerekir.
+
+<h2 id="framework">Framework’e özel</h2>
+
+Bu script’ler yalnızca ilgili şablonda vardır:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Komut</th><th>Şablon</th><th>Ne zaman kullan</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm analyze`</td><td>`nextjs`</td><td>Bundle analyzer build’i. Client bundle boyutunu önemsediğinde kullan.</td></tr>
+      <tr><td>`pnpm generate-routes`</td><td>`tanstack`</td><td>Route ekleyip yeniden adlandırdıktan sonra TanStack Router route tree’yi yeniden üretir.</td></tr>
+      <tr><td>`pnpm preview`</td><td>`tanstack`</td><td>Üretim Vite build’ini önizler (pnpm start ile aynı fikir).</td></tr>
+      <tr><td>`pnpm clean`</td><td>`tanstack`</td><td>Vite / TanStack build cache’lerini temizler (dist, .tanstack, .output).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="ci">CI</h2>
+
+Şablondaki GitHub Actions şu sırayı çalıştırır:
+
+<pre><code>{output}</code></pre>
+
+CI başarısız olursa aynı sırayı yerelde çalıştır: `pnpm typecheck && pnpm lint:ci && pnpm knip && pnpm test && pnpm build`.
+
+</DocsProse>

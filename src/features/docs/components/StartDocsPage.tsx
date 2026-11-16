@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
@@ -7,44 +5,15 @@ import { getProduct } from "@/config/products.config";
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
+import { DocsMdx } from "@/features/docs/components/DocsMdx";
 import { docsProducts, getDocsVersionContent } from "@/features/docs/config/docs-products";
-import { StartCliDoc } from "@/features/docs/content/start/StartCliDoc";
-import { StartI18nDoc } from "@/features/docs/content/start/StartI18nDoc";
-import { StartInstallationDoc } from "@/features/docs/content/start/StartInstallationDoc";
-import { StartIntroductionDoc } from "@/features/docs/content/start/StartIntroductionDoc";
-import { StartModulesDoc } from "@/features/docs/content/start/StartModulesDoc";
-import { StartScriptsDoc } from "@/features/docs/content/start/StartScriptsDoc";
-import { StartTemplatesDoc } from "@/features/docs/content/start/StartTemplatesDoc";
-import { StartV1CliDoc } from "@/features/docs/content/start/v1/StartV1CliDoc";
-import { StartV1I18nDoc } from "@/features/docs/content/start/v1/StartV1I18nDoc";
-import { StartV1InstallationDoc } from "@/features/docs/content/start/v1/StartV1InstallationDoc";
-import { StartV1IntroductionDoc } from "@/features/docs/content/start/v1/StartV1IntroductionDoc";
-import { StartV1ScriptsDoc } from "@/features/docs/content/start/v1/StartV1ScriptsDoc";
-import { StartV1TemplatesDoc } from "@/features/docs/content/start/v1/StartV1TemplatesDoc";
+import { startDocsContent } from "@/features/docs/content/start/start-docs-content";
+import { startDocsV1Content } from "@/features/docs/content/start/v1/start-docs-v1-content";
+import { readDocsMdxHeadings } from "@/features/docs/lib/docs-mdx-source";
 import { getDocsVersionLinks } from "@/features/docs/lib/docs-versions";
 
 /** The note's migration section is the upgrade guide from 1.x. */
 const UPGRADE_HREF = "/releases#start-2-0-0";
-
-const startDocsContent: Record<string, Record<string, () => ReactNode>> = {
-  latest: {
-    introduction: () => <StartIntroductionDoc />,
-    installation: () => <StartInstallationDoc />,
-    cli: () => <StartCliDoc />,
-    modules: () => <StartModulesDoc />,
-    templates: () => <StartTemplatesDoc />,
-    scripts: () => <StartScriptsDoc />,
-    i18n: () => <StartI18nDoc />,
-  },
-  v1: {
-    introduction: () => <StartV1IntroductionDoc />,
-    installation: () => <StartV1InstallationDoc />,
-    cli: () => <StartV1CliDoc />,
-    templates: () => <StartV1TemplatesDoc />,
-    scripts: () => <StartV1ScriptsDoc />,
-    i18n: () => <StartV1I18nDoc />,
-  },
-};
 
 type StartDocsPageProps = {
   slug: string;
@@ -56,12 +25,13 @@ export async function StartDocsPage({ slug, versionId }: StartDocsPageProps) {
   const docs = docsProducts.start;
   const content = getDocsVersionContent(docs, versionId);
   const version = docs.versions.find((item) => (versionId ? item.id === versionId : item.latest));
-  const texts = content.texts(await getMessages(), await getLocale());
+  const locale = await getLocale();
+  const texts = content.texts(await getMessages(), locale);
   const tDocs = await getTranslations("Docs");
   const page = texts.getPage(slug);
-  const render = startDocsContent[versionId ?? "latest"]?.[slug];
+  const pageContent = (versionId === "v1" ? startDocsV1Content : startDocsContent)[slug];
 
-  if (!page || !version || !render) {
+  if (!page || !version || !pageContent) {
     return null;
   }
 
@@ -82,7 +52,7 @@ export async function StartDocsPage({ slug, versionId }: StartDocsPageProps) {
       sections={texts.getNav()}
       docsIndexHref={content.indexHref}
       slug={slug}
-      headings={page.headings ?? []}
+      headings={readDocsMdxHeadings({ product: "start", version: versionId, locale, slug })}
       githubIssueHref={githubIssueHref}
       versions={{
         current: version.id,
@@ -90,7 +60,7 @@ export async function StartDocsPage({ slug, versionId }: StartDocsPageProps) {
         upgradeHref: UPGRADE_HREF,
       }}
     >
-      {render()}
+      <DocsMdx content={pageContent} />
     </DocsLayout>
   );
 }

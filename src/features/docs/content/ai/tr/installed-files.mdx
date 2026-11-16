@@ -1,0 +1,76 @@
+export const tree = `.claude/rules/virastack/*.md     # --agent claude
+.cursor/rules/virastack/*.mdc    # --agent cursor
+.agents/rules/virastack/*.md     # --agent none
+.virastack/ai.json               # manifest
+AGENTS.md                        # virastack-ai block
+CLAUDE.md                        # @AGENTS.md (--agent claude)`;
+
+export const agentsBlock = `<!-- BEGIN:virastack-ai -->
+# ViraStack AI
+
+## Commands
+## Precedence
+## Rules
+<!-- END:virastack-ai -->`;
+
+<DocsPageHeader
+  title="Kurulan dosyalar"
+  description="Kuralların nereye yazıldığı, AGENTS.md bloğunda ne olduğu ve manifestin dosyaları nasıl izlediği."
+/>
+
+<DocsProse>
+
+<h2 id="tree">Dosya ağacı</h2>
+
+<pre><code>{tree}</code></pre>
+
+Kural dosyaları sadece seçtiğin araçlar için yazılır. `AGENTS.md` ve `.virastack/ai.json` her zaman yazılır.
+
+<h2 id="agents-md">AGENTS.md bloğu</h2>
+
+ViraStack AI sadece `BEGIN:virastack-ai` ve `END:virastack-ai` işaretleri arasındaki kısmı yönetir:
+
+<pre><code>{agentsBlock}</code></pre>
+
+- **Komutlar** lockfile’dan bulunan paket yöneticisini kullanır (`pnpm lint && pnpm typecheck`, `npm test`, …).
+- **Precedence**, kendi proje talimatlarının ViraStack kurallarının önüne geçtiğini, API konusunda ise framework dokümanının esas olduğunu söyler.
+- **Rules** bölümü her aracın kuralları nereden okuduğunu ve her kuralın ne zaman kullanılacağını gösteren tabloyu içerir.
+- Bloğun üstündeki veya altındaki kendi metnin ve <AcademyBadge kind="nextjs" label="Next.js" /> bloğu (`BEGIN:nextjs-agent-rules`) birebir korunur.
+- İşaretler dengesiz veya tekrarlıysa CLI durur ve dosyaya dokunmaz; elle düzeltebilirsin.
+
+<h2 id="claude-md">CLAUDE.md</h2>
+
+`--agent claude` ile `CLAUDE.md` dosyasına `@AGENTS.md` import satırı eklenir. Böylece <AcademyBadge kind="claudeCode" label="Claude Code" /> bloğu okur. Dosya yoksa oluşturulur. Varsa satır en üste eklenir, geri kalanı aynen kalır. `remove` sadece yapılanı geri alır. `CLAUDE.md`, `AGENTS.md` dosyasına symlink ise bağlantı korunur ve satır eklenmez.
+
+<h2 id="manifest">Manifest</h2>
+
+`.virastack/ai.json` neyin kurulduğunu kaydeder. Commit et, elle düzenleme.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Alan</th><th>Anlamı</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`$schema`</td><td>Editör doğrulaması için JSON şeması.</td></tr>
+      <tr><td>`version`</td><td>Manifest biçim sürümü (`1`).</td></tr>
+      <tr><td>`cliVersion`</td><td>Dosyayı yazan `@virastack/ai` sürümü.</td></tr>
+      <tr><td>`framework`</td><td>`nextjs` veya `tanstack`.</td></tr>
+      <tr><td>`agents`</td><td>Seçilen araçlar: `claude`, `cursor` veya `none`.</td></tr>
+      <tr><td>`claudeImport`</td><td>`created` veya `inserted`: `@AGENTS.md` satırının `CLAUDE.md` içine nasıl girdiği.</td></tr>
+      <tr><td>`files`</td><td>Yönetilen her dosya ve yazılan içeriğin sha256 özeti. Özet farklıysa dosyayı sen değiştirmişsin demektir.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="managed">Neler yönetilir</h2>
+
+ViraStack AI sadece şunları oluşturur, günceller ve siler:
+
+- `virastack/` klasörlerindeki kural dosyaları. Her biri “Managed by @virastack/ai” yorumuyla başlar.
+- `AGENTS.md` içindeki `virastack-ai` bloğu ve manifest.
+- `CLAUDE.md` içindeki `@AGENTS.md` satırı.
+
+Geri kalan her şeye, `virastack/` klasörlerinin yanındaki kendi kural dosyaların dahil, asla dokunulmaz.
+
+</DocsProse>

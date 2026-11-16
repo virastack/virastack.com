@@ -1,0 +1,64 @@
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+
+export const v1Tree = `AGENTS.md
+CLAUDE.md                     # @AGENTS.md
+.cursor/rules/*.mdc
+docs/architecture-guide.md
+docs/MEMORIES.md`;
+
+<DocsPageHeader
+  title="ViraStack AI v1"
+  description="ViraStack AI 1.3.2 kurulum komutu, seçenekleri, kuralları ve dosyaları."
+/>
+
+<DocsProse>
+
+ViraStack AI 1.3.2, `.cursor/rules/` içine `.mdc` kurallarını, ayrıca `AGENTS.md`, `CLAUDE.md` ve `docs/` içinde bir mimari rehber yazar. `package.json` üzerinden Next.js veya TanStack Start’ı tespit eder ve sadece o framework’ün kurallarını yazar.
+
+<h2 id="install">Kurulum</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npx @virastack/ai@1 init")} />
+
+`@1` son 1.x sürümünü sabitler. Olmadan npm v2’yi kurar.
+
+<h2 id="options">Seçenekler</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Bayrak</th><th>Açıklama</th></tr>
+    </thead>
+    <tbody>
+      <tr><td className="whitespace-nowrap">`--force, -f`</td><td>Mevcut kural dosyalarının üzerine sormadan yazar.</td></tr>
+      <tr><td className="whitespace-nowrap">`--framework <name>`</td><td>Framework’ü açıkça belirler (`nextjs` veya `tanstack`).</td></tr>
+      <tr><td className="whitespace-nowrap">`--tr`</td><td>Türkçe sorular ve başarı mesajları.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="rules">Kurallar</h2>
+
+Tespit edilen framework’ün kuralları `.cursor/rules/` içine yazılır. `nextjs.mdc` Next.js için, `tanstack-start.mdc` TanStack Start içindir:
+
+- `api.mdc`
+- `core-principles.mdc`
+- `forms.mdc`
+- `i18n.mdc`
+- `nextjs.mdc`
+- `performance.mdc`
+- `react-best-practices.mdc`
+- `state-management.mdc`
+- `tanstack-query.mdc`
+- `tanstack-start.mdc`
+- `testing.mdc`
+- `typescript.mdc`
+- `ui-components.mdc`
+
+<h2 id="files">Dosyalar</h2>
+
+<pre><code>{v1Tree}</code></pre>
+
+`AGENTS.md` tespit edilen framework için yazılır. Next.js’te Next.js agent bloğuyla başlar. Mevcut dosyaların üzerine sadece sen onaylarsan veya `--force` ile yazılır.
+
+</DocsProse>

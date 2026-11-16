@@ -1,0 +1,76 @@
+export const output = `typecheck → lint:ci → knip → test → build`;
+
+<DocsPageHeader
+  title="Scripts"
+  description="Use the right script for the job: local development, quality gates, and CI."
+/>
+
+<DocsProse>
+
+Every template ships with the same quality scripts. Framework-specific extras are noted below. Prefer pnpm; npm, yarn, and bun work the same way.
+
+<h2 id="gunluk">Day to day</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Command</th><th>When to use it</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm dev`</td><td>Start the local dev server (Next.js uses Turbopack; TanStack Start uses Vite on port 3000).</td></tr>
+      <tr><td>`pnpm build`</td><td>Production build. Run before deploy or when you want to verify the build locally.</td></tr>
+      <tr><td>`pnpm start`</td><td>Serve the production build (Next.js) or preview the Vite build (TanStack Start).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="kalite">Quality</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Command</th><th>When to use it</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm lint`</td><td>Run ESLint with cache. Use while coding to catch issues early.</td></tr>
+      <tr><td>`pnpm lint:fix`</td><td>Auto-fix ESLint issues, then run Prettier write.</td></tr>
+      <tr><td>`pnpm lint:ci`</td><td>Strict lint for CI: zero warnings, plus Prettier check. Same gate as GitHub Actions.</td></tr>
+      <tr><td>`pnpm format`</td><td>Format the whole repo with Prettier.</td></tr>
+      <tr><td>`pnpm format:check`</td><td>Check formatting without writing files (CI-friendly).</td></tr>
+      <tr><td>`pnpm typecheck`</td><td>TypeScript check with tsc --noEmit. Run before push if you changed types.</td></tr>
+      <tr><td>`pnpm knip`</td><td>Find unused files, exports, and dependencies. Keep the scaffold lean.</td></tr>
+      <tr><td>`pnpm test`</td><td>Run the test suite once with Vitest. CI runs it before the build.</td></tr>
+      <tr><td>`pnpm test:watch`</td><td>Run Vitest in watch mode while you code.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+Husky runs lint-staged on commit and related checks on push. You rarely need to run the full suite by hand unless CI fails locally.
+
+<h2 id="framework">Framework-specific</h2>
+
+These scripts exist only on the matching template:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Template</th><th>When to use it</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>`pnpm analyze`</td><td>`nextjs`</td><td>Bundle analyzer build. Use when you care about client bundle size.</td></tr>
+      <tr><td>`pnpm generate-routes`</td><td>`tanstack`</td><td>Regenerate the TanStack Router route tree after adding or renaming routes.</td></tr>
+      <tr><td>`pnpm preview`</td><td>`tanstack`</td><td>Preview the production Vite build (same idea as pnpm start).</td></tr>
+      <tr><td>`pnpm clean`</td><td>`tanstack`</td><td>Remove Vite / TanStack build caches (dist, .tanstack, .output).</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="ci">CI</h2>
+
+GitHub Actions in the scaffold runs this sequence:
+
+<pre><code>{output}</code></pre>
+
+If CI fails, reproduce the same order locally: `pnpm typecheck && pnpm lint:ci && pnpm knip && pnpm test && pnpm build`.
+
+</DocsProse>

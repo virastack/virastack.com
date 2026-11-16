@@ -1,0 +1,46 @@
+import { GuideStackIcon } from "@/components/shared/GuideRichText";
+import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
+import { TanstackLogo } from "@/components/shared/TanstackLogo";
+
+<DocsPageHeader
+  title="i18n"
+  description="Yalnızca çoklu dil şablonları için: locale’ler ve varsayılan dil nasıl bağlanır."
+/>
+
+<DocsProse>
+
+<h2 id="ne-zaman">Ne zaman geçerli</h2>
+
+Bu sayfa yalnızca kurulumda çoklu dil desteğini seçtiysen geçerlidir (**templates-i18n** kopyası). Sade şablonlarda locale routing yoktur. Genel bakış: [şablonlar](/start/docs/templates).
+
+<h2 id="nextjs"><GuideStackIcon icon={<NextjsIconDark className="dark:invert" aria-hidden />}>Next.js</GuideStackIcon> (next-intl)</h2>
+
+Yapılandırma `src/i18n/routing.ts` içindedir. Şablon `en` ve `tr` ile gelir.
+
+- `locales` / `defaultLocale`: hangi diller var ve hangisi fallback (`en` varsayılan).
+- Metinler `src/messages/en.json` ve `src/messages/tr.json` dosyalarındadır (`src/i18n/request.ts` ile yüklenir).
+- `localePrefix: "as-needed"`: varsayılan dilin URL prefix’i yoktur (`/`); diğerleri `/tr/…` kullanır. Dili yalnızca URL belirler, otomatik yönlendirme yoktur.
+
+Bu kurulumun dışındaki API ve kalıplar için [next-intl docs](https://next-intl.dev)’a bak.
+
+<h2 id="tanstack"><GuideStackIcon icon={<TanstackLogo />}>TanStack Start</GuideStackIcon> (Paraglide)</h2>
+
+Locale’ler `project.inlang/settings.json` içinde. Routing, `src/routes/` altındaki isteğe bağlı `{-$lang}` segmentini kullanır.
+
+- `baseLocale`: varsayılan dil (`en`). `locales`: tüm locale’ler.
+- Mesajlar `src/messages/{locale}.json` altında (ör. `src/messages/en.json`).
+- Varsayılan dilin URL prefix’i yoktur (`/`); diğerleri `/tr/…` kullanır. Bunu `vite.config.ts` içindeki `urlPatterns` belirler. Dili yalnızca URL belirler, otomatik yönlendirme yoktur.
+
+Paraglide ayrıntıları için [Paraglide JS docs](https://inlang.com/m/gerre34r/library-inlang-paraglideJs).
+
+<h2 id="varsayilan">Varsayılan dili değiştir</h2>
+
+Başka bir dili varsayılan yapmak istiyorsan:
+
+1. **Next.js**: `src/i18n/routing.ts` içinde `defaultLocale`’i ayarla (ör. `"tr"`). `as-needed` ile yeni varsayılanın URL prefix’i kalkar.
+2. **TanStack Start**: `project.inlang/settings.json` içinde `baseLocale`’u değiştir, sonra `vite.config.ts` içindeki `urlPatterns`’ta prefix’li ve prefix’siz dilleri yer değiştir.
+3. İlgili mesaj dosyalarındaki ürün metinlerini güncelle. `site.config` / SEO locale alanları açıksa onları da uyumlu tut.
+
+Yeni bir dil eklerken dil listesine kaydet, çeviri dosyasını oluştur ve dil seçicide görünür yap. Ayrıntılar için next-intl veya Paraglide dokümantasyonuna bak.
+
+</DocsProse>
