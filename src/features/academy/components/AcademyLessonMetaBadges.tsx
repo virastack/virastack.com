@@ -46,14 +46,17 @@ export async function AcademyLessonMetaBadges({ counts, isProject }: AcademyLess
           {t("projectLabel")}
         </span>
       ) : null}
-      {counts.map((item) => (
-        <AcademyResourceBadge
-          key={item.kind}
-          kind={item.kind}
-          label={resourceCountLabel(t, item.kind, item.count)}
-          className="tabular-nums"
-        />
-      ))}
+      {/* On a phone the counts wrap under the title and crowd the row, so they show from `sm` up. */}
+      <span className="hidden sm:contents">
+        {counts.map((item) => (
+          <AcademyResourceBadge
+            key={item.kind}
+            kind={item.kind}
+            label={resourceCountLabel(t, item.kind, item.count)}
+            className="tabular-nums"
+          />
+        ))}
+      </span>
     </span>
   );
 }
