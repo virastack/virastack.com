@@ -1,4 +1,14 @@
-import type { Heading, List, ListItem, PhrasingContent, Root, Text } from "mdast";
+import type {
+  BlockContent,
+  Content,
+  Heading,
+  List,
+  ListItem,
+  PhrasingContent,
+  Root,
+  RootContent,
+  Text,
+} from "mdast";
 import { visit } from "unist-util-visit";
 
 import type { AcademyCitationNode } from "@/features/academy/types/academy-mdast.types";
@@ -190,4 +200,25 @@ export function remarkAcademyCitations() {
 
     markResourceLists(tree);
   };
+}
+
+/**
+ * The resources list a heading titles: the first one before the next heading. A resource
+ * heading with such a list is shown as a box, without one it stays a heading.
+ */
+export function findFollowingResourceList(
+  nodes: readonly (RootContent | Content | BlockContent)[],
+  fromIndex: number,
+): { list: List; index: number } | null {
+  for (let cursor = fromIndex + 1; cursor < nodes.length; cursor += 1) {
+    const sibling = nodes[cursor];
+    if (!sibling) continue;
+    if (sibling.type === "heading") {
+      break;
+    }
+    if (sibling.type === "list" && isAcademyResourceList(sibling)) {
+      return { list: sibling, index: cursor };
+    }
+  }
+  return null;
 }

@@ -41,7 +41,8 @@ export async function AcademyCodeBlock({ language, code, className }: AcademyCod
     return (
       <div
         className={cn(
-          "academy-playground not-prose my-4 max-w-5xl overflow-hidden rounded-xl border border-border",
+          // Wider than the gap beside the column: it stays above the lesson's table of contents.
+          "academy-playground not-prose relative z-10 my-4 max-w-5xl overflow-hidden rounded-xl border border-border bg-background",
           className,
         )}
       >

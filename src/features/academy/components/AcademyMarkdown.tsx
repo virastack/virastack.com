@@ -5,7 +5,6 @@ import type {
   Content,
   List,
   ListItem,
-  Node,
   PhrasingContent,
   Root,
   RootContent,
@@ -14,9 +13,6 @@ import type {
   TableRow,
 } from "mdast";
 import { getTranslations } from "next-intl/server";
-import remarkGfm from "remark-gfm";
-import remarkParse from "remark-parse";
-import { unified } from "unified";
 
 import { ACADEMY_COMPANY_NAME_TO_KIND } from "@/constants/academy-badge.constants";
 
@@ -34,39 +30,35 @@ import {
   parseAcademyResourceKind,
   type AcademyResourceKind,
 } from "@/features/academy/constants/resource.constants";
-import { remarkAcademyAlerts } from "@/features/academy/lib/remark-academy-alerts";
-import { remarkAcademyBadges } from "@/features/academy/lib/remark-academy-badges";
 import {
+  getAcademyHeadingTitle,
+  readAcademyHeadingId,
+} from "@/features/academy/lib/lesson-headings";
+import { parseAcademyMarkdown } from "@/features/academy/lib/parse-academy-markdown";
+import {
+  findFollowingResourceList,
   getAcademyCitationId,
   getAcademyHeadingText,
   isAcademyResourceHeading,
   isAcademyResourceList,
   readAcademyCitationId,
-  remarkAcademyCitations,
 } from "@/features/academy/lib/remark-academy-citations";
 import {
   readAcademyDetails,
-  remarkAcademyDetails,
   type AcademyDetailsItem,
 } from "@/features/academy/lib/remark-academy-details";
-import {
-  isWideAcademyTable,
-  remarkAcademyTables,
-} from "@/features/academy/lib/remark-academy-tables";
+import { isWideAcademyTable } from "@/features/academy/lib/remark-academy-tables";
 import { Link } from "@/i18n/routing";
 
 const HEADING_TAGS = { 1: "h1", 2: "h2", 3: "h3", 4: "h4", 5: "h5", 6: "h6" } as const;
 
 type AcademyMarkdownProps = {
-  content: string;
+  /** A lesson parsed with `parseAcademyLesson`, so its sections carry the ids the page links to. */
+  tree: Root;
 };
 
 const INLINE_CODE_CLASS =
   "rounded-md border border-border bg-muted/40 px-1 py-0.5 font-mono text-xs font-normal text-foreground md:text-sm";
-
-function isRoot(node: Node): node is Root {
-  return node.type === "root";
-}
 
 function readStringProperty(node: BlockContent | PhrasingContent, name: string): string | null {
   const value = node.data?.hProperties?.[name];
@@ -494,23 +486,6 @@ function parseResourceListItems(list: List): AcademyResourceLinkItem[] {
     .filter((item): item is AcademyResourceLinkItem => item !== null);
 }
 
-function findFollowingResourceList(
-  nodes: readonly (RootContent | Content | BlockContent)[],
-  fromIndex: number,
-): { list: List; index: number } | null {
-  for (let cursor = fromIndex + 1; cursor < nodes.length; cursor += 1) {
-    const sibling = nodes[cursor];
-    if (!sibling) continue;
-    if (sibling.type === "heading") {
-      break;
-    }
-    if (sibling.type === "list" && isAcademyResourceList(sibling)) {
-      return { list: sibling, index: cursor };
-    }
-  }
-  return null;
-}
-
 async function renderListItem(item: ListItem, key: string): Promise<ReactNode> {
   const children: ReactNode[] = [];
   for (let i = 0; i < item.children.length; i += 1) {
@@ -651,24 +626,6 @@ async function renderTable(table: Table, key: string): Promise<ReactNode> {
   );
 }
 
-function createAcademyProcessor() {
-  return unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkAcademyAlerts)
-    .use(remarkAcademyBadges)
-    .use(remarkAcademyCitations)
-    .use(remarkAcademyDetails)
-    .use(remarkAcademyTables);
-}
-
-async function parseAcademyMarkdown(content: string): Promise<Root> {
-  const processor = createAcademyProcessor();
-  const tree = await processor.run(processor.parse(content));
-  if (!isRoot(tree)) throw new Error("Academy Markdown did not produce a root node");
-  return tree;
-}
-
 async function renderInlineMarkdown(content: string, key: string): Promise<ReactNode> {
   const transformed = await parseAcademyMarkdown(content);
   const [first, ...rest] = transformed.children;
@@ -744,14 +701,37 @@ async function renderBlock(
           }
         }
         const Tag = HEADING_TAGS[node.depth];
+        // The top space of an h2 moves to the row when the heading gets an anchor link beside it.
+        const spacing = node.depth === 2 ? "pt-4" : undefined;
         const size =
           node.depth === 2
-            ? "pt-4 text-xl font-semibold tracking-tight text-foreground"
+            ? "text-xl font-semibold tracking-tight text-foreground"
             : "text-lg font-semibold tracking-tight text-foreground";
+        const id = readAcademyHeadingId(node);
+        if (!id) {
+          out.push(
+            <Tag key={key} className={cn("scroll-mt-32", spacing, size)}>
+              {await renderPhrasing(node.children, key)}
+            </Tag>,
+          );
+          break;
+        }
+        const t = await getTranslations("Academy");
+        const anchorLabel = t("headingLink", { title: getAcademyHeadingTitle(node) });
+        // The link sits beside the heading, not inside it, so it stays out of the heading's name.
         out.push(
-          <Tag key={key} className={`scroll-mt-32 ${size}`}>
-            {await renderPhrasing(node.children, key)}
-          </Tag>,
+          <div key={key} className={cn("group flex items-baseline gap-1", spacing)}>
+            <Tag id={id} className={cn("scroll-mt-32", size)}>
+              {await renderPhrasing(node.children, key)}
+            </Tag>
+            <a
+              href={`#${id}`}
+              aria-label={anchorLabel}
+              className="inline-flex size-6 shrink-0 items-center justify-center rounded-md text-base font-normal text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground focus-visible:opacity-100 pointer-coarse:opacity-100"
+            >
+              <span aria-hidden>#</span>
+            </a>
+          </div>,
         );
         break;
       }
@@ -812,9 +792,8 @@ async function renderBlock(
   return out;
 }
 
-export async function AcademyMarkdown({ content }: AcademyMarkdownProps) {
-  const transformed = await parseAcademyMarkdown(content);
-  const children = await renderBlock(transformed.children, "root");
+export async function AcademyMarkdown({ tree }: AcademyMarkdownProps) {
+  const children = await renderBlock(tree.children, "root");
 
   return <div className="min-w-0 space-y-6 text-base leading-relaxed">{children}</div>;
 }

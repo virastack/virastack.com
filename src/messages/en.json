@@ -377,6 +377,8 @@
     "trackPagerNext": "Next track",
     "trackPagerAria": "Track navigation",
     "lessonListAria": "Steps",
+    "onThisPage": "On this page",
+    "headingLink": "Link to {title}",
     "editOnGitHub": "Edit this page",
     "lastUpdated": "Last updated: {date}",
     "calloutTip": "Tip",

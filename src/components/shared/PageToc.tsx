@@ -2,18 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-import { useTranslations } from "next-intl";
-
 import { cn } from "@/lib/utils";
 
-import type { DocsHeading } from "@/features/docs/types/docs.types";
-
-type DocsTocProps = {
-  headings: DocsHeading[];
+/** One entry of a page's table of contents; `id` is the id of the heading on the page. */
+type PageTocHeading = {
+  id: string;
+  title: string;
+  level?: 2 | 3;
 };
 
-export function DocsToc({ headings }: DocsTocProps) {
-  const t = useTranslations("Docs");
+type PageTocProps = {
+  headings: readonly PageTocHeading[];
+  /** Title of the list and name of the landmark, such as "On this page". */
+  label: string;
+};
+
+/** The headings of the page as links; the one being read is highlighted while scrolling. */
+export function PageToc({ headings, label }: PageTocProps) {
   const [activeId, setActiveId] = useState(headings[0]?.id ?? "");
 
   useEffect(() => {
@@ -52,10 +57,8 @@ export function DocsToc({ headings }: DocsTocProps) {
   if (headings.length === 0) return null;
 
   return (
-    <nav aria-label={t("onThisPage")} className="flex flex-col gap-3">
-      <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-        {t("onThisPage")}
-      </p>
+    <nav aria-label={label} className="flex flex-col gap-3">
+      <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{label}</p>
       <ul className="flex flex-col gap-1 border-l border-border">
         {headings.map((heading) => {
           const active = activeId === heading.id;
@@ -63,6 +66,7 @@ export function DocsToc({ headings }: DocsTocProps) {
             <li key={heading.id}>
               <a
                 href={`#${heading.id}`}
+                aria-current={active ? "location" : undefined}
                 className={cn(
                   "-ml-px block border-l-2 py-1 text-sm transition-colors",
                   heading.level === 3 ? "pl-5" : "pl-3",

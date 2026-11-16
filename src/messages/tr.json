@@ -377,6 +377,8 @@
     "trackPagerNext": "Sonraki konu",
     "trackPagerAria": "Konu gezintisi",
     "lessonListAria": "Adımlar",
+    "onThisPage": "Bu sayfada",
+    "headingLink": "Bağlantı: {title}",
     "editOnGitHub": "Bu sayfayı düzenle",
     "lastUpdated": "Son güncelleme tarihi: {date}",
     "calloutTip": "İpucu",

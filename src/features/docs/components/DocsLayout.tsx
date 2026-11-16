@@ -5,11 +5,11 @@ import type { ReactNode } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { PageToc } from "@/components/shared/PageToc";
 import { DocsArchiveNotice } from "@/features/docs/components/DocsArchiveNotice";
 import { DocsMobileNav } from "@/features/docs/components/DocsMobileNav";
 import { DocsPager } from "@/features/docs/components/DocsPager";
 import { DocsSidebar } from "@/features/docs/components/DocsSidebar";
-import { DocsToc } from "@/features/docs/components/DocsToc";
 import { DocsVersionSelect } from "@/features/docs/components/DocsVersionSelect";
 import { getDocsAdjacentPages } from "@/features/docs/lib/docs-adjacent";
 import type { DocsVersionLink } from "@/features/docs/lib/docs-versions";
@@ -90,7 +90,7 @@ export function DocsLayout({
 
       <aside className="hidden w-48 shrink-0 xl:block">
         <div className="sticky top-25 h-[calc(100dvh-6.25rem)] overflow-y-auto py-8 pl-4">
-          <DocsToc headings={headings} />
+          <PageToc headings={headings} label={t("onThisPage")} />
           <div className={headings.length > 0 ? "mt-6 border-t border-border pt-4" : undefined}>
             <a
               href={githubIssueHref}

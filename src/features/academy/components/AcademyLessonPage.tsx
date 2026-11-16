@@ -3,14 +3,17 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { formatDate } from "@/helpers/format-date";
 
 import { GithubIcon } from "@/components/shared/icons/GithubIcon";
+import { PageToc } from "@/components/shared/PageToc";
 import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
 import { AcademyLessonCompleteButton } from "@/features/academy/components/AcademyLessonCompleteButton";
 import { AcademyLessonQuiz } from "@/features/academy/components/AcademyLessonQuiz";
 import { AcademyMarkdown } from "@/features/academy/components/AcademyMarkdown";
 import { LessonPager } from "@/features/academy/components/LessonPager";
 import { highlightAcademyCode } from "@/features/academy/lib/highlight-academy-code";
+import { readAcademyLessonHeadings } from "@/features/academy/lib/lesson-headings";
 import { formatLessonNumber, getAcademyLessonId } from "@/features/academy/lib/load-curriculum";
 import { getAcademyLessonEditUrl } from "@/features/academy/lib/load-lesson";
+import { parseAcademyLesson } from "@/features/academy/lib/parse-academy-markdown";
 import type {
   AcademyLessonDocument,
   AcademyLessonLookup,
@@ -43,9 +46,11 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
   const editUrl = getAcademyLessonEditUrl(document);
   const lessonId = getAcademyLessonId(track.slug, lesson.slug);
   const quiz = lesson.kind === "lesson" ? await toQuizItems(document) : null;
+  const tree = await parseAcademyLesson(document.body);
+  const headings = readAcademyLessonHeadings(tree);
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
+    <div className="relative mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
         <div className="flex items-center justify-between gap-4">
           <AcademyBackLink href={`/academy/${track.slug}`} label={track.title} />
@@ -68,7 +73,7 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
         </header>
       </div>
 
-      <AcademyMarkdown content={document.body} />
+      <AcademyMarkdown tree={tree} />
 
       {quiz ? (
         <div className="border-t border-border pt-10">
@@ -96,6 +101,13 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
       </div>
 
       <LessonPager trackSlug={track.slug} previous={previous} next={next} />
+
+      {/* Beside the column, so the lesson stays centered. The offset clears a wide table. */}
+      <aside className="absolute inset-y-0 left-full ml-16 hidden w-48 pt-28 pb-24 xl:block">
+        <div className="sticky top-32 max-h-[calc(100dvh-10rem)] overflow-y-auto">
+          <PageToc headings={headings} label={t("onThisPage")} />
+        </div>
+      </aside>
     </div>
   );
 }
