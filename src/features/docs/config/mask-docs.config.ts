@@ -258,7 +258,7 @@ const MASK_EXAMPLE_DEFS: MaskExampleDef[] = [
         preview: "ibanTR",
       },
     ],
-    errorKeys: ["iban.incomplete", "iban.invalid"],
+    errorKeys: ["iban.incomplete", "iban.country", "iban.length", "iban.checksum", "iban.invalid"],
   },
   {
     id: "phone",

@@ -121,8 +121,8 @@
     "featuresCustomSubtitle": "Tokens · [optional]",
     "featuresCustomDesc": "Describe your own formats, like an order number or reference code, in a few lines. Write it once and reuse it everywhere.",
     "featuresLightTitle": "Light",
-    "featuresLightSubtitle": "Zero dependencies · <10 KB",
-    "featuresLightDesc": "The whole package is under <bold>10 KB</bold> (min+brotli) with no dependencies. Only the parts you use end up in your project.",
+    "featuresLightSubtitle": "Zero dependencies · ~10 KB",
+    "featuresLightDesc": "The whole package is about <bold>10 KB</bold> (min+brotli) with no dependencies. Only the parts you use end up in your project.",
     "featuresRulesTitle": "Validation included",
     "featuresRulesSubtitle": "Luhn · Amex · minAge",
     "featuresRulesDesc": "Card numbers are checked with the <bold>Luhn</bold> algorithm and IBANs with the <bold>mod-97</bold> algorithm. Past expiry dates and age limits are covered too."

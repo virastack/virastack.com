@@ -178,7 +178,7 @@ export const docsProducts: Record<DocsProductId, DocsProductConfig> = {
     },
     isSlug: isMaskDocsSlug,
     versions: [
-      { id: "v2", label: "v2.3", latest: true },
+      { id: "v2", label: "v2.4", latest: true },
       { id: "v1", label: "v1.1", latest: false },
     ],
     archives: {

@@ -24,6 +24,24 @@ const price = createMask("currency")
 price.format("1234.5", { from: "USD" }) // "$1,234.5"
 ```
 
+<h2 id="placeholder">getMaskPlaceholder</h2>
+
+Maskeden placeholder metni üretir (2.4+). `createMask` ile aynı argümanı alır. Yazılacak her karakter `_` olur; ayraçlar ve `{sabit}` parçalar olduğu gibi kalır, isteğe bağlı `[...]` parçalar yazılmaz. Desenini çalışma anında seçen maskeler (`card`, `cvv`, `plate`) boş alandaki haliyle okunur. Sayı, para ve tarih maskelerinde `undefined` döner; `fullName` gibi en fazla bir zorunlu karakteri olan maskelerde de. Hook placeholder'ı kendisi atamaz; sen verirsin.
+
+```tsx
+import { getMaskPlaceholder } from "@virastack/mask"
+
+getMaskPlaceholder({ preset: "phone", country: "TR" }) // "(___) ___ __ __"
+getMaskPlaceholder({ preset: "iban", country: "TR" })  // "TR__ ____ ____ ____ ____ ____ __"
+getMaskPlaceholder("card")                             // "____ ____ ____ ____"
+getMaskPlaceholder({ mask: "aa-9999[9]" })             // "__-____"
+getMaskPlaceholder("currency")                         // undefined
+
+const masks = { phone: { preset: "phone", country: "TR" } } as const
+const { phone } = useViraMask(form, masks)
+return <input {...phone} placeholder={getMaskPlaceholder(masks.phone)} />
+```
+
 <h2 id="validators">Doğrulayıcılar</h2>
 
 ```ts

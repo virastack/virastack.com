@@ -121,8 +121,8 @@
     "featuresCustomSubtitle": "Token · [opsiyonel]",
     "featuresCustomDesc": "Sipariş numarası, referans kodu gibi kendi formatlarını birkaç satırda tanımla; bir kez yazıp her yerde kullan.",
     "featuresLightTitle": "Hafif",
-    "featuresLightSubtitle": "Sıfır bağımlılık · <10 KB",
-    "featuresLightDesc": "Tüm paket sıkıştırılmış <bold>10 KB’ın altında</bold> ve hiçbir bağımlılık getirmez. Projene yalnızca kullandığın kısmı girer.",
+    "featuresLightSubtitle": "Sıfır bağımlılık · ~10 KB",
+    "featuresLightDesc": "Tüm paket sıkıştırılmış <bold>yaklaşık 10 KB</bold> ve hiçbir bağımlılık getirmez. Projene yalnızca kullandığın kısmı girer.",
     "featuresRulesTitle": "Doğrulama dahil",
     "featuresRulesSubtitle": "Luhn · Amex · minAge",
     "featuresRulesDesc": "Kart numarası <bold>Luhn</bold> algoritmasıyla, IBAN <bold>mod-97</bold> algoritmasıyla doğrulanır. Geçmiş son kullanma tarihi ve yaş sınırı gibi kontroller de hazırdır."

@@ -47,6 +47,41 @@ export type ReleaseImage = {
 
 const releases: readonly Release[] = [
   {
+    id: "mask-2-4-0",
+    date: "2026-11-16",
+    products: [{ id: "mask", version: "2.4.0" }],
+    sources: [],
+    commits: [
+      {
+        repo: "virastack/form",
+        hash: "c1bca17b3c0fd91c85ba7cb3b0edbce9df099784",
+        title: "getMaskPlaceholder and detailed IBAN error keys",
+      },
+    ],
+    copy: {
+      en: {
+        title: "`getMaskPlaceholder()` and detailed IBAN error keys",
+        summary:
+          "Build placeholder text from a mask, and learn why an IBAN fails: country, length or checksum.",
+        whatChanged:
+          '- **`getMaskPlaceholder(spec)`:** Returns placeholder text from a mask: `(___) ___ __ __` for `{ preset: "phone", country: "TR" }`, `TR__ ____ ____ ____ ____ ____ __` for the Turkish IBAN. It takes what `createMask` takes, so you can pass the same schema entry you give `useViraMask`. On the root and `/server` entries.\n- **What it draws:** Every character to type is `_`. Separators and `{fixed}` parts stay as they are, optional `[...]` parts are left out. A mask that picks its pattern at runtime (`card`, `cvv`, `plate`) is read as it is for an empty field.\n- **Where it returns `undefined`:** Number, currency and date masks (`expiry` included), an unknown preset, and a mask with at most one required character, such as `fullName`.\n- **IBAN error keys:** The `iban` preset now names the reason. `iban.country`: the value does not start with two A–Z letters. `iban.length`: not the length of its country (26 for TR, 22 for DE). `iban.checksum`: the mod-97 check fails. `{ preset: "iban", country: "TR" }` fixes the country and the length, so of the new keys it only returns `iban.checksum`.\n- **`iban.invalid` is the fallback:** It stays for a character an IBAN cannot have (a letter outside A–Z) and for your own `validate` that returns `false`. `isValidIBAN` gives the same answers as before.\n- **Size:** The root entry goes from 9.95 kB to 10.07 kB (min+brotli).',
+        why: '- **Placeholder:** A hand-written placeholder drifts from the mask: change the pattern and the hint under it stays the old one. The helper reads the same mask the field uses.\n- **IBAN keys:** One "invalid IBAN" message does not tell the user what to fix. A missing digit and a mistyped digit need different messages.\n- **Limits:** A country code the IBAN registry does not list is not rejected; it is checked with 15–34 characters and mod-97. National account rules (BBAN) are not checked. The hook does not set the placeholder on its own. We ran the tests in Chromium, Firefox and WebKit and in a Next.js app; we did not try other frameworks.',
+        migration:
+          "**If your messages map has `iban.invalid`, add the three new keys.** A wrong check digit used to return `iban.invalid` and now returns `iban.checksum`; without a message for it the user sees the raw key. Add `iban.country`, `iban.length` and `iban.checksum`, or fall back to your `iban.invalid` message for any other key that starts with `iban.`. A preset of your own that spreads `presets.iban.options` also gets the `iban.*` keys instead of `<name>.invalid`. Nothing else changes.",
+      },
+      tr: {
+        title: "`getMaskPlaceholder()` ve ayrıntılı IBAN hata anahtarları",
+        summary:
+          "Maskeden placeholder metni üret; IBAN'ın neden geçersiz olduğunu öğren: ülke, uzunluk ya da kontrol hanesi.",
+        whatChanged:
+          '- **`getMaskPlaceholder(spec)`:** Maskeden placeholder metni döndürür: `{ preset: "phone", country: "TR" }` için `(___) ___ __ __`, Türkiye IBAN\'ı için `TR__ ____ ____ ____ ____ ____ __`. `createMask` ile aynı argümanı alır; `useViraMask`\'a verdiğin şema girdisini doğrudan verebilirsin. Kök ve `/server` girişlerinde.\n- **Ne çizer:** Yazılacak her karakter `_` olur. Ayraçlar ve `{sabit}` parçalar olduğu gibi kalır, isteğe bağlı `[...]` parçalar yazılmaz. Desenini çalışma anında seçen maskeler (`card`, `cvv`, `plate`) boş alandaki haliyle okunur.\n- **Nerede `undefined` döner:** Sayı, para ve tarih maskeleri (`expiry` dahil), bilinmeyen preset ve `fullName` gibi en fazla bir zorunlu karakteri olan maskeler.\n- **IBAN hata anahtarları:** `iban` preset\'i artık nedeni söyler. `iban.country`: değer iki A–Z harfiyle başlamıyor. `iban.length`: uzunluk ülkesine uymuyor (TR 26, DE 22). `iban.checksum`: mod-97 kontrolü tutmuyor. `{ preset: "iban", country: "TR" }` ülkeyi ve uzunluğu sabitlediği için yeni anahtarlardan yalnızca `iban.checksum` döner.\n- **`iban.invalid` yedek anahtar:** IBAN\'da olamayacak bir karakterde (A–Z dışı harf) ve `false` dönen kendi `validate` fonksiyonunda gelmeye devam eder. `isValidIBAN` eskisiyle aynı sonuçları verir.\n- **Boyut:** Kök giriş 9,95 kB\'tan 10,07 kB\'a çıktı (min+brotli).',
+        why: "- **Placeholder:** Elle yazılan placeholder maskeden kopar: deseni değiştirirsin, altındaki ipucu eski kalır. Yardımcı, alanın kullandığı maskenin aynısını okur.\n- **IBAN anahtarları:** Tek bir \"geçersiz IBAN\" mesajı kullanıcıya neyi düzelteceğini söylemez. Eksik hane ile yanlış yazılmış hane ayrı mesaj ister.\n- **Sınırlar:** IBAN kayıt listesinde olmayan ülke kodu reddedilmez; 15–34 karakter ve mod-97 ile kontrol edilir. Ülkeye özgü hesap kuralları (BBAN) kontrol edilmez. Hook placeholder'ı kendisi atamaz. Testleri Chromium, Firefox ve WebKit'te ve bir Next.js uygulamasında çalıştırdık; başka framework denemedik.",
+        migration:
+          "**Mesaj haritanda `iban.invalid` varsa üç yeni anahtarı ekle.** Hatalı kontrol hanesi eskiden `iban.invalid` dönüyordu, artık `iban.checksum` dönüyor; mesajı yoksa kullanıcı ham anahtarı görür. `iban.country`, `iban.length` ve `iban.checksum` anahtarlarını ekle ya da `iban.` ile başlayan diğer anahtarlarda `iban.invalid` mesajına düş. `presets.iban.options`'ı yayarak kurduğun kendi preset'in de `<ad>.invalid` yerine `iban.*` anahtarlarını alır. Başka bir şey değişmez.",
+      },
+    },
+  },
+  {
     id: "start-2-2-0",
     date: "2026-11-13",
     products: [{ id: "start", version: "2.2.0" }],

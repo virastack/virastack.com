@@ -36,7 +36,19 @@ Boş değer doğrulanmaz; zorunluluk `rules.required` ya da şemanın işidir. H
       </tr>
       <tr>
         <td>`<ad>.invalid`</td>
-        <td>Algoritma reddetti (Luhn, TCKN, VKN, mod-97, gerçek olmayan tarih)</td>
+        <td>Algoritma reddetti (Luhn, TCKN, VKN, gerçek olmayan tarih)</td>
+      </tr>
+      <tr>
+        <td>`iban.country`</td>
+        <td>IBAN iki A–Z harfiyle başlamıyor (2.4+)</td>
+      </tr>
+      <tr>
+        <td>`iban.length`</td>
+        <td>Uzunluk ülkesine uymuyor: TR 26, DE 22 karakter (2.4+)</td>
+      </tr>
+      <tr>
+        <td>`iban.checksum`</td>
+        <td>mod-97 kontrolü tutmadı (2.4+)</td>
       </tr>
       <tr>
         <td>`<ad>.min`, `<ad>.max`</td>
@@ -55,6 +67,20 @@ Boş değer doğrulanmaz; zorunluluk `rules.required` ya da şemanın işidir. H
 </div>
 
 `<ad>` preset adıdır; özel desende `mask`, `definePreset` ile verdiğin ad.
+
+`iban` preset'i 2.4 ile nedeni ayrı anahtarlarla söyler. `iban.invalid` yedek anahtar olarak kalır: IBAN'da olamayacak bir karakterde (A–Z dışı harf) ve `false` dönen kendi `validate` fonksiyonunda gelir. Mesaj haritanda yalnızca `iban.invalid` varsa üç yeni anahtarı ekle ya da diğer `iban.*` anahtarlarında ona düş. `{ preset: "iban", country: "TR" }` ülkeyi ve uzunluğu sabitlediği için yeni anahtarlardan yalnızca `iban.checksum` döner. Kayıt listesinde olmayan bir ülke kodu reddedilmez; 15–34 karakter ve mod-97 ile kontrol edilir.
+
+```ts
+const messages: Record<string, string> = {
+  "iban.incomplete": "IBAN eksik",
+  "iban.country": "IBAN ülke koduyla başlamalı",
+  "iban.length": "IBAN uzunluğu ülkesine uymuyor",
+  "iban.checksum": "IBAN hatalı, hanelerini kontrol et",
+  "iban.invalid": "Geçersiz IBAN",
+}
+
+const text = (key: string) => messages[key] ?? (key.startsWith("iban.") ? messages["iban.invalid"] : key)
+```
 
 <ComponentPreview preview={<MaskFieldDemo config="tckn" placeholder="10000000146" />} code={messagesCode}>
   <DocsCodeBlock code={messagesCode} lang="tsx" />

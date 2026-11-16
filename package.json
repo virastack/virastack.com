@@ -62,7 +62,7 @@
     "@upstash/ratelimit": "^2.2.0",
     "@upstash/redis": "^1.40.0",
     "@virastack/address": "1.0.1",
-    "@virastack/mask": "2.3.0",
+    "@virastack/mask": "2.4.0",
     "@virastack/mask-v1": "npm:@virastack/mask@1.1.1",
     "@virastack/password": "1.2.0",
     "class-variance-authority": "^0.7.1",

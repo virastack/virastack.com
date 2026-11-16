@@ -61,7 +61,7 @@ v2: const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR
 Never combine mask with number/currency/date in one entry (v2 makes it a type error).
 
 ## 7. Validation and messages
-- v2 errors are keys, not messages: tckn.invalid, card.invalid, phone.incomplete, iban.invalid, date.min, date.max, date.minAge, date.beforeFrom, expiry.min, number.min, number.max. Error type is "mask".
+- v2 errors are keys, not messages: tckn.invalid, card.invalid, phone.incomplete, iban.invalid (from 2.4 also iban.country, iban.length and iban.checksum; iban.invalid stays as the fallback), date.min, date.max, date.minAge, date.beforeFrom, expiry.min, number.min, number.max. Error type is "mask".
 - Wherever the UI printed errors.x.message for a masked field, add a small map from key to message text and render through it. Reuse the texts the user saw before: the old errorMessage strings, or the schema's messages if validation came from Zod/Valibot. Keep the project's i18n system if it has one. Add a message for every key the field's preset can return.
 - If useForm has a resolver (zodResolver, valibotResolver, …), wrap it, otherwise mask validation is skipped:
   import { maskResolver } from "@virastack/mask"

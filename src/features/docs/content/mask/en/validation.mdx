@@ -36,7 +36,19 @@ Empty values are not validated; requiring a value is the job of `rules.required`
       </tr>
       <tr>
         <td>`<name>.invalid`</td>
-        <td>A checksum failed (Luhn, TCKN, VKN, mod-97, a date that doesn't exist)</td>
+        <td>A checksum failed (Luhn, TCKN, VKN, a date that doesn't exist)</td>
+      </tr>
+      <tr>
+        <td>`iban.country`</td>
+        <td>The IBAN does not start with two A–Z letters (2.4+)</td>
+      </tr>
+      <tr>
+        <td>`iban.length`</td>
+        <td>Not the length of its country: 26 characters for TR, 22 for DE (2.4+)</td>
+      </tr>
+      <tr>
+        <td>`iban.checksum`</td>
+        <td>The mod-97 check failed (2.4+)</td>
       </tr>
       <tr>
         <td>`<name>.min`, `<name>.max`</td>
@@ -55,6 +67,20 @@ Empty values are not validated; requiring a value is the job of `rules.required`
 </div>
 
 `<name>` is the preset name; `mask` for a custom pattern, or the name you gave `definePreset`.
+
+From 2.4 the `iban` preset names the reason with its own keys. `iban.invalid` stays as the fallback: it comes for a character an IBAN cannot have (a letter outside A–Z) and for your own `validate` that returns `false`. If your messages map only has `iban.invalid`, add the three new keys or fall back to it for any other `iban.*` key. `{ preset: "iban", country: "TR" }` fixes the country and the length, so of the new keys it only returns `iban.checksum`. A country code the registry does not list is not rejected; it is checked with 15–34 characters and mod-97.
+
+```ts
+const messages: Record<string, string> = {
+  "iban.incomplete": "The IBAN is incomplete",
+  "iban.country": "An IBAN starts with a country code",
+  "iban.length": "The IBAN is not the right length for its country",
+  "iban.checksum": "The IBAN is wrong, check its digits",
+  "iban.invalid": "Invalid IBAN",
+}
+
+const text = (key: string) => messages[key] ?? (key.startsWith("iban.") ? messages["iban.invalid"] : key)
+```
 
 <ComponentPreview preview={<MaskFieldDemo config="tckn" placeholder="10000000146" />} code={messagesCode}>
   <DocsCodeBlock code={messagesCode} lang="tsx" />

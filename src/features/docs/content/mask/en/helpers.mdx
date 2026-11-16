@@ -24,6 +24,24 @@ const price = createMask("currency")
 price.format("1234.5", { from: "USD" }) // "$1,234.5"
 ```
 
+<h2 id="placeholder">getMaskPlaceholder</h2>
+
+Builds placeholder text from a mask (2.4+). It takes what `createMask` takes. Every character to type becomes `_`; separators and `{fixed}` parts stay as they are, and optional `[...]` parts are left out. Masks that pick their pattern at runtime (`card`, `cvv`, `plate`) are read as they are for an empty field. Number, currency and date masks return `undefined`, and so does a mask with at most one required character, such as `fullName`. The hook does not set the placeholder itself; you pass it.
+
+```tsx
+import { getMaskPlaceholder } from "@virastack/mask"
+
+getMaskPlaceholder({ preset: "phone", country: "TR" }) // "(___) ___ __ __"
+getMaskPlaceholder({ preset: "iban", country: "TR" })  // "TR__ ____ ____ ____ ____ ____ __"
+getMaskPlaceholder("card")                             // "____ ____ ____ ____"
+getMaskPlaceholder({ mask: "aa-9999[9]" })             // "__-____"
+getMaskPlaceholder("currency")                         // undefined
+
+const masks = { phone: { preset: "phone", country: "TR" } } as const
+const { phone } = useViraMask(form, masks)
+return <input {...phone} placeholder={getMaskPlaceholder(masks.phone)} />
+```
+
 <h2 id="validators">Validators</h2>
 
 ```ts

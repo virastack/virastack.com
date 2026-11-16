@@ -51,8 +51,8 @@ function Checkout() {
 | --- | --- | --- | --- |
 | `phone` | `+90 (555) 123 45 67`, others `+4915112345678` | `+905551234567` (E.164) | `phone.incomplete` |
 | `phone` + `country: "TR"` | `(555) 123 45 67` (type +90, 0090, 0 or 555) | `5551234567` | `phone.incomplete` |
-| `iban` | `GB82 WEST 1234 5698 7654 32` (any country) | `GB82WEST12345698765432` | `iban.incomplete`, `iban.invalid` |
-| `iban` + `country: "TR"` | `TR33 0006 1005 1978 6457 8413 26` | `TR330006100519786457841326` | `iban.incomplete`, `iban.invalid` |
+| `iban` | `GB82 WEST 1234 5698 7654 32` (any country) | `GB82WEST12345698765432` | `iban.incomplete`; 2.4+: `iban.country` (no two A–Z letters first), `iban.length` (not its country's length), `iban.checksum` (mod-97); `iban.invalid` is the fallback (before 2.4 the only key) |
+| `iban` + `country: "TR"` | `TR33 0006 1005 1978 6457 8413 26` | `TR330006100519786457841326` | `iban.incomplete`, `iban.checksum` (2.4+; `iban.invalid` before) |
 | `card` | `4111 1111 1111 1111`, Amex `3782 822463 10005` | digits | `card.incomplete`, `card.invalid` (Luhn) |
 | `cvv` | 3 digits, 4 when `from` card is Amex | digits | `cvv.incomplete` |
 | `expiry` | `12/28`, past months invalid | `1228` | `expiry.incomplete`, `expiry.invalid`, `expiry.min` |
@@ -108,7 +108,7 @@ export async function checkout(formData: FormData) {
 
 ## Helpers
 
-`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length), `isValidPlate` (2.3+; spaces, hyphens and lowercase OK; Latin A–Z, Q/W/X included; name plates and special plates not checked) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
+`createMask(spec)` → `{ format, parse, validate, isComplete }` · `getMaskPlaceholder(spec)` (2.4+; takes what `createMask` takes: `{ preset: "phone", country: "TR" }` → `"(___) ___ __ __"`, `{ preset: "iban", country: "TR" }` → `"TR__ ____ ____ ____ ____ ____ __"`; optional parts left out; `undefined` for number, currency and date masks and for `fullName`; the hook does not set it, pass it as `placeholder`) · `getCardType` · `isValidCard`, `isValidLuhn`, `isValidTCKN`, `isValidVKN`, `isValidIBAN` (any country; country code sets the length), `isValidPlate` (2.3+; spaces, hyphens and lowercase OK; Latin A–Z, Q/W/X included; name plates and special plates not checked) · `toMinorUnits("1234.56", "TRY") → 123456` · `getTurkishBank("TR63 0006 2…") → { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }` (from the IBAN's bank code, partial input OK, no checksum check; `turkishBanks` is the full TCMB list of 70, 2.1+) · `maskResolver(masks, resolverOrStandardSchema)`.
 
 ## Test data (2.3+)
 
