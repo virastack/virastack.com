@@ -14,8 +14,8 @@ Use what the user names: a page, product, section or file. With no scope, review
 ## Step 1: Terminology (fix)
 
 1. Read `.cursor/rules/terminology.mdc` fresh every run; it is the source of truth.
-2. Search Turkish copy (`tr.json`, `src/features/**/locales/tr/**/*.tsx`, `ecosystem.config.ts`) for every "Never" term and forbidden form (`ajan`, `başsız`, `istemci`), including suffixed forms.
-3. Fix hits in place: apostrophe suffixes (`agent'ın`; `&apos;` in JSX), pairs, `sunucu` exceptions. Keep JSON valid and run `npx tsc --noEmit -p .` afterwards.
+2. Search Turkish copy (`tr.json`, `src/features/docs/content/**/tr/*.mdx`, `src/features/**/locales/tr/**/*.tsx`, `ecosystem.config.ts`) for every "Never" term and forbidden form (`ajan`, `başsız`, `istemci`), including suffixed forms.
+3. Fix hits in place: apostrophe suffixes (`agent'ın`; `&apos;` in JSX, a plain `'` in MDX), pairs, `sunucu` exceptions. Keep JSON valid and run `npx tsc --noEmit -p .` afterwards.
 4. Address form: the whole site uses **sen** (`kurulur`, `ekle`, `kullan`, `seç`, `öğren`), one form per page. Fix stray **siz** forms (`ekleyin`, `kullanın`, `projeniz`, `-iniz/-ınız`, `-sınız`) in place; CLI flag descriptions have no subject. Read the address-form section of `terminology.mdc` for the exact scope and exceptions.
 5. **Established English dev terms stay English** (`state`, `feature`, `framework`, `hook`, `server`, `client`, `agent`, `build`, `props`, `parse`, `lockfile`…). Fix Turkish coinages that replaced them (`durum yönetimi`, `kanca`, `ayrıştırılıp`). Never flag English terms or English card titles in Turkish copy as "mixed language" (`Data & State` is correct) and never suggest translating them.
 6. A term that looks like it deserves a rule but is missing: report it as a proposed row, do not add it.

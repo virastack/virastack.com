@@ -54,7 +54,7 @@ export async function PasswordExamplesPage({ exampleId }: PasswordExamplesPagePr
       sections={sections}
       docsIndexHref={EXAMPLES_INDEX}
       slug={slug}
-      headings={page.headings}
+      headings={page.headings ?? []}
       githubIssueHref={githubIssueHref}
     >
       {exampleId ? <PasswordExampleDetailDoc id={exampleId} /> : <PasswordExamplesDoc />}

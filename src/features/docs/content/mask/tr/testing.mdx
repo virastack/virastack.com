@@ -1,0 +1,82 @@
+import { MaskTestingDemo } from "@/features/docs/components/MaskTestingDemo";
+
+<DocsPageHeader
+  title="Test verisi"
+  description="@virastack/mask/testing ile test ve seed verisi için geçerli TCKN ve IBAN üret (2.3+)."
+/>
+
+<DocsProse>
+
+<h2 id="giris">Test girişi</h2>
+
+**Yalnızca test ve seed verisi için.** Üretilen değer algoritmaya uyduğu için gerçek bir kişiye ya da hesaba denk gelebilir. Gerçek veri olarak kullanma.
+
+Üreteçler ayrı bir girişte durur: `@virastack/mask/testing`. Kök ve `/server` girişleri bunları export etmez, bu yüzden üretim bundle'ına girmezler. Girişte React ve `"use client"` yok: seed betiklerinde, test dosyalarında ve Server Component'lerde çalışır. Boyutu yaklaşık 2 KB.
+
+```ts
+import { generateIBAN, generateTCKN } from "@virastack/mask/testing"
+```
+
+<h2 id="deneyin">Dene</h2>
+
+Bir butona bas, değer ekranda görünsün. Seed verince değer sabit kalır; başka bir değer için seed'i değiştir.
+
+<MaskTestingDemo />
+
+<h2 id="tckn">generateTCKN</h2>
+
+Dokuz hane seçer (ilki 1–9) ve 10. ile 11. haneyi `isValidTCKN` ile aynı kuralla hesaplar. Liste tutulmaz, her numara anında üretilir.
+
+```ts
+generateTCKN()             // her çağrıda yeni bir numara
+generateTCKN({ seed: 1 })  // her çalıştırmada "49537717654"
+
+isValidTCKN(generateTCKN()) // true
+```
+
+<h2 id="iban">generateIBAN</h2>
+
+IBAN'ı boşluksuz döndürür, `iban` preset'inin sakladığı gibi. Ülke varsayılan olarak `TR`.
+
+- **Türkiye:** ulusal düzene uyar: `turkishBanks` listesinden banka kodu, rezerv hane `0` ve 16 haneli hesap numarası. `bank` dört haneli TCMB koduyla bankayı seçer; verilmezse banka rastgele seçilir. `getTurkishBank` üretilen her IBAN'ın bankasını bulur.
+- **Diğer ülkeler:** IBAN kaydındaki 89 ülkenin hepsi. Hesap kısmı kayıttaki uzunlukta ve yalnızca rakamdır. `isValidIBAN` kontrolünü (uzunluk ve mod-97) geçer, İngiltere banka kodundaki harfler gibi ulusal kuralları geçmez.
+- Bilinmeyen ülke, bilinmeyen banka kodu ya da Türkiye dışında `bank` hata fırlatır; yazım hatası sessizce yanlış veri üretmez.
+
+```ts
+generateIBAN()                        // rastgele bir bankada Türk IBAN'ı
+generateIBAN("TR", { bank: "0062" })  // "TR51 0006 2…", Garanti
+generateIBAN("DE", { seed: 1 })       // her çalıştırmada "DE70449725173128749365"
+
+getTurkishBank(generateIBAN("TR", { bank: "0062" })) // { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }
+```
+
+<h2 id="seed">Seed ve testler</h2>
+
+`seed` verilmezse her çağrı yeni değer verir. Tam sayı bir `seed` ile değer her çalıştırmada ve her platformda aynıdır; snapshot'lar, seed verisi ve ekran görüntüleri değişmez. Seed yalnızca üretecin başlangıç değeridir, hiçbir kişiye ya da tabloya karşılık gelmez. Aynı seed TCKN ve IBAN için birbiriyle ilgisiz rakamlar verir.
+
+```ts
+// prisma/seed.ts — "use client" yok, Node'da çalışır
+import { generateIBAN, generateTCKN } from "@virastack/mask/testing"
+
+const customers = Array.from({ length: 50 }, (_, i) => ({
+  name: `Müşteri ${i + 1}`,
+  tckn: generateTCKN({ seed: i }),
+  iban: generateIBAN("TR", { seed: i }),
+}))
+// her çalıştırmada aynı 50 müşteri; snapshot ve ekran görüntüleri değişmez
+```
+
+```tsx
+import { generateTCKN } from "@virastack/mask/testing"
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+
+it("geçerli TCKN'yi kabul eder", async () => {
+  render(<SignupForm />)
+  await userEvent.type(screen.getByLabelText("TCKN"), generateTCKN({ seed: 7 }))
+  await userEvent.click(screen.getByRole("button", { name: "Devam" }))
+  expect(screen.queryByText("Geçersiz TCKN")).toBeNull()
+})
+```
+
+</DocsProse>

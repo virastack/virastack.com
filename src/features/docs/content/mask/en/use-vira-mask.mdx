@@ -1,0 +1,106 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+
+export const basicCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+function Example() {
+  const form = useForm<{ phone: string }>()
+  const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
+
+  return <input {...phone} placeholder="(555) 123 45 67" />
+}
+// form.watch("phone") → "5551234567"`;
+
+export const fromCode = `const form = useForm({ defaultValues: { currency: "TRY", price: "1234.56" } })
+
+const { price } = useViraMask(form, {
+  price: { preset: "currency", from: "currency" },
+})
+
+<select {...form.register("currency")}>…</select>
+<input {...price} />`;
+
+<DocsPageHeader
+  title="useViraMask()"
+  description="Mask several fields with one hook. The form keeps the raw value; the input shows the mask."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Basic usage</h2>
+
+The first argument is what `useForm()` returns, the second is the schema. Types come from the form; you don't write them again.
+
+<ComponentPreview
+  preview={<MaskFieldDemo
+              config={{ preset: "phone", country: "TR" }}
+              placeholder="(555) 123 45 67"
+            />}
+  code={basicCode}
+>
+  <DocsCodeBlock code={basicCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="schema">Schema</h2>
+
+Keys are field paths of your form. An unknown field, an unknown preset or a wrong option is a compile error.
+
+```tsx
+useViraMask(form, {
+  // a preset name
+  tckn: "tckn",
+  // a preset with overrides
+  birthDate: { preset: "date", date: { max: "today", minAge: 18 } },
+  // React Hook Form rules pass through
+  phone: { preset: "phone", country: "TR", rules: { required: "required" } },
+  // nested field: quote the key or set name
+  "address.zip": { mask: "99999" },
+  zip2: { name: "address.zip2", mask: "99999" },
+  // write the masked text into the form
+  iban: { preset: "iban", country: "TR", output: "masked" },
+  // when the mask is full
+  card: { preset: "card", onComplete: () => form.setFocus("expiry") },
+})
+```
+
+- `rules`: `required`, `minLength`, `deps`, `setValueAs`, `disabled`, `onChange` and the other `register` rules.
+- `country`: the Turkish layout for `phone`, `iban`, `currency` and `number` (`"TR"` for now). The defaults are global.
+- `output`: `"raw"` (default) or `"masked"`.
+- `onComplete`: runs once when the mask is full. You decide where focus goes.
+
+<h2 id="from">Linked fields (from)</h2>
+
+A mask can depend on another field. The link is explicit and typed: `from` must be a real field of the form.
+
+- `cvv` → `card`: 4 digits for Amex, 3 otherwise.
+- `currency` → a select: symbol and separators follow the currency.
+- `date` → a start date: the end can't be before it (`date.beforeFrom`).
+
+<ComponentPreview preview={<MaskCurrencyFromDemo />} code={fromCode}>
+  <DocsCodeBlock code={fromCode} lang="tsx" />
+</ComponentPreview>
+
+When the linked field changes the mask is re-applied: if the card turns from Amex to Visa, the CVV is trimmed to 3 digits on screen and in the form.
+
+<h2 id="donus">Return value</h2>
+
+Each key returns an object you spread on an input. Every key in it is a valid input prop; nothing unknown reaches the DOM.
+
+- `name`, `ref`, `defaultValue`
+- `onChange`, `onBlur`, `onCompositionEnd`
+- `type`, `inputMode`, `autoComplete`
+- `disabled` (when set in rules), `aria-invalid` (when there is an error)
+
+The input is uncontrolled (`defaultValue`); don't pass `value`. Read the raw value with `form.watch("phone")`.
+
+<h2 id="rhf">React Hook Form compatibility</h2>
+
+- `reset()` and `setValue()` update the input. Pass raw values (ISO for dates: `2026-07-29`).
+- `watch`, `getValues`, `formState`, `Controller` and `useFieldArray` work alongside it.
+- Mask validation is added as the `validate.mask` rule; your own `validate` rules are kept.
+- With a resolver (<AcademyBadge kind="zod" />, Valibot), wrap it with [maskResolver](/mask/docs/validation#resolver).
+- Formatting waits until IME composition (Chinese, Japanese, dead keys) ends.
+
+</DocsProse>

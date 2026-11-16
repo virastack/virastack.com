@@ -1,0 +1,176 @@
+<DocsPageHeader
+  title="React Hook Form"
+  description="Pass a form and every pick is written into it: default field names, names, FormProvider, edit forms and Zod."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Basic usage</h2>
+
+Hand your <AcademyBadge kind="react-hook-form" /> form to the hook through the `form` option, and the fields fill themselves:
+
+```tsx
+"use client"
+
+import { useForm } from "react-hook-form"
+import { useViraAddress } from "@virastack/address"
+
+type Values = {
+  province: string
+  district: string
+  neighbourhood: string
+  postalCode: string
+}
+
+export function AddressForm() {
+  const form = useForm<Values>()
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+  } = useViraAddress({ form })
+
+  return (
+    <form onSubmit={form.handleSubmit(save)}>
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+      <button type="submit">Save</button>
+    </form>
+  )
+}
+```
+
+When a higher level changes, the levels below it become `""` in the form too. Values are written with `shouldDirty`, `shouldTouch` and `shouldValidate`, so a required district cannot stay valid after the province changes. Pass `shouldValidate: false` to skip the revalidation.
+
+The hook imports nothing from React Hook Form and does not depend on it. `form` is any object with `setValue(name, value, options)`, plus `getValues(name)` if it should start filled and `subscribe` if it should follow `reset()`; the result of `useForm()` fits as it is.
+
+<h2 id="names">names</h2>
+
+The fields default to `province`, `district`, `neighbourhood` and `postalCode`. If your form is shaped differently, pass `names`; TypeScript checks each one against the form's type:
+
+```tsx
+type Values = {
+  shipping: {
+    city: string
+    district: string
+    neighbourhood: string
+    zip: string
+    plate: string
+  }
+}
+
+const form = useForm<Values>()
+
+useViraAddress({
+  form,
+  names: {
+    province: "shipping.city",
+    district: "shipping.district",
+    neighbourhood: "shipping.neighbourhood",
+    postalCode: "shipping.zip",
+    provinceCode: "shipping.plate", // also store the plate code
+  },
+})
+
+// A typo such as "shipping.zp" is a type error.
+```
+
+`provinceCode` is only written when you name it. The same names go on the inputs the prop getters return, so a native form submit sends the same fields.
+
+<h2 id="form-provider">FormProvider</h2>
+
+When the address fields live in their own component, take the form from context instead of passing it down:
+
+```tsx
+import { useFormContext } from "react-hook-form"
+
+function AddressFields() {
+  const address = useViraAddress({ form: useFormContext<Values>() })
+  // ...
+}
+```
+
+<h2 id="duzenleme">Edit forms</h2>
+
+The hook starts from the address already in the form, so there is no separate `defaultValue` to keep in sync. Names match regardless of case and Turkish characters: a database value like `"Fatih"` still finds `FATİH`.
+
+```tsx
+const form = useForm<Values>({
+  defaultValues: {
+    province: "İstanbul",
+    district: "Fatih",
+    neighbourhood: "Aksaray Mah.",
+    postalCode: "34096",
+  },
+})
+
+const address = useViraAddress({ form })
+// address.value.district === "FATİH"
+// once loaded: address.value.neighbourhood === "AKSARAY MAH."
+```
+
+Filling in the postal code once the neighbourhoods load is not an edit, so the form is not marked dirty. `isDirty` only turns `true` when the user picks something.
+
+Data that arrives later works too: `form.reset(data)`, the `values` option of `useForm()` and `setValue()` on a level all move the selects, and the form stays pristine. `form.reset()` to empty values clears the address as well, so you never call `address.reset()` alongside it. A level the new province or district does not have is dropped in the form too.
+
+<h2 id="zod">Validation with Zod</h2>
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+const schema = z.object({
+  province: z.string().min(1, "Pick a province"),
+  district: z.string().min(1, "Pick a district"),
+  neighbourhood: z.string().min(1, "Pick a neighbourhood"),
+  postalCode: z.string().regex(/^\d{5}$/),
+})
+
+const form = useForm({
+  resolver: zodResolver(schema),
+  defaultValues: {
+    province: "",
+    district: "",
+    neighbourhood: "",
+    postalCode: "",
+  },
+})
+const address = useViraAddress({ form })
+
+// form.formState.errors.district?.message
+```
+
+A <AcademyBadge kind="zod" /> schema works as it is. Because the district and neighbourhood are cleared and revalidated when the province changes, error messages stay on the right level. Client validation alone is not enough, though: check the submitted address [on the server with resolveAddress](/address/docs/server).
+
+<h2 id="diger">Other form libraries</h2>
+
+A small object that matches the `setValue` signature connects any form library. <AcademyBadge kind="formik" />:
+
+```tsx
+import { useFormikContext } from "formik"
+
+const { setFieldValue } = useFormikContext()
+
+// form is any object with setValue(name, value).
+const address = useViraAddress({
+  form: { setValue: (name, value) => setFieldValue(name, value) },
+})
+```
+
+Or do the writing yourself: `onChange` is called with the whole `value` on every change. <AcademyBadge kind="tanstack-form" />:
+
+```tsx
+const address = useViraAddress({
+  onChange: (value) => {
+    form.setFieldValue("province", value.province ?? "")
+    form.setFieldValue("district", value.district ?? "")
+    form.setFieldValue("neighbourhood", value.neighbourhood ?? "")
+    form.setFieldValue("postalCode", value.postalCode ?? "")
+  },
+})
+```
+
+For a form without a library, see the [Server Action](/address/docs/server) example.
+
+</DocsProse>

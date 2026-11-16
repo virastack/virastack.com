@@ -1,0 +1,48 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Customization"
+  description="Icons, text, props, automatic hiding, autoComplete and locked states."
+/>
+
+<DocsProse>
+
+<h2 id="icons">Icons & text</h2>
+
+`icons` takes any `ReactNode`: `show` renders while the password is hidden, `hide` while it is visible.
+
+<PasswordExamplePreview id="custom-icons" />
+
+<PasswordExamplePreview id="custom-text" />
+
+<h2 id="props">inputProps & btnProps</h2>
+
+<PasswordExamplePreview id="prop-merge" />
+
+Merge rules: [useViraPassword()](/password/docs/use-vira-password).
+
+<h2 id="gizleme">Automatic hiding</h2>
+
+Hiding on submit lets password managers see a password field when they save. Automatic hiding works even while the field is disabled.
+
+```tsx
+useViraPassword({
+  hideOnSubmit: true, // default: hide on form submit and reset
+  hideOnBlur: true,   // hide when focus leaves the field or the tab is hidden
+})
+```
+
+<h2 id="autocomplete">autoComplete</h2>
+
+```tsx
+useViraPassword() // current-password (login)
+useViraPassword({ policy }) // new-password (sign-up)
+useViraPassword({ autoComplete: "one-time-code" })
+useViraPassword({ autoComplete: false }) // no attribute
+```
+
+<h2 id="state">disabled & readOnly</h2>
+
+<PasswordExamplePreview id="disabled" />
+
+</DocsProse>

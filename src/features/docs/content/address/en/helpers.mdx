@@ -1,0 +1,79 @@
+<DocsPageHeader
+  title="Turkish helpers"
+  description="formatName, toSearchKey, compareNames and formatAddress: display, search and sort Turkish names and put an address on one line, with İ and ı handled correctly."
+/>
+
+<DocsProse>
+
+Turkish has two letter i's: a dotted `i` whose capital is `İ`, and a dotless `ı` whose capital is `I`. The default JavaScript case functions only know the English pair, so `"KADIKÖY".toLowerCase()` gives the wrong word. These three helpers apply Turkish rules for you.
+
+<h2 id="format-name">formatName</h2>
+
+The dataset is in capitals (`AKKAPI MAH.`), which reads badly in a dropdown. `formatName` lowercases with Turkish rules, then capitalises the first letter of every word and every letter after a dot, hyphen, slash or parenthesis.
+
+```ts
+import { formatName } from "@virastack/address"
+
+formatName("AKKAPI MAH.")             // "Akkapı Mah."
+formatName("İSTANBUL")                // "İstanbul"
+formatName("ŞEHİT P. ÜSTEĞMEN MAH.")  // "Şehit P. Üsteğmen Mah."
+formatName("GAZİ-OSMAN MAH.")         // "Gazi-Osman Mah."
+```
+
+It is the default [formatLabel](/address/docs/use-vira-address), so the `label` in every list comes from it. `MAH.` is short for _mahallesi_, "neighbourhood".
+
+<h2 id="search-key">toSearchKey</h2>
+
+Prepares text for search: case and Turkish characters are ignored, so a user typing `kadikoy` on a keyboard without Turkish letters still finds `KADIKÖY`.
+
+```ts
+import { toSearchKey } from "@virastack/address"
+
+toSearchKey("KADIKÖY")    // "kadikoy"
+toSearchKey("Çağlayan")   // "caglayan"
+
+const hits = neighbourhoods.filter((n) =>
+  toSearchKey(n.label).includes(toSearchKey(query)),
+)
+```
+
+`resolveAddress`, name matching in edit forms and the <AcademyBadge kind="ant-design" /> flavour's search all use it.
+
+<h2 id="compare-names">compareNames</h2>
+
+Sorts in Turkish alphabetical order, where `Ç`, `Ğ`, `İ`, `Ö`, `Ş` and `Ü` each come right after their base letter.
+
+```ts
+import { compareNames } from "@virastack/address"
+
+const sorted = ["İZMİR", "ADANA", "ÇORUM"].sort(compareNames)
+// ["ADANA", "ÇORUM", "İZMİR"]
+```
+
+The province and district lists are sorted with it.
+
+<h2 id="format-address">formatAddress</h2>
+
+Puts the picked address on one line, for an order summary, an invoice or a cargo label. The default is the neighbourhood followed by `district/province`, the way Turkish addresses are written, with names in `formatName` case.
+
+```ts
+import { formatAddress } from "@virastack/address"
+
+const value = {
+  province: "SAKARYA",
+  district: "ADAPAZARI",
+  neighbourhood: "ALANDÜZÜ MAH.",
+  postalCode: "54100",
+}
+
+formatAddress(value)                        // "Alandüzü Mah. Adapazarı/Sakarya"
+formatAddress(value, { postalCode: true })  // "Alandüzü Mah. 54100 Adapazarı/Sakarya"
+formatAddress(value, { separator: ", " })   // "Alandüzü Mah. Adapazarı, Sakarya"
+
+formatAddress({ province: "SAKARYA", district: "ADAPAZARI" })
+// "Adapazarı/Sakarya": a level not picked is left out
+```
+
+There are two options: `postalCode` adds the postal code before the district, as on an envelope, and `separator` changes what goes between district and province. Levels not picked yet are left out, so a half-filled form still reads cleanly. It takes the hook's `value`, a `resolveAddress` result or your own object, and is exported from `/server` too.
+
+</DocsProse>

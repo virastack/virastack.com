@@ -1,0 +1,85 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Giriş"
+  description="React için headless parola hook'u: göster/gizle, NIST tarzı güç, parola tekrarı, sunucu doğrulaması ve sızmış parola kontrolü."
+/>
+
+<DocsProse>
+
+Parola alanlarında hata yapmak kolaydır: eksik ARIA, formu gönderen bir toggle, metin alanı gören parola yöneticisi, formda ve sunucuda farklı kurallar. `useViraPassword()` bunları tek hook ile çözer. İşaretleme ve stil sende kalır.
+
+<h2 id="baslarken">Başlarken</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+
+<PasswordExamplePreview id="show-hide" />
+
+1\.0'dan mı geliyorsun? Hiçbir şey kırılmaz; [sürüm notlarına](/releases/password) bak. Canlı demolar [örnekler](/password/examples) sayfasında.
+
+<h2 id="giris-noktalari">Giriş noktaları</h2>
+
+Yalnızca kök girişte `"use client"` vardır. Güç motoru yalnızca politika verdiğinde paketine girer.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Import</th>
+        <th>Dışa aktarımlar</th>
+        <th>Çalıştığı yer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`@virastack/password`</td>
+        <td>useViraPassword (React Hook Form ile ya da onsuz), mergeProps, composeRefs, ikonlar</td>
+        <td>client</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/strength`</td>
+        <td>definePolicy, evaluate, normalizePassword</td>
+        <td>client + server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/server`</td>
+        <td>validatePassword (+ strength dışa aktarımları)</td>
+        <td>server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/pwned`</td>
+        <td>checkPwned</td>
+        <td>server (önerilen)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="peer">Gereksinimler</h2>
+
+- <AcademyBadge kind="react" label="React 18.2+" /> ve `react-dom` (React 19 desteklenir)
+- Çalışma zamanı bağımlılığı yok
+- <AcademyBadge kind="react-hook-form" /> isteğe bağlıdır; başka bir form kütüphanesiyle veya kütüphanesiz de çalışır.
+
+Ayrıca <GuideProductMark id="start" linked={false}>Start</GuideProductMark> CLI kurulumunda seçilebilir (`npx virastack@latest --tools password`).
+
+<h2 id="neden">Neden <GuideProductMark id="password" linked={false} tone="heading">Password</GuideProductMark>?</h2>
+
+- **Headless**: döndürülen her değer geçerli bir input veya buton prop'udur.
+- **Radix düzeyinde detaylar**: gönderimde gizleme, tıklamadan sonra odak, kontrollü `visible`, Caps Lock, `autoComplete`.
+- **NIST tarzı güç**: önce uzunluk (15–64), yaygın parolalar, tekrarlar ve kişisel bilgi. Varsayılan olarak bileşim kuralı yok.
+- **Sunucuda aynı kurallar**: form ve Server Action için tek politika nesnesi.
+- **Hata anahtarları**: `password.tooShort`, `password.mismatch`… Mesajlar ve i18n sende kalır.
+
+<h2 id="kapsam">Kapsam</h2>
+
+- [useViraPassword()](/password/docs/use-vira-password), [güç](/password/docs/strength) ve [parola tekrarı](/password/docs/confirm)
+- [React Hook Form](/password/docs/react-hook-form), [sunucu doğrulaması](/password/docs/server) ve [sızmış parolalar](/password/docs/pwned)
+- [Erişilebilirlik](/password/docs/accessibility) ve [özelleştirme](/password/docs/customization)
+
+Kapsam dışı: güç barı veya parola üretici bileşeni, passkey, pano temizleme.
+
+</DocsProse>

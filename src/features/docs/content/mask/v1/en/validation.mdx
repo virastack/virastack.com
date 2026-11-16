@@ -1,0 +1,75 @@
+<DocsPageHeader
+  title="Validation"
+  description="Built-in validators on presets or your own function; wired to React Hook Form errors."
+/>
+
+<DocsProse>
+
+<h2 id="built-in">Built-in validators</h2>
+
+Enable with `validate: true` and a `validator` key. Empty fields are not validated.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`luhn`</td>
+        <td>Card number (Amex 15 / others 16 digits)</td>
+      </tr>
+      <tr>
+        <td>`expiry`</td>
+        <td>MMYY: month 1–12, not a past date</td>
+      </tr>
+      <tr>
+        <td>`tckn`</td>
+        <td>11-digit Turkish ID algorithm</td>
+      </tr>
+      <tr>
+        <td>`vkn`</td>
+        <td>10-digit tax ID number</td>
+      </tr>
+      <tr>
+        <td>`iban`</td>
+        <td>TR + 24 digits, mod-97</td>
+      </tr>
+      <tr>
+        <td>`email`</td>
+        <td>Email regex</td>
+      </tr>
+      <tr>
+        <td>`url`</td>
+        <td>URL regex</td>
+      </tr>
+      <tr>
+        <td>`date`</td>
+        <td>Calendar date (with `dateFormat`)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Functions can also be imported directly: `validateLuhn`, `validateTCKN`, `validateIBAN`, the `VALIDATORS` map, etc.
+
+<h2 id="ozel">Custom validator</h2>
+
+```ts
+{
+  mask: "(999) 999 99 99",
+  validate: true,
+  validator: (value) => value.length === 10,
+}
+```
+
+<h2 id="mesaj">Error message</h2>
+
+On failed validation, `errorMessage` is returned; otherwise RHF gets `false`. Read errors from `form.formState.errors`.
+
+For type definitions see [types](/mask/docs/v1/types); for live examples see [examples](/mask/examples).
+
+</DocsProse>

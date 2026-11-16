@@ -1,0 +1,48 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Özelleştirme"
+  description="İkonlar, metin, props, otomatik gizleme, autoComplete ve kilit durumları."
+/>
+
+<DocsProse>
+
+<h2 id="icons">İkonlar & metin</h2>
+
+`icons` herhangi bir `ReactNode` alır: `show` parola gizliyken, `hide` görünürken render edilir.
+
+<PasswordExamplePreview id="custom-icons" />
+
+<PasswordExamplePreview id="custom-text" />
+
+<h2 id="props">inputProps & btnProps</h2>
+
+<PasswordExamplePreview id="prop-merge" />
+
+Birleştirme kuralları: [useViraPassword()](/password/docs/use-vira-password).
+
+<h2 id="gizleme">Otomatik gizleme</h2>
+
+Gönderimde gizlemek, parola yöneticisinin kaydederken parola alanı görmesini sağlar. Otomatik gizleme alan disabled olsa bile çalışır.
+
+```tsx
+useViraPassword({
+  hideOnSubmit: true, // varsayılan: form gönderilince ve resetlenince gizle
+  hideOnBlur: true,   // odak alandan çıkınca veya sekme gizlenince gizle
+})
+```
+
+<h2 id="autocomplete">autoComplete</h2>
+
+```tsx
+useViraPassword() // current-password (giriş)
+useViraPassword({ policy }) // new-password (kayıt)
+useViraPassword({ autoComplete: "one-time-code" })
+useViraPassword({ autoComplete: false }) // öznitelik eklenmez
+```
+
+<h2 id="state">disabled & readOnly</h2>
+
+<PasswordExamplePreview id="disabled" />
+
+</DocsProse>

@@ -52,6 +52,9 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@hookform/resolvers": "^6.0.2",
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "16.4.5",
     "@next/third-parties": "16.4.5",
     "@shadcn/react": "^0.3.0",
     "@tanstack/react-hotkeys": "^0.10.0",
@@ -105,6 +108,7 @@
     "@testing-library/user-event": "^14.6.8",
     "@types/geojson": "^7946.0.16",
     "@types/mdast": "^4.0.4",
+    "@types/mdx": "^2.0.14",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

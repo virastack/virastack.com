@@ -9,3 +9,7 @@ CHANGELOG.md
 .virastack
 AGENTS.md
 CLAUDE.md
+
+# Prettier's MDX parser ends an `export` at a blank line and rewrites the code
+# samples inside it; docs MDX is kept as written.
+*.mdx

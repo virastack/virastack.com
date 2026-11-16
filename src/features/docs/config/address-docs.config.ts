@@ -51,90 +51,26 @@ export function getAddressDocsPage(
   slug: string,
   t: DocsAddressTranslate,
 ): DocsPageMeta | undefined {
-  const page = (
-    slug: string,
-    title: string,
-    description: string,
-    headings: [id: string, title: string][],
-  ): DocsPageMeta => ({
+  const page = (slug: string, title: string, description: string): DocsPageMeta => ({
     slug,
     title,
     description,
-    headings: headings.map(([id, headingTitle]) => ({ id, title: headingTitle })),
   });
 
   const pages: Record<string, DocsPageMeta> = {
-    introduction: page("introduction", t("introductionTitle"), t("introductionDescription"), [
-      ["baslarken", t("introductionHeadingGettingStarted")],
-      ["neden", t("introductionHeadingWhy")],
-      ["karsilastirma", t("introductionHeadingComparison")],
-      ["giris-noktalari", t("introductionHeadingEntries")],
-      ["gereksinimler", t("introductionHeadingRequirements")],
-      ["kapsam", t("introductionHeadingScope")],
-    ]),
+    introduction: page("introduction", t("introductionTitle"), t("introductionDescription")),
     "use-vira-address": page(
       "use-vira-address",
       "useViraAddress()",
       t("useViraAddressDescription"),
-      [
-        ["temel", t("useViraAddressHeadingBasic")],
-        ["value", "value"],
-        ["secenekler", t("useViraAddressHeadingOptions")],
-        ["donus", t("useViraAddressHeadingReturn")],
-        ["kaynak", t("useViraAddressHeadingSource")],
-      ],
     ),
-    "react-hook-form": page("react-hook-form", "React Hook Form", t("reactHookFormDescription"), [
-      ["temel", t("reactHookFormHeadingBasic")],
-      ["names", "names"],
-      ["form-provider", "FormProvider"],
-      ["duzenleme", t("reactHookFormHeadingEdit")],
-      ["zod", t("reactHookFormHeadingZod")],
-      ["diger", t("reactHookFormHeadingOther")],
-    ]),
-    "postal-code": page("postal-code", t("postalCodeTitle"), t("postalCodeDescription"), [
-      ["input", t("postalCodeHeadingInput")],
-      ["kesinlik", t("postalCodeHeadingCertainty")],
-      ["davranis", t("postalCodeHeadingBehaviour")],
-      ["set-postal-code", "setPostalCode()"],
-      ["ui", t("navUiLibraries")],
-      ["sunucu", t("postalCodeHeadingServer")],
-    ]),
-    "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription"), [
-      ["getterlar", t("uiLibrariesHeadingGetters")],
-      ["headless", "headless"],
-      ["shadcn", "shadcn/ui"],
-      ["ant-design", "Ant Design"],
-      ["listeler", t("uiLibrariesHeadingCustom")],
-      ["uzun-listeler", t("uiLibrariesHeadingLongLists")],
-    ]),
-    server: page("server", t("serverTitle"), t("serverDescription"), [
-      ["resolve", "resolveAddress()"],
-      ["sorunlar", t("serverHeadingIssues")],
-      ["posta-kodu", "resolvePostalCode()"],
-      ["server-action", "Server Action"],
-      ["yardimcilar", t("serverHeadingHelpers")],
-      ["nextjs", t("serverHeadingNext")],
-    ]),
-    data: page("data", t("dataTitle"), t("dataDescription"), [
-      ["api", "API"],
-      ["maliyet", t("dataHeadingCost")],
-      ["loader", t("dataHeadingLoader")],
-      ["kaynak", t("dataHeadingSource")],
-    ]),
-    helpers: page("helpers", t("helpersTitle"), t("helpersDescription"), [
-      ["format-name", "formatName"],
-      ["search-key", "toSearchKey"],
-      ["compare-names", "compareNames"],
-      ["format-address", "formatAddress"],
-    ]),
-    types: page("types", t("navTypes"), t("typesDescription"), [
-      ["hook", t("typesHeadingHook")],
-      ["form", t("typesHeadingForm")],
-      ["deger", t("typesHeadingValue")],
-      ["server", "/server"],
-      ["data", "/data"],
-    ]),
+    "react-hook-form": page("react-hook-form", "React Hook Form", t("reactHookFormDescription")),
+    "postal-code": page("postal-code", t("postalCodeTitle"), t("postalCodeDescription")),
+    "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription")),
+    server: page("server", t("serverTitle"), t("serverDescription")),
+    data: page("data", t("dataTitle"), t("dataDescription")),
+    helpers: page("helpers", t("helpersTitle"), t("helpersDescription")),
+    types: page("types", t("navTypes"), t("typesDescription")),
   };
 
   return pages[slug];

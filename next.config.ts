@@ -2,6 +2,7 @@ import path from "node:path";
 import type { NextConfig } from "next";
 
 import createBundleAnalyzer from "@next/bundle-analyzer";
+import createMDX from "@next/mdx";
 import createNextIntlPlugin from "next-intl/plugin";
 
 // Validates env at build/dev start; throws on a bad value.
@@ -12,6 +13,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
+
+// Docs content is written in .mdx and imported as components, never routed, so
+// `pageExtensions` stays at its default.
+const withMDX = createMDX();
 
 const isDev = process.env.NODE_ENV !== "production";
 
@@ -182,4 +187,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(withBundleAnalyzer(nextConfig));
+export default withNextIntl(withBundleAnalyzer(withMDX(nextConfig)));

@@ -1,0 +1,186 @@
+<DocsPageHeader
+  title="Server validation"
+  description="Re-check a submitted address against the dataset with @virastack/address/server, and derive the postal code on the server."
+/>
+
+<DocsProse>
+
+<h2 id="resolve">resolveAddress()</h2>
+
+A client can send any postal code it likes. `resolveAddress` looks the address up in the dataset and derives the postal code itself. If a `postalCode` is sent too, it must be one of the neighbourhood's codes; for a neighbourhood with several, the one sent is kept.
+
+```ts
+import { resolveAddress } from "@virastack/address/server"
+
+const { ok, value, issues } = await resolveAddress({
+  // a name in any casing, or a plate code: 34, "34", "06"
+  province: "istanbul",
+  district: "fatih",
+  neighbourhood: "aksaray mah.",
+})
+
+if (!ok) return { errors: issues }
+value.postalCode // "34096": derived here, not taken from the client
+```
+
+Names match regardless of case and Turkish characters, with surrounding spaces trimmed, and `value` comes back in the dataset's spelling. When both `provinceCode` and `province` are sent, the code wins; an empty code field does not stop the name from being used.
+
+<h2 id="sorunlar">Issues</h2>
+
+When part of the address is missing or unknown, `ok` is `false` and `issues` names the level:
+
+```ts
+type AddressIssue =
+  | { level: "province"; reason: "missing" | "unknown" }
+  | { level: "district"; reason: "missing" | "unknown" }
+  | { level: "neighbourhood"; reason: "missing" | "unknown" }
+  | { level: "postalCode"; reason: "missing" | "unknown" | "mismatch" }
+
+await resolveAddress({ provinceCode: 34, district: "ÇANKAYA" })
+// ok: false
+// issues: [{ level: "district", reason: "unknown" }]
+// value.province: "İSTANBUL", value.district: null
+```
+
+The check runs top-down and stops at the first problem, so `issues` holds at most one entry. Whatever was valid stays in `value`: if the district is unknown, the province is still filled in, so the form can keep showing it. Error messages and their translations are up to you.
+
+A submitted `postalCode` that is not the neighbourhood's gives `{ level: "postalCode", reason: "mismatch" }`, and `value` still carries the neighbourhood's real code. A postal code that is not sent, or sent empty, is not checked but derived.
+
+<h2 id="posta-kodu">resolvePostalCode()</h2>
+
+Finds the address a postal code belongs to, on the server: for example to offer a [postal code lookup](/address/docs/postal-code) from a route handler. It returns as much of the address as the code can say in `value`, and the candidates in `neighbourhoods`:
+
+```ts
+import { resolvePostalCode } from "@virastack/address/server"
+
+const { ok, value, neighbourhoods } = await resolvePostalCode("34096")
+// ok: false
+// issues: [{ level: "neighbourhood", reason: "missing" }]
+// value: { province: "İSTANBUL", district: "FATİH",
+//          neighbourhood: null, postalCode: "34096", ... }
+// neighbourhoods: ["AKSARAY MAH.", "HASEKİ SULTAN MAH."]
+
+await resolvePostalCode("34710")
+// ok: true, value.neighbourhood: "CAFERAĞA MAH."
+
+await resolvePostalCode("34999")
+// ok: false, issues: [{ level: "postalCode", reason: "unknown" }]
+```
+
+`ok` is `true` only when the code has one neighbourhood, since only then is the address complete. An empty code gives `missing`; a code that is not five digits or not in the dataset gives `unknown`.
+
+<h2 id="server-action">Server Action</h2>
+
+```ts
+// app/actions/address.ts
+"use server"
+
+import { resolveAddress } from "@virastack/address/server"
+
+export async function saveAddress(formData: FormData) {
+  const { ok, value, issues } = await resolveAddress({
+    province: String(formData.get("province") ?? ""),
+    district: String(formData.get("district") ?? ""),
+    neighbourhood: String(formData.get("neighbourhood") ?? ""),
+    postalCode: String(formData.get("postalCode") ?? ""),
+  })
+  if (!ok) return { errors: issues }
+
+  await db.address.create({ data: value })
+}
+```
+
+```tsx
+"use client"
+
+import { useViraAddress } from "@virastack/address"
+import { saveAddress } from "@/app/actions/address"
+
+export function AddressForm() {
+  const address = useViraAddress()
+
+  return (
+    <form action={saveAddress}>
+      <select {...address.getProvinceProps()} />
+      <select {...address.getDistrictProps()} />
+      <select {...address.getNeighbourhoodProps()} />
+      <input {...address.getPostalCodeProps()} />
+      <button type="submit">Save</button>
+    </form>
+  )
+}
+```
+
+In a native select, a province option's value is its plate code, so `formData.get("province")` arrives as `"34"` and `resolveAddress` reads it as a code. The hidden postal code input's value is submitted too; the server does not trust it but checks it against the neighbourhood.
+
+<h2 id="yardimcilar">Other helpers</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Export</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`resolveAddress(input)`</td>
+        <td>Validates the address and derives its postal code: `{ ok, value, issues }`</td>
+      </tr>
+      <tr>
+        <td>`postalCodeFor(input)`</td>
+        <td>Just the postal code; `null` when nothing matches</td>
+      </tr>
+      <tr>
+        <td>`resolvePostalCode(code)`</td>
+        <td>The address behind a postal code: `{ ok, value, issues, neighbourhoods }`</td>
+      </tr>
+      <tr>
+        <td>`formatAddress(value, options)`</td>
+        <td>Puts the address on one line</td>
+      </tr>
+      <tr>
+        <td>`normalizePostalCode(input)`</td>
+        <td>A five digit postal code or null; spaces dropped</td>
+      </tr>
+      <tr>
+        <td>`districtsOf(province)`</td>
+        <td>A province's district names, in Turkish alphabetical order</td>
+      </tr>
+      <tr>
+        <td>`findProvince(input)`</td>
+        <td>Finds a province by plate code or name</td>
+      </tr>
+      <tr>
+        <td>`provinces`</td>
+        <td>All 81 provinces with their district names</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+```ts
+import {
+  districtsOf,
+  findProvince,
+  postalCodeFor,
+} from "@virastack/address/server"
+
+await postalCodeFor({
+  province: 34,
+  district: "FATİH",
+  neighbourhood: "AKSARAY MAH.",
+}) // "34096"
+
+districtsOf("06")          // ["AKYURT", "ALTINDAĞ", ...]
+findProvince("kırşehir")   // { code: 40, name: "KIRŞEHİR", ... }
+```
+
+<h2 id="nextjs">SSR and Next.js</h2>
+
+- Only `@virastack/address` carries `"use client"`. Server Components, Server Actions and route handlers import `/server` or `/data`.
+- The server loads a province's neighbourhoods the first time they are needed and keeps them for the life of the process; later requests for the same province, including concurrent ones, do not load it again. On serverless platforms each instance keeps its own cache.
+- The prop getters' `id`s come from `useId`, so the server and the client produce the same ids.
+
+</DocsProse>

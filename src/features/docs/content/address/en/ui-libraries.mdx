@@ -1,0 +1,163 @@
+<DocsPageHeader
+  title="UI libraries"
+  description="Prop getters fill a plain select in one line and work out the disabled state from the chain, with flavours for shadcn/ui, Ant Design and your own component."
+/>
+
+<DocsProse>
+
+<h2 id="getterlar">Prop getters</h2>
+
+`getProvinceProps()`, `getDistrictProps()` and `getNeighbourhoodProps()` fill a plain `<select>` in one line:
+
+```tsx
+const {
+  getProvinceProps,
+  getDistrictProps,
+  getNeighbourhoodProps,
+  getPostalCodeProps,
+} = useViraAddress()
+
+<select {...getProvinceProps()} />
+<select {...getDistrictProps()} />
+<select {...getNeighbourhoodProps()} />
+<input {...getPostalCodeProps()} />
+```
+
+The options are rendered for you; the empty first option is the placeholder and lets the user clear the level again. The getters also set `value`, `onChange`, `disabled`, `aria-busy`, `name` and `id`. The hidden postal code input carries the value into a plain form submit.
+
+`disabled` follows the chain: the district waits for a province, and the neighbourhood waits for a district and its data. Override anything through the options, or by setting the prop after the spread:
+
+```tsx
+<select {...getProvinceProps({ placeholder: "Select a province" })} />
+<select {...getDistrictProps()} disabled={false} />
+<select {...getNeighbourhoodProps({ name: "area", id: "area" })} />
+```
+
+The default placeholders are in Turkish, because the people filling in the form are in Türkiye. Pass `placeholder` to use your own wording. For other components, pick a flavour with `as`: `headless`, `shadcn` or `antd`.
+
+<h2 id="headless">headless</h2>
+
+For your own select component: an `options` list plus `onChange(value)`.
+
+```tsx
+<MySelect {...getProvinceProps({ as: "headless" })} />
+<MySelect {...getDistrictProps({ as: "headless" })} />
+<MySelect {...getNeighbourhoodProps({ as: "headless" })} />
+```
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`options`</td>
+        <td>A `{ value, label }` list</td>
+      </tr>
+      <tr>
+        <td>`value`</td>
+        <td>The selected value; `""` when nothing is picked</td>
+      </tr>
+      <tr>
+        <td>`onChange`</td>
+        <td>Takes a bare value or a change event</td>
+      </tr>
+      <tr>
+        <td>`disabled`</td>
+        <td>Worked out from the chain</td>
+      </tr>
+      <tr>
+        <td>`loading, aria-busy`</td>
+        <td>`true` on the neighbourhood level while it loads</td>
+      </tr>
+      <tr>
+        <td>`name, id`</td>
+        <td>From the `names` option or the level name; `id` comes from `useId`</td>
+      </tr>
+      <tr>
+        <td>`placeholder`</td>
+        <td>`"İl seç"`, `"İlçe seç"`, `"Mahalle seç"` (Turkish for "select a province" and so on)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="shadcn">shadcn/ui</h2>
+
+```tsx
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+const { provinces, getProvinceProps } = useViraAddress()
+
+<Select {...getProvinceProps({ as: "shadcn" })} items={provinces}>
+  <SelectTrigger>
+    <SelectValue placeholder="Select a province" />
+  </SelectTrigger>
+  <SelectContent>
+    {provinces.map((p) => (
+      <SelectItem key={p.value} value={p.value}>
+        {p.label}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+```
+
+For <AcademyBadge kind="shadcn" />, `value`, `onValueChange` and `disabled` go on `Select`; the items are yours. An empty value shows the `SelectValue` placeholder. `items` is needed on the Base UI version of shadcn/ui to show the selected label, and is harmless on the Radix version.
+
+<h2 id="ant-design">Ant Design</h2>
+
+```tsx
+import { Select } from "antd"
+
+<Select {...getProvinceProps({ as: "antd" })} />
+<Select {...getDistrictProps({ as: "antd" })} />
+<Select {...getNeighbourhoodProps({ as: "antd" })} />
+```
+
+With <AcademyBadge kind="ant-design" />, `options`, `loading` and search come ready. Ant Design's own filter lowercases `İ` into `i̇`, so a search for `istanbul` would miss `İstanbul`; this flavour passes a Turkish-aware `filterOption` instead. An empty value is sent as `undefined`, so the placeholder shows.
+
+<h2 id="listeler">Lists and setters</h2>
+
+If your component's props match none of the flavours, use the lists and setters directly. <AcademyBadge kind="mui" /> `Autocomplete`:
+
+```tsx
+import Autocomplete from "@mui/material/Autocomplete"
+import TextField from "@mui/material/TextField"
+
+const { provinces, setProvince, value } = useViraAddress()
+
+<Autocomplete
+  options={provinces}
+  value={provinces.find((p) => p.value === value.provinceCode) ?? null}
+  onChange={(_, option) => setProvince(option?.value ?? null)}
+  renderInput={(params) => <TextField {...params} label="Province" />}
+/>
+```
+
+Writing your own search? [toSearchKey](/address/docs/helpers) ignores case and Turkish characters:
+
+```ts
+import { toSearchKey } from "@virastack/address"
+
+// a search for "kadikoy" finds "Kadıköy"
+const hits = neighbourhoods.filter((n) =>
+  toSearchKey(n.label).includes(toSearchKey(query)),
+)
+```
+
+<h2 id="uzun-listeler">Long lists</h2>
+
+A district can hold several hundred neighbourhoods and villages; the largest, **Artvin**'s Yusufeli district, has 674. Use a searchable select there, and virtualise the list if it renders thousands of rows.
+
+</DocsProse>

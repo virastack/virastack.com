@@ -1,0 +1,52 @@
+<DocsPageHeader
+  title="Helpers"
+  description="Hook olmadan da kullanabileceğin formatlama ve yardımcı fonksiyonlar."
+/>
+
+<DocsProse>
+
+<h2 id="mask">Maske yardımcıları</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Fonksiyon</th>
+        <th>Açıklama</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`applyMask(value, mask)`</td>
+        <td>Ham değere pattern uygular</td>
+      </tr>
+      <tr>
+        <td>`unmask(value, mask)`</td>
+        <td>Maskeden veri karakterlerini çıkarır</td>
+      </tr>
+      <tr>
+        <td>`stripMask(value, mask)`</td>
+        <td>Maske ile kilit adımda yalnızca data slot’larını tutar</td>
+      </tr>
+      <tr>
+        <td>`cleanValue(value, allowed?, forbidden?)`</td>
+        <td>İzin / yasak regex ile filtreler</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="currency">Para birimi</h2>
+
+- `formatCurrency(value, options)`: ham `"1234.56"` → görüntü (`1,234.56` US varsayılan; TR için ayırıcıları customize et)
+- `unformatCurrency(value, options)`: görüntü → ham
+
+<h2 id="card">Kart</h2>
+
+`getCardType(cardNumber)` → `"visa" | "mastercard" | "amex" | "troy" | "unknown"`. BIN öneklerine göre çalışır (Visa `4`, Amex `34`/`37`, Troy `9792`…).
+
+<h2 id="refs">Refs</h2>
+
+`mergeRefs(...refs)`: RHF register ref’i ile yerel ref’i birleştirmek için. Hook bunu dahili kullanır; kendi kontrollü input’unda da işe yarar.
+
+</DocsProse>

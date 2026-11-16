@@ -1,0 +1,92 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
+import { ChakraUi } from "@/components/ui/svgs/chakraUi";
+import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+
+export const shadcnCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "@/components/ui/input"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask(form, { card: "card" })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}`;
+
+<DocsPageHeader
+  title="UI kütüphaneleri"
+  description="Mask bir UI paketi değildir. shadcn/ui, Ant Design, Chakra ve düz input ile aynı kalıp."
+/>
+
+<DocsProse>
+
+Dönen nesneyi input'a spread et. Bileşen `ref`'i gerçek `<input>`'a iletmelidir (<AcademyBadge kind="react" label="React 19" />'da prop olarak, <AcademyBadge kind="react" label="React 18" />'de `forwardRef` ile). `value` verme; input kontrolsüzdür.
+
+<h2 id="pattern">Ortak kalıp</h2>
+
+```tsx
+const { card } = useViraMask(form, { card: "card" })
+
+// ekranda: "4111 1111 1111 1111"
+// form.watch("card"): "4111111111111111"
+
+return <input {...card} placeholder="0000 0000 0000 0000" />
+```
+
+```tsx
+// Kendi ref'in de lazımsa ikisini birleştir
+const inputRef = useRef<HTMLInputElement>(null)
+
+<Input
+  {...card}
+  ref={(el) => {
+    card.ref(el)
+    inputRef.current = el
+  }}
+/>
+```
+
+<h2 id="shadcn" className="flex items-center gap-2.5"><ShadcnUi className="size-5 shrink-0 text-foreground" aria-hidden />shadcn/ui</h2>
+
+Bu sitedeki canlı demolar da <AcademyBadge kind="shadcn" /> `Input` kullanır:
+
+<ComponentPreview
+  preview={<MaskFieldDemo config="card" placeholder="0000 0000 0000 0000" />}
+  code={shadcnCode}
+>
+  <DocsCodeBlock code={shadcnCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="ant-design" className="flex items-center gap-2.5"><AntDesignDarkTheme className="size-5 shrink-0" aria-hidden />Ant Design</h2>
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "antd"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask(form, { card: "card" })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}
+```
+
+<h2 id="chakra" className="flex items-center gap-2.5"><ChakraUi className="size-5 shrink-0" aria-hidden />Chakra UI</h2>
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "@chakra-ui/react"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask(form, { card: "card" })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}
+```
+
+</DocsProse>

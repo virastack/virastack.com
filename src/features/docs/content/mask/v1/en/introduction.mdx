@@ -1,0 +1,45 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+
+<DocsPageHeader
+  title="Introduction"
+  description="A lightweight input formatting library that works in sync with React Hook Form."
+/>
+
+<DocsProse>
+
+It provides a single `useViraMask()` hook for card numbers, phone, IBAN, currency, and custom masks. While the form state holds raw (unmasked) values, the input shows a formatted display.
+
+<h2 id="baslarken">Getting started</h2>
+
+Install the package. For live mask examples, see the [examples](/mask/examples) page.
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask@1")} />
+
+<h2 id="peer">Peer dependencies</h2>
+
+- `react` ≥ 18.2
+- `react-dom` ≥ 18.2
+- `react-hook-form` ≥ 7
+
+Also selectable during <GuideProductMark id="start" linked={false}>Start</GuideProductMark> CLI setup.
+
+<h2 id="neden">Why <GuideProductMark id="mask" linked={false} tone="heading">Mask</GuideProductMark>?</h2>
+
+- **Lightweight**: zero runtime dependencies; React and React Hook Form as peers.
+- **RHF-first**: integrates with register / setValue; display and raw values are separate.
+- **Type-safe**: field names in the schema match TypeScript types.
+- **Smart presets**: card (Visa, Mastercard, Amex, Troy), CVV, TCKN, IBAN, currency, and more.
+
+<h2 id="kapsam">Scope</h2>
+
+This documentation covers the full package surface:
+
+- [useViraMask()](/mask/docs/v1/use-vira-mask) and the schema model
+- [Custom mask](/mask/docs/v1/custom-mask) syntax and `resolveMask`
+- [Validation](/mask/docs/v1/validation) and [helpers](/mask/docs/v1/helpers)
+- [Types](/mask/docs/v1/types) reference
+- [Examples](/mask/examples) for every preset
+
+</DocsProse>

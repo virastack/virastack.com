@@ -1,0 +1,135 @@
+import { AddressDemo } from "@/components/shared/AddressDemo";
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+
+export const inputCode = `"use client"
+
+import { useViraAddress } from "@virastack/address"
+
+export function AddressFields() {
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+    getPostalCodeInputProps,
+    postalCodeStatus,
+  } = useViraAddress()
+
+  return (
+    <>
+      <input {...getPostalCodeInputProps()} />
+      {postalCodeStatus === "unknown" && <p>No such postal code.</p>}
+
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+    </>
+  )
+}`;
+
+<DocsPageHeader
+  title="From a postal code"
+  description="Type a postal code and the selects fill in: all three levels for a code with one neighbourhood, province and district for a shared one."
+/>
+
+<DocsProse>
+
+Instead of picking from the selects, the address can also be filled from a postal code. Add a postal code input and the selects fill themselves once a code is typed. Pick a neighbourhood and the same input shows the derived code, so both directions work together.
+
+<h2 id="input">The postal code input</h2>
+
+<ComponentPreview preview={<AddressDemo showValue />} previewClassName="max-w-2xl" code={inputCode}>
+  <DocsCodeBlock code={inputCode} lang="tsx" />
+</ComponentPreview>
+
+`getPostalCodeInputProps()` spreads onto a plain `<input>`: `inputMode="numeric"`, `autoComplete="postal-code"`, a `maxLength` of 5, `value` and `onChange`. Anything that is not a digit is dropped, and the lookup runs once five digits are in. While the code is being edited with fewer digits, the address stays where it is.
+
+With `names.postalCode` set, the input carries that name. Don't also render the hidden `getPostalCodeProps()` input in the same form; both would submit the same field.
+
+<h2 id="kesinlik">How certain is it?</h2>
+
+Every postal code belongs to one district, and its first two digits are the province's plate code. But a code often covers several neighbourhoods: only 205 of 2,777 codes have exactly one, while `54100` in Sakarya is shared by 81. So the lookup fills in what the code can say for certain, and `postalCodeStatus` tells you what it found:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>postalCodeStatus</th>
+        <th>What happened</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`"exact"`</td>
+        <td>One neighbourhood under the code: province, district and neighbourhood are filled.</td>
+      </tr>
+      <tr>
+        <td>`"partial"`</td>
+        <td>Province and district are filled; the neighbourhood list is narrowed to the code and the user picks one. A neighbourhood already picked under the code is kept.</td>
+      </tr>
+      <tr>
+        <td>`"unknown"`</td>
+        <td>Not a code in the dataset. The address does not change and the input gets `aria-invalid`.</td>
+      </tr>
+      <tr>
+        <td>`"loading"`</td>
+        <td>The code's province is loading. Only that one province is read.</td>
+      </tr>
+      <tr>
+        <td>`null`</td>
+        <td>No lookup is active: no code was typed, or the province or district was changed by hand.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The data build checks that every code stays within one district and starts with its plate code; a refresh that breaks either rule does not ship.
+
+<h2 id="davranis">Behaviour</h2>
+
+- Picking a province or district by hand drops the lookup: the neighbourhood list is complete again and the input shows the code derived from the pick.
+- Picking a neighbourhood from the narrowed list keeps the lookup. For a neighbourhood with several codes, `value.postalCode` is the one the user typed, not the first.
+- If another pick is made or a new code typed while a code is loading, the older response never lands on top of the newer one.
+- A province already loaded for the selects is not downloaded again; the lookup reads the same data.
+- With a `form`, every level filled is written with `shouldDirty`; for `"partial"` the neighbourhood is empty and the postal code filled. `form.reset()` drops the lookup too.
+
+<h2 id="set-postal-code">setPostalCode()</h2>
+
+Start a lookup yourself, without the input, for a code from a saved address or a location. The promise resolves with what the code matched:
+
+```ts
+const { setPostalCode, value } = useViraAddress()
+
+await setPostalCode("34710") // "exact"
+value
+// { province: "İSTANBUL", district: "KADIKÖY",
+//   neighbourhood: "CAFERAĞA MAH.", postalCode: "34710", ... }
+
+await setPostalCode("34096") // "partial"
+value
+// { province: "İSTANBUL", district: "FATİH",
+//   neighbourhood: null, postalCode: "34096", ... }
+
+await setPostalCode("34999") // "unknown": the address stays as it was
+await setPostalCode(null)    // null: drops the lookup, keeps the address
+```
+
+Pass the code as text: `01040` as a number is `1040`, and the leading zero cannot be brought back. Spaces are dropped, so `"34 710"` works.
+
+<h2 id="ui">UI libraries</h2>
+
+The props are standard input props, and `onChange` takes either an event or a bare value. shadcn/ui's and Ant Design's `Input` take them as they are:
+
+```tsx
+import { Input } from "@/components/ui/input"
+
+<Input
+  {...address.getPostalCodeInputProps({ placeholder: "34710" })}
+  aria-describedby="postal-code-hint"
+/>
+```
+
+<h2 id="sunucu">On the server</h2>
+
+The same lookup runs on the server with `resolvePostalCode`, and `resolveAddress` checks a submitted postal code against the neighbourhood. See [server validation](/address/docs/server). For the raw result without React, use `findPostalCode` from the [dataset](/address/docs/data).
+
+</DocsProse>

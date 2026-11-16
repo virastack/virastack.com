@@ -74,7 +74,7 @@ export async function AiDocsPage({ slug, versionId }: AiDocsPageProps) {
       sections={texts.getNav()}
       docsIndexHref={content.indexHref}
       slug={slug}
-      headings={page.headings}
+      headings={page.headings ?? []}
       githubIssueHref={githubIssueHref}
       versions={{
         current: version.id,

@@ -1,0 +1,75 @@
+<DocsPageHeader
+  title="Validation"
+  description="Hazır maskelerdeki yerleşik doğrulayıcılar veya kendi fonksiyonun. React Hook Form hatalarına bağlanır."
+/>
+
+<DocsProse>
+
+<h2 id="built-in">Yerleşik validators</h2>
+
+`validate: true` ve bir `validator` anahtarı ile etkinleşir. Boş alanlar doğrulanmaz.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Anahtar</th>
+        <th>Kullanım</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`luhn`</td>
+        <td>Kart numarası (Amex 15 / diğer 16 hane)</td>
+      </tr>
+      <tr>
+        <td>`expiry`</td>
+        <td>MMYY: ay 1–12, geçmiş tarih değil</td>
+      </tr>
+      <tr>
+        <td>`tckn`</td>
+        <td>11 haneli T.C. kimlik algoritması</td>
+      </tr>
+      <tr>
+        <td>`vkn`</td>
+        <td>10 haneli vergi kimlik numarası</td>
+      </tr>
+      <tr>
+        <td>`iban`</td>
+        <td>TR + 24 rakam, mod-97</td>
+      </tr>
+      <tr>
+        <td>`email`</td>
+        <td>E-posta regex</td>
+      </tr>
+      <tr>
+        <td>`url`</td>
+        <td>URL regex</td>
+      </tr>
+      <tr>
+        <td>`date`</td>
+        <td>Takvim tarihi (`dateFormat` ile)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Fonksiyonlar ayrıca doğrudan import edilebilir: `validateLuhn`, `validateTCKN`, `validateIBAN`, `VALIDATORS` map’i vb.
+
+<h2 id="ozel">Özel validator</h2>
+
+```ts
+{
+  mask: "(999) 999 99 99",
+  validate: true,
+  validator: (value) => value.length === 10,
+}
+```
+
+<h2 id="mesaj">Hata mesajı</h2>
+
+Başarısız doğrulamada `errorMessage` döner; verilmezse RHF `false` alır. Hataları `form.formState.errors` üzerinden oku.
+
+Tip tanımları için [types](/mask/docs/v1/types), canlı örnekler için [örnekler](/mask/examples).
+
+</DocsProse>

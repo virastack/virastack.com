@@ -5,7 +5,7 @@ const config = {
     "src/app/**/{sitemap,robots,manifest}.{ts,tsx}",
     "src/**/*.test.ts",
   ],
-  project: ["src/**/*.{ts,tsx,js,jsx}"],
+  project: ["src/**/*.{ts,tsx,js,jsx,mdx}"],
   ignore: ["src/components/ui/**", "src/i18n/routing.ts"],
   ignoreDependencies: [
     "tailwindcss",

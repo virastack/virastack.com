@@ -1,36 +1,16 @@
-import type { ReactNode } from "react";
-
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { getProduct } from "@/config/products.config";
 
 import { buildDocsGithubIssueUrl, docsPagePath } from "@/lib/docs-github-issue";
 
 import { DocsLayout } from "@/features/docs/components/DocsLayout";
+import { DocsMdx } from "@/features/docs/components/DocsMdx";
 import { getAddressDocsNav, getAddressDocsPage } from "@/features/docs/config/address-docs.config";
-import { AddressDataDoc } from "@/features/docs/content/address/AddressDataDoc";
-import { AddressHelpersDoc } from "@/features/docs/content/address/AddressHelpersDoc";
-import { AddressIntroductionDoc } from "@/features/docs/content/address/AddressIntroductionDoc";
-import { AddressPostalCodeDoc } from "@/features/docs/content/address/AddressPostalCodeDoc";
-import { AddressReactHookFormDoc } from "@/features/docs/content/address/AddressReactHookFormDoc";
-import { AddressServerDoc } from "@/features/docs/content/address/AddressServerDoc";
-import { AddressTypesDoc } from "@/features/docs/content/address/AddressTypesDoc";
-import { AddressUiLibrariesDoc } from "@/features/docs/content/address/AddressUiLibrariesDoc";
-import { AddressUseViraAddressDoc } from "@/features/docs/content/address/AddressUseViraAddressDoc";
+import { addressDocsContent } from "@/features/docs/content/address/address-docs-content";
+import { readDocsMdxHeadings } from "@/features/docs/lib/docs-mdx-source";
 
 const DOCS_INDEX = "/address/docs";
-
-const addressDocsContent: Record<string, () => ReactNode> = {
-  introduction: () => <AddressIntroductionDoc />,
-  "use-vira-address": () => <AddressUseViraAddressDoc />,
-  "react-hook-form": () => <AddressReactHookFormDoc />,
-  "postal-code": () => <AddressPostalCodeDoc />,
-  "ui-libraries": () => <AddressUiLibrariesDoc />,
-  server: () => <AddressServerDoc />,
-  data: () => <AddressDataDoc />,
-  helpers: () => <AddressHelpersDoc />,
-  types: () => <AddressTypesDoc />,
-};
 
 type AddressDocsPageProps = {
   slug: string;
@@ -40,9 +20,9 @@ export async function AddressDocsPage({ slug }: AddressDocsPageProps) {
   const t = await getTranslations("DocsAddress");
   const tDocs = await getTranslations("Docs");
   const page = getAddressDocsPage(slug, t);
-  const render = addressDocsContent[slug];
+  const pageContent = addressDocsContent[slug];
 
-  if (!page || !render) {
+  if (!page || !pageContent) {
     return null;
   }
 
@@ -62,10 +42,10 @@ export async function AddressDocsPage({ slug }: AddressDocsPageProps) {
       sections={getAddressDocsNav(t)}
       docsIndexHref={DOCS_INDEX}
       slug={slug}
-      headings={page.headings}
+      headings={readDocsMdxHeadings({ product: "address", locale: await getLocale(), slug })}
       githubIssueHref={githubIssueHref}
     >
-      {render()}
+      <DocsMdx content={pageContent} />
     </DocsLayout>
   );
 }

@@ -1,0 +1,85 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Introduction"
+  description="Headless password hook for React: show/hide, NIST-style strength, confirmation, server validation and leaked password checks."
+/>
+
+<DocsProse>
+
+Password fields are easy to get wrong: missing ARIA, a toggle that submits the form, a password manager that sees a text field, rules that differ between the form and the server. `useViraPassword()` handles this in one hook. Markup and styling stay yours.
+
+<h2 id="baslarken">Getting started</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/password")} />
+
+<PasswordExamplePreview id="show-hide" />
+
+Coming from 1.0? Nothing breaks; see the [release notes](/releases/password). Live demos are on the [examples](/password/examples) page.
+
+<h2 id="giris-noktalari">Entry points</h2>
+
+Only the root entry has `"use client"`. The strength engine ships only when you pass a policy.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Import</th>
+        <th>Exports</th>
+        <th>Runs on</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`@virastack/password`</td>
+        <td>useViraPassword (with or without React Hook Form), mergeProps, composeRefs, icons</td>
+        <td>client</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/strength`</td>
+        <td>definePolicy, evaluate, normalizePassword</td>
+        <td>client + server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/server`</td>
+        <td>validatePassword (+ the strength exports)</td>
+        <td>server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/password/pwned`</td>
+        <td>checkPwned</td>
+        <td>server (recommended)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="peer">Requirements</h2>
+
+- <AcademyBadge kind="react" label="React 18.2+" /> and `react-dom` (React 19 supported)
+- No runtime dependencies
+- <AcademyBadge kind="react-hook-form" /> is optional; any form library or none works.
+
+Also selectable during <GuideProductMark id="start" linked={false}>Start</GuideProductMark> CLI setup (`npx virastack@latest --tools password`).
+
+<h2 id="neden">Why <GuideProductMark id="password" linked={false} tone="heading">Password</GuideProductMark>?</h2>
+
+- **Headless**: every returned value is a valid input or button prop.
+- **Radix-level details**: hides on submit, focus returns after a click, controlled `visible`, Caps Lock, `autoComplete`.
+- **NIST-style strength**: length first (15–64), common passwords, repeats and personal info. No composition rules by default.
+- **Same rules on the server**: one policy object for the form and the Server Action.
+- **Error keys**: `password.tooShort`, `password.mismatch`… Messages and i18n stay yours.
+
+<h2 id="kapsam">Scope</h2>
+
+- [useViraPassword()](/password/docs/use-vira-password), [strength](/password/docs/strength) and [confirm password](/password/docs/confirm)
+- [React Hook Form](/password/docs/react-hook-form), [server validation](/password/docs/server) and [leaked passwords](/password/docs/pwned)
+- [Accessibility](/password/docs/accessibility) and [customization](/password/docs/customization)
+
+Not included: a strength bar or password generator component, passkeys, clipboard clearing.
+
+</DocsProse>

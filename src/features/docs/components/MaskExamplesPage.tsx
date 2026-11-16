@@ -54,7 +54,7 @@ export async function MaskExamplesPage({ exampleId }: MaskExamplesPageProps) {
       sections={sections}
       docsIndexHref={EXAMPLES_INDEX}
       slug={slug}
-      headings={page.headings}
+      headings={page.headings ?? []}
       githubIssueHref={githubIssueHref}
     >
       {exampleId ? <MaskExampleDetailDoc id={exampleId} /> : <MaskExamplesDoc />}

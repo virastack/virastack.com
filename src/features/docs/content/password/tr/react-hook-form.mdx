@@ -1,0 +1,100 @@
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="React Hook Form"
+  description="Hook'u register, Controller, Zod ve ViraStack Mask ile aynı formda kullan."
+/>
+
+<DocsProse>
+
+<AcademyBadge kind="react-hook-form" /> tek doğruluk kaynağı olarak kalır. Hook yalnızca input'a props ekler; form değerini hiçbir zaman tutmaz.
+
+<h2 id="form">useViraPassword(form)</h2>
+
+`useViraMask(form, schema)` gibi önce formu ver. Her alan için bir giriş yaz: anahtar alan adıdır (farklıysa `name` ver), `matchWith` ve `forbidden` alan adı alır, `rules` ise `required` gibi ek React Hook Form kuralları ekler.
+
+Her alan kuralıyla kaydedilir. Değerler formdan okunur, bu yüzden `reset()` ve `setValue()` takip edilir. Kullanıcı alandan çıktıktan ya da formu gönderdikten sonra, bağlı olduğu alan değişince alan yeniden kontrol edilir (tekrar alanı parolayla, parola e-postayla). `value`, `deps` veya `trigger` gerekmez.
+
+```tsx
+import { useViraPassword } from "@virastack/password"
+
+const { password, confirm } = useViraPassword(form, {
+  password: { policy, forbidden: ["email"] }, // alan adları
+  confirm: { matchWith: "password" },
+})
+
+<input {...password.inputProps} /> // register() zaten içinde
+<button {...password.btnProps} />
+<input {...confirm.inputProps} />
+```
+
+<PasswordExamplePreview id="form-binding" />
+
+`react-hook-form` isteğe bağlı bir peer'dır (7.55+): hook yalnızca tiplerini ve verdiğin formun metotlarını kullanır, formsuz `useViraPassword()` eskisi gibi çalışır. Bir input'u ViraStack Mask alanıyla ya da bir resolver ile paylaşacaksan hook'u aşağıdaki gibi kendin bağla.
+
+<h2 id="register">register()</h2>
+
+```tsx
+const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
+
+// inputProps yalnızca öznitelik taşır: register()'dan önce ya da sonra spread et
+<input {...inputProps} {...form.register("password", rule)} />
+<button {...btnProps} />
+```
+
+<h2 id="value">useWatch()</h2>
+
+`reset()` ve `setValue()` input olayı tetiklemeden değeri değiştirir. Güç ve `matches` bunları takip etsin diye `value` ver. `useWatch`, `watch()`'tan farklı olarak React Compiler ile de çalışır.
+
+```tsx
+const password = useWatch({ control: form.control, name: "password" })
+const { inputProps, strength } = useViraPassword({ policy, value: password })
+```
+
+<h2 id="rule">rule & deps</h2>
+
+`rule` ilk hata anahtarını döndürür. `deps`, parola değişince tekrar alanını yeniden doğrular.
+
+```tsx
+form.register("password", { ...rule, deps: ["confirm"] })
+
+// deps yalnızca kullanıcı girişinde çalışır. setValue'dan sonra tekrar alanını sen kontrol et:
+form.setValue("password", next)
+form.trigger("confirm")
+```
+
+Forma `method="post"` ver. Hydration'dan önce form yerel olarak gönderilir ve varsayılan GET parolayı URL'ye yazar.
+
+<h2 id="controller">Controller</h2>
+
+```tsx
+<Controller
+  control={form.control}
+  name="password"
+  render={({ field }) => <PasswordField field={field} />}
+/>
+
+function PasswordField({ field }: { field: ControllerRenderProps<Values, "password"> }) {
+  const { inputProps } = useViraPassword({
+    policy,
+    value: field.value,
+    inputProps: { ...field, onChange: (e) => field.onChange(e.target.value) },
+  })
+  return <input {...inputProps} />
+}
+```
+
+<h2 id="zod">Zod resolver</h2>
+
+Resolver varken `register` kuralları çalışmaz. Aynı politikayı `evaluate` ile <AcademyBadge kind="zod" /> şemasına koy:
+
+<PasswordExamplePreview id="react-hook-form-zod" />
+
+<h2 id="mask">Mask ile</h2>
+
+<GuideProductMark id="mask" linked={false}>Mask</GuideProductMark> v2 de değeri React Hook Form'da tutar; ikisi aynı `useForm`'u paylaşır. Farklı input'larda kullan, asla aynı input'ta değil.
+
+<PasswordExamplePreview id="mask-signup" />
+
+</DocsProse>

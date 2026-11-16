@@ -1,0 +1,62 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Sızmış parolalar"
+  description="İsteğe bağlı Have I Been Pwned kontrolü, k-anonymity ile: @virastack/password/pwned."
+/>
+
+<DocsProse>
+
+<h2 id="kullanim">Kullanım</h2>
+
+Sen çağırmadıkça kapalıdır. Ücretsiz Pwned Passwords range API'sini kullanır; anahtar ve bağımlılık gerekmez.
+
+<PasswordExamplePreview id="pwned" />
+
+```ts
+checkPwned(password, {
+  signal,         // AbortSignal
+  timeout: 3000,  // ms, varsayılan 5000
+  fetch,          // özel fetch (test, proxy)
+})
+```
+
+Kayıtta bunun yerine `validatePassword`'a `pwned` ver: politikayı ve sızıntı listesini tek çağrıda kontrol eder, istek yalnızca politika geçince gider. Bkz. [sunucu doğrulaması](/password/docs/server#sizinti).
+
+<h2 id="sonuc">Sonuç</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Sonuç</th>
+        <th>Anlamı</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`{ status: "pwned", count }`</td>
+        <td>Sızıntılarda count kez görülmüş</td>
+      </tr>
+      <tr>
+        <td>`{ status: "safe" }`</td>
+        <td>Listede yok</td>
+      </tr>
+      <tr>
+        <td>`{ status: "unknown", reason }`</td>
+        <td>empty, unsupported (crypto.subtle veya fetch yok), network, timeout, aborted, rate-limited, http</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Hiç hata fırlatmaz. `unknown` durumunda kullanıcının devam etmesine izin ver (fail open).
+
+<h2 id="gizlilik">Gizlilik ve sınırlar</h2>
+
+- Parolanın SHA-1 özetinin yalnızca ilk 5 karakteri gönderilir; parola ve tam özet asla çıkmaz. Yanıtlar dolgu (padding) içerir.
+- Sunucudan çağır. Tarayıcıdan çağrılırsa Have I Been Pwned kullanıcının IP'sini görür.
+- `crypto.subtle` yalnızca HTTPS ve localhost'ta vardır; aksi halde sonuç `unknown` olur.
+- Her tuş vuruşunda çağırma; gönderimde kontrol et.
+
+</DocsProse>

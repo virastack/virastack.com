@@ -1,0 +1,106 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskCurrencyFromDemo } from "@/features/docs/components/MaskCurrencyFromDemo";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+
+export const basicCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+function Example() {
+  const form = useForm<{ phone: string }>()
+  const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
+
+  return <input {...phone} placeholder="(555) 123 45 67" />
+}
+// form.watch("phone") → "5551234567"`;
+
+export const fromCode = `const form = useForm({ defaultValues: { currency: "TRY", price: "1234.56" } })
+
+const { price } = useViraMask(form, {
+  price: { preset: "currency", from: "currency" },
+})
+
+<select {...form.register("currency")}>…</select>
+<input {...price} />`;
+
+<DocsPageHeader
+  title="useViraMask()"
+  description="Tek hook ile birden fazla alanı maskele. Form ham değeri tutar, input maskeyi gösterir."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Temel kullanım</h2>
+
+İlk argüman `useForm()` dönüşüdür, ikincisi şema. Tip formdan gelir; ayrıca yazman gerekmez.
+
+<ComponentPreview
+  preview={<MaskFieldDemo
+              config={{ preset: "phone", country: "TR" }}
+              placeholder="(555) 123 45 67"
+            />}
+  code={basicCode}
+>
+  <DocsCodeBlock code={basicCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="schema">Schema</h2>
+
+Anahtarlar formdaki alan yollarıdır. Olmayan bir alan, olmayan bir preset ya da yanlış seçenek derleme hatası verir.
+
+```tsx
+useViraMask(form, {
+  // preset adı
+  tckn: "tckn",
+  // preset + değişiklik
+  birthDate: { preset: "date", date: { max: "today", minAge: 18 } },
+  // React Hook Form kuralları olduğu gibi geçer
+  phone: { preset: "phone", country: "TR", rules: { required: "required" } },
+  // iç içe alan: anahtarı tırnakla yaz ya da name ver
+  "address.zip": { mask: "99999" },
+  zip2: { name: "address.zip2", mask: "99999" },
+  // forma maskeli metin yaz
+  iban: { preset: "iban", country: "TR", output: "masked" },
+  // maske dolunca
+  card: { preset: "card", onComplete: () => form.setFocus("expiry") },
+})
+```
+
+- `rules`: `required`, `minLength`, `deps`, `setValueAs`, `disabled`, `onChange` ve diğer `register` kuralları.
+- `country`: `phone`, `iban`, `currency` ve `number` için Türkiye biçimi (şimdilik `"TR"`). Varsayılanlar globaldir.
+- `output`: `"raw"` (varsayılan) ya da `"masked"`.
+- `onComplete`: maske dolduğunda bir kez çalışır. Odağı sen yönetirsin.
+
+<h2 id="from">Bağlı alanlar (from)</h2>
+
+Bir maske başka bir alanın değerine bağlı olabilir. Bağlantı açık yazılır ve tiplidir: `from` formdaki gerçek bir alan olmalıdır.
+
+- `cvv` → `card`: Amex ise 4, değilse 3 hane.
+- `currency` → bir select: seçilen kura göre sembol ve ayırıcılar.
+- `date` → başlangıç tarihi: bitiş ondan önce olamaz (`date.beforeFrom`).
+
+<ComponentPreview preview={<MaskCurrencyFromDemo />} code={fromCode}>
+  <DocsCodeBlock code={fromCode} lang="tsx" />
+</ComponentPreview>
+
+Bağlı alan değişince maske yeniden uygulanır: kart Amex'ten Visa'ya dönerse CVV hem ekranda hem formda 3 haneye kısalır.
+
+<h2 id="donus">Dönüş değeri</h2>
+
+Her anahtar için input'a doğrudan yayılabilen bir nesne döner. İçindeki her alan geçerli bir input prop'udur; DOM'a bilinmeyen bir şey sızmaz.
+
+- `name`, `ref`, `defaultValue`
+- `onChange`, `onBlur`, `onCompositionEnd`
+- `type`, `inputMode`, `autoComplete`
+- `disabled` (kurallarda varsa), `aria-invalid` (hata varsa)
+
+Input kontrolsüzdür (`defaultValue`); `value` verme. Ham değeri `form.watch("phone")` ile oku.
+
+<h2 id="rhf">React Hook Form uyumu</h2>
+
+- `reset()` ve `setValue()` ekrana yansır. Ham değer ver (tarihte ISO: `2026-07-29`).
+- `watch`, `getValues`, `formState`, `Controller` ve `useFieldArray` ile birlikte çalışır.
+- Mask doğrulaması `validate.mask` kuralı olarak eklenir; kendi `validate` kuralların korunur.
+- Resolver (<AcademyBadge kind="zod" />, Valibot) kullanıyorsan [maskResolver](/mask/docs/validation#resolver) ile sar.
+- IME (Çince, Japonca, ölü tuşlar) bitene kadar biçimlendirme bekler.
+
+</DocsProse>

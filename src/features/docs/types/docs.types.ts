@@ -1,3 +1,5 @@
+import type { MDXContent } from "mdx/types";
+
 export type DocsHeading = {
   id: string;
   title: string;
@@ -21,5 +23,12 @@ export type DocsPageMeta = {
   slug: string;
   title: string;
   description: string;
-  headings: DocsHeading[];
+  /** Left out for MDX pages, whose headings are read from the MDX file (`readDocsMdxHeadings`). */
+  headings?: DocsHeading[];
+};
+
+/** One docs page written in MDX, once per locale. */
+export type LocalizedDocsContent = {
+  en: MDXContent;
+  tr: MDXContent;
 };

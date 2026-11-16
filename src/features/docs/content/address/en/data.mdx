@@ -1,0 +1,125 @@
+import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
+
+<DocsPageHeader
+  title="Dataset"
+  description="81 provinces, 973 districts and 72,466 neighbourhoods with postal codes. No React needed; each province loads only when it is needed."
+/>
+
+<TurkeyOnlyNotice />
+
+<DocsProse>
+
+<h2 id="api">API</h2>
+
+The data behind the hook ships inside the package, and `@virastack/address/data` exposes it without React:
+
+```ts
+import {
+  districts,
+  findPostalCode,
+  neighbourhoods,
+  province,
+  provinces,
+  source,
+} from "@virastack/address/data"
+
+provinces.length        // 81
+province(34)?.name      // "İSTANBUL"
+districts(34)           // ["ADALAR", "ARNAVUTKÖY", ...]
+
+const byDistrict = await neighbourhoods(34)
+byDistrict.get("FATİH")
+// [{ name: "AKSARAY MAH.", postalCode: "34096", ... }, ...]
+
+source.date             // "2026-10-28": when the data was collected
+source.neighbourhoods   // 72466
+
+await findPostalCode("34710")
+// { postalCode: "34710", province: { code: 34, ... },
+//   district: "KADIKÖY", neighbourhoods: [{ name: "CAFERAĞA MAH.", ... }] }
+```
+
+`provinces`, `province` and `districts` are synchronous. `neighbourhoods(code)` returns a `Promise` and caches the result: two calls at the same time share one load, a failed load is not remembered and is retried on the next call, and a code that is not a province gives an empty `Map`.
+
+Most neighbourhoods have a single postal code. A few hundred have several, up to eight, and all of them are kept: `postalCodes` is the full answer and `postalCode` the first one, for the common case.
+
+`findPostalCode(code)` gives a postal code's province, district and the neighbourhoods it covers, or `null` when it is not in the dataset. Only the province in the code's first two digits is loaded. Every code belongs to one district and starts with its plate code; the data build checks both.
+
+<h2 id="maliyet">How much does it download?</h2>
+
+The province and district names arrive with the page; picking a province downloads only that province's neighbourhoods. There is nothing to configure: every province is a separate file, and your bundler splits it out on its own. On the server, only the provinces that are asked for are held in memory.
+
+The sizes below are what the browser actually downloads, compressed with gzip.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>What is downloaded</th>
+        <th>Size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Province and district names, once per page</td>
+        <td>5.3 kB</td>
+      </tr>
+      <tr>
+        <td>Picking **İstanbul** (973 neighbourhoods)</td>
+        <td>6.8 kB</td>
+      </tr>
+      <tr>
+        <td>Picking **Ankara** (1,434 neighbourhoods)</td>
+        <td>8.3 kB</td>
+      </tr>
+      <tr>
+        <td>A mid-sized province: half of the 81 are smaller</td>
+        <td>4.6 kB</td>
+      </tr>
+      <tr>
+        <td>A large province: 73 of the 81 are this size or smaller</td>
+        <td>9.2 kB</td>
+      </tr>
+      <tr>
+        <td>The largest: **Kastamonu** (167 neighbourhoods and 4,151 villages)</td>
+        <td>28.5 kB</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+75 of the 81 provinces are under 10 kB, so a typical visit downloads about **10 kB**: the names plus the province that was picked. Even big cities like **İstanbul** and **Ankara** stay under 10 kB; the largest files belong to rural provinces with thousands of villages. The data build fails if any province goes over 30 kB, so an update can never quietly make it heavier.
+
+<h2 id="loader">Your own loader</h2>
+
+To read neighbourhoods from disk, a CDN or your own endpoint, swap the loader:
+
+```ts
+import { setLoader } from "@virastack/address/data"
+
+setLoader(async (provinceCode) => {
+  const response = await fetch(`/api/address/${provinceCode}`)
+  return response.text()
+})
+
+setLoader(null) // back to the bundled modules
+```
+
+A loader returns the province's encoded text: one line per district, the district name followed by `;`, neighbourhoods separated by `|`, a `:` before the postal code and a `,` between several codes.
+
+```ts
+SEYHAN;AKKAPI MAH.:01040|ALTINŞEHİR MAH.:01170
+CEYHAN;BAHÇE MAH.:01950
+```
+
+`setLoader` also applies to the hook and to `/server`, since they all read the same data module. A new loader forgets the provinces read so far.
+
+<h2 id="kaynak">Source and updates</h2>
+
+The data comes from [PTT](https://www.ptt.gov.tr/posta-kodu), Türkiye's national postal service. Names and postal codes are public reference data; this package only reshapes them. Check against PTT for anything where delivery is critical.
+
+The source lists every street, which is far more than an address form needs, so the build reduces it to unique neighbourhoods with their postal codes. Each province ships as one encoded string rather than nested JSON: it is smaller over the wire, and splitting a string is faster than parsing an array of objects.
+
+An automated check compares the data against PTT every month. When something changes, a patch release ships; the API stays the same. `source.date` tells you when the data was collected.
+
+</DocsProse>

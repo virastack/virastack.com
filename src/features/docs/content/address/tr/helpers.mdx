@@ -1,0 +1,77 @@
+<DocsPageHeader
+  title="Türkçe yardımcılar"
+  description="formatName, toSearchKey, compareNames ve formatAddress: adları göstermek, aramak, sıralamak ve adresi tek satıra dökmek için; İ ve ı doğru işlenir."
+/>
+
+<DocsProse>
+
+<h2 id="format-name">formatName</h2>
+
+Veri seti büyük harflidir (`AKKAPI MAH.`) ve bir açılır listede kötü okunur. Sıradan `toLowerCase` `I` harfini `ı` yerine `i` yapar. `formatName` Türkçe kurallarla küçültür; her kelimenin ve nokta, tire, eğik çizgi ya da parantezden sonraki harfin ilkini büyütür.
+
+```ts
+import { formatName } from "@virastack/address"
+
+formatName("AKKAPI MAH.")             // "Akkapı Mah."
+formatName("İSTANBUL")                // "İstanbul"
+formatName("ŞEHİT P. ÜSTEĞMEN MAH.")  // "Şehit P. Üsteğmen Mah."
+formatName("GAZİ-OSMAN MAH.")         // "Gazi-Osman Mah."
+```
+
+Hook'un [formatLabel](/address/docs/use-vira-address) varsayılanıdır; listelerdeki `label` alanı bununla üretilir.
+
+<h2 id="search-key">toSearchKey</h2>
+
+Bir metni aramaya hazırlar: büyük/küçük harf ve Türkçe karakterler yok sayılır; `kadikoy` araması `KADIKÖY`'ü bulur.
+
+```ts
+import { toSearchKey } from "@virastack/address"
+
+toSearchKey("KADIKÖY")    // "kadikoy"
+toSearchKey("Çağlayan")   // "caglayan"
+
+const hits = neighbourhoods.filter((n) =>
+  toSearchKey(n.label).includes(toSearchKey(query)),
+)
+```
+
+`resolveAddress`, düzenleme formundaki adların eşleşmesi ve <AcademyBadge kind="ant-design" /> biçiminin araması da bunu kullanır.
+
+<h2 id="compare-names">compareNames</h2>
+
+Türk alfabesine göre sıralar; `Ç`, `Ğ`, `İ`, `Ö`, `Ş` ve `Ü` doğru yere düşer.
+
+```ts
+import { compareNames } from "@virastack/address"
+
+const sorted = ["İZMİR", "ADANA", "ÇORUM"].sort(compareNames)
+// ["ADANA", "ÇORUM", "İZMİR"]
+```
+
+İl ve ilçe listeleri bununla sıralanır.
+
+<h2 id="format-address">formatAddress</h2>
+
+Seçilen adresi tek satıra döker: sipariş özeti, fatura ya da kargo etiketi için. Varsayılan biçim mahalle, ardından `ilçe/il`'dir; adlar `formatName` ile yazılır.
+
+```ts
+import { formatAddress } from "@virastack/address"
+
+const value = {
+  province: "SAKARYA",
+  district: "ADAPAZARI",
+  neighbourhood: "ALANDÜZÜ MAH.",
+  postalCode: "54100",
+}
+
+formatAddress(value)                        // "Alandüzü Mah. Adapazarı/Sakarya"
+formatAddress(value, { postalCode: true })  // "Alandüzü Mah. 54100 Adapazarı/Sakarya"
+formatAddress(value, { separator: ", " })   // "Alandüzü Mah. Adapazarı, Sakarya"
+
+formatAddress({ province: "SAKARYA", district: "ADAPAZARI" })
+// "Adapazarı/Sakarya": seçilmeyen seviye atlanır
+```
+
+İki seçenek vardır: `postalCode` posta kodunu zarftaki gibi ilçeden önce ekler, `separator` ilçe ile il arasındakini değiştirir. Seçilmemiş seviyeler atlanır, yarım doldurulmuş bir form da düzgün okunur. Hook'un `value`'sunu, `resolveAddress` sonucunu ya da kendi nesneni alır; `/server` içinden de dışa aktarılır.
+
+</DocsProse>

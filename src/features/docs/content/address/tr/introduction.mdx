@@ -1,0 +1,207 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { AddressDemo } from "@/components/shared/AddressDemo";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
+
+export const quickStartCode = `"use client"
+
+import { useViraAddress } from "@virastack/address"
+
+export function AddressFields() {
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+    value,
+  } = useViraAddress()
+
+  return (
+    <>
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+      <p>Posta kodu: {value.postalCode ?? "—"}</p>
+    </>
+  )
+}`;
+
+<DocsPageHeader
+  title="Giriş"
+  description="Türkiye adresleri için headless React hook'u: il, ilçe ve mahalle zincirleme seçilir, posta kodu mahalleden türetilir; sunucu doğrulaması ve PTT verisiyle."
+/>
+
+<DocsProse>
+
+Adres formu göründüğünden zordur: il değişince ilçe ve mahalle temizlenmeli, posta kodu kullanıcıya yazdırılmamalı, 72 bin mahalle tek seferde indirilmemeli ve gönderilen adres sunucuda yeniden kontrol edilmelidir. `useViraAddress()` bunları tek hook ile çözer. Select'lerin ve stilin sende kalır.
+
+<h2 id="baslarken">Başlarken</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/address")} />
+
+<ComponentPreview preview={<AddressDemo showValue />} previewClassName="max-w-2xl" code={quickStartCode}>
+  <DocsCodeBlock code={quickStartCode} lang="tsx" />
+</ComponentPreview>
+
+İl seçilince ilçeler gelir, ilçe seçilince o ilin mahalleleri yüklenir, mahalle seçilince posta kodu `value.postalCode` alanına düşer. Bir üst seviyeyi değiştirmek altındakileri temizler. Posta kodu yazmak ters yönde çalışır ve select'leri doldurur.
+
+Yukarıdaki demo aynı hook'u <AcademyBadge kind="shadcn" /> Select ile kullanır; diğer bileşenler için [UI kütüphaneleri](/address/docs/ui-libraries) sayfasına bak.
+
+<h2 id="neden">Neden <GuideProductMark id="address" linked={false} tone="heading">Address</GuideProductMark>?</h2>
+
+- **Zincirleme seçim**: İl, ilçe, mahalle. Üst seviye değişince alttakiler hem hook'ta hem formda temizlenir.
+- **İki yönlü posta kodu**: Mahalle seçilince kodu gelir, kod yazılınca select'ler dolar: kodun tek mahallesi varsa üçü de, yoksa il ve ilçe. Bkz. [posta kodundan adres](/address/docs/postal-code).
+- **Tek satır adres**: `formatAddress` seçimi "Alandüzü Mah. Adapazarı/Sakarya" biçimine getirir; istenirse posta koduyla.
+- **Güncel veri**: Veri her ay otomatik bir sistemle PTT'ye karşı kontrol edilir. Bir değişiklik bulunursa yeni bir patch sürümü yayınlanır; API değişmez.
+- **İsteğe bağlı yükleme**: İl ve ilçe adları paketle gelir; bir ilin mahalleleri yalnızca o il seçilince yüklenir. Tipik bir ziyaret yaklaşık 10 kB indirir.
+- **Headless**: Hiçbir şey çizmez. Native select, <AcademyBadge kind="shadcn" />, <AcademyBadge kind="ant-design" /> veya kendi bileşeninle çalışır.
+- **Türkçe farkındalık**: Sıralama, harf dönüşümü ve arama `İ` ile `ı`'yı doğru işler.
+- **Sunucuda doğrulama**: Client'ın gönderdiği posta koduna güvenilmez; `resolveAddress` adresi veri setine karşı yeniden kontrol eder, posta kodunu sunucuda türetir ve uymayan bir kodu reddeder.
+
+<h2 id="karsilastirma">Karşılaştırma</h2>
+
+Karşılaştırılan iki paket veri paketidir: select'leri, zincirlemeyi ve doğrulamayı sen yazarsın. Fark hook, posta kodu, isteğe bağlı yükleme ve sunucu tarafındadır.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table className="[&_code]:whitespace-nowrap [&_td:not(:first-child)]:text-center [&_th:not(:first-child)]:text-center">
+    <thead>
+      <tr>
+        <th>Özellik</th>
+        <th><GuideProductMark id="address" linked={false}>Address</GuideProductMark></th>
+        <th>turkey-neighbourhoods</th>
+        <th>turkey-location-data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>React hook (zincirleme select'ler)</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>İl, ilçe ve mahalle verisi</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+      </tr>
+      <tr>
+        <td>Pakette bulunan mahalle sayısı</td>
+        <td>`72.466`</td>
+        <td>`73.305`</td>
+        <td>`49.662`</td>
+      </tr>
+      <tr>
+        <td>Mahalleden posta kodu</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Tarayıcıda çalışır</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>İl bazında isteğe bağlı yükleme</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Sunucuda adres doğrulama</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Türkçe harf dönüşümü, sıralama ve arama</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Şehirler arası mesafe</td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Çalışma zamanı bağımlılığı</td>
+        <td>-</td>
+        <td>-</td>
+        <td>`fs`</td>
+      </tr>
+      <tr>
+        <td>Boyut (aynı form, ilk yükleme, min+gzip)</td>
+        <td>`8,6 KB`</td>
+        <td>`434,5 KB`</td>
+        <td>Tarayıcı için derlenemez</td>
+      </tr>
+      <tr>
+        <td>Son sürüm</td>
+        <td><span className="flex flex-col items-center gap-1">`1.0.1`<span className="text-xs text-muted-foreground">Kasım 2026</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`4.0.3`<span className="text-xs text-muted-foreground">Mart 2024</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`1.1.1`<span className="text-xs text-muted-foreground">Mayıs 2025</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p className="text-sm text-muted-foreground"><StatusIcon status="yes" decorative /> var · <StatusIcon status="partial" decorative /> kısmi ya da elle · <StatusIcon status="no" decorative /> yok. 29 Ekim 2026’da npm paketleri (`turkey-neighbourhoods 4.0.3`, `turkey-location-data 1.1.1`) ve `@virastack/address` yerel derlemesi üzerinden kontrol edildi.</p>
+
+<p className="text-sm text-muted-foreground">**Boyut nasıl ölçüldü:** Aynı form (zincirleme il, ilçe ve mahalle select'leri) üç paketle ayrı ayrı yazıldı ve esbuild ile production modunda, minify, tree-shaking ve code splitting açık derlendi. Tablodaki boyut, sayfa ilk açıldığında inen JS'in aynı formun veri paketi olmadan derlenmiş halinden farkının gzip boyutudur; <AcademyBadge kind="react" /> iki tarafta da olduğu için boyuta dahil edilmez. Address'te bir ilin mahalleleri o il seçilince ayrıca iner: ortanca 4,8 KB, en büyüğü 29,6 KB. turkey-location-data veriyi Node'un `fs` modülüyle okuduğu için tarayıcı için derlenemez. Sunucu doğrulamasındaki kısmi işaret, adresin dışa aktarılan listelerle elle kontrol edilebildiği anlamına gelir.</p>
+
+<h2 id="giris-noktalari">Giriş noktaları</h2>
+
+Yalnızca kök girişte `"use client"` vardır. `/server` ve `/data` React import etmez; Server Component, Server Action, route handler ve Node betiklerinde çalışır.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Import</th>
+        <th>Dışa aktarımlar</th>
+        <th>Çalıştığı yer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`@virastack/address`</td>
+        <td>useViraAddress, formatAddress, formatName, toSearchKey, compareNames, normalizePostalCode, defaultSource</td>
+        <td>client</td>
+      </tr>
+      <tr>
+        <td>`@virastack/address/server`</td>
+        <td>resolveAddress, resolvePostalCode, postalCodeFor, formatAddress, districtsOf, findProvince, provinces</td>
+        <td>server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/address/data`</td>
+        <td>provinces, districts, province, neighbourhoods, findPostalCode, setLoader, source</td>
+        <td>client + server</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="gereksinimler">Gereksinimler</h2>
+
+<ul>
+  <li>Hook için <AcademyBadge kind="react" label="React 18.2+" /> (React 19 desteklenir). `/server` ve `/data` React olmadan çalışır.</li>
+  <li><AcademyBadge kind="nodejs" label="Node.js 20+" /></li>
+  <li>Çalışma zamanı bağımlılığı yok; veri paketin içinde gelir.</li>
+  <li><AcademyBadge kind="react-hook-form" /> isteğe bağlıdır. Hook ondan hiçbir şey import etmez; formu `form` seçeneğiyle alır.</li>
+</ul>
+
+<h2 id="kapsam">Kapsam</h2>
+
+- [useViraAddress()](/address/docs/use-vira-address), [React Hook Form](/address/docs/react-hook-form) ve [UI kütüphaneleri](/address/docs/ui-libraries)
+- [Sunucu doğrulaması](/address/docs/server) ve [veri seti](/address/docs/data)
+- [Türkçe yardımcılar](/address/docs/helpers) ve [tipler](/address/docs/types)
+
+Kapsam dışı: sokak, bina ve kapı numarası (veri setinde yoktur, serbest metin olarak alırsın), yurt dışı adresler, harita ve konumdan adres bulma, hazır select bileşeni.
+
+</DocsProse>

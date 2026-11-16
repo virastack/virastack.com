@@ -82,7 +82,7 @@ export async function StartDocsPage({ slug, versionId }: StartDocsPageProps) {
       sections={texts.getNav()}
       docsIndexHref={content.indexHref}
       slug={slug}
-      headings={page.headings}
+      headings={page.headings ?? []}
       githubIssueHref={githubIssueHref}
       versions={{
         current: version.id,

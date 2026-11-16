@@ -1,0 +1,82 @@
+import { MaskTestingDemo } from "@/features/docs/components/MaskTestingDemo";
+
+<DocsPageHeader
+  title="Test data"
+  description="Generate valid TCKNs and IBANs for tests and seed data with @virastack/mask/testing (2.3+)."
+/>
+
+<DocsProse>
+
+<h2 id="giris">Testing entry</h2>
+
+**For tests and seed data only.** A generated value fits the algorithm, so it can belong to a real person or match a real account. Never use one as real data.
+
+The generators live in their own entry, `@virastack/mask/testing`. The root and `/server` entries don't export them, so they never reach your production bundle. The entry has no React and no `"use client"`: it runs in seed scripts, test files and Server Components. It adds about 2 KB.
+
+```ts
+import { generateIBAN, generateTCKN } from "@virastack/mask/testing"
+```
+
+<h2 id="deneyin">Try it</h2>
+
+Press a button to see a value. With a seed the value stays the same; change the seed to get another one.
+
+<MaskTestingDemo />
+
+<h2 id="tckn">generateTCKN</h2>
+
+Picks nine digits (the first one 1–9) and computes the 10th and 11th digits with the same rule as `isValidTCKN`. No list is kept; every number is made on the spot.
+
+```ts
+generateTCKN()             // a new number on every call
+generateTCKN({ seed: 1 })  // "49537717654" on every run
+
+isValidTCKN(generateTCKN()) // true
+```
+
+<h2 id="iban">generateIBAN</h2>
+
+Returns the IBAN without spaces, the way the `iban` preset stores it. The country defaults to `TR`.
+
+- **Turkey:** follows the national layout: a bank code from `turkishBanks`, the reserve digit `0` and a 16-digit account number. `bank` picks the bank by its four-digit TCMB code; without it a bank is picked at random. `getTurkishBank` finds the bank of every generated IBAN.
+- **Other countries:** any of the 89 countries in the IBAN registry. The account part is digits only, at the registry length. It passes `isValidIBAN` (length and mod-97), not national rules such as the letters of a UK bank code.
+- An unknown country, an unknown bank code or `bank` outside Turkey throws an error, so a typo doesn't give you silent data.
+
+```ts
+generateIBAN()                        // Turkish IBAN at a random bank
+generateIBAN("TR", { bank: "0062" })  // "TR51 0006 2…", Garanti
+generateIBAN("DE", { seed: 1 })       // "DE70449725173128749365" on every run
+
+getTurkishBank(generateIBAN("TR", { bank: "0062" })) // { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }
+```
+
+<h2 id="seed">Seed and tests</h2>
+
+Without `seed` every call gives a new value. With an integer `seed` the value is the same on every run and platform, so snapshots, seed data and screenshots stay stable. The seed is only the generator's start value; it maps to no person or table. One seed gives unrelated digits for a TCKN and an IBAN.
+
+```ts
+// prisma/seed.ts — no "use client", runs in Node
+import { generateIBAN, generateTCKN } from "@virastack/mask/testing"
+
+const customers = Array.from({ length: 50 }, (_, i) => ({
+  name: `Customer ${i + 1}`,
+  tckn: generateTCKN({ seed: i }),
+  iban: generateIBAN("TR", { seed: i }),
+}))
+// the same 50 customers on every run, so snapshots and screenshots stay stable
+```
+
+```tsx
+import { generateTCKN } from "@virastack/mask/testing"
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+
+it("accepts a valid TCKN", async () => {
+  render(<SignupForm />)
+  await userEvent.type(screen.getByLabelText("TCKN"), generateTCKN({ seed: 7 }))
+  await userEvent.click(screen.getByRole("button", { name: "Continue" }))
+  expect(screen.queryByText("Invalid TCKN")).toBeNull()
+})
+```
+
+</DocsProse>

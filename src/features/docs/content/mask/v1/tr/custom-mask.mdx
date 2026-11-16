@@ -1,0 +1,93 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskV1CustomDemo as MaskCustomDemo } from "@/features/docs/content/mask/v1/demos/MaskV1CustomDemo";
+
+export const customCode = `const form = useForm({ defaultValues: { code: "" } })
+
+const { code } = useViraMask({
+  form,
+  schema: {
+    code: {
+      mask: "aaa-999",
+      transform: "uppercase",
+    },
+  },
+})
+
+const { rawValue, ...inputProps } = code
+
+<input {...inputProps} placeholder="ABC-123" />`;
+
+<DocsPageHeader
+  title="Custom mask"
+  description="Hazır maske yetmediğinde kendi maske dizgini ve MaskOptions alanlarını kullan."
+/>
+
+<DocsProse>
+
+<h2 id="sozdizimi">Sözdizimi</h2>
+
+Maske dizgisindeki özel token’lar:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Anlam</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`9`</td>
+        <td>Rakam (0–9)</td>
+      </tr>
+      <tr>
+        <td>`a` / `A`</td>
+        <td>Harf (a–z). Büyük/küçük için `transform` kullan</td>
+      </tr>
+      <tr>
+        <td>`*`</td>
+        <td>Herhangi bir karakter</td>
+      </tr>
+      <tr>
+        <td>Diğer</td>
+        <td>Literal ayırıcı (<code> </code>, `/`, `(`, `)`…)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ComponentPreview preview={<MaskCustomDemo />} code={customCode}>
+  <DocsCodeBlock code={customCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="options">MaskOptions</h2>
+
+Sık kullanılan alanlar:
+
+- `mask`: pattern dizgisi
+- `transform`: `uppercase` | `lowercase`
+- `allowedChars` / `forbiddenChars`
+- `displayPrefix`: gösterilir, ham değere yazılmaz (IBAN’daki `TR`)
+- `currency`, `dateFormat`, `alphaFormat`, `usernameFormat`
+- `type`, `inputMode`, `autoComplete`
+- `preset`: hazır maske üzerine override
+
+<h2 id="resolve">resolveMask</h2>
+
+Dinamik maske için `resolveMask(value, allValues, schema)` yeni bir maske dizgisi (veya `undefined`) döner. Kart (Amex) ve CVV hazır maskeleri bunu kullanır: kardeş alanlara bakarak maskeyi günceller.
+
+```ts
+{
+  mask: "9999 9999 9999 9999",
+  resolveMask: (value) => {
+    const digits = value.replace(/\D/g, "")
+    if (digits.startsWith("34") || digits.startsWith("37")) {
+      return "9999 999999 99999" // Amex
+    }
+    return undefined
+  },
+}
+```
+
+</DocsProse>

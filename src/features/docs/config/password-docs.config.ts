@@ -211,106 +211,29 @@ export function getPasswordDocsPage(
   t: DocsPasswordTranslate,
 ): DocsPageMeta | undefined {
   const examples = getPasswordExamples(t);
-  const page = (
-    slug: string,
-    title: string,
-    description: string,
-    headings: [id: string, title: string][],
-  ): DocsPageMeta => ({
+  const page = (slug: string, title: string, description: string): DocsPageMeta => ({
     slug,
     title,
     description,
-    headings: headings.map(([id, headingTitle]) => ({ id, title: headingTitle })),
   });
 
   const pages: Record<string, DocsPageMeta> = {
-    introduction: page("introduction", t("introductionTitle"), t("introductionDescription"), [
-      ["baslarken", t("introductionHeadingGettingStarted")],
-      ["giris-noktalari", t("introductionHeadingEntries")],
-      ["peer", t("introductionHeadingPeer")],
-      ["neden", t("introductionHeadingWhy")],
-      ["kapsam", t("introductionHeadingScope")],
-    ]),
+    introduction: page("introduction", t("introductionTitle"), t("introductionDescription")),
     "use-vira-password": page(
       "use-vira-password",
       "useViraPassword()",
       t("useViraPasswordDescription"),
-      [
-        ["temel", t("useViraPasswordHeadingBasic")],
-        ["options", "Options"],
-        ["donus", t("useViraPasswordHeadingReturn")],
-        ["merge", "Prop merging"],
-      ],
     ),
-    strength: page("strength", t("strengthTitle"), t("strengthDescription"), [
-      ["policy", "definePolicy()"],
-      ["sablonlar", t("strengthHeadingPresets")],
-      ["sonuc", t("strengthHeadingResult")],
-      ["hook", t("strengthHeadingHook")],
-      ["forbidden", "forbidden"],
-      ["unicode", "Unicode"],
-      ["yapistirma", t("strengthHeadingPaste")],
-    ]),
-    confirm: page("confirm", t("confirmTitle"), t("confirmDescription"), [
-      ["temel", t("confirmHeadingBasic")],
-      ["rule", "rule"],
-      ["gorunurluk", t("confirmHeadingVisibility")],
-    ]),
-    "react-hook-form": page("react-hook-form", "React Hook Form", t("rhfDescription"), [
-      ["form", "useViraPassword(form)"],
-      ["register", "register()"],
-      ["value", "useWatch()"],
-      ["rule", "rule & deps"],
-      ["controller", "Controller"],
-      ["zod", t("rhfHeadingZod")],
-      ["mask", t("rhfHeadingMask")],
-    ]),
-    server: page("server", t("serverTitle"), t("serverDescription"), [
-      ["giris", t("serverHeadingEntry")],
-      ["server-action", "Server Action"],
-      ["sizinti", t("serverHeadingPwned")],
-      ["hash", t("serverHeadingHash")],
-      ["nextjs", t("serverHeadingNext")],
-    ]),
-    pwned: page("pwned", t("pwnedTitle"), t("pwnedDescription"), [
-      ["kullanim", t("pwnedHeadingUsage")],
-      ["sonuc", t("pwnedHeadingResult")],
-      ["gizlilik", t("pwnedHeadingPrivacy")],
-    ]),
-    accessibility: page("accessibility", t("navAccessibility"), t("accessibilityDescription"), [
-      ["aria", t("accessibilityHeadingAria")],
-      ["odak", t("accessibilityHeadingFocus")],
-      ["canli", t("accessibilityHeadingLive")],
-      ["caps", "Caps Lock"],
-      ["ids", t("accessibilityHeadingIds")],
-    ]),
-    customization: page("customization", t("navCustomization"), t("customizationDescription"), [
-      ["icons", t("customizationHeadingIcons")],
-      ["props", "inputProps & btnProps"],
-      ["gizleme", t("customizationHeadingAutoHide")],
-      ["autocomplete", "autoComplete"],
-      ["state", "disabled & readOnly"],
-    ]),
-    helpers: page("helpers", t("navHelpers"), t("helpersDescription"), [
-      ["core", t("helpersHeadingCore")],
-      ["icons", t("helpersHeadingIcons")],
-      ["merge", "mergeProps"],
-      ["refs", "composeRefs"],
-    ]),
-    types: page("types", t("navTypes"), t("typesDescription"), [
-      ["options", "UseViraPasswordOptions"],
-      ["result", "UseViraPasswordResult"],
-      ["strength", "/strength"],
-      ["server", "/server"],
-      ["form", "/form"],
-      ["pwned", "/pwned"],
-    ]),
-    "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription"), [
-      ["pattern", t("uiLibrariesHeadingPattern")],
-      ["shadcn", "shadcn/ui"],
-      ["ant-design", "Ant Design"],
-      ["chakra", "Chakra UI"],
-    ]),
+    strength: page("strength", t("strengthTitle"), t("strengthDescription")),
+    confirm: page("confirm", t("confirmTitle"), t("confirmDescription")),
+    "react-hook-form": page("react-hook-form", "React Hook Form", t("rhfDescription")),
+    server: page("server", t("serverTitle"), t("serverDescription")),
+    pwned: page("pwned", t("pwnedTitle"), t("pwnedDescription")),
+    accessibility: page("accessibility", t("navAccessibility"), t("accessibilityDescription")),
+    customization: page("customization", t("navCustomization"), t("customizationDescription")),
+    helpers: page("helpers", t("navHelpers"), t("helpersDescription")),
+    types: page("types", t("navTypes"), t("typesDescription")),
+    "ui-libraries": page("ui-libraries", t("uiLibrariesTitle"), t("uiLibrariesDescription")),
     examples: {
       slug: "examples",
       title: t("examplesTitle"),

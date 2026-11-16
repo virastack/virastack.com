@@ -9,6 +9,7 @@ import {
 } from "@/helpers/message-utils";
 
 import { DOCS_PRODUCT_IDS, docsProducts } from "@/features/docs/config/docs-products";
+import { readDocsMdxHeadings, readDocsMdxText } from "@/features/docs/lib/docs-mdx-source";
 
 function docsKeyPrefixesForSlug(slug: string): string[] {
   if (slug.startsWith("examples/")) {
@@ -36,10 +37,16 @@ export function buildDocsSearchDocuments(messages: AppMessages, locale: string):
       if (!page) continue;
 
       const prefixes = docsKeyPrefixesForSlug(slug);
-      const headingText = page.headings.map((heading) => heading.title).join(" ");
-      const body = [page.description, headingText, collectByKeyPrefixes(namespace, prefixes)].join(
-        " ",
-      );
+      // Messages-based pages (Start, AI) keep their prose in messages; MDX pages in their file.
+      const mdx = { product: productId, locale, slug };
+      const headings = page.headings ?? readDocsMdxHeadings(mdx);
+      const headingText = headings.map((heading) => heading.title).join(" ");
+      const body = [
+        page.description,
+        headingText,
+        collectByKeyPrefixes(namespace, prefixes),
+        readDocsMdxText(mdx),
+      ].join(" ");
 
       documents.push({
         id: `${productId}:docs:${slug}`,

@@ -1,0 +1,244 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { AddressDemo } from "@/components/shared/AddressDemo";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { TurkeyOnlyNotice } from "@/components/shared/TurkeyOnlyNotice";
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
+
+export const quickStartCode = `"use client"
+
+import { useViraAddress } from "@virastack/address"
+
+export function AddressFields() {
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+    value,
+  } = useViraAddress()
+
+  return (
+    <>
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+      <p>Postal code: {value.postalCode ?? "—"}</p>
+    </>
+  )
+}`;
+
+<DocsPageHeader
+  title="Introduction"
+  description="A headless React hook for Turkish addresses: province, district and neighbourhood picked in a chain, the postal code derived from the pick, server validation and the PTT dataset."
+/>
+
+<TurkeyOnlyNotice />
+
+<DocsProse>
+
+A Turkish address is picked in three steps, each depending on the one before: the province, then a district inside it, then a neighbourhood inside that. The postal code belongs to the neighbourhood. `useViraAddress()` runs that chain for you, loads the data a province at a time and works out the postal code. The markup and the styling stay yours.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>In these docs</th>
+        <th>In Turkish</th>
+        <th>What it is</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Province</td>
+        <td>*il*</td>
+        <td>81 of them. Each has a plate code from 1 to 81, e.g. 34 for İstanbul.</td>
+      </tr>
+      <tr>
+        <td>District</td>
+        <td>*ilçe*</td>
+        <td>973 in total, nested under a province.</td>
+      </tr>
+      <tr>
+        <td>Neighbourhood</td>
+        <td>*mahalle*</td>
+        <td>72,466 in total. In rural districts these are mostly villages (köy).</td>
+      </tr>
+      <tr>
+        <td>Postal code</td>
+        <td>*posta kodu*</td>
+        <td>Five digits, issued by PTT, Türkiye's postal service.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="baslarken">Getting started</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/address")} />
+
+<ComponentPreview preview={<AddressDemo showValue />} previewClassName="max-w-2xl" code={quickStartCode}>
+  <DocsCodeBlock code={quickStartCode} lang="tsx" />
+</ComponentPreview>
+
+Picking a province lists its districts. Picking a district lists its neighbourhoods, which are fetched for that province the first time it is needed. Picking a neighbourhood fills in `value.postalCode`. Changing any level clears everything below it. Typing a postal code works the other way round and fills in the selects.
+
+The demo above runs the same hook on <AcademyBadge kind="shadcn" /> selects; see [UI libraries](/address/docs/ui-libraries) for other components.
+
+<h2 id="neden">Why <GuideProductMark id="address" linked={false} tone="heading">Address</GuideProductMark>?</h2>
+
+- **Chained selection**: Province, district, neighbourhood. Changing a level clears the ones below it, in the hook and in your form.
+- **Postal code both ways**: Picking a neighbourhood fills in its code, and typing a code fills in the selects: all three when the code has one neighbourhood, province and district otherwise. See [from a postal code](/address/docs/postal-code).
+- **One-line address**: `formatAddress` turns the pick into "Alandüzü Mah. Adapazarı/Sakarya", optionally with the postal code.
+- **Up-to-date data**: An automated check compares the dataset against PTT every month. When something changes, a patch release ships; the API stays the same.
+- **Loaded on demand**: Province and district names ship with the package; a province's neighbourhoods download only when it is picked. A typical visit costs about 10 kB.
+- **Headless**: Nothing is rendered for you. A native select, <AcademyBadge kind="shadcn" />, <AcademyBadge kind="ant-design" /> or your own component all work.
+- **Turkish-aware**: Sorting, casing and search handle the dotted `İ` and the dotless `ı` correctly.
+- **Validated on the server**: A postal code sent by the client is never trusted; `resolveAddress` checks the address against the dataset, derives the code itself and refuses a submitted code that does not match.
+
+<h2 id="karsilastirma">Comparison</h2>
+
+Both packages compared here are data packages: you write the selects, the chaining and the validation. The difference is the hook, the postal code, loading on demand and the server.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table className="[&_code]:whitespace-nowrap [&_td:not(:first-child)]:text-center [&_th:not(:first-child)]:text-center">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th><GuideProductMark id="address" linked={false}>Address</GuideProductMark></th>
+        <th>turkey-neighbourhoods</th>
+        <th>turkey-location-data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>React hook (chained selects)</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Province, district and neighbourhood data</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+      </tr>
+      <tr>
+        <td>Neighbourhoods in the package</td>
+        <td>`72,466`</td>
+        <td>`73,305`</td>
+        <td>`49,662`</td>
+      </tr>
+      <tr>
+        <td>Postal code from the neighbourhood</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Runs in the browser</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Loads neighbourhoods per province on demand</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Address validation on the server</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Turkish-aware case, sorting and search</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Distances between cities</td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Runtime dependencies</td>
+        <td>-</td>
+        <td>-</td>
+        <td>`fs`</td>
+      </tr>
+      <tr>
+        <td>Size (same form, first load, min+gzip)</td>
+        <td>`8.6 KB`</td>
+        <td>`434.5 KB`</td>
+        <td>Does not build for the browser</td>
+      </tr>
+      <tr>
+        <td>Latest release</td>
+        <td><span className="flex flex-col items-center gap-1">`1.0.1`<span className="text-xs text-muted-foreground">Nov 2026</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`4.0.3`<span className="text-xs text-muted-foreground">Mar 2024</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`1.1.1`<span className="text-xs text-muted-foreground">May 2025</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p className="text-sm text-muted-foreground"><StatusIcon status="yes" decorative /> yes · <StatusIcon status="partial" decorative /> partial or manual · <StatusIcon status="no" decorative /> no. Checked on 29 October 2026 against the npm packages (`turkey-neighbourhoods 4.0.3`, `turkey-location-data 1.1.1`) and a local build of `@virastack/address`.</p>
+
+<p className="text-sm text-muted-foreground">**How size was measured:** The same form (chained province, district and neighbourhood selects) was written with each package and built with esbuild in production mode, minified, tree-shaken and code split. The size is the gzip difference in the JS loaded on first visit over the same form built without a data package, so <AcademyBadge kind="react" />, present on both sides, is not counted. With Address, a province’s neighbourhoods load when it is picked: 4.8 KB median, 29.6 KB at most. turkey-location-data reads its data with Node’s `fs` module, so it does not build for the browser. Partial server validation means the address can be checked by hand against the exported lists.</p>
+
+<h2 id="giris-noktalari">Entry points</h2>
+
+Only the root entry carries `"use client"`. `/server` and `/data` never import React, so they run in Server Components, Server Actions, route handlers and plain Node scripts.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Import</th>
+        <th>Exports</th>
+        <th>Runs on</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`@virastack/address`</td>
+        <td>useViraAddress, formatAddress, formatName, toSearchKey, compareNames, normalizePostalCode, defaultSource</td>
+        <td>client</td>
+      </tr>
+      <tr>
+        <td>`@virastack/address/server`</td>
+        <td>resolveAddress, resolvePostalCode, postalCodeFor, formatAddress, districtsOf, findProvince, provinces</td>
+        <td>server</td>
+      </tr>
+      <tr>
+        <td>`@virastack/address/data`</td>
+        <td>provinces, districts, province, neighbourhoods, findPostalCode, setLoader, source</td>
+        <td>client + server</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="gereksinimler">Requirements</h2>
+
+<ul>
+  <li><AcademyBadge kind="react" label="React 18.2+" /> for the hook (React 19 is supported). `/server` and `/data` work without React.</li>
+  <li><AcademyBadge kind="nodejs" label="Node.js 20+" /></li>
+  <li>No runtime dependencies; the dataset ships inside the package.</li>
+  <li><AcademyBadge kind="react-hook-form" /> is optional. The hook imports nothing from it and takes your form through the `form` option.</li>
+</ul>
+
+<h2 id="kapsam">Scope</h2>
+
+- [useViraAddress()](/address/docs/use-vira-address), [React Hook Form](/address/docs/react-hook-form) and [UI libraries](/address/docs/ui-libraries)
+- [Server validation](/address/docs/server) and the [dataset](/address/docs/data)
+- [Turkish helpers](/address/docs/helpers) and [types](/address/docs/types)
+
+Out of scope: street, building and door numbers (they are not in the dataset; collect them as free text), addresses outside Türkiye, maps and geocoding, and a ready-made select component.
+
+</DocsProse>

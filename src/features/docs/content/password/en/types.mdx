@@ -1,0 +1,107 @@
+<DocsPageHeader title="Types" description="Exported TypeScript types. No any." />
+
+<DocsProse>
+
+<h2 id="options">UseViraPasswordOptions</h2>
+
+```ts
+import type { UseViraPasswordOptions } from "@virastack/password"
+
+interface UseViraPasswordOptions {
+  defaultVisible?: boolean
+  visible?: boolean
+  onVisibleChange?: (visible: boolean) => void
+  hideOnSubmit?: boolean
+  hideOnBlur?: boolean
+  autoComplete?: string | false
+  policy?: Policy
+  forbidden?: readonly unknown[]
+  matchWith?: string
+  normalization?: "NFKC" | "NFC"
+  value?: string
+  icons?: { show: ReactNode; hide: ReactNode }
+  disabled?: boolean
+  readOnly?: boolean
+  id?: string
+  inputProps?: ViraPasswordInputProps
+  btnProps?: ButtonHTMLAttributes<HTMLButtonElement>
+}
+```
+
+<h2 id="result">UseViraPasswordResult</h2>
+
+```ts
+interface UseViraPasswordResult {
+  inputProps: ViraPasswordInputProps // InputHTMLAttributes (+ your ref, if you passed one)
+  btnProps: ButtonHTMLAttributes<HTMLButtonElement>
+  isVisible: boolean
+  capsLock: boolean
+  toggle: () => void
+  setVisible: (visible: boolean) => void
+  strength: StrengthResult | null
+  strengthProps: ViraPasswordStrengthProps
+  matches: boolean | null
+  issues: PasswordIssue[]
+  rule: { validate: (value: unknown) => true | PasswordIssue }
+}
+```
+
+<h2 id="strength">/strength</h2>
+
+```ts
+import type {
+  Policy, PolicyOptions, PolicyPreset, Normalization, StrengthResult, StrengthScore,
+  StrengthLevel, PasswordChecks, PasswordIssue, EvaluateOptions,
+} from "@virastack/password/strength"
+
+type PolicyPreset = "nist" | "mfa" | "legacy"
+type Normalization = "NFKC" | "NFC"
+type StrengthScore = 0 | 1 | 2 | 3 | 4
+type StrengthLevel = "weak" | "fair" | "good" | "strong"
+```
+
+<h2 id="server">/server</h2>
+
+```ts
+import type { PasswordValidation, ValidatePasswordOptions } from "@virastack/password/server"
+
+interface PasswordValidation extends StrengthResult {
+  password: string // normalized with the policy
+  pwned?: PwnedResult // with the pwned option
+}
+
+interface ValidatePasswordOptions extends EvaluateOptions {
+  confirm?: unknown
+  pwned?: boolean | CheckPwnedOptions // true → Promise<PasswordValidation>
+}
+```
+
+<h2 id="form">useViraPassword(form)</h2>
+
+```ts
+import type { ViraPasswordFieldConfig, ViraPasswordFields } from "@virastack/password"
+
+// useViraPassword(form, schema): one entry per field
+interface ViraPasswordFieldConfig<TFieldValues> {
+  name?: Path<TFieldValues> // when the key is not the field name
+  matchWith?: Path<TFieldValues> // the field to repeat
+  forbidden?: readonly Path<TFieldValues>[]
+  rules?: RegisterOptions<TFieldValues> // validate runs after the password check
+  // + every UseViraPasswordOptions except value
+}
+
+type ViraPasswordFields<K> = { readonly [P in K]: UseViraPasswordResult }
+```
+
+<h2 id="pwned">/pwned</h2>
+
+```ts
+import type { CheckPwnedOptions, PwnedResult } from "@virastack/password/pwned"
+
+type PwnedResult =
+  | { status: "pwned"; count: number }
+  | { status: "safe" }
+  | { status: "unknown"; reason: PwnedUnknownReason }
+```
+
+</DocsProse>

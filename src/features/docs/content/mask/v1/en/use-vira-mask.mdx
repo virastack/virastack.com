@@ -1,0 +1,58 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskV1PresetDemo as MaskPresetDemo } from "@/features/docs/content/mask/v1/demos/MaskV1PresetDemo";
+
+export const basicCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+function Example() {
+  const form = useForm<{ phone: string }>()
+  const { phone } = useViraMask({
+    form,
+    schema: { phone: "phone" },
+  })
+
+  const { rawValue, ...inputProps } = phone
+
+  return <input {...inputProps} placeholder="(555) 555-5555" />
+}`;
+
+<DocsPageHeader
+  title="useViraMask()"
+  description="Mask multiple fields with one hook. Schema field names match form fields."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Basic usage</h2>
+
+<ComponentPreview preview={<MaskPresetDemo preset="phone" placeholder="(555) 555-5555" />} code={basicCode}>
+  <DocsCodeBlock code={basicCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="schema">Schema</h2>
+
+Three forms are valid for each field:
+
+- **Preset string**: `{ phone: "phone" }`
+- **Options object**: `{ amount: { currency: { decimalSeparator: ",", thousandSeparator: ".", symbol: "₺" } } }`
+- **Preset + override**: `{ card: { preset: "card", onCardTypeChange: fn } }`
+
+See the [examples](/mask/examples) page for all presets. For masks from scratch, see [custom mask](/mask/docs/v1/custom-mask).
+
+<h2 id="donus">Return value</h2>
+
+`useViraMask()` returns a `MaskField` for each key in the schema. Strip `rawValue` before spreading so it never lands on the DOM - `value` stays in `inputProps`: `const { rawValue, ...inputProps } = phone`
+
+- `value`: formatted (display) value
+- `rawValue`: raw value stored in the form
+- `ref`, `name`, `onChange`, `onBlur`, `onFocus`, `onKeyDown`
+- `type`, `inputMode`, `autoComplete`
+- `aria-invalid`, `aria-describedby`, `title`
+
+<h2 id="rhf">React Hook Form</h2>
+
+- Each field is `register`ed; validation runs under `validate.maskFormat`.
+- `setValue` writes the **raw** value to the form (`shouldValidate` / `shouldDirty` / `shouldTouch`).
+- Validation runs only when `validate: true` and the value is not empty; details on the [validation](/mask/docs/v1/validation) page.
+
+</DocsProse>

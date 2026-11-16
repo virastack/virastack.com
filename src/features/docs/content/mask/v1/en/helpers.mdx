@@ -1,0 +1,52 @@
+<DocsPageHeader
+  title="Helpers"
+  description="Formatting and utility functions you can use without the hook."
+/>
+
+<DocsProse>
+
+<h2 id="mask">Mask helpers</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`applyMask(value, mask)`</td>
+        <td>Applies a pattern to a raw value</td>
+      </tr>
+      <tr>
+        <td>`unmask(value, mask)`</td>
+        <td>Extracts data characters from a masked value</td>
+      </tr>
+      <tr>
+        <td>`stripMask(value, mask)`</td>
+        <td>At a locked mask step, keeps only data slots</td>
+      </tr>
+      <tr>
+        <td>`cleanValue(value, allowed?, forbidden?)`</td>
+        <td>Filters with allow / forbid regex</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="currency">Currency</h2>
+
+- `formatCurrency(value, options)`: raw `"1234.56"` → display (`1,234.56` US default; customize separators for TR)
+- `unformatCurrency(value, options)`: display → raw
+
+<h2 id="card">Card</h2>
+
+`getCardType(cardNumber)` → `"visa" | "mastercard" | "amex" | "troy" | "unknown"`. Works from BIN prefixes (Visa `4`, Amex `34`/`37`, Troy `9792`…).
+
+<h2 id="refs">Refs</h2>
+
+`mergeRefs(...refs)`: merge the RHF register ref with a local ref. The hook uses this internally; useful on your own controlled inputs too.
+
+</DocsProse>

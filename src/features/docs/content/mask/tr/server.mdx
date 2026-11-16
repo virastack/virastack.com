@@ -1,0 +1,70 @@
+<DocsPageHeader
+  title="Sunucu"
+  description="@virastack/mask/server ile aynı şemayı Server Component ve Server Action içinde kullan."
+/>
+
+<DocsProse>
+
+<h2 id="giris">Sunucu girişi</h2>
+
+Kök paket (`@virastack/mask`) hook içerdiği için `"use client"` ile gelir. Server Component, Server Action ve paylaşılan şema dosyalarında `@virastack/mask/server` kullan: `createMask`, `definePreset`, doğrulayıcılar, `toMinorUnits` ve `parseMasked` buradadır.
+
+```ts
+// lib/checkout-masks.ts — "use client" yok
+import type { MaskSchema } from "@virastack/mask/server"
+
+export const checkoutMasks = {
+  phone: { preset: "phone", country: "TR" },
+  card: "card",
+  cvv: { preset: "cvv", from: "card" },
+  price: { preset: "currency", from: "currency" },
+} as const satisfies MaskSchema
+```
+
+```tsx
+import { createMask } from "@virastack/mask/server"
+
+const phone = createMask({ preset: "phone", country: "TR" })
+
+export default async function Customers() {
+  const customers = await getCustomers()
+  return customers.map((c) => <p key={c.id}>{phone.format(c.phone)}</p>) // (555) 123 45 67
+}
+```
+
+<h2 id="server-action">Server Action</h2>
+
+`parseMasked` FormData, URLSearchParams ya da düz nesne alır. Maskeli metni (form JavaScript'siz gönderildiyse) ya da ham değeri ayrıştırır, doğrular ve `address.zip` gibi adları iç içe nesneye çevirir.
+
+```ts
+"use server"
+import { parseMasked } from "@virastack/mask/server"
+import { checkoutMasks } from "@/lib/checkout-masks"
+
+export async function checkout(formData: FormData) {
+  const result = parseMasked(checkoutMasks, formData)
+  if (!result.success) return { errors: result.errors } // { phone: "phone.incomplete" }
+
+  // result.data: { phone: "5551234567", card: "4111…", price: "1234.56", currency: "TRY" }
+}
+```
+
+<h2 id="standard-schema">Standard Schema</h2>
+
+Üçüncü argüman olarak <AcademyBadge kind="zod" />, Valibot, ArkType gibi herhangi bir Standard Schema ver. Paket bunlara bağımlı değildir; yalnızca ortak arayüzü kullanır. Şema verildiğinde sonuç bir Promise'tir.
+
+```ts
+import { z } from "zod"
+
+const schema = z.object({
+  phone: z.string().length(10),
+  price: z.string().transform(Number),
+  currency: z.enum(["TRY", "USD"]),
+})
+
+const result = await parseMasked(checkoutMasks, formData, schema)
+// önce maskeler ayrıştırılır ve doğrulanır, sonra şema çalışır
+// result.data → z.output<typeof schema>
+```
+
+</DocsProse>

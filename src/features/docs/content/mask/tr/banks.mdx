@@ -1,0 +1,59 @@
+import { MaskBankDemo } from "@/features/docs/components/MaskBankDemo";
+
+<DocsPageHeader
+  title="Banka tespiti"
+  description="Türkiye IBAN'ından bankayı bul. API yok; banka, numaranın içindeki banka kodundan okunur."
+/>
+
+<DocsProse>
+
+<h2 id="deneyin">Dene</h2>
+
+Bir IBAN yaz; banka kodunun son hanesi girildiği anda banka görünür ve tabloda işaretlenir.
+
+<MaskBankDemo />
+
+<h2 id="nasil">Nasıl çalışır</h2>
+
+Türkiye IBAN'ı 26 karakterdir: `TR`, 2 kontrol hanesi, 5 haneli banka kodu, 1 rezerv hane ve 16 haneli hesap numarası. Banka kodu, sıfırla başlayan TCMB katılımcı kodudur: `TR63 0006 2…` içindeki `00062`, `0062` koduyla Garanti BBVA'dır. Bu yüzden ağa çıkmadan, tarayıcıda ve sunucuda aynı şekilde çalışır.
+
+Şube ve hesap sahibi IBAN'dan anlaşılmaz; bunlar yalnızca bankaların kendi servisleriyle öğrenilebilir.
+
+<h2 id="kullanim">Kullanım</h2>
+
+```tsx
+import { getTurkishBank, useViraMask } from "@virastack/mask"
+import { useWatch } from "react-hook-form"
+
+const { iban } = useViraMask(form, {
+  iban: { preset: "iban", country: "TR" },
+})
+const bank = getTurkishBank(useWatch({ control: form.control, name: "iban" }))
+
+<input {...iban} />
+<p>{bank?.name}</p> // "T. GARANTİ BANKASI A.Ş."
+```
+
+```ts
+import { getTurkishBank, turkishBanks } from "@virastack/mask"
+
+getTurkishBank("TR63 0006 2000 0000 0000 1234 56")
+// { code: "0062", name: "T. GARANTİ BANKASI A.Ş." }
+
+getTurkishBank("TR63 0006 2")   // banka hanesi yazılınca yeterli
+getTurkishBank("tr630006200000000000123456") // boşluksuz, küçük harf
+getTurkishBank("TR63 0006")     // null: banka kodu henüz tamamlanmadı
+getTurkishBank("DE89 3704 0044 0532 0130 00") // null: TR değil
+
+turkishBanks.length // 70
+```
+
+`getTurkishBank` IBAN'ın kendisini doğrulamaz; kontrol hanesi yanlış bir IBAN'ın da bankasını söyler. Doğrulama için `iban` preset'i ya da `isValidIBAN` kullan. İkisi de `@virastack/mask/server` içinde de vardır.
+
+Tablo düz bir dizidir: `getTurkishBank` ya da `turkishBanks` kullanmayan uygulamaların paketine girmez. Kullanıldığında yaklaşık 2 KB ekler.
+
+<h2 id="kaynak">Kaynak</h2>
+
+Liste, [Türkiye Cumhuriyet Merkez Bankası](https://www.tcmb.gov.tr/) tarafından yayımlanan Ödeme Sistemleri Katılımcıları tablosundan alınmıştır: 70 katılımcı, son değişiklik 18.09.2026. Adlar TCMB'nin yazdığı gibidir. Liste değiştiğinde paketin yeni bir sürümüyle güncellenir.
+
+</DocsProse>

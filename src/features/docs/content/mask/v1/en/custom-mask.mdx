@@ -1,0 +1,93 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskV1CustomDemo as MaskCustomDemo } from "@/features/docs/content/mask/v1/demos/MaskV1CustomDemo";
+
+export const customCode = `const form = useForm({ defaultValues: { code: "" } })
+
+const { code } = useViraMask({
+  form,
+  schema: {
+    code: {
+      mask: "aaa-999",
+      transform: "uppercase",
+    },
+  },
+})
+
+const { rawValue, ...inputProps } = code
+
+<input {...inputProps} placeholder="ABC-123" />`;
+
+<DocsPageHeader
+  title="Custom mask"
+  description="When presets are not enough, use your own mask string and MaskOptions fields."
+/>
+
+<DocsProse>
+
+<h2 id="sozdizimi">Syntax</h2>
+
+Special tokens in the mask string:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`9`</td>
+        <td>Digit (0–9)</td>
+      </tr>
+      <tr>
+        <td>`a` / `A`</td>
+        <td>Letter (a–z). Use `transform` for case</td>
+      </tr>
+      <tr>
+        <td>`*`</td>
+        <td>Any character</td>
+      </tr>
+      <tr>
+        <td>Other</td>
+        <td>Literal separator (<code> </code>, `/`, `(`, `)`…)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ComponentPreview preview={<MaskCustomDemo />} code={customCode}>
+  <DocsCodeBlock code={customCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="options">MaskOptions</h2>
+
+Commonly used fields:
+
+- `mask`: pattern string
+- `transform`: `uppercase` | `lowercase`
+- `allowedChars` / `forbiddenChars`
+- `displayPrefix`: shown but not written to raw value (e.g. `TR` on IBAN)
+- `currency`, `dateFormat`, `alphaFormat`, `usernameFormat`
+- `type`, `inputMode`, `autoComplete`
+- `preset`: override on top of a preset
+
+<h2 id="resolve">resolveMask</h2>
+
+For dynamic masks, `resolveMask(value, allValues, schema)` returns a new mask string (or `undefined`). Card (Amex) and CVV presets use this: they update the mask based on sibling fields.
+
+```ts
+{
+  mask: "9999 9999 9999 9999",
+  resolveMask: (value) => {
+    const digits = value.replace(/\D/g, "")
+    if (digits.startsWith("34") || digits.startsWith("37")) {
+      return "9999 999999 99999" // Amex
+    }
+    return undefined
+  },
+}
+```
+
+</DocsProse>

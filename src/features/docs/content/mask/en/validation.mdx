@@ -1,0 +1,96 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { MaskFieldDemo } from "@/features/docs/components/MaskFieldDemo";
+
+export const messagesCode = `const messages: Record<string, string> = {
+  "tckn.invalid": "Invalid national ID",
+  "phone.incomplete": "The phone number is incomplete",
+  "date.minAge": "You must be at least 18",
+}
+
+const error = form.formState.errors.tckn
+{error && <p>{messages[error.message ?? ""] ?? error.message}</p>}`;
+
+<DocsPageHeader
+  title="Validation"
+  description="Errors come back as keys, not messages. Add your own rules and use them with a resolver."
+/>
+
+<DocsProse>
+
+<h2 id="anahtarlar">Error keys</h2>
+
+Empty values are not validated; requiring a value is the job of `rules.required` or your schema. The error arrives as a key in `errors.field.message`, so translations stay with you.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`<name>.incomplete`</td>
+        <td>The pattern is not full (phone, card, tckn…)</td>
+      </tr>
+      <tr>
+        <td>`<name>.invalid`</td>
+        <td>A checksum failed (Luhn, TCKN, VKN, mod-97, a date that doesn't exist)</td>
+      </tr>
+      <tr>
+        <td>`<name>.min`, `<name>.max`</td>
+        <td>Number, currency or date limit; a past month on expiry</td>
+      </tr>
+      <tr>
+        <td>`date.minAge`</td>
+        <td>Age limit</td>
+      </tr>
+      <tr>
+        <td>`date.beforeFrom`</td>
+        <td>Before the linked start date</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+`<name>` is the preset name; `mask` for a custom pattern, or the name you gave `definePreset`.
+
+<ComponentPreview preview={<MaskFieldDemo config="tckn" placeholder="10000000146" />} code={messagesCode}>
+  <DocsCodeBlock code={messagesCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="ozel">Custom validation</h2>
+
+`validate` runs after the built-in checks. On a preset, both apply.
+
+```tsx
+useViraMask(form, {
+  // true: valid · false: "<name>.invalid" · a string: your own key
+  tckn: { preset: "tckn", validate: (value) => value !== "11111111110" || "tckn.blocked" },
+  // React Hook Form rules work too
+  phone: { preset: "phone", country: "TR", rules: { required: "required", validate: { mobile: (v) => v.startsWith("5") || "phone.mobile" } } },
+})
+```
+
+<h2 id="resolver">Zod, Valibot and resolvers</h2>
+
+<AcademyBadge kind="react-hook-form" /> skips `register` validation when a resolver is set. Wrap the resolver with `maskResolver` to get schema and mask errors together. Without it, you get a console warning in development.
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod"
+import { maskResolver, useViraMask } from "@virastack/mask"
+
+const masks = { tckn: "tckn", phone: { preset: "phone", country: "TR" } } as const
+const schema = z.object({ tckn: z.string().min(1, "required"), phone: z.string() })
+
+const form = useForm({ resolver: maskResolver(masks, zodResolver(schema)) })
+// or pass a Standard Schema directly (no @hookform/resolvers needed)
+const form2 = useForm({ resolver: maskResolver(masks, schema) })
+
+const { tckn, phone } = useViraMask(form, masks)
+```
+
+To use the same schema on the server, see the [server](/mask/docs/server) page.
+
+</DocsProse>

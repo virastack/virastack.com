@@ -1,0 +1,100 @@
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="React Hook Form"
+  description="Use the hook with register, Controller, Zod and ViraStack Mask in one form."
+/>
+
+<DocsProse>
+
+<AcademyBadge kind="react-hook-form" /> stays the single source of truth. The hook only adds props to the input; it never holds the form value.
+
+<h2 id="form">useViraPassword(form)</h2>
+
+Pass the form first, as with `useViraMask(form, schema)`. One entry per field: the key is the field name (set `name` when it differs), `matchWith` and `forbidden` take field names, and `rules` adds more React Hook Form rules such as `required`.
+
+Each field is registered with its rule. Values are read from the form, so `reset()` and `setValue()` are followed, and a field is checked again when the field it depends on changes (the confirm field with the password, the password with the email), once the user has left it or submitted. No `value`, `deps` or `trigger`.
+
+```tsx
+import { useViraPassword } from "@virastack/password"
+
+const { password, confirm } = useViraPassword(form, {
+  password: { policy, forbidden: ["email"] }, // field names
+  confirm: { matchWith: "password" },
+})
+
+<input {...password.inputProps} /> // register() is already inside
+<button {...password.btnProps} />
+<input {...confirm.inputProps} />
+```
+
+<PasswordExamplePreview id="form-binding" />
+
+`react-hook-form` is an optional peer (7.55+): the hook only uses its types and the methods of the form you pass, and `useViraPassword()` without a form works as before. To share an input with a ViraStack Mask field, or with a resolver, bind the hook yourself as below.
+
+<h2 id="register">register()</h2>
+
+```tsx
+const { inputProps, btnProps, rule } = useViraPassword({ policy, value: password })
+
+// inputProps holds attributes only: spread it before or after register()
+<input {...inputProps} {...form.register("password", rule)} />
+<button {...btnProps} />
+```
+
+<h2 id="value">useWatch()</h2>
+
+`reset()` and `setValue()` change the input without an input event. Pass `value` so strength and `matches` follow them. `useWatch` also works with the React Compiler, unlike `watch()`.
+
+```tsx
+const password = useWatch({ control: form.control, name: "password" })
+const { inputProps, strength } = useViraPassword({ policy, value: password })
+```
+
+<h2 id="rule">rule & deps</h2>
+
+`rule` returns the first error key. `deps` re-validates the confirm field when the password changes.
+
+```tsx
+form.register("password", { ...rule, deps: ["confirm"] })
+
+// deps only runs on user input. After setValue, check the confirm field yourself:
+form.setValue("password", next)
+form.trigger("confirm")
+```
+
+Give the form `method="post"`. Before hydration a form submits natively, and the default GET puts the password in the URL.
+
+<h2 id="controller">Controller</h2>
+
+```tsx
+<Controller
+  control={form.control}
+  name="password"
+  render={({ field }) => <PasswordField field={field} />}
+/>
+
+function PasswordField({ field }: { field: ControllerRenderProps<Values, "password"> }) {
+  const { inputProps } = useViraPassword({
+    policy,
+    value: field.value,
+    inputProps: { ...field, onChange: (e) => field.onChange(e.target.value) },
+  })
+  return <input {...inputProps} />
+}
+```
+
+<h2 id="zod">Zod resolver</h2>
+
+With a resolver, `register` rules don't run. Put the same policy into the <AcademyBadge kind="zod" /> schema with `evaluate`:
+
+<PasswordExamplePreview id="react-hook-form-zod" />
+
+<h2 id="mask">With Mask</h2>
+
+<GuideProductMark id="mask" linked={false}>Mask</GuideProductMark> v2 also keeps the value in React Hook Form, so both share one `useForm`. Use them on different inputs, never on the same one.
+
+<PasswordExamplePreview id="mask-signup" />
+
+</DocsProse>

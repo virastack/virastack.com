@@ -1,0 +1,174 @@
+import { DocsPromptBlock } from "@/features/docs/components/DocsPromptBlock";
+import { MASK_UPGRADE_PROMPT } from "@/features/docs/content/mask/mask-upgrade-prompt";
+
+<DocsPageHeader
+  title="v1'den v2'ye geçiş"
+  description="v2 baştan yazıldı. Hook imzası, preset listesi ve bazı değerler değişti."
+/>
+
+<DocsProse>
+
+<h2 id="prompt">Yapay zekâ ile tek adımda</h2>
+
+Prompt'u kopyalayıp projende <AcademyBadge kind="claudeCode" />, <AcademyBadge kind="cursor" /> ya da <AcademyBadge kind="codex" /> gibi bir agent'a ver. Agent tüm kullanımları bulur, v2'ye çevirir, tip kontrolü ve testleri çalıştırır; sonunda biçimi değişen verileri (tarih ISO, TR IBAN'da `TR`) onayın için listeler.
+
+<DocsPromptBlock prompt={MASK_UPGRADE_PROMPT} label="v1 → v2 upgrade prompt" copyLabel="Kopyala" />
+
+Elle yapmak istersen aşağıdaki tablolar aynı adımları anlatır.
+
+v1 dokümanı [arşivde](/mask/docs/v1) duruyor. Gereksinimler: <AcademyBadge kind="react" label="React 18.2+" />, <AcademyBadge kind="react-hook-form" label="React Hook Form 7.55+" />, <AcademyBadge kind="nodejs" label="Node 20+" />.
+
+<h2 id="imza">Hook imzası</h2>
+
+```tsx
+- const { phone } = useViraMask({ form, schema: { phone: "phone" } })
++ const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
+```
+
+Şema anahtarları formdaki alan adları olmalı (ya da `name` ver). Yazım hatası artık derleme hatasıdır.
+
+<h2 id="raw">rawValue kalktı</h2>
+
+Form zaten ham değeri tutar. Dönen nesneyi doğrudan spread et.
+
+```tsx
+- const { rawValue, ...inputProps } = phone
+- <input {...inputProps} />
++ <input {...phone} />
++ const raw = form.watch("phone") // "5551234567"
+```
+
+<h2 id="presetler">Presetler</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`phone (ABD biçimi)`</td>
+        <td>\{ preset: "phone", country: "TR" \} → (555) 123 45 67; "phone" → E.164 (+905551234567). ABD için \{ mask: "(999) 999-9999" \}</td>
+      </tr>
+      <tr>
+        <td>`iban (yalnız TR, değer TR'siz)`</td>
+        <td>\{ preset: "iban", country: "TR" \} (değer TR ile); "iban" her ülke için</td>
+      </tr>
+      <tr>
+        <td>`currency (ABD ayırıcıları, sembolsüz)`</td>
+        <td>Aynısı "currency" (1,234.56); Türk lirası \{ preset: "currency", country: "TR" \} (₺1.234,56); diğer kurlar currency: "USD" ya da from</td>
+      </tr>
+      <tr>
+        <td>`date (değer 01022020)`</td>
+        <td>Değer ISO: 2020-02-01</td>
+      </tr>
+      <tr>
+        <td>`taxNumber`</td>
+        <td>vkn</td>
+      </tr>
+      <tr>
+        <td>`numeric`</td>
+        <td>number</td>
+      </tr>
+      <tr>
+        <td>`email, url, username, alpha, password, text, zipCode`</td>
+        <td>Kaldırıldı; şemanda doğrula ya da definePreset. Kişi adları için alpha yerine fullName (2.2+)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="secenekler">Seçenekler</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`resolveMask`</td>
+        <td>mask: (value, ctx) =\> string</td>
+      </tr>
+      <tr>
+        <td>`cvv şemada kart arıyordu`</td>
+        <td>cvv: \{ preset: "cvv", from: "card" \}</td>
+      </tr>
+      <tr>
+        <td>`validator: "tckn" / validate: true`</td>
+        <td>Presette yerleşik; ekleme için validate: (value) =\> true | "anahtar"</td>
+      </tr>
+      <tr>
+        <td>`errorMessage`</td>
+        <td>Hata anahtarı döner (tckn.invalid); mesajı sen eşlersin</td>
+      </tr>
+      <tr>
+        <td>`currency: { decimalSeparator, thousandSeparator, symbol }`</td>
+        <td>currency: \{ code, locale, scale \}</td>
+      </tr>
+      <tr>
+        <td>`dateFormat: "DMY"`</td>
+        <td>date: \{ format: "DD/MM/YYYY" \}</td>
+      </tr>
+      <tr>
+        <td>`allowedChars, forbiddenChars`</td>
+        <td>\{ mask: "hhhh", tokens: \{ h: /\[0-9a-f\]/i \} \}</td>
+      </tr>
+      <tr>
+        <td>`displayPrefix`</td>
+        <td>\{TR\}99 … (sabit bölüm değerde kalır)</td>
+      </tr>
+      <tr>
+        <td>`placeholderChar`</td>
+        <td>Kaldırıldı (hiç çalışmıyordu)</td>
+      </tr>
+      <tr>
+        <td>`onCardTypeChange`</td>
+        <td>getCardType(form.watch("card"))</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="dogrulama">Resolver ile doğrulama</h2>
+
+v1'de resolver varken maske doğrulaması sessizce duruyordu. v2'de resolver'ı sar:
+
+```ts
+useForm({ resolver: maskResolver(masks, zodResolver(schema)) })
+```
+
+<h2 id="yardimcilar">Yardımcılar</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`validateTCKN, validateVKN, validateLuhn, validateIBAN`</td>
+        <td>isValidTCKN, isValidVKN, isValidLuhn / isValidCard, isValidIBAN</td>
+      </tr>
+      <tr>
+        <td>`applyMask, unmask, formatCurrency…`</td>
+        <td>createMask(spec).format() / .parse()</td>
+      </tr>
+      <tr>
+        <td>`mergeRefs`</td>
+        <td>Kaldırıldı; React 19'da ref bir prop</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</DocsProse>

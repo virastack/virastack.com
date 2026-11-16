@@ -1,0 +1,41 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Confirm password"
+  description="Repeat-password fields with the same hook and matchWith."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Basic usage</h2>
+
+There is no separate hook. Give the confirm field `matchWith`: `matches` is `true`, `false`, or `null` while the field is empty. Both values are compared after NFKC, like on the server.
+
+<PasswordExamplePreview id="confirm" />
+
+<h2 id="rule">rule</h2>
+
+`rule.validate` always reads the latest `matchWith`, so the same object can go into `register()`. To re-check the confirm field when the password changes, see [deps](/password/docs/react-hook-form).
+
+```tsx
+const password = useWatch({ control: form.control, name: "password" })
+const { inputProps, rule } = useViraPassword({ matchWith: password })
+
+<input {...inputProps} {...form.register("confirm", rule)} />
+// "password.mismatch" when the values differ (an empty confirm fails too)
+```
+
+<h2 id="gorunurluk">Shared visibility</h2>
+
+Each field has its own toggle. To show both at once, control them with one state:
+
+```tsx
+const [visible, setVisible] = useState(false)
+
+const shared = { visible, onVisibleChange: setVisible }
+
+const passwordField = useViraPassword(shared)
+const confirmField = useViraPassword({ ...shared, matchWith: password })
+```
+
+</DocsProse>

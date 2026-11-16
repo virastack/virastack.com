@@ -1,0 +1,186 @@
+<DocsPageHeader
+  title="Sunucu doğrulaması"
+  description="Gönderilen adresi @virastack/address/server ile veri setine karşı yeniden kontrol et; posta kodunu sunucuda türet."
+/>
+
+<DocsProse>
+
+<h2 id="resolve">resolveAddress()</h2>
+
+Client istediği posta kodunu gönderebilir. `resolveAddress` adresi veri setinde arar ve posta kodunu kendisi türetir. `postalCode` da gönderilirse mahallenin kodlarından biri olup olmadığı kontrol edilir; birden çok kodu olan mahallede gönderilen kod korunur.
+
+```ts
+import { resolveAddress } from "@virastack/address/server"
+
+const { ok, value, issues } = await resolveAddress({
+  // ad, harf farkı önemsiz; ya da plaka kodu: 34, "34", "06"
+  province: "istanbul",
+  district: "fatih",
+  neighbourhood: "aksaray mah.",
+})
+
+if (!ok) return { errors: issues }
+value.postalCode // "34096": sunucuda türetildi, client'tan alınmadı
+```
+
+Adlar büyük/küçük harf ve Türkçe karakter farkı gözetmeden, baştaki ve sondaki boşluklar atılarak eşleşir; `value` veri setindeki yazımı döndürür. `provinceCode` ve `province` birlikte gelirse önce kod kullanılır; boş gelen bir kod alanı adın kullanılmasını engellemez.
+
+<h2 id="sorunlar">Sorunlar</h2>
+
+Adres eksik ya da bilinmiyorsa `ok` `false` olur ve `issues` sorunlu seviyeyi söyler:
+
+```ts
+type AddressIssue =
+  | { level: "province"; reason: "missing" | "unknown" }
+  | { level: "district"; reason: "missing" | "unknown" }
+  | { level: "neighbourhood"; reason: "missing" | "unknown" }
+  | { level: "postalCode"; reason: "missing" | "unknown" | "mismatch" }
+
+await resolveAddress({ provinceCode: 34, district: "ÇANKAYA" })
+// ok: false
+// issues: [{ level: "district", reason: "unknown" }]
+// value.province: "İSTANBUL", value.district: null
+```
+
+Kontrol yukarıdan aşağı ilerler ve ilk sorunda durur, bu yüzden `issues` en fazla bir sorun taşır. Doğru olan kısım `value` içinde kalır: ilçe bilinmiyorsa il yine doludur, form adresin geri kalanını gösterebilir. Hata mesajları ve çevirileri sizdedir.
+
+Gönderilen `postalCode` mahalleye ait değilse sorun `{ level: "postalCode", reason: "mismatch" }` olur; `value` yine mahallenin gerçek kodunu taşır. Posta kodu gönderilmezse ya da boş gelirse kontrol edilmez, türetilir.
+
+<h2 id="posta-kodu">resolvePostalCode()</h2>
+
+Bir posta kodunun hangi adrese ait olduğunu sunucuda bulur; örneğin bir route handler'dan [posta kodu araması](/address/docs/postal-code) sunmak için. Kodun kesin söyleyebildiği kadarını `value` içinde, adayları `neighbourhoods` içinde döndürür:
+
+```ts
+import { resolvePostalCode } from "@virastack/address/server"
+
+const { ok, value, neighbourhoods } = await resolvePostalCode("34096")
+// ok: false
+// issues: [{ level: "neighbourhood", reason: "missing" }]
+// value: { province: "İSTANBUL", district: "FATİH",
+//          neighbourhood: null, postalCode: "34096", ... }
+// neighbourhoods: ["AKSARAY MAH.", "HASEKİ SULTAN MAH."]
+
+await resolvePostalCode("34710")
+// ok: true, value.neighbourhood: "CAFERAĞA MAH."
+
+await resolvePostalCode("34999")
+// ok: false, issues: [{ level: "postalCode", reason: "unknown" }]
+```
+
+`ok` yalnızca kodun altında tek mahalle varsa `true` olur; adres o zaman tamdır. Boş kod `missing`, veri setinde olmayan ya da beş haneli olmayan kod `unknown` verir.
+
+<h2 id="server-action">Server Action</h2>
+
+```ts
+// app/actions/address.ts
+"use server"
+
+import { resolveAddress } from "@virastack/address/server"
+
+export async function saveAddress(formData: FormData) {
+  const { ok, value, issues } = await resolveAddress({
+    province: String(formData.get("province") ?? ""),
+    district: String(formData.get("district") ?? ""),
+    neighbourhood: String(formData.get("neighbourhood") ?? ""),
+    postalCode: String(formData.get("postalCode") ?? ""),
+  })
+  if (!ok) return { errors: issues }
+
+  await db.address.create({ data: value })
+}
+```
+
+```tsx
+"use client"
+
+import { useViraAddress } from "@virastack/address"
+import { saveAddress } from "@/app/actions/address"
+
+export function AddressForm() {
+  const address = useViraAddress()
+
+  return (
+    <form action={saveAddress}>
+      <select {...address.getProvinceProps()} />
+      <select {...address.getDistrictProps()} />
+      <select {...address.getNeighbourhoodProps()} />
+      <input {...address.getPostalCodeProps()} />
+      <button type="submit">Kaydet</button>
+    </form>
+  )
+}
+```
+
+Native select'te il seçeneğinin değeri plaka kodudur; `formData.get("province")` `"34"` gelir ve `resolveAddress` bunu kod olarak tanır. Gizli posta kodu input'unun değeri de gönderilir; sunucu ona güvenmez, mahalleye karşı kontrol eder.
+
+<h2 id="yardimcilar">Diğer yardımcılar</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Dışa aktarım</th>
+        <th>Ne yapar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`resolveAddress(input)`</td>
+        <td>Adresi doğrular, posta kodunu türetir: `{ ok, value, issues }`</td>
+      </tr>
+      <tr>
+        <td>`postalCodeFor(input)`</td>
+        <td>Yalnızca posta kodu; eşleşme yoksa `null`</td>
+      </tr>
+      <tr>
+        <td>`resolvePostalCode(code)`</td>
+        <td>Posta kodundan adres: `{ ok, value, issues, neighbourhoods }`</td>
+      </tr>
+      <tr>
+        <td>`formatAddress(value, options)`</td>
+        <td>Adresi tek satıra döker</td>
+      </tr>
+      <tr>
+        <td>`normalizePostalCode(input)`</td>
+        <td>Beş haneli posta kodu ya da null; boşlukları atar</td>
+      </tr>
+      <tr>
+        <td>`districtsOf(province)`</td>
+        <td>Bir ilin ilçe adları, Türkçe sıralı</td>
+      </tr>
+      <tr>
+        <td>`findProvince(input)`</td>
+        <td>Plaka kodu ya da adla il arar</td>
+      </tr>
+      <tr>
+        <td>`provinces`</td>
+        <td>81 il, ilçe adlarıyla</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+```ts
+import {
+  districtsOf,
+  findProvince,
+  postalCodeFor,
+} from "@virastack/address/server"
+
+await postalCodeFor({
+  province: 34,
+  district: "FATİH",
+  neighbourhood: "AKSARAY MAH.",
+}) // "34096"
+
+districtsOf("06")          // ["AKYURT", "ALTINDAĞ", ...]
+findProvince("kırşehir")   // { code: 40, name: "KIRŞEHİR", ... }
+```
+
+<h2 id="nextjs">SSR ve Next.js</h2>
+
+- Yalnızca `@virastack/address` içinde `"use client"` vardır. Server Component, Server Action ve route handler'lar `/server` veya `/data` import eder.
+- Sunucu bir ilin mahallelerini ilk ihtiyaçta yükler ve süreç boyunca önbellekte tutar; aynı il için sonraki istekler, aynı anda gelenler dahil, yeniden yüklemez. Serverless ortamlarda her instance kendi önbelleğini tutar.
+- Prop getter'ların `id`'leri `useId`'den gelir; server'da ve client'ta aynı id üretilir.
+
+</DocsProse>

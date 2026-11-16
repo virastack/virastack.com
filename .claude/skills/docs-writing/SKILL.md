@@ -40,7 +40,7 @@ Then rewrite the latest pages from the new code, as if no old docs existed. Reus
 Check which one the product uses before editing:
 
 - **Messages-based** (Start, AI): page components in `content/<product>/` (AI: `content/ai/v2/`) render keys from the product namespace (`DocsStart`, `DocsAi`) with `t()` and `t.rich(key, docsRichTags)`. Copy lives in `src/messages/tr.json` and `en.json`.
-- **Locale TSX** (Mask, Password, Address): one component per locale in `content/<product>/locales/tr/` and `locales/en/`, with the text written in JSX.
+- **MDX** (Mask, Password, Address): one file per locale, `content/<product>/en/<slug>.mdx` and `tr/<slug>.mdx` (Mask v1: `content/mask/v1/`), registered in `content/<product>/<product>-docs-content.ts`. Prose is markdown; headings stay `<h2 id="...">` so the ids are fixed; a fenced block with a language renders as `DocsCodeBlock`. `DocsPageHeader`, `DocsProse`, `DocsCodeBlock`, `AcademyBadge` and `Link` need no import (`lib/docs-mdx-components.tsx`); other components are imported with `@/`. A line holding only JSX is block JSX in MDX, so a paragraph or list item that is only a badge gets its own `<p>` or `<li>` tags. The table of contents and the site search read each page's headings and prose from its MDX file at build time (`lib/docs-mdx-source.ts`), so headings have no keys in `messages`; write each `<h2 id="...">` on its own line. Prettier skips `*.mdx`. Example pages (`Examples`, `ExampleDetail`) are built from config and stay locale TSX in `content/<product>/locales/`.
 
 New products use the messages-based shape. Edit both locales in the same change; the English page is localized, not translated word for word.
 
@@ -65,13 +65,13 @@ Rules come from `.cursor/rules/brand.mdc` and `.cursor/rules/terminology.mdc`; r
 
 ## Markup
 
-| Need                                              | Messages-based (`t.rich`)                                         | Locale TSX                       |
+| Need                                              | Messages-based (`t.rich`)                                         | MDX                              |
 | :------------------------------------------------ | :---------------------------------------------------------------- | :------------------------------- |
-| Identifier, file, command, flag, package, env var | `<code>api.ts</code>`                                             | `<code>api.ts</code>`            |
-| Key phrase                                        | `<bold>...</bold>`                                                | `<strong>...</strong>`           |
+| Identifier, file, command, flag, package, env var | `<code>api.ts</code>`                                             | `` `api.ts` ``                   |
+| Key phrase                                        | `<bold>...</bold>`                                                | `**...**`                        |
 | Technology                                        | `<nextjs>Next.js</nextjs>` (handlers in `lib/docs-rich-tags.tsx`) | `<AcademyBadge kind="nextjs" />` |
 | ViraStack product                                 | a product tag backed by `GuideProductMark`                        | `<GuideProductMark id="mask" />` |
-| Internal link                                     | `<link>...</link>` with a `Link` handler                          | `<Link href="...">`              |
+| Internal link                                     | `<link>...</link>` with a `Link` handler                          | `[...](/mask/docs/...)`          |
 
 - A badge kind must exist in `src/constants/academy-badge.constants.ts`. A missing `t.rich` handler goes into `docsRichTags`, not into a local object.
 - Bold: one or two key phrases per paragraph at most, never a whole sentence. No italic for emphasis (only a foreign or quoted word). Product names are never italic.

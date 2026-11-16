@@ -1,0 +1,174 @@
+import { DocsPromptBlock } from "@/features/docs/components/DocsPromptBlock";
+import { MASK_UPGRADE_PROMPT } from "@/features/docs/content/mask/mask-upgrade-prompt";
+
+<DocsPageHeader
+  title="Upgrading from v1 to v2"
+  description="v2 is a rewrite. The hook signature, the preset list and some values changed."
+/>
+
+<DocsProse>
+
+<h2 id="prompt">One step with an AI agent</h2>
+
+Copy the prompt and give it to an agent such as <AcademyBadge kind="claudeCode" />, <AcademyBadge kind="cursor" /> or <AcademyBadge kind="codex" /> in your project. It finds every usage, moves it to v2, runs the type checker and tests, and lists the data whose shape changed (ISO dates, `TR` in Turkish IBANs) for you to confirm.
+
+<DocsPromptBlock prompt={MASK_UPGRADE_PROMPT} label="v1 → v2 upgrade prompt" copyLabel="Copy" />
+
+Prefer doing it by hand? The tables below describe the same steps.
+
+The v1 docs are [archived](/mask/docs/v1). Requirements: <AcademyBadge kind="react" label="React 18.2+" />, <AcademyBadge kind="react-hook-form" label="React Hook Form 7.55+" />, <AcademyBadge kind="nodejs" label="Node 20+" />.
+
+<h2 id="imza">Hook signature</h2>
+
+```tsx
+- const { phone } = useViraMask({ form, schema: { phone: "phone" } })
++ const { phone } = useViraMask(form, { phone: { preset: "phone", country: "TR" } })
+```
+
+Schema keys must be field names of your form (or set `name`). A typo is now a compile error.
+
+<h2 id="raw">rawValue is gone</h2>
+
+The form already holds the raw value. Spread the returned object directly.
+
+```tsx
+- const { rawValue, ...inputProps } = phone
+- <input {...inputProps} />
++ <input {...phone} />
++ const raw = form.watch("phone") // "5551234567"
+```
+
+<h2 id="presetler">Presets</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`phone (US layout)`</td>
+        <td>\{ preset: "phone", country: "TR" \} → (555) 123 45 67; "phone" → E.164 (+905551234567). For a US layout: \{ mask: "(999) 999-9999" \}</td>
+      </tr>
+      <tr>
+        <td>`iban (Turkey only, value without TR)`</td>
+        <td>\{ preset: "iban", country: "TR" \} (value includes TR); "iban" for any country</td>
+      </tr>
+      <tr>
+        <td>`currency (US separators, no symbol)`</td>
+        <td>The same as "currency" (1,234.56); Turkish lira \{ preset: "currency", country: "TR" \} (₺1.234,56); others currency: "USD" or from</td>
+      </tr>
+      <tr>
+        <td>`date (value 01022020)`</td>
+        <td>The value is ISO: 2020-02-01</td>
+      </tr>
+      <tr>
+        <td>`taxNumber`</td>
+        <td>vkn</td>
+      </tr>
+      <tr>
+        <td>`numeric`</td>
+        <td>number</td>
+      </tr>
+      <tr>
+        <td>`email, url, username, alpha, password, text, zipCode`</td>
+        <td>Removed; validate them in your schema or use definePreset. For person names, use fullName (2.2+) instead of alpha</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="secenekler">Options</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`resolveMask`</td>
+        <td>mask: (value, ctx) =\> string</td>
+      </tr>
+      <tr>
+        <td>`cvv scanned the schema for a card`</td>
+        <td>cvv: \{ preset: "cvv", from: "card" \}</td>
+      </tr>
+      <tr>
+        <td>`validator: "tckn" / validate: true`</td>
+        <td>Built into the preset; add more with validate: (value) =\> true | "my.key"</td>
+      </tr>
+      <tr>
+        <td>`errorMessage`</td>
+        <td>Returns an error key (tckn.invalid); map it to a message yourself</td>
+      </tr>
+      <tr>
+        <td>`currency: { decimalSeparator, thousandSeparator, symbol }`</td>
+        <td>currency: \{ code, locale, scale \}</td>
+      </tr>
+      <tr>
+        <td>`dateFormat: "DMY"`</td>
+        <td>date: \{ format: "DD/MM/YYYY" \}</td>
+      </tr>
+      <tr>
+        <td>`allowedChars, forbiddenChars`</td>
+        <td>\{ mask: "hhhh", tokens: \{ h: /\[0-9a-f\]/i \} \}</td>
+      </tr>
+      <tr>
+        <td>`displayPrefix`</td>
+        <td>\{TR\}99 … (a fixed part kept in the value)</td>
+      </tr>
+      <tr>
+        <td>`placeholderChar`</td>
+        <td>Removed (it never worked)</td>
+      </tr>
+      <tr>
+        <td>`onCardTypeChange`</td>
+        <td>getCardType(form.watch("card"))</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="dogrulama">Validation with a resolver</h2>
+
+In v1, mask validation silently stopped when a resolver was set. In v2, wrap the resolver:
+
+```ts
+useForm({ resolver: maskResolver(masks, zodResolver(schema)) })
+```
+
+<h2 id="yardimcilar">Helpers</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>v1</th>
+        <th>v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`validateTCKN, validateVKN, validateLuhn, validateIBAN`</td>
+        <td>isValidTCKN, isValidVKN, isValidLuhn / isValidCard, isValidIBAN</td>
+      </tr>
+      <tr>
+        <td>`applyMask, unmask, formatCurrency…`</td>
+        <td>createMask(spec).format() / .parse()</td>
+      </tr>
+      <tr>
+        <td>`mergeRefs`</td>
+        <td>Removed; ref is a prop in React 19</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</DocsProse>

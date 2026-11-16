@@ -1,0 +1,214 @@
+<DocsPageHeader
+  title="useViraAddress()"
+  description="Hook API'si: seçenekler, dönüş değeri, value nesnesi ve kendi veri kaynağın."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Temel kullanım</h2>
+
+Hook üç liste ve üç setter döndürür. Her liste `{ value, label }` biçimindedir: `value` veri setindeki ham adı (`FATİH`), `label` başlık biçimini (`Fatih`) taşır. İl listesinde `value` plaka kodudur (`"34"`).
+
+```tsx
+const {
+  provinces, districts, neighbourhoods,
+  setProvince, setDistrict, setNeighbourhood,
+  value, loading,
+} = useViraAddress()
+
+return (
+  <>
+    <select
+      value={value.provinceCode ?? ""}
+      onChange={(e) => setProvince(e.target.value)}
+    >
+      <option value="">İl seç</option>
+      {provinces.map((p) => (
+        <option key={p.value} value={p.value}>{p.label}</option>
+      ))}
+    </select>
+
+    <select
+      value={value.district ?? ""}
+      onChange={(e) => setDistrict(e.target.value)}
+      disabled={!districts.length}
+    >
+      <option value="">İlçe seç</option>
+      {districts.map((d) => (
+        <option key={d.value} value={d.value}>{d.label}</option>
+      ))}
+    </select>
+
+    <select
+      value={value.neighbourhood ?? ""}
+      onChange={(e) => setNeighbourhood(e.target.value)}
+      disabled={!neighbourhoods.length}
+    >
+      <option value="">
+        {loading.neighbourhoods ? "Yükleniyor…" : "Mahalle seç"}
+      </option>
+      {neighbourhoods.map((n) => (
+        <option key={n.value} value={n.value}>{n.label}</option>
+      ))}
+    </select>
+  </>
+)
+```
+
+Elle bağlamak istemiyorsan aynı şeyi [prop getter'lar](/address/docs/ui-libraries) tek satırda yapar. `setProvince` plaka kodunu sayı veya metin olarak alır.
+
+<h2 id="value">value</h2>
+
+Formun ihtiyaç duyduğu her şey tek nesnededir:
+
+```ts
+{
+  provinceCode: "34",       // plaka kodu, string olarak
+  province: "İSTANBUL",
+  district: "FATİH",
+  neighbourhood: "AKSARAY MAH.",
+  postalCode: "34096",      // mahallenin ilk posta kodu ya da yazılan kod
+  postalCodes: ["34096"],   // hepsi; birkaç yüz mahallede birden fazla
+}
+```
+
+Seçilmemiş seviyeler `null`, `postalCodes` boş dizidir. Adlar veri setindeki gibi büyük harflidir; ekranda göstermek için listelerdeki `label` alanını ya da [formatName](/address/docs/helpers) kullan.
+
+<h2 id="secenekler">Seçenekler</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Seçenek</th>
+        <th>Varsayılan</th>
+        <th>Ne yapar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`source`</td>
+        <td>paketteki veri seti</td>
+        <td>Listelerin geldiği yer. Test fixture'ı ya da kendi API'n için değiştir.</td>
+      </tr>
+      <tr>
+        <td>`defaultValue`</td>
+        <td>—</td>
+        <td>`{ provinceCode, district, neighbourhood }` ile başlangıç. `form` verildiyse ve bu boşsa formdaki adresten okunur.</td>
+      </tr>
+      <tr>
+        <td>`formatLabel`</td>
+        <td>`formatName`</td>
+        <td>Ham adı etikete çevirir; ikinci parametre seviyedir. `(name) => name` büyük harfi korur.</td>
+      </tr>
+      <tr>
+        <td>`onChange`</td>
+        <td>—</td>
+        <td>Her değişiklikte `value` ile çağrılır; ilk render'da çağrılmaz.</td>
+      </tr>
+      <tr>
+        <td>`form`</td>
+        <td>—</td>
+        <td>Senkron tutulacak form, örneğin React Hook Form'un `useForm()` sonucu.</td>
+      </tr>
+      <tr>
+        <td>`names`</td>
+        <td>`province`, `district`, `neighbourhood`, `postalCode`</td>
+        <td>Formdaki ve prop getter'ların döndürdüğü input'lardaki alan adları. `provinceCode` yalnızca adı verilirse yazılır.</td>
+      </tr>
+      <tr>
+        <td>`shouldValidate`</td>
+        <td>`true`</td>
+        <td>Adres değiştikçe form alanlarını yeniden doğrular.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+`form`, `names` ve `shouldValidate` [React Hook Form](/address/docs/react-hook-form) sayfasında ayrıntılı anlatılır.
+
+<h2 id="donus">Dönüş değeri</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Alan</th>
+        <th>Açıklama</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`value`</td>
+        <td>Seçili adres; yukarıdaki nesne.</td>
+      </tr>
+      <tr>
+        <td>`provinces, districts, neighbourhoods`</td>
+        <td>Select'e hazır `{ value, label }` listeleri. Mahalle seçenekleri ayrıca `postalCode` ve `postalCodes` taşır.</td>
+      </tr>
+      <tr>
+        <td>`setProvince(code), setDistrict(name), setNeighbourhood(name)`</td>
+        <td>Seçim yapar; `null` veya `""` seviyeyi temizler. Üst seviye alttakileri temizler.</td>
+      </tr>
+      <tr>
+        <td>`setPostalCode(code)`</td>
+        <td>Posta kodundan adresi doldurur; `"exact" | "partial" | "unknown"` ile çözülür. Bkz. [posta kodundan adres](/address/docs/postal-code).</td>
+      </tr>
+      <tr>
+        <td>`postalCodeStatus`</td>
+        <td>Son posta kodunun ne bulduğu; etkin bir arama yoksa `null`.</td>
+      </tr>
+      <tr>
+        <td>`reset()`</td>
+        <td>Her seviyeyi temizler.</td>
+      </tr>
+      <tr>
+        <td>`loading.neighbourhoods`</td>
+        <td>Seçili ilin mahalleleri yüklenirken `true`.</td>
+      </tr>
+      <tr>
+        <td>`error`</td>
+        <td>Son yükleme hatası. Başka bir il seçilince temizlenir; başarısız il sonra tekrar seçilirse yükleme yeniden denenir.</td>
+      </tr>
+      <tr>
+        <td>`getProvinceProps(), getDistrictProps(), getNeighbourhoodProps()`</td>
+        <td>Düz bir `<select>`'e yayılan prop'lar; `disabled` zincirden hesaplanır. Diğer bileşenler için `as` ile biçim seçilir.</td>
+      </tr>
+      <tr>
+        <td>`getPostalCodeProps()`</td>
+        <td>Türetilen posta kodu için gizli bir input.</td>
+      </tr>
+      <tr>
+        <td>`getPostalCodeInputProps()`</td>
+        <td>Kullanıcının posta kodu yazabildiği input; seçimden türetilen kodu da gösterir.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="kaynak">Kendi veri kaynağın</h2>
+
+Varsayılan kaynak paketteki veri setidir. Testlerde küçük bir fixture kullanmak ya da listeleri kendi API'nden okumak için `source` ver:
+
+```tsx
+import { useViraAddress, type AddressSource } from "@virastack/address"
+
+const aksaray = {
+  name: "AKSARAY MAH.",
+  postalCode: "34096",
+  postalCodes: ["34096"],
+}
+
+const source: AddressSource = {
+  provinces: [
+    { code: 34, name: "İSTANBUL", districts: ["FATİH", "KADIKÖY"] },
+  ],
+  neighbourhoods: async (code) => new Map([["FATİH", [aksaray]]]),
+}
+
+const address = useViraAddress({ source })
+```
+
+Hook mahalleleri yalnızca il değiştiğinde okur; her render'da yeni bir `source` nesnesi vermek yüklemeyi tekrarlatmaz. Yalnızca mahallelerin nereden geldiğini değiştirmek istiyorsan `setLoader` daha kısadır; bkz. [veri seti](/address/docs/data).
+
+</DocsProse>

@@ -1,0 +1,173 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+import { MaskCreditCardDemo } from "@/features/docs/components/MaskCreditCardDemo";
+import { StatusIcon } from "@/features/docs/components/StatusIcon";
+
+export const quickStartCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+
+function Checkout() {
+  const form = useForm<{ card: string; expiry: string; cvv: string }>()
+
+  const { card, expiry, cvv } = useViraMask(form, {
+    card: "card",
+    expiry: "expiry",
+    cvv: { preset: "cvv", from: "card" },
+  })
+
+  return (
+    <form onSubmit={form.handleSubmit(console.log)}>
+      <input {...card} />
+      <input {...expiry} />
+      <input {...cvv} />
+    </form>
+  )
+}
+// form.watch("card") → "4111111111111111"`;
+
+<DocsPageHeader
+  title="Introduction"
+  description="Zero-dependency input masks for React Hook Form, with Turkish validators, type safety and server support."
+/>
+
+<DocsProse>
+
+The form keeps the raw value (`5551234567`); the input shows the mask (`(555) 123 45 67`). `register` rules, `reset`, `setValue`, `watch` and resolvers keep working.
+
+<h2 id="baslarken">Getting started</h2>
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask")} />
+
+<ComponentPreview preview={<MaskCreditCardDemo />} code={quickStartCode}>
+  <DocsCodeBlock code={quickStartCode} lang="tsx" />
+</ComponentPreview>
+
+Try every preset on the [examples](/mask/examples) page. On v1? Read the [upgrade guide](/mask/docs/upgrade).
+
+<h2 id="neden">Why <GuideProductMark id="mask" linked={false} tone="heading">Mask</GuideProductMark>?</h2>
+
+- **Built for <AcademyBadge kind="react-hook-form" />**: the form is the single source of truth; the hook keeps no value state.
+- **Turkey ready**: TCKN, VKN, Turkish IBAN and phone, and TRY that keeps kuruş.
+- **Type-safe**: field names, `from` and rules are checked against your form type; a typo is a compile error.
+- **On the server too**: the same schema parses and validates in a Server Action with `@virastack/mask/server`.
+- **Stays out of the way**: not a UI package; works with <AcademyBadge kind="shadcn" />, Radix or a plain input.
+
+<h2 id="karsilastirma">Comparison</h2>
+
+It doesn't compete with imask or Maskito on engine power; the difference is <AcademyBadge kind="react-hook-form" />, Turkey and the server.
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table className="[&_code]:whitespace-nowrap [&_td:not(:first-child)]:text-center [&_th:not(:first-child)]:text-center">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th><GuideProductMark id="mask" linked={false}>Mask</GuideProductMark></th>
+        <th>react-imask</th>
+        <th>Maskito</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Designed for React Hook Form (register rules, reset, setValue)</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Pattern masks, custom tokens, optional parts, dynamic masks</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Number and date (min/max)</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+      </tr>
+      <tr>
+        <td>Card type detection</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Luhn algorithm</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>TCKN, VKN, Turkish IBAN validation</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="no" /></td>
+      </tr>
+      <tr>
+        <td>Per-country phone formatting</td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="yes" /></td>
+      </tr>
+      <tr>
+        <td>Parsing and validation on the server</td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Vue, Angular</td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="yes" /></td>
+      </tr>
+      <tr>
+        <td>Range, Enum, Pipe blocks</td>
+        <td><StatusIcon status="no" /></td>
+        <td><StatusIcon status="yes" /></td>
+        <td><StatusIcon status="partial" /></td>
+      </tr>
+      <tr>
+        <td>Runtime dependencies</td>
+        <td>-</td>
+        <td>imask, prop-types</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>Size (same form, min+gzip)</td>
+        <td>`8.3 KB`</td>
+        <td>`17.1 KB`</td>
+        <td>`10.6 KB`</td>
+      </tr>
+      <tr>
+        <td>Latest release</td>
+        <td><span className="flex flex-col items-center gap-1">`2.0.0`<span className="text-xs text-muted-foreground">Oct 2026</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`7.6.1`<span className="text-xs text-muted-foreground">May 2024</span></span></td>
+        <td><span className="flex flex-col items-center gap-1">`5.6.1`<span className="text-xs text-muted-foreground">Oct 2026</span></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p className="text-sm text-muted-foreground"><StatusIcon status="yes" decorative /> yes · <StatusIcon status="partial" decorative /> partial or manual · <StatusIcon status="no" decorative /> no. Checked on 29 October 2026 against the npm packages (`@virastack/mask 2.0.0`, `react-imask 7.6.1`, `@maskito/react 5.6.1`).</p>
+
+<p className="text-sm text-muted-foreground">**How size was measured:** The same form was written with each library: Turkish phone, card number, expiry, CVV, TRY amount and a date no later than today, with values written to React Hook Form. Each was built with esbuild in production mode, minified and tree-shaken. The number is the gzip size of the difference over the same form built without a mask library, so <AcademyBadge kind="react" /> and <AcademyBadge kind="react-hook-form" />, present on both sides, are not counted. Mask’s card preset also includes card type detection and the Luhn algorithm; the other two do not.</p>
+
+<h2 id="peer">Peer dependencies</h2>
+
+- `react` ≥ 18.2 (<AcademyBadge kind="react" label="React 19" /> recommended)
+- `react-hook-form` ≥ 7.55
+
+No runtime dependencies. The whole package is ~8 KB (min + brotli). <GuideProductMark id="start" linked={false}>Start</GuideProductMark> CLI can add it for you.
+
+<h2 id="kapsam">Scope</h2>
+
+- [useViraMask()](/mask/docs/use-vira-mask): schema, linked fields and React Hook Form compatibility
+- [Custom mask](/mask/docs/custom-mask): pattern syntax, number, currency, date and `definePreset`
+- [Validation](/mask/docs/validation) and the [server](/mask/docs/server)
+- [Helpers](/mask/docs/helpers) and [types](/mask/docs/types)
+- [Examples](/mask/examples) for every preset
+
+</DocsProse>

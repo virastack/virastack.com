@@ -1,0 +1,45 @@
+import { convertNpmCommand } from "@/lib/convert-npm-command";
+import { CodeBlockCommand } from "@/components/shared/CodeBlockCommand";
+import { GuideProductMark } from "@/components/shared/GuideRichText";
+
+<DocsPageHeader
+  title="Giriş"
+  description="React Hook Form ile senkron çalışan hafif bir input formatlama kütüphanesidir."
+/>
+
+<DocsProse>
+
+Kart numarası, telefon, IBAN, para birimi ve özel maskeler için tek bir `useViraMask()` hook'u sunar. Form state'inde ham (unmasked) değer tutulurken input'ta formatlı görüntü gösterilir.
+
+<h2 id="baslarken">Başlarken</h2>
+
+Paketi ekle. Canlı maske örneklerini görmek için [örnekler](/mask/examples) sayfasına bak.
+
+<CodeBlockCommand {...convertNpmCommand("npm install @virastack/mask@1")} />
+
+<h2 id="peer">Peer bağımlılıklar</h2>
+
+- `react` ≥ 18.2
+- `react-dom` ≥ 18.2
+- `react-hook-form` ≥ 7
+
+<GuideProductMark id="start" linked={false}>Start</GuideProductMark> CLI kurulumunda da seçilebilir.
+
+<h2 id="neden">Neden <GuideProductMark id="mask" linked={false} tone="heading">Mask</GuideProductMark>?</h2>
+
+- **Hafif**: sıfır runtime dependency; peer olarak React ve React Hook Form.
+- **RHF-first**: register / setValue ile entegre; display ile raw değer ayrılır.
+- **Tip güvenli**: schema'daki alan adları TypeScript ile eşleşir.
+- **Akıllı hazır maskeler**: kart (Visa, Mastercard, Amex, Troy), CVV, TCKN, IBAN, currency ve daha fazlası.
+
+<h2 id="kapsam">Kapsam</h2>
+
+Dokümantasyon paket yüzeyinin tamamını kapsar:
+
+- [useViraMask()](/mask/docs/v1/use-vira-mask) ve schema modeli
+- [Custom mask](/mask/docs/v1/custom-mask) sözdizimi ve `resolveMask`
+- [Validation](/mask/docs/v1/validation) ve [helpers](/mask/docs/v1/helpers)
+- [Types](/mask/docs/v1/types) referansı
+- Tüm hazır maskeler için [örnekler](/mask/examples)
+
+</DocsProse>

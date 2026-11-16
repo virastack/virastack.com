@@ -1,0 +1,163 @@
+<DocsPageHeader
+  title="UI kütüphaneleri"
+  description="Prop getter'lar düz bir select'i tek satırda doldurur ve disabled durumunu zincirden hesaplar; shadcn/ui, Ant Design ve kendi bileşenin için ayrı biçimler sunar."
+/>
+
+<DocsProse>
+
+<h2 id="getterlar">Prop getter'lar</h2>
+
+`getProvinceProps()`, `getDistrictProps()` ve `getNeighbourhoodProps()` düz bir `<select>`'i tek satırda doldurur:
+
+```tsx
+const {
+  getProvinceProps,
+  getDistrictProps,
+  getNeighbourhoodProps,
+  getPostalCodeProps,
+} = useViraAddress()
+
+<select {...getProvinceProps()} />
+<select {...getDistrictProps()} />
+<select {...getNeighbourhoodProps()} />
+<input {...getPostalCodeProps()} />
+```
+
+Seçenekler senin yerine çizilir; boş ilk seçenek placeholder'dır ve seviyeyi tekrar temizlemeye yarar. Getter'lar ayrıca `value`, `onChange`, `disabled`, `aria-busy`, `name` ve `id` verir. Gizli posta kodu input'u, değeri kütüphanesiz bir form gönderimine taşır.
+
+`disabled` zincirden gelir: ilçe, il seçilene kadar; mahalle, ilçe seçilene ve mahalleler yüklenene kadar kapalıdır. Her değeri seçenekle ya da prop'u sonradan yazarak ezebilirsin:
+
+```tsx
+<select {...getDistrictProps({ placeholder: "Nerede?" })} />
+<select {...getDistrictProps()} disabled={false} />
+<select {...getProvinceProps({ name: "sehir", id: "sehir" })} />
+```
+
+Başka bir bileşen kullanıyorsan biçimi `as` ile seç: `headless`, `shadcn` veya `antd`.
+
+<h2 id="headless">headless</h2>
+
+Kendi select bileşenin için: `options` listesi artı `onChange(value)`.
+
+```tsx
+<MySelect {...getProvinceProps({ as: "headless" })} />
+<MySelect {...getDistrictProps({ as: "headless" })} />
+<MySelect {...getNeighbourhoodProps({ as: "headless" })} />
+```
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Değer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`options`</td>
+        <td>`{ value, label }` listesi</td>
+      </tr>
+      <tr>
+        <td>`value`</td>
+        <td>Seçili değer; seçim yoksa `""`</td>
+      </tr>
+      <tr>
+        <td>`onChange`</td>
+        <td>Çıplak bir değer ya da change event'i alır</td>
+      </tr>
+      <tr>
+        <td>`disabled`</td>
+        <td>Zincirden hesaplanır</td>
+      </tr>
+      <tr>
+        <td>`loading, aria-busy`</td>
+        <td>Mahalle seviyesinde, mahalleler yüklenirken `true`</td>
+      </tr>
+      <tr>
+        <td>`name, id`</td>
+        <td>`names` seçeneğinden ya da seviye adından; `id` `useId` ile üretilir</td>
+      </tr>
+      <tr>
+        <td>`placeholder`</td>
+        <td>`"İl seç"`, `"İlçe seç"`, `"Mahalle seç"`</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="shadcn">shadcn/ui</h2>
+
+```tsx
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+const { provinces, getProvinceProps } = useViraAddress()
+
+<Select {...getProvinceProps({ as: "shadcn" })} items={provinces}>
+  <SelectTrigger>
+    <SelectValue placeholder="İl seç" />
+  </SelectTrigger>
+  <SelectContent>
+    {provinces.map((p) => (
+      <SelectItem key={p.value} value={p.value}>
+        {p.label}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+```
+
+<AcademyBadge kind="shadcn" /> için `value`, `onValueChange` ve `disabled` `Select`'e gider; öğeler sizdedir. Değer boşken `SelectValue` placeholder'ı gösterir. `items`, shadcn/ui'ın Base UI sürümünde seçili etiketin görünmesi için gerekir; Radix sürümünde zararsızdır.
+
+<h2 id="ant-design">Ant Design</h2>
+
+```tsx
+import { Select } from "antd"
+
+<Select {...getProvinceProps({ as: "antd" })} />
+<Select {...getDistrictProps({ as: "antd" })} />
+<Select {...getNeighbourhoodProps({ as: "antd" })} />
+```
+
+<AcademyBadge kind="ant-design" /> için `options`, `loading` ve arama hazır gelir. Kütüphanenin kendi filtresi `İ` harfini `i̇` yaptığı için `istanbul` araması `İstanbul`'u bulamaz; bu biçim Türkçe farkında bir `filterOption` verir. Değer boşken `undefined` gönderilir, böylece placeholder görünür.
+
+<h2 id="listeler">Listeler ve setter'lar</h2>
+
+Bileşeninin prop'ları hiçbir biçime uymuyorsa listeleri ve setter'ları doğrudan kullan. <AcademyBadge kind="mui" /> `Autocomplete`:
+
+```tsx
+import Autocomplete from "@mui/material/Autocomplete"
+import TextField from "@mui/material/TextField"
+
+const { provinces, setProvince, value } = useViraAddress()
+
+<Autocomplete
+  options={provinces}
+  value={provinces.find((p) => p.value === value.provinceCode) ?? null}
+  onChange={(_, option) => setProvince(option?.value ?? null)}
+  renderInput={(params) => <TextField {...params} label="İl" />}
+/>
+```
+
+Kendi aramanı yazıyorsan [toSearchKey](/address/docs/helpers) harf ve Türkçe karakter farkını yok sayar:
+
+```ts
+import { toSearchKey } from "@virastack/address"
+
+// "kadikoy" araması "Kadıköy"ü bulur
+const hits = neighbourhoods.filter((n) =>
+  toSearchKey(n.label).includes(toSearchKey(query)),
+)
+```
+
+<h2 id="uzun-listeler">Uzun listeler</h2>
+
+Bir ilçe birkaç yüz mahalle ve köy tutabilir; en kalabalığı **Artvin**'in Yusufeli ilçesidir (674). Bu seviyede aranabilir bir select kullan; listen binlerce satır çizecekse sanallaştır.
+
+</DocsProse>

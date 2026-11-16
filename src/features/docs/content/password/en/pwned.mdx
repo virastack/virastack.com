@@ -1,0 +1,62 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Leaked passwords"
+  description="Optional Have I Been Pwned check with k-anonymity: @virastack/password/pwned."
+/>
+
+<DocsProse>
+
+<h2 id="kullanim">Usage</h2>
+
+Off unless you call it. It uses the free Pwned Passwords range API; no key, no dependencies.
+
+<PasswordExamplePreview id="pwned" />
+
+```ts
+checkPwned(password, {
+  signal,         // AbortSignal
+  timeout: 3000,  // ms, default 5000
+  fetch,          // custom fetch (tests, proxies)
+})
+```
+
+On sign-up, pass `pwned` to `validatePassword` instead: it checks the policy and the breach list in one call, and only sends a request when the policy passes. See [server validation](/password/docs/server#sizinti).
+
+<h2 id="sonuc">Result</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Result</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`{ status: "pwned", count }`</td>
+        <td>Seen count times in breaches</td>
+      </tr>
+      <tr>
+        <td>`{ status: "safe" }`</td>
+        <td>Not in the list</td>
+      </tr>
+      <tr>
+        <td>`{ status: "unknown", reason }`</td>
+        <td>empty, unsupported (no crypto.subtle or fetch), network, timeout, aborted, rate-limited, http</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+It never throws. On `unknown`, let the user continue (fail open).
+
+<h2 id="gizlilik">Privacy and limits</h2>
+
+- Only the first 5 characters of the password's SHA-1 hash are sent; the password and the full hash never leave. Responses are padded.
+- Call it from the server. From a browser, Have I Been Pwned sees the user's IP.
+- `crypto.subtle` exists only on HTTPS and localhost; elsewhere the result is `unknown`.
+- Don't call it on every keystroke; check on submit.
+
+</DocsProse>

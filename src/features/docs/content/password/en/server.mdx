@@ -1,0 +1,66 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Server validation"
+  description="Run the same policy in Server Actions and API routes with @virastack/password/server."
+/>
+
+<DocsProse>
+
+<h2 id="giris">Server entry</h2>
+
+The browser can be skipped, so the server decides. `validatePassword` uses the same engine as the form; the same input gives the same issues on both sides. Use it for sign-up, password reset and password change.
+
+```ts
+import { validatePassword } from "@virastack/password/server"
+
+const result = validatePassword(formData.get("password"), policy, {
+  forbidden: [formData.get("email")],
+  confirm: formData.get("confirm"), // adds password.mismatch when it differs
+})
+// result.valid, result.issues, result.score, result.password (normalized)
+```
+
+Anything that isn't a string (a missing field, a File) counts as an empty password.
+
+<h2 id="server-action">Server Action</h2>
+
+<PasswordExamplePreview id="server-action" />
+
+```ts
+// app/api/password/route.ts
+import { validatePassword } from "@virastack/password/server"
+import { policy } from "@/lib/password-policy"
+
+export async function POST(request: Request) {
+  const { password, email } = await request.json()
+  const result = validatePassword(password, policy, { forbidden: [email] })
+  return Response.json({ valid: result.valid, issues: result.issues })
+}
+```
+
+<h2 id="sizinti">Leaked password check</h2>
+
+Pass `pwned` and `validatePassword` also looks the password up in Have I Been Pwned, then returns a Promise. The request is only sent when the policy passes. A breached password gets `password.pwned` and score 0; a failed lookup never blocks (`pwned.status` is `unknown`).
+
+```ts
+const result = await validatePassword(formData.get("password"), policy, {
+  forbidden: [formData.get("email")],
+  confirm: formData.get("confirm"),
+  pwned: { timeout: 3000 }, // or true; checkPwned options
+})
+// result.issues may contain "password.pwned"; result.pwned = { status, count? }
+```
+
+<h2 id="hash">What to hash</h2>
+
+Hash `result.password`: it is normalized with the policy's `normalization` (NFKC by default), so the same password typed on another keyboard still verifies at login. Normalize the login input the same way with `normalizePassword(password, policy.normalization)`.
+
+<h2 id="nextjs">SSR & Next.js</h2>
+
+- Only `@virastack/password` has `"use client"`. Server Components, Server Actions and route handlers import `/server` or `/strength`.
+- Keep the policy in a shared file without `"use client"`.
+- The hook renders the same markup on the server and the client (ids come from `useId`), so there is no hydration mismatch.
+- Tested with <AcademyBadge kind="nextjs" /> in `next dev` and `next start`.
+
+</DocsProse>

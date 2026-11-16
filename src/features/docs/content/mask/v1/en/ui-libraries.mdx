@@ -1,0 +1,103 @@
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+import { AntDesignDarkTheme } from "@/components/ui/svgs/antDesignDarkTheme";
+import { ChakraUi } from "@/components/ui/svgs/chakraUi";
+import { ShadcnUi } from "@/components/ui/svgs/shadcnUi";
+import { MaskV1PresetDemo as MaskPresetDemo } from "@/features/docs/content/mask/v1/demos/MaskV1PresetDemo";
+
+export const shadcnCode = `import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "@/components/ui/input"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask({
+    form,
+    schema: {
+      card: "card",
+    },
+  })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}`;
+
+<DocsPageHeader
+  title="UI libraries"
+  description="Mask attaches to any input component. The examples below use the same hook API."
+/>
+
+<DocsProse>
+
+`useViraMask()` returns field props. Spread them onto an input; `card.value` is the formatted display and `card.rawValue` is the raw form value.
+
+<h2 id="pattern">Common pattern</h2>
+
+```tsx
+const { card } = useViraMask({
+  form,
+  schema: {
+    card: "card",
+  },
+})
+
+// card.value → "4111 1111 1111 1111" (display)
+// card.rawValue → "4111111111111111" (raw form value)
+
+return <input {...card} placeholder="0000 0000 0000 0000" />
+```
+
+<h2 id="shadcn" className="flex items-center gap-2.5"><ShadcnUi className="size-5 shrink-0 text-foreground" aria-hidden />shadcn/ui</h2>
+
+Live demos on this site also use shadcn `Input`. Props are spread directly:
+
+<ComponentPreview
+  preview={<MaskPresetDemo preset="card" placeholder="0000 0000 0000 0000" />}
+  code={shadcnCode}
+>
+  <DocsCodeBlock code={shadcnCode} lang="tsx" />
+</ComponentPreview>
+
+<h2 id="ant-design" className="flex items-center gap-2.5"><AntDesignDarkTheme className="size-5 shrink-0" aria-hidden />Ant Design</h2>
+
+`antd` `Input` accepts native input props. Same pattern:
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "antd"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask({
+    form,
+    schema: {
+      card: "card",
+    },
+  })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}
+```
+
+<h2 id="chakra" className="flex items-center gap-2.5"><ChakraUi className="size-5 shrink-0" aria-hidden />Chakra UI</h2>
+
+Chakra `Input` works the same way:
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useViraMask } from "@virastack/mask"
+import { Input } from "@chakra-ui/react"
+
+function Example() {
+  const form = useForm<{ card: string }>()
+  const { card } = useViraMask({
+    form,
+    schema: {
+      card: "card",
+    },
+  })
+
+  return <Input {...card} placeholder="0000 0000 0000 0000" />
+}
+```
+
+</DocsProse>

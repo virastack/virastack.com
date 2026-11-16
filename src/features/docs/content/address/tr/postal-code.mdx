@@ -1,0 +1,135 @@
+import { AddressDemo } from "@/components/shared/AddressDemo";
+import { ComponentPreview } from "@/components/shared/ComponentPreview";
+
+export const inputCode = `"use client"
+
+import { useViraAddress } from "@virastack/address"
+
+export function AddressFields() {
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+    getPostalCodeInputProps,
+    postalCodeStatus,
+  } = useViraAddress()
+
+  return (
+    <>
+      <input {...getPostalCodeInputProps()} />
+      {postalCodeStatus === "unknown" && <p>Bu posta kodu bulunamadı.</p>}
+
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+    </>
+  )
+}`;
+
+<DocsPageHeader
+  title="Posta kodundan adres"
+  description="Posta kodunu yaz, select'ler dolsun: tek mahalleli kodda üç seviye, ortak kodda il ve ilçe."
+/>
+
+<DocsProse>
+
+Adres, select'lerden seçilmek yerine posta kodundan da doldurulabilir. Posta kodu input'u ekle; kod yazılınca select'ler kendiliğinden dolar. Mahalle seçilince de aynı input türetilen kodu gösterir, iki yön birlikte çalışır.
+
+<h2 id="input">Posta kodu input'u</h2>
+
+<ComponentPreview preview={<AddressDemo showValue />} previewClassName="max-w-2xl" code={inputCode}>
+  <DocsCodeBlock code={inputCode} lang="tsx" />
+</ComponentPreview>
+
+`getPostalCodeInputProps()` düz bir `<input>`'a yayılır: `inputMode="numeric"`, `autoComplete="postal-code"`, `maxLength` 5, `value` ve `onChange`. Rakam olmayan her şey atılır; arama beş rakam girilince yapılır. Daha az rakamla düzenlerken adres yerinde kalır.
+
+`names.postalCode` verdiysen input o adı taşır. Aynı formda gizli `getPostalCodeProps()` input'unu ayrıca kullanma; ikisi aynı alanı gönderir.
+
+<h2 id="kesinlik">Ne kadar kesin?</h2>
+
+Her posta kodu tek bir ilçeye aittir ve ilk iki hanesi ilin plaka kodudur. Ama bir kod çoğu zaman birden çok mahalleyi kapsar: 2.777 kodun yalnızca 205'inin altında tek mahalle vardır, Sakarya'da `54100` ise 81 mahallenin ortak kodudur. Bu yüzden arama kodun kesin söyleyebildiği kadarını doldurur ve `postalCodeStatus` neyin bulunduğunu söyler:
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>postalCodeStatus</th>
+        <th>Ne oldu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`"exact"`</td>
+        <td>Kodun altında tek mahalle var: il, ilçe ve mahalle doldu.</td>
+      </tr>
+      <tr>
+        <td>`"partial"`</td>
+        <td>İl ve ilçe doldu; mahalle listesi bu koda daraltıldı, mahalleyi kullanıcı seçer. Bu kodun altında zaten seçili bir mahalle varsa korunur.</td>
+      </tr>
+      <tr>
+        <td>`"unknown"`</td>
+        <td>Veri setinde böyle bir kod yok. Adres değişmez, input `aria-invalid` alır.</td>
+      </tr>
+      <tr>
+        <td>`"loading"`</td>
+        <td>Kodun ili yükleniyor. Yalnızca o il okunur.</td>
+      </tr>
+      <tr>
+        <td>`null`</td>
+        <td>Etkin bir arama yok: kod hiç yazılmadı ya da il veya ilçe elle değiştirildi.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+Veri derlenirken her kodun tek ilçede kaldığı ve plaka koduyla başladığı kontrol edilir; bir güncelleme bunu bozarsa yayınlanmaz.
+
+<h2 id="davranis">Davranış</h2>
+
+- İl veya ilçe elle seçilince arama bırakılır: mahalle listesi yeniden tamamlanır, input seçimden türetilen kodu gösterir.
+- Daraltılmış listeden mahalle seçmek aramayı korur. Birden çok kodu olan bir mahallede `value.postalCode` kullanıcının yazdığı koddur, ilki değil.
+- Kod yüklenirken başka bir seçim yapılırsa ya da yeni bir kod yazılırsa eski yanıt yenisinin üstüne yazılmaz.
+- İl seçim için zaten yüklendiyse tekrar indirilmez; arama aynı veriyi kullanır.
+- `form` verildiyse dolan her seviye forma `shouldDirty` ile yazılır; `"partial"` durumda mahalle boş, posta kodu dolu olur. `form.reset()` aramayı da bırakır.
+
+<h2 id="set-postal-code">setPostalCode()</h2>
+
+Input kullanmadan, örneğin kayıtlı bir adresten ya da konumdan gelen kodla aramayı kendin başlat. Promise, bulunan durumla çözülür:
+
+```ts
+const { setPostalCode, value } = useViraAddress()
+
+await setPostalCode("34710") // "exact"
+value
+// { province: "İSTANBUL", district: "KADIKÖY",
+//   neighbourhood: "CAFERAĞA MAH.", postalCode: "34710", ... }
+
+await setPostalCode("34096") // "partial"
+value
+// { province: "İSTANBUL", district: "FATİH",
+//   neighbourhood: null, postalCode: "34096", ... }
+
+await setPostalCode("34999") // "unknown": adres değişmez
+await setPostalCode(null)    // null: arama bırakılır, adres kalır
+```
+
+Kodu metin olarak ver: `01040` sayı olarak `1040` olur ve baştaki sıfır geri getirilemez. Boşluklar atılır, `"34 710"` çalışır.
+
+<h2 id="ui">UI kütüphaneleri</h2>
+
+Prop'lar standart input prop'larıdır; `onChange` hem olayı hem düz değeri alır. shadcn/ui ve Ant Design'ın `Input`'u olduğu gibi kabul eder:
+
+```tsx
+import { Input } from "@/components/ui/input"
+
+<Input
+  {...address.getPostalCodeInputProps({ placeholder: "34710" })}
+  aria-describedby="postal-code-hint"
+/>
+```
+
+<h2 id="sunucu">Sunucuda</h2>
+
+Aynı arama sunucuda `resolvePostalCode` ile yapılır; gönderilen posta kodu da `resolveAddress` ile mahalleye karşı kontrol edilir. Bkz. [sunucu doğrulaması](/address/docs/server). React olmadan ham sonuç için [veri setindeki](/address/docs/data) `findPostalCode` kullanılır.
+
+</DocsProse>

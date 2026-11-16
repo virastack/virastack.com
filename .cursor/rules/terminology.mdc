@@ -1,6 +1,6 @@
 ---
 description: "USE WHEN: Writing or editing Turkish copy (tr.json, Turkish docs content) that names a software concept."
-globs: "src/messages/tr.json,src/features/**/locales/tr/**/*.tsx"
+globs: "src/messages/tr.json,src/features/docs/content/**/tr/*.mdx,src/features/**/locales/tr/**/*.tsx"
 alwaysApply: false
 ---
 

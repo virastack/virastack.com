@@ -1,0 +1,176 @@
+<DocsPageHeader
+  title="React Hook Form"
+  description="form seçeneğiyle her seçim forma yazılır: varsayılan alan adları, names, FormProvider, düzenleme formu ve Zod."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Temel kullanım</h2>
+
+<AcademyBadge kind="react-hook-form" /> formunu `form` seçeneğiyle ver; alanlar kendiliğinden dolar:
+
+```tsx
+"use client"
+
+import { useForm } from "react-hook-form"
+import { useViraAddress } from "@virastack/address"
+
+type Values = {
+  province: string
+  district: string
+  neighbourhood: string
+  postalCode: string
+}
+
+export function AddressForm() {
+  const form = useForm<Values>()
+  const {
+    getProvinceProps,
+    getDistrictProps,
+    getNeighbourhoodProps,
+  } = useViraAddress({ form })
+
+  return (
+    <form onSubmit={form.handleSubmit(save)}>
+      <select {...getProvinceProps()} />
+      <select {...getDistrictProps()} />
+      <select {...getNeighbourhoodProps()} />
+      <button type="submit">Kaydet</button>
+    </form>
+  )
+}
+```
+
+Bir üst seviye değişince alttakiler formda da `""` olur. Değerler `shouldDirty`, `shouldTouch` ve `shouldValidate` ile yazılır; böylece zorunlu bir ilçe alanı, il değiştikten sonra geçerli kalamaz. Yeniden doğrulamayı kapatmak için `shouldValidate: false` ver.
+
+Hook React Hook Form'dan hiçbir şey import etmez, bağımlılığı da değildir. `form`, `setValue(name, value, options)`, doluyla başlamak için `getValues(name)` ve `reset()` ile güncellenmek için `subscribe` taşıyan herhangi bir nesnedir; `useForm()` sonucu olduğu gibi uyar.
+
+<h2 id="names">names</h2>
+
+Alanlar varsayılan olarak `province`, `district`, `neighbourhood` ve `postalCode`'dur. Formun farklıysa `names` ver; TypeScript her adı formun tipine karşı kontrol eder:
+
+```tsx
+type Values = {
+  address: {
+    il: string
+    ilce: string
+    mahalle: string
+    postaKodu: string
+    plaka: string
+  }
+}
+
+const form = useForm<Values>()
+
+useViraAddress({
+  form,
+  names: {
+    province: "address.il",
+    district: "address.ilce",
+    neighbourhood: "address.mahalle",
+    postalCode: "address.postaKodu",
+    provinceCode: "address.plaka", // plaka kodu da yazılsın
+  },
+})
+
+// "address.ilc" gibi bir yazım hatası derleme hatası verir.
+```
+
+`provinceCode` yalnızca adı verilirse yazılır. Aynı adlar prop getter'ların döndürdüğü `name` özniteliğine de gider; native bir form gönderimi de aynı alanları taşır.
+
+<h2 id="form-provider">FormProvider</h2>
+
+Adres alanlarını ayrı bir bileşene taşıdığında formu prop olarak geçirmek yerine bağlamdan al:
+
+```tsx
+import { useFormContext } from "react-hook-form"
+
+function AddressFields() {
+  const address = useViraAddress({ form: useFormContext<Values>() })
+  // ...
+}
+```
+
+<h2 id="duzenleme">Düzenleme formu</h2>
+
+Hook formdaki adresle başlar; ayrıca `defaultValue` vermen gerekmez. Adlar büyük/küçük harf ve Türkçe karakter farkı gözetmeden eşleşir: veritabanından `"Fatih"` gelse de seçim doğru dolar.
+
+```tsx
+const form = useForm<Values>({
+  defaultValues: {
+    province: "İstanbul",
+    district: "Fatih",
+    neighbourhood: "Aksaray Mah.",
+    postalCode: "34096",
+  },
+})
+
+const address = useViraAddress({ form })
+// address.value.district === "FATİH"
+// mahalleler yüklenince address.value.neighbourhood === "AKSARAY MAH."
+```
+
+Mahalleler yüklenip posta kodu dolduğunda form kirli (`isDirty`) işaretlenmez; bu bir düzenleme değildir. `isDirty` ancak kullanıcı bir şey seçince `true` olur.
+
+Sonradan gelen veri de çalışır: `form.reset(data)`, `useForm()` içindeki `values` seçeneği ve bir seviyeye `setValue()` select'leri günceller, form kirlenmez. Boş değerlerle `form.reset()` adresi de temizler; yanında `address.reset()` çağırman gerekmez. Yeni ilde ya da ilçede olmayan bir seviye formdan da düşer.
+
+<h2 id="zod">Zod ile doğrulama</h2>
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+const schema = z.object({
+  province: z.string().min(1, "İl seç"),
+  district: z.string().min(1, "İlçe seç"),
+  neighbourhood: z.string().min(1, "Mahalle seç"),
+  postalCode: z.string().regex(/^\d{5}$/),
+})
+
+const form = useForm({
+  resolver: zodResolver(schema),
+  defaultValues: {
+    province: "",
+    district: "",
+    neighbourhood: "",
+    postalCode: "",
+  },
+})
+const address = useViraAddress({ form })
+
+// form.formState.errors.district?.message
+```
+
+<AcademyBadge kind="zod" /> şeması olduğu gibi çalışır. İl değişince ilçe ve mahalle boşaltılıp yeniden doğrulandığı için hata mesajları doğru seviyede kalır. Yine de client doğrulaması tek başına yetmez: gönderilen adresi [sunucuda resolveAddress](/address/docs/server) ile kontrol et.
+
+<h2 id="diger">Diğer form kütüphaneleri</h2>
+
+`setValue` imzasına uyan küçük bir nesne her form kütüphanesini bağlar. <AcademyBadge kind="formik" />:
+
+```tsx
+import { useFormikContext } from "formik"
+
+const { setFieldValue } = useFormikContext()
+
+// form, setValue(name, value) taşıyan herhangi bir nesnedir.
+const address = useViraAddress({
+  form: { setValue: (name, value) => setFieldValue(name, value) },
+})
+```
+
+Ya da yazma işini kendin yap: `onChange` her değişiklikte tüm `value` ile çağrılır. <AcademyBadge kind="tanstack-form" />:
+
+```tsx
+const address = useViraAddress({
+  onChange: (value) => {
+    form.setFieldValue("province", value.province ?? "")
+    form.setFieldValue("district", value.district ?? "")
+    form.setFieldValue("neighbourhood", value.neighbourhood ?? "")
+    form.setFieldValue("postalCode", value.postalCode ?? "")
+  },
+})
+```
+
+Kütüphane kullanmayan bir form için [Server Action](/address/docs/server) örneğine bak.
+
+</DocsProse>

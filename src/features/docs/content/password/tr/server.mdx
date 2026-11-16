@@ -1,0 +1,66 @@
+import { PasswordExamplePreview } from "@/features/docs/content/password/examples/ExamplePreview";
+
+<DocsPageHeader
+  title="Sunucu doğrulaması"
+  description="Aynı politikayı @virastack/password/server ile Server Action ve API route'larda çalıştır."
+/>
+
+<DocsProse>
+
+<h2 id="giris">Sunucu girişi</h2>
+
+Tarayıcı atlanabilir; karar sunucudadır. `validatePassword` formla aynı motoru kullanır; aynı girdi iki tarafta aynı hataları verir. Kayıt, parola sıfırlama ve parola değiştirmede kullan.
+
+```ts
+import { validatePassword } from "@virastack/password/server"
+
+const result = validatePassword(formData.get("password"), policy, {
+  forbidden: [formData.get("email")],
+  confirm: formData.get("confirm"), // farklıysa password.mismatch ekler
+})
+// result.valid, result.issues, result.score, result.password (normalleştirilmiş)
+```
+
+String olmayan her şey (eksik alan, File) boş parola sayılır.
+
+<h2 id="server-action">Server Action</h2>
+
+<PasswordExamplePreview id="server-action" />
+
+```ts
+// app/api/password/route.ts
+import { validatePassword } from "@virastack/password/server"
+import { policy } from "@/lib/password-policy"
+
+export async function POST(request: Request) {
+  const { password, email } = await request.json()
+  const result = validatePassword(password, policy, { forbidden: [email] })
+  return Response.json({ valid: result.valid, issues: result.issues })
+}
+```
+
+<h2 id="sizinti">Sızıntı kontrolü</h2>
+
+`pwned` verirsen `validatePassword` parolayı Have I Been Pwned'de de arar ve Promise döndürür. İstek yalnızca politika geçince gider. Sızmış bir parola `password.pwned` ve 0 skor alır; başarısız bir sorgu asla engellemez (`pwned.status` `unknown` olur).
+
+```ts
+const result = await validatePassword(formData.get("password"), policy, {
+  forbidden: [formData.get("email")],
+  confirm: formData.get("confirm"),
+  pwned: { timeout: 3000 }, // ya da true; checkPwned seçenekleri
+})
+// result.issues "password.pwned" içerebilir; result.pwned = { status, count? }
+```
+
+<h2 id="hash">Neyi hash'lemeli</h2>
+
+`result.password` değerini hash'le: politikanın `normalization` ayarıyla (varsayılan NFKC) normalleştirilmiştir; başka klavyede yazılan aynı parola girişte de doğrulanır. Giriş formundaki parolayı da `normalizePassword(password, policy.normalization)` ile aynı şekilde normalleştir.
+
+<h2 id="nextjs">SSR ve Next.js</h2>
+
+- Yalnızca `@virastack/password` içinde `"use client"` vardır. Server Component, Server Action ve route handler'lar `/server` veya `/strength` import eder.
+- Politikayı `"use client"` içermeyen ortak bir dosyada tut.
+- Hook server'da ve client'ta aynı işaretlemeyi üretir (id'ler `useId`'den gelir); hydration uyuşmazlığı olmaz.
+- <AcademyBadge kind="nextjs" /> ile `next dev` ve `next start` modlarında test edildi.
+
+</DocsProse>

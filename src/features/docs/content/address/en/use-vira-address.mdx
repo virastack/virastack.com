@@ -1,0 +1,214 @@
+<DocsPageHeader
+  title="useViraAddress()"
+  description="The hook API: options, the return value, the value object and bringing your own data."
+/>
+
+<DocsProse>
+
+<h2 id="temel">Basic usage</h2>
+
+The hook returns three lists and three setters. Every list item is `{ value, label }`: `value` is the name as the dataset spells it (`FATİH`), `label` is the display form (`Fatih`). For provinces, `value` is the plate code (`"34"`).
+
+```tsx
+const {
+  provinces, districts, neighbourhoods,
+  setProvince, setDistrict, setNeighbourhood,
+  value, loading,
+} = useViraAddress()
+
+return (
+  <>
+    <select
+      value={value.provinceCode ?? ""}
+      onChange={(e) => setProvince(e.target.value)}
+    >
+      <option value="">Select a province</option>
+      {provinces.map((p) => (
+        <option key={p.value} value={p.value}>{p.label}</option>
+      ))}
+    </select>
+
+    <select
+      value={value.district ?? ""}
+      onChange={(e) => setDistrict(e.target.value)}
+      disabled={!districts.length}
+    >
+      <option value="">Select a district</option>
+      {districts.map((d) => (
+        <option key={d.value} value={d.value}>{d.label}</option>
+      ))}
+    </select>
+
+    <select
+      value={value.neighbourhood ?? ""}
+      onChange={(e) => setNeighbourhood(e.target.value)}
+      disabled={!neighbourhoods.length}
+    >
+      <option value="">
+        {loading.neighbourhoods ? "Loading…" : "Select a neighbourhood"}
+      </option>
+      {neighbourhoods.map((n) => (
+        <option key={n.value} value={n.value}>{n.label}</option>
+      ))}
+    </select>
+  </>
+)
+```
+
+The [prop getters](/address/docs/ui-libraries) do the same wiring in one line. `setProvince` accepts the plate code as a number or a string.
+
+<h2 id="value">value</h2>
+
+Everything your form needs, in one object:
+
+```ts
+{
+  provinceCode: "34",       // plate code, as a string
+  province: "İSTANBUL",
+  district: "FATİH",
+  neighbourhood: "AKSARAY MAH.",
+  postalCode: "34096",      // the neighbourhood's first code, or the one typed
+  postalCodes: ["34096"],   // all of them; a few hundred have several
+}
+```
+
+Levels that are not picked yet are `null`, and `postalCodes` is an empty array. Names are upper case, as the dataset stores them; show the `label` from the lists, or run them through [formatName](/address/docs/helpers).
+
+<h2 id="secenekler">Options</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Default</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`source`</td>
+        <td>the bundled dataset</td>
+        <td>Where the lists come from. Swap it for a test fixture or your own API.</td>
+      </tr>
+      <tr>
+        <td>`defaultValue`</td>
+        <td>—</td>
+        <td>`{ provinceCode, district, neighbourhood }` to start from. With a `form`, read from the form when omitted.</td>
+      </tr>
+      <tr>
+        <td>`formatLabel`</td>
+        <td>`formatName`</td>
+        <td>Turns a raw name into a label; the second argument is the level. `(name) => name` keeps the dataset's upper case.</td>
+      </tr>
+      <tr>
+        <td>`onChange`</td>
+        <td>—</td>
+        <td>Called with the whole `value` on every change, not on the first render.</td>
+      </tr>
+      <tr>
+        <td>`form`</td>
+        <td>—</td>
+        <td>A form to keep in sync, such as React Hook Form's `useForm()`.</td>
+      </tr>
+      <tr>
+        <td>`names`</td>
+        <td>`province`, `district`, `neighbourhood`, `postalCode`</td>
+        <td>Field names in the form and on the inputs the prop getters return. `provinceCode` is only written when you name it.</td>
+      </tr>
+      <tr>
+        <td>`shouldValidate`</td>
+        <td>`true`</td>
+        <td>Revalidate the form fields as the address changes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+`form`, `names` and `shouldValidate` are covered on the [React Hook Form](/address/docs/react-hook-form) page.
+
+<h2 id="donus">Return value</h2>
+
+<div className="overflow-x-auto rounded-lg border border-border">
+  <table>
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>`value`</td>
+        <td>The selected address; see above.</td>
+      </tr>
+      <tr>
+        <td>`provinces, districts, neighbourhoods`</td>
+        <td>Ready-made `{ value, label }` lists for a select. Neighbourhood options also carry `postalCode` and `postalCodes`.</td>
+      </tr>
+      <tr>
+        <td>`setProvince(code), setDistrict(name), setNeighbourhood(name)`</td>
+        <td>Picks a level; `null` or `""` clears it. A higher level clears the ones below.</td>
+      </tr>
+      <tr>
+        <td>`setPostalCode(code)`</td>
+        <td>Fills the address from a postal code; resolves with `"exact" | "partial" | "unknown"`. See [from a postal code](/address/docs/postal-code).</td>
+      </tr>
+      <tr>
+        <td>`postalCodeStatus`</td>
+        <td>What the last postal code matched; `null` when no lookup is active.</td>
+      </tr>
+      <tr>
+        <td>`reset()`</td>
+        <td>Clears every level.</td>
+      </tr>
+      <tr>
+        <td>`loading.neighbourhoods`</td>
+        <td>`true` while the picked province's neighbourhoods load.</td>
+      </tr>
+      <tr>
+        <td>`error`</td>
+        <td>The last load error. Cleared when another province is picked; picking the failed one again retries.</td>
+      </tr>
+      <tr>
+        <td>`getProvinceProps(), getDistrictProps(), getNeighbourhoodProps()`</td>
+        <td>Props to spread on a plain `<select>`; `disabled` is worked out from the chain. Other components pick a flavour with `as`.</td>
+      </tr>
+      <tr>
+        <td>`getPostalCodeProps()`</td>
+        <td>A hidden input that carries the derived postal code.</td>
+      </tr>
+      <tr>
+        <td>`getPostalCodeInputProps()`</td>
+        <td>An input the user can type a postal code into; it also shows the code derived from a pick.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="kaynak">Your own data source</h2>
+
+By default the lists come from the bundled dataset. Pass a `source` to use a small fixture in tests, or to read the lists from your own API:
+
+```tsx
+import { useViraAddress, type AddressSource } from "@virastack/address"
+
+const aksaray = {
+  name: "AKSARAY MAH.",
+  postalCode: "34096",
+  postalCodes: ["34096"],
+}
+
+const source: AddressSource = {
+  provinces: [
+    { code: 34, name: "İSTANBUL", districts: ["FATİH", "KADIKÖY"] },
+  ],
+  neighbourhoods: async (code) => new Map([["FATİH", [aksaray]]]),
+}
+
+const address = useViraAddress({ source })
+```
+
+The hook only reads neighbourhoods when the province changes, so passing a new `source` object on every render does not reload anything. If you only want the neighbourhoods to come from elsewhere, `setLoader` is shorter; see the [dataset](/address/docs/data).
+
+</DocsProse>
