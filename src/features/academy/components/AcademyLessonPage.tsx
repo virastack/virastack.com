@@ -1,7 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { localeUrl } from "@/lib/canonical";
 import { formatDate } from "@/helpers/format-date";
 
+import { CopyButton } from "@/components/shared/CopyButton";
 import { GithubIcon } from "@/components/shared/icons/GithubIcon";
 import { PageToc } from "@/components/shared/PageToc";
 import { AcademyBackLink } from "@/features/academy/components/AcademyBackLink";
@@ -11,6 +13,7 @@ import { AcademyMarkdown } from "@/features/academy/components/AcademyMarkdown";
 import { LessonPager } from "@/features/academy/components/LessonPager";
 import { highlightAcademyCode } from "@/features/academy/lib/highlight-academy-code";
 import { readAcademyLessonHeadings } from "@/features/academy/lib/lesson-headings";
+import { buildAcademyLessonMarkdown } from "@/features/academy/lib/lesson-markdown";
 import { formatLessonNumber, getAcademyLessonId } from "@/features/academy/lib/load-curriculum";
 import { getAcademyLessonEditUrl } from "@/features/academy/lib/load-lesson";
 import { parseAcademyLesson } from "@/features/academy/lib/parse-academy-markdown";
@@ -48,20 +51,37 @@ export async function AcademyLessonPageView({ lookup, document }: AcademyLessonP
   const quiz = lesson.kind === "lesson" ? await toQuizItems(document) : null;
   const tree = await parseAcademyLesson(document.body);
   const headings = readAcademyLessonHeadings(tree);
+  const markdown = buildAcademyLessonMarkdown(document, {
+    path: `/academy/${track.slug}/${lesson.slug}`,
+    toUrl: (path) => localeUrl(locale, path),
+    sourceLabel: t("copyMarkdownSource"),
+  });
 
   return (
     <div className="relative mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-10 px-6 pt-28 pb-24">
       <div className="flex flex-col gap-4 md:gap-6">
         <div className="flex items-center justify-between gap-4">
           <AcademyBackLink href={`/academy/${track.slug}`} label={track.title} />
-          <p className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums md:text-sm">
-            {formatLessonNumber(number)} / {formatLessonNumber(total)}
-            {lesson.kind === "project" ? (
-              <span className="ml-2 rounded-md border border-brand-academy/30 bg-brand-academy/10 px-1.5 py-0.5 font-sans text-[0.7rem] font-medium text-brand-academy">
-                {t("projectLabel")}
-              </span>
-            ) : null}
-          </p>
+          <div className="flex shrink-0 items-center gap-3">
+            <CopyButton
+              text={markdown}
+              variant="ghost"
+              size="xs"
+              className="text-muted-foreground hover:text-foreground"
+              aria-label={t("copyMarkdown")}
+            >
+              <span className="sm:hidden">{t("copyMarkdownShort")}</span>
+              <span className="hidden sm:inline">{t("copyMarkdown")}</span>
+            </CopyButton>
+            <p className="font-mono text-xs text-muted-foreground tabular-nums md:text-sm">
+              {formatLessonNumber(number)} / {formatLessonNumber(total)}
+              {lesson.kind === "project" ? (
+                <span className="ml-2 rounded-md border border-brand-academy/30 bg-brand-academy/10 px-1.5 py-0.5 font-sans text-[0.7rem] font-medium text-brand-academy">
+                  {t("projectLabel")}
+                </span>
+              ) : null}
+            </p>
+          </div>
         </div>
         <header className="space-y-3 border-b border-border pb-8">
           <h1 className="text-3xl font-semibold tracking-tight text-balance text-foreground sm:text-4xl">
