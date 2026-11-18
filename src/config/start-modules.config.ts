@@ -53,7 +53,7 @@ export const featureCatalog: readonly CatalogFeature[] = [
   {
     id: "auth",
     group: "user",
-    status: "planned",
+    status: "ready",
     order: 2,
     tags: ["mockApi", "form"],
     packages: ["@virastack/password"],

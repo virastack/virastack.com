@@ -42,7 +42,7 @@ The command:
 - Brings the module's tests; the project's `test` script runs them too.
 - Prints where the module's pages are; for a module without pages, the main component's import line and the module page's link.
 
-**A module with pages brings them:** `products` adds its list at `/products` and a page per product under it, and `cart` adds the cart at `/cart`. If your project already has a route at one of those addresses, nothing changes and the CLI lists it; `--no-pages` installs the feature alone. Other modules create no page: you decide where they show up.
+**A module with pages brings them:** `products` adds its list at `/products` and a page per product under it, `cart` adds the cart at `/cart`, and `auth` adds sign-in at `/login` and sign-up at `/register`. If your project already has a route at one of those addresses, nothing changes and the CLI lists it; `--no-pages` installs the feature alone. Other modules create no page: you decide where they show up.
 
 **In a <AcademyBadge kind="nextjs" label="Next.js" /> project created before Start 2.2,** delete `src/app/loading.tsx`. While it stays, a missing product answers 200 instead of 404 and the page's content is hidden without JavaScript. New projects do not have this file.
 

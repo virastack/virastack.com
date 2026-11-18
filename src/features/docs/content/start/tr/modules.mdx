@@ -42,7 +42,7 @@ Komut şunları yapar:
 - Testleri modülle birlikte gelir; projenin `test` script'i onları da çalıştırır.
 - Bitince modülün sayfalarının nerede olduğunu yazar; sayfası olmayan modülde ana bileşenin import satırını ve modül sayfasının linkini.
 
-**Sayfası olan modül sayfalarını da getirir:** `products` listesini `/products` adresine, her ürünün sayfasını da onun altına; `cart` sepeti `/cart` adresine kurar. Projende bu adreslerden birinde route varsa hiçbir şey değişmez, CLI onu listeler; `--no-pages` yalnızca feature'ı kurar. Diğer modüller sayfa oluşturmaz, hangi adreste görüneceklerine sen karar verirsin.
+**Sayfası olan modül sayfalarını da getirir:** `products` listesini `/products` adresine, her ürünün sayfasını da onun altına; `cart` sepeti `/cart` adresine, `auth` giriş sayfasını `/login`, kayıt sayfasını `/register` adresine kurar. Projende bu adreslerden birinde route varsa hiçbir şey değişmez, CLI onu listeler; `--no-pages` yalnızca feature'ı kurar. Diğer modüller sayfa oluşturmaz, hangi adreste görüneceklerine sen karar verirsin.
 
 **Start 2.2'den önce kurulan <AcademyBadge kind="nextjs" label="Next.js" /> projesinde** `src/app/loading.tsx` dosyasını sil. Bu dosya durdukça olmayan bir ürün 404 yerine 200 döner ve sayfanın içeriği JavaScript olmadan görünmez. Yeni projelerde bu dosya yok.
 

@@ -4,6 +4,7 @@ import { keysOf } from "@/lib/object";
 import { cn } from "@/lib/utils";
 
 import { PreviewLinkGuard } from "@/features/start/components/PreviewLinkGuard";
+import { LoginDemo } from "@/features/start/demos/auth/LoginDemo";
 import { CartDemo } from "@/features/start/demos/cart/CartDemo";
 import { CheckoutAddressDemo } from "@/features/start/demos/checkout-address/CheckoutAddressDemo";
 import { CheckoutCardDemo } from "@/features/start/demos/checkout-card/CheckoutCardDemo";
@@ -17,6 +18,7 @@ const FEATURE_DEMOS = {
   "checkout-card": CheckoutCardDemo,
   products: ProductListDemo,
   cart: CartDemo,
+  auth: LoginDemo,
 } as const;
 
 /**

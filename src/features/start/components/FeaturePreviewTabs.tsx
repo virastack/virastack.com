@@ -42,16 +42,26 @@ function FeaturePreviewFrame({ src, width, title }: { src: string; width: string
     const observe = () => {
       observer?.disconnect();
       const frameWindow = getFrameWindow(frame);
-      const root = frame.contentDocument?.querySelector("[data-feature-preview]");
-      if (!frameWindow || !root) return;
+      const frameDocument = frame.contentDocument;
+      let root = frameDocument?.querySelector("[data-feature-preview]");
+      if (!frameWindow || !frameDocument || !root) return;
 
       // The frame's own `ResizeObserver`, since the element lives in its document.
-      observer = new frameWindow.ResizeObserver(() => {
-        const contentHeight = Math.ceil(root.getBoundingClientRect().height);
+      const resizeObserver = new frameWindow.ResizeObserver(() => {
+        // A link inside the demo (a product, the sign-up page) swaps the page without a load, and
+        // with it the element to measure: the body's change says when, and the new one is watched.
+        const current = frameDocument.querySelector("[data-feature-preview]");
+        if (current && current !== root) {
+          root = current;
+          resizeObserver.observe(current);
+        }
+        const contentHeight = Math.ceil(root?.getBoundingClientRect().height ?? 0);
         // A hidden tab measures 0; keep the last height until it shows again.
         if (contentHeight > 0) setHeight(Math.max(contentHeight, MIN_FRAME_HEIGHT));
       });
-      observer.observe(root);
+      observer = resizeObserver;
+      resizeObserver.observe(frameDocument.body);
+      resizeObserver.observe(root);
     };
 
     observe();

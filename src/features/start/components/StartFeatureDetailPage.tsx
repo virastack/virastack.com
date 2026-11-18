@@ -11,6 +11,10 @@ import { CopyButton } from "@/components/shared/CopyButton";
 import { guideCardTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
 import {
+  INSTALL_PAGES as AUTH_PAGES,
+  INSTALL_ROUTE as AUTH_ROUTE,
+} from "@/features/start/demos/auth/install-files";
+import {
   INSTALL_PAGES as CART_PAGES,
   INSTALL_ROUTE as CART_ROUTE,
 } from "@/features/start/demos/cart/install-files";
@@ -97,6 +101,15 @@ const READY_CONTENT: Partial<Record<FeatureId, ReadyContent>> = {
     ownKey: "cartOwn",
     hasMoreNote: false,
   },
+  auth: {
+    route: AUTH_ROUTE,
+    pages: AUTH_PAGES,
+    rows: ["authLogin", "authRegister", "authPassword", "authSession", "authTests"],
+    previewNote: "authPreviewNote",
+    apiKey: "authApi",
+    ownKey: "authOwn",
+    hasMoreNote: false,
+  },
 };
 
 const USE_ITEMS = ["api", "own"] as const;
@@ -124,6 +137,11 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
     ),
     mask: (chunks: ReactNode) => (
       <GuideProductMark id="mask" linked={false}>
+        {chunks}
+      </GuideProductMark>
+    ),
+    password: (chunks: ReactNode) => (
+      <GuideProductMark id="password" linked={false}>
         {chunks}
       </GuideProductMark>
     ),
