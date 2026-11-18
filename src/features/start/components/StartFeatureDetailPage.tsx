@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ArrowLeftIcon, SparklesIcon, SquareTerminalIcon } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import type { AppMessages } from "@/types/messages.types";
 import { featureCatalog, visibleFeatures, type FeatureId } from "@/config/start-modules.config";
@@ -10,6 +10,7 @@ import { AcademyBadge } from "@/components/shared/AcademyBadge";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { guideCardTags, GuideProductMark } from "@/components/shared/GuideRichText";
 import { FeaturePreviewTabs } from "@/features/start/components/FeaturePreviewTabs";
+import { FeaturePromptDialog } from "@/features/start/components/FeaturePromptDialog";
 import {
   INSTALL_PAGES as AUTH_PAGES,
   INSTALL_ROUTE as AUTH_ROUTE,
@@ -120,7 +121,6 @@ const previewClassName = "rounded-2xl border border-border bg-muted/30 px-4 py-1
 
 export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
   const t = useTranslations("StartFeatureCatalog");
-  const format = useFormatter();
   const command = `npx virastack add ${feature}`;
   const status = featureCatalog.find((item) => item.id === feature)?.status;
   const isReady = status === "ready";
@@ -157,49 +157,22 @@ export function StartFeatureDetailPage({ feature }: { feature: FeatureId }) {
     ),
   };
 
-  const [firstPage] = content?.pages ?? [];
-  // One prompt for both frameworks: the agent reads the project and writes the page itself, unless
-  // the module brings its pages, which `add` puts in place.
-  const prompt = !content
-    ? t("detail.prompt", { feature })
-    : content.pages && firstPage
-      ? t("detail.readyPromptPages", {
-          feature,
-          pages: format.list(
-            content.pages.map((page) => `\`${page}\``),
-            { type: "conjunction" },
-          ),
-          page: firstPage,
-        })
-      : t("detail.readyPrompt", {
-          feature,
-          component: content.route.component,
-          notes: [
-            content.route.fallback
-              ? t("detail.readyPromptFallback", {
-                  component: content.route.component,
-                  fallback: content.route.fallback,
-                })
-              : "",
-            content.route.routeSearch
-              ? t("detail.readyPromptSearch", { feature, ...content.route.routeSearch })
-              : "",
-          ].join(""),
-        });
-
-  // Both copy actions look alike: the icon names what is copied and turns into a check.
+  // A ready module's prompt depends on the framework and i18n the reader picks, so it opens in a
+  // dialog; a module that is not ready yet has one generic prompt.
   const actions = (
     <div className="flex min-w-0 flex-wrap items-center gap-2">
-      <CopyButton
-        text={prompt}
-        variant="outline"
-        size="lg"
-        idleIcon={<SparklesIcon />}
-        aria-label={t("detail.copyPrompt")}
-        title={t("detail.copyPrompt")}
-      >
-        {t("detail.promptButton")}
-      </CopyButton>
+      {content ? (
+        <FeaturePromptDialog feature={feature} pages={content.pages} {...content.route} />
+      ) : (
+        <CopyButton
+          text={t("detail.prompt", { feature })}
+          variant="outline"
+          size="lg"
+          idleIcon={<SparklesIcon />}
+        >
+          {t("detail.promptButton")}
+        </CopyButton>
+      )}
       <CopyButton
         text={command}
         variant="outline"

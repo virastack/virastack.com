@@ -60,10 +60,11 @@ export const brandPalettes: readonly BrandPalette[] = ecosystem.map((entry) => (
 export const virastackColor = {
   id: "virastack",
   shade: "teal-500",
-  lightShade: "teal-600",
+  // teal-700 on light: the background color as text on it reads at 5.5:1 (WCAG AA).
+  lightShade: "teal-700",
   darkShade: "teal-500",
   hex: "#00baa6",
-  lightHex: "#009689",
+  lightHex: "#00786f",
   darkHex: "#00baa6",
   textClass: "text-brand-virastack",
   bgClass: "bg-brand-virastack-solid",

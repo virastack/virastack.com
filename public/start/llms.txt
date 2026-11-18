@@ -28,7 +28,7 @@ Installed with `npx virastack@latest add <module>` into projects created with St
 - [checkout-card](https://virastack.com/start/features/checkout-card): Saved card picker; card number and CVV never leave the browser
 - [products](https://virastack.com/start/features/products): Paginated product list with search, category and sorting in the URL, and a page per product; brings its pages
 - [cart](https://virastack.com/start/features/cart): Cart page with item selection, quantities, removal, a coupon code and an order summary; brings its page
-- [auth](https://virastack.com/start/features/auth): Sign-in and sign-up pages with password strength from @virastack/password, error and success states; brings its pages
+- [auth](https://virastack.com/start/features/auth): Sign-in and sign-up pages with name and username masks from @virastack/mask, password strength from @virastack/password, error and success states; brings its pages
 ## Product
 
 - [Start overview](https://virastack.com/start): Marketing page

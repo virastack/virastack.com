@@ -163,12 +163,13 @@ export const ecosystem: readonly EcosystemEntry[] = [
     icon: TextCursorInputIcon,
     iconSlug: "text-cursor-input",
     color: {
+      // indigo-500 reads below 4.5:1 as text on both backgrounds, so text takes 600 and 400.
       shade: "indigo-500",
-      lightShade: "indigo-500",
-      darkShade: "indigo-500",
+      lightShade: "indigo-600",
+      darkShade: "indigo-400",
       hex: "#605efe",
-      lightHex: "#605efe",
-      darkHex: "#605efe",
+      lightHex: "#4f39f6",
+      darkHex: "#7c86ff",
     },
     copy: {
       en: {
