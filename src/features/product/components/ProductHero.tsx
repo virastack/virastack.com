@@ -128,11 +128,13 @@ export function ProductHero({ product, aside, githubStars }: ProductHeroProps) {
               {primaryContent}
             </Link>
           )}
-          <GithubRepoButton
-            href={product.github}
-            label={github.pkg ? `${github.slug.split("/")[0]}/${github.pkg}` : github.slug}
-            stars={githubStars}
-          />
+          {product.id !== "guide" ? (
+            <GithubRepoButton
+              href={product.github}
+              label={github.pkg ? `${github.slug.split("/")[0]}/${github.pkg}` : github.slug}
+              stars={githubStars}
+            />
+          ) : null}
         </div>
 
         {installCommand ? <NpxInstallCommand command={installCommand} /> : null}

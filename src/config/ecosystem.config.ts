@@ -258,7 +258,8 @@ export const ecosystem: readonly EcosystemEntry[] = [
     id: "guide",
     name: "Guide",
     href: "/guide",
-    github: "https://github.com/virastack/guide",
+    // Guide has no repository of its own: its code lives in the site, and the hero shows no GitHub button.
+    github: "https://github.com/virastack/virastack.com",
     icon: CompassIcon,
     iconSlug: "compass",
     color: {
