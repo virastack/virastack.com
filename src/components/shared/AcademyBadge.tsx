@@ -276,15 +276,14 @@ function AcademyBadgeIcon({ kind, className }: { kind: string; className?: strin
     case "mui":
       return <Materialui className={iconClassName} aria-hidden />;
     case "virastack":
-      // logo-icon.webp has ~24% transparent padding per side; scale to match other icons.
       return (
         <Image
-          src="/logo-icon.webp"
+          src="/brand/virastack-icon.svg"
           alt=""
           width={16}
           height={16}
           unoptimized
-          className={cn(iconClassName, "scale-[1.9]")}
+          className={cn(iconClassName, "scale-[1.1]")}
           aria-hidden
         />
       );

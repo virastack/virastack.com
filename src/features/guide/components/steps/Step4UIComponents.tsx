@@ -238,7 +238,12 @@ export function Step4UIComponents({ onNext, isCompleted, isStyled }: GuideStepPr
           <p className="text-xs font-semibold tracking-wide text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 align-baseline">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-icon.webp" alt="" className="size-[1em] shrink-0" aria-hidden />
+              <img
+                src="/brand/virastack-icon.svg"
+                alt=""
+                className="size-[1em] shrink-0"
+                aria-hidden
+              />
               {t.rich("after", {
                 mask: () => (
                   <GuideProductMark id="mask" linked={false}>

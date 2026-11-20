@@ -14,7 +14,7 @@ export type AcademySourceVisual =
   | { type: "initials"; initials: string };
 
 const ORGANIZATION_LOGO_SOURCES: Record<string, string> = {
-  "virastack ai": "/logo-sm.webp",
+  "virastack ai": "/brand/virastack-icon.svg",
 };
 
 const ORGANIZATION_BADGE_ALIASES: Record<string, AcademyBadgeKind> = {

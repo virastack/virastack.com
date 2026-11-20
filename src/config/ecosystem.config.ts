@@ -196,12 +196,13 @@ export const ecosystem: readonly EcosystemEntry[] = [
     icon: SquareAsteriskIcon,
     iconSlug: "square-asterisk",
     color: {
-      shade: "pink-500",
-      lightShade: "pink-600",
-      darkShade: "pink-500",
-      hex: "#f6339a",
-      lightHex: "#e60076",
-      darkHex: "#f6339a",
+      // The form packages share Mask's indigo: one family color.
+      shade: "indigo-500",
+      lightShade: "indigo-600",
+      darkShade: "indigo-400",
+      hex: "#605efe",
+      lightHex: "#4f39f6",
+      darkHex: "#7c86ff",
     },
     copy: {
       en: {
@@ -228,12 +229,13 @@ export const ecosystem: readonly EcosystemEntry[] = [
     icon: MapPinIcon,
     iconSlug: "map-pin",
     color: {
-      shade: "red-500",
-      lightShade: "red-600",
-      darkShade: "red-500",
-      hex: "#fb2c36",
-      lightHex: "#e7000b",
-      darkHex: "#fb2c36",
+      // The form packages share Mask's indigo: one family color.
+      shade: "indigo-500",
+      lightShade: "indigo-600",
+      darkShade: "indigo-400",
+      hex: "#605efe",
+      lightHex: "#4f39f6",
+      darkHex: "#7c86ff",
     },
     copy: {
       en: {

@@ -13,9 +13,14 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#ffffff",
     icons: [
       {
-        src: "/logo-icon.webp",
-        sizes: "96x96",
-        type: "image/webp",
+        src: "/brand/virastack-icon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+      },
+      {
+        src: "/brand/virastack-icon.png",
+        sizes: "1024x1024",
+        type: "image/png",
       },
     ],
   };

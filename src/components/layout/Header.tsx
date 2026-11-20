@@ -92,19 +92,28 @@ export function Header({ search }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-items-stretch">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-3 px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-items-stretch">
         <div className="flex items-center lg:justify-self-start">
           <HeaderLogoContextMenu>
-            <Link href="/" className="inline-flex shrink-0 items-center gap-2 tracking-tight">
+            <Link
+              href="/"
+              className="relative -mx-1.5 inline-flex shrink-0 items-center gap-1 rounded-md px-1.5 py-1.5 tracking-tight"
+            >
+              {/* One highlight for both copy items: square around the symbol, grows to the right over the wordmark. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-0 w-9 rounded-md bg-foreground/10 opacity-0 transition-[width,opacity] duration-200 ease-out group-data-[active=true]/logo:opacity-100 group-data-[shape=wordmark]/logo:w-full"
+              />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-sm.webp"
+                src="/brand/virastack-icon.svg"
                 alt=""
                 width={24}
                 height={24}
-                className="block size-6 shrink-0"
+                className="relative block size-6 shrink-0"
               />
-              <span className="font-heading text-lg leading-none font-semibold text-primary">
+              {/* text-base (16px): the capitals come to 11.7px, about half the 24px icon, as in the wordmark files. */}
+              <span className="relative font-heading text-base leading-none font-semibold text-primary">
                 {siteConfig.name}
                 {activeProduct ? (
                   // Between lg and xl the nav leaves no room; the product sub-header still names it.

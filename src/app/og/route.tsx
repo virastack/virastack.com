@@ -35,7 +35,7 @@ async function loadFonts() {
 }
 
 async function loadLogoDataUrl(): Promise<string> {
-  const logo = await readFile(join(process.cwd(), "public/logo-icon.png"));
+  const logo = await readFile(join(process.cwd(), "public/brand/virastack-icon.png"));
   return `data:image/png;base64,${logo.toString("base64")}`;
 }
 
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse requires raw img */}
-          <img src={logoSrc} width={48} height={48} alt="" style={{ borderRadius: 10 }} />
+          <img src={logoSrc} width={48} height={48} alt="" />
           <div
             style={{
               marginLeft: 16,

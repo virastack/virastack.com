@@ -1,7 +1,11 @@
 <div align="center">
 
 <a href="https://virastack.com" target="_blank" rel="noreferrer">
-  <img src="https://raw.githubusercontent.com/virastack/virastack.com/main/assets/logo.png" alt="ViraStack" height="120" style="max-width: 100%;" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/assets/logo-dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/virastack/virastack.com/main/assets/logo-light.png" />
+    <img src="https://raw.githubusercontent.com/virastack/virastack.com/main/assets/logo-light.png" alt="ViraStack" height="80" style="max-width: 100%;" />
+  </picture>
 </a>
 
 _Official website and docs for the ViraStack ecosystem_

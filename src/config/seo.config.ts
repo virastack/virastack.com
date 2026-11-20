@@ -48,7 +48,7 @@ export const defaultMetadata: Metadata = {
     images: [buildOgImagePath({ description: siteConfig.description })],
   },
   icons: {
-    icon: "/logo-icon.webp",
+    icon: "/brand/virastack-icon.svg",
   },
   robots: {
     index: true,

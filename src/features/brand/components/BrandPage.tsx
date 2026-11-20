@@ -1,405 +1,308 @@
-import type { ReactNode } from "react";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
+import { DownloadIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import {
-  brandPalettes,
   getBrandPalette,
   virastackColor,
-  type BrandPalette,
+  type BrandPaletteId,
 } from "@/config/brand-palettes.config";
-import type { EcosystemId } from "@/config/ecosystem.config";
-import { productIcons, productIconSlugs } from "@/config/product-icons.config";
 import { siteConfig } from "@/config/site.config";
 
 import { cn } from "@/lib/utils";
 
-import { BrandLockup } from "@/components/shared/BrandLockup";
-// import { BrandLogoSection } from "@/features/brand/components/BrandLogoSection";
-import { guideBadgeTags } from "@/components/shared/GuideRichText";
-import { ProductDots } from "@/components/shared/ProductDots";
+import { CopyButton } from "@/components/shared/CopyButton";
 import { RevealGroup, RevealItem } from "@/components/shared/Reveal";
+import { buttonVariants } from "@/components/ui/button";
+import { ClearSpaceFigure } from "@/features/brand/components/ClearSpaceFigure";
+import { CopyBlock } from "@/features/brand/components/CopyBlock";
+import {
+  logoGroups,
+  type LogoAsset,
+  type LogoGroup,
+} from "@/features/brand/constants/logo-assets.constants";
+import { getColorFormats } from "@/features/brand/helpers/color-formats";
 
-const linkClassName =
-  "font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground/60";
+const cardClassName = "rounded-2xl border border-border bg-card";
 
-function ExternalLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={href} target="_blank" rel="noreferrer" className={linkClassName}>
-      {children}
-    </a>
-  );
+/** Read on the server so the copy button needs no fetch and works without a network round trip. */
+function readSvg(basePath: string): string {
+  return readFileSync(path.join(process.cwd(), "public", `${basePath}.svg`), "utf8");
 }
 
-/** Same markup as `GuideProductMark`: ViraStack semibold + product name bold in its color; `heading` makes both black. */
-function BrandMarkPreview({
-  productName,
-  textClass,
-  heading = false,
-}: {
-  productName: string;
-  textClass: string;
-  heading?: boolean;
-}) {
+function SectionHeading({ title, body }: { title: string; body: React.ReactNode }) {
   return (
-    <span className="font-heading whitespace-nowrap">
-      <span className={cn("text-primary", heading ? "font-black" : "font-semibold")}>
-        {siteConfig.name}
-      </span>{" "}
-      <span className={cn(heading ? "font-black" : "font-bold", textClass)}>{productName}</span>
-    </span>
-  );
-}
-
-type ColorValuesProps = {
-  color: Pick<BrandPalette, "lightShade" | "darkShade" | "lightHex" | "darkHex">;
-};
-
-function ColorValues({ color }: ColorValuesProps) {
-  const t = useTranslations("BrandPage");
-  const rows = [
-    [t("colorsLight"), color.lightShade, color.lightHex],
-    [t("colorsDark"), color.darkShade, color.darkHex],
-  ];
-
-  return (
-    <div className="space-y-0.5 font-mono text-xs text-muted-foreground">
-      {rows.map(([label, shade, hex]) => (
-        <p key={label}>
-          {label}: {shade} · {hex}
-        </p>
-      ))}
+    <div className="max-w-xl space-y-2">
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
+      <p className="text-base leading-relaxed text-pretty text-muted-foreground">{body}</p>
     </div>
   );
 }
 
-const richTags = {
-  ...guideBadgeTags(),
-  bold: (chunks: ReactNode) => <strong className="font-semibold text-foreground">{chunks}</strong>,
-  italic: (chunks: ReactNode) => <em className="italic">{chunks}</em>,
-  code: (chunks: ReactNode) => (
-    <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.85em] text-foreground">
-      {chunks}
-    </code>
-  ),
-};
-
-const homeDescKeys = {
-  academy: "ecosystemAcademyDesc",
-  start: "ecosystemStartDesc",
-  ai: "ecosystemAiDesc",
-  mask: "ecosystemMaskDesc",
-  password: "ecosystemPasswordDesc",
-  address: "ecosystemAddressDesc",
-  guide: "ecosystemGuideDesc",
-} as const satisfies Record<EcosystemId, `ecosystem${Capitalize<EcosystemId>}Desc`>;
-
-/** Short, medium, long and meta descriptions of every product, read from `ecosystem.config.ts`. */
-function ProductCopyList() {
+function LogoCard({
+  asset,
+  kind,
+  name,
+}: {
+  asset: LogoAsset;
+  kind: LogoGroup["kind"];
+  name: string;
+}) {
   const t = useTranslations("BrandPage");
-  const tNav = useTranslations("Navigation");
-  const tHome = useTranslations("Home");
-  const tProducts = useTranslations("Products");
-  const tAcademy = useTranslations("Academy");
+  const filename = asset.basePath.split("/").at(-1);
+  const label = asset.background === "light" ? t("light") : t("dark");
+  const assetName = `${name} (${label})`;
+  const actionClassName = cn(buttonVariants({ variant: "outline", size: "sm" }), "font-mono");
 
   return (
-    <ul className="space-y-4">
-      {brandPalettes.map((palette) => {
-        const Icon = productIcons[palette.id];
-        const rows: [string, ReactNode][] = [
-          [t("copyShort"), tNav(`${palette.id}Desc`)],
-          [t("copyMedium"), tHome.rich(homeDescKeys[palette.id], richTags)],
-          [
-            t("copyLong"),
-            palette.id === "academy"
-              ? tAcademy.rich("descriptionRich", richTags)
-              : tProducts.rich(`${palette.id}Desc`, richTags),
-          ],
-          [
-            t("copyMeta"),
-            palette.id === "academy" ? tAcademy("metaDescription") : tProducts(`${palette.id}Meta`),
-          ],
-        ];
-
-        return (
-          <li
-            key={palette.id}
-            className="space-y-4 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6"
+    <div className={cn(cardClassName, "p-1.5")}>
+      <div
+        className={cn(
+          "flex h-56 items-center justify-center rounded-xl border px-6 sm:h-64",
+          asset.background === "light"
+            ? "border-black/10 bg-white"
+            : "border-white/10 bg-neutral-900",
+        )}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${asset.basePath}.svg`}
+          alt={assetName}
+          width={asset.width}
+          height={asset.height}
+          className={kind === "icon" ? "h-20 w-auto" : "h-9 w-auto max-w-[80%] sm:h-10"}
+        />
+      </div>
+      <div className="flex items-center justify-between gap-3 px-2.5 pt-2.5 pb-1">
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <div className="flex items-center gap-1.5">
+          <CopyButton
+            variant="outline"
+            size="sm"
+            className="font-mono"
+            text={readSvg(asset.basePath)}
+            aria-label={t("copySvg", { name: assetName })}
           >
-            <p className="flex items-center gap-2.5 text-base">
-              <Icon className={cn("size-5", palette.textClass)} strokeWidth={1.75} aria-hidden />
-              <BrandMarkPreview productName={palette.productName} textClass={palette.textClass} />
-            </p>
-            <dl className="space-y-3">
-              {rows.map(([label, text]) => (
-                <div key={label} className="grid gap-1 sm:grid-cols-[3.5rem_1fr] sm:gap-4">
-                  <dt className="font-mono text-xs leading-6 text-muted-foreground">{label}</dt>
-                  <dd className="text-sm leading-relaxed text-pretty text-muted-foreground">
-                    {text}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </li>
-        );
-      })}
-    </ul>
+            SVG
+          </CopyButton>
+          <a
+            href={`${asset.basePath}.svg`}
+            download={`${filename}.svg`}
+            aria-label={t("downloadAs", { name: assetName, format: "SVG" })}
+            className={actionClassName}
+          >
+            <DownloadIcon data-icon="inline-start" />
+            .svg
+          </a>
+          <a
+            href={`${asset.basePath}.png`}
+            download={`${filename}.png`}
+            aria-label={t("downloadAs", { name: assetName, format: "PNG" })}
+            className={actionClassName}
+          >
+            <DownloadIcon data-icon="inline-start" />
+            .png
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
-const startPalette = brandPalettes.find((palette) => palette.id === "start");
+const groupCopyKeys = {
+  icon: { title: "iconTitle", body: "iconBody" },
+  wordmark: { title: "wordmarkTitle", body: "wordmarkBody" },
+  mono: { title: "monoTitle", body: "monoBody" },
+} as const satisfies Record<LogoGroup["id"], { title: string; body: string }>;
 
-if (!startPalette?.productName) {
-  throw new Error("Start brand palette is required for typography examples");
-}
+/** Same three groups, in the same order, as the homepage ecosystem section. */
+const productGroups = [
+  { id: "learn", ids: ["academy", "guide"] },
+  { id: "start", ids: ["start", "ai"] },
+  { id: "build", ids: ["mask", "password", "address"] },
+] as const satisfies readonly { id: "learn" | "start" | "build"; ids: readonly BrandPaletteId[] }[];
 
-const startName = startPalette.productName;
-const startTextClass = startPalette.textClass;
-const StartIcon = productIcons.start;
+const virastackFormats = getColorFormats(virastackColor.hex);
 
 export function BrandPage() {
   const t = useTranslations("BrandPage");
+  const tHome = useTranslations("Home");
 
   return (
-    <div className="mx-auto max-w-3xl px-6 pt-20 pb-28 sm:pt-28">
-      <RevealGroup className="space-y-16">
+    <div className="mx-auto max-w-5xl px-6 pt-20 pb-28 sm:pt-28">
+      <RevealGroup className="space-y-20">
         <RevealItem>
-          <header className="space-y-4">
+          <header className="max-w-2xl space-y-4">
             <h1 className="text-4xl font-semibold tracking-tight text-balance text-foreground lg:text-5xl">
               {t("title")}
             </h1>
-            <p className="text-base leading-relaxed text-balance text-muted-foreground sm:text-lg">
+            <p className="text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
               {t("intro")}
             </p>
           </header>
         </RevealItem>
 
-        {/* Hidden until the new logos land. Restore it, and the import above, with them.
-        <RevealItem>
-          <BrandLogoSection />
-        </RevealItem>
-        */}
+        {logoGroups.map((group) => {
+          const title = t(groupCopyKeys[group.id].title);
+
+          return (
+            <RevealItem key={group.id}>
+              <section className="space-y-6">
+                <SectionHeading title={title} body={t(groupCopyKeys[group.id].body)} />
+                <div className="grid gap-4 md:grid-cols-2">
+                  {group.assets.map((asset) => (
+                    <LogoCard key={asset.id} asset={asset} kind={group.kind} name={title} />
+                  ))}
+                </div>
+              </section>
+            </RevealItem>
+          );
+        })}
 
         <RevealItem>
           <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("namingTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                {t.rich("namingBody", {
-                  mask: () => (
-                    <BrandMarkPreview
-                      productName="Mask"
-                      textClass={getBrandPalette("mask").textClass}
-                    />
-                  ),
-                })}
-              </p>
-            </div>
-
-            <ul className="space-y-3 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              {brandPalettes.map((palette) => (
-                <li
-                  key={palette.id}
-                  className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border/60 pb-3 last:border-0 last:pb-0"
-                >
-                  <BrandMarkPreview
-                    productName={palette.productName}
-                    textClass={palette.textClass}
+            <SectionHeading title={t("clearSpaceTitle")} body={t("clearSpaceBody")} />
+            <div className="grid gap-4 md:grid-cols-2">
+              {(["light", "dark"] as const).map((background) => (
+                <div key={background} className="space-y-4">
+                  <ClearSpaceFigure
+                    variant="icon"
+                    background={background}
+                    label={t("clearSpaceIcon")}
                   />
-                  <span className="flex items-center gap-2.5">
-                    <span className="font-mono text-xs text-muted-foreground">{palette.shade}</span>
-                    <span
-                      aria-hidden
-                      className={cn("block size-2.5 shrink-0 rounded-full", palette.bgClass)}
-                    />
-                  </span>
-                </li>
+                  <ClearSpaceFigure
+                    variant="wordmark"
+                    background={background}
+                    label={t("clearSpaceWordmark")}
+                  />
+                </div>
               ))}
-            </ul>
-          </section>
-        </RevealItem>
-
-        <RevealItem>
-          <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("lockupTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{t("lockupBody")}</p>
-            </div>
-
-            <div className="overflow-hidden rounded-2xl border border-border bg-card px-5 pt-4 pb-9 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              <BrandLockup as="div" sizeClassName="[--f:15vw] sm:[--f:104px]">
-                <span className={startTextClass}>{startName}</span>
-              </BrandLockup>
             </div>
           </section>
         </RevealItem>
 
         <RevealItem>
           <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("typeTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{t("typeBody")}</p>
+            <SectionHeading title={t("colorsTitle")} body={t("colorsBody")} />
+
+            <div className={cn(cardClassName, "grid gap-1.5 p-1.5 md:grid-cols-2")}>
+              <div
+                className={cn(
+                  "flex min-h-44 flex-col justify-end rounded-xl p-5",
+                  virastackColor.bgClass,
+                )}
+              >
+                <p className="font-heading text-2xl font-semibold text-black">{siteConfig.name}</p>
+                <p className="font-mono text-xs text-black/70">{virastackColor.shade}</p>
+              </div>
+              <ul className="grid grid-rows-4 divide-y divide-border px-1.5">
+                {virastackFormats.map((format) => (
+                  <li key={format.label} className="flex">
+                    <CopyBlock
+                      text={format.value}
+                      label={t("copyValue", { name: format.label })}
+                      className="rounded-none px-2 py-1.5"
+                    >
+                      <span className="w-14 font-mono text-xs text-muted-foreground">
+                        {format.label}
+                      </span>
+                      <span className="flex-1 font-mono text-sm text-foreground">
+                        {format.value}
+                      </span>
+                    </CopyBlock>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="space-y-4 rounded-2xl border border-border bg-card px-5 py-5 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              <div className="space-y-1">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {t("typeHeadingLabel")}
-                </p>
-                <p className="text-2xl tracking-tight">
-                  <BrandMarkPreview productName={startName} textClass={startTextClass} heading />
-                </p>
-                <p className="font-mono text-xs text-muted-foreground">
-                  font-black · text-2xl · font-black · {startTextClass}
-                </p>
-              </div>
-              <div className="space-y-1 border-t border-border pt-4">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {t("typeLogoLabel")}
-                </p>
-                <p className="text-lg leading-none">
-                  <BrandMarkPreview productName={startName} textClass={startTextClass} />
-                </p>
-                <p className="font-mono text-xs text-muted-foreground">
-                  font-semibold · text-lg · font-bold · {startTextClass}
-                </p>
-              </div>
-              <div className="space-y-1 border-t border-border pt-4">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {t("typeBodyLabel")}
-                </p>
-                <p className="text-base">
-                  <BrandMarkPreview productName={startName} textClass={startTextClass} />
-                </p>
-                <p className="font-mono text-xs text-muted-foreground">
-                  font-semibold · inherit (text-base) · font-bold · {startTextClass}
-                </p>
-              </div>
-              <div className="space-y-1 border-t border-border pt-4">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                  {t("typeNavLabel")}
-                </p>
-                <p className="flex items-center gap-2.5 text-sm">
-                  <StartIcon className={cn("size-4", startTextClass)} aria-hidden />
-                  <span className="font-semibold text-foreground">{startName}</span>
-                </p>
-                <p className="font-mono text-xs text-muted-foreground">
-                  icon {startTextClass} · name font-semibold text-foreground · text-sm
-                </p>
-              </div>
+            <div className="space-y-6 pt-4">
+              <h3 className="text-sm font-medium text-foreground">{t("productsTitle")}</h3>
+              {productGroups.map((group) => (
+                <div key={group.id} className="space-y-3">
+                  <h4 className="text-sm text-muted-foreground">{tHome(`${group.id}Title`)}</h4>
+                  <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    {group.ids.map((id) => {
+                      const palette = getBrandPalette(id);
+
+                      return (
+                        <li key={palette.id} className="rounded-xl border border-border bg-card">
+                          <CopyBlock
+                            text={palette.hex}
+                            label={t("copyValue", {
+                              name: `${siteConfig.name} ${palette.productName}`,
+                            })}
+                            className="rounded-xl p-3"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src="/brand/virastack-icon.svg"
+                              alt=""
+                              width={36}
+                              height={36}
+                              className="size-9 shrink-0"
+                            />
+                            <span className="min-w-0">
+                              <span className="block truncate font-heading text-sm">
+                                <span className="font-semibold text-primary">
+                                  {siteConfig.name}
+                                </span>{" "}
+                                <span className={cn("font-bold", palette.textClass)}>
+                                  {palette.productName}
+                                </span>
+                              </span>
+                              <span className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+                                <span
+                                  aria-hidden
+                                  className={cn("size-2.5 shrink-0 rounded-full", palette.bgClass)}
+                                />
+                                <span className="truncate">
+                                  {palette.hex} · {palette.shade}
+                                </span>
+                              </span>
+                            </span>
+                          </CopyBlock>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
             </div>
           </section>
         </RevealItem>
 
         <RevealItem>
-          <section className="space-y-10">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("colorsTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">
-                {t.rich("colorsBody", {
-                  tailwind: (chunks) => (
-                    <ExternalLink href="https://tailwindcss.com/docs/colors">{chunks}</ExternalLink>
-                  ),
-                  lucide: (chunks) => (
-                    <ExternalLink href="https://lucide.dev">{chunks}</ExternalLink>
-                  ),
-                })}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
-              <div className="space-y-3 text-center">
-                <div className="flex h-8 items-center justify-center gap-3">
-                  <div
-                    className={cn(
-                      "size-8 rounded-lg ring-1 ring-foreground/10",
-                      virastackColor.bgClass,
-                    )}
-                    title={virastackColor.hex}
-                  />
-                </div>
-                <div className="space-y-0.5">
-                  <p className="text-sm font-semibold text-primary">{siteConfig.name}</p>
-                  <ColorValues color={virastackColor} />
-                </div>
-              </div>
-              {brandPalettes.map((palette) => {
-                const Icon = productIcons[palette.id];
-                const slug = productIconSlugs[palette.id];
-
-                return (
-                  <div key={palette.id} className="space-y-3 text-center">
-                    <div className="flex items-center justify-center gap-3">
-                      <div
-                        className={cn(
-                          "size-8 rounded-lg ring-1 ring-foreground/10",
-                          palette.bgClass,
-                        )}
-                        title={palette.hex}
-                      />
-                      <Icon
-                        className={cn("size-8", palette.textClass)}
-                        strokeWidth={1.75}
-                        aria-hidden
-                      />
-                    </div>
-                    <div className="space-y-0.5">
-                      <p className="text-sm font-medium text-foreground">
-                        <BrandMarkPreview
-                          productName={palette.productName}
-                          textClass={palette.textClass}
-                        />
-                      </p>
-                      <a
-                        href={`https://lucide.dev/icons/${slug}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {slug}
-                      </a>
-                      <ColorValues color={palette} />
-                    </div>
-                  </div>
-                );
+          <section>
+            <SectionHeading
+              title={t("fontTitle")}
+              body={t.rich("fontBody", {
+                link: (chunks) => (
+                  <a
+                    href="https://fonts.google.com/specimen/Sora"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-medium text-foreground underline underline-offset-4"
+                  >
+                    {chunks}
+                  </a>
+                ),
               })}
-            </div>
+            />
           </section>
         </RevealItem>
 
         <RevealItem>
-          <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("dotsTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{t("dotsBody")}</p>
-            </div>
-
-            <div className="flex justify-center rounded-2xl border border-border bg-card px-5 pt-12 pb-8 ring-1 ring-border ring-offset-4 ring-offset-background sm:px-6">
-              <ProductDots label={t("dotsLabel")} autoplay align="center" />
-            </div>
-          </section>
-        </RevealItem>
-
-        <RevealItem>
-          <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {t("copyTitle")}
-              </h2>
-              <p className="text-base leading-relaxed text-muted-foreground">{t("copyBody")}</p>
-            </div>
-
-            <ProductCopyList />
+          <section>
+            <SectionHeading
+              title={t("nameTitle")}
+              body={t.rich("nameBody", {
+                bold: (chunks) => (
+                  <strong className="font-semibold text-foreground">{chunks}</strong>
+                ),
+              })}
+            />
           </section>
         </RevealItem>
       </RevealGroup>

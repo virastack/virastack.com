@@ -27,7 +27,7 @@ export function buildHomeJsonLd({ locale, description }: { locale: string; descr
         "@id": organizationId,
         name: siteConfig.name,
         url: siteConfig.url,
-        logo: `${siteConfig.url}/logo-icon.webp`,
+        logo: `${siteConfig.url}/brand/virastack-icon.png`,
         sameAs: [siteConfig.links.github, siteConfig.links.twitter],
         founder: { "@id": authorId },
       },
